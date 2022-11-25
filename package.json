@@ -1,0 +1,29 @@
+{
+  "name": "winemap",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@mapbox/mapbox-gl-geocoder": "^5.0.1",
+    "@types/node": "18.11.9",
+    "@types/react": "18.0.25",
+    "@types/react-dom": "18.0.9",
+    "eslint": "8.28.0",
+    "eslint-config-next": "13.0.5",
+    "mapbox-gl": "^2.11.0",
+    "next": "13.0.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-map-gl": "^7.0.19",
+    "sass": "^1.56.1",
+    "typescript": "4.9.3"
+  },
+  "devDependencies": {
+    "@types/mapbox__mapbox-gl-geocoder": "^4.7.3"
+  }
+}
