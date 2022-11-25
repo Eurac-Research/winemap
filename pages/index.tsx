@@ -12,7 +12,7 @@ import styles from "../styles/Home.module.scss"
 import Map from "react-map-gl"
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN
 import "mapbox-gl/dist/mapbox-gl.css"
-import GeocoderControl from "../components/geocontroler"
+import GeocoderControl from "../components/geocoder"
 
 export default function Home() {
   const [hoverInfo, setHoverInfo] = useState(null)
