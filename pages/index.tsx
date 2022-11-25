@@ -15,28 +15,33 @@ import "mapbox-gl/dist/mapbox-gl.css"
 import GeocoderControl from "../components/geocoder"
 
 export default function Home() {
-  const [hoverInfo, setHoverInfo] = useState(null)
-  // const [hoverInfo, setHoverInfo] = useState<
-  //   { count: number; feature: []; x: number; y: number }[]
-  // >([])
+  //const [hoverInfo, setHoverInfo] = useState(null)
+  const [hoverInfo, setHoverInfo] = useState<{
+    count: number
+    feature: string[]
+    x: number
+    y: number
+  }>()
 
-  const onHover = useCallback((event: { features: any; point: { x: number; y: number } }) => {
+  const onHover = useCallback((event: mapboxgl.MapLayerMouseEvent) => {
     const {
       features,
       point: { x, y }
     } = event
     const hoveredFeature =
       features &&
-      features.map((feature: { properties: { PDOid: string } }) => {
-        return feature.properties.PDOid
+      features.map((feature) => {
+        return feature?.properties?.PDOid
       })
-    // .join(", ")
-    // console.log("hoveredFeature", hoveredFeature)
 
-    setHoverInfo(
-      hoveredFeature &&
-        hoveredFeature.length && { count: hoveredFeature.length, feature: hoveredFeature, x, y }
-    )
+    if (hoveredFeature && hoveredFeature.length) {
+      setHoverInfo({
+        count: hoveredFeature.length,
+        feature: hoveredFeature,
+        x,
+        y
+      })
+    }
   }, [])
   // console.log("hoverInfo", hoverInfo)
 
@@ -60,18 +65,11 @@ export default function Home() {
         mapboxAccessToken={MAPBOX_TOKEN}
         interactiveLayerIds={["pdo-area", "pdo-pins"]} /* defined in mapbox studio */
         onMouseMove={onHover}>
-        <GeocoderControl
-          mapboxAccessToken={MAPBOX_TOKEN!}
-          position="top-left"
-          essential={true}
-          duration={1}
-        />
+        <GeocoderControl mapboxAccessToken={MAPBOX_TOKEN!} position="top-left" />
       </Map>
 
       {hoverInfo && (
         <div className="tooltip" style={{ left: hoverInfo.x, top: hoverInfo.y }}>
-          {/* <div>OBJECTID: {hoverInfo?.feature}</div>
-          <div>PDOid: {hoverInfo.feature.properties.PDOid}</div> */}
           {hoverInfo.count > 1 && <div>{hoverInfo.count} overlapping PDOs</div>}
           {hoverInfo.feature.map(
             (

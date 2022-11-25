@@ -2,25 +2,24 @@ import * as React from "react"
 import { useState } from "react"
 import { useControl, Marker, MarkerProps, ControlPosition } from "react-map-gl"
 import MapboxGeocoder, { GeocoderOptions } from "@mapbox/mapbox-gl-geocoder"
+import { JsxElement } from "typescript"
 
-type GeocoderControlProps = Omit<
-  GeocoderOptions,
-  "accessToken" | "mapboxgl" | "marker" | "position"
-> & {
+type GeocoderControlProps = Omit<GeocoderOptions, "accessToken" | "mapboxgl" | "marker"> & {
   // see: https://docs.mapbox.com/mapbox-gl-js/api/map/#map#flyto
 
   mapboxAccessToken: string
   marker?: boolean | Omit<MarkerProps, "longitude" | "latitude">
+  position: ControlPosition
 
-  onLoading?: (e: object) => void
-  onResults?: (e: object) => void
-  onResult?: (e: object) => void
-  onError?: (e: object) => void
+  onLoading: (e: object) => void
+  onResults: (e: object) => void
+  onResult: (e: object) => void
+  onError: (e: object) => void
 }
 
 /* eslint-disable complexity,max-statements */
 export default function GeocoderControl(props: GeocoderControlProps) {
-  const [marker, setMarker] = useState(null)
+  const [marker, setMarker] = useState<React.ReactElement | null>()
 
   const geocoder = useControl<MapboxGeocoder>(
     () => {
@@ -39,7 +38,7 @@ export default function GeocoderControl(props: GeocoderControlProps) {
           result &&
           (result.center || (result.geometry?.type === "Point" && result.geometry.coordinates))
         if (location && props.marker) {
-          setMarker(<Marker {...props.marker} longitude={location[0]} latitude={location[1]} />)
+          setMarker(<Marker longitude={location[0]} latitude={location[1]} />)
         } else {
           setMarker(null)
         }
@@ -104,6 +103,9 @@ export default function GeocoderControl(props: GeocoderControlProps) {
     // if (geocoder.getWorldview() !== props.worldview && props.worldview !== undefined) {
     //   geocoder.setWorldview(props.worldview);
     // }
+  }
+  if (marker === undefined) {
+    return null
   }
   return marker
 }
