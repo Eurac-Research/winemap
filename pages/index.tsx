@@ -28,11 +28,14 @@ export default function Home() {
       features,
       point: { x, y }
     } = event
+    // console.log("features", features)
     const hoveredFeature =
       features &&
       features.map((feature) => {
-        return feature?.properties?.PDOid
+        // console.log("feature", feature)
+        return feature?.properties?.PDOid ? feature?.properties?.PDOid : null
       })
+    // console.log("hoverfeature", hoveredFeature)
 
     if (hoveredFeature && hoveredFeature.length) {
       setHoverInfo({
@@ -42,6 +45,12 @@ export default function Home() {
         y
       })
     }
+  }, [])
+
+  //console.log("hoverInfo", hoverInfo)
+
+  const onOut = useCallback((event: mapboxgl.MapLayerMouseEvent) => {
+    setHoverInfo(undefined)
   }, [])
   // console.log("hoverInfo", hoverInfo)
 
@@ -64,7 +73,8 @@ export default function Home() {
         mapStyle="mapbox://styles/tiacop/clas8a92e003c15o2bpopdfqt"
         mapboxAccessToken={MAPBOX_TOKEN}
         interactiveLayerIds={["pdo-area", "pdo-pins"]} /* defined in mapbox studio */
-        onMouseMove={onHover}>
+        onMouseMove={onHover}
+        onMouseLeave={onOut}>
         <GeocoderControl mapboxAccessToken={MAPBOX_TOKEN!} position="top-left" />
       </Map>
 
