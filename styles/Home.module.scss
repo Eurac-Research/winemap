@@ -1,3 +1,89 @@
+.container {
+  position: relative;
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    margin-bottom: 20px;
+    span {
+      display: inline-block;
+      padding-right: 10px;
+      font-size: 16px;
+    }
+    svg {
+      width: 120px;
+    }
+  }
+}
+
+.contentFrame {
+  width: 400px;
+  height: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0;
+  font-size: 16px;
+  background-color: rgba(0, 0, 0, 0.6);
+  overflow-y: auto;
+}
+
+.PDOdetail {
+  padding: 20px;
+  height: 100%;
+  width: 400px;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.6);
+  h2 {
+    font-size: 32px;
+  }
+}
+.PDOlistitem {
+  padding: 20px 20px 40px 20px;
+  background-color: transparent;
+  transition: all 300ms ease-in-out;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+  h2 {
+    font-size: 22px;
+  }
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+}
+
+.actionBar {
+  height: auto;
+  padding: 20px;
+  font-size: 18px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.arrow {
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 3px;
+  height: 20px;
+  width: 20px;
+
+  &.right {
+    transform: rotate(-45deg);
+  }
+
+  &.left {
+    transform: rotate(135deg);
+  }
+}
+
 // .container {
 //   padding: 0 2rem;
 // }
@@ -127,3 +213,9 @@
 //     filter: invert(1);
 //   }
 // }
+
+.filterBar {
+  position: fixed;
+  top: 0;
+  left: 300px;
+}
