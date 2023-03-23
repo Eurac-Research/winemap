@@ -790,7 +790,7 @@ export default function Home() {
       <div className={styles.filterBar}>
         <header>
           <span>WINEMAP by</span>
-          <a href="https:www.eurac.edu">
+          <a href="https://www.eurac.edu">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="178.793"
