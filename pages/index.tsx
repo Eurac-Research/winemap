@@ -51,14 +51,14 @@ export interface JSONObject {
   country: string;
   pdoid: string;
   pdoname: string;
-  registration: string;
+  registration: string | null;
   category: string;
-  varietiesOiv: string;
-  varieties: string;
-  "max-yield-hl": string;
-  "max-yield-kg": string;
-  "min-planting-density": string;
-  irrigation: string;
+  varietiesOiv: string | null;
+  varieties: string | null;
+  "max-yield-hl": number | null;
+  "max-yield-kg": number | null;
+  "min-planting-density": number | null;
+  irrigation: string | null;
   amendment: string;
   pdoinfo: string;
   munic: string;
@@ -106,17 +106,16 @@ export default function Home() {
 
   const [pdos, setPdos] = useState<JSONObject[] | null>(null);
   const [activePDO, setActivePDO] = useState<JSONObject | null>(null);
-  const [selectValue, setSelectValue] = useState(null);
-  const [selectCatValue, setSelectCatValue] = useState(null);
-  const [selectMunicValue, setSelectMunicValue] = useState(null);
-  const [selectVarValue, setSelectVarValue] = useState(null);
+  const [selectValue, setSelectValue] = useState<string | null>(null);
+  const [selectCatValue, setSelectCatValue] = useState<string | null>(null);
+  const [selectMunicValue, setSelectMunicValue] = useState<string | null>(null);
+  const [selectVarValue, setSelectVarValue] = useState<string | null>(null);
   const [fromSearch, setFromSearch] = useState(false);
 
-  const mapRef = useRef<MapRef>();
+  const mapRef = useRef<MapRef>(null);
 
   async function openDetail(id: string) {
     const PDO = data.filter((i: { pdoid: any }) => id === i.pdoid);
-    //console.log("PDO", PDO);
     setActivePDO(PDO[0]);
   }
   /* return PDO Name by given PDOid */
@@ -185,8 +184,8 @@ export default function Home() {
   const varMap = new Map();
   const uniqVar = new Set();
   data.forEach((item) => {
-    const varieties = item.varietiesOiv.split("/");
-    varieties.forEach((v) => uniqVar.add({ value: v, label: v }));
+    const varieties = item?.varietiesOiv?.split("/");
+    varieties?.forEach((v) => uniqVar.add({ value: v, label: v }));
     varMap.set(item.pdoid, varieties);
   });
 
@@ -201,7 +200,7 @@ export default function Home() {
   });
 
   // unique varieties for select
-  const varieties = data.map((item) => item.varietiesOiv.split("/"));
+  const varieties = data.map((item) => item?.varietiesOiv?.split("/"));
   let uniqueVarieties = [...new Set(varieties.flat())];
   let selectVarieties = uniqueVarieties.sort().map((varietyName) => {
     let object = {
@@ -309,8 +308,9 @@ export default function Home() {
       return data.filter((i: { pdoid: any }) => item === i.pdoid);
     });
     const flattenPDOS = PDOList?.flat();
-
-    setPdos(flattenPDOS);
+    if (flattenPDOS) {
+      setPdos(flattenPDOS);
+    }
   }
 
   async function getPdoIDsByPdoName(pdoname: string) {
@@ -373,7 +373,13 @@ export default function Home() {
 
   // generic filter by munic/varietiesOiv/category
   async function getPdoIDsByFilter(term: string, filterBy: string) {
-    const PDOList = data.filter((i) => i[`${filterBy}`].includes(term));
+    const PDOList = data.filter((i) => {
+      for (const [key, value] of Object.entries(i)) {
+        if (key === filterBy && typeof value === "string") {
+          return value.includes(term);
+        }
+      }
+    });
     const showIDs = PDOList.map((item) => {
       return item.pdoid;
     });
@@ -656,12 +662,16 @@ export default function Home() {
               }
             >
               <h2>{pdo?.pdoname}</h2>
-              <p>
-                <span>Registration:</span> {pdo?.registration}
-              </p>
-              <p>
-                <span>Category:</span> {pdo?.category.replaceAll("/", ", ")}
-              </p>
+              {pdo?.registration && (
+                <p>
+                  <span>Registration:</span> {pdo?.registration}
+                </p>
+              )}
+              {pdo?.category && (
+                <p>
+                  <span>Category:</span> {pdo?.category.replaceAll("/", ", ")}
+                </p>
+              )}
             </div>
           ))}
         </div>
@@ -696,29 +706,43 @@ export default function Home() {
               </button>
               <button onClick={onClearFilter}>reset</button>
             </div>
-            <p>
-              <span>Country:</span> {activePDO?.country}
-            </p>
-            <p>
-              <span>Registration:</span> {activePDO?.registration}
-            </p>
-            <p>
-              <span>Category:</span> {activePDO?.category.replaceAll("/", ", ")}
-            </p>
+            {activePDO?.country && (
+              <p>
+                <span>Country:</span> {activePDO?.country}
+              </p>
+            )}
+            {activePDO?.registration && (
+              <p>
+                <span>Registration:</span> {activePDO?.registration}
+              </p>
+            )}
+            {activePDO?.category && (
+              <p>
+                <span>Category:</span>{" "}
+                {activePDO?.category.replaceAll("/", ", ")}
+              </p>
+            )}
             <p>
               <span>PDO ID:</span> {activePDO?.pdoid}
             </p>
-            <p>
-              <span>Varieties OIV:</span>{" "}
-              {activePDO?.["varietiesOiv"].replaceAll("/", ", ")}
-            </p>
-            <p>
-              <span>Varieties other:</span>{" "}
-              {activePDO?.["varieties"].replaceAll("/", ", ")}
-            </p>
-            <p>
-              <span>Maximum Yield (hl):</span> {activePDO?.["max-yield-hl"]} hl
-            </p>
+            {activePDO?.["varietiesOiv"] && (
+              <p>
+                <span>Varieties OIV:</span>{" "}
+                {activePDO?.["varietiesOiv"].replaceAll("/", ", ")}
+              </p>
+            )}
+            {activePDO?.["varieties"] && (
+              <p>
+                <span>Varieties other:</span>{" "}
+                {activePDO?.["varieties"].replaceAll("/", ", ")}
+              </p>
+            )}
+            {activePDO?.["max-yield-hl"] && (
+              <p>
+                <span>Maximum Yield (hl):</span> {activePDO?.["max-yield-hl"]}{" "}
+                hl
+              </p>
+            )}
             {activePDO?.["max-yield-kg"] && (
               <p>
                 <span>Maximum Yield (kg):</span> {activePDO?.["max-yield-kg"]}{" "}
