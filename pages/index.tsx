@@ -291,7 +291,7 @@ export default function Home() {
         .setFilter("pdo-area", null)
         .setFilter("pdo-pins", null)
         .setCenter([5, 46])
-        .zoomTo(4, {
+        .zoomTo(3.6, {
           duration: 1000,
           offset: [100, 50],
         });
@@ -559,7 +559,7 @@ export default function Home() {
         initialViewState={{
           latitude: 46,
           longitude: 5,
-          zoom: 4,
+          zoom: 3.6,
           bearing: 0,
           pitch: 0,
         }}
@@ -752,7 +752,7 @@ export default function Home() {
             {activePDO?.["min-planting-density"] && (
               <p>
                 <span>Minimum Planting Density:</span>{" "}
-                {activePDO?.["min-planting-density"]} ??
+                {activePDO?.["min-planting-density"]} vine stocks/ha
               </p>
             )}
             {activePDO?.["irrigation"] && (
@@ -773,7 +773,14 @@ export default function Home() {
             )}
             {activePDO?.["pdoinfo"] && (
               <p>
-                <span>Info:</span> {activePDO?.["pdoinfo"]}{" "}
+                <span>Info:</span>{" "}
+                <a
+                  href={activePDO?.["pdoinfo"]}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {activePDO?.["pdoinfo"]}
+                </a>
               </p>
             )}
           </div>
