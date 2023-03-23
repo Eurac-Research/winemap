@@ -4,6 +4,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  color: #fff;
 }
 
 a {
@@ -356,6 +357,7 @@ button {
   background-color: transparent;
   cursor: pointer;
   transition: 300ms all ease-in-out;
+  color: #fff;
 
   &:hover {
     background-color: #fff;
