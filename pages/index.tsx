@@ -26,6 +26,7 @@ import { Select } from "antd";
 
 import data from "./data/PDO_EU_id.json";
 import allPDOPoints from "./data/pdo-points.json";
+import allCountries from "./data/countryCodesFromDataHub.io.json";
 // {
 //   "country": "Country",
 //   "pdoid": "PDOid",
@@ -46,6 +47,7 @@ import allPDOPoints from "./data/pdo-points.json";
 
 import { useRouter } from "next/router";
 import bbox from "@turf/bbox";
+import Chart from "../components/charts/racechart";
 
 export interface JSONObject {
   country: string;
@@ -109,8 +111,13 @@ export default function Home() {
   const [selectValue, setSelectValue] = useState<string | null>(null);
   const [selectCatValue, setSelectCatValue] = useState<string | null>(null);
   const [selectMunicValue, setSelectMunicValue] = useState<string | null>(null);
+  const [selectCountryValue, setSelectCountryValue] = useState<string | null>(
+    null
+  );
   const [selectVarValue, setSelectVarValue] = useState<string | null>(null);
   const [fromSearch, setFromSearch] = useState(false);
+
+  const [showChart, setShowChart] = useState(false);
 
   const mapRef = useRef<MapRef>(null);
 
@@ -136,23 +143,25 @@ export default function Home() {
 
   const onSearchCatChange = (value: string) => {
     router.push(`/?cat=${value}`, undefined, { shallow: true });
-    setActivePDO(null);
     setFromSearch(true);
+    setActivePDO(null);
     setSelectValue(null);
     setSelectMunicValue(null);
     setSelectCatValue(value);
     setSelectVarValue(null);
+    setSelectCountryValue(null);
     getPdoIDsByFilter(value, "category");
   };
 
   const onSearchVarietyChange = (value: string) => {
     router.push(`/?variety=${value}`, undefined, { shallow: true });
-    setActivePDO(null);
     setFromSearch(true);
+    setActivePDO(null);
     setSelectValue(null);
     setSelectMunicValue(null);
     setSelectCatValue(null);
     setSelectVarValue(value);
+    setSelectCountryValue(null);
     getPdoIDsByFilter(value, "varietiesOiv");
   };
 
@@ -163,16 +172,31 @@ export default function Home() {
     setSelectMunicValue(null);
     setSelectCatValue(null);
     setSelectVarValue(null);
+    setSelectCountryValue(null);
     getPdoIDsByPdoName(value);
+  };
+
+  const onSelectCountryNameChange = (value: string) => {
+    router.push(`/?country=${value}`, undefined, { shallow: true });
+    setFromSearch(true);
+    setActivePDO(null);
+    setSelectValue(null);
+    setSelectMunicValue(null);
+    setSelectCatValue(null);
+    setSelectVarValue(null);
+    setSelectCountryValue(value);
+    getPdoIDsByFilter(value, "country");
   };
 
   const onSelectMunicChange = (value: string) => {
     router.push(`/?munic=${value}`, undefined, { shallow: true });
+    setFromSearch(true);
     setActivePDO(null);
     setSelectValue(null);
     setSelectMunicValue(value);
     setSelectCatValue(null);
     setSelectVarValue(null);
+    setSelectCountryValue(null);
     getPdoIDsByFilter(value, "munic");
   };
 
@@ -180,14 +204,14 @@ export default function Home() {
     //console.log("search:", value);
   };
 
-  // unique varieties via Set
-  const varMap = new Map();
-  const uniqVar = new Set();
-  data.forEach((item) => {
-    const varieties = item?.varietiesOiv?.split("/");
-    varieties?.forEach((v) => uniqVar.add({ value: v, label: v }));
-    varMap.set(item.pdoid, varieties);
-  });
+  // // unique varieties via Set
+  // const varMap = new Map();
+  // const uniqVar = new Set();
+  // data.forEach((item) => {
+  //   const varieties = item?.varietiesOiv?.split("/");
+  //   varieties?.forEach((v) => uniqVar.add({ value: v, label: v }));
+  //   varMap.set(item.pdoid, varieties);
+  // });
 
   // unique PDONames for select
   const uniquePdonames = [...new Set(data.map((item) => item.pdoname))];
@@ -231,6 +255,31 @@ export default function Home() {
       value: municName,
     };
     return object;
+  });
+
+  // unique countries for select
+  const country = data.map((item) => item.country);
+  let uniqueCountry = [...new Set(country.flat())];
+
+  // ordered by countryCode ....
+  // let selectCountry = uniqueCountry.sort().map((countryCode) => {
+  //   for (const country of allCountries) {
+  //     if (country.Code === countryCode) {
+  //       return {
+  //         label: `${country.name} (${country.code})`,
+  //         value: `${country.name} (${country.code})`,
+  //       };
+  //     }
+  //   }
+  // });
+
+  // ordered by countryName ... does not return a defined object but the filtered countries, aka: {name: "bla", code: "bla"}
+  let selectCountry = allCountries.filter((country) => {
+    for (const cc of uniqueCountry) {
+      if (cc === country.code) {
+        return cc;
+      }
+    }
   });
 
   const onHover = useCallback((event: mapboxgl.MapLayerMouseEvent) => {
@@ -638,7 +687,25 @@ export default function Home() {
               <a href="#about">About the project</a>
             </p>
             <p>About the data</p>
+
+            <button onClick={() => setShowChart(!showChart)}>
+              Did you know?
+            </button>
           </div>
+        </div>
+      )}
+
+      {showChart && (
+        <div className={styles.chartContainer}>
+          <div
+            className={styles.close}
+            onClick={() => setShowChart(!showChart)}
+          >
+            <svg width="800" height="800" viewBox="0 0 256 256">
+              <path d="M202.829 197.172a4 4 0 1 1-5.658 5.656L128 133.658l-69.171 69.17a4 4 0 0 1-5.658-5.656L122.343 128 53.171 58.828a4 4 0 0 1 5.658-5.656L128 122.342l69.171-69.17a4 4 0 0 1 5.658 5.656L133.657 128Z" />
+            </svg>
+          </div>
+          <Chart />
         </div>
       )}
 
@@ -822,6 +889,20 @@ export default function Home() {
             fieldNames={{ label: "label", value: "value" }}
             options={selectPdonames}
             value={selectValue}
+          />
+          <Select
+            showSearch
+            placeholder="Select country"
+            dropdownMatchSelectWidth={290}
+            optionFilterProp="children"
+            onChange={onSelectCountryNameChange}
+            onSearch={onSearch}
+            filterOption={(input, option) =>
+              (option?.name ?? "").toLowerCase().includes(input.toLowerCase())
+            }
+            fieldNames={{ label: "name", value: "code" }}
+            options={selectCountry}
+            value={selectCountryValue}
           />
           <Select
             showSearch

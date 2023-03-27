@@ -133,10 +133,62 @@
     }
     .ant-select {
       width: 10vw;
-      max-width: 300px;
+      max-width: 200px;
     }
   }
 }
 .frontpageContent {
   padding: 30px;
+}
+
+.chartContainer {
+  position: fixed;
+  z-index: 99;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background-color: #fff;
+  padding: 30px;
+  box-shadow: 0 0 40px #000;
+}
+.close {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  box-shadow: 0 0 20px #000;
+  cursor: pointer;
+
+  background-color: #fff;
+  height: 50px;
+  width: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border-radius: 100%;
+  svg {
+    fill: #000;
+    width: 35px;
+    height: 35px;
+  }
+
+  // &:after {
+  //   display: inline-block;
+  //   content: "\00d7"; /* This will render the 'X' */
+  //   color: red;
+  //   line-height: 0;
+  //   font-size: 50px;
+  //   background-color: #000;
+  //   height: 50px;
+  //   width: 50px;
+  //   display: inline-flex;
+  //   align-items: center;
+  //   justify-content: center;
+  //   margin: 0;
+  //   padding: 0;
+  //   border-radius: 100%;
+  // }
 }
