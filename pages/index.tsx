@@ -19,6 +19,8 @@ import {
 } from "react-map-gl";
 import type { MapRef } from "react-map-gl";
 
+import Accordion from "@/components/accordion";
+
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 import "mapbox-gl/dist/mapbox-gl.css";
 
@@ -287,7 +289,7 @@ export default function Home() {
       features,
       point: { x, y },
     } = event;
-    // console.log("features", features)
+    //console.log("features", features);
     const hoveredFeature =
       features &&
       features.map((feature) => {
@@ -784,25 +786,25 @@ export default function Home() {
               </p>
             )}
             {activePDO?.category && (
-              <p>
-                <span>Category:</span>{" "}
-                {activePDO?.category.replaceAll("/", ", ")}
-              </p>
+              <Accordion
+                title="Category:"
+                content={activePDO?.category.replaceAll("/", ", ")}
+              />
             )}
             <p>
               <span>PDO ID:</span> {activePDO?.pdoid}
             </p>
             {activePDO?.["varietiesOiv"] && (
-              <p>
-                <span>Varieties OIV:</span>{" "}
-                {activePDO?.["varietiesOiv"].replaceAll("/", ", ")}
-              </p>
+              <Accordion
+                title="Varieties OIV:"
+                content={activePDO?.["varietiesOiv"].replaceAll("/", ", ")}
+              />
             )}
             {activePDO?.["varieties"] && (
-              <p>
-                <span>Varieties other:</span>{" "}
-                {activePDO?.["varieties"].replaceAll("/", ", ")}
-              </p>
+              <Accordion
+                title="Varieties other:"
+                content={activePDO?.["varieties"].replaceAll("/", ", ")}
+              />
             )}
             {activePDO?.["max-yield-hl"] && (
               <p>
@@ -833,10 +835,10 @@ export default function Home() {
               </p>
             )}
             {activePDO?.["munic"] && (
-              <p>
-                <span>Municipalities:</span>{" "}
-                {activePDO?.["munic"].replaceAll("/", ", ")}{" "}
-              </p>
+              <Accordion
+                title="Municipalities:"
+                content={activePDO?.["munic"].replaceAll("/", ", ")}
+              />
             )}
             {activePDO?.["pdoinfo"] && (
               <p>
@@ -906,7 +908,7 @@ export default function Home() {
           />
           <Select
             showSearch
-            placeholder="Select Municipality"
+            placeholder="Select municipality"
             dropdownMatchSelectWidth={290}
             optionFilterProp="children"
             onChange={onSelectMunicChange}
