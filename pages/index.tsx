@@ -19,7 +19,7 @@ import {
 } from "react-map-gl";
 import type { MapRef } from "react-map-gl";
 
-import Accordion from "@/components/accordion";
+import Accordion from "../components/accordion";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -50,6 +50,24 @@ import allCountries from "./data/countryCodesFromDataHub.io.json";
 import { useRouter } from "next/router";
 import bbox from "@turf/bbox";
 import Chart from "../components/charts/racechart";
+
+import Image from "next/image";
+
+import infoIcon from "../public/icons/Information-outline.svg";
+import amendmentIcon from "../public/icons/Amendment-outline.svg";
+import irrigationIcon from "../public/icons/Irrigation-outline.svg";
+import densityIcon from "../public/icons/Planting-density-2-outline.svg";
+import yieldKgIcon from "../public/icons/Yield-kg-1-outline.svg";
+import yieldHlIcon from "../public/icons/Yield-hl-3-outline.svg";
+import pdoIcon from "../public/icons/PDOid.svg";
+import registrationIcon from "../public/icons/Registration-outline.svg";
+import countryIcon from "../public/icons/CountryName-outline.svg";
+import categoryIcon from "../public/icons/Category.svg";
+
+import varietiesOIVIcon from "../public/icons/Varieties-OIV-outline.svg";
+
+import varietiesOtherIcon from "../public/icons/Varieties-others-outline.svg";
+import municIcon from "../public/icons/Municipalities-outline.svg";
 
 export interface JSONObject {
   country: string;
@@ -289,7 +307,7 @@ export default function Home() {
       features,
       point: { x, y },
     } = event;
-    //console.log("features", features);
+    // console.log("features", features);
     const hoveredFeature =
       features &&
       features.map((feature) => {
@@ -620,6 +638,7 @@ export default function Home() {
         interactiveLayerIds={[
           "pdo-area",
           "pdo-pins",
+          "pdo-municipality",
         ]} /* defined in mapbox studio */
         onMouseMove={onHover}
         onMouseLeave={onOut}
@@ -777,72 +796,119 @@ export default function Home() {
             </div>
             {activePDO?.country && (
               <p>
+                <Image src={countryIcon} alt="Country" width={35} height={35} />
                 <span>Country:</span> {activePDO?.country}
               </p>
             )}
             {activePDO?.registration && (
               <p>
-                <span>Registration:</span> {activePDO?.registration}
+                <Image
+                  src={registrationIcon}
+                  alt="Registration Date"
+                  width={35}
+                  height={35}
+                />
+                <span className="bold">Registration:</span>{" "}
+                {activePDO?.registration}
               </p>
             )}
             {activePDO?.category && (
               <Accordion
                 title="Category:"
                 content={activePDO?.category.replaceAll("/", ", ")}
+                icon={categoryIcon}
               />
             )}
             <p>
-              <span>PDO ID:</span> {activePDO?.pdoid}
+              <Image src={pdoIcon} alt="PDO Id" width={35} height={35} />
+              <span className="bold">PDO ID:</span> {activePDO?.pdoid}
             </p>
             {activePDO?.["varietiesOiv"] && (
               <Accordion
                 title="Varieties OIV:"
                 content={activePDO?.["varietiesOiv"].replaceAll("/", ", ")}
+                icon={varietiesOIVIcon}
               />
             )}
             {activePDO?.["varieties"] && (
               <Accordion
                 title="Varieties other:"
                 content={activePDO?.["varieties"].replaceAll("/", ", ")}
+                icon={varietiesOtherIcon}
               />
             )}
             {activePDO?.["max-yield-hl"] && (
               <p>
-                <span>Maximum Yield (hl):</span> {activePDO?.["max-yield-hl"]}{" "}
-                hl
+                <Image
+                  src={yieldHlIcon}
+                  alt="Maximum Yield (hl)"
+                  width={35}
+                  height={35}
+                />
+                <span className="bold">Maximum Yield (hl):</span>{" "}
+                {activePDO?.["max-yield-hl"]} hl
               </p>
             )}
             {activePDO?.["max-yield-kg"] && (
               <p>
-                <span>Maximum Yield (kg):</span> {activePDO?.["max-yield-kg"]}{" "}
-                kg
+                <Image
+                  src={yieldKgIcon}
+                  alt="Maximum Yield (kg)"
+                  width={35}
+                  height={35}
+                />
+                <span className="bold">Maximum Yield (kg):</span>{" "}
+                {activePDO?.["max-yield-kg"]} kg
               </p>
             )}
             {activePDO?.["min-planting-density"] && (
               <p>
-                <span>Minimum Planting Density:</span>{" "}
+                <Image
+                  src={densityIcon}
+                  alt="Minimum Planting Density"
+                  width={35}
+                  height={35}
+                />
+                <span className="bold">Minimum Planting Density:</span>{" "}
                 {activePDO?.["min-planting-density"]} vine stocks/ha
               </p>
             )}
             {activePDO?.["irrigation"] && (
               <p>
-                <span>Irrigation:</span> {activePDO?.["irrigation"]}{" "}
+                <Image
+                  src={irrigationIcon}
+                  alt="Irrigation"
+                  width={35}
+                  height={35}
+                />
+                <span className="bold">Irrigation:</span>{" "}
+                {activePDO?.["irrigation"]}{" "}
               </p>
             )}
             {activePDO?.["amendment"] && (
               <p>
-                <span>Amendment:</span> {activePDO?.["amendment"]}{" "}
+                <Image
+                  src={amendmentIcon}
+                  alt="Amendment"
+                  width={35}
+                  height={35}
+                />
+                <span className="bold">Amendment:</span>{" "}
+                {activePDO?.["amendment"]}{" "}
               </p>
             )}
             {activePDO?.["munic"] && (
               <Accordion
                 title="Municipalities:"
                 content={activePDO?.["munic"].replaceAll("/", ", ")}
+                icon={municIcon}
               />
             )}
             {activePDO?.["pdoinfo"] && (
               <p>
-                <span>Info:</span>{" "}
+                <Image src={infoIcon} alt="Info" width={35} height={35} />
+                <span className="bold">Info:</span>
+                <br />{" "}
                 <a
                   href={activePDO?.["pdoinfo"]}
                   target="_blank"

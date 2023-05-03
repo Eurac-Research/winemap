@@ -1,6 +1,12 @@
 import { useState } from "react";
+import Image from "next/image";
 
-export default function Accordion(props) {
+type PropTypes = {
+  content: string;
+  title: string;
+  icon: string;
+};
+export default function Accordion(props: PropTypes) {
   const [isShowing, setIsShowing] = useState(false);
 
   const toggle = () => {
@@ -9,7 +15,7 @@ export default function Accordion(props) {
 
   return (
     <>
-      {props.content.length > 50 ? (
+      {props.content.length > 40 ? (
         <div
           style={{ position: "relative", cursor: "pointer" }}
           onClick={toggle}
@@ -18,53 +24,56 @@ export default function Accordion(props) {
             {isShowing ? "-" : "+"}
           </span> */}
 
-          <span className="plus">
-            {isShowing ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="800"
-                height="800"
-                fill="none"
-                viewBox="0 0 24 24"
-                className="minusIcon"
-              >
-                <path
-                  fill="#fff"
-                  fillRule="evenodd"
-                  d="M4 12a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1Z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="64"
-                height="64"
-                fill="none"
-                viewBox="0 0 24 24"
-                className="plusIcon"
-              >
-                <path
-                  fill="#fff"
-                  d="M12.75 11.25V5a.75.75 0 1 0-1.5 0v6.25H5a.75.75 0 1 0 0 1.5h6.25V19a.76.76 0 0 0 .75.75.75.75 0 0 0 .75-.75v-6.25H19a.75.75 0 0 0 .75-.75.76.76 0 0 0-.75-.75h-6.25Z"
-                />
-              </svg>
-            )}
-          </span>
-
           <p>
-            <span>{props.title}</span> {/* isShowing && <>{props.content}</>*/}
-            <div className={isShowing ? "showAll" : "showOneLine"}>
+            <Image src={props.icon} alt={props.title} width={35} height={35} />
+            <span className="bold">{props.title}</span>{" "}
+            {/* isShowing && <>{props.content}</>*/}
+            <span className={isShowing ? "showAll" : "showOneLine"}>
               {props.content}
-            </div>
+            </span>
+            <span className="expand">
+              {isShowing ? (
+                <svg
+                  width="18"
+                  height="11"
+                  viewBox="0 0 18 11"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1 10L9 2L17 10"
+                    stroke="#9E9E9E"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  width="18"
+                  height="11"
+                  viewBox="0 0 18 11"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1 1L9 9L17 1"
+                    stroke="#9E9E9E"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              )}
+            </span>
           </p>
         </div>
       ) : (
         <p>
-          <span>{props.title}</span> {/* isShowing && <>{props.content}</>*/}
-          <div className={isShowing ? "showAll" : "showOneLine"}>
+          <Image src={props.icon} alt={props.title} width={35} height={35} />
+          <span className="bold">{props.title}</span>{" "}
+          {/* isShowing && <>{props.content}</>*/}
+          <span className={isShowing ? "showAll" : "showOneLine"}>
             {props.content}
-          </div>
+          </span>
         </p>
       )}
     </>
