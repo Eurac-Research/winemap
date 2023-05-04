@@ -638,7 +638,6 @@ export default function Home() {
         interactiveLayerIds={[
           "pdo-area",
           "pdo-pins",
-          "pdo-municipality",
         ]} /* defined in mapbox studio */
         onMouseMove={onHover}
         onMouseLeave={onOut}
