@@ -68,6 +68,7 @@ import varietiesOIVIcon from "../public/icons/Varieties-OIV-outline.svg";
 
 import varietiesOtherIcon from "../public/icons/Varieties-others-outline.svg";
 import municIcon from "../public/icons/Municipalities-outline.svg";
+import Link from "next/link";
 
 export interface JSONObject {
   country: string;
@@ -337,6 +338,8 @@ export default function Home() {
       features.map((f) => {
         return f?.properties?.PDOid;
       });
+
+    // console.log("overlapping", overlappingPDOs);
 
     if (overlappingPDOs && overlappingPDOs?.length > 1) {
       /* destroy active PDO */
@@ -697,16 +700,37 @@ export default function Home() {
           <div className={styles.frontpageContent}>
             <h1>WINEMAP</h1>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
-              sollicitudin eros porta leo accumsan porta. Sed dictum ut metus et
-              semper. Maecenas euismod viverra urna. Duis in felis nibh. In vel
-              est et tellus feugiat pharetra eu sed purus. Quisque nec turpis id
-              massa pellentesque commodo sed vel quam.
+              European wine regions legally defined under the ‘
+              <strong>Protected Designation of Origin</strong>’ (
+              <strong>PDO</strong>) quality scheme represent a unique cultural,
+              socio-economic and environmental heritage to be protected. Yet,
+              this viticultural heritage is increasingly threatened by the
+              negative effects of decades of intensive management practices and
+              by the growing impacts of climate change.
             </p>
             <p>
-              <a href="#about">About the project</a>
+              Indeed, the combination of simplified agroecosystems with new
+              temperature and precipitation regimes will see crop yields and
+              wine quality decline and interannual yield variability increase,
+              thus threatening the European excellence of the wine sector.
             </p>
-            <p>About the data</p>
+            <p>
+              Faced with these alarming challenges, wine industry professionals
+              urgently need new knowledge and tools to build the ecological
+              resilience and adaptive capacity of their vineyards.
+            </p>
+            <p>
+              The European wine map is intended to help wine professionals,
+              stakeholders and researchers face climate change and provide them
+              with updated data that contribute to translating information into
+              decisions and actions.
+            </p>
+            <p className={styles.homeNavigation}>
+              <Link href="/about">About the project</Link>
+            </p>
+            <p>
+              <Link href="/about-data">About the data</Link>
+            </p>
 
             <button onClick={() => setShowChart(!showChart)}>
               Did you know?
@@ -922,8 +946,10 @@ export default function Home() {
       )}
 
       <div className={styles.filterBar}>
-        <header>
-          <span>WINEMAP by</span>
+        <header className={styles.header}>
+          <Link href="/" className={styles.frontpageLink}>
+            WINEMAP by
+          </Link>
           <a href="https://www.eurac.edu">
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -20,10 +20,6 @@ export default function Accordion(props: PropTypes) {
           style={{ position: "relative", cursor: "pointer" }}
           onClick={toggle}
         >
-          {/* <span className="plus" onClick={toggle}>
-            {isShowing ? "-" : "+"}
-          </span> */}
-
           <p>
             <Image src={props.icon} alt={props.title} width={35} height={35} />
             <span className="bold">{props.title}</span>{" "}
