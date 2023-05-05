@@ -2,6 +2,7 @@ import Head from "next/head";
 
 import styles from "../styles/Home.module.scss";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function About() {
   return (
@@ -36,24 +37,136 @@ export default function About() {
         </a>
       </header>
 
-      <h1>About the data</h1>
+      <h1>The Team</h1>
       <p>
-        European wine regions legally defined under the ‘Protected Designation
-        of Origin’ (PDO) quality scheme represent a unique cultural,
-        socio-economic and environmental heritage to be protected. Yet, this
-        viticultural heritage is increasingly threatened by the negative effects
-        of decades of intensive management practices and by the growing impacts
-        of climate change. Indeed, the combination of simplified agroecosystems
-        with new temperature and precipitation regimes will see crop yields and
-        wine quality decline and interannual yield variability increase, thus
-        threatening the European excellence of the wine sector. Faced with these
-        alarming challenges, wine industry professionals urgently need new
-        knowledge and tools to build the ecological resilience and adaptive
-        capacity of their vineyards. The European wine map is intended to help
-        wine professionals, stakeholders and researchers face climate change and
-        provide them with updated data that contribute to translating
-        information into decisions and actions.
+        A team of researchers from Eurac Research Bolzano, Foscari University of
+        Venice, University of Innsbruck and the University of Trás-os-Montes and
+        Alto Douro in Portugal have successfully collaborated to set up this
+        database on PDO vines. With their combined expertise and dedication, the
+        team has compiled an extensive collection of information for PDO wine
+        production in Europe.
       </p>
+      <p>
+        <span className={styles.teamItem}>
+          <Image
+            src="https://webassets.eurac.edu/31538/1620137491-candiagosebastian.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2"
+            width={150}
+            height={150}
+            alt="Sebastian Candiago"
+            quality={95}
+            style={{
+              borderRadius: "50%",
+              filter: "grayscale(100%) brightness(0.9)",
+            }}
+          ></Image>
+          <span>
+            <h3>Sebastian Candiago</h3>
+            <span>Eurac Research, Institute for Alpine Environment</span>
+            <span>
+              Ca’ Foscari University of Venice, Department of Economics ... 1,
+              2: https://www.unive.it/data/persone/18664532
+            </span>
+          </span>
+        </span>
+        <span className={styles.teamItem}>
+          <Image
+            src="https://webassets.eurac.edu/31538/1620655782-tschollsimon.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2"
+            width={150}
+            height={150}
+            alt="Simon Tscholl"
+            quality={95}
+            style={{
+              borderRadius: "50%",
+              filter: "grayscale(100%) brightness(0.9)",
+            }}
+          ></Image>
+          <span>
+            <a
+              href="https://www.eurac.edu/en/people/simon-tscholl"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <h3>Simon Tscholl</h3>
+            </a>
+            <span>Eurac Research, Institute for Alpine Environment</span>
+            <span>University of Innsbruck, Department of Ecology</span>
+          </span>
+        </span>
+        <span className={styles.teamItem}>
+          <Image
+            src="/bassani-1607528202341.jpeg"
+            width={150}
+            height={150}
+            alt="Leonardo Bassani"
+            quality={95}
+            style={{
+              borderRadius: "50%",
+              filter: "grayscale(100%) brightness(0.9)",
+            }}
+          ></Image>
+          <span>
+            <h3>Leonardo Bassani</h3>
+            1,:
+            https://www.ilgiornalediudine.com/cronaca/insegnante-friulano-costretto-a-dimettersi/
+          </span>
+        </span>
+        <span className={styles.teamItem}>
+          <Image
+            src="/fraga-1643032447711.jpeg"
+            width={150}
+            height={150}
+            alt="Helder Fraga"
+            quality={95}
+            style={{
+              borderRadius: "50%",
+              filter: "grayscale(100%) brightness(0.9)",
+            }}
+          ></Image>
+          <span>
+            <h3>Helder Fraga</h3>
+            <span>
+              University of Trás-os-Montes and Alto Douro, Centre for the
+              Research and Technology of Agro-Environmental and Biological
+              Sciences
+            </span>
+            4 : https://www.researchgate.net/profile/Helder-Fraga
+          </span>
+        </span>
+        <span className={styles.teamItem}>
+          <Image
+            src="https://webassets.eurac.edu/31538/1624523789-egarterlukas.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2"
+            width={150}
+            height={150}
+            alt="Lukas Egarter"
+            quality={95}
+            style={{
+              borderRadius: "50%",
+              filter: "grayscale(100%) brightness(0.9)",
+            }}
+          ></Image>
+          <span>
+            <a
+              href="https://www.eurac.edu/en/people/lukas-egarter-vigl"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <h3>Lukas Egarter Vigl</h3>
+            </a>
+            <span>Eurac Research, Institute for Alpine Environment</span>
+          </span>
+        </span>
+      </p>
+      <div className={styles.frontpageContent} style={{ padding: "0" }}>
+        <p className={styles.homeNavigation}>
+          <Link href="/about">About the project</Link>
+        </p>
+        <p>
+          <Link href="/about-pdo">What is PDO?</Link>
+        </p>
+        <p>
+          <Link href="/team">The Team</Link>
+        </p>
+      </div>
     </main>
   );
 }

@@ -170,6 +170,11 @@
 .frontpageContent {
   padding: 30px;
 
+  h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
   p {
     line-height: 1.3;
   }
@@ -268,7 +273,7 @@
 
 .staticContentBox {
   max-width: 900px;
-  height: 100vh;
+  min-height: 100vh;
   overflow: auto;
   margin: 0 auto;
   padding: 20px;
@@ -286,10 +291,8 @@
       text-decoration: underline;
     }
   }
-  h1 {
-  }
   p {
-    line-height: 1.3;
+    line-height: 1.4;
   }
 }
 
@@ -299,4 +302,34 @@
 .toggleVineyards {
   position: relative;
   margin-top: 20px;
+}
+
+.teamItem {
+  display: flex;
+  flex-wrap: no-wrap;
+  gap: 40px;
+  margin-top: 40px;
+  position: relative;
+  align-items: center;
+  span h3 {
+    font-weight: 500;
+    font-size: 18px;
+    margin-top: 0;
+  }
+  a {
+    &:after {
+      content: "";
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      position: absolute;
+    }
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  span {
+    display: block;
+  }
 }

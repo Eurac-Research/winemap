@@ -721,7 +721,58 @@ export default function Home() {
         >
           <div className={styles.frontpageContent}>
             <h1>WINEMAP</h1>
+            <h2>European Wine Classification Map </h2>
             <p>
+              The Wine-Map Europe representing the classifications for wine
+              called <strong>PDO (Protected Designation of Origin)</strong> is
+              an essential resource for anyone interested in wine or working in
+              the wine industry. It provides a comprehensive and user-friendly
+              overview of the the 1,800 designated wine regions different PDO
+              throughout Europe.
+            </p>
+            {/* <button></button>
+              <p>
+               It can be used to increase knowledge and
+              appreciation of regional wines and to make informed decisions
+              about wine purchases. It is based on a collection and mosaique of
+              data, including legal regulations, grape varieties, and production
+              details, and is the first representation of these regions in one
+              comprehensive resource.
+            </p>
+            <p>
+              The European PDO wine regions are facing threats from intensive
+              management practices and climate change. These regions are home to
+              a unique cultural, socio-economic and environmental heritage that
+              need to be protected. Climate change is especially concerning as
+              it will lead to declines in wine quality and yields, posing a
+              threat to the excellence of the European wine sector. Wine
+              industry professionals need new knowledge and tools to build the
+              ecological resilience and adaptive capacity of their vineyards to
+              face these challenges. The European wine map is intended to help
+              faceing climate change and providing updated data that contribute
+              to translating information into decisions and actions.
+            </p>
+            <p>
+              Moreover this map is a useful resource for anyone interested in
+              wine or working in the wine industry. It can be used to identify
+              the location of specific PDO regions, learn about the grape
+              varieties grown in each region, and discover the unique production
+              methods used to make each wine. It also helps to highlight some of
+              the lesser-known PDO regions in Europe, which may be overlooked
+              compared to more famous wine regions such as Bordeaux or Tuscany.
+              For example, the map shows that wines from PDO regions such as
+              Valençay in the Loire Valley of France, or the Achaia region in
+              Greece, have similar protections and quality standards as
+              better-known regions. It also reveals fascinating insights into
+              the various wine classifications of Europe’s major wine-producing
+              countries. For example, the map highlights the vast number of
+              Italian wines that fall under the PDO system, with over 400
+              classifications. In contrast, France has over 300 classifications,
+              Spain has 103, Germany has 30, Austria has 16, and Portugal has
+              15.
+            </p> */}
+
+            {/* <p>
               European wine regions legally defined under the ‘
               <strong>Protected Designation of Origin</strong>’ (
               <strong>PDO</strong>) quality scheme represent a unique cultural,
@@ -746,14 +797,16 @@ export default function Home() {
               stakeholders and researchers face climate change and provide them
               with updated data that contribute to translating information into
               decisions and actions.
-            </p>
+            </p> */}
             <p className={styles.homeNavigation}>
               <Link href="/about">About the project</Link>
             </p>
             <p>
-              <Link href="/about-data">About the data</Link>
+              <Link href="/about-pdo">What is PDO?</Link>
             </p>
-
+            <p>
+              <Link href="/team">The Team</Link>
+            </p>
             <button onClick={() => setShowChart(!showChart)}>
               Did you know?
             </button>
@@ -979,7 +1032,11 @@ export default function Home() {
       )}
       <div className={styles.filterBar}>
         <header className={styles.header}>
-          <Link href="/" className={styles.frontpageLink}>
+          <Link
+            href="/"
+            className={styles.frontpageLink}
+            onClick={onClearFilter}
+          >
             WINEMAP by
           </Link>
           <a href="https://www.eurac.edu">
