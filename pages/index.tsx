@@ -144,9 +144,7 @@ export default function Home() {
   const [showChart, setShowChart] = useState(false);
 
   const [zoomLevel, setZoomLevel] = useState<number | null>(null);
-  const [vineyardVisibility, setVineyardVisibility] = useState<boolean | null>(
-    null
-  );
+  const [vineyardVisibility, setVineyardVisibility] = useState<boolean>(false);
 
   const mapRef = useRef<MapRef>(null);
 
@@ -398,29 +396,18 @@ export default function Home() {
     setZoomLevel(zoom);
   }, []);
 
-  const toggleVineyards = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      const vineyardVisibility =
-        mapRef.current &&
-        mapRef.current.getMap().getPaintProperty("vineyards", "fill-opacity");
-      //console.log("vineyardVisibility", vineyardVisibility);
-
-      setVineyardVisibility(vineyardVisibility);
-      mapRef.current &&
-        mapRef.current
-          .getMap()
-          .setPaintProperty("vineyards", "fill-color", "#00d619")
-          .setPaintProperty(
-            "vineyards",
-            "fill-opacity",
-            vineyardVisibility === 0 ? 0.6 : 0
-          );
-    },
-    []
-  );
-  // const checkVineyards =
-  //   mapRef.current && mapRef.current.getMap().getLayer("vineyards");
-  // console.log("checkvineyards", checkVineyards);
+  const toggleVineyards = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setVineyardVisibility(!vineyardVisibility);
+    mapRef.current &&
+      mapRef.current
+        .getMap()
+        .setPaintProperty("vineyards", "fill-color", "#00d619")
+        .setPaintProperty(
+          "vineyards",
+          "fill-opacity",
+          vineyardVisibility === false ? 0.6 : 0
+        );
+  };
 
   async function getPdoIDsByPdoName(pdoname: string) {
     const PDOList = data.filter((i) => pdoname === i.pdoname);
@@ -1093,7 +1080,7 @@ export default function Home() {
                 toggleVineyards(e)
               }
             >
-              {vineyardVisibility ? "show" : "hide"} vineyards
+              {vineyardVisibility ? "hide" : "show"} vineyards
             </button>
           </div>
         )}
