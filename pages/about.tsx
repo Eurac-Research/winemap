@@ -82,6 +82,23 @@ export default function About() {
         France has over 300 classifications, Spain has 103, Germany has 30,
         Austria has 16, and Portugal has 15.
       </p>
+
+      <p>
+        Read more:{" "}
+        <i>
+          A geospatial inventory of regulatory information for wine protected
+          designations of origin in Europe,- Scientific Data Volume 9, Article
+          number: 394 (2022).
+        </i>{" "}
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="https://doi.org/10.1038/s41597-022-01513-0"
+          style={{ textDecoration: "underline" }}
+        >
+          https://doi.org/10.1038/s41597-022-01513-0
+        </a>
+      </p>
       <div className={styles.frontpageContent} style={{ padding: "0" }}>
         <p className={styles.homeNavigation}>
           <Link href="/about">About the project</Link>

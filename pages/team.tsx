@@ -47,6 +47,23 @@ export default function About() {
         production in Europe.
       </p>
       <p>
+        First, the results were published as an article in Science-data in
+        Nature in 2022:{" "}
+        <i>
+          A geospatial inventory of regulatory information for wine protected
+          designations of origin in Europe,- Scientific Data Volume 9, Article
+          number: 394 (2022).
+        </i>{" "}
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="https://doi.org/10.1038/s41597-022-01513-0"
+          style={{ textDecoration: "underline" }}
+        >
+          https://doi.org/10.1038/s41597-022-01513-0
+        </a>
+      </p>
+      <p>
         <span className={styles.teamItem}>
           <Image
             src="https://webassets.eurac.edu/31538/1620137491-candiagosebastian.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2"
@@ -60,7 +77,7 @@ export default function About() {
             }}
           ></Image>
           <span>
-            <h3>Sebastian Candiago</h3>
+            <span>Sebastian Candiago</span>
             <span>Eurac Research, Institute for Alpine Environment</span>
             <span>
               Ca’ Foscari University of Venice, Department of Economics ... 1,
@@ -86,7 +103,7 @@ export default function About() {
               target="_blank"
               rel="noreferrer"
             >
-              <h3>Simon Tscholl</h3>
+              <span>Simon Tscholl</span>
             </a>
             <span>Eurac Research, Institute for Alpine Environment</span>
             <span>University of Innsbruck, Department of Ecology</span>
@@ -105,7 +122,7 @@ export default function About() {
             }}
           ></Image>
           <span>
-            <h3>Leonardo Bassani</h3>
+            <span>Leonardo Bassani</span>
             1,:
             https://www.ilgiornalediudine.com/cronaca/insegnante-friulano-costretto-a-dimettersi/
           </span>
@@ -123,7 +140,7 @@ export default function About() {
             }}
           ></Image>
           <span>
-            <h3>Helder Fraga</h3>
+            <span>Helder Fraga</span>
             <span>
               University of Trás-os-Montes and Alto Douro, Centre for the
               Research and Technology of Agro-Environmental and Biological
@@ -150,7 +167,7 @@ export default function About() {
               target="_blank"
               rel="noreferrer"
             >
-              <h3>Lukas Egarter Vigl</h3>
+              <span>Lukas Egarter Vigl</span>
             </a>
             <span>Eurac Research, Institute for Alpine Environment</span>
           </span>
