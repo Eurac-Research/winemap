@@ -120,14 +120,26 @@
 .filterBar {
   position: fixed;
   top: 20px;
-  left: 440px;
+  left: 0px;
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 20px;
-  padding: 15px 30px 30px 30px;
+  padding: 15px 20px 20px 20px;
+  width: 100%;
+
+  @media screen and (min-width: 768px) {
+    left: 440px;
+    width: auto;
+    padding: 15px 30px 30px 30px;
+  }
 
   .filter {
     display: flex;
-    gap: 10px;
+    gap: 5px;
+    justify-content: space-between;
+    @media screen and (min-width: 768px) {
+      gap: 10px;
+      justify-content: flex-start;
+    }
   }
 
   :global {
@@ -332,4 +344,11 @@
   span {
     display: block;
   }
+}
+
+.municName {
+  background-color: rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  display: block;
+  opacity: 0.5;
 }

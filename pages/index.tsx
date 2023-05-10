@@ -123,6 +123,7 @@ export default function Home() {
   const [hoverInfo, setHoverInfo] = useState<{
     count: number;
     feature: string[];
+    munic: string[] | undefined;
     x: number;
     y: number;
   }>();
@@ -320,12 +321,21 @@ export default function Home() {
       features.map((feature) => {
         // console.log("feature", feature)
         return feature?.properties?.PDOid ? feature?.properties?.PDOid : null;
+        //return feature?.properties?.PDOid !== undefined;
       });
-    // console.log("hoverfeature", hoveredFeature)
-    if (hoveredFeature && hoveredFeature.length) {
+
+    // do not return null or undefined
+    const feat = hoveredFeature && hoveredFeature.filter((f) => f != null);
+
+    // get municipality name from
+    const hoveredMunic = features && features[0]?.properties?.Name;
+
+    // console.log("count", hoveredFeature.length);
+    if (feat && feat.length) {
       setHoverInfo({
-        count: hoveredFeature.length,
-        feature: hoveredFeature,
+        count: feat.length,
+        feature: feat,
+        munic: hoveredMunic,
         x,
         y,
       });
@@ -664,6 +674,7 @@ export default function Home() {
         interactiveLayerIds={[
           "pdo-area",
           "pdo-pins",
+          "pdo-municipality",
         ]} /* defined in mapbox studio */
         onMouseMove={onHover}
         onMouseLeave={onOut}
@@ -710,6 +721,12 @@ export default function Home() {
                 </span>
               );
             }
+          )}
+          {hoverInfo?.munic && (
+            <span className={styles.municName}>
+              Municipality <br />
+              {hoverInfo.munic}
+            </span>
           )}
         </div>
       )}
@@ -878,7 +895,7 @@ export default function Home() {
       {activePDO && (
         <div
           className={styles.contentFrame}
-          style={!pdos ? { top: "0", height: "100%" } : {}}
+          style={!pdos ? { top: "0", height: "100vh" } : {}}
         >
           {pdos && (
             <div
