@@ -42,7 +42,7 @@ export default function About() {
         The Wine-Map Europe representing the classifications for wine called{" "}
         <strong>PDO (Protected Designation of Origin)</strong> is an essential
         resource for anyone interested in wine or working in the wine industry.
-        It provides a comprehensive and user-friendly overview of the the 1,800
+        It provides a comprehensive and user-friendly overview of the the 1,200
         designated wine regions different PDO throughout Europe.
       </p>
       <p>

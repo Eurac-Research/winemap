@@ -58,7 +58,7 @@ export default function About() {
         and industry professionals had to consult various sources to understand
         these classifications. Now, Eurac research has produced the first-ever
         comprehensive map of Europe’s wine regions classified under the PDO
-        system. Europe’s PDO classifications, cover over 60,000 wine labels.
+        system.
       </p>
       <div className={styles.frontpageContent} style={{ padding: "0" }}>
         <p className={styles.homeNavigation}>

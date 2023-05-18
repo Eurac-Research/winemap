@@ -109,7 +109,7 @@ export default function About() {
             <span>University of Innsbruck, Department of Ecology</span>
           </span>
         </span>
-        <span className={styles.teamItem}>
+        {/* <span className={styles.teamItem}>
           <Image
             src="/bassani-1607528202341.jpeg"
             width={150}
@@ -148,7 +148,7 @@ export default function About() {
             </span>
             4 : https://www.researchgate.net/profile/Helder-Fraga
           </span>
-        </span>
+        </span> */}
         <span className={styles.teamItem}>
           <Image
             src="https://webassets.eurac.edu/31538/1624523789-egarterlukas.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2"
