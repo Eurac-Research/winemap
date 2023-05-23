@@ -1,7 +1,7 @@
 import Head from "next/head";
-
-import styles from "../styles/Home.module.scss";
 import Link from "next/link";
+
+import styles from "@/styles/Home.module.scss";
 
 export default function About() {
   return (
@@ -36,29 +36,68 @@ export default function About() {
         </a>
       </header>
 
-      <h1>What is PDO</h1>
+      <h1>Winemap</h1>
+      <h2>European Wine Classification Map </h2>
       <p>
-        Europe is home to some of the world’s most robust and prestigious wine
-        industries. In order to maintain the integrity and quality of these
-        wines, the European Union has established a system of protection called{" "}
-        <strong>Protected Designation of Origin (PDO)</strong>.
+        The Wine-Map Europe representing the classifications for wine called{" "}
+        <strong>PDO (Protected Designation of Origin)</strong> is an essential
+        resource for anyone interested in wine or working in the wine industry.
+        It provides a comprehensive and user-friendly overview of the the 1,200
+        designated wine regions different PDO throughout Europe.
       </p>
       <p>
-        This system sets rules and regulations for the production, labeling, and
-        promotion of wines within specific regions of Europe. This
-        classification ensures that wines produced within each region follow
-        strict standards of quality and tradition, protecting the reputation and
-        authenticity of each wine. The PDO designation is granted by the EU, and
-        only wines that are produced within a certain region and meet specific
-        production criteria are allowed to carry the PDO label.
+        It can be used to increase knowledge and appreciation of regional wines
+        and to make informed decisions about wine purchases. It is based on a
+        collection and mosaique of data, including legal regulations, grape
+        varieties, and production details, and is the first representation of
+        these regions in one comprehensive resource.
       </p>
       <p>
-        The PDO system is extensive and complex, covering thousands of wine
-        types from various regions in Europe. Until recently, wine enthusiasts
-        and industry professionals had to consult various sources to understand
-        these classifications. Now, Eurac research has produced the first-ever
-        comprehensive map of Europe’s wine regions classified under the PDO
-        system.
+        The European PDO wine regions are facing threats from intensive
+        management practices and climate change. These regions are home to a
+        unique cultural, socio-economic and environmental heritage that need to
+        be protected. Climate change is especially concerning as it will lead to
+        declines in wine quality and yields, posing a threat to the excellence
+        of the European wine sector. Wine industry professionals need new
+        knowledge and tools to build the ecological resilience and adaptive
+        capacity of their vineyards to face these challenges. The European wine
+        map is intended to help faceing climate change and providing updated
+        data that contribute to translating information into decisions and
+        actions.
+      </p>
+      <p>
+        Moreover this map is a useful resource for anyone interested in wine or
+        working in the wine industry. It can be used to identify the location of
+        specific PDO regions, learn about the grape varieties grown in each
+        region, and discover the unique production methods used to make each
+        wine. It also helps to highlight some of the lesser-known PDO regions in
+        Europe, which may be overlooked compared to more famous wine regions
+        such as Bordeaux or Tuscany. For example, the map shows that wines from
+        PDO regions such as Valençay in the Loire Valley of France, or the
+        Achaia region in Greece, have similar protections and quality standards
+        as better-known regions. It also reveals fascinating insights into the
+        various wine classifications of Europe’s major wine-producing countries.
+        For example, the map highlights the vast number of Italian wines that
+        fall under the PDO system, with over 400 classifications. In contrast,
+        France has over 300 classifications, Spain has 103, Germany has 30,
+        Austria has 16, and Portugal has 15.
+      </p>
+
+      <p>
+        Read more:{" "}
+        <i>
+          A geospatial inventory of regulatory information for wine protected
+          designations of origin in Europe,- Scientific Data Volume 9, Article
+          number: 394 (2022).
+        </i>{" "}
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="https://doi.org/10.1038/s41597-022-01513-0"
+          style={{ textDecoration: "underline" }}
+        >
+          https://doi.org/10.1038/s41597-022-01513-0
+        </a>
       </p>
       <div className={styles.frontpageContent} style={{ padding: "0" }}>
         <p className={styles.homeNavigation}>

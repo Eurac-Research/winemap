@@ -1,8 +1,7 @@
 import Head from "next/head";
-
-import styles from "../styles/Home.module.scss";
 import Link from "next/link";
-import Image from "next/image";
+
+import styles from "@/styles/Home.module.scss";
 
 export default function About() {
   return (
@@ -37,141 +36,29 @@ export default function About() {
         </a>
       </header>
 
-      <h1>The Team</h1>
+      <h1>What is PDO</h1>
       <p>
-        A team of researchers from Eurac Research Bolzano, Foscari University of
-        Venice, University of Innsbruck and the University of Trás-os-Montes and
-        Alto Douro in Portugal have successfully collaborated to set up this
-        database on PDO vines. With their combined expertise and dedication, the
-        team has compiled an extensive collection of information for PDO wine
-        production in Europe.
+        Europe is home to some of the world’s most robust and prestigious wine
+        industries. In order to maintain the integrity and quality of these
+        wines, the European Union has established a system of protection called{" "}
+        <strong>Protected Designation of Origin (PDO)</strong>.
       </p>
       <p>
-        First, the results were published as an article in Science-data in
-        Nature in 2022:{" "}
-        <i>
-          A geospatial inventory of regulatory information for wine protected
-          designations of origin in Europe,- Scientific Data Volume 9, Article
-          number: 394 (2022).
-        </i>{" "}
-        <a
-          target="_blank"
-          rel="noreferrer"
-          href="https://doi.org/10.1038/s41597-022-01513-0"
-          style={{ textDecoration: "underline" }}
-        >
-          https://doi.org/10.1038/s41597-022-01513-0
-        </a>
+        This system sets rules and regulations for the production, labeling, and
+        promotion of wines within specific regions of Europe. This
+        classification ensures that wines produced within each region follow
+        strict standards of quality and tradition, protecting the reputation and
+        authenticity of each wine. The PDO designation is granted by the EU, and
+        only wines that are produced within a certain region and meet specific
+        production criteria are allowed to carry the PDO label.
       </p>
       <p>
-        <span className={styles.teamItem}>
-          <Image
-            src="https://webassets.eurac.edu/31538/1620137491-candiagosebastian.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2"
-            width={150}
-            height={150}
-            alt="Sebastian Candiago"
-            quality={95}
-            style={{
-              borderRadius: "50%",
-              filter: "grayscale(100%) brightness(0.9)",
-            }}
-          ></Image>
-          <span>
-            <span>Sebastian Candiago</span>
-            <span>Eurac Research, Institute for Alpine Environment</span>
-            <span>
-              Ca’ Foscari University of Venice, Department of Economics ... 1,
-              2: https://www.unive.it/data/persone/18664532
-            </span>
-          </span>
-        </span>
-        <span className={styles.teamItem}>
-          <Image
-            src="https://webassets.eurac.edu/31538/1620655782-tschollsimon.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2"
-            width={150}
-            height={150}
-            alt="Simon Tscholl"
-            quality={95}
-            style={{
-              borderRadius: "50%",
-              filter: "grayscale(100%) brightness(0.9)",
-            }}
-          ></Image>
-          <span>
-            <a
-              href="https://www.eurac.edu/en/people/simon-tscholl"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span>Simon Tscholl</span>
-            </a>
-            <span>Eurac Research, Institute for Alpine Environment</span>
-            <span>University of Innsbruck, Department of Ecology</span>
-          </span>
-        </span>
-        {/* <span className={styles.teamItem}>
-          <Image
-            src="/bassani-1607528202341.jpeg"
-            width={150}
-            height={150}
-            alt="Leonardo Bassani"
-            quality={95}
-            style={{
-              borderRadius: "50%",
-              filter: "grayscale(100%) brightness(0.9)",
-            }}
-          ></Image>
-          <span>
-            <span>Leonardo Bassani</span>
-            1,:
-            https://www.ilgiornalediudine.com/cronaca/insegnante-friulano-costretto-a-dimettersi/
-          </span>
-        </span>
-        <span className={styles.teamItem}>
-          <Image
-            src="/fraga-1643032447711.jpeg"
-            width={150}
-            height={150}
-            alt="Helder Fraga"
-            quality={95}
-            style={{
-              borderRadius: "50%",
-              filter: "grayscale(100%) brightness(0.9)",
-            }}
-          ></Image>
-          <span>
-            <span>Helder Fraga</span>
-            <span>
-              University of Trás-os-Montes and Alto Douro, Centre for the
-              Research and Technology of Agro-Environmental and Biological
-              Sciences
-            </span>
-            4 : https://www.researchgate.net/profile/Helder-Fraga
-          </span>
-        </span> */}
-        <span className={styles.teamItem}>
-          <Image
-            src="https://webassets.eurac.edu/31538/1624523789-egarterlukas.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2"
-            width={150}
-            height={150}
-            alt="Lukas Egarter"
-            quality={95}
-            style={{
-              borderRadius: "50%",
-              filter: "grayscale(100%) brightness(0.9)",
-            }}
-          ></Image>
-          <span>
-            <a
-              href="https://www.eurac.edu/en/people/lukas-egarter-vigl"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span>Lukas Egarter Vigl</span>
-            </a>
-            <span>Eurac Research, Institute for Alpine Environment</span>
-          </span>
-        </span>
+        The PDO system is extensive and complex, covering thousands of wine
+        types from various regions in Europe. Until recently, wine enthusiasts
+        and industry professionals had to consult various sources to understand
+        these classifications. Now, Eurac research has produced the first-ever
+        comprehensive map of Europe’s wine regions classified under the PDO
+        system.
       </p>
       <div className={styles.frontpageContent} style={{ padding: "0" }}>
         <p className={styles.homeNavigation}>

@@ -1,37 +1,32 @@
-import Head from "next/head";
+"use client";
+
 import {
-  useState,
-  useCallback,
+  ButtonHTMLAttributes,
+  DetailedHTMLProps,
   JSXElementConstructor,
+  MouseEventHandler,
   ReactElement,
   ReactFragment,
   ReactPortal,
-  useRef,
+  useCallback,
   useEffect,
-  MouseEventHandler,
-  DetailedHTMLProps,
-  ButtonHTMLAttributes,
+  useRef,
+  useState,
 } from "react";
-
-import styles from "../styles/Home.module.scss";
+import Head from "next/head";
 import {
   FullscreenControl,
-  Map as ReactMap,
   NavigationControl,
+  Map as ReactMap,
   ScaleControl,
+  type MapRef,
 } from "react-map-gl";
-import type { MapRef } from "react-map-gl";
 
-import Accordion from "../components/accordion";
-
-const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
+import Accordion from "@/app/components/accordion";
+import styles from "@/styles/Home.module.scss";
 import "mapbox-gl/dist/mapbox-gl.css";
-
-import { Select } from "antd";
-
-import data from "./data/PDO_EU_id.json";
-import allPDOPoints from "./data/pdo-points.json";
-import allCountries from "./data/countryCodesFromDataHub.io.json";
+import Image from "next/image";
+import Link from "next/link";
 // {
 //   "country": "Country",
 //   "pdoid": "PDOid",
@@ -50,28 +45,30 @@ import allCountries from "./data/countryCodesFromDataHub.io.json";
 //   "begin-lifes": "begin_lifes"
 // },
 
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import bbox from "@turf/bbox";
-import Chart from "../components/charts/racechart";
+import { Select } from "antd";
 
-import Image from "next/image";
+import data from "@/app/data/PDO_EU_id.json";
+import allCountries from "@/app/data/countryCodesFromDataHub.io.json";
+import allPDOPoints from "@/app/data/pdo-points.json";
+import amendmentIcon from "@/public/icons/Amendment-outline.svg";
+import categoryIcon from "@/public/icons/Category.svg";
+import countryIcon from "@/public/icons/CountryName-outline.svg";
+import infoIcon from "@/public/icons/Information-outline.svg";
+import irrigationIcon from "@/public/icons/Irrigation-outline.svg";
+import municIcon from "@/public/icons/Municipalities-outline.svg";
+import pdoIcon from "@/public/icons/PDOid.svg";
+import densityIcon from "@/public/icons/Planting-density-2-outline.svg";
+import registrationIcon from "@/public/icons/Registration-outline.svg";
+import varietiesOIVIcon from "@/public/icons/Varieties-OIV-outline.svg";
+import varietiesOtherIcon from "@/public/icons/Varieties-others-outline.svg";
+import yieldHlIcon from "@/public/icons/Yield-hl-3-outline.svg";
+import yieldKgIcon from "@/public/icons/Yield-kg-1-outline.svg";
+import Chart from "./components/charts/racechart";
 
-import infoIcon from "../public/icons/Information-outline.svg";
-import amendmentIcon from "../public/icons/Amendment-outline.svg";
-import irrigationIcon from "../public/icons/Irrigation-outline.svg";
-import densityIcon from "../public/icons/Planting-density-2-outline.svg";
-import yieldKgIcon from "../public/icons/Yield-kg-1-outline.svg";
-import yieldHlIcon from "../public/icons/Yield-hl-3-outline.svg";
-import pdoIcon from "../public/icons/PDOid.svg";
-import registrationIcon from "../public/icons/Registration-outline.svg";
-import countryIcon from "../public/icons/CountryName-outline.svg";
-import categoryIcon from "../public/icons/Category.svg";
-
-import varietiesOIVIcon from "../public/icons/Varieties-OIV-outline.svg";
-
-import varietiesOtherIcon from "../public/icons/Varieties-others-outline.svg";
-import municIcon from "../public/icons/Municipalities-outline.svg";
-import Link from "next/link";
+const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
 export interface JSONObject {
   country: string;
@@ -115,10 +112,14 @@ export interface Geometry {
 
 export default function Home() {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
+    const url = pathname + searchParams?.toString();
+
     //console.log("router changed");
-  }, [router.query.cat]);
+  }, [pathname, searchParams]);
 
   const [hoverInfo, setHoverInfo] = useState<{
     count: number;
@@ -137,7 +138,7 @@ export default function Home() {
   const [selectCatValue, setSelectCatValue] = useState<string | null>(null);
   const [selectMunicValue, setSelectMunicValue] = useState<string | null>(null);
   const [selectCountryValue, setSelectCountryValue] = useState<string | null>(
-    null
+    null,
   );
   const [selectVarValue, setSelectVarValue] = useState<string | null>(null);
   const [fromSearch, setFromSearch] = useState(false);
@@ -163,14 +164,14 @@ export default function Home() {
       | ReactFragment
       | ReactPortal
       | null
-      | undefined
+      | undefined,
   ) {
     const PDO = data.filter((i: { pdoid: any }) => id === i.pdoid);
     return PDO[0].pdoname;
   }
 
   const onSearchCatChange = (value: string) => {
-    router.push(`/?cat=${value}`, undefined, { shallow: true });
+    router.push(`/?cat=${value}`);
     setFromSearch(true);
     setActivePDO(null);
     setSelectValue(null);
@@ -182,7 +183,7 @@ export default function Home() {
   };
 
   const onSearchVarietyChange = (value: string) => {
-    router.push(`/?variety=${value}`, undefined, { shallow: true });
+    router.push(`/?variety=${value}`);
     setFromSearch(true);
     setActivePDO(null);
     setSelectValue(null);
@@ -194,7 +195,7 @@ export default function Home() {
   };
 
   const onSelectPdoNameChange = (value: string) => {
-    router.push(`/?pdoname=${value}`, undefined, { shallow: true });
+    router.push(`/?pdoname=${value}`);
     setActivePDO(null);
     setSelectValue(value);
     setSelectMunicValue(null);
@@ -205,7 +206,7 @@ export default function Home() {
   };
 
   const onSelectCountryNameChange = (value: string) => {
-    router.push(`/?country=${value}`, undefined, { shallow: true });
+    router.push(`/?country=${value}`);
     setFromSearch(true);
     setActivePDO(null);
     setSelectValue(null);
@@ -217,7 +218,7 @@ export default function Home() {
   };
 
   const onSelectMunicChange = (value: string) => {
-    router.push(`/?munic=${value}`, undefined, { shallow: true });
+    router.push(`/?munic=${value}`);
     setFromSearch(true);
     setActivePDO(null);
     setSelectValue(null);
@@ -415,7 +416,7 @@ export default function Home() {
         .setPaintProperty(
           "vineyards",
           "fill-opacity",
-          vineyardVisibility === false ? 0.6 : 0
+          vineyardVisibility === false ? 0.6 : 0,
         );
   };
 
@@ -455,7 +456,7 @@ export default function Home() {
         ]);
     const filteredFeatures = allPDOPoints.features?.filter(
       (item: { properties: { PDOid: string } }) =>
-        item?.properties?.PDOid === showIDs[0]
+        item?.properties?.PDOid === showIDs[0],
     );
 
     if (filteredFeatures) {
@@ -472,7 +473,7 @@ export default function Home() {
             padding: { top: 100, bottom: 25, left: 400, right: 5 },
             duration: 1000,
             maxZoom: 10,
-          }
+          },
         );
     }
   }
@@ -553,7 +554,7 @@ export default function Home() {
             padding: { top: 100, bottom: 25, left: 400, right: 5 },
             duration: 1000,
             maxZoom: 10,
-          }
+          },
         );
     }
   }
@@ -574,7 +575,7 @@ export default function Home() {
 
     const filteredFeatures = allPDOPoints.features?.filter(
       (item: { properties: { PDOid: string } }) =>
-        item?.properties?.PDOid === id
+        item?.properties?.PDOid === id,
     );
 
     // if (
@@ -620,7 +621,7 @@ export default function Home() {
           padding: { top: 100, bottom: 25, left: 400, right: 5 },
           duration: 500,
           maxZoom: 10,
-        }
+        },
       );
 
     /* zoom to polygon boundaries .... use queryRenderedFeatures now because we have only one pdo visible in the viewport */
@@ -711,7 +712,7 @@ export default function Home() {
                 | ReactPortal
                 | null
                 | undefined,
-              index: any
+              index: any,
             ) => {
               const pdoName = getPDONameById(f);
 
@@ -720,7 +721,7 @@ export default function Home() {
                   {pdoName} ({f})
                 </span>
               );
-            }
+            },
           )}
           {hoverInfo?.munic && (
             <span className={styles.municName}>
@@ -738,14 +739,16 @@ export default function Home() {
         >
           <div className={styles.frontpageContent}>
             <h1>WINEMAP</h1>
-            <h2>European Wine Classification Map </h2>
+            <h2 style={{ fontSize: "24px" }}>
+              The Map of Protected Designations of Origin
+            </h2>
             <p>
               The Wine-Map Europe representing the classifications for wine
-              called <strong>PDO (Protected Designation of Origin)</strong> is
+              called <strong>Protected Designation of Origin (PDO)</strong> is
               an essential resource for anyone interested in wine or working in
               the wine industry. It provides a comprehensive and user-friendly
-              overview of the the 1,200 designated wine regions different PDO
-              throughout Europe.
+              overview of the 1,200 designated PDO wine regions throughout
+              Europe.
             </p>
             {/* <button></button>
               <p>

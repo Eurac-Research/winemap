@@ -1,7 +1,8 @@
 import Head from "next/head";
-
-import styles from "../styles/Home.module.scss";
+import Image from "next/image";
 import Link from "next/link";
+
+import styles from "@/styles/Home.module.scss";
 
 export default function About() {
   return (
@@ -36,55 +37,18 @@ export default function About() {
         </a>
       </header>
 
-      <h1>Winemap</h1>
-      <h2>European Wine Classification Map </h2>
+      <h1>The Team</h1>
       <p>
-        The Wine-Map Europe representing the classifications for wine called{" "}
-        <strong>PDO (Protected Designation of Origin)</strong> is an essential
-        resource for anyone interested in wine or working in the wine industry.
-        It provides a comprehensive and user-friendly overview of the the 1,200
-        designated wine regions different PDO throughout Europe.
+        A team of researchers from Eurac Research Bolzano, Foscari University of
+        Venice, University of Innsbruck and the University of Trás-os-Montes and
+        Alto Douro in Portugal have successfully collaborated to set up this
+        database on PDO vines. With their combined expertise and dedication, the
+        team has compiled an extensive collection of information for PDO wine
+        production in Europe.
       </p>
       <p>
-        It can be used to increase knowledge and appreciation of regional wines
-        and to make informed decisions about wine purchases. It is based on a
-        collection and mosaique of data, including legal regulations, grape
-        varieties, and production details, and is the first representation of
-        these regions in one comprehensive resource.
-      </p>
-      <p>
-        The European PDO wine regions are facing threats from intensive
-        management practices and climate change. These regions are home to a
-        unique cultural, socio-economic and environmental heritage that need to
-        be protected. Climate change is especially concerning as it will lead to
-        declines in wine quality and yields, posing a threat to the excellence
-        of the European wine sector. Wine industry professionals need new
-        knowledge and tools to build the ecological resilience and adaptive
-        capacity of their vineyards to face these challenges. The European wine
-        map is intended to help faceing climate change and providing updated
-        data that contribute to translating information into decisions and
-        actions.
-      </p>
-      <p>
-        Moreover this map is a useful resource for anyone interested in wine or
-        working in the wine industry. It can be used to identify the location of
-        specific PDO regions, learn about the grape varieties grown in each
-        region, and discover the unique production methods used to make each
-        wine. It also helps to highlight some of the lesser-known PDO regions in
-        Europe, which may be overlooked compared to more famous wine regions
-        such as Bordeaux or Tuscany. For example, the map shows that wines from
-        PDO regions such as Valençay in the Loire Valley of France, or the
-        Achaia region in Greece, have similar protections and quality standards
-        as better-known regions. It also reveals fascinating insights into the
-        various wine classifications of Europe’s major wine-producing countries.
-        For example, the map highlights the vast number of Italian wines that
-        fall under the PDO system, with over 400 classifications. In contrast,
-        France has over 300 classifications, Spain has 103, Germany has 30,
-        Austria has 16, and Portugal has 15.
-      </p>
-
-      <p>
-        Read more:{" "}
+        First, the results were published as an article in Science-data in
+        Nature in 2022:{" "}
         <i>
           A geospatial inventory of regulatory information for wine protected
           designations of origin in Europe,- Scientific Data Volume 9, Article
@@ -98,6 +62,116 @@ export default function About() {
         >
           https://doi.org/10.1038/s41597-022-01513-0
         </a>
+      </p>
+      <p>
+        <span className={styles.teamItem}>
+          <Image
+            src="https://webassets.eurac.edu/31538/1620137491-candiagosebastian.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2"
+            width={150}
+            height={150}
+            alt="Sebastian Candiago"
+            quality={95}
+            style={{
+              borderRadius: "50%",
+              filter: "grayscale(100%) brightness(0.9)",
+            }}
+          ></Image>
+          <span>
+            <span>Sebastian Candiago</span>
+            <span>Eurac Research, Institute for Alpine Environment</span>
+            <span>
+              Ca’ Foscari University of Venice, Department of Economics ... 1,
+              2: https://www.unive.it/data/persone/18664532
+            </span>
+          </span>
+        </span>
+        <span className={styles.teamItem}>
+          <Image
+            src="https://webassets.eurac.edu/31538/1620655782-tschollsimon.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2"
+            width={150}
+            height={150}
+            alt="Simon Tscholl"
+            quality={95}
+            style={{
+              borderRadius: "50%",
+              filter: "grayscale(100%) brightness(0.9)",
+            }}
+          ></Image>
+          <span>
+            <a
+              href="https://www.eurac.edu/en/people/simon-tscholl"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span>Simon Tscholl</span>
+            </a>
+            <span>Eurac Research, Institute for Alpine Environment</span>
+            <span>University of Innsbruck, Department of Ecology</span>
+          </span>
+        </span>
+        {/* <span className={styles.teamItem}>
+          <Image
+            src="/bassani-1607528202341.jpeg"
+            width={150}
+            height={150}
+            alt="Leonardo Bassani"
+            quality={95}
+            style={{
+              borderRadius: "50%",
+              filter: "grayscale(100%) brightness(0.9)",
+            }}
+          ></Image>
+          <span>
+            <span>Leonardo Bassani</span>
+            1,:
+            https://www.ilgiornalediudine.com/cronaca/insegnante-friulano-costretto-a-dimettersi/
+          </span>
+        </span>
+        <span className={styles.teamItem}>
+          <Image
+            src="/fraga-1643032447711.jpeg"
+            width={150}
+            height={150}
+            alt="Helder Fraga"
+            quality={95}
+            style={{
+              borderRadius: "50%",
+              filter: "grayscale(100%) brightness(0.9)",
+            }}
+          ></Image>
+          <span>
+            <span>Helder Fraga</span>
+            <span>
+              University of Trás-os-Montes and Alto Douro, Centre for the
+              Research and Technology of Agro-Environmental and Biological
+              Sciences
+            </span>
+            4 : https://www.researchgate.net/profile/Helder-Fraga
+          </span>
+        </span> */}
+        <span className={styles.teamItem}>
+          <Image
+            src="https://webassets.eurac.edu/31538/1624523789-egarterlukas.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2"
+            width={150}
+            height={150}
+            alt="Lukas Egarter"
+            quality={95}
+            style={{
+              borderRadius: "50%",
+              filter: "grayscale(100%) brightness(0.9)",
+            }}
+          ></Image>
+          <span>
+            <a
+              href="https://www.eurac.edu/en/people/lukas-egarter-vigl"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span>Lukas Egarter Vigl</span>
+            </a>
+            <span>Eurac Research, Institute for Alpine Environment</span>
+          </span>
+        </span>
       </p>
       <div className={styles.frontpageContent} style={{ padding: "0" }}>
         <p className={styles.homeNavigation}>
