@@ -1,10 +1,7 @@
 "use client";
 
 import {
-  ButtonHTMLAttributes,
-  DetailedHTMLProps,
   JSXElementConstructor,
-  MouseEventHandler,
   ReactElement,
   ReactFragment,
   ReactPortal,
@@ -27,26 +24,6 @@ import styles from "@/styles/Home.module.scss";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Image from "next/image";
 import Link from "next/link";
-// {
-//   "country": "Country",
-//   "pdoid": "PDOid",
-//   "pdoname": "PDOnam",
-//   "registration": "Registration",
-//   "category": "Category_of_wine_product",
-//   "varietiesOiv": "Varieties_OIV",
-//   "varieties": "Varieties_Other",
-//   "max-yield-hl": "Maximum_yield_hl",
-//   "max-yield-kg": "Maximum_yield_kg",
-//   "min-planting-density": "Minimum_planting_density",
-//   "irrigation": "Irrigation",
-//   "amendment": "Amendment",
-//   "pdoinfo": "PDOinfo",
-//   "munic": "Municip_nam",
-//   "begin-lifes": "begin_lifes"
-// },
-
-// import { useRouter } from "next/router";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import bbox from "@turf/bbox";
 import { Select } from "antd";
 
@@ -87,39 +64,32 @@ export interface JSONObject {
   munic: string;
   "begin-lifes": string;
 }
-
 export interface RootObject {
   type: string;
   name: string;
   features: Features[];
 }
-
 export interface Features {
   type: string;
   properties: Properties;
   geometry: Geometry;
 }
-
 export interface Properties {
   OBJECTID: number;
   PDOid: string;
 }
-
 export interface Geometry {
   type: string;
   coordinates: number[];
 }
-
-export default function Home() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    const url = pathname + searchParams?.toString();
-
-    //console.log("router changed");
-  }, [pathname, searchParams]);
+export default function Page({
+  params,
+  searchParams,
+}: {
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const mapRef = useRef<MapRef>(null);
 
   const [hoverInfo, setHoverInfo] = useState<{
     count: number;
@@ -127,9 +97,6 @@ export default function Home() {
     munic: string[] | undefined;
     x: number;
     y: number;
-  }>();
-  const [clickInfo, setClickInfo] = useState<{
-    feature: string[];
   }>();
 
   const [pdos, setPdos] = useState<JSONObject[] | null>(null);
@@ -142,16 +109,34 @@ export default function Home() {
   );
   const [selectVarValue, setSelectVarValue] = useState<string | null>(null);
   const [fromSearch, setFromSearch] = useState(false);
-
   const [showChart, setShowChart] = useState(false);
-
   const [zoomLevel, setZoomLevel] = useState<number | null>(null);
   const [vineyardVisibility, setVineyardVisibility] = useState<boolean>(false);
+  const [mapLoaded, setMapLoaded] = useState<boolean>(false);
 
-  const mapRef = useRef<MapRef>(null);
+  // navigate the page by passing the url params
+  useEffect(() => {
+    if (!mapLoaded) return;
+    if (searchParams?.country) {
+      onSelectCountryNameChange(decodeURI(searchParams?.country.toString()));
+    } else if (searchParams?.pdoname) {
+      onSelectPdoNameChange(decodeURI(searchParams?.pdoname.toString()));
+    } else if (searchParams?.cat) {
+      onSearchCatChange(decodeURI(searchParams?.cat.toString()));
+    } else if (searchParams?.variety) {
+      onSearchVarietyChange(decodeURI(searchParams?.variety.toString()));
+    } else if (searchParams?.munic) {
+      onSelectMunicChange(decodeURI(searchParams?.munic.toString()));
+    } else if (searchParams?.pdo) {
+      /* detail view */
+      openDetail(decodeURI(searchParams?.pdo.toString()));
+      showPDOonMap(decodeURI(searchParams?.pdo.toString()));
+    }
+  }, [mapLoaded]);
 
   async function openDetail(id: string) {
     const PDO = data.filter((i: { pdoid: any }) => id === i.pdoid);
+    history.replaceState({}, "", `/?pdo=${encodeURI(id)}`);
     setActivePDO(PDO[0]);
   }
   /* return PDO Name by given PDOid */
@@ -170,8 +155,18 @@ export default function Home() {
     return PDO[0].pdoname;
   }
 
+  const onSelectPdoNameChange = (value: string) => {
+    history.replaceState({}, "", `/?pdoname=${encodeURI(value.toString())}`);
+    setActivePDO(null);
+    setSelectValue(value);
+    setSelectMunicValue(null);
+    setSelectCatValue(null);
+    setSelectVarValue(null);
+    setSelectCountryValue(null);
+    getPdoIDsByPdoName(value);
+  };
   const onSearchCatChange = (value: string) => {
-    router.push(`/?cat=${value}`);
+    history.replaceState({}, "", `/?cat=${encodeURI(value.toString())}`);
     setFromSearch(true);
     setActivePDO(null);
     setSelectValue(null);
@@ -181,9 +176,8 @@ export default function Home() {
     setSelectCountryValue(null);
     getPdoIDsByFilter(value, "category");
   };
-
   const onSearchVarietyChange = (value: string) => {
-    router.push(`/?variety=${value}`);
+    history.replaceState({}, "", `/?variety=${encodeURI(value.toString())}`);
     setFromSearch(true);
     setActivePDO(null);
     setSelectValue(null);
@@ -193,20 +187,8 @@ export default function Home() {
     setSelectCountryValue(null);
     getPdoIDsByFilter(value, "varietiesOiv");
   };
-
-  const onSelectPdoNameChange = (value: string) => {
-    router.push(`/?pdoname=${value}`);
-    setActivePDO(null);
-    setSelectValue(value);
-    setSelectMunicValue(null);
-    setSelectCatValue(null);
-    setSelectVarValue(null);
-    setSelectCountryValue(null);
-    getPdoIDsByPdoName(value);
-  };
-
   const onSelectCountryNameChange = (value: string) => {
-    router.push(`/?country=${value}`);
+    history.replaceState({}, "", `/?country=${encodeURI(value.toString())}`);
     setFromSearch(true);
     setActivePDO(null);
     setSelectValue(null);
@@ -216,9 +198,8 @@ export default function Home() {
     setSelectCountryValue(value);
     getPdoIDsByFilter(value, "country");
   };
-
   const onSelectMunicChange = (value: string) => {
-    router.push(`/?munic=${value}`);
+    history.replaceState({}, "", `/?munic=${encodeURI(value.toString())}`);
     setFromSearch(true);
     setActivePDO(null);
     setSelectValue(null);
@@ -232,15 +213,6 @@ export default function Home() {
   const onSearch = (value: string) => {
     //console.log("search:", value);
   };
-
-  // // unique varieties via Set
-  // const varMap = new Map();
-  // const uniqVar = new Set();
-  // data.forEach((item) => {
-  //   const varieties = item?.varietiesOiv?.split("/");
-  //   varieties?.forEach((v) => uniqVar.add({ value: v, label: v }));
-  //   varMap.set(item.pdoid, varieties);
-  // });
 
   // unique PDONames for select
   const uniquePdonames = [...new Set(data.map((item) => item.pdoname))];
@@ -290,18 +262,6 @@ export default function Home() {
   const country = data.map((item) => item.country);
   let uniqueCountry = [...new Set(country.flat())];
 
-  // ordered by countryCode ....
-  // let selectCountry = uniqueCountry.sort().map((countryCode) => {
-  //   for (const country of allCountries) {
-  //     if (country.Code === countryCode) {
-  //       return {
-  //         label: `${country.name} (${country.code})`,
-  //         value: `${country.name} (${country.code})`,
-  //       };
-  //     }
-  //   }
-  // });
-
   // ordered by countryName ... does not return a defined object but the filtered countries, aka: {name: "bla", code: "bla"}
   let selectCountry = allCountries.filter((country) => {
     for (const cc of uniqueCountry) {
@@ -349,14 +309,11 @@ export default function Home() {
 
   const onClick = useCallback(async (event: mapboxgl.MapLayerMouseEvent) => {
     const { features } = event;
-    // console.log("features", features);
     const overlappingPDOs =
       features &&
       features.map((f) => {
         return f?.properties?.PDOid;
       });
-
-    // console.log("overlapping", overlappingPDOs);
 
     if (overlappingPDOs && overlappingPDOs?.length > 1) {
       /* destroy active PDO */
@@ -368,12 +325,8 @@ export default function Home() {
     overlappingPDOs && openDetail(overlappingPDOs[0]);
   }, []);
 
-  // const onClose = useCallback(async (event: any) => {
-  //   setClickInfo(undefined);
-  // }, []);
-
   /* clear all filter and zoom to inital view */
-  const onClearFilter = useCallback(async (event: any) => {
+  async function onClearFilter() {
     mapRef.current &&
       mapRef.current
         .getMap()
@@ -390,7 +343,8 @@ export default function Home() {
     setSelectCatValue(null);
     setSelectVarValue(null);
     setPdos(null);
-  }, []);
+    history.replaceState({}, "", "/");
+  }
 
   async function getListData(overlappingPDOs: any[] | undefined) {
     const PDOList = overlappingPDOs?.map((item: any) => {
@@ -422,6 +376,12 @@ export default function Home() {
 
   async function getPdoIDsByPdoName(pdoname: string) {
     const PDOList = data.filter((i) => pdoname === i.pdoname);
+
+    if (!PDOList.length) {
+      onClearFilter();
+      return;
+    }
+
     const showIDs = PDOList.map((item) => {
       return item.pdoid;
     });
@@ -462,7 +422,6 @@ export default function Home() {
     if (filteredFeatures) {
       // calculate the bounding box of the feature
       const [minLng, minLat, maxLng, maxLat] = bbox(filteredFeatures[0]);
-
       mapRef.current &&
         mapRef.current.fitBounds(
           [
@@ -487,6 +446,11 @@ export default function Home() {
         }
       }
     });
+    if (!PDOList.length) {
+      onClearFilter();
+      return;
+    }
+
     const showIDs = PDOList.map((item) => {
       return item.pdoid;
     });
@@ -559,55 +523,18 @@ export default function Home() {
     }
   }
 
-  // not used yet
-  // function checkIfPositionInViewport(lat: number, lng: number) {
-  //   const bounds = mapRef.current && mapRef.current.getMap().getBounds();
-  //   return bounds?.contains([lng, lat]);
-  // }
-
   // show one single PDO on the map
   function showPDOonMap(id: string) {
-    const filter =
-      mapRef.current &&
-      mapRef.current
-        .getMap()
-        .setFilter("pdo-area", ["match", ["get", "PDOid"], id, true, false]);
-
     const filteredFeatures = allPDOPoints.features?.filter(
       (item: { properties: { PDOid: string } }) =>
         item?.properties?.PDOid === id,
     );
+    if (!filteredFeatures.length) return;
 
-    // if (
-    //   filteredFeatures &&
-    //   checkIfPositionInViewport(
-    //     filteredFeatures[0].geometry.coordinates[1],
-    //     filteredFeatures[0].geometry.coordinates[0]
-    //   )
-    // ) {
-    //   console.log("position in viewport, zoom to polygon, not to point");
-
-    //   const featuresOnMap =
-    //     mapRef.current &&
-    //     mapRef.current.queryRenderedFeatures([
-    //       filteredFeatures[0].geometry.coordinates[1],
-    //       filteredFeatures[0].geometry.coordinates[0],
-    //     ]);
-
-    //   console.log("featureonmap", featuresOnMap);
-
-    //   // calculate the bounding box of the feature
-    //   const [minLng, minLat, maxLng, maxLat] = bbox(featuresOnMap[0]);
-    //   mapRef.current &&
-    //     mapRef.current.fitBounds(
-    //       [
-    //         [minLng, minLat],
-    //         [maxLng, maxLat],
-    //       ],
-    //       { padding: 40, duration: 500 }
-    //     );
-    // } else {
-    //   console.log("position not in viewport, zoom to points, not to polygon");
+    mapRef.current &&
+      mapRef.current
+        .getMap()
+        .setFilter("pdo-area", ["match", ["get", "PDOid"], id, true, false]);
 
     // calculate the bounding box of the feature
     const [minLng, minLat, maxLng, maxLat] = bbox(filteredFeatures[0]);
@@ -623,31 +550,6 @@ export default function Home() {
           maxZoom: 10,
         },
       );
-
-    /* zoom to polygon boundaries .... use queryRenderedFeatures now because we have only one pdo visible in the viewport */
-    // mapRef.current &&
-    //   mapRef.current.on("moveend", (event) => {
-    //     // console.log("event", event.fitByPoints);
-    //     if (event.fitByPoints) {
-    //       // console.log("A moveend event occurred.");
-    //       const featuresOnMap =
-    //         mapRef.current && mapRef.current.queryRenderedFeatures();
-
-    //       if (featuresOnMap) {
-    //         // calculate the bounding box of the feature
-    //         const [minLng, minLat, maxLng, maxLat] = bbox(featuresOnMap[0]);
-
-    //         mapRef.current &&
-    //           mapRef.current.fitBounds(
-    //             [
-    //               [minLng, minLat],
-    //               [maxLng, maxLat],
-    //             ],
-    //             { padding: 140, duration: 1000 }
-    //           );
-    //       }
-    //     }
-    //   });
   }
 
   /* RETURN */
@@ -681,6 +583,7 @@ export default function Home() {
         onMouseLeave={onOut}
         onClick={onClick}
         onZoom={onMapZoom}
+        onLoad={() => setMapLoaded(true)}
       >
         <FullscreenControl position="bottom-right" />
         <NavigationControl
@@ -750,74 +653,7 @@ export default function Home() {
               overview of the 1,200 designated PDO wine regions throughout
               Europe.
             </p>
-            {/* <button></button>
-              <p>
-               It can be used to increase knowledge and
-              appreciation of regional wines and to make informed decisions
-              about wine purchases. It is based on a collection and mosaique of
-              data, including legal regulations, grape varieties, and production
-              details, and is the first representation of these regions in one
-              comprehensive resource.
-            </p>
-            <p>
-              The European PDO wine regions are facing threats from intensive
-              management practices and climate change. These regions are home to
-              a unique cultural, socio-economic and environmental heritage that
-              need to be protected. Climate change is especially concerning as
-              it will lead to declines in wine quality and yields, posing a
-              threat to the excellence of the European wine sector. Wine
-              industry professionals need new knowledge and tools to build the
-              ecological resilience and adaptive capacity of their vineyards to
-              face these challenges. The European wine map is intended to help
-              faceing climate change and providing updated data that contribute
-              to translating information into decisions and actions.
-            </p>
-            <p>
-              Moreover this map is a useful resource for anyone interested in
-              wine or working in the wine industry. It can be used to identify
-              the location of specific PDO regions, learn about the grape
-              varieties grown in each region, and discover the unique production
-              methods used to make each wine. It also helps to highlight some of
-              the lesser-known PDO regions in Europe, which may be overlooked
-              compared to more famous wine regions such as Bordeaux or Tuscany.
-              For example, the map shows that wines from PDO regions such as
-              Valençay in the Loire Valley of France, or the Achaia region in
-              Greece, have similar protections and quality standards as
-              better-known regions. It also reveals fascinating insights into
-              the various wine classifications of Europe’s major wine-producing
-              countries. For example, the map highlights the vast number of
-              Italian wines that fall under the PDO system, with over 400
-              classifications. In contrast, France has over 300 classifications,
-              Spain has 103, Germany has 30, Austria has 16, and Portugal has
-              15.
-            </p> */}
 
-            {/* <p>
-              European wine regions legally defined under the ‘
-              <strong>Protected Designation of Origin</strong>’ (
-              <strong>PDO</strong>) quality scheme represent a unique cultural,
-              socio-economic and environmental heritage to be protected. Yet,
-              this viticultural heritage is increasingly threatened by the
-              negative effects of decades of intensive management practices and
-              by the growing impacts of climate change.
-            </p>
-            <p>
-              Indeed, the combination of simplified agroecosystems with new
-              temperature and precipitation regimes will see crop yields and
-              wine quality decline and interannual yield variability increase,
-              thus threatening the European excellence of the wine sector.
-            </p>
-            <p>
-              Faced with these alarming challenges, wine industry professionals
-              urgently need new knowledge and tools to build the ecological
-              resilience and adaptive capacity of their vineyards.
-            </p>
-            <p>
-              The European wine map is intended to help wine professionals,
-              stakeholders and researchers face climate change and provide them
-              with updated data that contribute to translating information into
-              decisions and actions.
-            </p> */}
             <p className={styles.homeNavigation}>
               <Link href="/about">About the project</Link>
             </p>
@@ -921,7 +757,7 @@ export default function Home() {
               >
                 show on map
               </button>
-              <button onClick={onClearFilter}>reset</button>
+              <button onClick={() => onClearFilter()}>reset</button>
             </div>
             {activePDO?.country && (
               <p>
@@ -1055,7 +891,7 @@ export default function Home() {
           <Link
             href="/"
             className={styles.frontpageLink}
-            onClick={onClearFilter}
+            onClick={() => onClearFilter()}
           >
             WINEMAP by
           </Link>
@@ -1148,7 +984,7 @@ export default function Home() {
             options={selectVarieties}
             value={selectVarValue}
           />
-          <button onClick={onClearFilter}>reset</button>
+          <button onClick={() => onClearFilter()}>reset</button>
         </div>
         {zoomLevel && zoomLevel > 7 && (
           <div className={styles.toggleVineyards}>
