@@ -642,16 +642,18 @@ export default function Page({
         >
           <div className={styles.frontpageContent}>
             <h1>WINEMAP</h1>
-            <h2 style={{ fontSize: "24px" }}>
-              The Map of Protected Designations of Origin
-            </h2>
             <p>
-              The Wine-Map Europe representing the classifications for wine
-              called <strong>Protected Designation of Origin (PDO)</strong> is
-              an essential resource for anyone interested in wine or working in
-              the wine industry. It provides a comprehensive and user-friendly
-              overview of the 1,200 designated PDO wine regions throughout
-              Europe.
+              The Winemap provides a comprehensive overview of the 1,174
+              European wine regions under the{" "}
+              <strong>Protected Designation of Origin (PDO)</strong> label. It
+              is an essential resource for anyone interested in wine or working
+              in the wine industry and can be used to increase knowledge and
+              appreciation of regional wines as well as a decision-support
+              instrument for the wine sector. It is based on a collection of
+              legal information, including grape varieties, geospatial
+              boundaries, and production details, and is the first
+              representation of European PDO regions in one comprehensive
+              resource.
             </p>
 
             <p className={styles.homeNavigation}>
@@ -661,11 +663,15 @@ export default function Page({
               <Link href="/about-pdo">What is PDO?</Link>
             </p>
             <p>
+              <Link href="/about-data">About the data</Link>
+            </p>
+            <p>
               <Link href="/team">The Team</Link>
             </p>
-            <button onClick={() => setShowChart(!showChart)}>
+
+            {/* <button onClick={() => setShowChart(!showChart)}>
               Did you know?
-            </button>
+            </button> */}
           </div>
         </div>
       )}

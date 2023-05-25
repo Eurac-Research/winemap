@@ -305,6 +305,22 @@
   }
   p {
     line-height: 1.4;
+    @media screen and (min-width: 768px) {
+      max-width: 700px;
+    }
+  }
+
+  .contentImageBox {
+    display: flex;
+    flex-direction: column;
+    @media screen and (min-width: 768px) {
+      flex-direction: row;
+      align-items: center;
+    }
+    span {
+      font-style: italic;
+      font-size: 12px;
+    }
   }
 }
 
@@ -323,6 +339,16 @@
   margin-top: 40px;
   position: relative;
   align-items: center;
+  img {
+    transition: 300ms transform ease-in-out;
+    border-radius: "50%";
+    filter: grayscale(100%) brightness(0.9);
+  }
+  &:hover {
+    img {
+      transform: scale(1.05);
+    }
+  }
   span h3 {
     font-weight: 500;
     font-size: 18px;

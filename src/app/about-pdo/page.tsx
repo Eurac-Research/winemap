@@ -1,7 +1,9 @@
 import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
 
 import styles from "@/styles/Home.module.scss";
+import pdoicon from "/public/icons/pdo-label.svg";
 
 export default function About() {
   return (
@@ -36,36 +38,54 @@ export default function About() {
         </a>
       </header>
 
-      <h1>What is PDO</h1>
+      <h1>What is PDO?</h1>
       <p>
-        Europe is home to some of the world’s most robust and prestigious wine
-        industries. In order to maintain the integrity and quality of these
-        wines, the European Union has established a system of protection called{" "}
-        <strong>Protected Designation of Origin (PDO)</strong>.
+        Europe is home to some of the world’s most prestigious wine regions. In
+        order to maintain the integrity and quality of these wines, the European
+        Union has established a quality scheme called{" "}
+        <strong>Protected Designation of Origin (PDO)</strong>. This system sets
+        rules and regulations for the production, labelling, and promotion of
+        wines within specific regions of Europe. This classification ensures
+        that wines produced within each region follow strict standards of
+        quality and tradition, protecting the reputation and authenticity of
+        each wine. The PDO designation is granted by the EU, and only wines that
+        are produced within a certain region and meet specific production
+        criteria are allowed to carry the PDO label.
       </p>
-      <p>
-        This system sets rules and regulations for the production, labeling, and
-        promotion of wines within specific regions of Europe. This
-        classification ensures that wines produced within each region follow
-        strict standards of quality and tradition, protecting the reputation and
-        authenticity of each wine. The PDO designation is granted by the EU, and
-        only wines that are produced within a certain region and meet specific
-        production criteria are allowed to carry the PDO label.
-      </p>
+
       <p>
         The PDO system is extensive and complex, covering thousands of wine
         types from various regions in Europe. Until recently, wine enthusiasts
         and industry professionals had to consult various sources to understand
-        these classifications. Now, Eurac research has produced the first-ever
-        comprehensive map of Europe’s wine regions classified under the PDO
-        system.
+        these classifications.
       </p>
+      <p>
+        Now, Eurac research has produced the first-ever comprehensive{" "}
+        <Link href="/" style={{ textDecoration: "underline" }}>
+          map of Europe’s wine regions classified under the PDO system
+        </Link>
+        .
+      </p>
+      <a
+        className={styles.contentImageBox}
+        href="https://agriculture.ec.europa.eu/farming/geographical-indications-and-quality-schemes/geographical-indications-and-quality-schemes-explained_en#pdo"
+      >
+        <Image src={pdoicon} alt="pdo logo" />
+        <span>
+          Official PDO logo from the Eurpean Commission
+          <br />
+          https://agriculture.ec.europa.eu/...
+        </span>
+      </a>
       <div className={styles.frontpageContent} style={{ padding: "0" }}>
         <p className={styles.homeNavigation}>
           <Link href="/about">About the project</Link>
         </p>
         <p>
           <Link href="/about-pdo">What is PDO?</Link>
+        </p>
+        <p>
+          <Link href="/about-data">About the data</Link>
         </p>
         <p>
           <Link href="/team">The Team</Link>
