@@ -113,6 +113,7 @@ export default function Page({
   const [zoomLevel, setZoomLevel] = useState<number | null>(null);
   const [vineyardVisibility, setVineyardVisibility] = useState<boolean>(false);
   const [mapLoaded, setMapLoaded] = useState<boolean>(false);
+  const year = new Date().getFullYear();
 
   // navigate the page by passing the url params
   useEffect(() => {
@@ -1003,6 +1004,12 @@ export default function Page({
             </button>
           </div>
         )}
+      </div>
+      <div className={styles.imprintBoxMap}>
+        <span>
+          © {year} Eurac Research{" "}
+          <Link href="/imprint-privacy">Imprint / Privacy</Link>
+        </span>
       </div>
     </div>
   );

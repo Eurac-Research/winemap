@@ -1,11 +1,9 @@
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 
 import styles from "@/styles/Home.module.scss";
-import pdoicon from "/public/icons/pdo-label.svg";
 
-export default function AboutPdo() {
+export default function Imprint() {
   const year = new Date().getFullYear();
   return (
     <main className={styles.staticContentBox}>
@@ -14,12 +12,10 @@ export default function AboutPdo() {
         <meta name="description" content="About the project ..." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <Link href="/" className={styles.backLink}>
         <span className={`${styles.arrow} ${styles.left}`}></span>
         back to map
       </Link>
-
       <header className={styles.header}>
         <Link href="/" className={styles.frontpageLink}>
           WINEMAP by
@@ -38,66 +34,35 @@ export default function AboutPdo() {
           </svg>
         </a>
       </header>
-
-      <h1>What is PDO?</h1>
-      <p>
-        Europe is home to some of the world’s most prestigious wine regions. In
-        order to maintain the integrity and quality of these wines, the European
-        Union has established a quality scheme called{" "}
-        <strong>Protected Designation of Origin (PDO)</strong>. This system sets
-        rules and regulations for the production, labelling, and promotion of
-        wines within specific regions of Europe. This classification ensures
-        that wines produced within each region follow strict standards of
-        quality and tradition, protecting the reputation and authenticity of
-        each wine. The PDO designation is granted by the EU, and only wines that
-        are produced within a certain region and meet specific production
-        criteria are allowed to carry the PDO label.
+      <h1>Imprint / Privacy</h1>
+      <p className={styles.imprintContent}>
+        <strong>Eurac Research</strong>
+        <br />
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="https://www.eurac.edu/en/institutes-centers/institute-for-alpine-environment"
+        >
+          Institute for Alpine Environment
+        </a>
+        <br />
+        Viale Druso 1<br />
+        39100 - Bolzano – Italy
+        <br />
+        T +39 0471 055 333
+        <br />
+        <a href="mailto:alpine.environment@eurac.edu">
+          alpine.environment@eurac.edu
+        </a>
+        <br />
+        <br />
+        <strong>Privacy</strong>
+        <br />
+        <a target="_blank" rel="noreferrer" href="https://privacy.eurac.edu">
+          Privacy information regarding the use of cookies and the processing of
+          personal data on winemap.eurac.edu
+        </a>
       </p>
-
-      <p>
-        The PDO system is extensive and complex, covering thousands of wine
-        types from various regions in Europe. Until recently, wine enthusiasts
-        and industry professionals had to consult various sources to understand
-        these classifications.
-      </p>
-      <p>
-        Now, Eurac research has produced the first-ever comprehensive{" "}
-        <Link href="/" style={{ textDecoration: "underline" }}>
-          map of Europe’s wine regions classified under the PDO system
-        </Link>
-        .
-      </p>
-      <a
-        className={styles.contentImageBox}
-        href="https://agriculture.ec.europa.eu/farming/geographical-indications-and-quality-schemes/geographical-indications-and-quality-schemes-explained_en#pdo"
-      >
-        <Image src={pdoicon} alt="pdo logo" />
-        <span>
-          Official PDO logo from the Eurpean Commission
-          <br />
-          https://agriculture.ec.europa.eu/...
-        </span>
-      </a>
-      <div className={styles.frontpageContent} style={{ padding: "0" }}>
-        <p className={styles.homeNavigation}>
-          <Link href="/about">About the project</Link>
-        </p>
-        <p>
-          <Link href="/about-pdo">What is PDO?</Link>
-        </p>
-        <p>
-          <Link href="/about-data">About the data</Link>
-        </p>
-        <p>
-          <Link href="/team">The Team</Link>
-        </p>
-      </div>
-      <div className={styles.imprintBoxMap}>
-        <span>
-          © {year} Eurac Research{" "}
-          <Link href="/imprint-privacy">Imprint / Privacy</Link>
-        </span>
-      </div>
     </main>
   );
 }

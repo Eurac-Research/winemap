@@ -5,6 +5,7 @@ import Link from "next/link";
 import styles from "@/styles/Home.module.scss";
 
 export default function About() {
+  const year = new Date().getFullYear();
   return (
     <main className={styles.staticContentBox}>
       <Head>
@@ -140,6 +141,12 @@ export default function About() {
         <p>
           <Link href="/team">The Team</Link>
         </p>
+      </div>
+      <div className={styles.imprintBoxMap}>
+        <span>
+          © {year} Eurac Research{" "}
+          <Link href="/imprint-privacy">Imprint / Privacy</Link>
+        </span>
       </div>
     </main>
   );
