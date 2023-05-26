@@ -113,6 +113,7 @@ export default function Page({
   const [zoomLevel, setZoomLevel] = useState<number | null>(null);
   const [vineyardVisibility, setVineyardVisibility] = useState<boolean>(false);
   const [mapLoaded, setMapLoaded] = useState<boolean>(false);
+
   const year = new Date().getFullYear();
 
   // navigate the page by passing the url params
@@ -586,7 +587,6 @@ export default function Page({
         onZoom={onMapZoom}
         onLoad={() => setMapLoaded(true)}
       >
-        <FullscreenControl position="bottom-right" />
         <NavigationControl
           position="bottom-right"
           visualizePitch={true}
@@ -637,10 +637,7 @@ export default function Page({
       )}
       {/* aka frontpage */}
       {!pdos && !activePDO && (
-        <div
-          className={styles.contentFrame}
-          style={{ top: "0", height: "100%" }}
-        >
+        <div className={styles.contentFrame}>
           <div className={styles.frontpageContent}>
             <h1>WINEMAP</h1>
             <p>
@@ -691,10 +688,7 @@ export default function Page({
       )}
       {/* list of PDOs */}
       {pdos && !activePDO && (
-        <div
-          className={styles.contentFrame}
-          style={{ top: "0", height: "100%" }}
-        >
+        <div className={styles.contentFrame}>
           {pdos.length > 1 && (
             <h3 className={styles.amountOfItems}>
               {pdos.length} {!fromSearch && "overlapping"} PDOs found
@@ -733,16 +727,16 @@ export default function Page({
                   {pdo?.category.replaceAll("/", ", ")}
                 </p>
               )}
+              <span
+                className={`${styles.arrow} ${styles.right} ${styles.alignRight}`}
+              ></span>
             </div>
           ))}
         </div>
       )}
       {/* PDO detail */}
       {activePDO && (
-        <div
-          className={styles.contentFrame}
-          style={!pdos ? { top: "0", height: "100vh" } : {}}
-        >
+        <div className={`${styles.contentFrame}`}>
           {pdos && (
             <div
               onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
@@ -754,7 +748,9 @@ export default function Page({
               back to list
             </div>
           )}
-          <div className={styles.PDOdetail}>
+          <div
+            className={`${styles.PDOdetail}${pdos ? ` ${styles.margin}` : ``} `}
+          >
             <h2>{activePDO.pdoname}</h2>
             <div className={styles.buttonDiv}>
               <button
@@ -879,14 +875,14 @@ export default function Page({
             {activePDO?.["pdoinfo"] && (
               <p>
                 <Image src={infoIcon} alt="Info" width={35} height={35} />
-                <span className="bold">Info:</span>
-                <br />{" "}
+
                 <a
                   href={activePDO?.["pdoinfo"]}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {activePDO?.["pdoinfo"]}
+                  More info on{" "}
+                  <span style={{ textDecoration: "underline" }}>eAmbrosia</span>
                 </a>
               </p>
             )}
@@ -920,7 +916,7 @@ export default function Page({
         <div className={styles.filter}>
           <Select
             showSearch
-            placeholder="Select PDO"
+            placeholder="PDO"
             // style={{ width: 250 }}
             // disabled={true}
             // allowClear={true}
@@ -937,7 +933,7 @@ export default function Page({
           />
           <Select
             showSearch
-            placeholder="Select country"
+            placeholder="country"
             dropdownMatchSelectWidth={290}
             optionFilterProp="children"
             onChange={onSelectCountryNameChange}
@@ -951,7 +947,7 @@ export default function Page({
           />
           <Select
             showSearch
-            placeholder="Select municipality"
+            placeholder="municipality"
             dropdownMatchSelectWidth={290}
             optionFilterProp="children"
             onChange={onSelectMunicChange}
@@ -965,7 +961,7 @@ export default function Page({
           />
           <Select
             showSearch
-            placeholder="Select category"
+            placeholder="category"
             dropdownMatchSelectWidth={290}
             optionFilterProp="children"
             onChange={onSearchCatChange}
@@ -979,7 +975,7 @@ export default function Page({
           />
           <Select
             showSearch
-            placeholder="Select variety"
+            placeholder="variety"
             dropdownMatchSelectWidth={290}
             optionFilterProp="children"
             onChange={onSearchVarietyChange}

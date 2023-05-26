@@ -193,7 +193,6 @@ a {
 .mapboxgl-ctrl-geocoder--icon {
   display: inline-block;
   vertical-align: middle;
-  speak: none;
   fill: #757575;
   top: 15px;
 }
@@ -388,4 +387,14 @@ button {
 }
 .bold {
   font-weight: bold;
+}
+
+.ant-select-selection-placeholder {
+  text-transform: capitalize;
+  @media screen and (min-width: 768px) {
+    text-transform: none;
+    &:before {
+      content: "Select ";
+    }
+  }
 }

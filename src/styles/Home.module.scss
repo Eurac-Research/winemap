@@ -3,15 +3,30 @@
 }
 
 .contentFrame {
-  width: 400px;
-  height: calc(100vh - 70px);
+  width: 100%;
+  top: 60vh;
+  height: 40vh;
   position: fixed;
-  top: 70px;
-  left: 0;
   font-size: 16px;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.8);
   overflow-y: auto;
   overflow-x: hidden;
+  margin-bottom: 60px;
+  padding-top: 20px;
+  padding-right: 40px;
+  border-top: 10px solid rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+
+  @media screen and (min-width: 768px) {
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 400px;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    border-top: none;
+  }
 
   .amountOfItems {
     padding: 30px 20px;
@@ -23,10 +38,18 @@
 .PDOdetail {
   padding: 30px;
   height: auto;
-  min-height: calc(100vh - 70px);
-  width: 400px;
+  min-height: 100vh;
+  width: auto;
   background-color: rgba(0, 0, 0, 0.6);
   padding-bottom: 100px;
+  @media screen and (min-width: 768px) {
+    width: 400px;
+  }
+
+  &.margin {
+    margin-top: 70px;
+    min-height: calc(100vh - 70px);
+  }
   h2 {
     font-size: 32px;
   }
@@ -50,6 +73,7 @@
   }
 }
 .PDOlistitem {
+  position: relative;
   padding: 10px 20px 20px 20px;
   background-color: transparent;
   transition: all 300ms ease-in-out;
@@ -79,6 +103,11 @@
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.8);
+
+    .arrow.alignRight {
+      opacity: 1;
+      transition: opacity 300ms ease-in-out;
+    }
   }
 }
 
@@ -88,7 +117,7 @@
   width: 400px;
 
   height: 70px;
-  padding: 20px;
+  padding: 20px 30px 20px 20px;
   font-size: 18px;
   border-bottom: 1px solid #eee;
   display: flex;
@@ -111,22 +140,29 @@
   &.right {
     transform: rotate(-45deg);
   }
-
   &.left {
     transform: rotate(135deg);
+  }
+  &.alignRight {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    opacity: 0.3;
   }
 }
 
 .filterBar {
   position: fixed;
-  top: 20px;
+  top: 0px;
   left: 0px;
   background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 20px;
+  border-radius: 0 0 20px 20px;
   padding: 15px 20px 20px 20px;
   width: 100%;
+  backdrop-filter: blur(10px);
 
   @media screen and (min-width: 768px) {
+    top: 20px;
     left: 440px;
     width: auto;
     padding: 15px 30px 30px 30px;
@@ -134,11 +170,14 @@
 
   .filter {
     display: flex;
+    flex-wrap: wrap;
     gap: 5px;
-    justify-content: space-between;
+    justify-content: flex-start;
     @media screen and (min-width: 768px) {
       gap: 10px;
       justify-content: flex-start;
+      flex-wrap: nowrap;
+      justify-content: space-between;
     }
   }
 
@@ -147,8 +186,12 @@
       color: rgba(0, 0, 0, 0.5);
     }
     .ant-select {
-      width: 10vw;
-      max-width: 200px;
+      width: 150px;
+      //max-width: 200px;
+      @media screen and (min-width: 768px) {
+        width: 10vw;
+        max-width: 200px;
+      }
     }
   }
 }
@@ -286,11 +329,20 @@
 .imprintBoxMap {
   position: fixed;
   width: 100%;
-  bottom: 10px;
+  bottom: 0px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 9px;
+  background-color: #000;
+  height: 40px;
+
+  @media screen and (min-width: 768px) {
+    background-color: transparent;
+    bottom: 10px;
+    height: auto;
+    font-size: 12px;
+  }
   a {
     margin-left: 10px;
     &:hover {
