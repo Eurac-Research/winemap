@@ -24,6 +24,7 @@
     "next": "^13.4.3",
     "next-plausible": "^3.7.2",
     "react": "^18.2.0",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
     "react-map-gl": "^7.0.24",
     "sass": "^1.56.1"

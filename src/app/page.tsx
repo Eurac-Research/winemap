@@ -26,6 +26,7 @@ import Image from "next/image";
 import Link from "next/link";
 import bbox from "@turf/bbox";
 import { Select } from "antd";
+import { isMobile } from "react-device-detect";
 
 import data from "@/app/data/PDO_EU_id.json";
 import allCountries from "@/app/data/countryCodesFromDataHub.io.json";
@@ -115,6 +116,10 @@ export default function Page({
   const [mapLoaded, setMapLoaded] = useState<boolean>(false);
 
   const year = new Date().getFullYear();
+  /* fix fitBounds for mobile device */
+  const paddingResponsive = isMobile
+    ? { top: 100, bottom: 100, left: 0, right: 0 }
+    : { top: 100, bottom: 25, left: 400, right: 5 };
 
   // navigate the page by passing the url params
   useEffect(() => {
@@ -431,9 +436,9 @@ export default function Page({
             [maxLng, maxLat],
           ],
           {
-            padding: { top: 100, bottom: 25, left: 400, right: 5 },
-            duration: 1000,
-            maxZoom: 10,
+            padding: paddingResponsive,
+            duration: 500,
+            maxZoom: 8,
           },
         );
     }
@@ -517,9 +522,9 @@ export default function Page({
             [maxLng, maxLat],
           ],
           {
-            padding: { top: 100, bottom: 25, left: 400, right: 5 },
-            duration: 1000,
-            maxZoom: 10,
+            padding: paddingResponsive,
+            duration: 500,
+            maxZoom: 8,
           },
         );
     }
@@ -540,6 +545,7 @@ export default function Page({
 
     // calculate the bounding box of the feature
     const [minLng, minLat, maxLng, maxLat] = bbox(filteredFeatures[0]);
+
     mapRef.current &&
       mapRef.current.fitBounds(
         [
@@ -547,9 +553,9 @@ export default function Page({
           [maxLng, maxLat],
         ],
         {
-          padding: { top: 100, bottom: 25, left: 400, right: 5 },
+          padding: paddingResponsive,
           duration: 500,
-          maxZoom: 10,
+          maxZoom: 8,
         },
       );
   }
@@ -565,7 +571,7 @@ export default function Page({
       </Head>
       <ReactMap
         ref={mapRef}
-        minZoom={3}
+        minZoom={isMobile ? 1 : 3}
         initialViewState={{
           latitude: 46,
           longitude: 5,
