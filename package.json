@@ -20,6 +20,7 @@
     "antd": "^5.3.1",
     "echarts": "^5.4.2",
     "echarts-for-react": "^3.0.2",
+    "js-cookie": "^3.0.5",
     "mapbox-gl": "^2.11.0",
     "next": "^13.4.3",
     "next-plausible": "^3.7.2",
@@ -31,6 +32,7 @@
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^3.7.2",
+    "@types/js-cookie": "^3.0.3",
     "@types/mapbox__mapbox-gl-geocoder": "^4.7.3",
     "eslint": "^8.41.0",
     "eslint-config-next": "^13.4.3",

@@ -1,6 +1,8 @@
 import "../styles/globals.scss";
 import PlausibleProvider from "next-plausible";
 
+import CookieConsent from "./components/CookieConsent";
+
 export default function RootLayout({
   children,
 }: {
@@ -13,8 +15,10 @@ export default function RootLayout({
         trackLocalhost={false}
         enabled={true}
       />
-
-      <body>{children}</body>
+      <body>
+        {children}
+        <CookieConsent />
+      </body>
     </html>
   );
 }
