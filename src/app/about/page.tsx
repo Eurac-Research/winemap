@@ -41,41 +41,41 @@ export default function About() {
       <h2>Map of the Protected Designations of Origin</h2>
       <p>
         The Winemap provides a comprehensive overview of the 1,174 European wine
-        regions under the <strong>Protected Designation of Origin (PDO)</strong>{" "}
-        label. It is an essential resource for anyone interested in wine or
-        working in the wine industry and can be used to increase knowledge and
-        appreciation of regional wines as well as a decision-support instrument
-        for the wine sector. It is based on a collection of legal information,
+        regions which fall under the{" "}
+        <strong>Protected Designation of Origin (PDO)</strong>
+        label. It is an essential resource for anyone interested in wine or who
+        works in the wine industry and can be used to increase knowledge as well
+        as appreciation of regional wines and as an instrument for wine sector
+        decision making. The map is based on a collection of legal information,
         including grape varieties, geospatial boundaries, and production
         details, and is the first representation of European PDO regions in one
-        comprehensive resource.{" "}
+        comprehensive resource.
       </p>
       <p>
-        The Winemap Europe is intended to help protecting the unique cultural,
+        The Winemap is intended to help protect the unique cultural,
         socio-economic, and environmental heritage of European wine regions by
-        providing easily accessible information from different sources. For
-        instance, it can be used to identify the location of specific PDO
-        regions, learn about the grape varieties grown in each region, and
-        discover the unique production methods used to make each wine. It also
-        helps to highlight some of the lesser-known PDO regions in Europe, which
-        may often be overlooked compared to more famous wine regions. Moreover,
-        the Winemap reveals fascinating insights into the various wine
-        classifications of Europe’s major wine-producing countries. For example,
-        the map highlights the vast number of Italian and French wines that fall
-        under the PDO system, with over 400 and 300 PDOs, respectively. In
-        contrast, Spain has only 103, Germany 30, Austria 16, and Portugal 15.{" "}
+        providing easily accessible information from different sources. It can
+        be used to identify the location of specific PDO regions, learn about
+        the grape varieties grown in each region, and to discover the unique
+        production methods used to make each wine. It also helps to highlight
+        some of the lesser-known PDO regions in Europe. Moreover, the Winemap
+        reveals fascinating insights into the various wine classifications of
+        Europe’s major wine-producing countries. For example, the map highlights
+        the vast number of Italian and French wines that fall under the PDO
+        system: 400 and 300 PDOs, respectively. In contrast, Spain has only 103,
+        Germany 30, Austria 16, and Portugal 15.
       </p>
       <p>
-        The European wine map is also intended to help face future challenges
-        for the European wine sector and provide updated data that contributes
-        to translating information into policy decisions and actions. For
-        instance, European PDO wine regions are facing increasing threats from
-        intensive management practices and climate change. The latter is
+        The European wine map is also intended to help address future challenges
+        the European wine sector will undergo and provide updated data that
+        contributes to translating information into policy decisions and
+        actions. European PDO wine regions are facing increasing threats from
+        intensive management practices and climate change, the latter is
         especially concerning as it will lead to declines in wine quality and
-        yields, posing a threat to the excellence of the European wine sector.
+        yield, posing a threat to the excellence of the European wine sector.
         Professionals in the wine industry urgently need new knowledge and tools
         to build the ecological resilience and adaptive capacity of their
-        vineyards and successfully face these challenges.{" "}
+        vineyards and successfully face these challenges.
       </p>
 
       <p>
@@ -99,7 +99,7 @@ export default function About() {
           <Link href="/about">About the project</Link>
         </p>
         <p>
-          <Link href="/about-pdo">What is PDO?</Link>
+          <Link href="/about-pdo">What’s a PDO?</Link>
         </p>
         <p>
           <Link href="/about-data">About the data</Link>

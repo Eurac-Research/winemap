@@ -648,12 +648,12 @@ export default function Page({
             <h1>WINEMAP</h1>
             <p>
               The Winemap provides a comprehensive overview of the 1,174
-              European wine regions under the{" "}
+              European wine regions which fall under the{" "}
               <strong>Protected Designation of Origin (PDO)</strong> label. It
-              is an essential resource for anyone interested in wine or working
-              in the wine industry and can be used to increase knowledge and
-              appreciation of regional wines as well as a decision-support
-              instrument for the wine sector. It is based on a collection of
+              is an essential resource for anyone interested in wine or who
+              works in the wine industry and can be used to increase knowledge
+              as well as appreciation of regional wines and as an instrument for
+              wine sector decision making. The map is based on a collection of
               legal information, including grape varieties, geospatial
               boundaries, and production details, and is the first
               representation of European PDO regions in one comprehensive
@@ -664,7 +664,7 @@ export default function Page({
               <Link href="/about">About the project</Link>
             </p>
             <p>
-              <Link href="/about-pdo">What is PDO?</Link>
+              <Link href="/about-pdo">What’s a PDO?</Link>
             </p>
             <p>
               <Link href="/about-data">About the data</Link>

@@ -39,7 +39,7 @@ export default function AboutPdo() {
         </a>
       </header>
 
-      <h1>What is PDO?</h1>
+      <h1>What’s a PDO?</h1>
       <p>
         Europe is home to some of the world’s most prestigious wine regions. In
         order to maintain the integrity and quality of these wines, the European
@@ -47,7 +47,7 @@ export default function AboutPdo() {
         <strong>Protected Designation of Origin (PDO)</strong>. This system sets
         rules and regulations for the production, labelling, and promotion of
         wines within specific regions of Europe. This classification ensures
-        that wines produced within each region follow strict standards of
+        that wines produced within those regions follow strict standards of
         quality and tradition, protecting the reputation and authenticity of
         each wine. The PDO designation is granted by the EU, and only wines that
         are produced within a certain region and meet specific production
@@ -61,7 +61,7 @@ export default function AboutPdo() {
         these classifications.
       </p>
       <p>
-        Now, Eurac research has produced the first-ever comprehensive{" "}
+        Now, Eurac Research has produced the first-ever comprehensive{" "}
         <Link href="/" style={{ textDecoration: "underline" }}>
           map of Europe’s wine regions classified under the PDO system
         </Link>
@@ -83,7 +83,7 @@ export default function AboutPdo() {
           <Link href="/about">About the project</Link>
         </p>
         <p>
-          <Link href="/about-pdo">What is PDO?</Link>
+          <Link href="/about-pdo">What’s a PDO?</Link>
         </p>
         <p>
           <Link href="/about-data">About the data</Link>

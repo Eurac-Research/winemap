@@ -42,12 +42,12 @@ export default function About() {
       <p>
         An interdisciplinary research team from Eurac Research Bolzano, the
         University of Venice, the University of Trás-os-Montes and Alto Douro
-        and the University of Innsbruck, led by Eurac Research, have
-        successfully collaborated to set up this database on PDO vines. With
-        their combined expertise and dedication, the team has compiled an
-        extensive collection of information for PDO wine production in Europe.
-        The results were published as an article in Scientific-data in Nature in
-        2022:
+        and the University of Innsbruck came together for the initiative. Led by
+        Eurac Research, the team have successfully collaborated to set up this
+        database on PDO vines. With their combined expertise and dedication, the
+        team has compiled an extensive collection of information for PDO wine
+        production in Europe. The results were published as an article in
+        Nature’s Scientific Data in 2022:
       </p>
       <p>
         <i>
@@ -133,7 +133,7 @@ export default function About() {
           <Link href="/about">About the project</Link>
         </p>
         <p>
-          <Link href="/about-pdo">What is PDO?</Link>
+          <Link href="/about-pdo">What’s a PDO?</Link>
         </p>
         <p>
           <Link href="/about-data">About the data</Link>
