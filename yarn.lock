@@ -2778,7 +2778,7 @@ next-plausible@^3.7.2:
   resolved "https://registry.yarnpkg.com/next-plausible/-/next-plausible-3.7.2.tgz#33eae204a00ad01b7851b319e115eab8e0815fa6"
   integrity sha512-9PqFiVtD1kZO5gHFYTcgilHhg2WhMzD6I4NK/RUh9DGavD1N11IhNAvyGLFmvB3f4FtHC9IoAsauYDtQBt+riA==
 
-next@^13.4.3:
+next@^13.4.4:
   version "13.4.4"
   resolved "https://registry.yarnpkg.com/next/-/next-13.4.4.tgz#d1027c8d77f4c51be0b39f671b4820db03c93e60"
   integrity sha512-C5S0ysM0Ily9McL4Jb48nOQHT1BukOWI59uC3X/xCMlYIh9rJZCv7nzG92J6e1cOBqQbKovlpgvHWFmz4eKKEA==
