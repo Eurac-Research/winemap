@@ -2,8 +2,10 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
-    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  color: #fff;
+  background-color: #222;
 }
 
 a {
@@ -62,6 +64,11 @@ a {
   font-size: 12px;
   z-index: 9;
   pointer-events: none;
+
+  span {
+    display: block;
+    margin-bottom: 2px;
+  }
 }
 
 /* Mapbox geocoder Basics */
@@ -75,8 +82,8 @@ a {
 .mapboxgl-ctrl-geocoder {
   font-size: 18px;
   line-height: 24px;
-  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, Helvetica,
-    sans-serif;
+  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+    Arial, Helvetica, sans-serif;
   position: relative;
   background-color: #fff;
   width: 100%;
@@ -186,7 +193,6 @@ a {
 .mapboxgl-ctrl-geocoder--icon {
   display: inline-block;
   vertical-align: middle;
-  speak: none;
   fill: #757575;
   top: 15px;
 }
@@ -338,4 +344,112 @@ a {
   .mapboxgl-ctrl-geocoder--powered-by {
     font-size: 11px !important;
   }
+}
+
+button {
+  height: 30px;
+  border: 1px solid #fff;
+  border-radius: 20px;
+  display: flex;
+  padding: 4px 16px;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  cursor: pointer;
+  transition: 300ms all ease-in-out;
+  color: #fff;
+
+  &:hover {
+    background-color: #fff;
+    border: 1px solid #000;
+    color: #000;
+  }
+}
+
+.expand {
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none; /* Standard syntax */
+}
+.showOneLine {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+.showAll {
+  overflow-x: visible;
+  height: auto;
+  display: block;
+}
+.bold {
+  font-weight: bold;
+}
+
+.ant-select-selection-placeholder {
+  text-transform: capitalize;
+  @media screen and (min-width: 768px) {
+    text-transform: none;
+    &:before {
+      content: "Select ";
+    }
+  }
+}
+
+.CookieBg {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+}
+.CookieConsent {
+  position: fixed;
+  z-index: 20;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  background-color: #eee;
+  color: #111;
+  @media screen and (min-width: 768px) {
+    padding: 40px;
+  }
+  >.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    @media screen and (min-width: 768px) {
+      flex-direction: row;
+    }
+  }
+  p {
+    max-width: 740px;
+    line-height: 1.4;
+    a {
+      text-decoration: underline;
+      display: block;
+      @media screen and (min-width: 768px) {
+        display: inline;
+      }
+    }
+  }
+  button {
+    color: #111;
+    border-color: #111;
+    font-weight: 600;
+    transform: scale(1.1);
+    &:hover {
+      color: #fff;
+      border-color: #fff;
+      background-color: #111;
+    }
+  }
+
 }

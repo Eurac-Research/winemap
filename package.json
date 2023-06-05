@@ -6,24 +6,38 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint src --cache --cache-strategy content",
+    "format": "prettier --check '**/*.{cjs,mjs,ts,tsx,md,json}' --ignore-unknown --ignore-path .gitignore",
+    "format:fix": "prettier --write '**/*.{cjs,mjs,ts,tsx,md,json}' --ignore-unknown --ignore-path .gitignore",
+    "ci": "yarn format && yarn lint && yarn tsc"
   },
   "dependencies": {
     "@mapbox/mapbox-gl-geocoder": "^5.0.1",
+    "@turf/bbox": "^6.5.0",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
-    "eslint": "8.28.0",
-    "eslint-config-next": "13.0.5",
+    "antd": "^5.3.1",
+    "echarts": "^5.4.2",
+    "echarts-for-react": "^3.0.2",
+    "js-cookie": "^3.0.5",
     "mapbox-gl": "^2.11.0",
-    "next": "13.0.5",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-map-gl": "^7.0.19",
-    "sass": "^1.56.1",
-    "typescript": "4.9.3"
+    "next": "^13.4.4",
+    "next-plausible": "^3.7.2",
+    "react": "^18.2.0",
+    "react-device-detect": "^2.2.3",
+    "react-dom": "^18.2.0",
+    "react-map-gl": "^7.0.24",
+    "sass": "^1.56.1"
   },
   "devDependencies": {
-    "@types/mapbox__mapbox-gl-geocoder": "^4.7.3"
+    "@ianvs/prettier-plugin-sort-imports": "^3.7.2",
+    "@types/js-cookie": "^3.0.3",
+    "@types/mapbox__mapbox-gl-geocoder": "^4.7.3",
+    "eslint": "^8.41.0",
+    "eslint-config-next": "^13.4.3",
+    "prettier": "^2.8.8",
+    "prettier-plugin-tailwindcss": "^0.3.0",
+    "typescript": "^5.0.4"
   }
 }
