@@ -1,4 +1,3 @@
-import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,12 +7,6 @@ export default function About() {
   const year = new Date().getFullYear();
   return (
     <main className={styles.staticContentBox}>
-      <Head>
-        <title>Winemap</title>
-        <meta name="description" content="About the project ..." />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Link href="/" className={styles.backLink}>
         <span className={`${styles.arrow} ${styles.left}`}></span>
         back to map

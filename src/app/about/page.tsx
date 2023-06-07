@@ -1,4 +1,3 @@
-import Head from "next/head";
 import Link from "next/link";
 
 import styles from "@/styles/Home.module.scss";
@@ -7,12 +6,6 @@ export default function About() {
   const year = new Date().getFullYear();
   return (
     <main className={styles.staticContentBox}>
-      <Head>
-        <title>Winemap</title>
-        <meta name="description" content="About the project ..." />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Link href="/" className={styles.backLink}>
         <span className={`${styles.arrow} ${styles.left}`}></span>
         back to map

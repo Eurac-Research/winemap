@@ -1,20 +1,20 @@
-import Head from "next/head";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
 import styles from "@/styles/Home.module.scss";
 import pdoicon from "/public/icons/pdo-label.svg";
 
+export const metadata: Metadata = {
+  title: "What’s a PDO? - Winemap Europe by Eurac Research",
+  description:
+    "Europe is home to some of the world’s most prestigious wine regions. In order to maintain the integrity and quality of these wines, the European Union has established a quality scheme called Protected Designation of Origin (PDO).",
+};
+
 export default function AboutPdo() {
   const year = new Date().getFullYear();
   return (
     <main className={styles.staticContentBox}>
-      <Head>
-        <title>Winemap</title>
-        <meta name="description" content="About the project ..." />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Link href="/" className={styles.backLink}>
         <span className={`${styles.arrow} ${styles.left}`}></span>
         back to map
