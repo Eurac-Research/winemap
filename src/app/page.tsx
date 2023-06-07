@@ -42,7 +42,8 @@ import varietiesOIVIcon from "@/public/icons/Varieties-OIV-outline.svg";
 import varietiesOtherIcon from "@/public/icons/Varieties-others-outline.svg";
 import yieldHlIcon from "@/public/icons/Yield-hl-3-outline.svg";
 import yieldKgIcon from "@/public/icons/Yield-kg-1-outline.svg";
-import Chart from "./components/charts/racechart";
+
+//import Chart from "./components/charts/racechart";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
@@ -107,7 +108,7 @@ export default function Page({
   );
   const [selectVarValue, setSelectVarValue] = useState<string | null>(null);
   const [fromSearch, setFromSearch] = useState(false);
-  const [showChart, setShowChart] = useState(false);
+  //const [showChart, setShowChart] = useState(false);
   const [zoomLevel, setZoomLevel] = useState<number | null>(null);
   const [vineyardVisibility, setVineyardVisibility] = useState<boolean>(false);
   const [mapLoaded, setMapLoaded] = useState<boolean>(false);
@@ -682,7 +683,7 @@ export default function Page({
           </div>
         </div>
       )}
-      {showChart && (
+      {/* {showChart && (
         <div className={styles.chartContainer}>
           <div
             className={styles.close}
@@ -694,7 +695,7 @@ export default function Page({
           </div>
           <Chart />
         </div>
-      )}
+      )} */}
       {/* list of PDOs */}
       {pdos && !activePDO && (
         <div className={styles.contentFrame}>
