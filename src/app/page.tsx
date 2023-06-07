@@ -121,7 +121,9 @@ export default function Page({
 
   // navigate the page by passing the url params
   useEffect(() => {
-    if (!mapLoaded) return;
+    if (!mapLoaded) {
+      return;
+    }
     if (searchParams?.country) {
       onSelectCountryNameChange(decodeURI(searchParams?.country.toString()));
     } else if (searchParams?.pdoname) {
@@ -137,7 +139,15 @@ export default function Page({
       openDetail(decodeURI(searchParams?.pdo.toString()));
       showPDOonMap(decodeURI(searchParams?.pdo.toString()));
     }
-  }, [mapLoaded]);
+  }, [
+    mapLoaded,
+    searchParams?.country,
+    searchParams?.pdoname,
+    searchParams?.cat,
+    searchParams?.variety,
+    searchParams?.munic,
+    searchParams?.pdo,
+  ]);
 
   async function openDetail(id: string) {
     const PDO = data.filter((i: { pdoid: any }) => id === i.pdoid);
@@ -534,6 +544,7 @@ export default function Page({
       (item: { properties: { PDOid: string } }) =>
         item?.properties?.PDOid === id,
     );
+
     if (!filteredFeatures.length) return;
 
     mapRef.current &&
