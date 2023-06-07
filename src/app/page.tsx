@@ -82,7 +82,6 @@ export interface Geometry {
   coordinates: number[];
 }
 export default function Page({
-  params,
   searchParams,
 }: {
   params: { slug: string };
