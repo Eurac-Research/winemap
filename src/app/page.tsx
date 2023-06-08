@@ -306,7 +306,6 @@ export default function Page({
     // get municipality name from
     const hoveredMunic = features && features[0]?.properties?.Name;
 
-    // console.log("count", hoveredFeature.length);
     if (feat && feat.length) {
       setHoverInfo({
         count: feat.length,
