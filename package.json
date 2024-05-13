@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint src --cache --cache-strategy content",
     "format": "prettier --check '**/*.{cjs,mjs,ts,tsx,md,json}' --ignore-unknown --ignore-path .gitignore",
-    "format:fix": "prettier --write '**/*.{cjs,mjs,ts,tsx,md,json}' --ignore-unknown --ignore-path .gitignore",
+    "fmt": "prettier --write '**/*.{cjs,mjs,ts,tsx,md,json}' --ignore-unknown --ignore-path .gitignore",
     "ci": "yarn format && yarn lint && yarn tsc"
   },
   "dependencies": {
@@ -18,17 +18,21 @@
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
     "antd": "^5.3.1",
+    "autoprefixer": "^10.4.19",
     "echarts": "^5.4.2",
     "echarts-for-react": "^3.0.2",
     "js-cookie": "^3.0.5",
     "mapbox-gl": "^2.11.0",
     "next": "^13.4.4",
     "next-plausible": "^3.7.2",
+    "postcss": "^8.4.38",
     "react": "^18.2.0",
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
     "react-map-gl": "^7.0.24",
-    "sass": "^1.56.1"
+    "sass": "^1.56.1",
+    "tailwindcss": "^3.4.3",
+    "uniqolor": "^1.1.1"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^3.7.2",

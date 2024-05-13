@@ -5,15 +5,19 @@ import {
   ReactElement,
   ReactFragment,
   ReactPortal,
+  Suspense,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from "react";
+import { useSearchParams } from "next/navigation";
 import {
+  Layer,
   NavigationControl,
   Map as ReactMap,
   ScaleControl,
+  Source,
   type MapRef,
 } from "react-map-gl";
 
@@ -24,11 +28,19 @@ import Image from "next/image";
 import Link from "next/link";
 import bbox from "@turf/bbox";
 import { Select } from "antd";
+import type {
+  FeatureCollection,
+  Geometry as Geo,
+  GeoJsonProperties,
+} from "geojson";
+import type { Expression } from "mapbox-gl";
 import { isMobile } from "react-device-detect";
 
 import data from "@/app/data/PDO_EU_id.json";
 import allCountries from "@/app/data/countryCodesFromDataHub.io.json";
 import allPDOPoints from "@/app/data/pdo-points.json";
+import vulnerability from "@/app/data/vulnerability.json";
+import { vulnerabilityLayer } from "@/app/vulnerability-style";
 import amendmentIcon from "@/public/icons/Amendment-outline.svg";
 import categoryIcon from "@/public/icons/Category.svg";
 import countryIcon from "@/public/icons/CountryName-outline.svg";
@@ -42,11 +54,25 @@ import varietiesOIVIcon from "@/public/icons/Varieties-OIV-outline.svg";
 import varietiesOtherIcon from "@/public/icons/Varieties-others-outline.svg";
 import yieldHlIcon from "@/public/icons/Yield-hl-3-outline.svg";
 import yieldKgIcon from "@/public/icons/Yield-kg-1-outline.svg";
+import VulnerabilityDot from "./components/vulnerabilityDot";
+import VulnerabilityLegend from "./components/vulnerabilityLegend";
 
 //import Chart from "./components/charts/racechart";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
+export interface VulnerabilityType {
+  PDOid: string;
+  financial: number;
+  natural: number;
+  physical: number;
+  social: number;
+  human: number;
+  AdaptiveCapacity: number;
+  Exposure: number;
+  Sensitivity: number;
+  Vulnerability: string;
+}
 export interface JSONObject {
   country: string;
   pdoid: string;
@@ -63,7 +89,23 @@ export interface JSONObject {
   pdoinfo: string;
   munic: string;
   "begin-lifes": string;
+  vulneral?: VulnerabilityType | null;
 }
+
+// vulnerability.json
+// [
+//   "PDOid",
+//   "financial",
+//   "natural",
+//   "physical",
+//   "social",
+//   "human",
+//   "AdaptiveCapacity",
+//   "Exposure",
+//   "Sensitivity",
+//   "Vulnerability"
+// ],
+
 export interface RootObject {
   type: string;
   name: string;
@@ -82,12 +124,9 @@ export interface Geometry {
   type: string;
   coordinates: number[];
 }
-export default function Page({
-  searchParams,
-}: {
-  params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
+export default function Page() {
+  const searchParams = useSearchParams();
+
   const mapRef = useRef<MapRef>(null);
 
   const [hoverInfo, setHoverInfo] = useState<{
@@ -112,42 +151,14 @@ export default function Page({
   const [zoomLevel, setZoomLevel] = useState<number | null>(null);
   const [vineyardVisibility, setVineyardVisibility] = useState<boolean>(false);
   const [mapLoaded, setMapLoaded] = useState<boolean>(false);
+  const [vulnerabilityVisibility, setVulnerabilityVisibility] =
+    useState<boolean>(false);
 
   const year = new Date().getFullYear();
   /* fix fitBounds for mobile device */
   const paddingResponsive = isMobile
     ? { top: 100, bottom: 100, left: 0, right: 0 }
     : { top: 100, bottom: 25, left: 400, right: 5 };
-
-  // navigate the page by passing the url params
-  useEffect(() => {
-    if (!mapLoaded) {
-      return;
-    }
-    if (searchParams?.country) {
-      onSelectCountryNameChange(decodeURI(searchParams?.country.toString()));
-    } else if (searchParams?.pdoname) {
-      onSelectPdoNameChange(decodeURI(searchParams?.pdoname.toString()));
-    } else if (searchParams?.cat) {
-      onSearchCatChange(decodeURI(searchParams?.cat.toString()));
-    } else if (searchParams?.variety) {
-      onSearchVarietyChange(decodeURI(searchParams?.variety.toString()));
-    } else if (searchParams?.munic) {
-      onSelectMunicChange(decodeURI(searchParams?.munic.toString()));
-    } else if (searchParams?.pdo) {
-      /* detail view */
-      openDetail(decodeURI(searchParams?.pdo.toString()));
-      showPDOonMap(decodeURI(searchParams?.pdo.toString()));
-    }
-  }, [
-    mapLoaded,
-    searchParams?.country,
-    searchParams?.pdoname,
-    searchParams?.cat,
-    searchParams?.variety,
-    searchParams?.munic,
-    searchParams?.pdo,
-  ]);
 
   async function openDetail(id: string) {
     const PDO = data.filter((i: { pdoid: any }) => id === i.pdoid);
@@ -295,7 +306,8 @@ export default function Page({
     const hoveredFeature =
       features &&
       features.map((feature) => {
-        // console.log("feature", feature)
+        // console.log("feature", feature);
+
         return feature?.properties?.PDOid ? feature?.properties?.PDOid : null;
         //return feature?.properties?.PDOid !== undefined;
       });
@@ -305,6 +317,21 @@ export default function Page({
 
     // get municipality name from
     const hoveredMunic = features && features[0]?.properties?.Name;
+
+    // if (vulnerabilityVisibility) {
+    //   hoveredFeature &&
+    //     hoveredFeature.map((id) => {
+    //       const vul = vulnerability.filter((i) => id === i.PDOid);
+    //       vulnera = vul;
+    //       // feat.map((f) => {
+    //       //   f.vul = vul[0];
+    //       // });
+    //     });
+    // }
+    // console.log("vul: ", vulnera);
+    // console.log("hoveredFeature: ", hoveredFeature);
+
+    // console.log("feat: ", feat);
 
     if (feat && feat.length) {
       setHoverInfo({
@@ -317,27 +344,32 @@ export default function Page({
     }
   }, []);
 
+  //console.log("hoverInfo: ", hoverInfo);
+
   const onOut = useCallback((event: mapboxgl.MapLayerMouseEvent) => {
     setHoverInfo(undefined);
   }, []);
 
-  const onClick = useCallback(async (event: mapboxgl.MapLayerMouseEvent) => {
-    const { features } = event;
-    const overlappingPDOs =
-      features &&
-      features.map((f) => {
-        return f?.properties?.PDOid;
-      });
+  const onClick = useCallback(
+    async (event: mapboxgl.MapLayerMouseEvent) => {
+      const { features } = event;
+      const overlappingPDOs =
+        features &&
+        features.map((f) => {
+          return f?.properties?.PDOid;
+        });
 
-    if (overlappingPDOs && overlappingPDOs?.length > 1) {
-      /* destroy active PDO */
-      setActivePDO(null);
-      /* get list of overlapping PDOs */
-      return getListData(overlappingPDOs);
-    }
-    /* click on non-overlapping single PDO */
-    overlappingPDOs && openDetail(overlappingPDOs[0]);
-  }, []);
+      if (overlappingPDOs && overlappingPDOs?.length > 1) {
+        /* destroy active PDO */
+        setActivePDO(null);
+        /* get list of overlapping PDOs */
+        return getListData(overlappingPDOs);
+      }
+      /* click on non-overlapping single PDO */
+      overlappingPDOs && openDetail(overlappingPDOs[0]);
+    },
+    [getListData],
+  );
 
   /* clear all filter and zoom to inital view */
   async function onClearFilter() {
@@ -362,8 +394,24 @@ export default function Page({
 
   async function getListData(overlappingPDOs: any[] | undefined) {
     const PDOList = overlappingPDOs?.map((item: any) => {
-      return data.filter((i: { pdoid: any }) => item === i.pdoid);
+      let myData = data.filter((i: { pdoid: any }) => item === i.pdoid);
+      // console.log("myData", myData);
+      console.log(
+        "vulnerabilityVisibility in getListData ??? false??:",
+        vulnerabilityVisibility,
+      );
+
+      if (vulnerabilityVisibility) {
+        myData.map((i: any) => {
+          const vul = vulnerability.filter((v: any) => i.pdoid === v.PDOid);
+          i.vulneral = vul[0];
+        });
+      }
+      return myData;
     });
+
+    console.log("PDOList", PDOList);
+
     const flattenPDOS = PDOList?.flat();
     if (flattenPDOS) {
       setPdos(flattenPDOS);
@@ -387,6 +435,66 @@ export default function Page({
           vineyardVisibility === false ? 0.6 : 0,
         );
   };
+
+  /* vulnerability magic */
+  // done this way or via a <source> and a custom <layer>
+
+  const matchExpression: Expression = ["match", ["get", "PDOid"]];
+
+  if (vulnerabilityVisibility && vulnerability.length > 1) {
+    for (const row of vulnerability) {
+      let color = "#fff";
+      if (row["Vulnerability"] === "low") {
+        color = "#4FF47C";
+      } else if (row["Vulnerability"] === "moderate") {
+        color = "#F5DA5C";
+      } else if (row["Vulnerability"] === "high (low-mod Exposure)") {
+        color = "#FF6D31";
+      } else if (row["Vulnerability"] === "high (low-mod Sensitivity)") {
+        color = "#FF6D31";
+      } else if (row["Vulnerability"] === "high (mod-high Adapt. capacity)") {
+        color = "#FF6D31";
+      } else if (row["Vulnerability"] === "very high") {
+        color = "#F51C1C";
+      }
+      matchExpression.push(row["PDOid"], color);
+    }
+  }
+  // matchExpression.push("blue");
+  matchExpression.push("black");
+
+  const circleRadiusValues = {
+    type: "exponential",
+    base: 1.75,
+    stops: [
+      [0, 2], // 0 = zoom level, 2 = circle radius
+      [6, 8],
+      [8, 26],
+    ],
+  };
+  const circleOpacityValues = {
+    type: "exponential",
+    stops: [
+      [0, 1], // 0 = zoom level, 1 opacity
+      [12, 0.5],
+      [16, 0.8],
+    ],
+  };
+
+  if (vulnerabilityVisibility) {
+    mapRef.current &&
+      mapRef.current
+        .getMap()
+        // .setLayoutProperty("pdo-area", "visibility", "none")
+        .setPaintProperty("pdo-area", "fill-color", matchExpression)
+        .setPaintProperty("pdo-pins", "circle-color", matchExpression)
+        .setPaintProperty("pdo-pins", "circle-radius", circleRadiusValues)
+        .setPaintProperty("pdo-pins", "circle-opacity", circleOpacityValues);
+    // .setPaintProperty("pdo-pins", "circle-opacity", 0);
+    // .setPaintProperty("vulnerability", "circle-radius", "200");
+    // .setLayerZoomRange("pdo-pins", 0, 22)
+    // .setPaintProperty("pdo-pins", "circle-color", "green");
+  }
 
   async function getPdoIDsByPdoName(pdoname: string) {
     const PDOList = data.filter((i) => pdoname === i.pdoname);
@@ -568,6 +676,54 @@ export default function Page({
       );
   }
 
+  // navigate the page by passing the url params
+  useEffect(() => {
+    if (!mapLoaded) {
+      return;
+    }
+    if (searchParams?.get("vulnerability")) {
+      setVulnerabilityVisibility(true);
+    }
+    if (searchParams?.get("country")) {
+      onSelectCountryNameChange(
+        decodeURI(searchParams?.get("country")!.toString()),
+      );
+    } else if (searchParams?.get("pdoname")) {
+      onSelectPdoNameChange(
+        decodeURI(searchParams?.get("pdoname")!.toString()),
+      );
+    } else if (searchParams?.get("cat")) {
+      onSearchCatChange(decodeURI(searchParams?.get("cat")!.toString()));
+    } else if (searchParams?.get("variety")) {
+      onSearchVarietyChange(
+        decodeURI(searchParams?.get("variety")!.toString()),
+      );
+    } else if (searchParams?.get("munic")) {
+      onSelectMunicChange(decodeURI(searchParams?.get("munic")!.toString()));
+    } else if (searchParams?.get("pdo")) {
+      /* detail view */
+      openDetail(decodeURI(searchParams?.get("pdo")!.toString()));
+      showPDOonMap(decodeURI(searchParams?.get("pdo")!.toString()));
+    }
+  }, [
+    mapLoaded,
+    searchParams?.get("vulnerability"),
+    searchParams?.get("country"),
+    searchParams?.get("pdoname"),
+    searchParams?.get("cat"),
+    searchParams?.get("variety"),
+    searchParams?.get("munic"),
+    searchParams?.get("pdo"),
+
+    // onSelectCountryNameChange,
+    // openDetail,
+    // showPDOonMap,
+    // onSearchCatChange,
+    // onSearchVarietyChange,
+    // onSelectMunicChange,
+    // onSelectPdoNameChange,
+  ]);
+
   /* RETURN */
 
   return (
@@ -584,11 +740,13 @@ export default function Page({
         }}
         style={{ width: "100vw", height: "100vh" }}
         mapStyle="mapbox://styles/tiacop/clas8a92e003c15o2bpopdfqt"
+        // mapStyle="mapbox://styles/tiacop/ckxsylx3u0qoj14muybrpmlpy" // ADO style
         mapboxAccessToken={MAPBOX_TOKEN}
         interactiveLayerIds={[
           "pdo-area",
           "pdo-pins",
           "pdo-municipality",
+          "vulnerabilityLayer",
         ]} /* defined in mapbox studio */
         onMouseMove={onHover}
         onMouseLeave={onOut}
@@ -596,6 +754,17 @@ export default function Page({
         onZoom={onMapZoom}
         onLoad={() => setMapLoaded(true)}
       >
+        {/* {vulnerabilityVisibility && (
+          <Source
+            id="vulnerability"
+            type="geojson"
+            data={allPDOPoints as FeatureCollection<Geo, GeoJsonProperties>}
+            generateId={true}
+          >
+            <Layer {...vulnerabilityLayer} />
+          </Source>
+        )} */}
+
         <NavigationControl
           position="bottom-right"
           visualizePitch={true}
@@ -605,82 +774,162 @@ export default function Page({
       </ReactMap>
       {/* tooltip like mouse over for the map */}
       {hoverInfo && (
-        <div
-          className="tooltip"
-          style={{ left: hoverInfo.x, top: hoverInfo.y }}
-        >
-          {hoverInfo.count > 1 && (
-            <div style={{ marginBottom: "6px" }}>
-              {hoverInfo.count} overlapping PDOs
-            </div>
-          )}
-          {hoverInfo.feature.map(
-            (
-              f:
-                | string
-                | number
-                | boolean
-                | ReactElement<any, string | JSXElementConstructor<any>>
-                | ReactFragment
-                | ReactPortal
-                | null
-                | undefined,
-              index: any,
-            ) => {
-              const pdoName = getPDONameById(f);
+        <Suspense fallback={<div>Loading...</div>}>
+          <div
+            className="tooltip"
+            style={{ left: hoverInfo.x, top: hoverInfo.y }}
+          >
+            {hoverInfo.count > 1 && (
+              <div style={{ marginBottom: "6px" }}>
+                {hoverInfo.count} overlapping PDOs
+              </div>
+            )}
+            {hoverInfo.feature.map(
+              (
+                f:
+                  | string
+                  | number
+                  | boolean
+                  | ReactElement<any, string | JSXElementConstructor<any>>
+                  | ReactFragment
+                  | ReactPortal
+                  | null
+                  | undefined,
+                index: any,
+              ) => {
+                const pdoName = getPDONameById(f);
 
-              return (
-                <span key={f + index}>
-                  {pdoName} ({f})
-                </span>
-              );
-            },
-          )}
-          {hoverInfo?.munic && (
-            <span className={styles.municName}>
-              Municipality <br />
-              {hoverInfo.munic}
-            </span>
-          )}
-        </div>
+                return (
+                  <span key={f + index}>
+                    {pdoName} ({f})
+                  </span>
+                );
+              },
+            )}
+            {hoverInfo?.munic && (
+              <span className={styles.municName}>
+                Municipality <br />
+                {hoverInfo.munic}
+              </span>
+            )}
+          </div>
+        </Suspense>
       )}
       {/* aka frontpage */}
       {!pdos && !activePDO && (
-        <div className={styles.contentFrame}>
-          <div className={styles.frontpageContent}>
-            <h1>WINEMAP</h1>
-            <p>
-              The Winemap provides a comprehensive overview of the 1,174
-              European wine regions which fall under the{" "}
-              <strong>Protected Designation of Origin (PDO)</strong> label. It
-              is an essential resource for anyone interested in wine or who
-              works in the wine industry and can be used to increase knowledge
-              as well as appreciation of regional wines and as an instrument for
-              wine sector decision making. The map is based on a collection of
-              legal information, including grape varieties, geospatial
-              boundaries, and production details, and is the first
-              representation of European PDO regions in one comprehensive
-              resource.
-            </p>
+        <Suspense fallback={<div>Loading...</div>}>
+          <div className={styles.contentFrame}>
+            <div className={styles.frontpageContent}>
+              <h1 className="text-[32px] font-bold mt-4 mb-5">WINEMAP</h1>
+              {!vulnerabilityVisibility && (
+                <>
+                  <p>
+                    The Winemap provides a comprehensive overview of the 1,174
+                    European wine regions which fall under the{" "}
+                    <strong>Protected Designation of Origin (PDO)</strong>{" "}
+                    label. It is an essential resource for anyone interested in
+                    wine or who works in the wine industry and can be used to
+                    increase knowledge as well as appreciation of regional wines
+                    and as an instrument for wine sector decision making. The
+                    map is based on a collection of legal information, including
+                    grape varieties, geospatial boundaries, and production
+                    details, and is the first representation of European PDO
+                    regions in one comprehensive resource.
+                  </p>
 
-            <p className={styles.homeNavigation}>
-              <Link href="/about">About the project</Link>
-            </p>
-            <p>
-              <Link href="/about-pdo">What’s a PDO?</Link>
-            </p>
-            <p>
-              <Link href="/about-data">About the data</Link>
-            </p>
-            <p>
-              <Link href="/team">The Team</Link>
-            </p>
+                  <Link
+                    href="?vulnerability=true"
+                    className="vulnerbilityButton my-8"
+                  >
+                    <span className="buttonLabel">climate change</span>
+                    <span className="buttonText">
+                      Discover how vulnerable <i>your</i> region is
+                    </span>
 
-            {/* <button onClick={() => setShowChart(!showChart)}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-arrow-right"
+                    >
+                      <path d="M5 12h14" />
+                      <path d="m12 5 7 7-7 7" />
+                    </svg>
+                  </Link>
+                </>
+              )}
+              {vulnerabilityVisibility && (
+                <>
+                  <h2>How vulnerable are our Vineyards?</h2>
+                  <p>
+                    The vulnerability of a PDO region is determined by a
+                    combination of three factors: exposure, sensitivity, and
+                    adaptive capacity. Exposure is the degree to which a region
+                    is exposed to climate change impacts. Sensitivity is the
+                    degree to which a region is affected by climate change
+                    impacts. Adaptive capacity is the ability of a region to
+                    adapt to climate change impacts
+                  </p>
+                  <h2 className="mt-6">Vulnerability overview for all PDOs</h2>
+                  <p className="flex items-center mb-2">
+                    <VulnerabilityDot type="low" className="mb-[2px]" />
+                    10% are at low risk
+                  </p>
+                  <p className="flex items-center mb-2">
+                    <VulnerabilityDot type="moderate" className="mb-[2px]" />
+                    30% are at moderart risk
+                  </p>
+                  <p className="flex items-center mb-2">
+                    <VulnerabilityDot type="high" className="mb-[2px]" />
+                    30% are at high risk
+                  </p>
+                  <p className="flex items-center mb-2">
+                    <VulnerabilityDot type="very high" className="mb-[2px]" />
+                    10% are at very high risk
+                  </p>
+                  <hr className="my-6" />
+                  <p>
+                    <h3>Tipp</h3>
+                    Zoom and select a region on the map to get detailed
+                    information about the PDOs vulnerbility.
+                  </p>
+                  <hr className="my-6" />
+                </>
+              )}
+
+              <p className={styles.homeNavigation}>
+                <Link href="/about" className={styles.homeNavigationItem}>
+                  About the project
+                </Link>
+              </p>
+              <p>
+                <Link href="/about-pdo" className={styles.homeNavigationItem}>
+                  What’s a PDO?
+                </Link>
+              </p>
+              <p>
+                <Link href="/about-data" className={styles.homeNavigationItem}>
+                  About the data
+                </Link>
+              </p>
+              <p>
+                <Link href="/team" className={styles.homeNavigationItem}>
+                  The Team
+                </Link>
+              </p>
+
+              {/* <button onClick={() => setShowChart(!showChart)}>
               Did you know?
             </button> */}
+            </div>
           </div>
-        </div>
+        </Suspense>
       )}
       {/* {showChart && (
         <div className={styles.chartContainer}>
@@ -697,206 +946,258 @@ export default function Page({
       )} */}
       {/* list of PDOs */}
       {pdos && !activePDO && (
-        <div className={styles.contentFrame}>
-          {pdos.length > 1 && (
-            <h3 className={styles.amountOfItems}>
-              {pdos.length} {!fromSearch && "overlapping"} PDOs found
-            </h3>
-          )}
-          {pdos.map((pdo) => (
+        <Suspense fallback={<div>Loading...</div>}>
+          <div className={styles.contentFrame}>
+            {pdos.length > 1 && (
+              <h3 className={styles.amountOfItems}>
+                {pdos.length} {!fromSearch && "overlapping"} PDOs found
+              </h3>
+            )}
+            {pdos.map((pdo) => (
+              <div
+                key={pdo?.pdoid}
+                className={`${styles.PDOlistitem}`}
+                onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
+                  openDetail(pdo?.pdoid)
+                }
+              >
+                <h2 className="flex items-start gap-4 leading-[120%] mb-3 font-medium">
+                  {pdo?.vulneral?.Vulnerability && (
+                    <VulnerabilityDot
+                      type={pdo.vulneral.Vulnerability}
+                      className="w-[20px] h-[20px]"
+                    />
+                  )}
+                  {pdo?.pdoname}
+                </h2>
+                {pdo?.registration && (
+                  <p className="flex items-start gap-4 h-fit">
+                    <Image
+                      src={registrationIcon}
+                      alt="Registration Date"
+                      width={35}
+                      height={35}
+                    />
+                    <span>
+                      <span className="bold">Registration:</span>{" "}
+                      {pdo?.registration}
+                    </span>
+                  </p>
+                )}
+                {pdo?.category && (
+                  <p className="flex items-start gap-4 ">
+                    <Image
+                      src={categoryIcon}
+                      alt="Category"
+                      width={35}
+                      height={35}
+                    />
+                    <span>
+                      <span className="bold">Category:</span>{" "}
+                      {pdo?.category.replaceAll("/", ", ")}
+                    </span>
+                  </p>
+                )}
+                <span
+                  className={`${styles.arrow} ${styles.right} ${styles.alignRight}`}
+                ></span>
+              </div>
+            ))}
+          </div>
+        </Suspense>
+      )}
+      {/* PDO detail */}
+      {activePDO && (
+        <Suspense fallback={<div>Loading...</div>}>
+          <div className={`${styles.contentFrame}`}>
+            {pdos && (
+              <div
+                onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
+                  setActivePDO(null)
+                }
+                className={styles.actionBar}
+              >
+                <span className={`${styles.arrow} ${styles.left}`}></span>
+                back to list
+              </div>
+            )}
             <div
-              key={pdo?.pdoid}
-              className={styles.PDOlistitem}
-              onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
-                openDetail(pdo?.pdoid)
-              }
+              className={`${styles.PDOdetail}${
+                pdos ? ` ${styles.margin}` : ``
+              } `}
             >
-              <h2>{pdo?.pdoname}</h2>
-              {pdo?.registration && (
+              <h2 className="text-[32px] font-bold mb-4 mt-8">
+                {activePDO.pdoname}
+              </h2>
+              <div className={styles.buttonDiv}>
+                <button
+                  className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
+                  onClick={(
+                    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+                  ) => showPDOonMap(activePDO.pdoid)}
+                >
+                  show on map
+                </button>
+                <button
+                  onClick={() => onClearFilter()}
+                  className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
+                >
+                  reset
+                </button>
+              </div>
+              {activePDO?.country && (
+                <p>
+                  <Image
+                    src={countryIcon}
+                    alt="Country"
+                    width={35}
+                    height={35}
+                    className="inline"
+                  />
+                  <span>Country:</span> {activePDO?.country}
+                </p>
+              )}
+              {activePDO?.registration && (
                 <p>
                   <Image
                     src={registrationIcon}
                     alt="Registration Date"
                     width={35}
                     height={35}
+                    className="inline"
                   />
                   <span className="bold">Registration:</span>{" "}
-                  {pdo?.registration}
+                  {activePDO?.registration}
                 </p>
               )}
-              {pdo?.category && (
+              {activePDO?.category && (
+                <Accordion
+                  title="Category:"
+                  content={activePDO?.category.replaceAll("/", ", ")}
+                  icon={categoryIcon}
+                />
+              )}
+              <p>
+                <Image
+                  src={pdoIcon}
+                  alt="PDO Id"
+                  width={35}
+                  height={35}
+                  className="inline"
+                />
+                <span className="bold">PDO ID:</span> {activePDO?.pdoid}
+              </p>
+              {activePDO?.["varietiesOiv"] && (
+                <Accordion
+                  title="Varieties OIV:"
+                  content={activePDO?.["varietiesOiv"].replaceAll("/", ", ")}
+                  icon={varietiesOIVIcon}
+                />
+              )}
+              {activePDO?.["varieties"] && (
+                <Accordion
+                  title="Varieties other:"
+                  content={activePDO?.["varieties"].replaceAll("/", ", ")}
+                  icon={varietiesOtherIcon}
+                />
+              )}
+              {activePDO?.["max-yield-hl"] && (
                 <p>
                   <Image
-                    src={categoryIcon}
-                    alt="Category"
+                    src={yieldHlIcon}
+                    alt="Maximum Yield (hl)"
                     width={35}
                     height={35}
+                    className="inline"
                   />
-                  <span className="bold">Category:</span>{" "}
-                  {pdo?.category.replaceAll("/", ", ")}
+                  <span className="bold">Maximum Yield (hl):</span>{" "}
+                  {activePDO?.["max-yield-hl"]} hl
                 </p>
               )}
-              <span
-                className={`${styles.arrow} ${styles.right} ${styles.alignRight}`}
-              ></span>
-            </div>
-          ))}
-        </div>
-      )}
-      {/* PDO detail */}
-      {activePDO && (
-        <div className={`${styles.contentFrame}`}>
-          {pdos && (
-            <div
-              onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
-                setActivePDO(null)
-              }
-              className={styles.actionBar}
-            >
-              <span className={`${styles.arrow} ${styles.left}`}></span>
-              back to list
-            </div>
-          )}
-          <div
-            className={`${styles.PDOdetail}${pdos ? ` ${styles.margin}` : ``} `}
-          >
-            <h2>{activePDO.pdoname}</h2>
-            <div className={styles.buttonDiv}>
-              <button
-                onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
-                  showPDOonMap(activePDO.pdoid)
-                }
-              >
-                show on map
-              </button>
-              <button onClick={() => onClearFilter()}>reset</button>
-            </div>
-            {activePDO?.country && (
-              <p>
-                <Image src={countryIcon} alt="Country" width={35} height={35} />
-                <span>Country:</span> {activePDO?.country}
-              </p>
-            )}
-            {activePDO?.registration && (
-              <p>
-                <Image
-                  src={registrationIcon}
-                  alt="Registration Date"
-                  width={35}
-                  height={35}
+              {activePDO?.["max-yield-kg"] && (
+                <p>
+                  <Image
+                    src={yieldKgIcon}
+                    alt="Maximum Yield (kg)"
+                    width={35}
+                    height={35}
+                    className="inline"
+                  />
+                  <span className="bold">Maximum Yield (kg):</span>{" "}
+                  {activePDO?.["max-yield-kg"]} kg
+                </p>
+              )}
+              {activePDO?.["min-planting-density"] && (
+                <p>
+                  <Image
+                    src={densityIcon}
+                    alt="Minimum Planting Density"
+                    width={35}
+                    height={35}
+                    className="inline"
+                  />
+                  <span className="bold">Minimum Planting Density:</span>{" "}
+                  {activePDO?.["min-planting-density"]} vine stocks/ha
+                </p>
+              )}
+              {activePDO?.["irrigation"] && (
+                <p>
+                  <Image
+                    src={irrigationIcon}
+                    alt="Irrigation"
+                    width={35}
+                    height={35}
+                    className="inline"
+                  />
+                  <span className="bold">Irrigation:</span>{" "}
+                  {activePDO?.["irrigation"]}{" "}
+                </p>
+              )}
+              {activePDO?.["amendment"] && (
+                <p>
+                  <Image
+                    src={amendmentIcon}
+                    alt="Amendment"
+                    width={35}
+                    height={35}
+                    className="inline"
+                  />
+                  <span className="bold">Amendment:</span>{" "}
+                  {activePDO?.["amendment"]}{" "}
+                </p>
+              )}
+              {activePDO?.["munic"] && (
+                <Accordion
+                  title="Municipalities:"
+                  content={activePDO?.["munic"].replaceAll("/", ", ")}
+                  icon={municIcon}
                 />
-                <span className="bold">Registration:</span>{" "}
-                {activePDO?.registration}
-              </p>
-            )}
-            {activePDO?.category && (
-              <Accordion
-                title="Category:"
-                content={activePDO?.category.replaceAll("/", ", ")}
-                icon={categoryIcon}
-              />
-            )}
-            <p>
-              <Image src={pdoIcon} alt="PDO Id" width={35} height={35} />
-              <span className="bold">PDO ID:</span> {activePDO?.pdoid}
-            </p>
-            {activePDO?.["varietiesOiv"] && (
-              <Accordion
-                title="Varieties OIV:"
-                content={activePDO?.["varietiesOiv"].replaceAll("/", ", ")}
-                icon={varietiesOIVIcon}
-              />
-            )}
-            {activePDO?.["varieties"] && (
-              <Accordion
-                title="Varieties other:"
-                content={activePDO?.["varieties"].replaceAll("/", ", ")}
-                icon={varietiesOtherIcon}
-              />
-            )}
-            {activePDO?.["max-yield-hl"] && (
-              <p>
-                <Image
-                  src={yieldHlIcon}
-                  alt="Maximum Yield (hl)"
-                  width={35}
-                  height={35}
-                />
-                <span className="bold">Maximum Yield (hl):</span>{" "}
-                {activePDO?.["max-yield-hl"]} hl
-              </p>
-            )}
-            {activePDO?.["max-yield-kg"] && (
-              <p>
-                <Image
-                  src={yieldKgIcon}
-                  alt="Maximum Yield (kg)"
-                  width={35}
-                  height={35}
-                />
-                <span className="bold">Maximum Yield (kg):</span>{" "}
-                {activePDO?.["max-yield-kg"]} kg
-              </p>
-            )}
-            {activePDO?.["min-planting-density"] && (
-              <p>
-                <Image
-                  src={densityIcon}
-                  alt="Minimum Planting Density"
-                  width={35}
-                  height={35}
-                />
-                <span className="bold">Minimum Planting Density:</span>{" "}
-                {activePDO?.["min-planting-density"]} vine stocks/ha
-              </p>
-            )}
-            {activePDO?.["irrigation"] && (
-              <p>
-                <Image
-                  src={irrigationIcon}
-                  alt="Irrigation"
-                  width={35}
-                  height={35}
-                />
-                <span className="bold">Irrigation:</span>{" "}
-                {activePDO?.["irrigation"]}{" "}
-              </p>
-            )}
-            {activePDO?.["amendment"] && (
-              <p>
-                <Image
-                  src={amendmentIcon}
-                  alt="Amendment"
-                  width={35}
-                  height={35}
-                />
-                <span className="bold">Amendment:</span>{" "}
-                {activePDO?.["amendment"]}{" "}
-              </p>
-            )}
-            {activePDO?.["munic"] && (
-              <Accordion
-                title="Municipalities:"
-                content={activePDO?.["munic"].replaceAll("/", ", ")}
-                icon={municIcon}
-              />
-            )}
-            {activePDO?.["pdoinfo"] && (
-              <p>
-                <Image src={infoIcon} alt="Info" width={35} height={35} />
+              )}
+              {activePDO?.["pdoinfo"] && (
+                <p>
+                  <Image
+                    src={infoIcon}
+                    alt="Info"
+                    width={35}
+                    height={35}
+                    className="inline"
+                  />
 
-                <a
-                  href={activePDO?.["pdoinfo"]}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  More info on{" "}
-                  <span style={{ textDecoration: "underline" }}>eAmbrosia</span>
-                </a>
-              </p>
-            )}
+                  <a
+                    href={activePDO?.["pdoinfo"]}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    More info on{" "}
+                    <span style={{ textDecoration: "underline" }}>
+                      eAmbrosia
+                    </span>
+                  </a>
+                </p>
+              )}
+            </div>
           </div>
-        </div>
+        </Suspense>
       )}
       <div className={styles.filterBar}>
         <header className={styles.header}>
@@ -907,7 +1208,7 @@ export default function Page({
           >
             WINEMAP by
           </Link>
-          <a href="https://www.eurac.edu">
+          <a href="https://www.eurac.edu" className="pb-[3px]">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="178.793"
@@ -923,84 +1224,100 @@ export default function Page({
         </header>
 
         <div className={styles.filter}>
-          <Select
-            showSearch
-            placeholder="PDO"
-            // style={{ width: 250 }}
-            // disabled={true}
-            // allowClear={true}
-            dropdownMatchSelectWidth={290}
-            optionFilterProp="children"
-            onChange={onSelectPdoNameChange}
-            onSearch={onSearch}
-            filterOption={(input, option) =>
-              (option?.value ?? "").toLowerCase().includes(input.toLowerCase())
-            }
-            fieldNames={{ label: "label", value: "value" }}
-            options={selectPdonames}
-            value={selectValue}
-          />
-          <Select
-            showSearch
-            placeholder="country"
-            dropdownMatchSelectWidth={290}
-            optionFilterProp="children"
-            onChange={onSelectCountryNameChange}
-            onSearch={onSearch}
-            filterOption={(input, option) =>
-              (option?.name ?? "").toLowerCase().includes(input.toLowerCase())
-            }
-            fieldNames={{ label: "name", value: "code" }}
-            options={selectCountry}
-            value={selectCountryValue}
-          />
-          <Select
-            showSearch
-            placeholder="municipality"
-            dropdownMatchSelectWidth={290}
-            optionFilterProp="children"
-            onChange={onSelectMunicChange}
-            onSearch={onSearch}
-            filterOption={(input, option) =>
-              (option?.value ?? "").toLowerCase().includes(input.toLowerCase())
-            }
-            fieldNames={{ label: "label", value: "value" }}
-            options={selectMunic}
-            value={selectMunicValue}
-          />
-          <Select
-            showSearch
-            placeholder="category"
-            dropdownMatchSelectWidth={290}
-            optionFilterProp="children"
-            onChange={onSearchCatChange}
-            onSearch={onSearch}
-            filterOption={(input, option) =>
-              (option?.value ?? "").toLowerCase().includes(input.toLowerCase())
-            }
-            fieldNames={{ label: "label", value: "value" }}
-            options={selectCategories}
-            value={selectCatValue}
-          />
-          <Select
-            showSearch
-            placeholder="variety"
-            dropdownMatchSelectWidth={290}
-            optionFilterProp="children"
-            onChange={onSearchVarietyChange}
-            onSearch={onSearch}
-            filterOption={(input, option) =>
-              (option?.value ?? "").toLowerCase().includes(input.toLowerCase())
-            }
-            fieldNames={{ label: "label", value: "value" }}
-            options={selectVarieties}
-            value={selectVarValue}
-          />
-          <button onClick={() => onClearFilter()}>reset</button>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Select
+              showSearch
+              placeholder="PDO"
+              // style={{ width: 250 }}
+              // disabled={true}
+              // allowClear={true}
+              dropdownMatchSelectWidth={290}
+              optionFilterProp="children"
+              onChange={onSelectPdoNameChange}
+              onSearch={onSearch}
+              filterOption={(input, option) =>
+                (option?.value ?? "")
+                  .toLowerCase()
+                  .includes(input.toLowerCase())
+              }
+              fieldNames={{ label: "label", value: "value" }}
+              options={selectPdonames}
+              value={selectValue}
+            />
+            <Select
+              showSearch
+              placeholder="country"
+              dropdownMatchSelectWidth={290}
+              optionFilterProp="children"
+              onChange={onSelectCountryNameChange}
+              onSearch={onSearch}
+              filterOption={(input, option) =>
+                (option?.name ?? "").toLowerCase().includes(input.toLowerCase())
+              }
+              fieldNames={{ label: "name", value: "code" }}
+              options={selectCountry}
+              value={selectCountryValue}
+            />
+            <Select
+              showSearch
+              placeholder="municipality"
+              dropdownMatchSelectWidth={290}
+              optionFilterProp="children"
+              onChange={onSelectMunicChange}
+              onSearch={onSearch}
+              filterOption={(input, option) =>
+                (option?.value ?? "")
+                  .toLowerCase()
+                  .includes(input.toLowerCase())
+              }
+              fieldNames={{ label: "label", value: "value" }}
+              options={selectMunic}
+              value={selectMunicValue}
+            />
+            <Select
+              showSearch
+              placeholder="category"
+              dropdownMatchSelectWidth={290}
+              optionFilterProp="children"
+              onChange={onSearchCatChange}
+              onSearch={onSearch}
+              filterOption={(input, option) =>
+                (option?.value ?? "")
+                  .toLowerCase()
+                  .includes(input.toLowerCase())
+              }
+              fieldNames={{ label: "label", value: "value" }}
+              options={selectCategories}
+              value={selectCatValue}
+            />
+            <Select
+              showSearch
+              placeholder="variety"
+              dropdownMatchSelectWidth={290}
+              optionFilterProp="children"
+              onChange={onSearchVarietyChange}
+              onSearch={onSearch}
+              filterOption={(input, option) =>
+                (option?.value ?? "")
+                  .toLowerCase()
+                  .includes(input.toLowerCase())
+              }
+              fieldNames={{ label: "label", value: "value" }}
+              options={selectVarieties}
+              value={selectVarValue}
+            />
+            <button
+              className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
+              onClick={() => onClearFilter()}
+            >
+              reset
+            </button>
+          </Suspense>
         </div>
         {zoomLevel && zoomLevel > 7 && (
           <div className={styles.toggleVineyards}>
             <button
+              className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
               onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
                 toggleVineyards(e)
               }
@@ -1010,6 +1327,7 @@ export default function Page({
           </div>
         )}
       </div>
+      {vulnerabilityVisibility && <VulnerabilityLegend />}
       <div className={styles.imprintBoxMap}>
         <span>
           © {year} Eurac Research{" "}

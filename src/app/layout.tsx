@@ -1,4 +1,5 @@
 import "../styles/globals.scss";
+import "../styles/global.css";
 import { Metadata } from "next";
 import PlausibleProvider from "next-plausible";
 

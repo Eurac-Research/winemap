@@ -21,7 +21,13 @@ export default function Accordion(props: PropTypes) {
           onClick={toggle}
         >
           <p>
-            <Image src={props.icon} alt={props.title} width={35} height={35} />
+            <Image
+              src={props.icon}
+              alt={props.title}
+              width={35}
+              height={35}
+              className="inline"
+            />
             <span className="bold">{props.title}</span>{" "}
             {/* isShowing && <>{props.content}</>*/}
             <span className={isShowing ? "showAll" : "showOneLine"}>
@@ -64,7 +70,13 @@ export default function Accordion(props: PropTypes) {
         </div>
       ) : (
         <p>
-          <Image src={props.icon} alt={props.title} width={35} height={35} />
+          <Image
+            src={props.icon}
+            alt={props.title}
+            width={35}
+            height={35}
+            className="inline"
+          />
           <span className="bold">{props.title}</span>{" "}
           {/* isShowing && <>{props.content}</>*/}
           <span className={isShowing ? "showAll" : "showOneLine"}>

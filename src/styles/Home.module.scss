@@ -86,23 +86,23 @@
   h2 {
     font-size: 22px;
   }
-  p {
-    padding: 0 25px 2px 46px;
-    margin-top: 6px;
-    margin-bottom: 2px;
-    line-height: 1;
+  // p {
+  //   padding: 0 25px 2px 46px;
+  //   margin-top: 6px;
+  //   margin-bottom: 2px;
+  //   line-height: 1;
 
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: block;
+  //   white-space: nowrap;
+  //   overflow: hidden;
+  //   text-overflow: ellipsis;
+  //   display: block;
 
-    img {
-      margin-right: 10px;
-      margin-left: -46px;
-      vertical-align: middle;
-    }
-  }
+  //   img {
+  //     margin-right: 10px;
+  //     margin-left: -46px;
+  //     vertical-align: middle;
+  //   }
+  // }
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.8);
@@ -241,7 +241,7 @@
   p {
     line-height: 1.3;
   }
-  a {
+  .homeNavigationItem {
     font-weight: 500;
     position: relative;
     margin-bottom: 10px;
