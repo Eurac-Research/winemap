@@ -8,6 +8,7 @@ import {
   Suspense,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -156,15 +157,17 @@ export default function Page() {
 
   const year = new Date().getFullYear();
   /* fix fitBounds for mobile device */
-  const paddingResponsive = isMobile
-    ? { top: 100, bottom: 100, left: 0, right: 0 }
-    : { top: 100, bottom: 25, left: 400, right: 5 };
+  const paddingResponsive = useMemo(() => {
+    return isMobile
+      ? { top: 100, bottom: 100, left: 0, right: 0 }
+      : { top: 100, bottom: 25, left: 400, right: 5 };
+  }, []);
 
-  async function openDetail(id: string) {
+  const openDetail = useCallback(async (id: string) => {
     const PDO = data.filter((i: { pdoid: any }) => id === i.pdoid);
     history.replaceState({}, "", `/?pdo=${encodeURI(id)}`);
     setActivePDO(PDO[0]);
-  }
+  }, []);
   /* return PDO Name by given PDOid */
   function getPDONameById(
     id:
@@ -180,65 +183,6 @@ export default function Page() {
     const PDO = data.filter((i: { pdoid: any }) => id === i.pdoid);
     return PDO[0].pdoname;
   }
-
-  const onSelectPdoNameChange = (value: string) => {
-    history.replaceState({}, "", `/?pdoname=${encodeURI(value.toString())}`);
-    setActivePDO(null);
-    setSelectValue(value);
-    setSelectMunicValue(null);
-    setSelectCatValue(null);
-    setSelectVarValue(null);
-    setSelectCountryValue(null);
-    getPdoIDsByPdoName(value);
-  };
-  const onSearchCatChange = (value: string) => {
-    history.replaceState({}, "", `/?cat=${encodeURI(value.toString())}`);
-    setFromSearch(true);
-    setActivePDO(null);
-    setSelectValue(null);
-    setSelectMunicValue(null);
-    setSelectCatValue(value);
-    setSelectVarValue(null);
-    setSelectCountryValue(null);
-    getPdoIDsByFilter(value, "category");
-  };
-  const onSearchVarietyChange = (value: string) => {
-    history.replaceState({}, "", `/?variety=${encodeURI(value.toString())}`);
-    setFromSearch(true);
-    setActivePDO(null);
-    setSelectValue(null);
-    setSelectMunicValue(null);
-    setSelectCatValue(null);
-    setSelectVarValue(value);
-    setSelectCountryValue(null);
-    getPdoIDsByFilter(value, "varietiesOiv");
-  };
-  const onSelectCountryNameChange = (value: string) => {
-    history.replaceState({}, "", `/?country=${encodeURI(value.toString())}`);
-    setFromSearch(true);
-    setActivePDO(null);
-    setSelectValue(null);
-    setSelectMunicValue(null);
-    setSelectCatValue(null);
-    setSelectVarValue(null);
-    setSelectCountryValue(value);
-    getPdoIDsByFilter(value, "country");
-  };
-  const onSelectMunicChange = (value: string) => {
-    history.replaceState({}, "", `/?munic=${encodeURI(value.toString())}`);
-    setFromSearch(true);
-    setActivePDO(null);
-    setSelectValue(null);
-    setSelectMunicValue(value);
-    setSelectCatValue(null);
-    setSelectVarValue(null);
-    setSelectCountryValue(null);
-    getPdoIDsByFilter(value, "munic");
-  };
-
-  const onSearch = (value: string) => {
-    //console.log("search:", value);
-  };
 
   // unique PDONames for select
   const uniquePdonames = [...new Set(data.map((item) => item.pdoname))];
@@ -346,6 +290,56 @@ export default function Page() {
 
   //console.log("hoverInfo: ", hoverInfo);
 
+  /* clear all filter and zoom to inital view */
+  const onClearFilter = useCallback(async () => {
+    mapRef.current &&
+      mapRef.current
+        .getMap()
+        .setFilter("pdo-area", null)
+        .setFilter("pdo-pins", null)
+        .setCenter([5, 46])
+        .zoomTo(3.6, {
+          duration: 1000,
+          offset: [100, 50],
+        });
+    setActivePDO(null);
+    setSelectValue(null);
+    setSelectMunicValue(null);
+    setSelectCatValue(null);
+    setSelectVarValue(null);
+    setPdos(null);
+    history.replaceState({}, "", "/");
+  }, [mapRef]);
+
+  const getListData = useCallback(
+    async (overlappingPDOs: any[] | undefined) => {
+      const PDOList = overlappingPDOs?.map((item: any) => {
+        let myData = data.filter((i: { pdoid: any }) => item === i.pdoid);
+        // console.log("myData", myData);
+        console.log(
+          "vulnerabilityVisibility in getListData ??? false??:",
+          vulnerabilityVisibility,
+        );
+
+        if (vulnerabilityVisibility) {
+          myData.map((i: any) => {
+            const vul = vulnerability.filter((v: any) => i.pdoid === v.PDOid);
+            i.vulneral = vul[0];
+          });
+        }
+        return myData;
+      });
+
+      console.log("PDOList", PDOList);
+
+      const flattenPDOS = PDOList?.flat();
+      if (flattenPDOS) {
+        setPdos(flattenPDOS);
+      }
+    },
+    [vulnerabilityVisibility, setPdos],
+  );
+
   const onOut = useCallback((event: mapboxgl.MapLayerMouseEvent) => {
     setHoverInfo(undefined);
   }, []);
@@ -368,56 +362,8 @@ export default function Page() {
       /* click on non-overlapping single PDO */
       overlappingPDOs && openDetail(overlappingPDOs[0]);
     },
-    [getListData],
+    [getListData, openDetail],
   );
-
-  /* clear all filter and zoom to inital view */
-  async function onClearFilter() {
-    mapRef.current &&
-      mapRef.current
-        .getMap()
-        .setFilter("pdo-area", null)
-        .setFilter("pdo-pins", null)
-        .setCenter([5, 46])
-        .zoomTo(3.6, {
-          duration: 1000,
-          offset: [100, 50],
-        });
-    setActivePDO(null);
-    setSelectValue(null);
-    setSelectMunicValue(null);
-    setSelectCatValue(null);
-    setSelectVarValue(null);
-    setPdos(null);
-    history.replaceState({}, "", "/");
-  }
-
-  async function getListData(overlappingPDOs: any[] | undefined) {
-    const PDOList = overlappingPDOs?.map((item: any) => {
-      let myData = data.filter((i: { pdoid: any }) => item === i.pdoid);
-      // console.log("myData", myData);
-      console.log(
-        "vulnerabilityVisibility in getListData ??? false??:",
-        vulnerabilityVisibility,
-      );
-
-      if (vulnerabilityVisibility) {
-        myData.map((i: any) => {
-          const vul = vulnerability.filter((v: any) => i.pdoid === v.PDOid);
-          i.vulneral = vul[0];
-        });
-      }
-      return myData;
-    });
-
-    console.log("PDOList", PDOList);
-
-    const flattenPDOS = PDOList?.flat();
-    if (flattenPDOS) {
-      setPdos(flattenPDOS);
-    }
-  }
-
   const onMapZoom = useCallback(() => {
     const zoom = mapRef.current && mapRef.current.getMap().getZoom();
     setZoomLevel(zoom);
@@ -496,139 +442,178 @@ export default function Page() {
     // .setPaintProperty("pdo-pins", "circle-color", "green");
   }
 
-  async function getPdoIDsByPdoName(pdoname: string) {
-    const PDOList = data.filter((i) => pdoname === i.pdoname);
+  const getPdoIDsByPdoName = useCallback(
+    async (pdoname: string) => {
+      const PDOList = data.filter((i) => pdoname === i.pdoname);
 
-    if (!PDOList.length) {
-      onClearFilter();
-      return;
-    }
-
-    const showIDs = PDOList.map((item) => {
-      return item.pdoid;
-    });
-
-    // open sidebar and show PDO details
-    openDetail(showIDs[0]);
-
-    const clearFilter =
-      mapRef.current &&
-      mapRef.current
-        .getMap()
-        .setFilter("pdo-area", null)
-        .setFilter("pdo-pins", null);
-
-    const filter =
-      mapRef.current &&
-      mapRef.current
-        .getMap()
-        .setFilter("pdo-area", [
-          "match",
-          ["get", "PDOid"],
-          showIDs,
-          true,
-          false,
-        ])
-        .setFilter("pdo-pins", [
-          "match",
-          ["get", "PDOid"],
-          showIDs,
-          true,
-          false,
-        ]);
-    const filteredFeatures = allPDOPoints.features?.filter(
-      (item: { properties: { PDOid: string } }) =>
-        item?.properties?.PDOid === showIDs[0],
-    );
-
-    if (filteredFeatures) {
-      // calculate the bounding box of the feature
-      const [minLng, minLat, maxLng, maxLat] = bbox(filteredFeatures[0]);
-      mapRef.current &&
-        mapRef.current.fitBounds(
-          [
-            [minLng, minLat],
-            [maxLng, maxLat],
-          ],
-          {
-            padding: paddingResponsive,
-            duration: 500,
-            maxZoom: 8,
-          },
-        );
-    }
-  }
-
-  // generic filter by munic/varietiesOiv/category
-  async function getPdoIDsByFilter(term: string, filterBy: string) {
-    const PDOList = data.filter((i) => {
-      for (const [key, value] of Object.entries(i)) {
-        if (key === filterBy && typeof value === "string") {
-          return value.includes(term);
-        }
+      if (!PDOList.length) {
+        onClearFilter();
+        return;
       }
-    });
-    if (!PDOList.length) {
-      onClearFilter();
-      return;
-    }
 
-    const showIDs = PDOList.map((item) => {
-      return item.pdoid;
-    });
+      const showIDs = PDOList.map((item) => {
+        return item.pdoid;
+      });
 
-    if (showIDs.length === 1) {
       // open sidebar and show PDO details
       openDetail(showIDs[0]);
-    }
-    const flattenPDOS = PDOList?.flat();
-    setPdos(flattenPDOS);
 
-    const clearFilter =
+      const clearFilter =
+        mapRef.current &&
+        mapRef.current
+          .getMap()
+          .setFilter("pdo-area", null)
+          .setFilter("pdo-pins", null);
+
+      const filter =
+        mapRef.current &&
+        mapRef.current
+          .getMap()
+          .setFilter("pdo-area", [
+            "match",
+            ["get", "PDOid"],
+            showIDs,
+            true,
+            false,
+          ])
+          .setFilter("pdo-pins", [
+            "match",
+            ["get", "PDOid"],
+            showIDs,
+            true,
+            false,
+          ]);
+      const filteredFeatures = allPDOPoints.features?.filter(
+        (item: { properties: { PDOid: string } }) =>
+          item?.properties?.PDOid === showIDs[0],
+      );
+
+      if (filteredFeatures) {
+        // calculate the bounding box of the feature
+        const [minLng, minLat, maxLng, maxLat] = bbox(filteredFeatures[0]);
+        mapRef.current &&
+          mapRef.current.fitBounds(
+            [
+              [minLng, minLat],
+              [maxLng, maxLat],
+            ],
+            {
+              padding: paddingResponsive,
+              duration: 500,
+              maxZoom: 8,
+            },
+          );
+      }
+    },
+    [onClearFilter, openDetail, mapRef, paddingResponsive],
+  );
+
+  // generic filter by munic/varietiesOiv/category
+  const getPdoIDsByFilter = useCallback(
+    async (term: string, filterBy: string) => {
+      const PDOList = data.filter((i) => {
+        for (const [key, value] of Object.entries(i)) {
+          if (key === filterBy && typeof value === "string") {
+            return value.includes(term);
+          }
+        }
+      });
+      if (!PDOList.length) {
+        onClearFilter();
+        return;
+      }
+
+      const showIDs = PDOList.map((item) => {
+        return item.pdoid;
+      });
+
+      if (showIDs.length === 1) {
+        // open sidebar and show PDO details
+        openDetail(showIDs[0]);
+      }
+      const flattenPDOS = PDOList?.flat();
+      setPdos(flattenPDOS);
+
+      const clearFilter =
+        mapRef.current &&
+        mapRef.current
+          .getMap()
+          .setFilter("pdo-area", null)
+          .setFilter("pdo-pins", null);
+
+      const filter =
+        mapRef.current &&
+        mapRef.current
+          .getMap()
+          .setFilter("pdo-area", [
+            "match",
+            ["get", "PDOid"],
+            showIDs,
+            true,
+            false,
+          ])
+          .setFilter("pdo-pins", [
+            "match",
+            ["get", "PDOid"],
+            showIDs,
+            true,
+            false,
+          ]);
+
+      /* push coordinates of filtered items to new array */
+      const coordinateArr = new Array();
+      allPDOPoints?.features?.some((i) => {
+        showIDs.includes(i?.properties?.PDOid) &&
+          coordinateArr.push(i.geometry.coordinates);
+      });
+
+      /* create geojson like object */
+      const bounds = {
+        type: "Feature",
+        geometry: {
+          type: "Polygon",
+          coordinates: [coordinateArr],
+        },
+      };
+
+      if (coordinateArr.length > 0) {
+        // calculate the bounding box of the feature
+        const [minLng, minLat, maxLng, maxLat] = bbox(bounds);
+
+        mapRef.current &&
+          mapRef.current.fitBounds(
+            [
+              [minLng, minLat],
+              [maxLng, maxLat],
+            ],
+            {
+              padding: paddingResponsive,
+              duration: 500,
+              maxZoom: 8,
+            },
+          );
+      }
+    },
+    [onClearFilter, openDetail, setPdos, mapRef, paddingResponsive],
+  );
+
+  // show one single PDO on the map
+  const showPDOonMap = useCallback(
+    (id: string) => {
+      const filteredFeatures = allPDOPoints.features?.filter(
+        (item: { properties: { PDOid: string } }) =>
+          item?.properties?.PDOid === id,
+      );
+
+      if (!filteredFeatures.length) return;
+
       mapRef.current &&
-      mapRef.current
-        .getMap()
-        .setFilter("pdo-area", null)
-        .setFilter("pdo-pins", null);
+        mapRef.current
+          .getMap()
+          .setFilter("pdo-area", ["match", ["get", "PDOid"], id, true, false]);
 
-    const filter =
-      mapRef.current &&
-      mapRef.current
-        .getMap()
-        .setFilter("pdo-area", [
-          "match",
-          ["get", "PDOid"],
-          showIDs,
-          true,
-          false,
-        ])
-        .setFilter("pdo-pins", [
-          "match",
-          ["get", "PDOid"],
-          showIDs,
-          true,
-          false,
-        ]);
-
-    /* push coordinates of filtered items to new array */
-    const coordinateArr = new Array();
-    allPDOPoints?.features?.some((i) => {
-      showIDs.includes(i?.properties?.PDOid) &&
-        coordinateArr.push(i.geometry.coordinates);
-    });
-
-    /* create geojson like object */
-    const bounds = {
-      type: "Feature",
-      geometry: {
-        type: "Polygon",
-        coordinates: [coordinateArr],
-      },
-    };
-
-    if (coordinateArr.length > 0) {
       // calculate the bounding box of the feature
-      const [minLng, minLat, maxLng, maxLat] = bbox(bounds);
+      const [minLng, minLat, maxLng, maxLat] = bbox(filteredFeatures[0]);
 
       mapRef.current &&
         mapRef.current.fitBounds(
@@ -642,39 +627,87 @@ export default function Page() {
             maxZoom: 8,
           },
         );
-    }
-  }
+    },
+    [mapRef, paddingResponsive],
+  );
 
-  // show one single PDO on the map
-  function showPDOonMap(id: string) {
-    const filteredFeatures = allPDOPoints.features?.filter(
-      (item: { properties: { PDOid: string } }) =>
-        item?.properties?.PDOid === id,
-    );
+  const onSelectPdoNameChange = useCallback(
+    (value: string) => {
+      history.replaceState({}, "", `/?pdoname=${encodeURI(value.toString())}`);
+      setActivePDO(null);
+      setSelectValue(value);
+      setSelectMunicValue(null);
+      setSelectCatValue(null);
+      setSelectVarValue(null);
+      setSelectCountryValue(null);
+      getPdoIDsByPdoName(value);
+    },
+    [getPdoIDsByPdoName],
+  );
 
-    if (!filteredFeatures.length) return;
+  const onSearchCatChange = useCallback(
+    (value: string) => {
+      history.replaceState({}, "", `/?cat=${encodeURI(value.toString())}`);
+      setFromSearch(true);
+      setActivePDO(null);
+      setSelectValue(null);
+      setSelectMunicValue(null);
+      setSelectCatValue(value);
+      setSelectVarValue(null);
+      setSelectCountryValue(null);
+      getPdoIDsByFilter(value, "category");
+    },
+    [getPdoIDsByFilter],
+  );
 
-    mapRef.current &&
-      mapRef.current
-        .getMap()
-        .setFilter("pdo-area", ["match", ["get", "PDOid"], id, true, false]);
+  const onSearchVarietyChange = useCallback(
+    (value: string) => {
+      history.replaceState({}, "", `/?variety=${encodeURI(value.toString())}`);
+      setFromSearch(true);
+      setActivePDO(null);
+      setSelectValue(null);
+      setSelectMunicValue(null);
+      setSelectCatValue(null);
+      setSelectVarValue(value);
+      setSelectCountryValue(null);
+      getPdoIDsByFilter(value, "varietiesOiv");
+    },
+    [getPdoIDsByFilter],
+  );
 
-    // calculate the bounding box of the feature
-    const [minLng, minLat, maxLng, maxLat] = bbox(filteredFeatures[0]);
+  const onSelectCountryNameChange = useCallback(
+    (value: string) => {
+      history.replaceState({}, "", `/?country=${encodeURI(value.toString())}`);
+      setFromSearch(true);
+      setActivePDO(null);
+      setSelectValue(null);
+      setSelectMunicValue(null);
+      setSelectCatValue(null);
+      setSelectVarValue(null);
+      setSelectCountryValue(value);
+      getPdoIDsByFilter(value, "country");
+    },
+    [getPdoIDsByFilter],
+  );
 
-    mapRef.current &&
-      mapRef.current.fitBounds(
-        [
-          [minLng, minLat],
-          [maxLng, maxLat],
-        ],
-        {
-          padding: paddingResponsive,
-          duration: 500,
-          maxZoom: 8,
-        },
-      );
-  }
+  const onSelectMunicChange = useCallback(
+    (value: string) => {
+      history.replaceState({}, "", `/?munic=${encodeURI(value.toString())}`);
+      setFromSearch(true);
+      setActivePDO(null);
+      setSelectValue(null);
+      setSelectMunicValue(value);
+      setSelectCatValue(null);
+      setSelectVarValue(null);
+      setSelectCountryValue(null);
+      getPdoIDsByFilter(value, "munic");
+    },
+    [getPdoIDsByFilter],
+  );
+
+  const onSearch = (value: string) => {
+    //console.log("search:", value);
+  };
 
   // navigate the page by passing the url params
   useEffect(() => {
@@ -707,54 +740,48 @@ export default function Page() {
     }
   }, [
     mapLoaded,
-    searchParams?.get("vulnerability"),
-    searchParams?.get("country"),
-    searchParams?.get("pdoname"),
-    searchParams?.get("cat"),
-    searchParams?.get("variety"),
-    searchParams?.get("munic"),
-    searchParams?.get("pdo"),
-
-    // onSelectCountryNameChange,
-    // openDetail,
-    // showPDOonMap,
-    // onSearchCatChange,
-    // onSearchVarietyChange,
-    // onSelectMunicChange,
-    // onSelectPdoNameChange,
+    searchParams,
+    onSelectCountryNameChange,
+    openDetail,
+    showPDOonMap,
+    onSearchCatChange,
+    onSearchVarietyChange,
+    onSelectMunicChange,
+    onSelectPdoNameChange,
   ]);
 
   /* RETURN */
 
   return (
     <div className={styles.container}>
-      <ReactMap
-        ref={mapRef}
-        minZoom={isMobile ? 1 : 3}
-        initialViewState={{
-          latitude: 46,
-          longitude: 5,
-          zoom: 3.6,
-          bearing: 0,
-          pitch: 0,
-        }}
-        style={{ width: "100vw", height: "100vh" }}
-        mapStyle="mapbox://styles/tiacop/clas8a92e003c15o2bpopdfqt"
-        // mapStyle="mapbox://styles/tiacop/ckxsylx3u0qoj14muybrpmlpy" // ADO style
-        mapboxAccessToken={MAPBOX_TOKEN}
-        interactiveLayerIds={[
-          "pdo-area",
-          "pdo-pins",
-          "pdo-municipality",
-          "vulnerabilityLayer",
-        ]} /* defined in mapbox studio */
-        onMouseMove={onHover}
-        onMouseLeave={onOut}
-        onClick={onClick}
-        onZoom={onMapZoom}
-        onLoad={() => setMapLoaded(true)}
-      >
-        {/* {vulnerabilityVisibility && (
+      <Suspense fallback={<div>Loading...</div>}>
+        <ReactMap
+          ref={mapRef}
+          minZoom={isMobile ? 1 : 3}
+          initialViewState={{
+            latitude: 46,
+            longitude: 5,
+            zoom: 3.6,
+            bearing: 0,
+            pitch: 0,
+          }}
+          style={{ width: "100vw", height: "100vh" }}
+          mapStyle="mapbox://styles/tiacop/clas8a92e003c15o2bpopdfqt"
+          // mapStyle="mapbox://styles/tiacop/ckxsylx3u0qoj14muybrpmlpy" // ADO style
+          mapboxAccessToken={MAPBOX_TOKEN}
+          interactiveLayerIds={[
+            "pdo-area",
+            "pdo-pins",
+            "pdo-municipality",
+            "vulnerabilityLayer",
+          ]} /* defined in mapbox studio */
+          onMouseMove={onHover}
+          onMouseLeave={onOut}
+          onClick={onClick}
+          onZoom={onMapZoom}
+          onLoad={() => setMapLoaded(true)}
+        >
+          {/* {vulnerabilityVisibility && (
           <Source
             id="vulnerability"
             type="geojson"
@@ -765,13 +792,14 @@ export default function Page() {
           </Source>
         )} */}
 
-        <NavigationControl
-          position="bottom-right"
-          visualizePitch={true}
-          showCompass={true}
-        />
-        <ScaleControl position="bottom-right" />
-      </ReactMap>
+          <NavigationControl
+            position="bottom-right"
+            visualizePitch={true}
+            showCompass={true}
+          />
+          <ScaleControl position="bottom-right" />
+        </ReactMap>
+      </Suspense>
       {/* tooltip like mouse over for the map */}
       {hoverInfo && (
         <Suspense fallback={<div>Loading...</div>}>
@@ -1223,8 +1251,8 @@ export default function Page() {
           </a>
         </header>
 
-        <div className={styles.filter}>
-          <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div>Loading...</div>}>
+          <div className={styles.filter}>
             <Select
               showSearch
               placeholder="PDO"
@@ -1312,20 +1340,20 @@ export default function Page() {
             >
               reset
             </button>
-          </Suspense>
-        </div>
-        {zoomLevel && zoomLevel > 7 && (
-          <div className={styles.toggleVineyards}>
-            <button
-              className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
-              onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
-                toggleVineyards(e)
-              }
-            >
-              {vineyardVisibility ? "hide" : "show"} vineyards
-            </button>
           </div>
-        )}
+          {zoomLevel && zoomLevel > 7 && (
+            <div className={styles.toggleVineyards}>
+              <button
+                className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
+                onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+                  toggleVineyards(e)
+                }
+              >
+                {vineyardVisibility ? "hide" : "show"} vineyards
+              </button>
+            </div>
+          )}
+        </Suspense>
       </div>
       {vulnerabilityVisibility && <VulnerabilityLegend />}
       <div className={styles.imprintBoxMap}>
