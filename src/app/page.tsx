@@ -144,6 +144,7 @@ export default function Page() {
     null,
   );
   const [selectVarValue, setSelectVarValue] = useState<string | null>(null);
+
   const [fromSearch, setFromSearch] = useState(false);
   //const [showChart, setShowChart] = useState(false);
   const [zoomLevel, setZoomLevel] = useState<number | null>(null);
@@ -152,6 +153,9 @@ export default function Page() {
   const [vulnerabilityVisibility, setVulnerabilityVisibility] =
     useState<boolean>(false);
 
+  const [selectVulneralValue, setSelectVulneralValue] = useState<string | null>(
+    null,
+  );
   const year = new Date().getFullYear();
   /* fix fitBounds for mobile device */
   const paddingResponsive = useMemo(() => {
@@ -357,10 +361,11 @@ export default function Page() {
       const { features } = event;
       const overlappingPDOs =
         features &&
-        features.map((f) => {
-          return f?.properties?.PDOid;
-        });
-
+        features
+          .map((f) => {
+            return f?.properties?.PDOid;
+          })
+          .filter((id) => id !== undefined);
       if (overlappingPDOs && overlappingPDOs?.length > 1) {
         /* destroy active PDO */
         setActivePDO(null);
@@ -605,8 +610,6 @@ export default function Page() {
       });
 
       if (showIDs.length === 1) {
-        console.log("only one ID found - showIDs", showIDs);
-
         // open sidebar and show PDO details
         openDetail(showIDs[0]);
       }
@@ -786,8 +789,6 @@ export default function Page() {
 
   const onVulneralFilter = useCallback(
     (e: RadioChangeEvent) => {
-      console.log("vulnerability filter: ", e.target.value);
-
       history.replaceState(
         {},
         "",
@@ -1030,10 +1031,10 @@ export default function Page() {
                   </p>
 
                   <div className="bg-white text-black p-4 mt-6">
-                    <h3 className="bold mb-2">Tipp</h3>
+                    <h3 className="bold mb-2">Tip</h3>
                     <p>
                       Zoom and select a region on the map to get detailed
-                      information about the PDOs vulnerbility.
+                      information about the PDOs vulnerability.
                     </p>
                   </div>
                   <hr className="my-6" />
@@ -1207,9 +1208,21 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
   */}
               {vulnerabilityVisibility && activePDO.vulneral && (
                 <div className="">
-                  <h3 className="text-[24px] font-medium mb-4">
-                    Vulnerability Index
+                  <h3 className="text-[24px] font-medium mb-4 flex items-center gap-2">
+                    Vulnerability Index{" "}
+                    <Link href="/vulnerability" className="info">
+                      i
+                    </Link>
                   </h3>
+                  <span className="text-[14px] leading-[140%] block text-white/80">
+                    The vulnerability of a PDO region is determined by a set of
+                    indicators. Lorem ipsum dolor sit amet, consectetur
+                    adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. <br />
+                    <Link href="/vulnerability" className="underline">
+                      Read more
+                    </Link>
+                  </span>
                   <div className="flex items-center gap-4 text-[20px] my-12">
                     <VulnerabilityDot
                       type={activePDO.vulneral.Vulnerability}
@@ -1221,7 +1234,7 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
                   </div>
                   <hr className="my-6" />
                   {/* <h3 className="text-[18px] font-medium mb-4">Sensitivity</h3> */}
-                  <div className="flex  gap-4">
+                  <div className="flex gap-4 mb-2">
                     <Pie
                       percentage={activePDO.vulneral.Sensitivity}
                       label="Sensitivity"
@@ -1235,9 +1248,35 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
                       label="Adaptive Capacity"
                     />
                   </div>
+                  <span className="text-[14px] leading-[140%] block text-white/80 mb-2">
+                    <b>Sensitivity</b> is the degree to which a region is
+                    affected by ... Lorem ipsum dolor sit amet, consectetur
+                    adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua.
+                  </span>
+                  <span className="text-[14px] leading-[140%] block text-white/80 mb-2">
+                    <b>Exposure</b> is the degree to which a region is affected
+                    by ... Lorem ipsum dolor sit amet, consectetur adipiscing
+                    elit, sed do eiusmod tempor incididunt ut labore et dolore
+                    magna aliqua.
+                  </span>
+                  <span className="text-[14px] leading-[140%] block text-white/80 mb-2">
+                    <b>Adaptive Capacity</b> is the degree to which a region is
+                    affected by ... Lorem ipsum dolor sit amet, consectetur
+                    adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua.
+                  </span>
+
                   <hr className="my-6" />
                   <span className="block">Adaptive Capacity in detail</span>
                   <AdaptiveChart data={activePDO.vulneral} />
+
+                  <span className="text-[14px] leading-[140%] block text-white/80 mb-2">
+                    <b>Financial</b> is the degree to which a region is affected
+                    by ... Lorem ipsum dolor sit amet, consectetur adipiscing
+                    elit, sed do eiusmod tempor incididunt ut labore et dolore
+                    magna aliqua.
+                  </span>
 
                   {/* adaptive capacity indicator */}
                   {/* <p>
@@ -1582,7 +1621,10 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
           {vulnerabilityVisibility && (
             <div className="vulnerabilityLegend">
               <div className="legend-title">
-                Vulnerability Index <span>i</span>
+                Vulnerability Index{" "}
+                <Link href="/vulnerability" className="info">
+                  i
+                </Link>
               </div>
 
               <div className=" ">
@@ -1614,7 +1656,7 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
                         d="M2.6077 21L13 3L23.3923 21H2.6077Z"
                         fill="none"
                         stroke="white"
-                        stroke-width="3"
+                        strokeWidth="3"
                       />
                     </svg>
                   </Radio.Button>
@@ -1637,7 +1679,7 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
                         d="M2.6077 21L13 3L23.3923 21H2.6077Z"
                         fill="none"
                         stroke="white"
-                        stroke-width="3"
+                        strokeWidth="3"
                       />
                     </svg>
                   </Radio.Button>
@@ -1660,7 +1702,7 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
                         d="M2.6077 21L13 3L23.3923 21H2.6077Z"
                         fill="none"
                         stroke="white"
-                        stroke-width="3"
+                        strokeWidth="3"
                       />
                     </svg>
                   </Radio.Button>
@@ -1683,7 +1725,7 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
                         d="M2.6077 21L13 3L23.3923 21H2.6077Z"
                         fill="none"
                         stroke="white"
-                        stroke-width="3"
+                        strokeWidth="3"
                       />
                     </svg>
                   </Radio.Button>

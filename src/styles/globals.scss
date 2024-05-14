@@ -546,20 +546,6 @@ a {
     align-items: center;
     gap: 8px;
     justify-content: center;
-    span {
-      font-size: 14px;
-      text-transform: lowercase;
-      border: 1px solid #fff;
-      margin-left: 4px;
-      border-radius: 100%;
-      height: 18px;
-      width: 18px;
-      flex-shrink: 0;
-      line-height: 0;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-    }
   }
   .legend-row {
     display: flex;
@@ -642,6 +628,21 @@ a {
       fill: none;
     }
   }
+}
+
+.info {
+  font-size: 14px;
+  text-transform: lowercase;
+  border: 1px solid #fff;
+  margin-left: 4px;
+  border-radius: 100%;
+  height: 18px;
+  width: 18px;
+  flex-shrink: 0;
+  line-height: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 
 // .vulnerabilityDot {
