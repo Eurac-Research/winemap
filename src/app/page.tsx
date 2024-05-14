@@ -19,7 +19,8 @@ import {
   ScaleControl,
   type MapRef,
 } from "react-map-gl";
-import { twMerge } from "tailwind-merge";
+
+//import { twMerge } from "tailwind-merge";
 
 import Accordion from "@/app/components/accordion";
 import styles from "@/styles/Home.module.scss";
@@ -49,12 +50,12 @@ import varietiesOtherIcon from "@/public/icons/Varieties-others-outline.svg";
 import yieldHlIcon from "@/public/icons/Yield-hl-3-outline.svg";
 import yieldKgIcon from "@/public/icons/Yield-kg-1-outline.svg";
 //import Chart from "./components/charts/racechart";
-import { IndexOptions } from "../../../chris/src/types/search";
+
 import AdaptiveChart from "./components/adaptiveChart";
-import Percentage from "./components/pie";
 import Pie from "./components/pie";
 import VulnerabilityDot from "./components/vulnerabilityDot";
-import VulnerabilityLegend from "./components/vulnerabilityLegend";
+
+//import VulnerabilityLegend from "./components/vulnerabilityLegend";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
@@ -599,6 +600,8 @@ export default function Page() {
       });
 
       if (showIDs.length === 1) {
+        console.log("only one ID found - showIDs", showIDs);
+
         // open sidebar and show PDO details
         openDetail(showIDs[0]);
       }
@@ -811,6 +814,7 @@ export default function Page() {
     }
     if (searchParams?.get("vulnerability") === "false") {
       setVulnerabilityVisibility(false);
+      onClearFilter();
     }
     if (searchParams?.get("country")) {
       onSelectCountryNameChange(
@@ -1018,12 +1022,14 @@ export default function Page() {
                     <VulnerabilityDot type="very high" className="mb-[2px]" />
                     10% are at very high risk
                   </p>
-                  <hr className="my-6" />
-                  <h3>Tipp</h3>
-                  <p>
-                    Zoom and select a region on the map to get detailed
-                    information about the PDOs vulnerbility.
-                  </p>
+
+                  <div className="bg-white text-black p-4 mt-6">
+                    <h3 className="bold mb-2">Tipp</h3>
+                    <p>
+                      Zoom and select a region on the map to get detailed
+                      information about the PDOs vulnerbility.
+                    </p>
+                  </div>
                   <hr className="my-6" />
                 </>
               )}
@@ -1086,14 +1092,13 @@ export default function Page() {
                   openDetail(pdo?.pdoid)
                 }
               >
-                <h2 className="flex items-start gap-4 leading-[120%] mb-3 font-medium">
+                <h2 className="flex items-start gap-[11px] leading-[120%] mb-3 font-medium">
                   {pdo?.vulneral?.Vulnerability && (
                     <VulnerabilityDot
                       type={pdo.vulneral.Vulnerability}
                       className="w-[20px] h-[20px]"
                     />
                   )}
-
                   {pdo?.pdoname}
                 </h2>
                 {pdo?.registration && (
@@ -1591,10 +1596,19 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
                     }}
                   >
                     Low
-                    <svg viewBox="0 0 100 100" className="w-[15px]">
-                      <polygon
-                        points="50 15, 100 100, 0 100"
-                        className="vul-indicator-arrow"
+                    <svg
+                      width="26"
+                      height="23"
+                      viewBox="0 0 26 23"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="vul-indicator-arrow"
+                    >
+                      <path
+                        d="M2.6077 21L13 3L23.3923 21H2.6077Z"
+                        fill="none"
+                        stroke="white"
+                        stroke-width="3"
                       />
                     </svg>
                   </Radio.Button>
@@ -1605,10 +1619,19 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
                     }}
                   >
                     Moderate
-                    <svg viewBox="0 0 100 100" className="w-[15px]">
-                      <polygon
-                        points="50 15, 100 100, 0 100"
-                        className="vul-indicator-arrow"
+                    <svg
+                      width="26"
+                      height="23"
+                      viewBox="0 0 26 23"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="vul-indicator-arrow"
+                    >
+                      <path
+                        d="M2.6077 21L13 3L23.3923 21H2.6077Z"
+                        fill="none"
+                        stroke="white"
+                        stroke-width="3"
                       />
                     </svg>
                   </Radio.Button>
@@ -1619,10 +1642,19 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
                     }}
                   >
                     High
-                    <svg viewBox="0 0 100 100" className="w-[15px]">
-                      <polygon
-                        points="50 15, 100 100, 0 100"
-                        className="vul-indicator-arrow"
+                    <svg
+                      width="26"
+                      height="23"
+                      viewBox="0 0 26 23"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="vul-indicator-arrow"
+                    >
+                      <path
+                        d="M2.6077 21L13 3L23.3923 21H2.6077Z"
+                        fill="none"
+                        stroke="white"
+                        stroke-width="3"
                       />
                     </svg>
                   </Radio.Button>
@@ -1633,10 +1665,19 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
                     }}
                   >
                     Very high
-                    <svg viewBox="0 0 100 100" className="w-[15px]">
-                      <polygon
-                        points="50 15, 100 100, 0 100"
-                        className="vul-indicator-arrow"
+                    <svg
+                      width="26"
+                      height="23"
+                      viewBox="0 0 26 23"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="vul-indicator-arrow"
+                    >
+                      <path
+                        d="M2.6077 21L13 3L23.3923 21H2.6077Z"
+                        fill="none"
+                        stroke="white"
+                        stroke-width="3"
                       />
                     </svg>
                   </Radio.Button>
