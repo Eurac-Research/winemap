@@ -14,13 +14,12 @@ import {
 } from "react";
 import { useSearchParams } from "next/navigation";
 import {
-  Layer,
   NavigationControl,
   Map as ReactMap,
   ScaleControl,
-  Source,
   type MapRef,
 } from "react-map-gl";
+import { twMerge } from "tailwind-merge";
 
 import Accordion from "@/app/components/accordion";
 import styles from "@/styles/Home.module.scss";
@@ -28,12 +27,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import Image from "next/image";
 import Link from "next/link";
 import bbox from "@turf/bbox";
-import { Select } from "antd";
-import type {
-  FeatureCollection,
-  Geometry as Geo,
-  GeoJsonProperties,
-} from "geojson";
+import { Radio, RadioChangeEvent, Select } from "antd";
 import type { Expression } from "mapbox-gl";
 import { isMobile } from "react-device-detect";
 
@@ -41,7 +35,6 @@ import data from "@/app/data/PDO_EU_id.json";
 import allCountries from "@/app/data/countryCodesFromDataHub.io.json";
 import allPDOPoints from "@/app/data/pdo-points.json";
 import vulnerability from "@/app/data/vulnerability.json";
-import { vulnerabilityLayer } from "@/app/vulnerability-style";
 import amendmentIcon from "@/public/icons/Amendment-outline.svg";
 import categoryIcon from "@/public/icons/Category.svg";
 import countryIcon from "@/public/icons/CountryName-outline.svg";
@@ -55,10 +48,13 @@ import varietiesOIVIcon from "@/public/icons/Varieties-OIV-outline.svg";
 import varietiesOtherIcon from "@/public/icons/Varieties-others-outline.svg";
 import yieldHlIcon from "@/public/icons/Yield-hl-3-outline.svg";
 import yieldKgIcon from "@/public/icons/Yield-kg-1-outline.svg";
+//import Chart from "./components/charts/racechart";
+import { IndexOptions } from "../../../chris/src/types/search";
+import AdaptiveChart from "./components/adaptiveChart";
+import Percentage from "./components/pie";
+import Pie from "./components/pie";
 import VulnerabilityDot from "./components/vulnerabilityDot";
 import VulnerabilityLegend from "./components/vulnerabilityLegend";
-
-//import Chart from "./components/charts/racechart";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
@@ -69,7 +65,7 @@ export interface VulnerabilityType {
   physical: number;
   social: number;
   human: number;
-  AdaptiveCapacity: number;
+  adaptiveCap: number;
   Exposure: number;
   Sensitivity: number;
   Vulnerability: string;
@@ -164,10 +160,16 @@ export default function Page() {
   }, []);
 
   const openDetail = useCallback(async (id: string) => {
-    const PDO = data.filter((i: { pdoid: any }) => id === i.pdoid);
+    let PDO: JSONObject[] = data.filter((i: { pdoid: any }) => id === i.pdoid);
+    if (vulnerabilityVisibility) {
+      const vul = vulnerability.filter((v: any) => id === v.PDOid);
+      PDO[0].vulneral = vul[0]; // Add 'vulneral' property
+    }
+
     history.replaceState({}, "", `/?pdo=${encodeURI(id)}`);
     setActivePDO(PDO[0]);
   }, []);
+
   /* return PDO Name by given PDOid */
   function getPDONameById(
     id:
@@ -180,7 +182,12 @@ export default function Page() {
       | null
       | undefined,
   ) {
-    const PDO = data.filter((i: { pdoid: any }) => id === i.pdoid);
+    let PDO: JSONObject[] = data.filter((i: { pdoid: any }) => id === i.pdoid);
+    if (vulnerabilityVisibility) {
+      const vul = vulnerability.filter((v: any) => id === v.PDOid);
+      PDO[0].vulneral = vul[0]; // Add 'vulneral' property
+    }
+
     return PDO[0].pdoname;
   }
 
@@ -315,11 +322,6 @@ export default function Page() {
     async (overlappingPDOs: any[] | undefined) => {
       const PDOList = overlappingPDOs?.map((item: any) => {
         let myData = data.filter((i: { pdoid: any }) => item === i.pdoid);
-        // console.log("myData", myData);
-        console.log(
-          "vulnerabilityVisibility in getListData ??? false??:",
-          vulnerabilityVisibility,
-        );
 
         if (vulnerabilityVisibility) {
           myData.map((i: any) => {
@@ -330,7 +332,7 @@ export default function Page() {
         return myData;
       });
 
-      console.log("PDOList", PDOList);
+      // console.log("PDOList", PDOList);
 
       const flattenPDOS = PDOList?.flat();
       if (flattenPDOS) {
@@ -440,7 +442,76 @@ export default function Page() {
     // .setPaintProperty("vulnerability", "circle-radius", "200");
     // .setLayerZoomRange("pdo-pins", 0, 22)
     // .setPaintProperty("pdo-pins", "circle-color", "green");
+  } else {
+    mapRef.current &&
+      mapRef.current
+        .getMap()
+        .setPaintProperty("pdo-area", "fill-color", "hsl(338, 96%, 38%)")
+        .setPaintProperty("pdo-pins", "circle-color", "hsl(338, 96%, 38%)")
+        .setPaintProperty("pdo-pins", "circle-radius", 3.63)
+        .setPaintProperty("pdo-pins", "circle-opacity", 1);
   }
+
+  const getPDOsByVulnerability = useCallback(
+    async (value: string) => {
+      const PDOList = data?.map((item: any) => {
+        let myData = vulnerability.filter((v: any) => item.pdoid === v.PDOid);
+        item.vulneral = myData[0];
+
+        // console.log("item", item);
+        // console.log("mydata: ", myData);
+
+        // reset the vulnerability filter
+        if (value === "all") {
+          return item;
+        }
+        if (myData[0]?.Vulnerability?.startsWith(value)) {
+          return item;
+        }
+      });
+      // console.log("PDOList", PDOList);
+
+      // remove undefined values
+      PDOList.filter((item) => item);
+
+      const flattenPDOS = PDOList.filter((item) => item)?.flat();
+      if (flattenPDOS) {
+        setPdos(flattenPDOS);
+      }
+
+      const showIDs = flattenPDOS.map((item) => {
+        return item.pdoid;
+      });
+
+      const clearFilter =
+        mapRef.current &&
+        mapRef.current
+          .getMap()
+          .setFilter("pdo-area", null)
+          .setFilter("pdo-pins", null);
+
+      const filter =
+        mapRef.current &&
+        mapRef.current
+          .getMap()
+          .setFilter("pdo-area", [
+            "match",
+            ["get", "PDOid"],
+            showIDs,
+            true,
+            false,
+          ])
+          .setFilter("pdo-pins", [
+            "match",
+            ["get", "PDOid"],
+            showIDs,
+            true,
+            false,
+          ]);
+      // console.log("flattenPDOS", flattenPDOS);
+    },
+    [onClearFilter, openDetail, setPdos, mapRef, paddingResponsive],
+  );
 
   const getPdoIDsByPdoName = useCallback(
     async (pdoname: string) => {
@@ -705,6 +776,27 @@ export default function Page() {
     [getPdoIDsByFilter],
   );
 
+  const onVulneralFilter = useCallback(
+    (e: RadioChangeEvent) => {
+      console.log("vulnerability filter: ", e.target.value);
+
+      history.replaceState(
+        {},
+        "",
+        `/?vulneral=${encodeURI(e.target.value.toString())}`,
+      );
+      setFromSearch(true);
+      setActivePDO(null);
+      setSelectValue(null);
+      setSelectMunicValue(null);
+      setSelectCatValue(null);
+      setSelectVarValue(null);
+      setSelectCountryValue(null);
+      getPDOsByVulnerability(e.target.value);
+    },
+    [getPDOsByVulnerability],
+  );
+
   const onSearch = (value: string) => {
     //console.log("search:", value);
   };
@@ -714,29 +806,34 @@ export default function Page() {
     if (!mapLoaded) {
       return;
     }
-    if (searchParams?.get("vulnerability")) {
+    if (searchParams?.get("vulnerability") === "true") {
       setVulnerabilityVisibility(true);
+    }
+    if (searchParams?.get("vulnerability") === "false") {
+      setVulnerabilityVisibility(false);
     }
     if (searchParams?.get("country")) {
       onSelectCountryNameChange(
-        decodeURI(searchParams?.get("country")!.toString()),
+        decodeURI(searchParams?.get("country")?.toString() ?? ""),
       );
     } else if (searchParams?.get("pdoname")) {
       onSelectPdoNameChange(
-        decodeURI(searchParams?.get("pdoname")!.toString()),
+        decodeURI(searchParams?.get("pdoname")!.toString() ?? ""),
       );
     } else if (searchParams?.get("cat")) {
-      onSearchCatChange(decodeURI(searchParams?.get("cat")!.toString()));
+      onSearchCatChange(decodeURI(searchParams?.get("cat")!.toString()) ?? "");
     } else if (searchParams?.get("variety")) {
       onSearchVarietyChange(
-        decodeURI(searchParams?.get("variety")!.toString()),
+        decodeURI(searchParams?.get("variety")!.toString() ?? ""),
       );
     } else if (searchParams?.get("munic")) {
-      onSelectMunicChange(decodeURI(searchParams?.get("munic")!.toString()));
+      onSelectMunicChange(
+        decodeURI(searchParams?.get("munic")!.toString()) ?? "",
+      );
     } else if (searchParams?.get("pdo")) {
       /* detail view */
-      openDetail(decodeURI(searchParams?.get("pdo")!.toString()));
-      showPDOonMap(decodeURI(searchParams?.get("pdo")!.toString()));
+      openDetail(decodeURI(searchParams?.get("pdo")!) ?? "");
+      showPDOonMap(decodeURI(searchParams?.get("pdo")!) ?? "");
     }
   }, [
     mapLoaded,
@@ -922,8 +1019,8 @@ export default function Page() {
                     10% are at very high risk
                   </p>
                   <hr className="my-6" />
+                  <h3>Tipp</h3>
                   <p>
-                    <h3>Tipp</h3>
                     Zoom and select a region on the map to get detailed
                     information about the PDOs vulnerbility.
                   </p>
@@ -996,6 +1093,7 @@ export default function Page() {
                       className="w-[20px] h-[20px]"
                     />
                   )}
+
                   {pdo?.pdoname}
                 </h2>
                 {pdo?.registration && (
@@ -1073,6 +1171,105 @@ export default function Page() {
                   reset
                 </button>
               </div>
+              {/* PDOid: string;
+  financial: number;
+  natural: number;
+  physical: number;
+  social: number;
+  human: number;
+
+  adaptiveCap: number;
+  Exposure: number;
+  Sensitivity: number;
+  Vulnerability: string; 
+  
+  
+  Die Tabelle "vulnerability_indikatoren": Enthält die Werte für die einzelnen Indikatorgruppen der Adaptive capacity (financial, human, social, natural und physical) für die genauere Darstellung mit den Kreisdiagrammen welche du uns gezeigt hast. Dazu ist in der Tabelle noch der adaptive capacity indikator (welcher sich aus den vorigen fünf indikatoren zusammensetzt), 
+  
+  der sensitivity indikator, der exposure indikator und der vulnerability indikator für die PDOs enthalten. 
+  
+  
+  Für den Vulnerability Indikator gibt es drei verschiedenen Abstufungen von "High", je nach dem wie die einzelnen Dimensionen (Exposure, Sensitivity und Adaptive Capacity) zusammengesetzt sind. Im file "vulnerability_map" findest du die dazugehörige Legende, welche die einzlenen Kategorien darstellt.
+Tie Tabelle "adaptive_capacity_indicator explanation" enthält eine erklärung zu den einzelnen Indikatoren der adaptive capacity
+Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. DI = dryness index, huglin = Huglin Index, cni = Cool Night Index
+  
+  */}
+              {vulnerabilityVisibility && activePDO.vulneral && (
+                <div className="">
+                  <h3 className="text-[24px] font-medium mb-4">
+                    Vulnerability Index
+                  </h3>
+                  <div className="flex items-center gap-4 text-[20px] my-12">
+                    <VulnerabilityDot
+                      type={activePDO.vulneral.Vulnerability}
+                      className="block m-0 w-8 h-8"
+                    />
+                    <span className="block">
+                      {activePDO.vulneral.Vulnerability}
+                    </span>
+                  </div>
+                  <hr className="my-6" />
+                  {/* <h3 className="text-[18px] font-medium mb-4">Sensitivity</h3> */}
+                  <div className="flex  gap-4">
+                    <Pie
+                      percentage={activePDO.vulneral.Sensitivity}
+                      label="Sensitivity"
+                    />
+                    <Pie
+                      percentage={activePDO.vulneral.Exposure}
+                      label="Exposure"
+                    />
+                    <Pie
+                      percentage={activePDO.vulneral.adaptiveCap}
+                      label="Adaptive Capacity"
+                    />
+                  </div>
+                  <hr className="my-6" />
+                  <span className="block">Adaptive Capacity in detail</span>
+                  <AdaptiveChart data={activePDO.vulneral} />
+
+                  {/* adaptive capacity indicator */}
+                  {/* <p>
+                    <span className="bold">Vulnerability:</span>{" "}
+                    {activePDO.vulneral.Vulnerability}
+                  </p>
+                  <p>
+                    <span className="bold">Financial:</span>{" "}
+                    {activePDO.vulneral.financial}
+                  </p>
+                  <p>
+                    <span className="bold">Natural:</span>{" "}
+                    {activePDO.vulneral.natural}
+                  </p>
+                  <p>
+                    <span className="bold">Physical:</span>{" "}
+                    {activePDO.vulneral.physical}
+                  </p>
+                  <p>
+                    <span className="bold">Social:</span>{" "}
+                    {activePDO.vulneral.social}
+                  </p>
+                  <p>
+                    <span className="bold">Human:</span>{" "}
+                    {activePDO.vulneral.human}
+                  </p>
+
+                  <p>
+                    <span className="bold">Adaptive capacity:</span>{" "}
+                    {activePDO.vulneral.adaptiveCap}
+                  </p>
+                  <p>
+                    <span className="bold">Exposure:</span>{" "}
+                    {activePDO.vulneral.Exposure}
+                  </p>
+                  <p>
+                    <span className="bold">Sensitivity:</span>{" "}
+                    {activePDO.vulneral.Sensitivity}
+                  </p> */}
+                </div>
+              )}
+              <hr className="my-6" />
+
               {activePDO?.country && (
                 <p>
                   <Image
@@ -1341,21 +1538,151 @@ export default function Page() {
               reset
             </button>
           </div>
-          {zoomLevel && zoomLevel > 7 && (
-            <div className={styles.toggleVineyards}>
-              <button
-                className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
-                onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
-                  toggleVineyards(e)
-                }
+          <div className="flex items-center mt-5 gap-3">
+            {vulnerabilityVisibility ? (
+              <Link
+                href="?vulnerability=false"
+                className="px-4 py-1 inline-flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black"
               >
-                {vineyardVisibility ? "hide" : "show"} vineyards
-              </button>
+                exit vulnerability mode
+              </Link>
+            ) : (
+              <Link
+                href="?vulnerability=true"
+                className="px-4 py-1 inline-flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black"
+              >
+                enter vulnerability mode
+              </Link>
+            )}
+
+            {zoomLevel && zoomLevel > 7 && (
+              <div className={styles.toggleVineyards}>
+                <button
+                  className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
+                  onClick={(
+                    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+                  ) => toggleVineyards(e)}
+                >
+                  {vineyardVisibility ? "hide" : "show"} vineyards
+                </button>
+              </div>
+            )}
+          </div>
+          {vulnerabilityVisibility && (
+            <div className="vulnerabilityLegend">
+              <div className="legend-title">
+                Vulnerability Index <span>i</span>
+              </div>
+
+              <div className=" ">
+                <Radio.Group
+                  onChange={onVulneralFilter}
+                  style={{
+                    borderRadius: "0",
+                    display: "flex",
+                    width: "600px",
+                    margin: "0 auto",
+                  }}
+                >
+                  <Radio.Button
+                    value="low"
+                    style={{
+                      background: "#4FF47C",
+                    }}
+                  >
+                    Low
+                    <svg viewBox="0 0 100 100" className="w-[15px]">
+                      <polygon
+                        points="50 15, 100 100, 0 100"
+                        className="vul-indicator-arrow"
+                      />
+                    </svg>
+                  </Radio.Button>
+                  <Radio.Button
+                    value="moderate"
+                    style={{
+                      background: "#F5DA5C",
+                    }}
+                  >
+                    Moderate
+                    <svg viewBox="0 0 100 100" className="w-[15px]">
+                      <polygon
+                        points="50 15, 100 100, 0 100"
+                        className="vul-indicator-arrow"
+                      />
+                    </svg>
+                  </Radio.Button>
+                  <Radio.Button
+                    value="high"
+                    style={{
+                      background: "#FF6D31",
+                    }}
+                  >
+                    High
+                    <svg viewBox="0 0 100 100" className="w-[15px]">
+                      <polygon
+                        points="50 15, 100 100, 0 100"
+                        className="vul-indicator-arrow"
+                      />
+                    </svg>
+                  </Radio.Button>
+                  <Radio.Button
+                    value="very high"
+                    style={{
+                      background: "#F51C1C",
+                    }}
+                  >
+                    Very high
+                    <svg viewBox="0 0 100 100" className="w-[15px]">
+                      <polygon
+                        points="50 15, 100 100, 0 100"
+                        className="vul-indicator-arrow"
+                      />
+                    </svg>
+                  </Radio.Button>
+                  <Radio.Button
+                    value="all"
+                    className="viewAllvul"
+                    style={{
+                      background: "transparent",
+                    }}
+                  >
+                    {" "}
+                    show all
+                  </Radio.Button>
+                </Radio.Group>
+              </div>
+              {/* <div className="legend-bar">
+                <div
+                  className="legend-row cursor-pointer bg-[#4FF47C] hover:bg-[#4FF47C]/80"
+                  onClick={() => onVulneralFilter("low")}
+                >
+                  <div className="legend-text">Low</div>
+                </div>
+                <div
+                  className="legend-row cursor-pointer bg-[#F5DA5C] hover:bg-[#F5DA5C]"
+                  onClick={() => onVulneralFilter("moderate")}
+                >
+                  <div className="legend-text">Moderate</div>
+                </div>
+                <div
+                  className="legend-row cursor-pointer bg-[#FF6D31] hover:bg-[#FF6D31]"
+                  onClick={() => onVulneralFilter("high")}
+                >
+                  <div className="legend-text">High</div>
+                </div>
+                <div
+                  className="legend-row cursor-pointer bg-[#F51C1C] hover:bg-[#F51C1C]"
+                  onClick={() => onVulneralFilter("very high")}
+                >
+                  <div className="legend-text">Very High</div>
+                </div>
+              </div> */}
             </div>
           )}
         </Suspense>
       </div>
-      {vulnerabilityVisibility && <VulnerabilityLegend />}
+
       <div className={styles.imprintBoxMap}>
         <span>
           © {year} Eurac Research{" "}
