@@ -160,16 +160,21 @@ export default function Page() {
       : { top: 100, bottom: 25, left: 400, right: 5 };
   }, []);
 
-  const openDetail = useCallback(async (id: string) => {
-    let PDO: JSONObject[] = data.filter((i: { pdoid: any }) => id === i.pdoid);
-    if (vulnerabilityVisibility) {
-      const vul = vulnerability.filter((v: any) => id === v.PDOid);
-      PDO[0].vulneral = vul[0]; // Add 'vulneral' property
-    }
+  const openDetail = useCallback(
+    async (id: string) => {
+      let PDO: JSONObject[] = data.filter(
+        (i: { pdoid: any }) => id === i.pdoid,
+      );
+      if (vulnerabilityVisibility) {
+        const vul = vulnerability.filter((v: any) => id === v.PDOid);
+        PDO[0].vulneral = vul[0]; // Add 'vulneral' property
+      }
 
-    history.replaceState({}, "", `/?pdo=${encodeURI(id)}`);
-    setActivePDO(PDO[0]);
-  }, []);
+      history.replaceState({}, "", `/?pdo=${encodeURI(id)}`);
+      setActivePDO(PDO[0]);
+    },
+    [vulnerabilityVisibility],
+  );
 
   /* return PDO Name by given PDOid */
   function getPDONameById(
@@ -511,7 +516,7 @@ export default function Page() {
           ]);
       // console.log("flattenPDOS", flattenPDOS);
     },
-    [onClearFilter, openDetail, setPdos, mapRef, paddingResponsive],
+    [setPdos, mapRef],
   );
 
   const getPdoIDsByPdoName = useCallback(
@@ -849,6 +854,7 @@ export default function Page() {
     onSearchVarietyChange,
     onSelectMunicChange,
     onSelectPdoNameChange,
+    onClearFilter,
   ]);
 
   /* RETURN */

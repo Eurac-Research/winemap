@@ -575,6 +575,73 @@ a {
       font-weight: 600;
     }
   }
+
+  .ant-radio-button-wrapper {
+    color: #000 !important;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    border: none;
+    height: 25px;
+    border-radius: 0 !important;
+    width: 100%;
+    position: relative;
+    span {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 5px;
+
+      line-height: 1;
+    }
+    &:before {
+      display: none !important;
+    }
+    &:hover {
+      color: #000 !important;
+      .vul-indicator-arrow {
+        display: block;
+      }
+    }
+    &.viewAllvul {
+      color: #fff !important;
+      width: 100px;
+      flex-shrink: 0;
+      &:hover {
+        span {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  .ant-radio-button-wrapper:first-child {
+    border: none;
+  }
+  .ant-radio-button-wrapper-checked {
+    color: #000 !important;
+    .vul-indicator-arrow {
+      display: block;
+      path {
+        fill: #fff;
+      }
+    }
+  }
+
+  .vul-indicator-arrow {
+    display: none;
+    position: absolute;
+    top: 20px;
+    width: 16px;
+    path {
+      stroke: #fff;
+      stroke-width: 3px;
+      fill: none;
+    }
+  }
 }
 
 // .vulnerabilityDot {
@@ -585,70 +652,3 @@ a {
 //   display: inline-block;
 //   vertical-align: middle;
 // }
-
-.ant-radio-button-wrapper {
-  color: #000 !important;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  border: none;
-  height: 25px;
-  border-radius: 0 !important;
-  width: 100%;
-  position: relative;
-  span {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 5px;
-
-    line-height: 1;
-  }
-  &:before {
-    display: none !important;
-  }
-  &:hover {
-    color: #000 !important;
-    .vul-indicator-arrow {
-      display: block;
-    }
-  }
-  &.viewAllvul {
-    color: #fff !important;
-    width: 100px;
-    flex-shrink: 0;
-    &:hover {
-      span {
-        text-decoration: underline;
-      }
-    }
-  }
-}
-.ant-radio-button-wrapper:first-child {
-  border: none;
-}
-.ant-radio-button-wrapper-checked {
-  color: #000 !important;
-  .vul-indicator-arrow {
-    display: block;
-    path {
-      fill: #fff;
-    }
-  }
-}
-
-.vul-indicator-arrow {
-  display: none;
-  position: absolute;
-  top: 20px;
-  width: 16px;
-  path {
-    stroke: #fff;
-    stroke-width: 3px;
-    fill: none;
-  }
-}
