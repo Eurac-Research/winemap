@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 import styles from "@/styles/Home.module.scss";
+import Textnavigation from "../components/textnavigation";
 
 export default function About() {
-  const year = new Date().getFullYear();
   return (
     <main className={styles.staticContentBox}>
       <Link href="/" className={styles.backLink}>
@@ -121,34 +121,7 @@ export default function About() {
         </span>
       </p>
 
-      <div className={styles.frontpageContent} style={{ padding: "0" }}>
-        <p className={styles.homeNavigation}>
-          <Link href="/about" className={styles.homeNavigationItem}>
-            About the project
-          </Link>
-        </p>
-        <p>
-          <Link href="/about-pdo" className={styles.homeNavigationItem}>
-            What’s a PDO?
-          </Link>
-        </p>
-        <p>
-          <Link href="/about-data" className={styles.homeNavigationItem}>
-            About the data
-          </Link>
-        </p>
-        <p>
-          <Link href="/team" className={styles.homeNavigationItem}>
-            The Team
-          </Link>
-        </p>
-      </div>
-      <div className={styles.imprintBoxMap}>
-        <span>
-          © {year} Eurac Research{" "}
-          <Link href="/imprint-privacy">Imprint / Privacy</Link>
-        </span>
-      </div>
+      <Textnavigation />
     </main>
   );
 }

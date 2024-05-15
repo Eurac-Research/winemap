@@ -1008,7 +1008,7 @@ export default function Page() {
 
                   <Link
                     href="?vulnerability=true"
-                    className="vulnerbilityButton my-8"
+                    className="vulnerbilityButton"
                   >
                     <span className="buttonLabel">climate change</span>
                     <span className="buttonText">
@@ -1660,14 +1660,14 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
                 href="?vulnerability=false"
                 className="px-4 py-1 inline-flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black"
               >
-                exit WINEMAP CLIMATE
+                exit climate mode
               </Link>
             ) : (
               <Link
                 href="?vulnerability=true"
                 className="px-4 py-1 inline-flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black"
               >
-                enter WINEMAP CLIMATE
+                enter climate mode
               </Link>
             )}
 
