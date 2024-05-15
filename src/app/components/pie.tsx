@@ -12,6 +12,13 @@ export default function Pie(props: { percentage: number; label?: string }) {
     color =
       percentage < 33 ? "#FF6D31" : percentage < 66 ? "#F5DA5C" : "#4FF47C";
   }
+  if (props.label === "Sensitivity") {
+    color =
+      percentage < 33 ? "#FF6D31" : percentage < 66 ? "#F5DA5C" : "#4FF47C";
+    const score =
+      percentage < 33 ? "Low" : percentage < 66 ? "Moderate" : "High";
+  }
+
   return (
     <div>
       <div className="w-[100px] h-[90px] mx-auto font-medium my-6">
