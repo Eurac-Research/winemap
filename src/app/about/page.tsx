@@ -89,16 +89,24 @@ export default function About() {
       </p>
       <div className={styles.frontpageContent} style={{ padding: "0" }}>
         <p className={styles.homeNavigation}>
-          <Link href="/about">About the project</Link>
+          <Link href="/about" className={styles.homeNavigationItem}>
+            About the project
+          </Link>
         </p>
         <p>
-          <Link href="/about-pdo">What’s a PDO?</Link>
+          <Link href="/about-pdo" className={styles.homeNavigationItem}>
+            What’s a PDO?
+          </Link>
         </p>
         <p>
-          <Link href="/about-data">About the data</Link>
+          <Link href="/about-data" className={styles.homeNavigationItem}>
+            About the data
+          </Link>
         </p>
         <p>
-          <Link href="/team">The Team</Link>
+          <Link href="/team" className={styles.homeNavigationItem}>
+            The Team
+          </Link>
         </p>
       </div>
       <div className={styles.imprintBoxMap}>

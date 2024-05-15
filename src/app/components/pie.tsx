@@ -3,14 +3,23 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 export default function Pie(props: { percentage: number; label?: string }) {
-  const percentage = props.percentage;
+  const percentage = Math.round(props.percentage * 100);
+
+  const score = percentage < 33 ? "Low" : percentage < 66 ? "Moderate" : "High";
+  let color =
+    percentage < 33 ? "#4FF47C" : percentage < 66 ? "#F5DA5C" : "#FF6D31";
+  if (props.label === "Adaptive Capacity") {
+    color =
+      percentage < 33 ? "#FF6D31" : percentage < 66 ? "#F5DA5C" : "#4FF47C";
+  }
   return (
     <div>
-      <div className="w-[100px] h-[100px] mx-auto font-medium my-6">
+      <div className="w-[100px] h-[90px] mx-auto font-medium my-6">
         <CircularProgressbar
           value={percentage}
-          maxValue={1}
-          text={`${Math.round(percentage * 100)}%`}
+          maxValue={100}
+          text={`${percentage}`}
+          strokeWidth={6}
           styles={buildStyles({
             // Rotation of path and trail, in number of turns (0-1)
             rotation: 0,
@@ -28,12 +37,20 @@ export default function Pie(props: { percentage: number; label?: string }) {
             // pathTransition: 'none',
 
             // Colors
-            pathColor: `rgb(190, 4, 72)`,
-            textColor: "#fff",
+            pathColor: color,
+            textColor: color,
+            trailColor: "rgba(255,255,255,0.1)",
+
+            backgroundColor: "#fff",
           })}
         />
       </div>
-      {props.label && <div className="text-center mt-2">{props.label}</div>}
+      {props.label && (
+        <div className="text-center text-[14px] mt-2" style={{ color: color }}>
+          {score}
+          <br /> {props.label}
+        </div>
+      )}
     </div>
   );
 }

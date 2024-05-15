@@ -1214,7 +1214,7 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
                       i
                     </Link>
                   </h3>
-                  <span className="text-[14px] leading-[140%] block text-white/80">
+                  {/* <span className="text-[14px] leading-[140%] block text-white/80">
                     The vulnerability of a PDO region is determined by a set of
                     indicators. Lorem ipsum dolor sit amet, consectetur
                     adipiscing elit, sed do eiusmod tempor incididunt ut labore
@@ -1222,8 +1222,8 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
                     <Link href="/vulnerability" className="underline">
                       Read more
                     </Link>
-                  </span>
-                  <div className="flex items-center gap-4 text-[20px] my-12">
+                  </span> */}
+                  <div className="flex items-center gap-4 text-[20px] my-8">
                     <VulnerabilityDot
                       type={activePDO.vulneral.Vulnerability}
                       className="block m-0 w-8 h-8"
@@ -1232,20 +1232,38 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
                       {activePDO.vulneral.Vulnerability}
                     </span>
                   </div>
+                  <span className="mt-6 text-[14px] leading-[150%] block text-white font-semibold mb-4">
+                    {activePDO.pdoname}{" "}
+                    {activePDO.vulneral.Vulnerability === "low"
+                      ? "is at low risk due to its moderate to high adaptive capacity and its low sensitivity and exposure."
+                      : activePDO.vulneral.Vulnerability === "moderate"
+                      ? "is at moderate risk due to its moderate to high adaptive capacity and moderate to high sensitivity and exposure."
+                      : activePDO.vulneral.Vulnerability ===
+                        "high (low-mod Exposure)"
+                      ? "is at high risk due to its low adaptive capacity, high sensitivity and low-moderate exposure"
+                      : activePDO.vulneral.Vulnerability ===
+                        "high (low-mod Sensitivity)"
+                      ? "is at high risk due to its low adaptive capacity, low-moderate sensitivity and high exposure"
+                      : activePDO.vulneral.Vulnerability ===
+                        "high (mod-high Adapt. capacity)"
+                      ? "is at high risk due to its moderate to high adaptive capacity and its high sensitivity and exposure."
+                      : activePDO.vulneral.Vulnerability === "very high"
+                      ? "is at very high risk due to its low adaptive capacity and its high sensitivity and exposure."
+                      : ""}
+                  </span>
+
                   <hr className="my-6" />
-                  {/* <h3 className="text-[18px] font-medium mb-4">Sensitivity</h3> */}
-                  <div className="flex gap-4 mb-2">
-                    <Pie
-                      percentage={activePDO.vulneral.Sensitivity}
-                      label="Sensitivity"
-                    />
+                  <h3 className="text-[18px] font-medium mb-4">
+                    Exposure & Sensitivity
+                  </h3>
+                  <div className="flex gap-8 mb-4 justify-center">
                     <Pie
                       percentage={activePDO.vulneral.Exposure}
                       label="Exposure"
                     />
                     <Pie
-                      percentage={activePDO.vulneral.adaptiveCap}
-                      label="Adaptive Capacity"
+                      percentage={activePDO.vulneral.Sensitivity}
+                      label="Sensitivity"
                     />
                   </div>
                   <span className="text-[14px] leading-[140%] block text-white/80 mb-2">
@@ -1260,65 +1278,48 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
                     elit, sed do eiusmod tempor incididunt ut labore et dolore
                     magna aliqua.
                   </span>
-                  <span className="text-[14px] leading-[140%] block text-white/80 mb-2">
+
+                  <hr className="my-6" />
+                  <h3 className="text-[18px] font-medium mb-4">
+                    Adaptive Capacity
+                  </h3>
+                  <Pie
+                    percentage={activePDO.vulneral.adaptiveCap}
+                    label="Adaptive Capacity"
+                  />
+                  <span className="mt-4 text-[14px] leading-[140%] block text-white/80 mb-4">
                     <b>Adaptive Capacity</b> is the degree to which a region is
                     affected by ... Lorem ipsum dolor sit amet, consectetur
                     adipiscing elit, sed do eiusmod tempor incididunt ut labore
                     et dolore magna aliqua.
                   </span>
 
-                  <hr className="my-6" />
-                  <span className="block">Adaptive Capacity in detail</span>
+                  <span className="block mb-4 mt-2">
+                    Adaptive Capacity in detail
+                  </span>
                   <AdaptiveChart data={activePDO.vulneral} />
 
-                  <span className="text-[14px] leading-[140%] block text-white/80 mb-2">
-                    <b>Financial</b> is the degree to which a region is affected
-                    by ... Lorem ipsum dolor sit amet, consectetur adipiscing
-                    elit, sed do eiusmod tempor incididunt ut labore et dolore
-                    magna aliqua.
+                  {/* <span className="mt-4 text-[14px] leading-[140%] block text-white/80 mb-2">
+                    <b>Financial dimension</b> describing the financial
+                    situation of farms specialized on viticulture in a region
                   </span>
-
-                  {/* adaptive capacity indicator */}
-                  {/* <p>
-                    <span className="bold">Vulnerability:</span>{" "}
-                    {activePDO.vulneral.Vulnerability}
-                  </p>
-                  <p>
-                    <span className="bold">Financial:</span>{" "}
-                    {activePDO.vulneral.financial}
-                  </p>
-                  <p>
-                    <span className="bold">Natural:</span>{" "}
-                    {activePDO.vulneral.natural}
-                  </p>
-                  <p>
-                    <span className="bold">Physical:</span>{" "}
-                    {activePDO.vulneral.physical}
-                  </p>
-                  <p>
-                    <span className="bold">Social:</span>{" "}
-                    {activePDO.vulneral.social}
-                  </p>
-                  <p>
-                    <span className="bold">Human:</span>{" "}
-                    {activePDO.vulneral.human}
-                  </p>
-
-                  <p>
-                    <span className="bold">Adaptive capacity:</span>{" "}
-                    {activePDO.vulneral.adaptiveCap}
-                  </p>
-                  <p>
-                    <span className="bold">Exposure:</span>{" "}
-                    {activePDO.vulneral.Exposure}
-                  </p>
-                  <p>
-                    <span className="bold">Sensitivity:</span>{" "}
-                    {activePDO.vulneral.Sensitivity}
-                  </p> */}
+                  <span className="text-[14px] leading-[140%] block text-white/80 mb-2">
+                    <b>Natural dimension</b> reflecting the topoclimatic
+                    diversity within a region
+                  </span>
+                  <span className="text-[14px] leading-[140%] block text-white/80 mb-2">
+                    <b>Physical dimension</b> describing the presence of
+                    infrastructure and physical assets for viticulture
+                  </span>
+                  <span className="text-[14px] leading-[140%] block text-white/80 mb-2">
+                    <b>Social and human dimensions</b> which are related to
+                    population characteristics, such as age structure or
+                    employment, and education as well as available labour force
+                    within the wine regions.
+                  </span> */}
                 </div>
               )}
-              <hr className="my-6" />
+              <hr className="mt-12 mb-12" />
 
               {activePDO?.country && (
                 <p>
@@ -1478,7 +1479,7 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
         <header className={styles.header}>
           <Link
             href="/"
-            className={styles.frontpageLink}
+            className={`${styles.frontpageLink} pb-[3px]`}
             onClick={() => onClearFilter()}
           >
             WINEMAP by
