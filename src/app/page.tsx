@@ -1069,13 +1069,19 @@ export default function Page() {
                 <>
                   <h2>How vulnerable are our Vineyards?</h2>
                   <p>
-                    The vulnerability of a PDO region is determined by a
-                    combination of three factors: exposure, sensitivity, and
-                    adaptive capacity. Exposure is the degree to which a region
-                    is exposed to climate change impacts. Sensitivity is the
-                    degree to which a region is affected by climate change
-                    impacts. Adaptive capacity is the ability of a region to
-                    adapt to climate change impacts
+                    The vulnerability of a Protected Designation of Origin (PDO)
+                    region is an indication of its resilience towards climate
+                    change. It encompasses various factors, including exposure
+                    to climate change, sensitivity to their impacts, and the
+                    capacity to adapt. It is influenced by social, economic, and
+                    environmental conditions, as well as geographical location
+                    and access to resources. A higher vulnerability indicates
+                    regions that are more susceptible to experiencing adverse
+                    effects from climate change compared to the other European
+                    PDO regions, while regions with a lower vulnerability are
+                    comparatively more resilient. Assessing vulnerability helps
+                    to identify regions most at risk, guiding efforts to enhance
+                    resilience and reduce negative impacts of climate change.
                   </p>
                   <h2 className="mt-6">Vulnerability overview for all PDOs</h2>
                   <p className="flex items-center mb-2">
@@ -1322,14 +1328,17 @@ export default function Page() {
                   </div>
                   <span className="text-[14px] leading-[140%] block text-white/80 mb-2">
                     <b>Exposure</b> measures the degree of climate change in a
-                    region. The annual average temperature and precipitation
-                    (1981–2010), as well as climate models (2071–2100), are used
-                    to determine the exposure.
+                    region based on a set of bioclimatic variables tailored to
+                    viticulture. The stronger the changes in climatic conditions
+                    between the future (2071-2100) and the past (1981-2010), the
+                    higher the exposure.
                   </span>
                   <span className="text-[14px] leading-[140%] block text-white/80 mb-2">
-                    <b>Sensitivity</b> describes the degree to which a system is
-                    affected by climate related stimuli based on the climate
-                    niche of currently cultivated varieties.
+                    <b>Sensitivity</b> describes how a region is affected by
+                    climate change. It is based on the abundance and diversity
+                    of cultivated varieties within a region combined with their
+                    climatic requirements. Impacts of changing climatic
+                    conditions are stronger in regions with a high sensitivity.
                   </span>
 
                   <hr className="my-6" />
@@ -1342,9 +1351,10 @@ export default function Page() {
                   />
                   <span className="mt-4 text-[14px] leading-[140%] block text-white/80 mb-4">
                     <b>Adaptive Capacity</b> refers to how a region can adapt to
-                    changing climatic conditions and includes biophysical as
-                    well as socioeconomic aspects. The higher the value, the
-                    better a region can adapt.
+                    climate change. As such it includes a range of different
+                    factors, from biophysical to socioeconomic aspects. A higher
+                    adaptive capacity indicates an increased availability of
+                    resources for adaptation within a region.
                   </span>
 
                   <span className="block mb-4 mt-2">
