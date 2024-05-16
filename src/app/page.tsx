@@ -504,7 +504,10 @@ export default function Page() {
 
         // reset the vulnerability filter
         if (value === "all") {
-          return item;
+          if (item.vulneral) {
+            return item;
+          }
+          return null;
         }
         if (myData[0]?.Vulnerability?.startsWith(value)) {
           return item;
@@ -1077,19 +1080,19 @@ export default function Page() {
                   <h2 className="mt-6">Vulnerability overview for all PDOs</h2>
                   <p className="flex items-center mb-2">
                     <VulnerabilityDot type="low" className="mb-[2px]" />
-                    10% are at low risk
+                    27% are at low risk
                   </p>
                   <p className="flex items-center mb-2">
                     <VulnerabilityDot type="moderate" className="mb-[2px]" />
-                    30% are at moderart risk
+                    43% are at moderart risk
                   </p>
                   <p className="flex items-center mb-2">
                     <VulnerabilityDot type="high" className="mb-[2px]" />
-                    30% are at high risk
+                    25% are at high risk
                   </p>
                   <p className="flex items-center mb-2">
                     <VulnerabilityDot type="very high" className="mb-[2px]" />
-                    10% are at very high risk
+                    5% are at very high risk
                   </p>
 
                   <div className="bg-white text-black p-4 mt-6">
@@ -1235,7 +1238,7 @@ export default function Page() {
                 pdos ? ` ${styles.margin}` : ``
               } `}
             >
-              <h2 className="text-[32px] font-bold mb-4 ">
+              <h2 className="text-[32px] font-bold mb-4 leading-tight ">
                 {activePDO.pdoname}
               </h2>
               <div className={styles.buttonDiv}>
@@ -1254,29 +1257,6 @@ export default function Page() {
                   reset
                 </button>
               </div>
-              {/* PDOid: string;
-  financial: number;
-  natural: number;
-  physical: number;
-  social: number;
-  human: number;
-
-  adaptiveCap: number;
-  Exposure: number;
-  Sensitivity: number;
-  Vulnerability: string; 
-  
-  
-  Die Tabelle "vulnerability_indikatoren": Enthält die Werte für die einzelnen Indikatorgruppen der Adaptive capacity (financial, human, social, natural und physical) für die genauere Darstellung mit den Kreisdiagrammen welche du uns gezeigt hast. Dazu ist in der Tabelle noch der adaptive capacity indikator (welcher sich aus den vorigen fünf indikatoren zusammensetzt), 
-  
-  der sensitivity indikator, der exposure indikator und der vulnerability indikator für die PDOs enthalten. 
-  
-  
-  Für den Vulnerability Indikator gibt es drei verschiedenen Abstufungen von "High", je nach dem wie die einzelnen Dimensionen (Exposure, Sensitivity und Adaptive Capacity) zusammengesetzt sind. Im file "vulnerability_map" findest du die dazugehörige Legende, welche die einzlenen Kategorien darstellt.
-Tie Tabelle "adaptive_capacity_indicator explanation" enthält eine erklärung zu den einzelnen Indikatoren der adaptive capacity
-Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. DI = dryness index, huglin = Huglin Index, cni = Cool Night Index
-  
-  */}
               {vulnerabilityVisibility && activePDO.vulneral && (
                 <div className="">
                   <hr className="my-6" />
@@ -1300,13 +1280,13 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
                       type={activePDO.vulneral.Vulnerability}
                       className="block m-0 w-8 h-8"
                     />
-                    <span className="block">
+                    <span className="block capitalize font-bold">
                       {activePDO.vulneral.Vulnerability.startsWith("high")
                         ? "high"
                         : activePDO.vulneral.Vulnerability}{" "}
                     </span>
                   </div>
-                  <span className="mt-6 text-[14px] leading-[150%] block text-white font-semibold mb-4">
+                  <span className="mt-6 text-[16px] leading-[150%] block text-white font-medium mb-4">
                     {activePDO.pdoname}{" "}
                     {activePDO.vulneral.Vulnerability === "low"
                       ? `is at low risk due to its ${activePDO.vulneral.AdaptiveTxt} adaptive capacity and its low sensitivity and exposure.`
@@ -1341,16 +1321,15 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
                     />
                   </div>
                   <span className="text-[14px] leading-[140%] block text-white/80 mb-2">
-                    <b>Sensitivity</b> is the degree to which a region is
-                    affected by ... Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua.
+                    <b>Exposure</b> measures the degree of climate change in a
+                    region. The annual average temperature and precipitation
+                    (1981–2010), as well as climate models (2071–2100), are used
+                    to determine the exposure.
                   </span>
                   <span className="text-[14px] leading-[140%] block text-white/80 mb-2">
-                    <b>Exposure</b> is the degree to which a region is affected
-                    by ... Lorem ipsum dolor sit amet, consectetur adipiscing
-                    elit, sed do eiusmod tempor incididunt ut labore et dolore
-                    magna aliqua.
+                    <b>Sensitivity</b> describes the degree to which a system is
+                    affected by climate related stimuli based on the climate
+                    niche of currently cultivated varieties.
                   </span>
 
                   <hr className="my-6" />
@@ -1362,10 +1341,10 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
                     label="Adaptive Capacity"
                   />
                   <span className="mt-4 text-[14px] leading-[140%] block text-white/80 mb-4">
-                    <b>Adaptive Capacity</b> is the degree to which a region is
-                    affected by ... Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua.
+                    <b>Adaptive Capacity</b> refers to how a region can adapt to
+                    changing climatic conditions and includes biophysical as
+                    well as socioeconomic aspects. The higher the value, the
+                    better a region can adapt.
                   </span>
 
                   <span className="block mb-4 mt-2">
