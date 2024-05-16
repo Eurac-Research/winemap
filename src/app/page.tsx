@@ -1685,7 +1685,7 @@ Der Ordner "Klimaraster": Enthält die geotiff files der drei Klimaindikatoren. 
             )}
           </div>
           {vulnerabilityVisibility && (
-            <div className="vulnerabilityLegend flex-col lg:flex-row gap-6">
+            <div className="vulnerabilityLegend flex flex-col lg:flex-row gap-6">
               <div className="uppercase flex font-bold items-center gap-2 ">
                 Vulnerability Index{" "}
                 <Link href="/vulnerability" className="info">
