@@ -7,7 +7,7 @@ export default function Smallheader(props: {
   vulneral: boolean;
 }) {
   return (
-    <header className="flex px-[30px] py-[20px] items-center gap-2 bg-black">
+    <header className="md:sticky z-50 top-0 flex px-[30px] py-[20px] items-center gap-2 bg-black">
       <Link
         href="/"
         className={`${styles.frontpageLink} pb-[3px]`}

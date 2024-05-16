@@ -1,4 +1,3 @@
-import { text } from "stream/consumers";
 import React from "react";
 import ReactECharts from "echarts-for-react";
 
@@ -46,7 +45,6 @@ export default function AdaptiveChart(props: { data: VulnerabilityType }) {
         type: "shadow",
       },
       formatter: function (params: any) {
-        console.log(params[0]);
         const text =
           params[0]?.value[1] === "Financial"
             ? "describing the financial situation of farms specialized on viticulture in a region"

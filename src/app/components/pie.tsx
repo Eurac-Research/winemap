@@ -5,18 +5,24 @@ import "react-circular-progressbar/dist/styles.css";
 export default function Pie(props: { percentage: number; label?: string }) {
   const percentage = Math.round(props.percentage * 100);
 
-  const score = percentage < 33 ? "Low" : percentage < 66 ? "Moderate" : "High";
+  let score = percentage < 55 ? "Low" : percentage < 72 ? "Moderate" : "High";
   let color =
-    percentage < 33 ? "#4FF47C" : percentage < 66 ? "#F5DA5C" : "#FF6D31";
+    percentage < 55 ? "#4FF47C" : percentage < 72 ? "#F5DA5C" : "#FF6D31";
+
   if (props.label === "Adaptive Capacity") {
     color =
-      percentage < 33 ? "#FF6D31" : percentage < 66 ? "#F5DA5C" : "#4FF47C";
+      percentage < 38 ? "#FF6D31" : percentage < 55 ? "#F5DA5C" : "#4FF47C";
+    score = percentage < 38 ? "Low" : percentage < 55 ? "Moderate" : "High";
   }
   if (props.label === "Sensitivity") {
     color =
-      percentage < 33 ? "#FF6D31" : percentage < 66 ? "#F5DA5C" : "#4FF47C";
-    const score =
-      percentage < 33 ? "Low" : percentage < 66 ? "Moderate" : "High";
+      percentage < 55 ? "#4FF47C" : percentage < 72 ? "#F5DA5C" : "#FF6D31";
+    score = percentage < 55 ? "Low" : percentage < 72 ? "Moderate" : "High";
+  }
+  if (props.label === "Exposure") {
+    color =
+      percentage < 62 ? "#4FF47C" : percentage < 75 ? "#F5DA5C" : "#FF6D31";
+    score = percentage < 62 ? "Low" : percentage < 75 ? "Moderate" : "High";
   }
 
   return (
