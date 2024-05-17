@@ -1,0 +1,2 @@
+# Ignore all JSON files - they should be compressed and not formatted
+*.json

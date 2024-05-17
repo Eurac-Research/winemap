@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint src --cache --cache-strategy content",
-    "format": "prettier --check '**/*.{cjs,mjs,ts,tsx,md,json}' --ignore-unknown --ignore-path .gitignore",
-    "fmt": "prettier --write '**/*.{cjs,mjs,ts,tsx,md,json}' --ignore-unknown --ignore-path .gitignore",
+    "format": "prettier --check '**/*.{cjs,mjs,ts,tsx,md}' --ignore-unknown --ignore-path .gitignore",
+    "fmt": "prettier --write '**/*.{cjs,mjs,ts,tsx,md}' --ignore-unknown --ignore-path .gitignore",
     "ci": "yarn format && yarn lint && yarn tsc"
   },
   "dependencies": {
