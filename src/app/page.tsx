@@ -140,13 +140,9 @@ export default function Page() {
   const [zoomLevel, setZoomLevel] = useState<number | null>(null);
   const [vineyardVisibility, setVineyardVisibility] = useState<boolean>(false);
   const [mapLoaded, setMapLoaded] = useState<boolean>(false);
-  const [vulnerabilityVisibility, setVulnerabilityVisibility] = useState<
-    boolean | null
-  >(null);
+  const [vulnerabilityVisibility, setVulnerabilityVisibility] =
+    useState<boolean>(false);
 
-  const [vulnerabilityFilter, setVulnerabilityFilter] = useState<string | null>(
-    null,
-  );
   // const [selectVulneralValue, setSelectVulneralValue] = useState<string | null>(
   //   null,
   // );
@@ -189,7 +185,7 @@ export default function Page() {
 
     //console.log("pdos", pdos);
 
-    if (vulnerabilityFilter !== "true") {
+    if (!fromSearch) {
       mapRef.current &&
         mapRef.current
           .getMap()
@@ -214,7 +210,7 @@ export default function Page() {
     }
   }
   // matchExpression.push("blue");
-  matchExpression.push("blue"); // all other PDOs that are not in the vulnerability.json - should not be visible because of the filter
+  matchExpression.push("rgba(0,0,0,0)"); // all other PDOs that are not in the vulnerability.json - should not be visible because of the filter
 
   const circleRadiusValues = {
     type: "exponential",
@@ -265,6 +261,11 @@ export default function Page() {
 
       if (vulnerabilityVisibility) {
         const vul = vulnerability.filter((v: any) => id === v.PDOid);
+
+        if (!vul[0]) {
+          setActivePDO(PDO[0]);
+          return;
+        }
 
         PDO[0].vulneral = vul[0]; // Add 'vulneral' property
 
@@ -414,6 +415,13 @@ export default function Page() {
 
   /* clear all filter and zoom to inital view */
   const onClearFilter = useCallback(async () => {
+    setFromSearch(false);
+    setActivePDO(null);
+    setSelectValue(null);
+    setSelectMunicValue(null);
+    setSelectCatValue(null);
+    setSelectVarValue(null);
+    setPdos(null);
     mapRef.current &&
       mapRef.current
         .getMap()
@@ -424,12 +432,6 @@ export default function Page() {
           duration: 1000,
           offset: [100, 50],
         });
-    setActivePDO(null);
-    setSelectValue(null);
-    setSelectMunicValue(null);
-    setSelectCatValue(null);
-    setSelectVarValue(null);
-    setPdos(null);
     history.replaceState({}, "", "/");
   }, [mapRef]);
 
@@ -643,26 +645,42 @@ export default function Page() {
         return;
       }
 
+      // const showIDs = PDOList.map((item) => {
+      //   if (vulnerabilityVisibility) {
+      //   }
+      //   return item.pdoid;
+      // });
+
       const showIDs = PDOList.map((item) => {
+        if (vulnerabilityVisibility) {
+          const vul = vulnerability.filter((v) => item.pdoid === v.PDOid);
+          return vul.length > 0 ? vul[0].PDOid : null;
+        }
         return item.pdoid;
-      });
+      }).filter((id) => id !== null) as string[];
 
       if (showIDs.length === 1) {
         // open sidebar and show PDO details
         openDetail(showIDs[0]);
       }
-      const flattenPDOS = PDOList?.flat();
+      let flattenPDOS = PDOList?.flat();
+
+      // if (vulnerabilityVisibility) {
+      //   flattenPDOS.map((i: any) => {
+      //     const vul = vulnerability.filter((v: any) => i.pdoid === v.PDOid);
+      //     i.vulneral = vul[0];
+      //   });
+      // }
+
       setPdos(flattenPDOS);
 
-      const clearFilter =
-        mapRef.current &&
+      mapRef.current &&
         mapRef.current
           .getMap()
           .setFilter("pdo-area", null)
           .setFilter("pdo-pins", null);
 
-      const filter =
-        mapRef.current &&
+      mapRef.current &&
         mapRef.current
           .getMap()
           .setFilter("pdo-area", [
@@ -714,7 +732,14 @@ export default function Page() {
           );
       }
     },
-    [onClearFilter, openDetail, setPdos, mapRef, paddingResponsive],
+    [
+      onClearFilter,
+      openDetail,
+      setPdos,
+      mapRef,
+      paddingResponsive,
+      vulnerabilityVisibility,
+    ],
   );
 
   // show one single PDO on the map
@@ -759,7 +784,7 @@ export default function Page() {
       setSelectMunicValue(null);
       setSelectCatValue(null);
       setSelectVarValue(null);
-      setVulnerabilityFilter(null);
+
       setSelectCountryValue(null);
       getPdoIDsByPdoName(value);
     },
@@ -775,7 +800,7 @@ export default function Page() {
       setSelectMunicValue(null);
       setSelectCatValue(value);
       setSelectVarValue(null);
-      setVulnerabilityFilter(null);
+
       setSelectCountryValue(null);
       getPdoIDsByFilter(value, "category");
     },
@@ -791,7 +816,7 @@ export default function Page() {
       setSelectMunicValue(null);
       setSelectCatValue(null);
       setSelectVarValue(value);
-      setVulnerabilityFilter(null);
+
       setSelectCountryValue(null);
       getPdoIDsByFilter(value, "varietiesOiv");
     },
@@ -807,7 +832,7 @@ export default function Page() {
       setSelectMunicValue(null);
       setSelectCatValue(null);
       setSelectVarValue(null);
-      setVulnerabilityFilter(null);
+
       setSelectCountryValue(value);
       getPdoIDsByFilter(value, "country");
     },
@@ -824,7 +849,7 @@ export default function Page() {
       setSelectCatValue(null);
       setSelectVarValue(null);
       setSelectCountryValue(null);
-      setVulnerabilityFilter(null);
+
       getPdoIDsByFilter(value, "munic");
     },
     [getPdoIDsByFilter],
@@ -844,7 +869,7 @@ export default function Page() {
       setSelectCatValue(null);
       setSelectVarValue(null);
       setSelectCountryValue(null);
-      setVulnerabilityFilter("true");
+
       getPDOsByVulnerability(e.target.value);
     },
     [getPDOsByVulnerability],
@@ -1666,6 +1691,7 @@ export default function Page() {
           <div className="flex items-center mt-5 gap-3">
             {vulnerabilityVisibility ? (
               <Link
+                onClick={() => onClearFilter()}
                 href="?vulnerability=false"
                 className="px-4 py-1 inline-flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black"
               >
