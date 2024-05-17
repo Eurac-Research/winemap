@@ -140,9 +140,13 @@ export default function Page() {
   const [zoomLevel, setZoomLevel] = useState<number | null>(null);
   const [vineyardVisibility, setVineyardVisibility] = useState<boolean>(false);
   const [mapLoaded, setMapLoaded] = useState<boolean>(false);
-  const [vulnerabilityVisibility, setVulnerabilityVisibility] =
-    useState<boolean>(false);
+  const [vulnerabilityVisibility, setVulnerabilityVisibility] = useState<
+    boolean | null
+  >(null);
 
+  const [vulnerabilityFilter, setVulnerabilityFilter] = useState<string | null>(
+    null,
+  );
   // const [selectVulneralValue, setSelectVulneralValue] = useState<string | null>(
   //   null,
   // );
@@ -153,6 +157,104 @@ export default function Page() {
       ? { top: 100, bottom: 100, left: 0, right: 0 }
       : { top: 100, bottom: 25, left: 400, right: 5 };
   }, []);
+
+  /* vulnerability magic */
+  // done this way or via a <source> and a custom <layer>
+
+  const matchExpression: Expression = ["match", ["get", "PDOid"]];
+
+  if (vulnerabilityVisibility && vulnerability.length > 1) {
+    for (const row of vulnerability) {
+      let color = "#fff";
+      if (row["Vulnerability"] === "low") {
+        color = "#4FF47C";
+      } else if (row["Vulnerability"] === "moderate") {
+        color = "#F5DA5C";
+      } else if (row["Vulnerability"] === "high (low-mod Exposure)") {
+        color = "#FF6D31";
+      } else if (row["Vulnerability"] === "high (low-mod Sensitivity)") {
+        color = "#FF6D31";
+      } else if (row["Vulnerability"] === "high (mod-high Adapt. capacity)") {
+        color = "#FF6D31";
+      } else if (row["Vulnerability"] === "very high") {
+        color = "#F51C1C";
+      }
+      matchExpression.push(row["PDOid"], color);
+    }
+
+    // show only PDOs that are in the vulnerability.json
+    const showOnlyVulneralIDs = vulnerability.map((item) => {
+      return item.PDOid;
+    });
+
+    //console.log("pdos", pdos);
+
+    if (vulnerabilityFilter !== "true") {
+      mapRef.current &&
+        mapRef.current
+          .getMap()
+          .setFilter("pdo-pins", [
+            "match",
+            ["get", "PDOid"],
+            showOnlyVulneralIDs,
+            true,
+            false,
+          ]);
+
+      mapRef.current &&
+        mapRef.current
+          .getMap()
+          .setFilter("pdo-area", [
+            "match",
+            ["get", "PDOid"],
+            showOnlyVulneralIDs,
+            true,
+            false,
+          ]);
+    }
+  }
+  // matchExpression.push("blue");
+  matchExpression.push("blue"); // all other PDOs that are not in the vulnerability.json - should not be visible because of the filter
+
+  const circleRadiusValues = {
+    type: "exponential",
+    base: 1.75,
+    stops: [
+      [0, 2], // 0 = zoom level, 2 = circle radius
+      [6, 8],
+      [8, 26],
+    ],
+  };
+  const circleOpacityValues = {
+    type: "exponential",
+    stops: [
+      [0, 1], // 0 = zoom level, 1 opacity
+      [12, 0.5],
+      [16, 0.8],
+    ],
+  };
+
+  if (vulnerabilityVisibility) {
+    mapRef.current &&
+      mapRef.current
+        .getMap()
+        .setPaintProperty("pdo-area", "fill-color", matchExpression)
+        .setPaintProperty("pdo-pins", "circle-color", matchExpression)
+        .setPaintProperty("pdo-pins", "circle-radius", circleRadiusValues)
+        .setPaintProperty("pdo-pins", "circle-opacity", circleOpacityValues);
+    // .setPaintProperty("pdo-pins", "circle-opacity", 0);
+    // .setPaintProperty("vulnerability", "circle-radius", "200");
+    // .setLayerZoomRange("pdo-pins", 0, 22)
+    // .setPaintProperty("pdo-pins", "circle-color", "green");
+  } else {
+    mapRef.current &&
+      mapRef.current
+        .getMap()
+        .setPaintProperty("pdo-area", "fill-color", "hsl(338, 96%, 38%)")
+        .setPaintProperty("pdo-pins", "circle-color", "hsl(338, 96%, 38%)")
+        .setPaintProperty("pdo-pins", "circle-radius", 3.63)
+        .setPaintProperty("pdo-pins", "circle-opacity", 1);
+  }
 
   const openDetail = useCallback(
     async (id: string) => {
@@ -398,100 +500,6 @@ export default function Page() {
         );
   };
 
-  /* vulnerability magic */
-  // done this way or via a <source> and a custom <layer>
-
-  const matchExpression: Expression = ["match", ["get", "PDOid"]];
-
-  if (vulnerabilityVisibility && vulnerability.length > 1) {
-    for (const row of vulnerability) {
-      let color = "#fff";
-      if (row["Vulnerability"] === "low") {
-        color = "#4FF47C";
-      } else if (row["Vulnerability"] === "moderate") {
-        color = "#F5DA5C";
-      } else if (row["Vulnerability"] === "high (low-mod Exposure)") {
-        color = "#FF6D31";
-      } else if (row["Vulnerability"] === "high (low-mod Sensitivity)") {
-        color = "#FF6D31";
-      } else if (row["Vulnerability"] === "high (mod-high Adapt. capacity)") {
-        color = "#FF6D31";
-      } else if (row["Vulnerability"] === "very high") {
-        color = "#F51C1C";
-      }
-      matchExpression.push(row["PDOid"], color);
-    }
-
-    // show only PDOs that are in the vulnerability.json
-    const showOnlyVulneralIDs = vulnerability.map((item) => {
-      return item.PDOid;
-    });
-
-    mapRef.current &&
-      mapRef.current
-        .getMap()
-        .setFilter("pdo-pins", [
-          "match",
-          ["get", "PDOid"],
-          showOnlyVulneralIDs,
-          true,
-          false,
-        ]);
-
-    mapRef.current &&
-      mapRef.current
-        .getMap()
-        .setFilter("pdo-area", [
-          "match",
-          ["get", "PDOid"],
-          showOnlyVulneralIDs,
-          true,
-          false,
-        ]);
-  }
-  // matchExpression.push("blue");
-  matchExpression.push("blue"); // all other PDOs that are not in the vulnerability.json - should not be visible because of the filter
-
-  const circleRadiusValues = {
-    type: "exponential",
-    base: 1.75,
-    stops: [
-      [0, 2], // 0 = zoom level, 2 = circle radius
-      [6, 8],
-      [8, 26],
-    ],
-  };
-  const circleOpacityValues = {
-    type: "exponential",
-    stops: [
-      [0, 1], // 0 = zoom level, 1 opacity
-      [12, 0.5],
-      [16, 0.8],
-    ],
-  };
-
-  if (vulnerabilityVisibility) {
-    mapRef.current &&
-      mapRef.current
-        .getMap()
-        .setPaintProperty("pdo-area", "fill-color", matchExpression)
-        .setPaintProperty("pdo-pins", "circle-color", matchExpression)
-        .setPaintProperty("pdo-pins", "circle-radius", circleRadiusValues)
-        .setPaintProperty("pdo-pins", "circle-opacity", circleOpacityValues);
-    // .setPaintProperty("pdo-pins", "circle-opacity", 0);
-    // .setPaintProperty("vulnerability", "circle-radius", "200");
-    // .setLayerZoomRange("pdo-pins", 0, 22)
-    // .setPaintProperty("pdo-pins", "circle-color", "green");
-  } else {
-    mapRef.current &&
-      mapRef.current
-        .getMap()
-        .setPaintProperty("pdo-area", "fill-color", "hsl(338, 96%, 38%)")
-        .setPaintProperty("pdo-pins", "circle-color", "hsl(338, 96%, 38%)")
-        .setPaintProperty("pdo-pins", "circle-radius", 3.63)
-        .setPaintProperty("pdo-pins", "circle-opacity", 1);
-  }
-
   const getPDOsByVulnerability = useCallback(
     async (value: string) => {
       const PDOList = data?.map((item: any) => {
@@ -526,15 +534,13 @@ export default function Page() {
         return item.pdoid;
       });
 
-      const clearFilter =
-        mapRef.current &&
+      mapRef.current &&
         mapRef.current
           .getMap()
           .setFilter("pdo-area", null)
           .setFilter("pdo-pins", null);
 
-      const filter =
-        mapRef.current &&
+      mapRef.current &&
         mapRef.current
           .getMap()
           .setFilter("pdo-area", [
@@ -753,6 +759,7 @@ export default function Page() {
       setSelectMunicValue(null);
       setSelectCatValue(null);
       setSelectVarValue(null);
+      setVulnerabilityFilter(null);
       setSelectCountryValue(null);
       getPdoIDsByPdoName(value);
     },
@@ -768,6 +775,7 @@ export default function Page() {
       setSelectMunicValue(null);
       setSelectCatValue(value);
       setSelectVarValue(null);
+      setVulnerabilityFilter(null);
       setSelectCountryValue(null);
       getPdoIDsByFilter(value, "category");
     },
@@ -783,6 +791,7 @@ export default function Page() {
       setSelectMunicValue(null);
       setSelectCatValue(null);
       setSelectVarValue(value);
+      setVulnerabilityFilter(null);
       setSelectCountryValue(null);
       getPdoIDsByFilter(value, "varietiesOiv");
     },
@@ -798,6 +807,7 @@ export default function Page() {
       setSelectMunicValue(null);
       setSelectCatValue(null);
       setSelectVarValue(null);
+      setVulnerabilityFilter(null);
       setSelectCountryValue(value);
       getPdoIDsByFilter(value, "country");
     },
@@ -814,6 +824,7 @@ export default function Page() {
       setSelectCatValue(null);
       setSelectVarValue(null);
       setSelectCountryValue(null);
+      setVulnerabilityFilter(null);
       getPdoIDsByFilter(value, "munic");
     },
     [getPdoIDsByFilter],
@@ -833,6 +844,7 @@ export default function Page() {
       setSelectCatValue(null);
       setSelectVarValue(null);
       setSelectCountryValue(null);
+      setVulnerabilityFilter("true");
       getPDOsByVulnerability(e.target.value);
     },
     [getPDOsByVulnerability],
