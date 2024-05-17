@@ -94,20 +94,6 @@ export interface JSONObject {
   vulneral?: VulnerabilityType | null;
 }
 
-// vulnerability.json
-// [
-//   "PDOid",
-//   "financial",
-//   "natural",
-//   "physical",
-//   "social",
-//   "human",
-//   "AdaptiveCapacity",
-//   "Exposure",
-//   "Sensitivity",
-//   "Vulnerability"
-// ],
-
 export interface RootObject {
   type: string;
   name: string;
@@ -157,9 +143,9 @@ export default function Page() {
   const [vulnerabilityVisibility, setVulnerabilityVisibility] =
     useState<boolean>(false);
 
-  const [selectVulneralValue, setSelectVulneralValue] = useState<string | null>(
-    null,
-  );
+  // const [selectVulneralValue, setSelectVulneralValue] = useState<string | null>(
+  //   null,
+  // );
   const year = new Date().getFullYear();
   /* fix fitBounds for mobile device */
   const paddingResponsive = useMemo(() => {
@@ -173,9 +159,11 @@ export default function Page() {
       let PDO: JSONObject[] = data.filter(
         (i: { pdoid: any }) => id === i.pdoid,
       );
+      if (!PDO.length) return; // no PDO found - clicked on the ocean
 
       if (vulnerabilityVisibility) {
         const vul = vulnerability.filter((v: any) => id === v.PDOid);
+
         PDO[0].vulneral = vul[0]; // Add 'vulneral' property
 
         // Adaptive Capacity 0-38 low, 38-55 moderate, 55-100 high
@@ -309,21 +297,6 @@ export default function Page() {
     // get municipality name from
     const hoveredMunic = features && features[0]?.properties?.Name;
 
-    // if (vulnerabilityVisibility) {
-    //   hoveredFeature &&
-    //     hoveredFeature.map((id) => {
-    //       const vul = vulnerability.filter((i) => id === i.PDOid);
-    //       vulnera = vul;
-    //       // feat.map((f) => {
-    //       //   f.vul = vul[0];
-    //       // });
-    //     });
-    // }
-    // console.log("vul: ", vulnera);
-    // console.log("hoveredFeature: ", hoveredFeature);
-
-    // console.log("feat: ", feat);
-
     if (feat && feat.length) {
       setHoverInfo({
         count: feat.length,
@@ -372,7 +345,7 @@ export default function Page() {
         return myData;
       });
 
-      // console.log("PDOList", PDOList);
+      //console.log("PDOList", PDOList);
 
       const flattenPDOS = PDOList?.flat();
       if (flattenPDOS) {
@@ -448,9 +421,36 @@ export default function Page() {
       }
       matchExpression.push(row["PDOid"], color);
     }
+
+    // show only PDOs that are in the vulnerability.json
+    const showOnlyVulneralIDs = vulnerability.map((item) => {
+      return item.PDOid;
+    });
+
+    mapRef.current &&
+      mapRef.current
+        .getMap()
+        .setFilter("pdo-pins", [
+          "match",
+          ["get", "PDOid"],
+          showOnlyVulneralIDs,
+          true,
+          false,
+        ]);
+
+    mapRef.current &&
+      mapRef.current
+        .getMap()
+        .setFilter("pdo-area", [
+          "match",
+          ["get", "PDOid"],
+          showOnlyVulneralIDs,
+          true,
+          false,
+        ]);
   }
   // matchExpression.push("blue");
-  matchExpression.push("black");
+  matchExpression.push("blue"); // all other PDOs that are not in the vulnerability.json - should not be visible because of the filter
 
   const circleRadiusValues = {
     type: "exponential",
@@ -474,7 +474,6 @@ export default function Page() {
     mapRef.current &&
       mapRef.current
         .getMap()
-        // .setLayoutProperty("pdo-area", "visibility", "none")
         .setPaintProperty("pdo-area", "fill-color", matchExpression)
         .setPaintProperty("pdo-pins", "circle-color", matchExpression)
         .setPaintProperty("pdo-pins", "circle-radius", circleRadiusValues)
