@@ -1331,20 +1331,20 @@ export default function Page() {
                   <span className="mt-6 text-[16px] leading-[150%] block text-white font-medium mb-4">
                     {activePDO.pdoname}{" "}
                     {activePDO.vulneral.Vulnerability === "low"
-                      ? `is at low risk due to its ${activePDO.vulneral.AdaptiveTxt} adaptive capacity and its low sensitivity and exposure.`
+                      ? `is at low risk due to its low sensitivity and exposure and its ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
                       : activePDO.vulneral.Vulnerability === "moderate"
-                      ? `is at moderate risk due to its ${activePDO.vulneral.AdaptiveTxt} adaptive capacity, ${activePDO.vulneral.SensitivityTxt} sensitivity and ${activePDO.vulneral.ExposureTxt} exposure.`
+                      ? `is at moderate risk due to its ${activePDO.vulneral.SensitivityTxt} sensitivity, ${activePDO.vulneral.ExposureTxt} exposure and ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
                       : activePDO.vulneral.Vulnerability ===
                         "high (low-mod Exposure)"
-                      ? `is at high risk due to its low adaptive capacity, high sensitivity and ${activePDO.vulneral.ExposureTxt} exposure`
+                      ? `is at high risk due to its high sensitivity, ${activePDO.vulneral.ExposureTxt} exposure and low adaptive capacity.`
                       : activePDO.vulneral.Vulnerability ===
                         "high (low-mod Sensitivity)"
-                      ? `is at high risk due to its low adaptive capacity, ${activePDO.vulneral.SensitivityTxt} sensitivity and high exposure`
+                      ? `is at high risk due to its ${activePDO.vulneral.SensitivityTxt} sensitivity, high exposure and low adaptive capacity.`
                       : activePDO.vulneral.Vulnerability ===
                         "high (mod-high Adapt. capacity)"
-                      ? `is at high risk due to its ${activePDO.vulneral.AdaptiveTxt} adaptive capacity and its high sensitivity and exposure.`
+                      ? `is at high risk due to its high sensitivity and exposure and its ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
                       : activePDO.vulneral.Vulnerability === "very high"
-                      ? "is at very high risk due to its low adaptive capacity and its high sensitivity and exposure."
+                      ? "is at very high risk due to its high sensitivity and exposure and low adaptive capacity."
                       : ""}
                   </span>
 
