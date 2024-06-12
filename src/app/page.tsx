@@ -1040,6 +1040,7 @@ export default function Page() {
                 </h1>
                 <a
                   href="https://www.eurac.edu"
+                  title="Go to Eurac Research Website"
                   className="pb-[3px] flex gap-2 items-center"
                 >
                   by
