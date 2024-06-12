@@ -71,7 +71,7 @@ export default function About() {
         vineyards and successfully face these challenges.
       </p>
 
-      <p>
+      <p className="mt-6">
         Read more:{" "}
         <i>
           A geospatial inventory of regulatory information for wine protected
@@ -86,6 +86,19 @@ export default function About() {
         >
           https://doi.org/10.1038/s41597-022-01513-0
         </a>
+      </p>
+
+      <p className="mt-6">
+        Winemap is part of the Eurac Research{" "}
+        <a
+          href="https://www.eurac.edu/en/data-in-action"
+          target="_blank"
+          rel="noreferrer"
+          className="underline"
+        >
+          <i>Data in Action</i>
+        </a>{" "}
+        initiative.
       </p>
       <Textnavigation />
     </main>
