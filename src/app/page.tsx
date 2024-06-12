@@ -13,7 +13,6 @@ import {
   useState,
 } from "react";
 import { useSearchParams } from "next/navigation";
-import { Tooltip } from "antd";
 import {
   NavigationControl,
   Map as ReactMap,
