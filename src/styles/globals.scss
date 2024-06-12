@@ -467,6 +467,7 @@ a {
   flex-direction: column;
   margin: 32px auto;
   transition: transform ease-in-out 300ms;
+  line-height: 1.2;
 
   &:hover {
     transform: rotate(0);
@@ -487,9 +488,10 @@ a {
     text-transform: uppercase;
     display: block;
     font-size: 14px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     border-bottom: 1px solid #fff;
     padding-bottom: 2px;
+    margin-top: 10px;
   }
   .buttonText {
     display: block;

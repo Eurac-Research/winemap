@@ -13,6 +13,7 @@ import {
   useState,
 } from "react";
 import { useSearchParams } from "next/navigation";
+import { Tooltip } from "antd";
 import {
   NavigationControl,
   Map as ReactMap,
@@ -1080,7 +1081,7 @@ export default function Page() {
                   >
                     <span className="buttonLabel">climate change</span>
                     <span className="buttonText">
-                      Discover how vulnerable <i>your</i> region is
+                      Discover how vulnerable regions are
                     </span>
 
                     <svg
@@ -1354,18 +1355,80 @@ export default function Page() {
                     />
                   </div>
                   <span className="text-[14px] leading-[140%] block text-white/80 mb-2">
-                    <b>Exposure</b> measures the degree of climate change in a
+                    {activePDO.vulneral.Exposure < 0.62 ? ( // low
+                      <>
+                        Wine regions with a <b>low level of exposure</b> are
+                        expected to experience limited changes in climatic
+                        conditions in comparison to the other European PDO
+                        regions. This means they are less likely to face changes
+                        in grape quality and yields. Depending on their
+                        sensitivity, these regions may maintain their
+                        traditional wine production with fewer adaptations.
+                      </>
+                    ) : activePDO.vulneral.Exposure < 0.75 ? ( // moderate
+                      <>
+                        Regions with <b>moderate exposure</b> will experience
+                        moderate climate change compared to other European PDO
+                        regions. Depending on their sensitivity, they may need
+                        to implement more extensive adaptation strategies than
+                        less exposed regions to cope with the evolving
+                        conditions.
+                      </>
+                    ) : (
+                      <>
+                        <b>Highly exposed</b> regions are projected to undergo
+                        the most singificant climatic shifts of all European PDO
+                        regions. These areas are likely to require extensive
+                        adaptation measures to mantain viticulture, which also
+                        need to take into account their sensitivity, such as
+                        relocation of vineyards or revision of traditional
+                        winegrowing practices.
+                      </>
+                    )}
+                    {/* <b>Exposure</b> measures the degree of climate change in a
                     region based on a set of bioclimatic variables tailored to
                     viticulture. The stronger the changes in climatic conditions
                     between the future (2071-2100) and the past (1981-2010), the
-                    higher the exposure.
+                    higher the exposure. */}
                   </span>
                   <span className="text-[14px] leading-[140%] block text-white/80 mb-2">
-                    <b>Sensitivity</b> describes how a region is affected by
+                    {activePDO.vulneral.Sensitivity < 0.55 ? (
+                      <>
+                        Regions with <b>low levels of sensitivity</b> have grape
+                        varieties that are far from the upper limit of their
+                        traditional climatic range compared to other European
+                        PDO regions. They are therefore less affected by
+                        climate-related stimuli and may even benefit from
+                        certain aspects of climate change, such as increased
+                        sugar content in grapes.
+                      </>
+                    ) : activePDO.vulneral.Sensitivity < 0.72 ? (
+                      <>
+                        Regions of <b>medium sensitivity</b> have grape
+                        varieties that are somewhat closer to the upper limit of
+                        their climatic range compared to the other European PDO
+                        regions. These areas will be moderately affected by a
+                        change in climatic conditions and, in the event of
+                        increased exposure levels, may need to consider gradual
+                        changes in grape composition and wine style to maintain
+                        the identity of their PDO products.
+                      </>
+                    ) : (
+                      <>
+                        <b>Highly sensitive</b> regions are closest to the upper
+                        limit of their varietal climate range of all European
+                        PDO regions. They are highly susceptible to
+                        climate-related stimuli and are likely to experience
+                        changes in grape composition and wine characteristics
+                        even at lower levels of exposure, requiring timely and
+                        innovative adaptation strategies.
+                      </>
+                    )}
+                    {/* <b>Sensitivity</b> describes how a region is affected by
                     climate change. It is based on the abundance and diversity
                     of cultivated varieties within a region combined with their
                     climatic requirements. Impacts of changing climatic
-                    conditions are stronger in regions with a high sensitivity.
+                    conditions are stronger in regions with a high sensitivity. */}
                   </span>
 
                   <hr className="my-6" />
@@ -1377,11 +1440,40 @@ export default function Page() {
                     label="Adaptive Capacity"
                   />
                   <span className="mt-4 text-[14px] leading-[140%] block text-white/80 mb-4">
-                    <b>Adaptive Capacity</b> refers to how a region can adapt to
+                    {activePDO.vulneral.adaptiveCap < 0.38 ? (
+                      <>
+                        Wine regions with a <b>low adaptive capacity</b> have
+                        limited resources to implement adaptation strategies
+                        compared to the other European PDO regions. When faced
+                        with negative impacts, they may find it difficult to
+                        adapt due to the limited resources avaialable.
+                      </>
+                    ) : activePDO.vulneral.adaptiveCap < 0.55 ? (
+                      <>
+                        Regions with a <b>medium adaptive capacity</b> have
+                        moderate resources available for adaptation compared to
+                        the other European PDO regions. However, they may still
+                        face challenges in fully addressing the impacts of
+                        climate change. They will need to carefully plan and
+                        implement adaptation strategies to avoid potential
+                        negative impacts.
+                      </>
+                    ) : (
+                      <>
+                        <b>High adaptive capacity</b> regions are well-equipped
+                        with resources to adapt to climate change compared to
+                        the other European PDO regions. They have the potential
+                        to implement comprehensive adaptation strategies, such
+                        as expanding irrigation systems or moving vineyards to
+                        higher elevations, in order to maintain high-quality
+                        wine production.
+                      </>
+                    )}
+                    {/* <b>Adaptive Capacity</b> refers to how a region can adapt to
                     climate change. As such it includes a range of different
                     factors, from biophysical to socioeconomic aspects. A higher
                     adaptive capacity indicates an increased availability of
-                    resources for adaptation within a region.
+                    resources for adaptation within a region. */}
                   </span>
 
                   <span className="block mb-4 mt-2">
