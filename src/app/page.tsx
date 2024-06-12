@@ -1126,7 +1126,7 @@ export default function Page() {
                   </p>
                   <p className="flex items-center mb-2">
                     <VulnerabilityDot type="moderate" className="mb-[2px]" />
-                    43% are at moderart risk
+                    43% are at moderate risk
                   </p>
                   <p className="flex items-center mb-2">
                     <VulnerabilityDot type="high" className="mb-[2px]" />
@@ -1308,15 +1308,6 @@ export default function Page() {
                       i
                     </Link>
                   </h3>
-                  {/* <span className="text-[14px] leading-[140%] block text-white/80">
-                    The vulnerability of a PDO region is determined by a set of
-                    indicators. Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. <br />
-                    <Link href="/vulnerability" className="underline">
-                      Read more
-                    </Link>
-                  </span> */}
                   <div className="flex items-center gap-4 text-[20px] my-8">
                     <VulnerabilityDot
                       type={activePDO.vulneral.Vulnerability}
@@ -1331,20 +1322,20 @@ export default function Page() {
                   <span className="mt-6 text-[16px] leading-[150%] block text-white font-medium mb-4">
                     {activePDO.pdoname}{" "}
                     {activePDO.vulneral.Vulnerability === "low"
-                      ? `is at low risk due to its low sensitivity and exposure and its ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
+                      ? `is at low risk due to its ${activePDO.vulneral.ExposureTxt} exposure, ${activePDO.vulneral.SensitivityTxt} sensitivity and its ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
                       : activePDO.vulneral.Vulnerability === "moderate"
-                      ? `is at moderate risk due to its ${activePDO.vulneral.SensitivityTxt} sensitivity, ${activePDO.vulneral.ExposureTxt} exposure and ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
+                      ? `is at moderate risk due to its ${activePDO.vulneral.ExposureTxt} exposure, ${activePDO.vulneral.SensitivityTxt} sensitivity and ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
                       : activePDO.vulneral.Vulnerability ===
                         "high (low-mod Exposure)"
-                      ? `is at high risk due to its high sensitivity, ${activePDO.vulneral.ExposureTxt} exposure and low adaptive capacity.`
+                      ? `is at high risk due to its ${activePDO.vulneral.ExposureTxt} exposure, high sensitivity and low adaptive capacity.`
                       : activePDO.vulneral.Vulnerability ===
                         "high (low-mod Sensitivity)"
-                      ? `is at high risk due to its ${activePDO.vulneral.SensitivityTxt} sensitivity, high exposure and low adaptive capacity.`
+                      ? `is at high risk due to its high exposure ${activePDO.vulneral.SensitivityTxt} sensitivity and low adaptive capacity.`
                       : activePDO.vulneral.Vulnerability ===
                         "high (mod-high Adapt. capacity)"
-                      ? `is at high risk due to its high sensitivity and exposure and its ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
+                      ? `is at high risk due to its high exposure and sensitivity and its ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
                       : activePDO.vulneral.Vulnerability === "very high"
-                      ? "is at very high risk due to its high sensitivity and exposure and low adaptive capacity."
+                      ? "is at very high risk due to its high exposure and sensitivity and low adaptive capacity."
                       : ""}
                   </span>
 
