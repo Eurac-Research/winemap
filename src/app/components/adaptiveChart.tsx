@@ -83,7 +83,7 @@ export default function AdaptiveChart(props: { data: VulnerabilityType }) {
       // Map the score column to color
       dimension: 0,
       inRange: {
-        color: ["#F51C1C", "#FF6D31", "#F5DA5C", "#4FF47C"],
+        color: ["#DE1355", "#DD7C75", "#E8C360", "#97BE6C"],
       },
     },
     series: [
