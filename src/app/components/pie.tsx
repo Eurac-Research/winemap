@@ -8,21 +8,21 @@ export default function Pie(props: { percentage: number; label?: string }) {
 
   let score = percentage < 55 ? "Low" : percentage < 72 ? "Moderate" : "High";
   let color =
-    percentage < 55 ? "#4FF47C" : percentage < 72 ? "#F5DA5C" : "#FF6D31";
+    percentage < 55 ? "#97BE6C" : percentage < 72 ? "#E8C360" : "#DD7C75";
 
   if (props.label === "Adaptive Capacity") {
     color =
-      percentage < 38 ? "#FF6D31" : percentage < 55 ? "#F5DA5C" : "#4FF47C";
+      percentage < 38 ? "#DD7C75" : percentage < 55 ? "#E8C360" : "#97BE6C";
     score = percentage < 38 ? "Low" : percentage < 55 ? "Moderate" : "High";
   }
   if (props.label === "Sensitivity") {
     color =
-      percentage < 55 ? "#4FF47C" : percentage < 72 ? "#F5DA5C" : "#FF6D31";
+      percentage < 55 ? "#97BE6C" : percentage < 72 ? "#E8C360" : "#DD7C75";
     score = percentage < 55 ? "Low" : percentage < 72 ? "Moderate" : "High";
   }
   if (props.label === "Exposure") {
     color =
-      percentage < 62 ? "#4FF47C" : percentage < 75 ? "#F5DA5C" : "#FF6D31";
+      percentage < 62 ? "#97BE6C" : percentage < 75 ? "#E8C360" : "#DD7C75";
     score = percentage < 62 ? "Low" : percentage < 75 ? "Moderate" : "High";
   }
 
