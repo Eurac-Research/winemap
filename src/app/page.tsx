@@ -1339,6 +1339,7 @@ export default function Page() {
                       height="205"
                       viewBox="0 0 211 205"
                       fill="none"
+                      className="vulnerbilityButtonSVG"
                     >
                       <g filter="url(#afff)">
                         <path
