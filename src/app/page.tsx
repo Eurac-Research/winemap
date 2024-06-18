@@ -1429,6 +1429,11 @@ export default function Page() {
                     to identify regions most at risk, guiding efforts to enhance
                     resilience and reduce negative impacts of climate change.
                   </p>
+                  <p className="mt-2 text-sm">
+                    <Link href="/vulnerability" className="underline">
+                      read more
+                    </Link>
+                  </p>
                   <h2 className="mt-6">Vulnerability overview for all PDOs</h2>
                   <p className="flex items-center mb-2">
                     <VulnerabilityDot type="low" className="mb-[2px]" />
@@ -1466,6 +1471,14 @@ export default function Page() {
               <p>
                 <Link href="/about-pdo" className={styles.homeNavigationItem}>
                   What’s a PDO?
+                </Link>
+              </p>
+              <p>
+                <Link
+                  href="/?vulnerability=true"
+                  className={styles.homeNavigationItem}
+                >
+                  Winemap Climate
                 </Link>
               </p>
               <p>
