@@ -71,12 +71,12 @@ export default function About() {
         vineyards and successfully face these challenges.
       </p>
 
+      <p className="mt-12">Read more: </p>
       <p className="mt-6">
-        Read more:{" "}
         <i>
-          A geospatial inventory of regulatory information for wine protected
-          designations of origin in Europe,- Scientific Data Volume 9, Article
-          number: 394 (2022).
+          Candiago, S., Tscholl, S., Bassani, L. et al. A geospatial inventory
+          of regulatory information for wine protected designations of origin in
+          Europe. Sci Data 9, 394 (2022).
         </i>{" "}
         <a
           target="_blank"
@@ -87,8 +87,22 @@ export default function About() {
           https://doi.org/10.1038/s41597-022-01513-0
         </a>
       </p>
-
       <p className="mt-6">
+        <i>
+          Tscholl, S., Candiago, S., Marsoner, T. et al. Climate resilience of
+          European wine regions. Nat Commun 15, 6254 (2024).
+        </i>
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="https://doi.org/10.1038/s41467-024-50549-w"
+          style={{ textDecoration: "underline" }}
+        >
+          https://doi.org/10.1038/s41467-024-50549-w
+        </a>
+      </p>
+
+      <p className="mt-12">
         Winemap is part of the Eurac Research{" "}
         <a
           href="https://www.eurac.edu/en/data-in-action"
