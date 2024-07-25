@@ -346,25 +346,25 @@ a {
   }
 }
 
-button {
-  height: 30px;
-  border: 1px solid #fff;
-  border-radius: 20px;
-  display: flex;
-  padding: 4px 16px;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-  cursor: pointer;
-  transition: 300ms all ease-in-out;
-  color: #fff;
+// button {
+//   height: 30px;
+//   border: 1px solid #fff;
+//   border-radius: 20px;
+//   display: flex;
+//   padding: 4px 16px;
+//   align-items: center;
+//   justify-content: center;
+//   background-color: transparent;
+//   cursor: pointer;
+//   transition: 300ms all ease-in-out;
+//   color: #fff;
 
-  &:hover {
-    background-color: #fff;
-    border: 1px solid #000;
-    color: #000;
-  }
-}
+//   &:hover {
+//     background-color: #fff;
+//     border: 1px solid #000;
+//     color: #000;
+//   }
+// }
 
 .expand {
   margin-top: 5px;
@@ -406,7 +406,7 @@ button {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 .CookieConsent {
   position: fixed;
@@ -420,7 +420,7 @@ button {
   @media screen and (min-width: 768px) {
     padding: 40px;
   }
-  >.flex {
+  > .flex {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -451,5 +451,173 @@ button {
       background-color: #111;
     }
   }
-
 }
+
+.vulnerbilityButtonSVG {
+  transition: transform ease-in-out 300ms;
+  &:hover {
+    transform: rotate(20deg);
+  }
+}
+
+@keyframes changeBackgroundColor {
+  0% {
+    fill: #97be6c;
+  }
+  // 25% {
+  //   background-color: #f5f51c;
+  // }
+  // 50% {
+  //   background-color: #DD7C75;
+  // }
+  50% {
+    fill: #de1355;
+  }
+  100% {
+    fill: #97be6c;
+  }
+}
+
+.vulnerbilityButton {
+  /* existing styles */
+
+  animation: changeBackgroundColor 8s infinite;
+}
+
+.vulnerabilityLegend {
+  z-index: 10;
+  color: #fff;
+  width: 100%;
+  margin-top: 16px;
+
+  .legend-bar {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+  }
+  .legend-title {
+    display: flex;
+    margin: 0 auto;
+    // background-color: rgba(0, 0, 0, 0.5);
+    // backdrop-filter: blur(10px);
+    max-width: 600px;
+    color: #fff;
+    padding: 6px 10px 6px 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+  }
+  .legend-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+
+    .legend-text {
+      font-size: 14px;
+      color: #000;
+      font-weight: 600;
+    }
+  }
+
+  .ant-radio-group {
+    width: 100%;
+    @media screen and (min-width: 768px) {
+      width: 500px;
+    }
+  }
+  .ant-radio-button-wrapper {
+    color: #000 !important;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    border: none;
+    height: 25px;
+    border-radius: 0 !important;
+    width: 100%;
+    position: relative;
+    span {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 5px;
+
+      line-height: 1;
+    }
+    &:before {
+      display: none !important;
+    }
+    &:hover {
+      color: #000 !important;
+      .vul-indicator-arrow {
+        display: block;
+      }
+    }
+    &.viewAllvul {
+      color: #fff !important;
+      width: 100px;
+      flex-shrink: 0;
+      &:hover {
+        span {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  .ant-radio-button-wrapper:first-child {
+    border: none;
+  }
+  .ant-radio-button-wrapper-checked {
+    color: #000 !important;
+    .vul-indicator-arrow {
+      display: block;
+      path {
+        fill: #fff;
+      }
+    }
+  }
+
+  .vul-indicator-arrow {
+    display: none;
+    position: absolute;
+    top: 20px;
+    width: 16px;
+    path {
+      stroke: #fff;
+      stroke-width: 3px;
+      fill: none;
+    }
+  }
+}
+
+.info {
+  font-size: 14px;
+  text-transform: lowercase;
+  border: 1px solid #fff;
+  margin-left: 4px;
+  border-radius: 100%;
+  height: 18px;
+  width: 18px;
+  flex-shrink: 0;
+  line-height: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// .vulnerabilityDot {
+//   width: 14px;
+//   height: 14px;
+//   border-radius: 100%;
+//   margin-right: 8px;
+//   display: inline-block;
+//   vertical-align: middle;
+// }

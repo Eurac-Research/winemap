@@ -1,4 +1,6 @@
 import "../styles/globals.scss";
+import "../styles/global.css";
+import { Suspense } from "react";
 import { Metadata } from "next";
 import PlausibleProvider from "next-plausible";
 
@@ -15,15 +17,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html>
+    <html lang="en">
       <PlausibleProvider
         domain="winemap.eurac.edu"
         trackLocalhost={false}
         enabled={true}
       />
       <body>
-        {children}
-        <CookieConsent />
+        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
+          <CookieConsent />
+        </Suspense>
       </body>
     </html>
   );
