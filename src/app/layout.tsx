@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <PlausibleProvider
-        domain="winemap.eurac.edu"
+        domain="winemap.eurac.edu,www.eurac.edu"
         trackLocalhost={false}
         enabled={true}
       />
