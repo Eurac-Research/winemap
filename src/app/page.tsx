@@ -1,10 +1,6 @@
 "use client";
 
 import {
-  JSXElementConstructor,
-  ReactElement,
-  ReactFragment,
-  ReactPortal,
   Suspense,
   useCallback,
   useEffect,
@@ -115,6 +111,64 @@ export interface Geometry {
   type: string;
   coordinates: number[];
 }
+/**
+ * The main page component for the Winemap application.
+ *
+ * @returns {JSX.Element} The rendered page component.
+ *
+ * @remarks
+ * This component handles the main functionality of the Winemap application, including:
+ * - Managing state for various filters and map settings.
+ * - Handling map interactions such as hover, click, and zoom events.
+ * - Fetching and displaying data related to Protected Designation of Origin (PDO) regions.
+ * - Displaying detailed information about selected PDO regions.
+ * - Managing the visibility and styling of map layers based on user interactions and filter settings.
+ *
+ * @component
+ *
+ * @example
+ * ```tsx
+ * import Page from './page';
+ *
+ * function App() {
+ *   return <Page />;
+ * }
+ *
+ * export default App;
+ * ```
+ *
+ * @hook
+ * - `useSearchParams` - To get the search parameters from the URL.
+ * - `useRef` - To create a reference for the map component.
+ * - `useState` - To manage various state variables.
+ * - `useMemo` - To memoize the padding values for responsive design.
+ * - `useCallback` - To memoize callback functions for handling map interactions.
+ * - `useEffect` - To handle side effects such as updating the map based on URL parameters.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.vulnerabilityVisibility - Indicates whether the vulnerability layer is visible.
+ * @param {boolean} props.mapLoaded - Indicates whether the map has finished loading.
+ * @param {boolean} props.vineyardVisibility - Indicates whether the vineyard layer is visible.
+ * @param {boolean} props.fromSearch - Indicates whether the current view is from a search result.
+ * @param {number | null} props.zoomLevel - The current zoom level of the map.
+ * @param {Object | null} props.activePDO - The currently active PDO region.
+ * @param {Object[] | null} props.pdos - The list of PDO regions.
+ * @param {Object} props.hoverInfo - Information about the currently hovered map feature.
+ * @param {string | null} props.selectValue - The selected PDO name.
+ * @param {string | null} props.selectCatValue - The selected category value.
+ * @param {string | null} props.selectMunicValue - The selected municipality value.
+ * @param {string | null} props.selectCountryValue - The selected country value.
+ * @param {string | null} props.selectVarValue - The selected variety value.
+ * @param {boolean} props.isMobile - Indicates whether the device is a mobile device.
+ * @param {Object} props.data - The data for the PDO regions.
+ * @param {Object} props.vulnerability - The vulnerability data for the PDO regions.
+ * @param {Object} props.allPDOPoints - The geojson data for all PDO points.
+ * @param {Object} props.allCountries - The list of all countries.
+ * @param {Object} props.styles - The styles for the component.
+ * @param {string} props.MAPBOX_TOKEN - The Mapbox access token.
+ *
+ * @returns {JSX.Element} The rendered page component.
+ */
 export default function Page() {
   const searchParams = useSearchParams();
 
@@ -275,14 +329,16 @@ export default function Page() {
       if (!PDO.length) return; // no PDO found - clicked on the ocean
 
       if (vulnerabilityVisibility) {
-        const vul = vulnerability.filter((v: any) => id === v.PDOid);
+        const vulnerabilityData = vulnerability.filter(
+          (v: any) => id === v.PDOid,
+        );
 
-        if (!vul[0]) {
+        if (!vulnerabilityData[0]) {
           setActivePDO(PDO[0]);
           return;
         }
 
-        PDO[0].vulneral = vul[0]; // Add 'vulneral' property
+        PDO[0].vulneral = vulnerabilityData[0]; // Add 'vulneral' property
 
         // Adaptive Capacity 0-38 low, 38-55 moderate, 55-100 high
         if (PDO[0].vulneral.adaptiveCap * 100 < 38) {
@@ -317,21 +373,13 @@ export default function Page() {
   );
 
   /* return PDO Name by given PDOid */
-  function getPDONameById(
-    id:
-      | string
-      | number
-      | boolean
-      | ReactElement<any, string | JSXElementConstructor<any>>
-      | ReactFragment
-      | ReactPortal
-      | null
-      | undefined,
-  ) {
+  function getPDONameById(id: string | undefined) {
     let PDO: JSONObject[] = data.filter((i: { pdoid: any }) => id === i.pdoid);
     if (vulnerabilityVisibility) {
-      const vul = vulnerability.filter((v: any) => id === v.PDOid);
-      PDO[0].vulneral = vul[0]; // Add 'vulneral' property
+      const vulnerabilityData = vulnerability.filter(
+        (v: any) => id === v.PDOid,
+      );
+      PDO[0].vulneral = vulnerabilityData[0]; // Add 'vulneral' property
     }
 
     return PDO[0].pdoname;
@@ -457,8 +505,10 @@ export default function Page() {
 
         if (vulnerabilityVisibility) {
           myData.map((i: any) => {
-            const vul = vulnerability.filter((v: any) => i.pdoid === v.PDOid);
-            i.vulneral = vul[0];
+            const vulnerabilityData = vulnerability.filter(
+              (v: any) => i.pdoid === v.PDOid,
+            );
+            i.vulneral = vulnerabilityData[0];
           });
         }
         return myData;
@@ -1004,28 +1054,15 @@ export default function Page() {
                 {hoverInfo.count} overlapping PDOs
               </div>
             )}
-            {hoverInfo.feature.map(
-              (
-                f:
-                  | string
-                  | number
-                  | boolean
-                  | ReactElement<any, string | JSXElementConstructor<any>>
-                  | ReactFragment
-                  | ReactPortal
-                  | null
-                  | undefined,
-                index: any,
-              ) => {
-                const pdoName = getPDONameById(f);
+            {hoverInfo.feature.map((f: string | undefined, index: any) => {
+              const pdoName = getPDONameById(f);
 
-                return (
-                  <span key={f + index}>
-                    {pdoName} ({f})
-                  </span>
-                );
-              },
-            )}
+              return (
+                <span key={f + index}>
+                  {pdoName} ({f})
+                </span>
+              );
+            })}
             {hoverInfo?.munic && (
               <span className={styles.municName}>
                 Municipality <br />
