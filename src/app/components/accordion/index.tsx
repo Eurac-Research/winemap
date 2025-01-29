@@ -6,6 +6,23 @@ type PropTypes = {
   title: string;
   icon?: string;
 };
+/**
+ * Accordion component that displays content with a toggleable view.
+ *
+ * @param {PropTypes} props - The properties object.
+ * @param {string} props.title - The title of the accordion.
+ * @param {string} props.content - The content to be displayed inside the accordion.
+ * @param {string} [props.icon] - Optional icon to be displayed alongside the title.
+ *
+ * @returns {JSX.Element} The rendered Accordion component.
+ *
+ * @example
+ * <Accordion
+ *   title="Accordion Title"
+ *   content="This is the content of the accordion."
+ *   icon="/path/to/icon.png"
+ * />
+ */
 export default function Accordion(props: PropTypes) {
   const [isShowing, setIsShowing] = useState(false);
 

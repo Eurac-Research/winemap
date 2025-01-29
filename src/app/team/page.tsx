@@ -4,6 +4,13 @@ import Link from "next/link";
 import styles from "@/styles/Home.module.scss";
 import Textnavigation from "../components/textnavigation";
 
+/**
+ * The `About` component renders the "About" page of the application.
+ * It includes a header with navigation links, a description of the team,
+ * and a list of team members with their respective information and images.
+ *
+ * @returns {JSX.Element} The rendered "About" page component.
+ */
 export default function About() {
   return (
     <main className={styles.staticContentBox}>

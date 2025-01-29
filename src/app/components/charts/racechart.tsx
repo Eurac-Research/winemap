@@ -2,6 +2,44 @@ import React from "react";
 import ReactECharts from "echarts-for-react";
 
 const Chart: React.FC = () => {
+  /**
+   * Configuration object for a stacked area chart.
+   *
+   * @property {Object} title - The title configuration for the chart.
+   * @property {string} title.text - The text of the chart title.
+   *
+   * @property {Object} tooltip - The tooltip configuration for the chart.
+   * @property {string} tooltip.trigger - The trigger type for the tooltip.
+   *
+   * @property {Object} legend - The legend configuration for the chart.
+   * @property {string[]} legend.data - The data series names to be displayed in the legend.
+   *
+   * @property {Object} toolbox - The toolbox configuration for the chart.
+   * @property {Object} toolbox.feature - The features available in the toolbox.
+   * @property {Object} toolbox.feature.saveAsImage - The save as image feature configuration.
+   *
+   * @property {Object} grid - The grid configuration for the chart.
+   * @property {string} grid.left - The left margin of the grid.
+   * @property {string} grid.right - The right margin of the grid.
+   * @property {string} grid.bottom - The bottom margin of the grid.
+   * @property {boolean} grid.containLabel - Whether the grid should contain labels.
+   *
+   * @property {Object[]} xAxis - The x-axis configuration for the chart.
+   * @property {string} xAxis[].type - The type of the x-axis.
+   * @property {boolean} xAxis[].boundaryGap - Whether the x-axis has a boundary gap.
+   * @property {string[]} xAxis[].data - The data points for the x-axis.
+   *
+   * @property {Object[]} yAxis - The y-axis configuration for the chart.
+   * @property {string} yAxis[].type - The type of the y-axis.
+   *
+   * @property {Object[]} series - The series configuration for the chart.
+   * @property {string} series[].name - The name of the data series.
+   * @property {string} series[].type - The type of the data series.
+   * @property {string} series[].stack - The stack name for the data series.
+   * @property {Object} series[].areaStyle - The area style configuration for the data series.
+   * @property {Object} series[].areaStyle.normal - The normal area style configuration.
+   * @property {number[]} series[].data - The data points for the data series.
+   */
   const option = {
     title: {
       text: "堆叠区域图",

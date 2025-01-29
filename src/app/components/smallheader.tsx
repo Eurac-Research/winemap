@@ -2,6 +2,15 @@ import Link from "next/link";
 
 import styles from "@/styles/Home.module.scss";
 
+/**
+ * A functional component that renders a small header with a link and an SVG logo.
+ *
+ * @param {Object} props - The properties object.
+ * @param {() => void} props.onClickFunction - The function to be called when the link is clicked.
+ * @param {boolean} props.vulneral - A boolean flag to conditionally render a span element.
+ *
+ * @returns {JSX.Element} The rendered header component.
+ */
 export default function Smallheader(props: {
   onClickFunction: () => void;
   vulneral: boolean;

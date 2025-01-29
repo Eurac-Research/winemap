@@ -2,6 +2,14 @@ import Link from "next/link";
 
 import styles from "@/styles/Home.module.scss";
 
+/**
+ * A functional component that renders the text navigation for the front page.
+ * It includes links to various sections of the website such as "About the project",
+ * "What’s a PDO?", "About the data", "Vulnerability Index", and "The Team".
+ * Additionally, it displays the current year and a link to the imprint/privacy page.
+ *
+ * @returns {JSX.Element} The rendered text navigation component.
+ */
 export default function Textnavigation() {
   const year = new Date().getFullYear();
   return (

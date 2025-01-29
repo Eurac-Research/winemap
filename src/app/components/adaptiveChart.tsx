@@ -3,6 +3,29 @@ import ReactECharts from "echarts-for-react";
 
 import type { VulnerabilityType } from "../page";
 
+/**
+ * AdaptiveChart component renders a bar chart using the provided vulnerability data.
+ *
+ * @param props - The properties object.
+ * @param props.data - The vulnerability data of type VulnerabilityType.
+ *
+ * The chart displays different dimensions of vulnerability (Human, Social, Physical, Natural, Financial)
+ * with their respective scores. The tooltip provides detailed descriptions for each dimension.
+ *
+ * The chart configuration includes:
+ * - A dataset with scores and types.
+ * - X-axis as a value axis with a maximum of 100.
+ * - Y-axis as a category axis with aligned ticks and labels.
+ * - A grid layout with specified margins.
+ * - A tooltip that triggers on axis hover and provides detailed descriptions for each dimension.
+ * - A legend with customized item styles.
+ * - A visual map that maps the score column to color, with a gradient from "Bad" to "Good".
+ * - A bar series that encodes the score to the X-axis and the type to the Y-axis.
+ *
+ * The chart is rendered using the ReactECharts component with SVG renderer and a fixed height of 200px.
+ *
+ * @returns A JSX element containing the configured bar chart.
+ */
 export default function AdaptiveChart(props: { data: VulnerabilityType }) {
   const option = {
     dataset: {

@@ -3,6 +3,17 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 
 import "react-circular-progressbar/dist/styles.css";
 
+/**
+ * A React functional component that renders a circular progress bar with a tooltip.
+ * The progress bar displays a percentage value and is color-coded based on the value.
+ * The tooltip provides additional information based on the label prop.
+ *
+ * @param {Object} props - The properties object.
+ * @param {number} props.percentage - The percentage value to display in the progress bar.
+ * @param {string} [props.label] - An optional label that determines the tooltip content and color coding.
+ *
+ * @returns {JSX.Element} The rendered Pie component.
+ */
 export default function Pie(props: { percentage: number; label?: string }) {
   const percentage = Math.round(props.percentage * 100);
 

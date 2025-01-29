@@ -7,6 +7,27 @@ const USER_CONSENT_COOKIE_KEY = "cookie_consent";
 const USER_CONSENT_COOKIE_EXPIRE_DATE =
   new Date().getTime() + 365 * 24 * 60 * 60;
 
+/**
+ * CookieConsent component displays a cookie consent banner at the bottom of the page.
+ * It checks if the user has already given consent by reading a cookie and sets the state accordingly.
+ * If consent is not given, it shows a banner with a message and a button to accept cookies.
+ *
+ * @component
+ * @returns {JSX.Element | null} The CookieConsent component or null if consent is already given.
+ *
+ * @example
+ * <CookieConsent />
+ *
+ * @remarks
+ * This component uses the `Cookies` library to get and set cookies.
+ *
+ * @hook
+ * - `useState` to manage the state of cookie consent.
+ * - `useEffect` to check the cookie consent status on component mount.
+ *
+ * @event
+ * - `onClick` to handle the button click event for accepting cookies.
+ */
 const CookieConsent = () => {
   const [cookieConsentIsTrue, setCookieConsentIsTrue] = useState(true);
 

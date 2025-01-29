@@ -14,6 +14,27 @@ export const metadata: Metadata = {
     google: "OdAWzIPNr_gquodYDcLJpB5xjGfw0mJ1Mowe5Do9k6U",
   },
 };
+/**
+ * RootLayout component that sets up the basic HTML structure for the application.
+ *
+ * @param {Object} props - The properties object.
+ * @param {React.ReactNode} props.children - The child components to be rendered within the layout.
+ *
+ * @returns {JSX.Element} The rendered RootLayout component.
+ *
+ * @component
+ *
+ * @example
+ * return (
+ *   <RootLayout>
+ *     <YourComponent />
+ *   </RootLayout>
+ * );
+ *
+ * @remarks
+ * This component includes the PlausibleProvider for analytics and uses Suspense for lazy loading.
+ * It also includes a CookieConsent component wrapped in Suspense.
+ */
 export default function RootLayout({
   children,
 }: {
