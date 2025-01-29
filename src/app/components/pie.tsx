@@ -39,12 +39,14 @@ export default function Pie(props: { percentage: number; label?: string }) {
             : ""
         }
         color="#eee"
-        overlayClassName=" text-black"
-        overlayInnerStyle={{
-          color: "#000",
-          padding: "14px",
-          fontSize: "12px",
-          lineHeight: "1.2",
+        classNames={{ root: "text-black" }}
+        styles={{
+          body: {
+            color: "#000",
+            padding: "14px",
+            fontSize: "12px",
+            lineHeight: "1.2",
+          },
         }}
       >
         <div className="w-[100px] h-[90px] mx-auto font-medium my-6">

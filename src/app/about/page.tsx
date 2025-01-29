@@ -113,6 +113,16 @@ export default function About() {
           <i>Data in Action</i>
         </a>{" "}
         initiative.
+        <br />
+        The code is available on GitHub:{" "}
+        <a
+          href="https://github.com/Eurac-Research/winemap"
+          target="_blank"
+          rel="noreferrer"
+          className="underline"
+        >
+          https://github.com/Eurac-Research/winemap
+        </a>
       </p>
       <Textnavigation />
     </main>
