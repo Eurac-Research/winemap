@@ -12,13 +12,11 @@
     "ci": "yarn format && yarn lint && yarn tsc"
   },
   "dependencies": {
-    "@mapbox/mapbox-gl-geocoder": "^5.0.1",
     "@turf/bbox": "^6.5.0",
     "@types/mapbox-gl": "^3.1.0",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
-    "add": "^2.0.6",
     "antd": "^5.3.1",
     "autoprefixer": "^10.4.19",
     "echarts": "^5.4.2",
@@ -40,7 +38,6 @@
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^3.7.2",
     "@types/js-cookie": "^3.0.3",
-    "@types/mapbox__mapbox-gl-geocoder": "^4.7.3",
     "eslint": "^8.41.0",
     "eslint-config-next": "^13.4.3",
     "prettier": "^2.8.8",
