@@ -373,16 +373,29 @@ export default function Page() {
   );
 
   /* return PDO Name by given PDOid */
+  /**
+   * Returns the PDO name for a given PDO ID.
+   * @param {string | undefined} id - The PDO ID to search for.
+   * @returns {string} - The name of the PDO.
+   */
   function getPDONameById(id: string | undefined) {
-    let PDO: JSONObject[] = data.filter((i: { pdoid: any }) => id === i.pdoid);
+    // Find the PDO object that matches the given ID
+    const matchingPDOs: JSONObject[] = data.filter(
+      (pdo: { pdoid: any }) => id === pdo.pdoid,
+    );
+
+    // If vulnerability visibility is enabled, add vulnerability data to the PDO object
     if (vulnerabilityVisibility) {
       const vulnerabilityData = vulnerability.filter(
-        (v: any) => id === v.PDOid,
+        (vul: any) => id === vul.PDOid,
       );
-      PDO[0].vulneral = vulnerabilityData[0]; // Add 'vulneral' property
+      if (vulnerabilityData.length > 0) {
+        matchingPDOs[0].vulneral = vulnerabilityData[0]; // Add 'vulneral' property
+      }
     }
 
-    return PDO[0].pdoname;
+    // Return the name of the matching PDO
+    return matchingPDOs.length > 0 ? matchingPDOs[0].pdoname : "Unknown PDO";
   }
 
   // unique PDONames for select
