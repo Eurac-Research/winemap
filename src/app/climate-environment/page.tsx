@@ -19,6 +19,7 @@ import Link from "next/link";
 import { Radio, RadioChangeEvent } from "antd";
 import { isMobile } from "react-device-detect";
 import WinemapNavigation from "../components/WinemapNavigation";
+import MapLegend from "../components/MapLegend";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
@@ -289,6 +290,14 @@ export default function EnvironmentalPage() {
             />
             <ScaleControl position="bottom-right" />
           </ReactMap>
+
+          {/* Map Legend - positioned over the map, not sidebar */}
+          <MapLegend
+            map={mapRef.current?.getMap() || null}
+            layerId={selectedLayer.mapboxLayerId}
+            layerName={selectedLayer.name}
+            isVisible={mapLoaded}
+          />
         </Suspense>
 
         {/* Responsive Content Frame */}
