@@ -16,15 +16,15 @@ export default function Smallheader(props: {
   vulneral: boolean;
 }) {
   return (
-    <header className="md:sticky z-50 top-0 flex px-[30px] py-[20px] items-center gap-2 bg-black">
+    <header className="md:sticky z-50 top-0 flex px-[28px] py-[20px] items-center gap-2 bg-black">
       <Link
         href="/"
-        className={`${styles.frontpageLink} pb-[3px]`}
+        className={`${styles.frontpageLink} pb-[3px] text-[14px]`}
         onClick={() => props.onClickFunction()}
       >
         WINEMAP{" "}
         {props.vulneral && (
-          <span className="font-extralight italic uppercase mr-1">Climate</span>
+          <span className="font-extralight italic uppercase mr-1">Adaptation</span>
         )}{" "}
         by
       </Link>
