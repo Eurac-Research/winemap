@@ -20,6 +20,7 @@ export default function MapLegend({ map, layerId, layerName, isVisible }: MapLeg
   const [legendItems, setLegendItems] = useState<LegendItem[]>([]);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
+
   const formatValue = useCallback((value: number): string => {
     if (value >= 1000) {
       return (value / 1000).toFixed(1) + "k";
@@ -30,81 +31,83 @@ export default function MapLegend({ map, layerId, layerName, isVisible }: MapLeg
   const createGenericLegend = useCallback((name: string): LegendItem[] => {
     // TIF-based color configurations with rescaled 0-100 values
     const layerLegends: Record<string, LegendItem[]> = {
-      "naturalness": [
-        { value: "0", color: "#00ffff", label: "0 (Very Low)" },
-        { value: "25", color: "#40bfff", label: "25 (Low)" },
-        { value: "50", color: "#807fff", label: "50 (Medium)" },
-        { value: "75", color: "#c03fff", label: "75 (High)" },
-        { value: "100", color: "#ff00ff", label: "100 (Very High)" },
+      "naturalness (index)": [
+        { value: "0", color: "#ff341e", label: "0 (Very Low)" },
+        { value: "25", color: "#f8ae26", label: "25 (Low)" },
+        { value: "50", color: "#f0fe28", label: "50 (Medium)" },
+        { value: "75", color: "#77b919", label: "75 (High)" },
+        { value: "100", color: "#137614", label: "100 (Very High)" },
       ],
-      "diversity": [
-        { value: "0", color: "#a50026", label: "0 (Low Diversity)" },
-        { value: "25", color: "#f88e52", label: "25 (Low)" },
-        { value: "50", color: "#fefebd", label: "50 (Medium)" },
-        { value: "75", color: "#84ca66", label: "75 (High)" },
-        { value: "100", color: "#006837", label: "100 (High Diversity)" },
+      "diversity (index)": [
+        { value: "0", color: "#f8f8f8", label: "0 (Low Diversity)" },
+        { value: "25", color: "#db8800", label: "25 (Low)" },
+        { value: "50", color: "#fdff01", label: "50 (Medium)" },
+        { value: "75", color: "#22d600", label: "75 (High)" },
+        { value: "100", color: "#02734c", label: "100 (High Diversity)" },
       ],
-      "water balance": [
-        { value: "0", color: "#f7fbff", label: "0 (Very Dry)" },
-        { value: "25", color: "#c5daee", label: "25 (Dry)" },
-        { value: "50", color: "#6aadd5", label: "50 (Moderate)" },
-        { value: "75", color: "#2070b4", label: "75 (Wet)" },
-        { value: "100", color: "#08306b", label: "100 (Very Wet)" },
+      "climate water balance (index)": [
+        { value: "0", color: "#ff3c17", label: "0 (Very Dry)" },
+        { value: "25", color: "#ffaa1f", label: "25 (Dry)" },
+        { value: "50", color: "#f2fe28", label: "50 (Moderate)" },
+        { value: "75", color: "#7dba0f", label: "75 (Wet)" },
+        { value: "100", color: "#167413", label: "100 (Very Wet)" },
       ],
-      "pest control": [
-        { value: "0", color: "#440154", label: "0 (Very Low)" },
-        { value: "25", color: "#3a528b", label: "25 (Low)" },
-        { value: "50", color: "#20908c", label: "50 (Medium)" },
-        { value: "75", color: "#5ec961", label: "75 (High)" },
-        { value: "100", color: "#fde724", label: "100 (Very High)" },
+      "pest control (index)": [
+        { value: "0", color: "#ffffff", label: "0 (Very Low)" },
+        { value: "25", color: "#b48017", label: "25 (Low)" },
+        { value: "50", color: "#f1ca3b", label: "50 (Medium)" },
+        { value: "75", color: "#b7ec07", label: "75 (High)" },
+        { value: "100", color: "#247500", label: "100 (Very High)" },
       ],
-      "pollination": [
-        { value: "0", color: "#440154", label: "0 (Very Low)" },
-        { value: "25", color: "#3a528b", label: "25 (Low)" },
-        { value: "50", color: "#20908c", label: "50 (Medium)" },
-        { value: "75", color: "#5ec961", label: "75 (High)" },
-        { value: "100", color: "#fde724", label: "100 (Very High)" },
+      "pollination (index)": [
+        { value: "0", color: "#f9f9fd", label: "0 (Very Low)" },
+        { value: "25", color: "#cbab62", label: "25 (Low)" },
+        { value: "50", color: "#faffca", label: "50 (Medium)" },
+        { value: "75", color: "#68c9a9", label: "75 (High)" },
+        { value: "100", color: "#4b8974", label: "100 (Very High)" },
       ],
-      "erosion": [
-        { value: "0", color: "#440154", label: "0 (Low Control)" },
-        { value: "25", color: "#3a528b", label: "25 (Low)" },
-        { value: "50", color: "#20908c", label: "50 (Medium)" },
-        { value: "75", color: "#5ec961", label: "75 (High)" },
-        { value: "100", color: "#fde724", label: "100 (High Control)" },
+      "soil erosion control (index)": [
+        { value: "0", color: "#be5a46", label: "0 (Low Control)" },
+        { value: "25", color: "#f0b70b", label: "25 (Low)" },
+        { value: "50", color: "#77ed00", label: "50 (Medium)" },
+        { value: "75", color: "#21a684", label: "75 (High)" },
+        { value: "100", color: "#122a74", label: "100 (High Control)" },
       ],
-      "production": [
-        { value: "0", color: "#ffffcc", label: "0 (Very Low)" },
-        { value: "25", color: "#fed875", label: "25 (Low)" },
-        { value: "50", color: "#fc8c3b", label: "50 (Medium)" },
-        { value: "75", color: "#e2191c", label: "75 (High)" },
-        { value: "100", color: "#800026", label: "100 (Very High)" },
+      "net primary production (index)": [
+        { value: "0", color: "#f2f306", label: "0 (Very Low)" },
+        { value: "25", color: "#f3b800", label: "25 (Low)" },
+        { value: "50", color: "#f47f03", label: "50 (Medium)" },
+        { value: "75", color: "#f33e00", label: "75 (High)" },
+        { value: "100", color: "#f53d01", label: "100 (Very High)" },
       ],
-      "recreation": [
-        { value: "0", color: "#440154", label: "0 (Very Low)" },
-        { value: "25", color: "#3a528b", label: "25 (Low)" },
-        { value: "50", color: "#20908c", label: "50 (Medium)" },
-        { value: "75", color: "#5ec961", label: "75 (High)" },
-        { value: "100", color: "#fde724", label: "100 (Very High)" },
+      "outdoor recreation (index)": [
+        { value: "0", color: "#f8f8f8", label: "0 (Very Low)" },
+        { value: "25", color: "#ffc3c1", label: "25 (Low)" },
+        { value: "50", color: "#f668a1", label: "50 (Medium)" },
+        { value: "75", color: "#b1007c", label: "75 (High)" },
+        { value: "100", color: "#46006b", label: "100 (Very High)" },
       ],
-      "aesthetic": [
-        { value: "0", color: "#440154", label: "0 (Very Low)" },
-        { value: "25", color: "#3a528b", label: "25 (Low)" },
-        { value: "50", color: "#20908c", label: "50 (Medium)" },
-        { value: "75", color: "#5ec961", label: "75 (High)" },
-        { value: "100", color: "#fde724", label: "100 (Very High)" },
+      "landscape aesthetics (index)": [
+        { value: "0", color: "#37a3cd", label: "0 (Very Low)" },
+        { value: "25", color: "#abcdac", label: "25 (Low)" },
+        { value: "50", color: "#f2fb7c", label: "50 (Medium)" },
+        { value: "75", color: "#f8a445", label: "75 (High)" },
+        { value: "100", color: "#df3d3e", label: "100 (Very High)" },
       ],
-      "distance to nature": [
-        { value: "0", color: "#440154", label: "0 (Very Close)" },
-        { value: "25", color: "#3a528b", label: "25 (Close)" },
-        { value: "50", color: "#20908c", label: "50 (Medium)" },
-        { value: "75", color: "#5ec961", label: "75 (Far)" },
-        { value: "100", color: "#fde724", label: "100 (Very Far)" },
+      "land use integrity (index)": [
+        { value: "0", color: "#ff341e", label: "0 (Very Close)" },
+        { value: "25", color: "#f8ae26", label: "25 (Close)" },
+        { value: "50", color: "#f0fe28", label: "50 (Medium)" },
+        { value: "75", color: "#77b919", label: "75 (Far)" },
+        { value: "100", color: "#137614", label: "100 (Very Far)" },
       ],
     };
 
     // Match layer name to legend configuration
     const lowerName = name.toLowerCase();
     for (const [key, legend] of Object.entries(layerLegends)) {
+      //console.log(`Checking layer name: ${lowerName} against key: ${key}`);
+
       if (lowerName.includes(key)) {
         return legend;
       }
@@ -112,7 +115,7 @@ export default function MapLegend({ map, layerId, layerName, isVisible }: MapLeg
 
     // Default fallback legend
     return [
-      { value: "0-20", color: "#440154", label: "0-20 (Low)" },
+      { value: "0-20", color: "#440154", label: "0-20 (Low)XXXY" },
       { value: "20-40", color: "#31688e", label: "20-40" },
       { value: "40-60", color: "#35b779", label: "40-60" },
       { value: "60-80", color: "#fde725", label: "60-80" },
@@ -155,7 +158,7 @@ export default function MapLegend({ map, layerId, layerName, isVisible }: MapLeg
         return;
       }
 
-      console.log(`Analyzing layer: ${layerId}`, layer);
+      //console.log(`Legend for: ${layerId}`, layer);
 
       // Extract paint properties for different layer types
       let paint = null;
@@ -169,20 +172,20 @@ export default function MapLegend({ map, layerId, layerName, isVisible }: MapLeg
         paint = map.getPaintProperty(layerId, 'heatmap-color');
       }
 
-      console.log(`Paint property for ${layerId}:`, paint);
+      //console.log(`Paint property for ${layerId}:`, paint);
 
       if (paint && Array.isArray(paint)) {
         // Handle data-driven paint properties
         const items = extractLegendFromPaint(paint);
         if (items.length > 0) {
           setLegendItems(items);
-          console.log(`Extracted ${items.length} legend items from paint property`);
+          //console.log(`Extracted ${items.length} legend items from paint property`);
           return;
         }
       }
 
       // Fallback: Create a generic legend based on layer type
-      console.log(`Using generic legend for ${layerName}`);
+      //console.log(`Using generic legend for ${layerName}`);
       setLegendItems(createGenericLegend(layerName));
     } catch (error) {
       console.log(`Error extracting legend for ${layerId}:`, error);
