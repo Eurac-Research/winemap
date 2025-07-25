@@ -400,7 +400,7 @@ export default function EnvironmentalPage() {
               )}
 
               {selectedLayer.inputData && (
-                <div>
+                <div className="mb-4">
                   <h5 className="text-md font-medium mb-2">Input Data:</h5>
                   <ul className="text-xs text-gray-400 space-y-1">
                     {selectedLayer.inputData.map((data, index) => (
@@ -409,6 +409,14 @@ export default function EnvironmentalPage() {
                   </ul>
                 </div>
               )}
+
+              {/* Acknowledgement - shown for all layers */}
+              <div>
+                <h5 className="text-md font-medium mb-2">Acknowledgement:</h5>
+                <p className="text-xs text-gray-400">
+                  The data presented were produced within the project AGATA (Accessible ecoloGicAl daTA for resilient Viticulture), jointly financed by Eurac Research and the University of Verona as part of the &ldquo;JOINT RESEARCH 2022&rdquo; Call.
+                </p>
+              </div>
             </div>
           </div>
         </div>
