@@ -35,7 +35,7 @@ export default function ClimateIndicatorsPage() {
           <h1 className="text-4xl font-bold mb-8">Climate indicators and scenarios</h1>
 
           <p className="text-lg leading-relaxed mb-6">
-            Wine production and its quality are highly sensitive to local weather variability and broader climatic conditions. Indeed, climate is often considered the most important factor influencing viticultural productivity and quality, largely determining which grape varieties can be grown and the distinctive wines that can be produced in a specific region, contributing significantly to its 'Terroir'. The global distribution of high-quality viticulture is therefore strongly influenced by specific climatic conditions.
+            Wine production and its quality are highly sensitive to local weather variability and broader climatic conditions. Indeed, climate is often considered the most important factor influencing viticultural productivity and quality, largely determining which grape varieties can be grown and the distinctive wines that can be produced in a specific region, contributing significantly to its &apos;Terroir&apos;. The global distribution of high-quality viticulture is therefore strongly influenced by specific climatic conditions.
           </p>
 
           <p className="text-lg leading-relaxed mb-6">
@@ -63,7 +63,7 @@ export default function ClimateIndicatorsPage() {
 
             <h4 className="text-xl font-medium mb-4">Interpretation</h4>
             <p className="mb-4">
-              The HI categorises climatic conditions into several classes, ranging from 'very cool' to 'too hot', each indicating different suitability levels for grape varieties and their ripening.
+              The HI categorises climatic conditions into several classes, ranging from &apos;very cool&apos; to &apos;too hot&apos;, each indicating different suitability levels for grape varieties and their ripening.
             </p>
 
             <ul className="space-y-4 mb-6">
@@ -114,7 +114,7 @@ export default function ClimateIndicatorsPage() {
 
             <h4 className="text-xl font-medium mb-4">General Introduction</h4>
             <p className="mb-6">
-              The Cool Night Index (CNI) is a bioclimatic indicator that specifically describes the minimum temperature during the ripening phase of grapes. This index is crucial for understanding the development of the sensory characteristics of grapes, such as polyphenols and aromas. The CNI's purpose is to assess the qualitative potentials of wine-growing regions, particularly concerning the secondary metabolites in grapes, which significantly influence grape and wine colour and aromas.
+              The Cool Night Index (CNI) is a bioclimatic indicator that specifically describes the minimum temperature during the ripening phase of grapes. This index is crucial for understanding the development of the sensory characteristics of grapes, such as polyphenols and aromas. The CNI&apos;s purpose is to assess the qualitative potentials of wine-growing regions, particularly concerning the secondary metabolites in grapes, which significantly influence grape and wine colour and aromas.
             </p>
 
             <h4 className="text-xl font-medium mb-4">Interpretation</h4>
@@ -149,7 +149,7 @@ export default function ClimateIndicatorsPage() {
 
             <h4 className="text-xl font-medium mb-4">General Introduction</h4>
             <p className="mb-6">
-              The Dryness Index (DI) is a bioclimatic indicator that describes the water availability for grapevines. It evaluates the soil water availability essential for vine development by estimating soil water reserves, precipitation, and potential evapotranspiration. The DI is related to vine growth and berry development and is based on an adaptation of Riou's potential water balance of the soil index, specifically developed for vineyard use. This index allows for the characterisation of the water component of the climate in a grape-growing region, indicating the potential water availability in the soil in relation to the level of dryness. It is also considered important for grape ripening and overall wine quality.
+              The Dryness Index (DI) is a bioclimatic indicator that describes the water availability for grapevines. It evaluates the soil water availability essential for vine development by estimating soil water reserves, precipitation, and potential evapotranspiration. The DI is related to vine growth and berry development and is based on an adaptation of Riou&apos;s potential water balance of the soil index, specifically developed for vineyard use. This index allows for the characterisation of the water component of the climate in a grape-growing region, indicating the potential water availability in the soil in relation to the level of dryness. It is also considered important for grape ripening and overall wine quality.
             </p>
 
             <h4 className="text-xl font-medium mb-4">Interpretation</h4>
@@ -187,8 +187,8 @@ export default function ClimateIndicatorsPage() {
               <li><strong>W</strong> = The estimated soil water reserve at the end of a given period. The DI itself is the value of W obtained at the final moment of the 6-month calculation period.</li>
               <li><strong>W<sub>o</sub></strong> = The initial useful soil water reserve, which can be accessed by the roots. This is typically set at 200 mm.</li>
               <li><strong>P</strong> = Precipitation (mm).</li>
-              <li><strong>T<sub>v</sub></strong> = Potential vineyard transpiration (mm). This is calculated as Potential Evapotranspiration (ETP) multiplied by 'k', a coefficient of radiation absorption by the vine plant, which varies by month (e.g., 0.1 for April, 0.3 for May, and 0.5 for June-September in the Northern Hemisphere). ETP can be calculated using different methods, for instance the Thornthwaite approach.</li>
-              <li><strong>E<sub>s</sub></strong> = Direct evaporation from the soil (mm). This is calculated using ETP, 'k', the number of days in the month (N), and rainfall per month (JPm).</li>
+              <li><strong>T<sub>v</sub></strong> = Potential vineyard transpiration (mm). This is calculated as Potential Evapotranspiration (ETP) multiplied by &apos;k&apos;, a coefficient of radiation absorption by the vine plant, which varies by month (e.g., 0.1 for April, 0.3 for May, and 0.5 for June-September in the Northern Hemisphere). ETP can be calculated using different methods, for instance the Thornthwaite approach.</li>
+              <li><strong>E<sub>s</sub></strong> = Direct evaporation from the soil (mm). This is calculated using ETP, &apos;k&apos;, the number of days in the month (N), and rainfall per month (JPm).</li>
             </ul>
             <p>
               The input data for DI include the initial soil water content, precipitation, and potential evapotranspiration.

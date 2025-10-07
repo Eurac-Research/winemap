@@ -163,7 +163,7 @@ export default function HomePage() {
             About the project
           </Link>
           <Link href="/about-pdo" className="text-gray-400 hover:text-white transition-colors">
-            What's a PDO?
+            What&apos;s a PDO?
           </Link>
           <Link href="/about-data" className="text-gray-400 hover:text-white transition-colors">
             About the data

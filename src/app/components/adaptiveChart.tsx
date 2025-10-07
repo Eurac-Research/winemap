@@ -1,7 +1,8 @@
 import React from "react";
 import ReactECharts from "echarts-for-react";
+import { VulnerabilityType } from "./MapContainer";
 
-import type { VulnerabilityType } from "../page";
+
 
 /**
  * AdaptiveChart component renders a bar chart using the provided vulnerability data.
@@ -72,14 +73,14 @@ export default function AdaptiveChart(props: { data: VulnerabilityType }) {
           params[0]?.value[1] === "Financial"
             ? "The Financial dimension is related to economic readiness and viability. Indicators consider the debt ratio of wine farms, return on assets for profitability, and subsidy dependence for financial sustainability in climate adaptation."
             : params[0]?.value[1] === "Natural"
-            ? "The Natural dimension addresses climate adaptation through natural resources. Indicators assess potential areas for shifts of viticultural areas, water availability for irrigation needs, and temperature variability to support diverse grape varieties."
-            : params[0]?.value[1] === "Physical"
-            ? "The Physical dimension focuses on infrastructure and mechanization. Indicators include road length for access to vineyards, mechanization index for the value of farm equipment, and naturalness, which indicates the role of natural areas in pest control."
-            : params[0]?.value[1] === "Social"
-            ? "The Social dimension reflects demographic trends and challenges. Indicators measure age and dependency ratios within the population and population density, highlighting the movement of young people, socioeconomic burdens, and urban-rural dynamics."
-            : params[0]?.value[1] === "Human"
-            ? "The Human dimension evaluates workforce and knowledge resources. Indicators look at the availability of farm labour force, the level of education of farm managers, and the proximity to wine research centres for innovation and adaptation."
-            : "";
+              ? "The Natural dimension addresses climate adaptation through natural resources. Indicators assess potential areas for shifts of viticultural areas, water availability for irrigation needs, and temperature variability to support diverse grape varieties."
+              : params[0]?.value[1] === "Physical"
+                ? "The Physical dimension focuses on infrastructure and mechanization. Indicators include road length for access to vineyards, mechanization index for the value of farm equipment, and naturalness, which indicates the role of natural areas in pest control."
+                : params[0]?.value[1] === "Social"
+                  ? "The Social dimension reflects demographic trends and challenges. Indicators measure age and dependency ratios within the population and population density, highlighting the movement of young people, socioeconomic burdens, and urban-rural dynamics."
+                  : params[0]?.value[1] === "Human"
+                    ? "The Human dimension evaluates workforce and knowledge resources. Indicators look at the availability of farm labour force, the level of education of farm managers, and the proximity to wine research centres for innovation and adaptation."
+                    : "";
 
         return `<strong>${params[0]?.value[1]} dimension</strong><br/>
         <span style="width: 150px; display: block; font-size: 12px; text-wrap: wrap; line-height: 120%">${text}</span>
