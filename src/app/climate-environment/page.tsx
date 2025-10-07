@@ -1,26 +1,14 @@
 "use client";
 
-import {
-  Suspense,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import {
-  NavigationControl,
-  Map as ReactMap,
-  ScaleControl,
-  type MapRef,
-} from "react-map-gl";
-
-import styles from "@/styles/Home.module.scss";
-import "mapbox-gl/dist/mapbox-gl.css";
+import { Suspense, useRef, useState, useEffect } from "react";
 import Link from "next/link";
+import Map, { MapRef, NavigationControl, ScaleControl } from "react-map-gl";
 import { Radio, RadioChangeEvent } from "antd";
+import MapLegend from "@/app/components/MapLegend";
+import styles from "@/styles/Home.module.scss";
 import { isMobile } from "react-device-detect";
-import WinemapNavigation from "../components/WinemapNavigation";
-import MapLegend from "../components/MapLegend";
 
+const ReactMap = Map;
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
 interface LayerGroup {
@@ -336,7 +324,6 @@ export default function EnvironmentalPage() {
                     </svg>
                   </a>
                 </div>
-                <WinemapNavigation currentPage="environment" />
               </div>
             </header>            {/* Main Title */}
             <h2 className="text-xl font-semibold mb-6">ECOLOGICAL CONDITIONS AND ECOSYSTEM SERVICES IN THE ALPS</h2>
