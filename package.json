@@ -11,6 +11,7 @@
     "fmt": "prettier --write '**/*.{cjs,mjs,ts,tsx,md}' --ignore-unknown --ignore-path .gitignore",
     "ci": "pnpm format && pnpm lint && pnpm tsc"
   },
+  "packageManager": "pnpm@10.13.1",
   "dependencies": {
     "@radix-ui/react-navigation-menu": "^1.2.14",
     "@turf/bbox": "^6.5.0",
