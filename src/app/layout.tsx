@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import PlausibleProvider from "next-plausible";
 
 import CookieConsent from "./components/CookieConsent";
+import { Navigation } from "./components/Navigation";
 
 export const metadata: Metadata = {
   title: "Winemap by Eurac Research",
@@ -43,15 +44,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <PlausibleProvider
-        domain="winemap.eurac.edu,www.eurac.edu"
+        domain="winemap.eurac.edu"
         trackLocalhost={false}
         enabled={true}
       />
-      <body>
-        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
-        <Suspense fallback={<div>Loading...</div>}>
-          <CookieConsent />
-        </Suspense>
+      <body className="">
+        <Navigation />
+        <div className="">
+          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+          <Suspense fallback={<div>Loading...</div>}>
+            <CookieConsent />
+          </Suspense>
+        </div>
       </body>
     </html>
   );

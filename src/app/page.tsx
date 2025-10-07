@@ -1009,7 +1009,7 @@ export default function Page() {
   /* RETURN */
 
   return (
-    <div className={styles.container}>
+    <div className="relative">
       <Suspense fallback={<div>Loading...</div>}>
         <ReactMap
           ref={mapRef}
@@ -1126,9 +1126,9 @@ export default function Page() {
                       </svg>
                     </a>
                   </div>
-                  <WinemapNavigation
+                  {/* <WinemapNavigation
                     currentPage={vulnerabilityVisibility ? "adaptation" : "regions"}
-                  />
+                  /> */}
                 </div>
               </header>
 

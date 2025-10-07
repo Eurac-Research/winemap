@@ -20,8 +20,8 @@
   @media screen and (min-width: 768px) {
     background-color: rgba(0, 0, 0, 0.6);
     width: 400px;
-    height: 100vh;
-    top: 0;
+    height: calc(100vh - 68px);
+    top: 68px;
     left: 0;
     padding-right: 0;
     padding-top: 0;
@@ -165,7 +165,7 @@
 
 .filterBar {
   position: fixed;
-  top: 0px;
+  top: 100px;
   left: 0px;
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 0 0 20px 20px;
@@ -174,7 +174,7 @@
   backdrop-filter: blur(10px);
 
   @media screen and (min-width: 768px) {
-    top: 0px;
+    top: 100px;
     left: 440px;
     width: auto;
     padding: 20px 20px 20px 20px;
