@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Map, Leaf, Scale } from "lucide-react";
+import { Leaf, Scale, ThermometerSun } from "lucide-react";
 
 export default function HomePage() {
   return (
@@ -60,7 +60,7 @@ export default function HomePage() {
               <div className="p-8 h-full flex flex-col">
                 <div className="mb-6">
                   <div className="w-16 h-16 rounded-full bg-[#E91E63]/10 flex items-center justify-center mb-4 group-hover:bg-[#E91E63]/20 transition-colors">
-                    <Map className="w-8 h-8 text-[#E91E63]" />
+                    <ThermometerSun className="w-8 h-8 text-[#E91E63]" />
                   </div>
                   <h2 className="text-2xl font-bold text-white mb-2">BENEFITS, VALUES & CLIMATIC THREATS</h2>
                 </div>
