@@ -909,7 +909,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
         <Suspense fallback={<div>Loading...</div>}>
           <div className={styles.contentFrame}>
             <div className={styles.frontpageContent}>
-              <header className="mb-8">
+              {/* <header className="mb-8">
                 <div className="flex items-start justify-between w-full mb-4 flex-col">
                   <div className="flex items-start justify-start gap-2 flex-col ">
                     <h1 className="text-[28px] font-bold mt-4 mb-0 block">
@@ -945,7 +945,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
                     </a>
                   </div>
                 </div>
-              </header>
+              </header> */}
 
               {!vulnerabilityVisibility && (
                 <>

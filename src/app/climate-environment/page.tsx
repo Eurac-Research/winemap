@@ -292,7 +292,7 @@ export default function EnvironmentalPage() {
         <div className={styles.contentFrame}>
           <div className={styles.frontpageContent}>
             {/* Winemap Header */}
-            <header className="mb-8">
+            {/* <header className="mb-8">
               <div className="flex items-start justify-between w-full mb-4 flex-col">
                 <div className="flex items-start justify-start gap-2 flex-col ">
                   <h1 className="text-[28px] font-bold mt-4 mb-0 ">
@@ -325,7 +325,8 @@ export default function EnvironmentalPage() {
                   </a>
                 </div>
               </div>
-            </header>            {/* Main Title */}
+            </header> */}
+            {/* Main Title */}
             <h2 className="text-xl font-semibold mb-6">ECOLOGICAL CONDITIONS AND ECOSYSTEM SERVICES IN THE ALPS</h2>
 
             {/* Group Selection Tabs */}
