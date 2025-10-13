@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ImageComparisonSlider from "@/app/components/ImageComparisonSlider";
 
 export default function ClimateIndicatorsPage() {
   return (
@@ -53,8 +54,8 @@ export default function ClimateIndicatorsPage() {
           </p>
 
           {/* Box 1: Huglin Index */}
-          <div className="bg-gray-900 border border-gray-700 rounded-lg p-8 my-12">
-            <h3 className="text-2xl font-semibold mb-6">Box 1: Huglin Index</h3>
+          <div className="bg-gray-900 border border-gray-700 rounded-lg p-4 lg:p-8 my-12">
+            <h3 className="text-2xl font-semibold mb-6">Huglin Index</h3>
 
             <h4 className="text-xl font-medium mb-4">General Introduction</h4>
             <p className="mb-6">
@@ -87,6 +88,21 @@ export default function ClimateIndicatorsPage() {
               </li>
             </ul>
 
+
+            {/* place before/after slider here */}
+            <ImageComparisonSlider
+              beforeImage="/images/indicators/huglin_1981_2010.png"
+              afterImage="/images/indicators/huglin_2071_2100.png"
+              beforeLabel="1981-2010"
+              afterLabel="2071-2100"
+              alt="Huglin Index Comparison"
+              aspectRatio="auto"
+              caption="Figure 1: Comparison of Huglin Index between historical (1981-2010) and projected (2071-2100) climate scenarios showing increased thermal suitability across European wine regions."
+            />
+
+
+
+
             <h4 className="text-xl font-medium mb-4">Methodology</h4>
             <p className="mb-4">
               The Huglin Index is calculated for a 6-month period, typically from 1 April to 30 September in the Northern Hemisphere, or 1 October to 31 March in the Southern Hemisphere.
@@ -109,8 +125,8 @@ export default function ClimateIndicatorsPage() {
           </div>
 
           {/* Box 2: Cool Night Index */}
-          <div className="bg-gray-900 border border-gray-700 rounded-lg p-8 my-12">
-            <h3 className="text-2xl font-semibold mb-6">Box 2: Cool Night Index</h3>
+          <div className="bg-gray-900 border border-gray-700 rounded-lg p-4 lg:p-8 my-12">
+            <h3 className="text-2xl font-semibold mb-6">Cool Night Index</h3>
 
             <h4 className="text-xl font-medium mb-4">General Introduction</h4>
             <p className="mb-6">
@@ -137,6 +153,18 @@ export default function ClimateIndicatorsPage() {
               </li>
             </ul>
 
+            {/* place before/after slider here */}
+            <ImageComparisonSlider
+              beforeImage="/images/indicators/cni_1981_2010.png"
+              afterImage="/images/indicators/cni_2071_2100.png"
+              beforeLabel="1981-2010"
+              afterLabel="2071-2100"
+              alt="Cool Night Index Comparison"
+              aspectRatio="auto"
+              caption="Figure 2: Comparison of Cool Night Index between historical (1981-2010) and projected (2071-2100) climate scenarios indicating shifts towards warmer night temperatures during grape ripening in many wine regions."
+            />
+
+
             <h4 className="text-xl font-medium mb-4">Methodology</h4>
             <p>
               The Cool Night Index (CNI) is calculated by averaging the minimum temperature during the month of September for the Northern Hemisphere or during March for the Southern Hemisphere. The input data required for the CNI calculation are daily minimum temperature data.
@@ -144,8 +172,8 @@ export default function ClimateIndicatorsPage() {
           </div>
 
           {/* Box 3: Dryness Index */}
-          <div className="bg-gray-900 border border-gray-700 rounded-lg p-8 my-12">
-            <h3 className="text-2xl font-semibold mb-6">Box 3: Dryness Index</h3>
+          <div className="bg-gray-900 border border-gray-700 rounded-lg p-4 lg:p-8 my-12">
+            <h3 className="text-2xl font-semibold mb-6">Dryness Index</h3>
 
             <h4 className="text-xl font-medium mb-4">General Introduction</h4>
             <p className="mb-6">
@@ -171,6 +199,19 @@ export default function ClimateIndicatorsPage() {
                 <strong>Less than -100 mm (Very dry):</strong> Potential dryness is pronounced in these regions, frequently leading to stress effects on vines. Irrigation is common and often mandatory when the DI falls below -200 mm, due to a high deficit of available soil water and a frequent risk of severe stress if not adequately irrigated.
               </li>
             </ul>
+
+
+            {/* place before/after slider here */}
+            <ImageComparisonSlider
+              beforeImage="/images/indicators/di_1981_2010.png"
+              afterImage="/images/indicators/di_2071_2100.png"
+              beforeLabel="1981-2010"
+              afterLabel="2071-2100"
+              alt="Dryness Index Comparison"
+              aspectRatio="auto"
+              caption="Figure 3: Comparison of Dryness Index between historical (1981-2010) and projected (2071-2100) climate scenarios showing increased dryness in many traditional wine regions, highlighting the growing importance of water management and irrigation strategies."
+            />
+
 
             <h4 className="text-xl font-medium mb-4">Methodology</h4>
             <p className="mb-4">
