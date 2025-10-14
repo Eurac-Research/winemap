@@ -62,7 +62,7 @@ export default function HomePage() {
                   <div className="w-16 h-16 rounded-full bg-[#E91E63]/10 flex items-center justify-center mb-4 group-hover:bg-[#E91E63]/20 transition-colors">
                     <ThermometerSun className="w-8 h-8 text-[#E91E63]" />
                   </div>
-                  <h2 className="text-2xl font-bold text-white mb-2">BENEFITS, VALUES & CLIMATIC THREATS</h2>
+                  <h2 className="text-2xl font-bold text-white mb-2 uppercase">Climate & Environment</h2>
                 </div>
 
                 <div className="space-y-4 flex-grow">
@@ -91,7 +91,7 @@ export default function HomePage() {
                   <div className="w-16 h-16 rounded-full bg-[#E91E63]/10 flex items-center justify-center mb-4 group-hover:bg-[#E91E63]/20 transition-colors">
                     <Leaf className="w-8 h-8 text-[#E91E63]" />
                   </div>
-                  <h2 className="text-2xl font-bold text-white mb-2">ECOSYSTEM-BASED ADAPTATION</h2>
+                  <h2 className="text-2xl font-bold text-white mb-2 uppercase">ADAPTATION</h2>
                 </div>
 
                 <div className="space-y-4 flex-grow">
@@ -120,7 +120,7 @@ export default function HomePage() {
                   <div className="w-16 h-16 rounded-full bg-[#E91E63]/10 flex items-center justify-center mb-4 group-hover:bg-[#E91E63]/20 transition-colors">
                     <Scale className="w-8 h-8 text-[#E91E63]" />
                   </div>
-                  <h2 className="text-2xl font-bold text-white mb-2">GOVERNANCE</h2>
+                  <h2 className="text-2xl font-bold text-white mb-2 uppercase">GOVERNANCE</h2>
                 </div>
 
                 <div className="space-y-4 flex-grow">

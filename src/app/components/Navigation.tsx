@@ -38,8 +38,8 @@ export function Navigation() {
         <NavigationMenu className="justify-center py-6 w-full">
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-black text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white text-base px-5 py-3">
-                BENEFITS, VALUES & CLIMATIC THREATS
+              <NavigationMenuTrigger className="bg-black text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white text-base px-5 py-3 uppercase">
+                Climate & Environment
               </NavigationMenuTrigger>
               <NavigationMenuContent className="bg-black border-white/20">
                 <div className="grid grid-cols-[340px_1fr] gap-0 w-[900px]">
@@ -90,8 +90,8 @@ export function Navigation() {
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-black text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white text-base px-5 py-3">
-                ECOSYSTEM-BASED ADAPTATION
+              <NavigationMenuTrigger className="bg-black text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white text-base px-5 py-3 uppercase">
+                ADAPTATION
               </NavigationMenuTrigger>
               <NavigationMenuContent className="bg-black border-white/20">
                 <div className="grid grid-cols-[340px_1fr] gap-0 w-[900px]">
@@ -153,7 +153,7 @@ export function Navigation() {
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-black text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white text-base px-5 py-3">
+              <NavigationMenuTrigger className="bg-black text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white text-base px-5 py-3 uppercase">
                 GOVERNANCE
               </NavigationMenuTrigger>
               <NavigationMenuContent className="bg-black border-white/20">
