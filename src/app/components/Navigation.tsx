@@ -46,11 +46,11 @@ export function Navigation() {
                   {/* Left side - Large clickable main entry */}
                   <NavigationMenuLink
                     href="/climate-environment"
-                    className="flex flex-col justify-center p-10 bg-zinc-900 hover:bg-zinc-800 transition-colors border-r border-white/10"
+                    className="flex flex-col justify-center p-10 bg-zinc-900 hover:bg-zinc-800 transition-colors border-r border-white/10 group"
                   >
                     <Map className="size-12 text-white mb-4" />
                     <h3 className="text-2xl font-semibold text-white mb-3">Wine map climate & environment</h3>
-                    <p className="text-base text-white/60 leading-relaxed">
+                    <p className="text-base text-white/60 group-hover:text-white leading-relaxed transition-colors">
                       Explore climate data and environmental indicators for wine regions.
                     </p>
                   </NavigationMenuLink>
@@ -59,28 +59,28 @@ export function Navigation() {
                   <div className="grid gap-1 p-5">
                     <NavigationMenuLink
                       href="/climate-environment/indicators"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors"
+                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">Climate Indicators & scenarios</div>
-                      <div className="text-sm text-white/60 leading-relaxed">
+                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
                         Raster data with different climatic indices (Huglin Index, Dryness Index...)
                       </div>
                     </NavigationMenuLink>
 
                     <NavigationMenuLink
                       href="#vulnerability"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors"
+                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">Vulnerability & Risks</div>
-                      <div className="text-sm text-white/60 leading-relaxed">Exposure, Sensitivity</div>
+                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">Exposure, Sensitivity</div>
                     </NavigationMenuLink>
 
                     <NavigationMenuLink
                       href="#ecosystem-services"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors"
+                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">Ecosystem Services</div>
-                      <div className="text-sm text-white/60 leading-relaxed">
+                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
                         Pollination, Soil erosion control Index
                       </div>
                     </NavigationMenuLink>
@@ -98,11 +98,11 @@ export function Navigation() {
                   {/* Left side - Large clickable main entry */}
                   <NavigationMenuLink
                     href="/adaptation"
-                    className="flex flex-col justify-center p-10 bg-zinc-900 hover:bg-zinc-800 transition-colors border-r border-white/10"
+                    className="flex flex-col justify-center p-10 bg-zinc-900 hover:bg-zinc-800 transition-colors border-r border-white/10 group"
                   >
                     <Map className="size-12 text-white mb-4" />
                     <h3 className="text-2xl font-semibold text-white mb-3">Wine map adaptation</h3>
-                    <p className="text-base text-white/60 leading-relaxed">
+                    <p className="text-base text-white/60 group-hover:text-white leading-relaxed transition-colors">
                       Discover ecosystem-based adaptation strategies for viticulture.
                     </p>
                   </NavigationMenuLink>
@@ -111,10 +111,10 @@ export function Navigation() {
                   <div className="grid gap-1 p-5">
                     <NavigationMenuLink
                       href="#eba-catalogue"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors"
+                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">Catalogue of EbA strategies</div>
-                      <div className="text-sm text-white/60 leading-relaxed">
+                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
                         The Catalogue of EbA strategies brings together approaches that harness biodiversity and
                         ecosystem functions to mitigate risks.
                       </div>
@@ -122,7 +122,7 @@ export function Navigation() {
 
                     <NavigationMenuLink
                       href="/adaptation/pilot-experiences"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors"
+                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                     >
                       <div className="font-semibold text-white mb-1.5 flex items-center gap-2 text-base">
                         <div className="bg-white rounded-md p-1 flex items-center justify-center">
@@ -130,7 +130,7 @@ export function Navigation() {
                         </div>
                         Pilot implementation experiences
                       </div>
-                      <div className="text-sm text-white/60 leading-relaxed">
+                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
                         Through short films from pilot regions, you can discover how winegrowers, researchers and
                         communities are working with their landscapes to address climate challenges while preserving
                         local traditions.
@@ -139,10 +139,10 @@ export function Navigation() {
 
                     <NavigationMenuLink
                       href="#spatial-analogues"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors"
+                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">Spatial analogues</div>
-                      <div className="text-sm text-white/60 leading-relaxed">
+                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
                         This section includes an interactive tool to select and visualize spatial analogues for
                         individual European wine regions.
                       </div>
@@ -161,11 +161,11 @@ export function Navigation() {
                   {/* Left side - Large clickable main entry */}
                   <NavigationMenuLink
                     href="/legal"
-                    className="flex flex-col justify-center p-10 bg-zinc-900 hover:bg-zinc-800 transition-colors border-r border-white/10"
+                    className="flex flex-col justify-center p-10 bg-zinc-900 hover:bg-zinc-800 transition-colors border-r border-white/10 group"
                   >
                     <Map className="size-12 text-white mb-4" />
                     <h3 className="text-2xl font-semibold text-white mb-3">Wine map legal</h3>
-                    <p className="text-base text-white/60 leading-relaxed">
+                    <p className="text-base text-white/60 group-hover:text-white leading-relaxed transition-colors">
                       Navigate regulations and governance frameworks for wine production.
                     </p>
                   </NavigationMenuLink>
@@ -174,10 +174,10 @@ export function Navigation() {
                   <div className="grid gap-1 p-5">
                     <NavigationMenuLink
                       href="#eu-regulations"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors"
+                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">EU Planting and Plant Health Regulations</div>
-                      <div className="text-sm text-white/60 leading-relaxed">
+                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
                         The EU Planting and Plant Health Regulations aim to ensure the sustainable management of plant
                         health risks and promote biodiversity in viticulture.
                       </div>
@@ -185,10 +185,10 @@ export function Navigation() {
 
                     <NavigationMenuLink
                       href="#geographic-indications"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors"
+                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">Geographic indications</div>
-                      <div className="text-sm text-white/60 leading-relaxed">
+                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
                         Geographical indications at the EU level are a form of intellectual property protection that
                         safeguard the names of products whose qualities, reputation, or characteristics are linked to
                         their specific geographical origin.

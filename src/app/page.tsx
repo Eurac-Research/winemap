@@ -52,92 +52,124 @@ export default function HomePage() {
         {/* Main Areas Grid */}
         <section className="px-4 py-20 max-w-7xl mx-auto">
           <div className="grid md:grid-cols-3 gap-8">
-            {/* Area 1: Benefits, Values & Climatic Threats */}
-            <Link
-              href="/climate-environment"
-              className="group relative bg-white/5 border border-white/10 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md"
-            >
+            {/* Area 1: Climate & Environment */}
+            <div className="group relative bg-white/5 border border-white/10 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md">
               <div className="p-8 h-full flex flex-col">
-                <div className="mb-6">
+                <Link href="/climate-environment" className="mb-6 block group/main">
                   <div className="w-16 h-16 rounded-full bg-[#E91E63]/10 flex items-center justify-center mb-4 group-hover:bg-[#E91E63]/20 transition-colors">
                     <ThermometerSun className="w-8 h-8 text-[#E91E63]" />
                   </div>
                   <h2 className="text-2xl font-bold text-white mb-2 uppercase">Climate & Environment</h2>
-                </div>
+                  <p className="text-white/60 group-hover/main:text-white text-sm leading-relaxed transition-colors">
+                    Explore climate data and environmental indicators for wine regions.
+                  </p>
+                </Link>
 
-                <div className="space-y-4 flex-grow">
-                  <div>
-                    <h3 className="text-white/90 font-semibold mb-1">Wine map climate & environment</h3>
-                    <p className="text-white/60 text-sm leading-relaxed">
-                      Explore how climate change impacts wine regions across Europe, understanding vulnerabilities and
-                      environmental factors.
+                <div className="space-y-3 flex-grow">
+                  <Link href="/climate-environment/indicators" className="block p-3 rounded hover:bg-white/5 transition-colors group/link">
+                    <h3 className="text-white/90 font-semibold text-sm mb-1">Climate Indicators & scenarios</h3>
+                    <p className="text-white/50 group-hover/link:text-white text-xs leading-relaxed transition-colors">
+                      Raster data with different climatic indices (Huglin Index, Dryness Index...)
                     </p>
-                  </div>
+                  </Link>
+
+                  <Link href="#vulnerability" className="block p-3 rounded hover:bg-white/5 transition-colors group/link">
+                    <h3 className="text-white/90 font-semibold text-sm mb-1">Vulnerability & Risks</h3>
+                    <p className="text-white/50 group-hover/link:text-white text-xs leading-relaxed transition-colors">
+                      Exposure, Sensitivity
+                    </p>
+                  </Link>
+
+                  <Link href="#ecosystem-services" className="block p-3 rounded hover:bg-white/5 transition-colors group/link">
+                    <h3 className="text-white/90 font-semibold text-sm mb-1">Ecosystem Services</h3>
+                    <p className="text-white/50 group-hover/link:text-white text-xs leading-relaxed transition-colors">
+                      Pollination, Soil erosion control Index
+                    </p>
+                  </Link>
                 </div>
 
-                <div className="mt-6 text-[#E91E63] font-semibold group-hover:translate-x-2 transition-transform">
+                <Link href="/climate-environment" className="mt-6 text-[#E91E63] font-semibold group-hover:translate-x-2 transition-transform inline-block">
                   Explore →
-                </div>
+                </Link>
               </div>
-            </Link>
+            </div>
 
-            {/* Area 2: Ecosystem-Based Adaptation */}
-            <Link
-              href="/adaptation"
-              className="group relative bg-white/5 border border-white/10 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md"
-            >
+            {/* Area 2: Adaptation */}
+            <div className="group relative bg-white/5 border border-white/10 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md">
               <div className="p-8 h-full flex flex-col">
-                <div className="mb-6">
+                <Link href="/adaptation" className="mb-6 block group/main">
                   <div className="w-16 h-16 rounded-full bg-[#E91E63]/10 flex items-center justify-center mb-4 group-hover:bg-[#E91E63]/20 transition-colors">
                     <Leaf className="w-8 h-8 text-[#E91E63]" />
                   </div>
                   <h2 className="text-2xl font-bold text-white mb-2 uppercase">ADAPTATION</h2>
-                </div>
+                  <p className="text-white/60 group-hover/main:text-white text-sm leading-relaxed transition-colors">
+                    Discover ecosystem-based adaptation strategies for viticulture.
+                  </p>
+                </Link>
 
-                <div className="space-y-4 flex-grow">
-                  <div>
-                    <h3 className="text-white/90 font-semibold mb-1">Wine map adaptation</h3>
-                    <p className="text-white/60 text-sm leading-relaxed">
-                      Discover sustainable adaptation strategies and ecosystem-based solutions for resilient wine
-                      production.
+                <div className="space-y-3 flex-grow">
+                  <Link href="#eba-catalogue" className="block p-3 rounded hover:bg-white/5 transition-colors group/link">
+                    <h3 className="text-white/90 font-semibold text-sm mb-1">Catalogue of EbA strategies</h3>
+                    <p className="text-white/50 group-hover/link:text-white text-xs leading-relaxed transition-colors">
+                      The Catalogue of EbA strategies brings together approaches that harness biodiversity and ecosystem functions to mitigate risks.
                     </p>
-                  </div>
+                  </Link>
+
+                  <Link href="/adaptation/pilot-experiences" className="block p-3 rounded hover:bg-white/5 transition-colors group/link">
+                    <h3 className="text-white/90 font-semibold text-sm mb-1">Pilot implementation experiences</h3>
+                    <p className="text-white/50 group-hover/link:text-white text-xs leading-relaxed transition-colors">
+                      Through short films from pilot regions, you can discover how winegrowers, researchers and communities are working with their landscapes to address climate challenges while preserving local traditions.
+                    </p>
+                  </Link>
+
+                  <Link href="#spatial-analogues" className="block p-3 rounded hover:bg-white/5 transition-colors group/link">
+                    <h3 className="text-white/90 font-semibold text-sm mb-1">Spatial analogues</h3>
+                    <p className="text-white/50 group-hover/link:text-white text-xs leading-relaxed transition-colors">
+                      This section includes an interactive tool to select and visualize spatial analogues for individual European wine regions.
+                    </p>
+                  </Link>
                 </div>
 
-                <div className="mt-6 text-[#E91E63] font-semibold group-hover:translate-x-2 transition-transform">
+                <Link href="/adaptation" className="mt-6 text-[#E91E63] font-semibold group-hover:translate-x-2 transition-transform inline-block">
                   Explore →
-                </div>
+                </Link>
               </div>
-            </Link>
+            </div>
 
             {/* Area 3: Governance */}
-            <Link
-              href="/legal"
-              className="group relative bg-white/5 border border-white/10 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md"
-            >
+            <div className="group relative bg-white/5 border border-white/10 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md">
               <div className="p-8 h-full flex flex-col">
-                <div className="mb-6">
+                <Link href="/legal" className="mb-6 block group/main">
                   <div className="w-16 h-16 rounded-full bg-[#E91E63]/10 flex items-center justify-center mb-4 group-hover:bg-[#E91E63]/20 transition-colors">
                     <Scale className="w-8 h-8 text-[#E91E63]" />
                   </div>
                   <h2 className="text-2xl font-bold text-white mb-2 uppercase">GOVERNANCE</h2>
-                </div>
+                  <p className="text-white/60 group-hover/main:text-white text-sm leading-relaxed transition-colors">
+                    Navigate regulations and governance frameworks for wine production.
+                  </p>
+                </Link>
 
-                <div className="space-y-4 flex-grow">
-                  <div>
-                    <h3 className="text-white/90 font-semibold mb-1">Wine map legal</h3>
-                    <p className="text-white/60 text-sm leading-relaxed">
-                      Navigate the legal frameworks, PDO regulations, and governance structures protecting European wine
-                      heritage.
+                <div className="space-y-3 flex-grow">
+                  <Link href="#eu-regulations" className="block p-3 rounded hover:bg-white/5 transition-colors group/link">
+                    <h3 className="text-white/90 font-semibold text-sm mb-1">EU Planting and Plant Health Regulations</h3>
+                    <p className="text-white/50 group-hover/link:text-white text-xs leading-relaxed transition-colors">
+                      The EU Planting and Plant Health Regulations aim to ensure the sustainable management of plant health risks and promote biodiversity in viticulture.
                     </p>
-                  </div>
+                  </Link>
+
+                  <Link href="#geographic-indications" className="block p-3 rounded hover:bg-white/5 transition-colors group/link">
+                    <h3 className="text-white/90 font-semibold text-sm mb-1">Geographic indications</h3>
+                    <p className="text-white/50 group-hover/link:text-white text-xs leading-relaxed transition-colors">
+                      Geographical indications at the EU level are a form of intellectual property protection that safeguard the names of products whose qualities, reputation, or characteristics are linked to their specific geographical origin.
+                    </p>
+                  </Link>
                 </div>
 
-                <div className="mt-6 text-[#E91E63] font-semibold group-hover:translate-x-2 transition-transform">
+                <Link href="/legal" className="mt-6 text-[#E91E63] font-semibold group-hover:translate-x-2 transition-transform inline-block">
                   Explore →
-                </div>
+                </Link>
               </div>
-            </Link>
+            </div>
           </div>
         </section>
 
