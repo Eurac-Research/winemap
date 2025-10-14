@@ -61,9 +61,9 @@ export function Navigation() {
                       href="/climate-environment/indicators"
                       className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                     >
-                      <div className="font-semibold text-white mb-1.5 text-base">Climate Indicators & scenarios</div>
+                      <div className="font-semibold text-white mb-1.5 text-base">Climate Indicators</div>
                       <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        Raster data with different climatic indices (Huglin Index, Dryness Index...)
+                        Learn more about bioclimatic indicators, their use in the field of viticulture and investigate their historical and future spatial distribution over Europe using high resolution maps
                       </div>
                     </NavigationMenuLink>
 
@@ -72,7 +72,9 @@ export function Navigation() {
                       className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">Vulnerability & Risks</div>
-                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">Exposure, Sensitivity</div>
+                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
+                        Discover more about the vulnerability to climate change of European wine regions, which was assessed using multiple dimensions, including the exposure and sensitivity to climate change and the adaptive capacity of each region.
+                      </div>
                     </NavigationMenuLink>
 
                     <NavigationMenuLink
@@ -81,7 +83,7 @@ export function Navigation() {
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">Ecosystem Services</div>
                       <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        Pollination, Soil erosion control Index
+                        Dive deeper into the multiple regulating, provisioning, and cultural benefits that viticulture provides for landscapes and communities. Explore how vineyards contribute to biodiversity, soil conservation, water regulation, and cultural heritage.
                       </div>
                     </NavigationMenuLink>
                   </div>
