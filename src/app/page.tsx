@@ -159,7 +159,7 @@ export default function HomePage() {
                     </p>
                   </Link>
 
-                  <Link href="#geographic-indications" className="block p-3 rounded hover:bg-white/5 transition-colors group/link">
+                  <Link href="/legal/geographic-indications" className="block p-3 rounded hover:bg-white/5 transition-colors group/link">
                     <h3 className="text-white/90 font-semibold text-sm mb-1">Geographic indications</h3>
                     <p className="text-white/50 group-hover/link:text-white text-xs leading-relaxed transition-colors">
                       Geographical indications at the EU level are a form of intellectual property protection that safeguard the names of products whose qualities, reputation, or characteristics are linked to their specific geographical origin.
