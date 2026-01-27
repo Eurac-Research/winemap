@@ -247,18 +247,6 @@ export default function ClimateIndicatorsPage() {
           </div>
         </article>
       </div>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-800 mt-20 py-8">
-        <div className="container mx-auto px-6 text-center text-sm text-gray-500">
-          <p>
-            © {new Date().getFullYear()} Eurac Research{" "}
-            <Link href="/imprint-privacy" className="underline hover:text-gray-400">
-              Imprint / Privacy
-            </Link>
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }

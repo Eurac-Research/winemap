@@ -6,6 +6,7 @@ import PlausibleProvider from "next-plausible";
 
 import CookieConsent from "./components/CookieConsent";
 import { ConditionalNavigation } from "./components/ConditionalNavigation";
+import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
   title: "Winemap by Eurac Research",
@@ -56,6 +57,7 @@ export default function RootLayout({
             <CookieConsent />
           </Suspense>
         </div>
+        <Footer />
       </body>
     </html>
   );

@@ -408,13 +408,6 @@ export default function EnvironmentalPage() {
             </div>
           </div>
         </div>
-
-        <div className={styles.imprintBoxMap}>
-          <span>
-            © {new Date().getFullYear()} Eurac Research{" "}
-            <Link href="/imprint-privacy">Imprint / Privacy</Link>
-          </span>
-        </div>
       </div>
     </>
   );

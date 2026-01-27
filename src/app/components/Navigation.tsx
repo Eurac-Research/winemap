@@ -1,7 +1,8 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
-import { Map, Video, BookOpen } from "lucide-react"
+import { Map, Video, BookOpen, Menu, X } from "lucide-react"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -12,8 +13,10 @@ import {
 } from "@/components/ui/navigation-menu"
 
 export function Navigation() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
   return (
-    <div className=" bg-black fixed top-0 left-0 w-full z-50 border-b border-white/20">
+    <div className="bg-black fixed top-0 left-0 w-full z-[100] border-b border-white/20">
       <div className="px-6 flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center gap-2 py-6 hover:opacity-90 transition-opacity lg:w-1/3">
@@ -37,7 +40,17 @@ export function Navigation() {
           </a>
         </div>
 
-        <NavigationMenu className="justify-center py-6 w-full">
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="lg:hidden text-white p-2 hover:bg-white/10 rounded transition-colors"
+          aria-label="Toggle mobile menu"
+        >
+          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+
+        {/* Desktop Navigation */}
+        <NavigationMenu className="hidden lg:flex justify-center py-6 w-full">
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuTrigger className="bg-black text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white text-base px-5 py-3 uppercase">
@@ -204,19 +217,191 @@ export function Navigation() {
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <NavigationMenuLink
-                href="/literature"
-                className="bg-black text-white hover:bg-white/10 hover:text-white text-base px-5 py-3 uppercase inline-flex items-center gap-2 rounded-md transition-colors"
-              >
-                <BookOpen className="w-4 h-4" aria-hidden="true" />
-                LITERATURE
-              </NavigationMenuLink>
+              <NavigationMenuTrigger className="bg-black text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white text-base px-5 py-3 uppercase">
+                About
+              </NavigationMenuTrigger>
+              <NavigationMenuContent className="bg-black border-white/20">
+                <div className="grid grid-cols-[340px_1fr] gap-0 w-[900px]">
+                  {/* Left side - Large clickable main entry */}
+                  <NavigationMenuLink
+                    href="/about"
+                    className="flex flex-col justify-center p-10 bg-zinc-900 hover:bg-zinc-800 transition-colors border-r border-white/10 group"
+                  >
+                    <BookOpen className="size-12 text-white mb-4" />
+                    <h3 className="text-2xl font-semibold text-white mb-3">About Winemap</h3>
+                    <p className="text-base text-white/60 group-hover:text-white leading-relaxed transition-colors">
+                      Learn about the project, data, and research behind Winemap.
+                    </p>
+                  </NavigationMenuLink>
+
+                  {/* Right side - List of subsections */}
+                  <div className="grid gap-1 p-5">
+                    <NavigationMenuLink
+                      href="/about-data"
+                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
+                    >
+                      <div className="font-semibold text-white mb-1.5 text-base">About the Data</div>
+                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
+                        Discover the data sources and methodologies behind Winemap.
+                      </div>
+                    </NavigationMenuLink>
+
+                    <NavigationMenuLink
+                      href="/about-pdo"
+                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
+                    >
+                      <div className="font-semibold text-white mb-1.5 text-base">About PDO Wine Regions</div>
+                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
+                        Explore Protected Designation of Origin wine regions across Europe.
+                      </div>
+                    </NavigationMenuLink>
+
+                    <NavigationMenuLink
+                      href="/vulnerability"
+                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
+                    >
+                      <div className="font-semibold text-white mb-1.5 text-base">Vulnerability Assessment</div>
+                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
+                        Understand climate change vulnerability analysis for wine regions.
+                      </div>
+                    </NavigationMenuLink>
+
+                    <NavigationMenuLink
+                      href="/literature"
+                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
+                    >
+                      <div className="font-semibold text-white mb-1.5 text-base">Scientific Literature</div>
+                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
+                        Browse relevant scientific publications and research papers.
+                      </div>
+                    </NavigationMenuLink>
+                  </div>
+                </div>
+              </NavigationMenuContent>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
 
-        <div className="lg:w-1/3"></div>
+        <div className="hidden lg:block lg:w-1/3"></div>
       </div>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="lg:hidden fixed inset-0 bg-black/80 z-[99] top-[80px]"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-hidden="true"
+          />
+
+          {/* Menu Content */}
+          <div className="lg:hidden bg-black border-t border-white/20 h-[calc(100vh-80px)] overflow-y-auto fixed left-0 right-0 top-[80px] z-[100]">
+            <div className="px-6 py-4 space-y-4">
+              {/* Climate & Environment */}
+              <div>
+                <Link
+                  href="/climate-environment"
+                  className="block text-white font-semibold text-lg mb-2 hover:text-[#E91E63] transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Climate & Environment
+                </Link>
+                <div className="pl-4 space-y-2">
+                  <Link
+                    href="/climate-environment/indicators"
+                    className="block text-white/70 text-sm hover:text-white transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Climate Indicators
+                  </Link>
+                </div>
+              </div>
+
+              {/* Adaptation */}
+              <div>
+                <Link
+                  href="/adaptation"
+                  className="block text-white font-semibold text-lg mb-2 hover:text-[#E91E63] transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Adaptation
+                </Link>
+                <div className="pl-4 space-y-2">
+                  <Link
+                    href="/adaptation/pilot-experiences"
+                    className="block text-white/70 text-sm hover:text-white transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Pilot Experiences
+                  </Link>
+                </div>
+              </div>
+
+              {/* Governance */}
+              <div>
+                <Link
+                  href="/legal"
+                  className="block text-white font-semibold text-lg mb-2 hover:text-[#E91E63] transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Governance
+                </Link>
+                <div className="pl-4 space-y-2">
+                  <Link
+                    href="/legal/geographic-indications"
+                    className="block text-white/70 text-sm hover:text-white transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Geographic Indications
+                  </Link>
+                </div>
+              </div>
+
+              {/* About */}
+              <div>
+                <Link
+                  href="/about"
+                  className="block text-white font-semibold text-lg mb-2 hover:text-[#E91E63] transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  About
+                </Link>
+                <div className="pl-4 space-y-2">
+                  <Link
+                    href="/about-data"
+                    className="block text-white/70 text-sm hover:text-white transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    About the Data
+                  </Link>
+                  <Link
+                    href="/about-pdo"
+                    className="block text-white/70 text-sm hover:text-white transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    About PDO Wine Regions
+                  </Link>
+                  <Link
+                    href="/vulnerability"
+                    className="block text-white/70 text-sm hover:text-white transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Vulnerability Assessment
+                  </Link>
+                  <Link
+                    href="/literature"
+                    className="block text-white/70 text-sm hover:text-white transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Scientific Literature
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }
