@@ -14,6 +14,11 @@ import {
   ScaleControl,
   type MapRef,
 } from "react-map-gl";
+import {
+  ResizablePanelGroup,
+  ResizablePanel,
+  ResizableHandle,
+} from "@/app/components/ui/resizable";
 
 import Accordion from "@/app/components/accordion";
 import styles from "@/styles/Home.module.scss";
@@ -117,107 +122,148 @@ export default function MapContainer({ viewType }: MapContainerProps) {
   const [zoomLevel, setZoomLevel] = useState<number | null>(null);
   const [vineyardVisibility, setVineyardVisibility] = useState<boolean>(false);
   const [mapLoaded, setMapLoaded] = useState<boolean>(false);
+  const [filterBarOpen, setFilterBarOpen] = useState<boolean>(!isMobile);
+  const groupRef = useRef<HTMLDivElement | null>(null);
+  const [groupWidth, setGroupWidth] = useState<number>(0);
+  const [panelLayout, setPanelLayout] = useState<number[] | null>(null);
 
   // Set vulnerability visibility based on viewType prop
   const vulnerabilityVisibility = viewType === "adaptation";
 
-  const year = new Date().getFullYear();
+  const isOverviewState = !pdos && !activePDO;
+  const showOverviewSidebar =
+    isOverviewState && (viewType === "legal" || viewType === "adaptation");
+  const hasSidebar = showOverviewSidebar || !!(pdos || activePDO);
+  const sidebarLayoutIndex = hasSidebar ? (isMobile ? 1 : 0) : -1;
+  const defaultSidebarPercent = isMobile ? 40 : 30;
+  const sidebarPercent = hasSidebar
+    ? (panelLayout?.[sidebarLayoutIndex] ?? defaultSidebarPercent)
+    : 0;
+  const sidebarWidthPx =
+    !isMobile && hasSidebar && groupWidth > 0
+      ? (sidebarPercent / 100) * groupWidth
+      : 0;
 
   const paddingResponsive = useMemo(() => {
-    return isMobile
-      ? { top: 100, bottom: 100, left: 0, right: 0 }
-      : { top: 100, bottom: 25, left: 400, right: 5 };
+    if (isMobile || !hasSidebar) {
+      return { top: 100, bottom: 100, left: 0, right: 0 };
+    }
+
+    const leftPadding = Math.max(0, sidebarWidthPx + 24);
+
+    return { top: 100, bottom: 25, left: leftPadding, right: 5 };
+  }, [hasSidebar, sidebarWidthPx]);
+
+  useEffect(() => {
+    if (!isMobile) {
+      setFilterBarOpen(true);
+    }
   }, []);
 
   /* vulnerability magic */
-  const matchExpression: ExpressionSpecification = ["match", ["get", "PDOid"]];
+  const { matchExpression, showOnlyVulneralIDs } = useMemo(() => {
+    const expression: ExpressionSpecification = ["match", ["get", "PDOid"]];
+    let ids: string[] = [];
 
-  if (vulnerabilityVisibility && vulnerability.length > 1) {
-    for (const row of vulnerability) {
-      let color = "#fff";
-      if (row["Vulnerability"] === "low") {
-        color = "#97BE6C";
-      } else if (row["Vulnerability"] === "moderate") {
-        color = "#E8C360";
-      } else if (row["Vulnerability"] === "high (low-mod Exposure)") {
-        color = "#DD7C75";
-      } else if (row["Vulnerability"] === "high (low-mod Sensitivity)") {
-        color = "#DD7C75";
-      } else if (row["Vulnerability"] === "high (mod-high Adapt. capacity)") {
-        color = "#DD7C75";
-      } else if (row["Vulnerability"] === "very high") {
-        color = "#DE1355";
+    if (vulnerabilityVisibility && vulnerability.length > 1) {
+      ids = vulnerability.map((item) => item.PDOid);
+
+      for (const row of vulnerability) {
+        let color = "#fff";
+        if (row["Vulnerability"] === "low") {
+          color = "#97BE6C";
+        } else if (row["Vulnerability"] === "moderate") {
+          color = "#E8C360";
+        } else if (row["Vulnerability"] === "high (low-mod Exposure)") {
+          color = "#DD7C75";
+        } else if (row["Vulnerability"] === "high (low-mod Sensitivity)") {
+          color = "#DD7C75";
+        } else if (row["Vulnerability"] === "high (mod-high Adapt. capacity)") {
+          color = "#DD7C75";
+        } else if (row["Vulnerability"] === "very high") {
+          color = "#DE1355";
+        }
+        expression.push(row["PDOid"], color);
       }
-      matchExpression.push(row["PDOid"], color);
     }
 
-    const showOnlyVulneralIDs = vulnerability.map((item) => {
-      return item.PDOid;
-    });
+    expression.push("rgba(0,0,0,0)");
 
-    if (!fromSearch) {
-      mapRef.current &&
-        mapRef.current
-          .getMap()
-          .setFilter("pdo-pins", [
-            "match",
-            ["get", "PDOid"],
-            showOnlyVulneralIDs,
-            true,
-            false,
-          ]);
+    return { matchExpression: expression, showOnlyVulneralIDs: ids };
+  }, [vulnerabilityVisibility]);
 
-      mapRef.current &&
-        mapRef.current
-          .getMap()
-          .setFilter("pdo-area", [
-            "match",
-            ["get", "PDOid"],
-            showOnlyVulneralIDs,
-            true,
-            false,
-          ]);
+  const circleRadiusValues = useMemo<DataDrivenPropertyValueSpecification<number>>(
+    () => ({
+      type: "exponential",
+      base: 1.75,
+      stops: [
+        [0, 2],
+        [6, 8],
+        [8, 26],
+      ],
+    }),
+    [],
+  );
+
+  const circleOpacityValues = useMemo<DataDrivenPropertyValueSpecification<number>>(
+    () => ({
+      type: "exponential",
+      stops: [
+        [0, 1],
+        [12, 0.5],
+        [16, 0.8],
+      ],
+    }),
+    [],
+  );
+
+  useEffect(() => {
+    if (!mapLoaded || !mapRef.current) return;
+
+    const map = mapRef.current.getMap();
+    const hasAreaLayer = !!map.getLayer("pdo-area");
+    const hasPinsLayer = !!map.getLayer("pdo-pins");
+
+    if (!hasAreaLayer || !hasPinsLayer) return;
+
+    if (vulnerabilityVisibility) {
+      if (!fromSearch && showOnlyVulneralIDs.length > 0) {
+        map.setFilter("pdo-pins", [
+          "match",
+          ["get", "PDOid"],
+          showOnlyVulneralIDs,
+          true,
+          false,
+        ]);
+        map.setFilter("pdo-area", [
+          "match",
+          ["get", "PDOid"],
+          showOnlyVulneralIDs,
+          true,
+          false,
+        ]);
+      }
+
+      map.setPaintProperty("pdo-area", "fill-color", matchExpression);
+      map.setPaintProperty("pdo-pins", "circle-color", matchExpression);
+      map.setPaintProperty("pdo-pins", "circle-radius", circleRadiusValues);
+      map.setPaintProperty("pdo-pins", "circle-opacity", circleOpacityValues);
+      return;
     }
-  }
 
-  matchExpression.push("rgba(0,0,0,0)");
-
-  const circleRadiusValues: DataDrivenPropertyValueSpecification<number> = {
-    type: "exponential",
-    base: 1.75,
-    stops: [
-      [0, 2],
-      [6, 8],
-      [8, 26],
-    ],
-  };
-
-  const circleOpacityValues: DataDrivenPropertyValueSpecification<number> = {
-    type: "exponential",
-    stops: [
-      [0, 1],
-      [12, 0.5],
-      [16, 0.8],
-    ],
-  };
-
-  if (vulnerabilityVisibility) {
-    mapRef.current &&
-      mapRef.current
-        .getMap()
-        .setPaintProperty("pdo-area", "fill-color", matchExpression)
-        .setPaintProperty("pdo-pins", "circle-color", matchExpression)
-        .setPaintProperty("pdo-pins", "circle-radius", circleRadiusValues)
-        .setPaintProperty("pdo-pins", "circle-opacity", circleOpacityValues);
-  } else {
-    mapRef.current &&
-      mapRef.current
-        .getMap()
-        .setPaintProperty("pdo-area", "fill-color", "hsl(338, 96%, 38%)")
-        .setPaintProperty("pdo-pins", "circle-color", "hsl(338, 96%, 38%)")
-        .setPaintProperty("pdo-pins", "circle-radius", 3.63)
-        .setPaintProperty("pdo-pins", "circle-opacity", 1);
-  }
+    map.setPaintProperty("pdo-area", "fill-color", "hsl(338, 96%, 38%)");
+    map.setPaintProperty("pdo-pins", "circle-color", "hsl(338, 96%, 38%)");
+    map.setPaintProperty("pdo-pins", "circle-radius", 3.63);
+    map.setPaintProperty("pdo-pins", "circle-opacity", 1);
+  }, [
+    circleOpacityValues,
+    circleRadiusValues,
+    fromSearch,
+    mapLoaded,
+    matchExpression,
+    showOnlyVulneralIDs,
+    vulnerabilityVisibility,
+  ]);
 
   const openDetail = useCallback(
     async (id: string) => {
@@ -837,42 +883,701 @@ export default function MapContainer({ viewType }: MapContainerProps) {
     onClearFilter,
   ]);
 
+  const updateGroupWidth = useCallback(() => {
+    const width = groupRef.current?.offsetWidth ?? 0;
+    if (width > 0) {
+      setGroupWidth(width);
+    }
+  }, []);
+
+  useEffect(() => {
+    updateGroupWidth();
+    window.addEventListener("resize", updateGroupWidth);
+    return () => window.removeEventListener("resize", updateGroupWidth);
+  }, [updateGroupWidth]);
+
+  const handlePanelLayout = useCallback(
+    (nextLayout: number[]) => {
+      setPanelLayout(nextLayout);
+      requestAnimationFrame(() => {
+        updateGroupWidth();
+        mapRef.current?.getMap().resize();
+      });
+    },
+    [updateGroupWidth],
+  );
+
+  const overviewSidebarContent = showOverviewSidebar ? (
+    <div className={`${styles.contentFrame} ${styles.contentFrameInPanel}`}>
+      <div className={styles.frontpageContent}>
+        {!vulnerabilityVisibility && (
+          <>
+            <h2>Governance</h2>
+            <p>
+              The Winemap provides a comprehensive overview of all European wine
+              regions which fall under the{" "}
+              <strong>Protected Designation of Origin (PDO)</strong> label (as
+              of November 2021). It is an essential resource for anyone
+              interested in wine or who works in the wine industry and can be
+              used to increase knowledge as well as appreciation of regional
+              wines and as an instrument for wine sector decision making. The map
+              is based on a collection of legal information, including grape
+              varieties, geospatial boundaries, and production details, and is
+              the first representation of European PDO regions in one
+              comprehensive resource.
+            </p>
+
+            <Link
+              href="/adaptation"
+              className="flex items-center justify-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="211"
+                height="205"
+                viewBox="0 0 211 205"
+                fill="none"
+                className="vulnerbilityButtonSVG"
+              >
+                <g filter="url(#afff)">
+                  <path
+                    fill="#DE1355"
+                    className="vulnerbilityButton"
+                    d="M129.473 177.56c21.469-7.814 57.802-22.174 66.027-25.168 4.542-1.653 6.662-7.291 4.733-12.591-3.494-9.597-16.113-44.6978-23.369-64.6319-15.114-41.507-60.831-62.9863-102.1145-47.9603C33.4656 42.2349 12.2512 88.0752 27.3617 129.591c15.1104 41.515 60.8271 62.995 102.1113 47.969Z"
+                  />
+                  <path
+                    stroke="#fff"
+                    strokeLinecap="round"
+                    strokeWidth="2.5"
+                    d="m184.49 140.586-24.471-11.411"
+                  />
+                  <path
+                    stroke="#fff"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2.5"
+                    d="m180.137 128.625 4.353 11.961-11.961 4.353"
+                  />
+                  <path
+                    fill="#fff"
+                    d="m63.5811 117.951-3.0974 1.128-3.4824-9.568 3.1955-1.163c.9375-.341 1.8123-.443 2.6244-.305.8111.135 1.5255.494 2.1432 1.077.6198.579 1.1105 1.365 1.4721 2.358.3627.997.4923 1.92.3886 2.769-.1006.848-.4232 1.589-.9678 2.225-.5458.632-1.3045 1.126-2.2762 1.479Zm-2.1129-.659 1.5744-.573c.7287-.266 1.2846-.623 1.6676-1.073.3819-.453.5975-.984.6469-1.595.0482-.614-.0654-1.299-.3408-2.056-.2732-.75-.625-1.344-1.0552-1.779-.4272-.438-.9252-.706-1.4941-.806-.5689-.1-1.2022-.023-1.8999.231l-1.6631.606 2.5642 7.045Zm8.5291-1.676-2.6118-7.176 1.3969-.508 2.6118 7.175-1.3969.509Zm-2.3093-8.54c-.2429.089-.4811.083-.7145-.015-.2313-.103-.3884-.268-.4711-.495-.0839-.231-.0697-.458.0427-.682.1143-.229.2929-.387.5358-.476.243-.088.4801-.081.7115.022.2334.098.392.263.4759.493.0827.227.0669.455-.0474.684-.1123.224-.29.381-.5329.469Zm9.12-.081-1.1844.685c-.1119-.143-.2521-.267-.4206-.371-.1654-.106-.3617-.17-.5888-.193-.2271-.023-.4855.018-.7751.123-.3956.144-.6934.353-.8935.627-.2013.271-.2514.545-.1506.822.0873.24.2464.401.4772.482.2308.082.561.098.9905.047l1.2351-.153c.7159-.088 1.2935-.032 1.7331.168.4395.2.7517.554.9364 1.061.1565.43.1713.858.0446 1.285-.1248.423-.3737.81-.7468 1.161-.37.35-.8446.63-1.4239.841-.8036.293-1.5215.36-2.1539.202-.6335-.161-1.1235-.538-1.47-1.131l1.2754-.697c.2121.321.4819.524.8093.61.3262.082.6996.047 1.12-.106.4579-.167.7892-.395.9942-.685.2038-.293.2552-.578.1543-.855-.0816-.224-.2343-.382-.458-.473-.2206-.093-.5164-.116-.8873-.069l-1.3116.176c-.7252.091-1.3088.028-1.7509-.188-.439-.218-.7514-.582-.9373-1.093-.1542-.423-.1707-.837-.0496-1.241.121-.404.3579-.77.7107-1.1.3516-.332.7968-.597 1.3356-.793.7755-.282 1.4471-.336 2.0149-.162.5667.171 1.0237.511 1.371 1.02Zm6.8571 3.81c-.6946.253-1.3498.313-1.9657.181-.614-.136-1.1563-.434-1.6271-.894-.4708-.46-.8371-1.05-1.0989-1.769-.2653-.729-.3623-1.422-.2912-2.079.0701-.661.297-1.239.6808-1.735.3839-.496.9137-.867 1.5895-1.113.5451-.198 1.0678-.274 1.5682-.227.4992.044.9454.199 1.3385.466.3962.264.7071.629.9326 1.094l-1.3594.495c-.1972-.31-.4739-.537-.8302-.682-.3532-.147-.7524-.139-1.1978.023-.3893.142-.6929.369-.9109.681-.216.308-.3363.679-.3611 1.115-.026.433.054.905.2399 1.415.1905.524.4343.946.7314 1.269.2972.322.6285.534.9941.638.3687.102.7509.081 1.1464-.063.2647-.096.487-.232.6668-.407.1817-.179.3123-.387.3918-.624.0826-.238.1065-.497.0716-.777l1.3595-.495c.119.482.1187.951-.0009 1.408-.1197.456-.3533.865-.7009 1.228-.3445.362-.8002.646-1.367.852Zm7.5958-2.764c-.6727.244-1.3159.304-1.9296.178-.6136-.126-1.1599-.415-1.6389-.869-.479-.453-.8534-1.051-1.1232-1.792-.2709-.744-.3692-1.446-.2949-2.104.0743-.659.306-1.233.6952-1.724.3892-.491.9202-.859 1.5929-1.104.6728-.244 1.316-.304 1.9296-.178.6137.126 1.1606.417 1.6407.874.4801.456.8556 1.057 1.1265 1.801.2698.741.367 1.44.2916 2.095-.0754.655-.3077 1.228-.6969 1.719-.3893.491-.9202.859-1.593 1.104Zm-.4221-1.175c.436-.158.7554-.405.958-.74.2027-.335.3028-.719.3004-1.152.0007-.434-.0828-.881-.2506-1.342-.1666-.458-.3897-.853-.6693-1.185-.2776-.336-.6022-.569-.9737-.698-.3716-.13-.7754-.115-1.2114.044-.4392.16-.761.409-.9657.748-.2015.338-.302.725-.3016 1.163.0024.433.0869.878.2535 1.336.1678.461.3899.858.6664 1.191.2796.332.6046.561.975.687.3735.125.7799.108 1.219-.052Zm8.688-10.1244.0096 8.1234-1.495.544-5.2186-6.2274 1.4996-.5458 3.8272 4.8602.0748-.027-.1973-6.1816 1.4997-.5458Zm6.9572 5.7584c-.707.257-1.371.328-1.991.211-.619-.12-1.167-.405-1.645-.856-.476-.454-.85-1.054-1.12-1.798-.268-.7353-.367-1.433-.297-2.0934.073-.6615.3-1.2396.681-1.7344.384-.496.909-.8652 1.576-1.1078a3.7315 3.7315 0 0 1 1.25-.2276c.429-.0044.846.0817 1.253.2583.406.1765.78.462 1.121.8564.34.3912.628.9123.865 1.5632l.18.4952-5.704 2.0761-.381-1.0464 4.336-1.5779c-.134-.3676-.32…1860 tokens truncated…8-.455-.8492-1.055-1.1201-1.799-.2676-.735-.3663-1.433-.2963-2.093.0732-.662.3001-1.24.6808-1.735.3838-.495.909-.865 1.5755-1.107a3.7174 3.7174 0 0 1 1.2504-.228c.4287-.004.8463.082 1.2527.258.4064.177.7801.462 1.1211.857.34.391.6284.912.8653 1.563l.1802.495-5.7042 2.076-.3809-1.046 4.3354-1.578c-.1337-.368-.3269-.666-.5796-.895-.2538-.232-.5462-.381-.8772-.448-.328-.067-.6726-.035-1.0339.096-.3924.143-.6998.364-.9223.664-.2205.295-.3541.626-.4007.992-.0446.362-.0018.722.1286 1.08l.2976.818c.1745.48.4071.857.6977 1.132.2938.274.6255.444.9954.511.3687.063.757.021 1.165-.128.2648-.096.4925-.222.6834-.376.1896-.157.3361-.341.4394-.551.1033-.211.1562-.443.1587-.698l1.4088-.243c.0358.428-.0301.838-.1976 1.231-.1655.388-.4244.738-.7765 1.049-.3502.308-.7869.557-1.3102.747Zm8.7499-.132c-.57.208-1.0877.311-1.5533.311-.4624-.001-.8676-.077-1.2157-.229-.348-.152-.6392-.351-.8734-.597l1.0204-.933c.1339.107.2988.211.4945.313.1999.103.4412.165.7238.186.2857.019.6217-.041 1.0079-.182.5295-.193.92-.481 1.1716-.865.2528-.382.2771-.853.0731-1.413l-.5135-1.411-.0888.032c-.0285.183-.0882.397-.179.642-.0878.244-.2437.484-.4679.721-.2242.236-.5559.435-.995.595-.5669.206-1.1258.259-1.6769.16-.5491-.103-1.0507-.367-1.5047-.791-.4521-.428-.817-1.023-1.0947-1.786-.2777-.763-.3865-1.464-.3264-2.104.0632-.64.2695-1.188.6188-1.643.3482-.458.8103-.792 1.3865-1.002.4454-.162.8323-.218 1.1608-.168.3274.046.6031.14.8271.281.2271.139.41.268.5485.387l.1028-.037-.4234-1.163 1.3688-.499 2.6696 7.335c.2244.617.2654 1.175.1228 1.675s-.4238.934-.8436 1.302c-.4167.366-.9303.661-1.5407.883Zm-1.5087-4.101c.4018-.147.7073-.364.9164-.651.2112-.292.3244-.64.3395-1.044.0172-.409-.0644-.861-.2446-1.356-.1757-.482-.4021-.882-.6791-1.197-.277-.315-.5916-.525-.9436-.63-.3531-.108-.7337-.087-1.1417.061-.4204.153-.7311.39-.9321.71-.2021.317-.3073.687-.3157 1.109-.0052.422.0754.862.2421 1.319.1712.471.393.857.6655 1.16.2725.303.5852.503.938.601.356.096.7411.068 1.1553-.082Zm5.7169-.647-2.6114-7.176 1.3969-.509 2.6115 7.176-1.397.509Zm-2.3089-8.54c-.243.088-.4811.083-.7145-.015-.2314-.103-.3884-.268-.4712-.495-.0839-.231-.0696-.458.0427-.683.1144-.228.293-.387.5359-.475.243-.088.4801-.081.7115.021.2334.099.392.263.4759.494.0827.227.0669.455-.0474.684-.1124.224-.29.38-.5329.469Zm8.7919 6.344c-.672.245-1.316.304-1.929.178-.614-.125-1.16-.415-1.639-.868-.479-.454-.854-1.051-1.123-1.793-.271-.744-.37-1.445-.295-2.104.074-.658.306-1.233.695-1.724.389-.49.92-.858 1.593-1.103.673-.245 1.316-.305 1.929-.179.614.126 1.161.417 1.641.874s.856 1.057 1.127 1.801c.269.742.367 1.44.291 2.095-.075.656-.307 1.229-.697 1.719-.389.491-.92.859-1.593 1.104Zm-.422-1.174c.436-.159.756-.406.958-.741.203-.334.303-.718.301-1.151 0-.434-.083-.882-.251-1.343-.167-.458-.39-.852-.669-1.185-.278-.336-.602-.569-.974-.698s-.775-.115-1.211.044c-.439.16-.761.409-.966.748-.202.338-.302.726-.302 1.163.003.433.087.878.254 1.336.168.461.39.858.666 1.191.28.333.605.562.975.688.374.125.78.107 1.219-.052Zm5.252-5.573 1.55 4.261-1.397.508-2.611-7.176 1.34-.488.426 1.168.088-.032c.027-.44.174-.839.443-1.198.271-.36.676-.637 1.214-.834.489-.178.955-.231 1.397-.159.442.069.837.267 1.185.595.349.328.631.788.846 1.38l1.662 4.564-1.397.509-1.6-4.396c-.19-.52-.473-.878-.851-1.072-.378-.197-.804-.209-1.278-.037-.324.118-.586.293-.787.525-.199.23-.321.508-.369.832-.046.32 0 .67.139 1.05Zm11.551-5.521-1.185.685c-.112-.143-.252-.267-.42-.371-.166-.106-.362-.17-.589-.193-.227-.023-.486.018-.775.123-.396.144-.694.353-.894.627-.201.271-.251.545-.15.822.087.24.246.401.477.482.231.082.561.098.99.047l1.235-.153c.716-.088 1.294-.032 1.733.168.44.2.752.554.937 1.061.156.43.171.858.045 1.286-.125.422-.374.809-.747 1.16-.37.35-.845.63-1.424.841-.804.293-1.522.36-2.154.202-.634-.161-1.124-.538-1.47-1.131l1.275-.697c.212.321.482.524.81.61.326.082.699.047 1.12-.106.457-.167.789-.395.994-.685.204-.293.255-.578.154-.855-.081-.224-.234-.382-.458-.473-.221-.093-.516-.116-.887-.069l-1.312.176c-.725.091-1.309.028-1.751-.188-.439-.218-.751-.582-.937-1.093-.154-.423-.171-.837-.05-1.241.121-.404.358-.77.711-1.1.352-.332.797-.597 1.336-.793.775-.282 1.447-.336 2.015-.162.566.171 1.023.511 1.371 1.02Zm9.541 2.849c-.455.166-.897.231-1.326.197-.429-.038-.811-.179-1.144-.425-.329-.247-.58-.605-.751-1.076-.147-.404-.191-.766-.13-1.084.06-.319.195-.602.404-.851.21-.249.464-.472.762-.669.299-.197.611-.377.935-.541.412-.207.746-.374 1.003-.503.255-.132.43-.257.524-.376.094-.119.111-.262.05-.431l-.012-.032c-.149-.408-.379-.682-.691-.823-.309-.141-.689-.13-1.141.034-.47.172-.803.411-.998.718-.193.303-.295.6-.306.889l-1.422.179c-.003-.493.097-.927.298-1.304.204-.381.48-.704.828-.968.347-.267.737-.48 1.17-.637.286-.105.602-.181.948-.229.348-.053.694-.041 1.039.034.348.075.673.244.973.509.3.261.545.653.736 1.176l1.734 4.766-1.364.496-.357-.981-.056.02c-.025.214-.096.441-.213.681-.117.24-.296.469-.538.688-.241.218-.56.399-.955.543Zm-.105-1.231c.386-.141.689-.338.907-.59.222-.253.36-.529.413-.827.056-.303.032-.596-.071-.879l-.337-.925c-.031.068-.111.15-.238.245-.126.092-.273.186-.442.283-.171.094-.337.184-.499.272-.164.084-.3.155-.41.212-.258.133-.485.281-.68.443-.191.162-.326.343-.405.544-.076.198-.069.421.022.67.126.346.349.561.669.645.318.082.676.05 1.071-.093Zm5.58-.942-2.612-7.175 1.35-.492.415 1.14.075-.027c-.01-.434.11-.821.36-1.163.252-.345.588-.595 1.008-.748.087-.031.191-.066.312-.102.124-.038.221-.065.293-.081l.487 1.336c-.062.005-.168.024-.318.058-.151.03-.299.071-.442.123-.33.121-.599.298-.806.532-.206.23-.339.495-.398.796-.062.297-.035.602.078.913l1.595 4.382-1.397.508Zm8.069-2.772c-.707.257-1.371.327-1.991.211-.619-.12-1.168-.406-1.645-.856-.476-.455-.85-1.054-1.121-1.798-.267-.735-.366-1.433-.296-2.094.073-.661.3-1.239.681-1.734.384-.496.909-.865 1.576-1.108.404-.147.821-.223 1.25-.227.429-.005.846.081 1.253.258.406.176.78.462 1.121.856.34.392.628.913.865 1.564l.18.495-5.704 2.076-.381-1.047 4.336-1.577c-.134-.368-.327-.666-.58-.895-.254-.232-.546-.382-.877-.448-.328-.068-.673-.036-1.034.096-.393.143-.7.364-.923.663-.22.296-.354.627-.4.993-.045.362-.002.722.128 1.08l.298.817c.175.48.407.858.698 1.133.293.274.625.444.995.51.369.064.757.021 1.165-.127.265-.097.493-.222.683-.376.19-.157.337-.341.44-.552.103-.21.156-.443.159-.697l1.408-.243c.036.427-.03.838-.197 1.23-.166.388-.425.738-.777 1.05-.35.307-.787.556-1.31.747Z"
+                  />
+                  <path
+                    fill="#fff"
+                    d="m70.5517 70.7186-2.0703.7535c-.077-.166-.1727-.3071-.2871-.4234a1.1174 1.1174 0 0 0-.3879-.2662c-.1451-.0636-.3045-.0943-.4782-.092-.1747-.0002-.3599.0354-.5557.1066-.3426.1247-.6023.3135-.7791.5663-.1743.2519-.2661.5555-.2754.9108-.0068.3544.0691.7494.2276 1.185.1675.4601.369.8232.6044 1.0895.2371.2629.5015.4299.7935.501.291.0687.6017.0429.9321-.0774.1884-.0685.3488-.1532.4811-.2541.1315-.1032.2358-.2202.313-.3508a1.154 1.154 0 0 0 .149-.4242c.0238-.1556.0185-.3185-.0158-.4889l2.0756-.7389c.0913.3271.12.6838.0861 1.0703-.0348.384-.1434.7672-.3257 1.1495-.1808.3789-.4485.7285-.803 1.0488-.3546.3202-.8072.5806-1.3578.781-.6901.2512-1.3631.3284-2.019.2319-.6535-.0975-1.2439-.3759-1.7714-.8352-.5249-.4602-.9388-1.1063-1.2417-1.9383-.3046-.8369-.3996-1.6004-.285-2.2906.1137-.6927.3912-1.2856.8325-1.7788.4404-.4956.9983-.8663 1.6737-1.1121.4747-.1728.9351-.2669 1.3812-.2824.4461-.0155.865.0468 1.2569.1868.3909.1376.7441.3541 1.0595.6495.3153.2954.5776.6696.7869 1.1228Zm3.1529 4.1733-2.7362-7.5175 2.0409-.7428 2.1376 5.873 3.0393-1.1062.5986 1.6445-5.0802 1.849Zm5.7267-10.5978 2.7362 7.5176-2.0409.7428-2.7362-7.5175 2.0409-.7429Zm1.4841-.5401 2.5401-.9245 3.297 3.622.0881-.0321.1975-4.8939 2.5401-.9245 2.7361 7.5175-1.9968.7268-1.5819-4.3461-.0587.0214-.1134 4.8966-1.2039.4382-3.245-3.7075-.0588.0214 1.5926 4.3754-1.9969.7268-2.7361-7.5175Zm14.8358 3.1136-2.2024.8016-.2548-8.4207 2.7897-1.0153 5.2173 6.6143-2.2022.8017-3.6271-4.8488-.0587.0214.3382 6.0458Zm-1.4906-2.8163 4.1405-1.507.5558 1.527-4.1406 1.507-.5557-1.527Zm4.9895-5.1083-.5986-1.6445 6.5335-2.3781.599 1.6445-2.261.823 2.137 5.8731-2.011.7321-2.138-5.8731-2.2609.823Zm9.9559 3.0273-2.736-7.5175 5.418-1.972.599 1.6445-3.377 1.2291.47 1.2921 3.098-1.1276.599 1.6444-3.099 1.1276.471 1.2921 3.362-1.2238.599 1.6445-5.404 1.9666ZM75.7399 82.6645l-2.0703.7536c-.077-.166-.1727-.3071-.2871-.4235a1.1201 1.1201 0 0 0-.3879-.2662c-.1451-.0636-.3045-.0942-.4782-.0919-.1747-.0002-.3599.0353-.5557.1066-.3426.1247-.6023.3134-.7791.5662-.1743.2519-.2661.5555-.2754.9109-.0068.3544.0691.7494.2276 1.185.1675.46.369.8232.6044 1.0894.2371.263.5015.43.7935.5011.291.0686.6017.0429.932-.0774.1885-.0686.3489-.1533.4812-.2541.1315-.1033.2358-.2202.313-.3508a1.155 1.155 0 0 0 .149-.4243c.0238-.1555.0185-.3185-.0158-.4889l2.0756-.7388c.0913.327.12.6838.0861 1.0702-.0348.3841-.1434.7672-.3257 1.1495-.1808.379-.4485.7286-.803 1.0488-.3546.3203-.8072.5806-1.3578.781-.6901.2512-1.3631.3285-2.019.2319-.6535-.0975-1.2439-.3758-1.7714-.8351-.5249-.4602-.9389-1.1063-1.2417-1.9383-.3046-.8369-.3996-1.6005-.285-2.2907.1137-.6926.3912-1.2855.8325-1.7787.4404-.4956.9983-.8663 1.6737-1.1122.4747-.1727.9351-.2669 1.3812-.2824.4461-.0154.865.0468 1.2569.1869.3909.1376.7441.3541 1.0595.6495.3153.2953.5776.6696.7869 1.1227Zm3.1529 4.1734-2.7362-7.5176 2.0409-.7428 1.0688 2.9366 2.7016-.9834-1.0688-2.9365 2.0409-.7428 2.7362 7.5175-2.0409.7428-1.0688-2.9365-2.7017.9833 1.0688 2.9366-2.0408.7428Zm10.222-3.7206-2.2024.8017-.2547-8.4207 2.7897-1.0154 5.2175 6.6144-2.2024.8016-3.6271-4.8487-.0587.0213.3381 6.0458Zm-1.4906-2.8162 4.1406-1.5071.5557 1.527-4.1405 1.5071-.5558-1.527Zm12.0498-9.5404 2.736 7.5175-1.703.6199-4.1538-2.961-.0441.0161 1.4376 3.9496-2.0409.7428-2.7362-7.5175 1.7326-.6306 4.1044 2.9623.0588-.0213-1.4322-3.935 2.0408-.7428Zm7.267.165c-.079-.1181-.17-.2137-.274-.2866a1.0027 1.0027 0 0 0-.349-.1598c-.127-.0344-.263-.0443-.41-.0296-.146.0114-.298.0461-.457.104-.343.1247-.605.3131-.788.5652-.18.2513-.278.5542-.293.9089-.012.3537.061.7484.219 1.184.161.4405.358.7955.592 1.0651.234.2696.499.4444.797.5244.298.08.623.0559.976-.0724.311-.1131.552-.2524.725-.4177.175-.1663.284-.3513.326-.5551.042-.2038.022-.4183-.06-.6434l.366-.0916-1.718.6253-.529-1.4536 3.333-1.2131.379 1.0425c.25.6851.318 1.3242.204 1.9172-.113.5896-.376 1.1068-.791 1.5514-.413.4413-.947.7813-1.603 1.02-.732.2664-1.431.3448-2.097.2353-.666-.1095-1.259-.3952-1.779-.8572-.518-.4628-.921-1.0907-1.21-1.8836-.226-.6215-.332-1.2064-.318-1.7546.016-.5491.133-1.0503.35-1.5036a3.579 3.579 0 0 1 .897-1.1787c.381-.3325.825-.5909 1.331-.7753.446-.1621.882-.249 1.31-.2607.43-.015.834.0402 1.212.1658.38.1223.718.3083 1.014.5581.296.2497.532.5559.708.9185l-2.063.7509Zm5.453 3.7188-2.736-7.5176 5.418-1.9719.598 1.6444-3.377 1.2292.47 1.292 3.098-1.1276.599 1.6445-3.098 1.1276.47 1.2921 3.363-1.2238.598 1.6444-5.403 1.9667Z"
+                  />
+                  <path
+                    fill="#fff"
+                    d="m65.5071 80.2034 50.3939-18.3419.257.7048-50.3944 18.3419-.2565-.7048Zm5.1882 11.946 48.9097-17.8018.257.7048-48.9102 17.8018-.2565-.7048Z"
+                  />
+                </g>
+                <defs>
+                  <filter
+                    id="afff"
+                    width="191.789"
+                    height="173.271"
+                    x="18.4899"
+                    y="18.4154"
+                    colorInterpolationFilters="sRGB"
+                    filterUnits="userSpaceOnUse"
+                  >
+                    <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                    <feColorMatrix
+                      in="SourceAlpha"
+                      result="hardAlpha"
+                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                    />
+                    <feOffset dx="2.6667" dy="2.6667" />
+                    <feGaussianBlur stdDeviation="3.3333" />
+                    <feComposite in2="hardAlpha" operator="out" />
+                    <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
+                    <feBlend
+                      in2="BackgroundImageFix"
+                      result="effect1_dropShadow_406_22"
+                    />
+                    <feBlend
+                      in="SourceGraphic"
+                      in2="effect1_dropShadow_406_22"
+                      result="shape"
+                    />
+                  </filter>
+                </defs>
+              </svg>
+            </Link>
+          </>
+        )}
+
+        {vulnerabilityVisibility && (
+          <>
+            <h2>How vulnerable are our Vineyards?</h2>
+            <p>
+              The vulnerability of a Protected Designation of Origin (PDO)
+              region is an indication of its resilience towards climate change...
+            </p>
+            <p className="mt-2 text-sm">
+              <Link href="/vulnerability" className="underline">
+                read more
+              </Link>
+            </p>
+            <h2 className="mt-6">Vulnerability overview for all PDOs</h2>
+            <p className="flex items-center mb-2">
+              <VulnerabilityDot type="low" className="mb-[2px]" />
+              27% are at low risk
+            </p>
+            <p className="flex items-center mb-2">
+              <VulnerabilityDot type="moderate" className="mb-[2px]" />
+              43% are at moderate risk
+            </p>
+            <p className="flex items-center mb-2">
+              <VulnerabilityDot type="high" className="mb-[2px]" />
+              25% are at high risk
+            </p>
+            <p className="flex items-center mb-2">
+              <VulnerabilityDot type="very high" className="mb-[2px]" />
+              5% are at very high risk
+            </p>
+
+            <div className="bg-white text-black p-4 mt-6">
+              <h3 className="bold mb-2">Tip</h3>
+              <p>
+                Zoom and select a region on the map to get detailed information
+                about the PDOs vulnerability.
+              </p>
+            </div>
+            <hr className="my-6" />
+          </>
+        )}
+
+        <p className={styles.homeNavigation}>
+          <Link href="/about" className={styles.homeNavigationItem}>
+            About the project
+          </Link>
+        </p>
+        <p>
+          <Link href="/about-pdo" className={styles.homeNavigationItem}>
+            What&apos;s a PDO?
+          </Link>
+        </p>
+        <p>
+          <Link href="/adaptation" className={styles.homeNavigationItem}>
+            Winemap Adaptation
+          </Link>
+        </p>
+        <p>
+          <Link href="/about-data" className={styles.homeNavigationItem}>
+            About the data
+          </Link>
+        </p>
+        <p>
+          <Link href="/team" className={styles.homeNavigationItem}>
+            The Team
+          </Link>
+        </p>
+      </div>
+    </div>
+  ) : null;
+
+  const sidebarContent = hasSidebar ? (
+    <div className={styles.panelFrame}>
+      <Smallheader
+        onClickFunction={onClearFilter}
+        vulneral={vulnerabilityVisibility}
+      />
+
+      {overviewSidebarContent}
+
+      {pdos && !activePDO && (
+        <>
+          {pdos.length > 1 && (
+            <h3 className={styles.amountOfItems}>
+              {pdos.length} {!fromSearch && "overlapping"} PDOs found
+            </h3>
+          )}
+          {pdos.map((pdo) => (
+            <div
+              key={pdo?.pdoid}
+              className={`${styles.PDOlistitem}`}
+              onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
+                openDetail(pdo?.pdoid)
+              }
+            >
+              <h2 className="flex items-start gap-[11px] leading-[120%] mb-3 font-medium">
+                {pdo?.vulneral?.Vulnerability && (
+                  <VulnerabilityDot
+                    type={pdo.vulneral.Vulnerability}
+                    className="w-[20px] h-[20px]"
+                  />
+                )}
+                {pdo?.pdoname}
+              </h2>
+              {pdo?.registration && (
+                <p className="flex items-start gap-4 h-fit">
+                  <Image
+                    src={registrationIcon}
+                    alt="Registration Date"
+                    width={35}
+                    height={35}
+                  />
+                  <span>
+                    <span className="bold">Registration:</span>{" "}
+                    {pdo?.registration}
+                  </span>
+                </p>
+              )}
+              {pdo?.category && (
+                <p className="flex items-start gap-4 ">
+                  <Image
+                    src={categoryIcon}
+                    alt="Category"
+                    width={35}
+                    height={35}
+                  />
+                  <span>
+                    <span className="bold">Category:</span>{" "}
+                    {pdo?.category.replaceAll("/", ", ")}
+                  </span>
+                </p>
+              )}
+              <span
+                className={`${styles.arrow} ${styles.right} ${styles.alignRight}`}
+              ></span>
+            </div>
+          ))}
+        </>
+      )}
+
+      {activePDO && (
+        <>
+          {pdos && (
+            <div
+              onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
+                setActivePDO(null)
+              }
+              className={styles.actionBar}
+            >
+              <span className={`${styles.arrow} ${styles.left}`}></span>
+              back to list
+            </div>
+          )}
+          <div
+            className={`${styles.PDOdetail}${pdos ? ` ${styles.margin}` : ``} !w-full !min-h-0`}
+          >
+            <h2 className="text-[32px] font-bold mb-4 leading-tight ">
+              {activePDO.pdoname}
+            </h2>
+            <div className={styles.buttonDiv}>
+              <button
+                className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
+                onClick={(
+                  e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+                ) => showPDOonMap(activePDO.pdoid)}
+              >
+                show on map
+              </button>
+              <button
+                onClick={() => onClearFilter()}
+                className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
+              >
+                reset
+              </button>
+            </div>
+            {vulnerabilityVisibility && activePDO.vulneral && (
+              <div className="">
+                <hr className="my-6" />
+                <h3 className="text-[24px] font-medium mb-4 flex items-center gap-2">
+                  Vulnerability Index{" "}
+                  <Link href="/vulnerability" className="info">
+                    i
+                  </Link>
+                </h3>
+                <div className="flex items-center gap-4 text-[20px] my-8">
+                  <VulnerabilityDot
+                    type={activePDO.vulneral.Vulnerability}
+                    className="block m-0 w-8 h-8"
+                  />
+                  <span className="block capitalize font-bold">
+                    {activePDO.vulneral.Vulnerability.startsWith("high")
+                      ? "high"
+                      : activePDO.vulneral.Vulnerability}{" "}
+                  </span>
+                </div>
+                <span className="mt-6 text-[16px] leading-[150%] block text-white font-medium mb-4">
+                  {activePDO.pdoname}{" "}
+                  {activePDO.vulneral.Vulnerability === "low"
+                    ? `is at low risk due to its ${activePDO.vulneral.ExposureTxt} exposure, ${activePDO.vulneral.SensitivityTxt} sensitivity and its ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
+                    : activePDO.vulneral.Vulnerability === "moderate"
+                      ? `is at moderate risk due to its ${activePDO.vulneral.ExposureTxt} exposure, ${activePDO.vulneral.SensitivityTxt} sensitivity and ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
+                      : activePDO.vulneral.Vulnerability ===
+                        "high (low-mod Exposure)"
+                        ? `is at high risk due to its ${activePDO.vulneral.ExposureTxt} exposure, high sensitivity and low adaptive capacity.`
+                        : activePDO.vulneral.Vulnerability ===
+                          "high (low-mod Sensitivity)"
+                          ? `is at high risk due to its high exposure ${activePDO.vulneral.SensitivityTxt} sensitivity and low adaptive capacity.`
+                          : activePDO.vulneral.Vulnerability ===
+                            "high (mod-high Adapt. capacity)"
+                            ? `is at high risk due to its high exposure and sensitivity and its ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
+                            : activePDO.vulneral.Vulnerability === "very high"
+                              ? "is at very high risk due to its high exposure and sensitivity and low adaptive capacity."
+                              : ""}
+                </span>
+
+                <hr className="my-6" />
+                <h3 className="text-[18px] font-medium mb-4">
+                  Exposure & Sensitivity
+                </h3>
+                <div className="flex gap-8 mb-4 justify-center">
+                  <Pie percentage={activePDO.vulneral.Exposure} label="Exposure" />
+                  <Pie percentage={activePDO.vulneral.Sensitivity} label="Sensitivity" />
+                </div>
+                <span className="text-[14px] leading-[140%] block text-white/80 mb-2">
+                  {activePDO.vulneral.Exposure < 0.62 ? (
+                    <>
+                      Wine regions with a <b>low level of exposure</b> are
+                      expected to experience limited changes in climatic
+                      conditions in comparison to the other European PDO
+                      regions. This means they are less likely to face changes
+                      in grape quality and yields. Depending on their
+                      sensitivity, these regions may maintain their traditional
+                      wine production with fewer adaptations.
+                    </>
+                  ) : activePDO.vulneral.Exposure < 0.75 ? (
+                    <>
+                      Regions with <b>moderate exposure</b> will experience
+                      moderate climate change compared to other European PDO
+                      regions. Depending on their sensitivity, they may need to
+                      implement more extensive adaptation strategies than less
+                      exposed regions to cope with the evolving conditions.
+                    </>
+                  ) : (
+                    <>
+                      <b>Highly exposed</b> regions are projected to undergo the
+                      most singificant climatic shifts of all European PDO
+                      regions. These areas are likely to require extensive
+                      adaptation measures to mantain viticulture, which also
+                      need to take into account their sensitivity, such as
+                      relocation of vineyards or revision of traditional
+                      winegrowing practices.
+                    </>
+                  )}
+                </span>
+                <span className="text-[14px] leading-[140%] block text-white/80 mb-2">
+                  {activePDO.vulneral.Sensitivity < 0.55 ? (
+                    <>
+                      Regions with <b>low levels of sensitivity</b> have grape
+                      varieties that are far from the upper limit of their
+                      traditional climatic range compared to other European PDO
+                      regions. They are therefore less affected by
+                      climate-related stimuli and may even benefit from certain
+                      aspects of climate change, such as increased sugar content
+                      in grapes.
+                    </>
+                  ) : activePDO.vulneral.Sensitivity < 0.72 ? (
+                    <>
+                      Regions of <b>medium sensitivity</b> have grape varieties
+                      that are somewhat closer to the upper limit of their
+                      climatic range compared to the other European PDO regions.
+                      These areas will be moderately affected by a change in
+                      climatic conditions and, in the event of increased
+                      exposure levels, may need to consider gradual changes in
+                      grape composition and wine style to maintain the identity
+                      of their PDO products.
+                    </>
+                  ) : (
+                    <>
+                      <b>Highly sensitive</b> regions are closest to the upper
+                      limit of their varietal climate range of all European PDO
+                      regions. They are highly susceptible to climate-related
+                      stimuli and are likely to experience changes in grape
+                      composition and wine characteristics even at lower levels
+                      of exposure, requiring timely and innovative adaptation
+                      strategies.
+                    </>
+                  )}
+                </span>
+
+                <hr className="my-6" />
+                <h3 className="text-[18px] font-medium mb-4">
+                  Adaptive Capacity
+                </h3>
+                <Pie
+                  percentage={activePDO.vulneral.adaptiveCap}
+                  label="Adaptive Capacity"
+                />
+                <span className="mt-4 text-[14px] leading-[140%] block text-white/80 mb-4">
+                  {activePDO.vulneral.adaptiveCap < 0.38 ? (
+                    <>
+                      Wine regions with a <b>low adaptive capacity</b> have
+                      limited resources to implement adaptation strategies
+                      compared to the other European PDO regions. When faced
+                      with negative impacts, they may find it difficult to adapt
+                      due to the limited resources avaialable.
+                    </>
+                  ) : activePDO.vulneral.adaptiveCap < 0.55 ? (
+                    <>
+                      Regions with a <b>medium adaptive capacity</b> have
+                      moderate resources available for adaptation compared to
+                      the other European PDO regions. However, they may still
+                      face challenges in fully addressing the impacts of climate
+                      change. They will need to carefully plan and implement
+                      adaptation strategies to avoid potential negative impacts.
+                    </>
+                  ) : (
+                    <>
+                      <b>High adaptive capacity</b> regions are well-equipped
+                      with resources to adapt to climate change compared to the
+                      other European PDO regions. They have the potential to
+                      implement comprehensive adaptation strategies, such as
+                      expanding irrigation systems or moving vineyards to higher
+                      elevations, in order to maintain high-quality wine
+                      production.
+                    </>
+                  )}
+                </span>
+
+                <span className="block mb-4 mt-2">
+                  Adaptive Capacity in detail
+                </span>
+                <AdaptiveChart data={activePDO.vulneral} />
+              </div>
+            )}
+            <hr className="mt-12 mb-12" />
+
+            {activePDO?.country && (
+              <p>
+                <Image
+                  src={countryIcon}
+                  alt="Country"
+                  width={35}
+                  height={35}
+                  className="inline"
+                />
+                <span>Country:</span> {activePDO?.country}
+              </p>
+            )}
+            {activePDO?.registration && (
+              <p>
+                <Image
+                  src={registrationIcon}
+                  alt="Registration Date"
+                  width={35}
+                  height={35}
+                  className="inline"
+                />
+                <span className="bold">Registration:</span>{" "}
+                {activePDO?.registration}
+              </p>
+            )}
+            {activePDO?.category && (
+              <Accordion
+                title="Category:"
+                content={activePDO?.category.replaceAll("/", ", ")}
+                icon={categoryIcon}
+              />
+            )}
+            <p>
+              <Image
+                src={pdoIcon}
+                alt="PDO Id"
+                width={35}
+                height={35}
+                className="inline"
+              />
+              <span className="bold">PDO ID:</span> {activePDO?.pdoid}
+            </p>
+            {activePDO?.["varietiesOiv"] && (
+              <Accordion
+                title="Varieties OIV:"
+                content={activePDO?.["varietiesOiv"].replaceAll("/", ", ")}
+                icon={varietiesOIVIcon}
+              />
+            )}
+            {activePDO?.["varieties"] && (
+              <Accordion
+                title="Varieties other:"
+                content={activePDO?.["varieties"].replaceAll("/", ", ")}
+                icon={varietiesOtherIcon}
+              />
+            )}
+            {activePDO?.["max-yield-hl"] && (
+              <p>
+                <Image
+                  src={yieldHlIcon}
+                  alt="Maximum Yield (hl)"
+                  width={35}
+                  height={35}
+                  className="inline"
+                />
+                <span className="bold">Maximum Yield (hl):</span>{" "}
+                {activePDO?.["max-yield-hl"]} hl
+              </p>
+            )}
+            {activePDO?.["max-yield-kg"] && (
+              <p>
+                <Image
+                  src={yieldKgIcon}
+                  alt="Maximum Yield (kg)"
+                  width={35}
+                  height={35}
+                  className="inline"
+                />
+                <span className="bold">Maximum Yield (kg):</span>{" "}
+                {activePDO?.["max-yield-kg"]} kg
+              </p>
+            )}
+            {activePDO?.["min-planting-density"] && (
+              <p>
+                <Image
+                  src={densityIcon}
+                  alt="Minimum Planting Density"
+                  width={35}
+                  height={35}
+                  className="inline"
+                />
+                <span className="bold">Minimum Planting Density:</span>{" "}
+                {activePDO?.["min-planting-density"]} vine stocks/ha
+              </p>
+            )}
+            {activePDO?.["irrigation"] && (
+              <p>
+                <Image
+                  src={irrigationIcon}
+                  alt="Irrigation"
+                  width={35}
+                  height={35}
+                  className="inline"
+                />
+                <span className="bold">Irrigation:</span>{" "}
+                {activePDO?.["irrigation"]}{" "}
+              </p>
+            )}
+            {activePDO?.["amendment"] && (
+              <p>
+                <Image
+                  src={amendmentIcon}
+                  alt="Amendment"
+                  width={35}
+                  height={35}
+                  className="inline"
+                />
+                <span className="bold">Amendment:</span>{" "}
+                {activePDO?.["amendment"]}{" "}
+              </p>
+            )}
+            {activePDO?.["munic"] && (
+              <Accordion
+                title="Municipalities:"
+                content={activePDO?.["munic"].replaceAll("/", ", ")}
+                icon={municIcon}
+              />
+            )}
+            {activePDO?.["pdoinfo"] && (
+              <p>
+                <Image
+                  src={infoIcon}
+                  alt="Info"
+                  width={35}
+                  height={35}
+                  className="inline"
+                />
+
+                <a href={activePDO?.["pdoinfo"]} target="_blank" rel="noreferrer">
+                  More info on{" "}
+                  <span style={{ textDecoration: "underline" }}>
+                    eAmbrosia
+                  </span>
+                </a>
+              </p>
+            )}
+          </div>
+        </>
+      )}
+    </div>
+  ) : null;
+
+  const showFilterContent = !isMobile || filterBarOpen;
+  const filterBarClassName = [
+    styles.filterBar,
+    isMobile
+      ? filterBarOpen
+        ? styles.filterBarExpanded
+        : styles.filterBarCollapsed
+      : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <div className="relative">
-      <Suspense fallback={<div>Loading...</div>}>
-        <ReactMap
-          ref={mapRef}
-          minZoom={isMobile ? 1 : 3}
-          initialViewState={{
-            latitude: 46,
-            longitude: 5,
-            zoom: 3.6,
-            bearing: 0,
-            pitch: 0,
-          }}
-          style={{ width: "100vw", height: "100vh" }}
-          mapStyle="mapbox://styles/tiacop/clas8a92e003c15o2bpopdfqt"
-          mapboxAccessToken={MAPBOX_TOKEN}
-          interactiveLayerIds={[
-            "pdo-area",
-            "pdo-pins",
-            "pdo-municipality",
-            "vulnerabilityLayer",
-          ]}
-          onMouseMove={onHover}
-          onMouseLeave={onOut}
-          onClick={onClick}
-          onZoom={onMapZoom}
-          onLoad={() => setMapLoaded(true)}
-        >
-          <NavigationControl
-            position="bottom-right"
-            visualizePitch={true}
-            showCompass={true}
+    <ResizablePanelGroup
+      direction={isMobile ? "vertical" : "horizontal"}
+      onLayout={handlePanelLayout}
+      elementRef={groupRef}
+      className="h-screen w-screen fixed inset-0"
+    >
+      {/* Sidebar Panel */}
+      {hasSidebar && (
+        <>
+          <ResizablePanel
+            defaultSize={isMobile ? "40%" : "28%"}
+            minSize={isMobile ? "15%" : "12%"}
+            maxSize={isMobile ? "85%" : "70%"}
+            collapsible={false}
+            className={`relative min-w-0 overflow-hidden ${isMobile ? "order-3" : ""}`}
+          >
+            {sidebarContent}
+          </ResizablePanel>
+
+          {/* Resize Handle */}
+          <ResizableHandle
+            withHandle
+            className={`${
+              isMobile
+                ? "order-2 w-full h-3 cursor-row-resize hover:h-4"
+                : "w-2 h-full cursor-col-resize hover:w-3"
+            } flex items-center justify-center bg-[#E91E63] text-[#E91E63] hover:brightness-110 transition-all relative group z-20`}
           />
-          <ScaleControl position="bottom-right" />
-        </ReactMap>
-      </Suspense>
+        </>
+      )}
+
+      {/* Map Panel */}
+      <ResizablePanel
+        defaultSize={hasSidebar && isMobile ? "60%" : undefined}
+        minSize={isMobile ? "25%" : "30%"}
+        className={`relative min-w-0 overflow-hidden ${isMobile ? "order-1" : ""}`}
+      >
+        <Suspense fallback={<div>Loading...</div>}>
+          <ReactMap
+            ref={mapRef}
+            minZoom={isMobile ? 1 : 3}
+            initialViewState={{
+              latitude: 46,
+              longitude: 5,
+              zoom: 3.6,
+              bearing: 0,
+              pitch: 0,
+            }}
+            style={{ width: "100%", height: "100%" }}
+            mapStyle="mapbox://styles/tiacop/clas8a92e003c15o2bpopdfqt"
+            mapboxAccessToken={MAPBOX_TOKEN}
+            interactiveLayerIds={[
+              "pdo-area",
+              "pdo-pins",
+              "pdo-municipality",
+              "vulnerabilityLayer",
+            ]}
+            onMouseMove={onHover}
+            onMouseLeave={onOut}
+            onClick={onClick}
+            onZoom={onMapZoom}
+            onLoad={() => setMapLoaded(true)}
+          >
+            <NavigationControl
+              position="bottom-right"
+              visualizePitch={true}
+              showCompass={true}
+            />
+            <ScaleControl position="bottom-right" />
+          </ReactMap>
+        </Suspense>
 
       {/* Tooltip */}
       {hoverInfo && (
@@ -905,7 +1610,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
       )}
 
       {/* Frontpage content - Only show when no PDOs selected */}
-      {!pdos && !activePDO && (
+      {isOverviewState && !showOverviewSidebar && (
         <Suspense fallback={<div>Loading...</div>}>
           <div className={styles.contentFrame}>
             <div className={styles.frontpageContent}>
@@ -1123,443 +1828,24 @@ export default function MapContainer({ viewType }: MapContainerProps) {
         </Suspense>
       )}
 
-      {/* list of PDOs */}
-      {pdos && !activePDO && (
-        <Suspense fallback={<div>Loading...</div>}>
-          <div className={styles.contentFrame}>
-            <Smallheader
-              onClickFunction={onClearFilter}
-              vulneral={vulnerabilityVisibility}
-            />
-            {pdos.length > 1 && (
-              <h3 className={styles.amountOfItems}>
-                {pdos.length} {!fromSearch && "overlapping"} PDOs found
-              </h3>
-            )}
-            {pdos.map((pdo) => (
-              <div
-                key={pdo?.pdoid}
-                className={`${styles.PDOlistitem}`}
-                onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
-                  openDetail(pdo?.pdoid)
-                }
-              >
-                <h2 className="flex items-start gap-[11px] leading-[120%] mb-3 font-medium">
-                  {pdo?.vulneral?.Vulnerability && (
-                    <VulnerabilityDot
-                      type={pdo.vulneral.Vulnerability}
-                      className="w-[20px] h-[20px]"
-                    />
-                  )}
-                  {pdo?.pdoname}
-                </h2>
-                {pdo?.registration && (
-                  <p className="flex items-start gap-4 h-fit">
-                    <Image
-                      src={registrationIcon}
-                      alt="Registration Date"
-                      width={35}
-                      height={35}
-                    />
-                    <span>
-                      <span className="bold">Registration:</span>{" "}
-                      {pdo?.registration}
-                    </span>
-                  </p>
-                )}
-                {pdo?.category && (
-                  <p className="flex items-start gap-4 ">
-                    <Image
-                      src={categoryIcon}
-                      alt="Category"
-                      width={35}
-                      height={35}
-                    />
-                    <span>
-                      <span className="bold">Category:</span>{" "}
-                      {pdo?.category.replaceAll("/", ", ")}
-                    </span>
-                  </p>
-                )}
-                <span
-                  className={`${styles.arrow} ${styles.right} ${styles.alignRight}`}
-                ></span>
-              </div>
-            ))}
-          </div>
-        </Suspense>
-      )}
-
-      {/* PDO detail */}
-      {activePDO && (
-        <Suspense fallback={<div>Loading...</div>}>
-          <div className={`${styles.contentFrame} w-[600px]`}>
-            <Smallheader
-              onClickFunction={onClearFilter}
-              vulneral={vulnerabilityVisibility}
-            />
-
-            {pdos && (
-              <div
-                onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
-                  setActivePDO(null)
-                }
-                className={styles.actionBar}
-              >
-                <span className={`${styles.arrow} ${styles.left}`}></span>
-                back to list
-              </div>
-            )}
-            <div
-              className={`${styles.PDOdetail}${pdos ? ` ${styles.margin}` : ``
-                } `}
-            >
-              <h2 className="text-[32px] font-bold mb-4 leading-tight ">
-                {activePDO.pdoname}
-              </h2>
-              <div className={styles.buttonDiv}>
-                <button
-                  className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
-                  onClick={(
-                    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-                  ) => showPDOonMap(activePDO.pdoid)}
-                >
-                  show on map
-                </button>
-                <button
-                  onClick={() => onClearFilter()}
-                  className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
-                >
-                  reset
-                </button>
-              </div>
-              {vulnerabilityVisibility && activePDO.vulneral && (
-                <div className="">
-                  <hr className="my-6" />
-                  <h3 className="text-[24px] font-medium mb-4 flex items-center gap-2">
-                    Vulnerability Index{" "}
-                    <Link href="/vulnerability" className="info">
-                      i
-                    </Link>
-                  </h3>
-                  <div className="flex items-center gap-4 text-[20px] my-8">
-                    <VulnerabilityDot
-                      type={activePDO.vulneral.Vulnerability}
-                      className="block m-0 w-8 h-8"
-                    />
-                    <span className="block capitalize font-bold">
-                      {activePDO.vulneral.Vulnerability.startsWith("high")
-                        ? "high"
-                        : activePDO.vulneral.Vulnerability}{" "}
-                    </span>
-                  </div>
-                  <span className="mt-6 text-[16px] leading-[150%] block text-white font-medium mb-4">
-                    {activePDO.pdoname}{" "}
-                    {activePDO.vulneral.Vulnerability === "low"
-                      ? `is at low risk due to its ${activePDO.vulneral.ExposureTxt} exposure, ${activePDO.vulneral.SensitivityTxt} sensitivity and its ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
-                      : activePDO.vulneral.Vulnerability === "moderate"
-                        ? `is at moderate risk due to its ${activePDO.vulneral.ExposureTxt} exposure, ${activePDO.vulneral.SensitivityTxt} sensitivity and ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
-                        : activePDO.vulneral.Vulnerability ===
-                          "high (low-mod Exposure)"
-                          ? `is at high risk due to its ${activePDO.vulneral.ExposureTxt} exposure, high sensitivity and low adaptive capacity.`
-                          : activePDO.vulneral.Vulnerability ===
-                            "high (low-mod Sensitivity)"
-                            ? `is at high risk due to its high exposure ${activePDO.vulneral.SensitivityTxt} sensitivity and low adaptive capacity.`
-                            : activePDO.vulneral.Vulnerability ===
-                              "high (mod-high Adapt. capacity)"
-                              ? `is at high risk due to its high exposure and sensitivity and its ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
-                              : activePDO.vulneral.Vulnerability === "very high"
-                                ? "is at very high risk due to its high exposure and sensitivity and low adaptive capacity."
-                                : ""}
-                  </span>
-
-                  <hr className="my-6" />
-                  <h3 className="text-[18px] font-medium mb-4">
-                    Exposure & Sensitivity
-                  </h3>
-                  <div className="flex gap-8 mb-4 justify-center">
-                    <Pie
-                      percentage={activePDO.vulneral.Exposure}
-                      label="Exposure"
-                    />
-                    <Pie
-                      percentage={activePDO.vulneral.Sensitivity}
-                      label="Sensitivity"
-                    />
-                  </div>
-                  <span className="text-[14px] leading-[140%] block text-white/80 mb-2">
-                    {activePDO.vulneral.Exposure < 0.62 ? (
-                      <>
-                        Wine regions with a <b>low level of exposure</b> are
-                        expected to experience limited changes in climatic
-                        conditions in comparison to the other European PDO
-                        regions. This means they are less likely to face changes
-                        in grape quality and yields. Depending on their
-                        sensitivity, these regions may maintain their
-                        traditional wine production with fewer adaptations.
-                      </>
-                    ) : activePDO.vulneral.Exposure < 0.75 ? (
-                      <>
-                        Regions with <b>moderate exposure</b> will experience
-                        moderate climate change compared to other European PDO
-                        regions. Depending on their sensitivity, they may need
-                        to implement more extensive adaptation strategies than
-                        less exposed regions to cope with the evolving
-                        conditions.
-                      </>
-                    ) : (
-                      <>
-                        <b>Highly exposed</b> regions are projected to undergo
-                        the most singificant climatic shifts of all European PDO
-                        regions. These areas are likely to require extensive
-                        adaptation measures to mantain viticulture, which also
-                        need to take into account their sensitivity, such as
-                        relocation of vineyards or revision of traditional
-                        winegrowing practices.
-                      </>
-                    )}
-                  </span>
-                  <span className="text-[14px] leading-[140%] block text-white/80 mb-2">
-                    {activePDO.vulneral.Sensitivity < 0.55 ? (
-                      <>
-                        Regions with <b>low levels of sensitivity</b> have grape
-                        varieties that are far from the upper limit of their
-                        traditional climatic range compared to other European
-                        PDO regions. They are therefore less affected by
-                        climate-related stimuli and may even benefit from
-                        certain aspects of climate change, such as increased
-                        sugar content in grapes.
-                      </>
-                    ) : activePDO.vulneral.Sensitivity < 0.72 ? (
-                      <>
-                        Regions of <b>medium sensitivity</b> have grape
-                        varieties that are somewhat closer to the upper limit of
-                        their climatic range compared to the other European PDO
-                        regions. These areas will be moderately affected by a
-                        change in climatic conditions and, in the event of
-                        increased exposure levels, may need to consider gradual
-                        changes in grape composition and wine style to maintain
-                        the identity of their PDO products.
-                      </>
-                    ) : (
-                      <>
-                        <b>Highly sensitive</b> regions are closest to the upper
-                        limit of their varietal climate range of all European
-                        PDO regions. They are highly susceptible to
-                        climate-related stimuli and are likely to experience
-                        changes in grape composition and wine characteristics
-                        even at lower levels of exposure, requiring timely and
-                        innovative adaptation strategies.
-                      </>
-                    )}
-                  </span>
-
-                  <hr className="my-6" />
-                  <h3 className="text-[18px] font-medium mb-4">
-                    Adaptive Capacity
-                  </h3>
-                  <Pie
-                    percentage={activePDO.vulneral.adaptiveCap}
-                    label="Adaptive Capacity"
-                  />
-                  <span className="mt-4 text-[14px] leading-[140%] block text-white/80 mb-4">
-                    {activePDO.vulneral.adaptiveCap < 0.38 ? (
-                      <>
-                        Wine regions with a <b>low adaptive capacity</b> have
-                        limited resources to implement adaptation strategies
-                        compared to the other European PDO regions. When faced
-                        with negative impacts, they may find it difficult to
-                        adapt due to the limited resources avaialable.
-                      </>
-                    ) : activePDO.vulneral.adaptiveCap < 0.55 ? (
-                      <>
-                        Regions with a <b>medium adaptive capacity</b> have
-                        moderate resources available for adaptation compared to
-                        the other European PDO regions. However, they may still
-                        face challenges in fully addressing the impacts of
-                        climate change. They will need to carefully plan and
-                        implement adaptation strategies to avoid potential
-                        negative impacts.
-                      </>
-                    ) : (
-                      <>
-                        <b>High adaptive capacity</b> regions are well-equipped
-                        with resources to adapt to climate change compared to
-                        the other European PDO regions. They have the potential
-                        to implement comprehensive adaptation strategies, such
-                        as expanding irrigation systems or moving vineyards to
-                        higher elevations, in order to maintain high-quality
-                        wine production.
-                      </>
-                    )}
-                  </span>
-
-                  <span className="block mb-4 mt-2">
-                    Adaptive Capacity in detail
-                  </span>
-                  <AdaptiveChart data={activePDO.vulneral} />
-                </div>
-              )}
-              <hr className="mt-12 mb-12" />
-
-              {activePDO?.country && (
-                <p>
-                  <Image
-                    src={countryIcon}
-                    alt="Country"
-                    width={35}
-                    height={35}
-                    className="inline"
-                  />
-                  <span>Country:</span> {activePDO?.country}
-                </p>
-              )}
-              {activePDO?.registration && (
-                <p>
-                  <Image
-                    src={registrationIcon}
-                    alt="Registration Date"
-                    width={35}
-                    height={35}
-                    className="inline"
-                  />
-                  <span className="bold">Registration:</span>{" "}
-                  {activePDO?.registration}
-                </p>
-              )}
-              {activePDO?.category && (
-                <Accordion
-                  title="Category:"
-                  content={activePDO?.category.replaceAll("/", ", ")}
-                  icon={categoryIcon}
-                />
-              )}
-              <p>
-                <Image
-                  src={pdoIcon}
-                  alt="PDO Id"
-                  width={35}
-                  height={35}
-                  className="inline"
-                />
-                <span className="bold">PDO ID:</span> {activePDO?.pdoid}
-              </p>
-              {activePDO?.["varietiesOiv"] && (
-                <Accordion
-                  title="Varieties OIV:"
-                  content={activePDO?.["varietiesOiv"].replaceAll("/", ", ")}
-                  icon={varietiesOIVIcon}
-                />
-              )}
-              {activePDO?.["varieties"] && (
-                <Accordion
-                  title="Varieties other:"
-                  content={activePDO?.["varieties"].replaceAll("/", ", ")}
-                  icon={varietiesOtherIcon}
-                />
-              )}
-              {activePDO?.["max-yield-hl"] && (
-                <p>
-                  <Image
-                    src={yieldHlIcon}
-                    alt="Maximum Yield (hl)"
-                    width={35}
-                    height={35}
-                    className="inline"
-                  />
-                  <span className="bold">Maximum Yield (hl):</span>{" "}
-                  {activePDO?.["max-yield-hl"]} hl
-                </p>
-              )}
-              {activePDO?.["max-yield-kg"] && (
-                <p>
-                  <Image
-                    src={yieldKgIcon}
-                    alt="Maximum Yield (kg)"
-                    width={35}
-                    height={35}
-                    className="inline"
-                  />
-                  <span className="bold">Maximum Yield (kg):</span>{" "}
-                  {activePDO?.["max-yield-kg"]} kg
-                </p>
-              )}
-              {activePDO?.["min-planting-density"] && (
-                <p>
-                  <Image
-                    src={densityIcon}
-                    alt="Minimum Planting Density"
-                    width={35}
-                    height={35}
-                    className="inline"
-                  />
-                  <span className="bold">Minimum Planting Density:</span>{" "}
-                  {activePDO?.["min-planting-density"]} vine stocks/ha
-                </p>
-              )}
-              {activePDO?.["irrigation"] && (
-                <p>
-                  <Image
-                    src={irrigationIcon}
-                    alt="Irrigation"
-                    width={35}
-                    height={35}
-                    className="inline"
-                  />
-                  <span className="bold">Irrigation:</span>{" "}
-                  {activePDO?.["irrigation"]}{" "}
-                </p>
-              )}
-              {activePDO?.["amendment"] && (
-                <p>
-                  <Image
-                    src={amendmentIcon}
-                    alt="Amendment"
-                    width={35}
-                    height={35}
-                    className="inline"
-                  />
-                  <span className="bold">Amendment:</span>{" "}
-                  {activePDO?.["amendment"]}{" "}
-                </p>
-              )}
-              {activePDO?.["munic"] && (
-                <Accordion
-                  title="Municipalities:"
-                  content={activePDO?.["munic"].replaceAll("/", ", ")}
-                  icon={municIcon}
-                />
-              )}
-              {activePDO?.["pdoinfo"] && (
-                <p>
-                  <Image
-                    src={infoIcon}
-                    alt="Info"
-                    width={35}
-                    height={35}
-                    className="inline"
-                  />
-
-                  <a
-                    href={activePDO?.["pdoinfo"]}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    More info on{" "}
-                    <span style={{ textDecoration: "underline" }}>
-                      eAmbrosia
-                    </span>
-                  </a>
-                </p>
-              )}
-            </div>
-          </div>
-        </Suspense>
-      )}
-
       {/* Filter Bar */}
-      <div className={styles.filterBar}>
-        <Suspense fallback={<div>Loading...</div>}>
+      <div className={filterBarClassName}>
+        {isMobile && (
+          <div className={styles.filterBarHeader}>
+            <button
+              type="button"
+              className={styles.filterBarToggle}
+              onClick={() => setFilterBarOpen((prev) => !prev)}
+              aria-expanded={filterBarOpen}
+              aria-controls="map-filter-content"
+            >
+              {filterBarOpen ? "Hide filters" : "Show filters"}
+            </button>
+          </div>
+        )}
+        {showFilterContent && (
+          <Suspense fallback={<div>Loading...</div>}>
+            <div id="map-filter-content" className={styles.filterBarContent}>
           <div className={styles.filter}>
             <Select
               showSearch
@@ -1796,19 +2082,16 @@ export default function MapContainer({ viewType }: MapContainerProps) {
                   >
                     show all
                   </Radio.Button>
-                </Radio.Group>
+                  </Radio.Group>
+                </div>
               </div>
+            )}
             </div>
-          )}
-        </Suspense>
+          </Suspense>
+        )}
       </div>
 
-      <div className={styles.imprintBoxMap}>
-        <span>
-          © {year} Eurac Research{" "}
-          <Link href="/imprint-privacy">Imprint / Privacy</Link>
-        </span>
-      </div>
-    </div>
+      </ResizablePanel>
+    </ResizablePanelGroup>
   );
 }

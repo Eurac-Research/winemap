@@ -419,32 +419,6 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-
-        {/* Additional Links */}
-        <div className="flex flex-wrap justify-center gap-6 text-sm">
-          <Link href="/about" className="text-gray-400 hover:text-white transition-colors">
-            About the project
-          </Link>
-          <Link href="/about-pdo" className="text-gray-400 hover:text-white transition-colors">
-            What&apos;s a PDO?
-          </Link>
-          <Link href="/about-data" className="text-gray-400 hover:text-white transition-colors">
-            About the data
-          </Link>
-          <Link href="/team" className="text-gray-400 hover:text-white transition-colors">
-            The Team
-          </Link>
-        </div>
-
-        {/* Footer */}
-        <div className="mt-16 text-center text-sm text-gray-500">
-          <p>
-            © {new Date().getFullYear()} Eurac Research{" "}
-            <Link href="/imprint-privacy" className="underline hover:text-gray-400">
-              Imprint / Privacy
-            </Link>
-          </p>
-        </div>
       </div>
     </div>
   );

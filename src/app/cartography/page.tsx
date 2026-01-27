@@ -1,10 +1,17 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { Layers, HelpCircle, X, ExternalLink } from "lucide-react"
 import Link from "next/link"
 import Map, { MapRef } from "react-map-gl"
 import "mapbox-gl/dist/mapbox-gl.css"
+import { isMobile } from "react-device-detect"
+
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/app/components/ui/resizable"
 
 type LayerGroup = "all" | "ecosystem" | "services"
 
@@ -97,6 +104,9 @@ export default function CartographyPage() {
   const [groupBy, setGroupBy] = useState<LayerGroup>("all")
   const [selectedInfo, setSelectedInfo] = useState<Layer | null>(null)
   const [mapLoaded, setMapLoaded] = useState(false)
+  const handlePanelLayout = useCallback(() => {
+    mapRef.current?.getMap().resize()
+  }, [])
 
   // Toggle layer visibility when layers change
   useEffect(() => {
@@ -136,156 +146,178 @@ export default function CartographyPage() {
   }
 
   return (
-    <div className="relative h-screen w-full bg-black pt-24">
-      {/* Layer Panel */}
-      <div className="absolute left-0 top-24 h-[calc(100vh-6rem)] w-96 bg-black/95 backdrop-blur-md border-r border-white/20 z-10 overflow-y-auto">
-        <div className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <Layers className="w-6 h-6 text-[#E91E63]" />
-              <h1 className="text-2xl font-bold text-white">Cartography</h1>
-            </div>
-          </div>
+    <div className="h-screen w-full bg-black pt-24">
+      <ResizablePanelGroup
+        direction={isMobile ? "vertical" : "horizontal"}
+        onLayout={handlePanelLayout}
+        className="h-[calc(100vh-6rem)] w-full"
+      >
+        <ResizablePanel
+          defaultSize={isMobile ? "45%" : "28%"}
+          minSize={isMobile ? "25%" : "20%"}
+          maxSize={isMobile ? "75%" : "40%"}
+          className="bg-black/95 backdrop-blur-md overflow-hidden"
+        >
+          <div
+            className={`h-full overflow-y-auto ${isMobile ? "border-b" : "border-r"} border-white/20`}
+          >
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <Layers className="w-6 h-6 text-[#E91E63]" />
+                  <h1 className="text-2xl font-bold text-white">Cartography</h1>
+                </div>
+              </div>
 
-          <p className="text-white/60 text-sm mb-6 leading-relaxed">
-            Toggle environmental map layers on/off and explore detailed information for each layer.
-          </p>
+              <p className="text-white/60 text-sm mb-6 leading-relaxed">
+                Toggle environmental map layers on/off and explore detailed information for each layer.
+              </p>
 
-          {/* Grouping Options */}
-          <div className="mb-6">
-            <label className="text-white/80 text-sm font-semibold mb-2 block">Filter By:</label>
-            <div className="flex gap-2">
-              <button
-                onClick={() => setGroupBy("all")}
-                className={`px-3 py-1.5 rounded text-sm transition-colors ${groupBy === "all"
-                  ? "bg-[#E91E63] text-white"
-                  : "bg-white/10 text-white/70 hover:bg-white/20"
-                  }`}
-              >
-                All
-              </button>
-              <button
-                onClick={() => setGroupBy("ecosystem")}
-                className={`px-3 py-1.5 rounded text-sm transition-colors ${groupBy === "ecosystem"
-                  ? "bg-[#E91E63] text-white"
-                  : "bg-white/10 text-white/70 hover:bg-white/20"
-                  }`}
-              >
-                Ecosystem
-              </button>
-              <button
-                onClick={() => setGroupBy("services")}
-                className={`px-3 py-1.5 rounded text-sm transition-colors ${groupBy === "services"
-                  ? "bg-[#E91E63] text-white"
-                  : "bg-white/10 text-white/70 hover:bg-white/20"
-                  }`}
-              >
-                Services
-              </button>
-            </div>
-          </div>
+              {/* Grouping Options */}
+              <div className="mb-6">
+                <label className="text-white/80 text-sm font-semibold mb-2 block">Filter By:</label>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setGroupBy("all")}
+                    className={`px-3 py-1.5 rounded text-sm transition-colors ${groupBy === "all"
+                      ? "bg-[#E91E63] text-white"
+                      : "bg-white/10 text-white/70 hover:bg-white/20"
+                      }`}
+                  >
+                    All
+                  </button>
+                  <button
+                    onClick={() => setGroupBy("ecosystem")}
+                    className={`px-3 py-1.5 rounded text-sm transition-colors ${groupBy === "ecosystem"
+                      ? "bg-[#E91E63] text-white"
+                      : "bg-white/10 text-white/70 hover:bg-white/20"
+                      }`}
+                  >
+                    Ecosystem
+                  </button>
+                  <button
+                    onClick={() => setGroupBy("services")}
+                    className={`px-3 py-1.5 rounded text-sm transition-colors ${groupBy === "services"
+                      ? "bg-[#E91E63] text-white"
+                      : "bg-white/10 text-white/70 hover:bg-white/20"
+                      }`}
+                  >
+                    Services
+                  </button>
+                </div>
+              </div>
 
-          {/* Layers List */}
-          <div className="space-y-6 mb-8">
-            {groupedLayers().map((group) => (
-              <div key={group.title}>
-                <h3 className="text-white font-semibold text-sm mb-3 uppercase tracking-wide">{group.title}</h3>
-                <div className="space-y-2">
-                  {group.items.map((layer) => (
-                    <div
-                      key={layer.id}
-                      className="p-4 rounded-lg border border-white/10 bg-white/5"
-                    >
-                      <div className="flex items-start gap-3">
-                        {/* Toggle Switch */}
-                        <button
-                          onClick={() => toggleLayer(layer.id)}
-                          className={`mt-1 w-10 h-5 rounded-full transition-colors relative flex-shrink-0 ${layer.enabled ? "bg-[#E91E63]" : "bg-white/20"
-                            }`}
-                          aria-label={`Toggle ${layer.name}`}
-                          aria-pressed={layer.enabled}
+              {/* Layers List */}
+              <div className="space-y-6 mb-8">
+                {groupedLayers().map((group) => (
+                  <div key={group.title}>
+                    <h3 className="text-white font-semibold text-sm mb-3 uppercase tracking-wide">{group.title}</h3>
+                    <div className="space-y-2">
+                      {group.items.map((layer) => (
+                        <div
+                          key={layer.id}
+                          className="p-4 rounded-lg border border-white/10 bg-white/5"
                         >
-                          <span
-                            className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform ${layer.enabled ? "translate-x-[1.125rem]" : "translate-x-0"
-                              }`}
-                          />
-                        </button>
-
-                        {/* Layer Info */}
-                        <div className="flex-grow">
-                          <div className="flex items-start justify-between gap-2">
-                            <h4 className="text-white font-semibold text-sm">{layer.name}</h4>
+                          <div className="flex items-start gap-3">
+                            {/* Toggle Switch */}
                             <button
-                              onClick={() => setSelectedInfo(layer)}
-                              className="text-white/40 hover:text-white transition-colors"
-                              aria-label={`More info about ${layer.name}`}
+                              onClick={() => toggleLayer(layer.id)}
+                              className={`mt-1 w-10 h-5 rounded-full transition-colors relative flex-shrink-0 ${layer.enabled ? "bg-[#E91E63]" : "bg-white/20"
+                                }`}
+                              aria-label={`Toggle ${layer.name}`}
+                              aria-pressed={layer.enabled}
                             >
-                              <HelpCircle className="w-4 h-4" />
+                              <span
+                                className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform ${layer.enabled ? "translate-x-[1.125rem]" : "translate-x-0"
+                                  }`}
+                              />
                             </button>
+
+                            {/* Layer Info */}
+                            <div className="flex-grow">
+                              <div className="flex items-start justify-between gap-2">
+                                <h4 className="text-white font-semibold text-sm">{layer.name}</h4>
+                                <button
+                                  onClick={() => setSelectedInfo(layer)}
+                                  className="text-white/40 hover:text-white transition-colors"
+                                  aria-label={`More info about ${layer.name}`}
+                                >
+                                  <HelpCircle className="w-4 h-4" />
+                                </button>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      ))}
                     </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Map Applications Section */}
+              <div className="border-t border-white/20 pt-6">
+                <h3 className="text-white font-semibold text-sm mb-3 uppercase tracking-wide flex items-center gap-2">
+                  <ExternalLink className="w-4 h-4 text-[#E91E63]" />
+                  Interactive Map Applications
+                </h3>
+                <p className="text-white/50 text-xs mb-4 leading-relaxed">
+                  Complex map applications with advanced features and interactions
+                </p>
+                <div className="space-y-2">
+                  {mapApplications.map((app) => (
+                    <Link
+                      key={app.id}
+                      href={app.href}
+                      className="block p-4 rounded-lg border border-[#E91E63]/30 bg-[#E91E63]/5 hover:bg-[#E91E63]/10 transition-colors group"
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <h4 className="text-white font-semibold text-sm group-hover:text-[#E91E63] transition-colors">
+                          {app.name}
+                        </h4>
+                        <ExternalLink className="w-3 h-3 text-white/40 group-hover:text-[#E91E63] transition-colors" />
+                      </div>
+                      <p className="text-white/50 text-xs leading-relaxed">{app.description}</p>
+                    </Link>
                   ))}
                 </div>
               </div>
-            ))}
-          </div>
-
-          {/* Map Applications Section */}
-          <div className="border-t border-white/20 pt-6">
-            <h3 className="text-white font-semibold text-sm mb-3 uppercase tracking-wide flex items-center gap-2">
-              <ExternalLink className="w-4 h-4 text-[#E91E63]" />
-              Interactive Map Applications
-            </h3>
-            <p className="text-white/50 text-xs mb-4 leading-relaxed">
-              Complex map applications with advanced features and interactions
-            </p>
-            <div className="space-y-2">
-              {mapApplications.map((app) => (
-                <Link
-                  key={app.id}
-                  href={app.href}
-                  className="block p-4 rounded-lg border border-[#E91E63]/30 bg-[#E91E63]/5 hover:bg-[#E91E63]/10 transition-colors group"
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <h4 className="text-white font-semibold text-sm group-hover:text-[#E91E63] transition-colors">
-                      {app.name}
-                    </h4>
-                    <ExternalLink className="w-3 h-3 text-white/40 group-hover:text-[#E91E63] transition-colors" />
-                  </div>
-                  <p className="text-white/50 text-xs leading-relaxed">{app.description}</p>
-                </Link>
-              ))}
             </div>
           </div>
-        </div>
-      </div>
+        </ResizablePanel>
 
-      {/* Map Container */}
-      <div className="absolute left-96 top-24 right-0 bottom-0">
-        <Map
-          ref={mapRef}
-          mapboxAccessToken={MAPBOX_TOKEN}
-          initialViewState={{
-            longitude: 5,
-            latitude: 46,
-            zoom: 5.2,
-          }}
-          style={{ width: "100%", height: "100%" }}
-          mapStyle="mapbox://styles/tiacop/cmdg1whvv001s01r2diojaxic"
-          onLoad={(e) => {
-            const map = e.target
-            // Hide all layers initially
-            layers.forEach((layer) => {
-              if (map.getLayer(layer.mapboxLayerId)) {
-                map.setLayoutProperty(layer.mapboxLayerId, "visibility", "none")
-              }
-            })
-            setMapLoaded(true)
-          }}
+        <ResizableHandle
+          withHandle
+          className={`${
+            isMobile
+              ? "h-3 w-full cursor-row-resize hover:h-4"
+              : "w-2 h-full cursor-col-resize hover:w-3"
+          } flex items-center justify-center bg-[#E91E63] text-[#E91E63] hover:brightness-110 transition-all`}
         />
-      </div>
+
+        <ResizablePanel className="relative">
+          <Map
+            ref={mapRef}
+            mapboxAccessToken={MAPBOX_TOKEN}
+            initialViewState={{
+              longitude: 5,
+              latitude: 46,
+              zoom: 5.2,
+            }}
+            style={{ width: "100%", height: "100%" }}
+            mapStyle="mapbox://styles/tiacop/cmdg1whvv001s01r2diojaxic"
+            onLoad={(e) => {
+              const map = e.target
+              // Hide all layers initially
+              layers.forEach((layer) => {
+                if (map.getLayer(layer.mapboxLayerId)) {
+                  map.setLayoutProperty(layer.mapboxLayerId, "visibility", "none")
+                }
+              })
+              setMapLoaded(true)
+            }}
+          />
+        </ResizablePanel>
+      </ResizablePanelGroup>
 
       {/* Info Modal */}
       {selectedInfo && (

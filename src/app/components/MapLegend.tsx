@@ -199,7 +199,7 @@ export default function MapLegend({ map, layerId, layerName, isVisible }: MapLeg
   }
 
   return (
-    <div className="absolute bottom-4 md:left-[440px] bg-black bg-opacity-90 text-white rounded-lg shadow-lg max-w-xs z-50 border border-gray-600 pointer-events-auto">
+    <div className="absolute bottom-4 left-4 bg-black bg-opacity-90 text-white rounded-lg shadow-lg max-w-xs z-50 border border-gray-600 pointer-events-auto">
       <div className="flex items-center justify-between p-3 border-b border-gray-600">
         <h4 className="text-sm font-medium truncate mr-2">{layerName}</h4>
         <button

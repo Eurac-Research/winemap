@@ -1,12 +1,17 @@
 "use client";
 
-import { Suspense, useRef, useState, useEffect } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Map, { MapRef, NavigationControl, ScaleControl } from "react-map-gl";
 import { Radio, RadioChangeEvent } from "antd";
 import MapLegend from "@/app/components/MapLegend";
 import styles from "@/styles/Home.module.scss";
 import { isMobile } from "react-device-detect";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/app/components/ui/resizable";
 
 const ReactMap = Map;
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
@@ -184,6 +189,9 @@ export default function EnvironmentalPage() {
   const [mapLoaded, setMapLoaded] = useState(false);
   const [selectedGroupId, setSelectedGroupId] = useState(layerGroups[0].id);
   const [selectedLayerId, setSelectedLayerId] = useState(layerGroups[0].layers[0].id);
+  const handlePanelLayout = useCallback(() => {
+    mapRef.current?.getMap().resize();
+  }, []);
 
   const selectedGroup = layerGroups.find(group => group.id === selectedGroupId) || layerGroups[0];
   const selectedLayer = selectedGroup.layers.find(layer => layer.id === selectedLayerId) || selectedGroup.layers[0];
@@ -253,44 +261,23 @@ export default function EnvironmentalPage() {
   };
 
   return (
-    <>
-      <div className={styles.container}>
-        <Suspense fallback={<div>Loading...</div>}>
-          <ReactMap
-            ref={mapRef}
-            minZoom={isMobile ? 1 : 3}
-            initialViewState={{
-              latitude: 46,
-              longitude: 5,
-              zoom: 5.2,
-              bearing: 0,
-              pitch: 0,
-            }}
-            style={{ width: "100vw", height: "100vh" }}
-            mapStyle="mapbox://styles/tiacop/cmdg1whvv001s01r2diojaxic"
-            mapboxAccessToken={MAPBOX_TOKEN}
-            onLoad={() => setMapLoaded(true)}
+    <div className="h-screen w-full bg-black pt-24">
+      <ResizablePanelGroup
+        direction={isMobile ? "vertical" : "horizontal"}
+        onLayout={handlePanelLayout}
+        className="h-[calc(100vh-6rem)] w-full"
+      >
+        <ResizablePanel
+          defaultSize={isMobile ? "48%" : "32%"}
+          minSize={isMobile ? "28%" : "24%"}
+          maxSize={isMobile ? "78%" : "45%"}
+          className="bg-black/95 backdrop-blur-md overflow-hidden"
+        >
+          <div
+            className={`h-full overflow-hidden ${isMobile ? "border-b" : "border-r"} border-white/20`}
           >
-            <NavigationControl
-              position="bottom-right"
-              visualizePitch={true}
-              showCompass={true}
-            />
-            <ScaleControl position="bottom-right" />
-          </ReactMap>
-
-          {/* Map Legend - positioned over the map, not sidebar */}
-          <MapLegend
-            map={mapRef.current?.getMap() || null}
-            layerId={selectedLayer.mapboxLayerId}
-            layerName={selectedLayer.name}
-            isVisible={mapLoaded}
-          />
-        </Suspense>
-
-        {/* Responsive Content Frame */}
-        <div className={styles.contentFrame}>
-          <div className={styles.frontpageContent}>
+            <div className={styles.panelFrame}>
+              <div className={styles.frontpageContent}>
             {/* Winemap Header */}
             {/* <header className="mb-8">
               <div className="flex items-start justify-between w-full mb-4 flex-col">
@@ -407,8 +394,53 @@ export default function EnvironmentalPage() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </>
+            </div>
+          </div>
+        </ResizablePanel>
+
+        <ResizableHandle
+          withHandle
+          className={`${
+            isMobile
+              ? "h-3 w-full cursor-row-resize hover:h-4"
+              : "w-2 h-full cursor-col-resize hover:w-3"
+          } flex items-center justify-center bg-[#E91E63] text-[#E91E63] hover:brightness-110 transition-all relative z-20`}
+        />
+
+        <ResizablePanel className="relative">
+          <Suspense fallback={<div>Loading...</div>}>
+            <ReactMap
+              ref={mapRef}
+              minZoom={isMobile ? 1 : 3}
+              initialViewState={{
+                latitude: 46,
+                longitude: 5,
+                zoom: 5.2,
+                bearing: 0,
+                pitch: 0,
+              }}
+              style={{ width: "100%", height: "100%" }}
+              mapStyle="mapbox://styles/tiacop/cmdg1whvv001s01r2diojaxic"
+              mapboxAccessToken={MAPBOX_TOKEN}
+              onLoad={() => setMapLoaded(true)}
+            >
+              <NavigationControl
+                position="bottom-right"
+                visualizePitch={true}
+                showCompass={true}
+              />
+              <ScaleControl position="bottom-right" />
+            </ReactMap>
+
+            <MapLegend
+              map={mapRef.current?.getMap() || null}
+              layerId={selectedLayer.mapboxLayerId}
+              layerName={selectedLayer.name}
+              isVisible={mapLoaded}
+            />
+          </Suspense>
+        </ResizablePanel>
+      </ResizablePanelGroup>
+    </div>
   );
 }

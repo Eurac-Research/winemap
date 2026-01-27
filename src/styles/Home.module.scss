@@ -8,25 +8,117 @@
   height: 40vh;
   position: fixed;
   font-size: 16px;
-  background-color: rgba(0, 0, 0, 0.8);
-  overflow-y: auto;
-  overflow-x: hidden;
+  background-color: rgba(0, 0, 0, 0.9);
+  overflow: visible;
   margin-bottom: 60px;
   padding-top: 20px;
   padding-right: 40px;
-  border-top: 10px solid rgba(0, 0, 0, 0.8);
+  padding-left: 20px;
+  border-top: 3px solid rgba(233, 30, 99, 0.5);
   backdrop-filter: blur(10px);
+  resize: vertical;
+  min-height: 100px;
+  max-height: 90vh;
+
+  /* Drag handle indicator */
+  &::before {
+    content: "";
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 96px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 9999px;
+    box-shadow:
+      0 6px 16px rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    z-index: 20;
+    pointer-events: none;
+  }
 
   @media screen and (min-width: 768px) {
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.9);
     width: 400px;
-    height: calc(100vh - 68px);
-    top: 68px;
+    height: calc(100vh - 80px);
+    top: 80px;
     left: 0;
-    padding-right: 0;
-    padding-top: 0;
+    padding-right: 20px;
+    padding-top: 20px;
     border-top: none;
+    border-right: 3px solid rgba(233, 30, 99, 0.5);
+    resize: horizontal;
+    min-width: 250px;
+    max-width: 50vw;
+
+    &::before {
+      display: none;
+    }
+
+    /* Drag handle indicator for desktop */
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 2px;
+      margin-right: -2px;
+    }
   }
+
+  .amountOfItems {
+    padding: 0px 20px 20px 20px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    margin: 0;
+    margin-bottom: 10px;
+    @media screen and (min-width: 768px) {
+      padding: 20px 30px;
+    }
+  }
+}
+
+.contentFrameInPanel {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  resize: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  backdrop-filter: none;
+  overflow: visible;
+
+  &::before,
+  &::after {
+    display: none;
+    content: none;
+  }
+}
+
+.panelFrame {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  font-size: 16px;
+  background-color: rgba(0, 0, 0, 0.9);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0;
+  backdrop-filter: blur(10px);
 
   .amountOfItems {
     padding: 0px 20px 20px 20px;
@@ -48,7 +140,7 @@
   background-color: rgba(0, 0, 0, 0.6);
   padding-bottom: 100px;
   @media screen and (min-width: 768px) {
-    width: 400px;
+    width: 100%;
   }
 
   &.margin {
@@ -64,11 +156,30 @@
     margin-bottom: 6px;
     border-bottom: 1px solid #333;
     line-height: 1.3;
+    position: relative;
     img {
       margin-right: 10px;
       margin-left: -46px;
       vertical-align: middle;
     }
+  }
+  :global(.showOneLine) {
+    display: inline-block;
+    max-width: calc(100% - 40px);
+    vertical-align: top;
+  }
+  :global(.showAll) {
+    display: block;
+    padding-right: 40px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  :global(.expand) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 32px;
+    height: 100%;
   }
   .buttonDiv {
     display: flex;
@@ -164,20 +275,23 @@
 }
 
 .filterBar {
-  position: fixed;
+  position: absolute;
   top: 100px;
   left: 0px;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 0 0 20px 20px;
+  background-color: rgba(0, 0, 0, 0.9);
+  border-radius: 0;
   padding: 15px 20px 20px 20px;
   width: 100%;
   backdrop-filter: blur(10px);
+  z-index: 10;
 
   @media screen and (min-width: 768px) {
     top: 100px;
-    left: 440px;
+    left: 20px;
     width: auto;
+    max-width: 600px;
     padding: 20px 20px 20px 20px;
+    border-radius: 12px;
   }
 
   .filter {
@@ -207,6 +321,52 @@
     }
   }
 }
+
+.filterBarCollapsed {
+  left: 12px;
+  right: 12px;
+  width: auto;
+  padding: 8px 12px;
+  border-radius: 12px;
+}
+
+.filterBarExpanded {
+  left: 12px;
+  right: 12px;
+  width: auto;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.filterBarHeader {
+  display: flex;
+}
+
+.filterBarToggle {
+  width: 100%;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.filterBarToggle:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.filterBarContent {
+  margin-top: 10px;
+}
+
 .header {
   display: flex;
   justify-content: flex-start;
@@ -237,6 +397,9 @@
 .frontpageContent {
   padding: 30px;
   padding-top: 50px;
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 
   h2 {
     font-size: 22px;
@@ -340,7 +503,7 @@
 }
 
 .imprintBoxMap {
-  position: fixed;
+  position: absolute;
   width: 100%;
   bottom: 0px;
   display: flex;
