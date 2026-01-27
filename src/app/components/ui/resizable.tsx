@@ -12,9 +12,10 @@ const ResizableDirectionContext = React.createContext<"horizontal" | "vertical">
 
 type ResizablePanelGroupProps = Omit<
   React.ComponentProps<typeof ResizablePrimitive.Group>,
-  "orientation"
+  "orientation" | "onLayout"
 > & {
   direction?: "horizontal" | "vertical"
+  onLayout?: (sizes: number[]) => void
 }
 
 const ResizablePanelGroup = ({
