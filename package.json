@@ -11,9 +11,12 @@
     "fmt": "prettier --write '**/*.{cjs,mjs,ts,tsx,md}' --ignore-unknown --ignore-path .gitignore",
     "ci": "pnpm format && pnpm lint && pnpm tsc"
   },
-  "packageManager": "pnpm@10.22.0",
+  "packageManager": "pnpm@10.28.2",
   "dependencies": {
+    "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-navigation-menu": "^1.2.14",
+    "@radix-ui/react-select": "^2.2.6",
+    "@radix-ui/react-slot": "^1.2.4",
     "@turf/bbox": "^6.5.0",
     "@types/mapbox-gl": "^3.1.0",
     "@types/node": "18.11.9",

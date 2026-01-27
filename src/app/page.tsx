@@ -28,7 +28,7 @@ export default function HomePage() {
       {/* Content Layer */}
       <div className="relative z-20 w-full">
         {/* Hero Section */}
-        <section className="relative min-h-[60vh] flex items-center justify-center px-4 py-20">
+        <section className="relative flex items-center justify-center pt-40 px-4 lg:pt-60 pb-20 ">
           <div className="max-w-5xl mx-auto text-center">
             <h1 className="text-6xl md:text-8xl font-bold mb-6 text-white">WINEMAP</h1>
             <p className="text-xl md:text-2xl text-white/60 mb-4 font-light flex items-center justify-center gap-2">by         <svg
@@ -52,7 +52,7 @@ export default function HomePage() {
         </section>
 
         {/* Main Areas Grid */}
-        <section className="px-4 py-20 max-w-7xl mx-auto">
+        <section className="px-4 pb-20 max-w-7xl mx-auto">
           <div className="grid md:grid-cols-3 gap-8">
             {/* Area 1: Climate & Environment */}
             <div className="group relative bg-white/5 border border-white/10 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md">

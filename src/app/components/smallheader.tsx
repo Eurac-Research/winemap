@@ -28,7 +28,7 @@ export default function Smallheader(props: {
         )}{" "}
         by
       </Link>
-      <a href="https://www.eurac.edu" className="pb-[3px]">
+      <a href="https://www.eurac.edu" target="_blank" className="pb-[3px]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="178.793"

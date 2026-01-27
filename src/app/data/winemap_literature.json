@@ -1,0 +1,97 @@
+[
+  {
+    "id": "1",
+    "title": "Climate resilience of European wine regions",
+    "authors": [
+      "Tscholl Simon",
+      "Candiago Sebastian",
+      "Marsoner Thomas",
+      "Helder Fraga",
+      "Giupponi Carlo",
+      "Egarter Vigl Lukas"
+    ],
+    "year": 2024,
+    "journal": "Nature Communications",
+    "volume": "15",
+    "doi": "10.1038/s41467-024-50549-w",
+    "abstract": "Over centuries, European vintners have developed a profound knowledge about grapes, environment, and techniques that yield the most distinguishable wines. In many regions, this knowledge is reflected in the system of wine geographical indications (GI), but climate change is challenging this historical union. Here, we present a climate change vulnerability assessment of 1085 wine GIs across Europe and propose climate-resilient development pathways using an ensemble of biophysical and socioeconomic indicators. Results indicate that wine regions in Southern Europe are among the most vulnerable, with high levels also found in Eastern Europe. Vulnerability is influenced by the rigidity of the GI system, which restricts grape variety diversity and thus contributes to an increased sensitivity to climate change. Contextual deficiencies, such as limited socioeconomic resources, may further contribute to increased vulnerability. Building a climate-resilient wine sector will require rethinking the GI system by allowing innovation to compensate for the negative effects of climate change.",
+    "keywords": [
+      "climate change",
+      "adaptation",
+      "viticulture",
+      "PDO",
+      "vulnerability"
+    ],
+    "type": "journal",
+    "category": "Adaptation"
+  },
+  {
+    "id": "2",
+    "title": "A geospatial inventory of regulatory information for wine protected designations of origin in Europe",
+    "authors": [
+      "Candiago Sebastian",
+      "Tscholl Simon",
+      "Bassani Leonardo",
+      "Helder Fraga",
+      "Egarter Vigl Lukas"
+    ],
+    "year": 2022,
+    "journal": "Scientific Data",
+    "volume": "9",
+    "doi": "10.1038/s41597-022-01513-0",
+    "abstract": "The Wine Protected Designation of Origin (PDO) label is a European quality scheme that protects high quality wines by linking them to legally defined geographic areas and a set of specific production practices. Because of the tight relation between PDO wines and the specifications defined in the official regulatory documents, these products are highly susceptible to changes in climatic, environmental, or socioeconomic conditions. However, the content of these regulatory documents has never been systematically analysed and summarized in a single dataset. Here, we present the first geospatial inventory that organizes regulatory information about the 1177 wine PDO in Europe based on the documents from the official EU geographical indication register. It includes essential legal information that defines the wine PDO such as the geographic boundaries, authorized cultivars and maximum yields. This inventory opens new possibilities for researchers to accurately assess, compare and map the regulatory information in each wine region at an unprecedented level of detail, supporting decision makers in developing adaptation strategies for the preservation of PDO wine regions.",
+    "keywords": [
+      "Europe",
+      "PDO",
+      "viticulture"
+    ],
+    "type": "journal",
+    "category": "Adaptation"
+  },
+  {
+    "id": "3",
+    "title": "The changing geography of wine climates and its implications on adaptation in the Italian",
+    "authors": [
+      "Tscholl Simon",
+      "Egarter Vigl Lukas"
+    ],
+    "year": 2024,
+    "journal": "Climate Resilience and Sustainability",
+    "volume": "3",
+    "issue": "4",
+    "doi": "10.1002/cli2.70000",
+    "abstract": "Wine production and quality both strongly depend on suitable climatic conditions. Increasing the climate resilience of wine regions is therefore of critical importance but requires instruments to evaluate shifts in climatic conditions and growing suitability. This evaluation is particularly challenging in mountain viticultural areas due to their complex topoclimatic patterns, yet they offer the possibility to analyze climate change impacts and adaptation strategies across various climatic conditions and cultivated varieties. Here, we assessed historical and future bioclimatic conditions and identified effective adaptation strategies toward more sustainable and climate-resilient wine production in the mountain winegrowing regions within South Tyrol in the Italian Alps. We found significant changes in climatic conditions under future scenarios, such as an increase in the Huglin index (HI) and cool night index (CNI) as well as a decreased dryness index (DI), causing an expansion of suitable areas for viticulture as well as a spread of unprecedented climatic conditions in traditional vineyards. Impacts and suitable adaptation options varied depending on climate type and grape variety, highlighting the need for targeted solutions that balance the need for high-quality wine production with environmental protection and sustainability. Higher elevated areas over 1000 m a.s.l. will experience an increased suitability raising the need for restrictions regarding the expansion of vineyards to avoid degradation of natural ecosystems and biodiversity declines. In contrast, many traditional winegrowing areas will need to implement a combination of short- and long-term adaptation measures to maintain traditional wine styles. Our findings provide a framework for the assessment of viticultural suitability and the formulation of appropriate adaptation strategies for the sustainable cultivation of wine grapes in a changing climate that applies to a variety of climates and grape varieties.",
+    "keywords": [
+      "climate change",
+      "viticulture",
+      "mountain",
+      "geography"
+    ],
+    "type": "journal",
+    "category": "Climate Change"
+  },
+  {
+    "id": "4",
+    "title": "Coupling solar radiation and cloud cover data for enhanced temperature predictions over topographically complex mountain terrain",
+    "authors": [
+      "Tscholl Simon",
+      "Tasser Erich",
+      "Tappeiner Ulrike",
+      "Egarter Vigl Lukas"
+    ],
+    "year": 2021,
+    "journal": "International Journal of Climatology",
+    "volume": "42",
+    "issue": "9",
+    "doi": "10.1002/joc.7497",
+    "abstract": "Fine-scale climate information is critical to understand species–climate relationships. It is usually obtained by interpolating meteorological station data or by downscaling coarse-gridded climate data. In mountain areas, however, the low station density and macroclimate variables used in coarse-gridded climate products cannot reproduce fine-scale variations caused by the complex topography and thus result in biased predictions of species responses to climate change. Here, we present an innovative method to estimate daily local air temperature at 100 m spatial resolution in the mountain region of South Tyrol (Central Alps, Italy), called the cloud-corrected model. We introduce a correction factor that couples solar radiation and cloud cover data to improve air temperature predictions. Results are compared to models that either consider elevation only (lapse-rate model) or elevation and solar radiation but not cloud cover (clear-sky model) using a set of independent meteorological stations for validation. Moreover, all models were tested to predict critical phenological stages of the climate-sensitive species Vitis vinifera. Over the vegetative period, the cloud-corrected model significantly reduced the mean absolute error of predicted temperature compared with the lapse rate and clear-sky model by 10 and 23%, respectively, and the bias by 93 and 90%, respectively. Solar radiation and cloud cover both strongly influenced local air temperature and their inclusion in temperature estimates greatly reduced systematic biases and improved predictions of important plant phenological stages by multiple days. Our method therefore provides a new way to include easily accessible topography and climate data into fine-scale temperature predictions and accounts for important climate forcing factors that otherwise are often neglected. It combines efficiency and accuracy, because it limits data requirements but still operates on an ecologically relevant spatial scale. Thus, our approach offers promising opportunities to improve the understanding of species–climate relationships, especially in regions sensitive to the effects of climate change.",
+    "keywords": [
+      "topoclimate",
+      "interpolation",
+      "mountain",
+      "temperature"
+    ],
+    "type": "journal",
+    "category": "Climate Change"
+  }
+]
