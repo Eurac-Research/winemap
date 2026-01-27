@@ -5,7 +5,7 @@ import { Metadata } from "next";
 import PlausibleProvider from "next-plausible";
 
 import CookieConsent from "./components/CookieConsent";
-import { Navigation } from "./components/Navigation";
+import { ConditionalNavigation } from "./components/ConditionalNavigation";
 
 export const metadata: Metadata = {
   title: "Winemap by Eurac Research",
@@ -49,7 +49,7 @@ export default function RootLayout({
         enabled={true}
       />
       <body className="">
-        <Navigation />
+        <ConditionalNavigation />
         <div className="">
           <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
           <Suspense fallback={<div>Loading...</div>}>

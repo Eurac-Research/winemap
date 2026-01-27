@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { Leaf, Scale, ThermometerSun } from "lucide-react";
+import { Leaf, Scale, ThermometerSun, Map as MapIcon } from "lucide-react";
+import { Sidebar } from "./components/Sidebar";
 
 export default function HomePage() {
   return (
-    <div className="relative min-h-screen text-white flex flex-col items-center justify-center p-6 overflow-hidden">
+    <div className="relative min-h-screen text-white flex flex-col items-center p-6 overflow-hidden">
       {/* Background Image Layer */}
       <div
         className="absolute inset-0 z-0"
@@ -27,8 +28,11 @@ export default function HomePage() {
 
       {/* Content Layer */}
       <div className="relative z-20 w-full">
+        {/* Sidebar Component */}
+        <Sidebar />
+
         {/* Hero Section */}
-        <section className="relative flex items-center justify-center pt-40 px-4 lg:pt-60 pb-20 ">
+        <section className="relative flex items-center justify-center pt-20 px-4 pb-16">
           <div className="max-w-5xl mx-auto text-center">
             <h1 className="text-6xl md:text-8xl font-bold mb-6 text-white">WINEMAP</h1>
             <p className="text-xl md:text-2xl text-white/60 mb-4 font-light flex items-center justify-center gap-2">by         <svg
@@ -51,128 +55,199 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Main Areas Grid */}
-        <section className="px-4 pb-20 max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8">
+        {/* Main Areas - Vertical Layout */}
+        <section className="px-4 pb-12 max-w-5xl mx-auto">
+          <div className="space-y-6">
             {/* Area 1: Climate & Environment */}
-            <div className="group relative bg-white/5 border border-white/10 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md">
-              <div className="p-8 h-full flex flex-col">
-                <Link href="/climate-environment" className="mb-6 block group/main">
-                  <div className="w-16 h-16 rounded-full bg-[#E91E63]/10 flex items-center justify-center mb-4 group-hover:bg-[#E91E63]/20 transition-colors">
-                    <ThermometerSun className="w-8 h-8 text-[#E91E63]" />
+            <div className="group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md rounded-xl shadow-xl hover:shadow-[#E91E63]/20">
+              <div className="grid md:grid-cols-[200px_1fr_250px] gap-6 p-8 items-center">
+                {/* Left - Icon and Title */}
+                <Link href="/climate-environment" className="flex flex-col items-center text-center group/main">
+                  <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#E91E63]/20 to-[#E91E63]/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <ThermometerSun className="w-12 h-12 text-[#E91E63]" aria-hidden="true" />
                   </div>
-                  <h2 className="text-2xl font-bold text-white mb-2 uppercase">Climate & Environment</h2>
-                  <p className="text-white/60 group-hover/main:text-white text-sm leading-relaxed transition-colors">
-                    Explore climate data and environmental indicators for wine regions.
-                  </p>
+                  <h2 className="text-xl font-bold text-white uppercase tracking-wide group-hover/main:text-[#E91E63] transition-colors">
+                    Climate &<br />Environment
+                  </h2>
                 </Link>
 
-                <div className="space-y-3 flex-grow">
-                  <Link href="/climate-environment/indicators" className="block p-3 rounded hover:bg-white/5 transition-colors group/link">
-                    <h3 className="text-white/90 font-semibold text-sm mb-1">Climate Indicators</h3>
-                    <p className="text-white/50 group-hover/link:text-white text-xs leading-relaxed transition-colors">
-                      Learn more about bioclimatic indicators, their use in the field of viticulture and investigate their historical and future spatial distribution over Europe using high resolution maps
-                    </p>
-                  </Link>
-
-                  <Link href="#vulnerability" className="block p-3 rounded hover:bg-white/5 transition-colors group/link">
-                    <h3 className="text-white/90 font-semibold text-sm mb-1">Vulnerability & Risks</h3>
-                    <p className="text-white/50 group-hover/link:text-white text-xs leading-relaxed transition-colors">
-                      Discover more about the vulnerability to climate change of European wine regions, which was assessed using multiple dimensions, including the exposure and sensitivity to climate change and the adaptive capacity of each region
-                    </p>
-                  </Link>
-
-                  <Link href="#ecosystem-services" className="block p-3 rounded hover:bg-white/5 transition-colors group/link">
-                    <h3 className="text-white/90 font-semibold text-sm mb-1">Ecosystem Services</h3>
-                    <p className="text-white/50 group-hover/link:text-white text-xs leading-relaxed transition-colors">
-                      Dive deeper into the multiple regulating, provisioning, and cultural benefits that viticulture provides for landscapes and communities. Explore how vineyards contribute to biodiversity, soil conservation, water regulation, and cultural heritage.
-                    </p>
+                {/* Middle - Description and Map Button */}
+                <div className="flex flex-col justify-center space-y-4">
+                  <p className="text-white/70 text-sm leading-relaxed">
+                    Explore climate data, vulnerability assessments, and environmental indicators for wine regions across Europe.
+                  </p>
+                  <Link
+                    href="/climate-environment"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-zinc-900/80 hover:bg-[#E91E63] text-white rounded-lg transition-all duration-300 font-semibold text-sm shadow-lg hover:shadow-[#E91E63]/50 self-start"
+                  >
+                    <MapIcon className="w-4 h-4" aria-hidden="true" />
+                    Open Map
                   </Link>
                 </div>
 
-                <Link href="/climate-environment" className="mt-6 text-[#E91E63] font-semibold group-hover:translate-x-2 transition-transform inline-block">
-                  Explore →
-                </Link>
+                {/* Right - Categories */}
+                <div className="space-y-1 border-l border-white/10 pl-6">
+                  <Link
+                    href="/climate-environment/indicators"
+                    className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
+                  >
+                    <h3 className="text-white/90 font-semibold text-sm group-hover/link:text-[#E91E63] transition-colors">
+                      Climate Indicators →
+                    </h3>
+                  </Link>
+                  <Link
+                    href="/climate-environment?vulnerability=true"
+                    className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
+                  >
+                    <h3 className="text-white/90 font-semibold text-sm group-hover/link:text-[#E91E63] transition-colors">
+                      Vulnerability & Risks →
+                    </h3>
+                  </Link>
+                  <Link
+                    href="/climate-environment"
+                    className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
+                  >
+                    <h3 className="text-white/90 font-semibold text-sm group-hover/link:text-[#E91E63] transition-colors">
+                      Ecosystem Services →
+                    </h3>
+                  </Link>
+                </div>
               </div>
             </div>
 
             {/* Area 2: Adaptation */}
-            <div className="group relative bg-white/5 border border-white/10 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md">
-              <div className="p-8 h-full flex flex-col">
-                <Link href="/adaptation" className="mb-6 block group/main">
-                  <div className="w-16 h-16 rounded-full bg-[#E91E63]/10 flex items-center justify-center mb-4 group-hover:bg-[#E91E63]/20 transition-colors">
-                    <Leaf className="w-8 h-8 text-[#E91E63]" />
+            <div className="group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md rounded-xl shadow-xl hover:shadow-[#E91E63]/20">
+              <div className="grid md:grid-cols-[200px_1fr_250px] gap-6 p-8 items-center">
+                {/* Left - Icon and Title */}
+                <Link href="/adaptation" className="flex flex-col items-center text-center group/main">
+                  <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#E91E63]/20 to-[#E91E63]/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <Leaf className="w-12 h-12 text-[#E91E63]" aria-hidden="true" />
                   </div>
-                  <h2 className="text-2xl font-bold text-white mb-2 uppercase">ADAPTATION</h2>
-                  <p className="text-white/60 group-hover/main:text-white text-sm leading-relaxed transition-colors">
-                    Discover ecosystem-based adaptation strategies for viticulture.
-                  </p>
+                  <h2 className="text-xl font-bold text-white uppercase tracking-wide group-hover/main:text-[#E91E63] transition-colors">
+                    Adaptation
+                  </h2>
                 </Link>
 
-                <div className="space-y-3 flex-grow">
-                  <Link href="#eba-catalogue" className="block p-3 rounded hover:bg-white/5 transition-colors group/link">
-                    <h3 className="text-white/90 font-semibold text-sm mb-1">Catalogue of EbA strategies</h3>
-                    <p className="text-white/50 group-hover/link:text-white text-xs leading-relaxed transition-colors">
-                      The Catalogue of EbA strategies brings together approaches that harness biodiversity and ecosystem functions to mitigate risks.
-                    </p>
-                  </Link>
-
-                  <Link href="/adaptation/pilot-experiences" className="block p-3 rounded hover:bg-white/5 transition-colors group/link">
-                    <h3 className="text-white/90 font-semibold text-sm mb-1">Pilot implementation experiences</h3>
-                    <p className="text-white/50 group-hover/link:text-white text-xs leading-relaxed transition-colors">
-                      Through short films from pilot regions, you can discover how winegrowers, researchers and communities are working with their landscapes to address climate challenges while preserving local traditions.
-                    </p>
-                  </Link>
-
-                  <Link href="#spatial-analogues" className="block p-3 rounded hover:bg-white/5 transition-colors group/link">
-                    <h3 className="text-white/90 font-semibold text-sm mb-1">Spatial analogues</h3>
-                    <p className="text-white/50 group-hover/link:text-white text-xs leading-relaxed transition-colors">
-                      This section includes an interactive tool to select and visualize spatial analogues for individual European wine regions.
-                    </p>
+                {/* Middle - Description and Map Button */}
+                <div className="flex flex-col justify-center space-y-4">
+                  <p className="text-white/70 text-sm leading-relaxed">
+                    Discover ecosystem-based adaptation strategies and pilot implementation experiences in wine regions.
+                  </p>
+                  <Link
+                    href="/adaptation"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-zinc-900/80 hover:bg-[#E91E63] text-white rounded-lg transition-all duration-300 font-semibold text-sm shadow-lg hover:shadow-[#E91E63]/50 self-start"
+                  >
+                    <MapIcon className="w-4 h-4" aria-hidden="true" />
+                    Open Map
                   </Link>
                 </div>
 
-                <Link href="/adaptation" className="mt-6 text-[#E91E63] font-semibold group-hover:translate-x-2 transition-transform inline-block">
-                  Explore →
-                </Link>
+                {/* Right - Categories */}
+                <div className="space-y-1 border-l border-white/10 pl-6">
+                  <Link
+                    href="/adaptation"
+                    className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
+                  >
+                    <h3 className="text-white/90 font-semibold text-sm group-hover/link:text-[#E91E63] transition-colors">
+                      EbA Strategies Catalogue →
+                    </h3>
+                  </Link>
+                  <Link
+                    href="/adaptation/pilot-experiences"
+                    className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
+                  >
+                    <h3 className="text-white/90 font-semibold text-sm group-hover/link:text-[#E91E63] transition-colors">
+                      Pilot Experiences →
+                    </h3>
+                  </Link>
+                  <Link
+                    href="/adaptation"
+                    className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
+                  >
+                    <h3 className="text-white/90 font-semibold text-sm group-hover/link:text-[#E91E63] transition-colors">
+                      Spatial Analogues →
+                    </h3>
+                  </Link>
+                </div>
               </div>
             </div>
 
             {/* Area 3: Governance */}
-            <div className="group relative bg-white/5 border border-white/10 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md">
-              <div className="p-8 h-full flex flex-col">
-                <Link href="/legal" className="mb-6 block group/main">
-                  <div className="w-16 h-16 rounded-full bg-[#E91E63]/10 flex items-center justify-center mb-4 group-hover:bg-[#E91E63]/20 transition-colors">
-                    <Scale className="w-8 h-8 text-[#E91E63]" />
+            <div className="group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md rounded-xl shadow-xl hover:shadow-[#E91E63]/20">
+              <div className="grid md:grid-cols-[200px_1fr_250px] gap-6 p-8 items-center">
+                {/* Left - Icon and Title */}
+                <Link href="/legal" className="flex flex-col items-center text-center group/main">
+                  <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#E91E63]/20 to-[#E91E63]/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <Scale className="w-12 h-12 text-[#E91E63]" aria-hidden="true" />
                   </div>
-                  <h2 className="text-2xl font-bold text-white mb-2 uppercase">GOVERNANCE</h2>
-                  <p className="text-white/60 group-hover/main:text-white text-sm leading-relaxed transition-colors">
-                    Navigate regulations and governance frameworks for wine production.
-                  </p>
+                  <h2 className="text-xl font-bold text-white uppercase tracking-wide group-hover/main:text-[#E91E63] transition-colors">
+                    Governance
+                  </h2>
                 </Link>
 
-                <div className="space-y-3 flex-grow">
-                  <Link href="#eu-regulations" className="block p-3 rounded hover:bg-white/5 transition-colors group/link">
-                    <h3 className="text-white/90 font-semibold text-sm mb-1">EU Planting and Plant Health Regulations</h3>
-                    <p className="text-white/50 group-hover/link:text-white text-xs leading-relaxed transition-colors">
-                      The EU Planting and Plant Health Regulations aim to ensure the sustainable management of plant health risks and promote biodiversity in viticulture.
-                    </p>
-                  </Link>
-
-                  <Link href="/legal/geographic-indications" className="block p-3 rounded hover:bg-white/5 transition-colors group/link">
-                    <h3 className="text-white/90 font-semibold text-sm mb-1">Geographic indications</h3>
-                    <p className="text-white/50 group-hover/link:text-white text-xs leading-relaxed transition-colors">
-                      Geographical indications at the EU level are a form of intellectual property protection that safeguard the names of products whose qualities, reputation, or characteristics are linked to their specific geographical origin.
-                    </p>
+                {/* Middle - Description and Map Button */}
+                <div className="flex flex-col justify-center space-y-4">
+                  <p className="text-white/70 text-sm leading-relaxed">
+                    Navigate legal frameworks, regulations, and geographic indications for wine production in Europe.
+                  </p>
+                  <Link
+                    href="/legal"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-zinc-900/80 hover:bg-[#E91E63] text-white rounded-lg transition-all duration-300 font-semibold text-sm shadow-lg hover:shadow-[#E91E63]/50 self-start"
+                  >
+                    <MapIcon className="w-4 h-4" aria-hidden="true" />
+                    Open Map
                   </Link>
                 </div>
 
-                <Link href="/legal" className="mt-6 text-[#E91E63] font-semibold group-hover:translate-x-2 transition-transform inline-block">
-                  Explore →
-                </Link>
+                {/* Right - Categories */}
+                <div className="space-y-1 border-l border-white/10 pl-6">
+                  <Link
+                    href="/legal"
+                    className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
+                  >
+                    <h3 className="text-white/90 font-semibold text-sm group-hover/link:text-[#E91E63] transition-colors">
+                      EU Regulations →
+                    </h3>
+                  </Link>
+                  <Link
+                    href="/legal/geographic-indications"
+                    className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
+                  >
+                    <h3 className="text-white/90 font-semibold text-sm group-hover/link:text-[#E91E63] transition-colors">
+                      Geographic Indications →
+                    </h3>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
+        </section>
+
+        {/* Cartography Section */}
+        <section className="px-4 pb-16 max-w-5xl mx-auto">
+          <Link href="/cartography" className="group relative bg-white/5 border border-white/10 hover:border-[#E91E63]/50 transition-all duration-300 overflow-hidden backdrop-blur-md rounded-lg block">
+            <div className="grid md:grid-cols-[140px_1fr] gap-4 p-6 items-center">
+              {/* Left side - Icon */}
+              <div className="flex flex-col items-center justify-center">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#E91E63]/10 to-[#E91E63]/5 flex items-center justify-center mb-2">
+                  <MapIcon className="w-7 h-7 text-[#E91E63]" aria-hidden="true" />
+                </div>
+                <span className="text-white/80 font-semibold text-sm text-center">
+                  Cartography
+                </span>
+              </div>
+
+              {/* Right side - Description */}
+              <div className="flex flex-col justify-center">
+                <h2 className="text-lg font-bold text-white mb-2 group-hover:text-[#E91E63] transition-colors">
+                  Cartographic Interface
+                </h2>
+                <p className="text-white/60 text-sm leading-relaxed">
+                  Access all map layers in one unified interface. Toggle layers, organize by scale or category, and explore detailed information.
+                </p>
+              </div>
+            </div>
+          </Link>
         </section>
 
         {/* About Section */}

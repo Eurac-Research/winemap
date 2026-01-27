@@ -21,7 +21,7 @@ export function Navigation() {
             <span className="text-white font-medium text-lg tracking-wide">WINEMAP</span>
             <span className="text-white/60 text-xs">by</span>
           </Link>
-          <Link href="https://www.eurac.edu" target="_blank" className="pb-[3px]">
+          <a href="https://www.eurac.edu" target="_blank" rel="noopener noreferrer" className="pb-[3px]">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="178.793"
@@ -34,7 +34,7 @@ export function Navigation() {
                 fill="#fff"
               ></path>
             </svg>
-          </Link>
+          </a>
         </div>
 
         <NavigationMenu className="justify-center py-6 w-full">
