@@ -287,11 +287,10 @@ export default function CartographyPage() {
 
         <ResizableHandle
           withHandle
-          className={`${
-            isMobile
+          className={`${isMobile
               ? "h-3 w-full cursor-row-resize hover:h-4"
               : "w-2 h-full cursor-col-resize hover:w-3"
-          } flex items-center justify-center bg-[#E91E63] text-[#E91E63] hover:brightness-110 transition-all`}
+            } flex items-center justify-center bg-[#E91E63] opacity-60 hover:opacity-100 text-[#E91E63] hover:brightness-110 transition-all`}
         />
 
         <ResizablePanel className="relative">

@@ -278,8 +278,8 @@ export default function EnvironmentalPage() {
           >
             <div className={styles.panelFrame}>
               <div className={styles.frontpageContent}>
-            {/* Winemap Header */}
-            {/* <header className="mb-8">
+                {/* Winemap Header */}
+                {/* <header className="mb-8">
               <div className="flex items-start justify-between w-full mb-4 flex-col">
                 <div className="flex items-start justify-start gap-2 flex-col ">
                   <h1 className="text-[28px] font-bold mt-4 mb-0 ">
@@ -313,98 +313,97 @@ export default function EnvironmentalPage() {
                 </div>
               </div>
             </header> */}
-            {/* Main Title */}
-            <h2 className="text-xl font-semibold mb-6">ECOLOGICAL CONDITIONS AND ECOSYSTEM SERVICES IN THE ALPS</h2>
+                {/* Main Title */}
+                <h2 className="text-xl font-semibold mb-6">ECOLOGICAL CONDITIONS AND ECOSYSTEM SERVICES IN THE ALPS</h2>
 
-            {/* Group Selection Tabs */}
-            <div className="mb-6">
-              <div className="flex bg-white bg-opacity-10 rounded-lg p-1 w-fit gap-1">
-                {layerGroups.map(group => (
-                  <button
-                    key={group.id}
-                    onClick={() => handleGroupChange(group.id)}
-                    className={`px-4 py-2 rounded-md text-sm font-medium transition-all !mt-0 duration-200 ${selectedGroupId === group.id
-                      ? 'bg-white text-black shadow-sm'
-                      : 'text-white hover:bg-white hover:bg-opacity-20'
-                      }`}
-                  >
-                    {group.id === 'ecosystem-conditions' ? 'Ecosystem Conditions' : 'Ecosystem Services'}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Layer Selection */}
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold mb-3">Layers</h3>
-              <Radio.Group
-                value={selectedLayerId}
-                onChange={handleLayerChange}
-                className="flex flex-col space-y-2"
-              >
-                {selectedGroup.layers.map(layer => (
-                  <Radio
-                    key={layer.id}
-                    value={layer.id}
-                    className="text-white"
-                  >
-                    <span className="text-sm">{layer.name}</span>
-                  </Radio>
-                ))}
-              </Radio.Group>
-            </div>
-
-            {/* Layer Description */}
-            <div className="border-t border-gray-600 pt-6 pb-10">
-              <div className="mb-4">
-                <h4 className="text-lg font-medium mb-2">{selectedLayer.name}</h4>
-                <p className="text-sm text-gray-300 leading-relaxed">
-                  {renderTextWithLinks(selectedLayer.description)}
-                </p>
-              </div>
-
-              {selectedLayer.references && (
-                <div className="mb-4">
-                  <h5 className="text-md font-medium mb-2">References:</h5>
-                  <ul className="text-xs text-gray-400 space-y-1">
-                    {selectedLayer.references.map((ref, index) => (
-                      <li key={index}>• {renderTextWithLinks(ref)}</li>
+                {/* Group Selection Tabs */}
+                <div className="mb-6">
+                  <div className="flex bg-white bg-opacity-10 rounded-lg p-1 w-fit gap-1">
+                    {layerGroups.map(group => (
+                      <button
+                        key={group.id}
+                        onClick={() => handleGroupChange(group.id)}
+                        className={`px-4 py-2 rounded-md text-sm font-medium transition-all !mt-0 duration-200 ${selectedGroupId === group.id
+                          ? 'bg-white text-black shadow-sm'
+                          : 'text-white hover:bg-white hover:bg-opacity-20'
+                          }`}
+                      >
+                        {group.id === 'ecosystem-conditions' ? 'Ecosystem Conditions' : 'Ecosystem Services'}
+                      </button>
                     ))}
-                  </ul>
+                  </div>
                 </div>
-              )}
 
-              {selectedLayer.inputData && (
-                <div className="mb-4">
-                  <h5 className="text-md font-medium mb-2">Input Data:</h5>
-                  <ul className="text-xs text-gray-400 space-y-1">
-                    {selectedLayer.inputData.map((data, index) => (
-                      <li key={index}>• {renderTextWithLinks(data)}</li>
+                {/* Layer Selection */}
+                <div className="mb-6">
+                  <h3 className="text-lg font-semibold mb-3">Layers</h3>
+                  <Radio.Group
+                    value={selectedLayerId}
+                    onChange={handleLayerChange}
+                    className="flex flex-col space-y-2"
+                  >
+                    {selectedGroup.layers.map(layer => (
+                      <Radio
+                        key={layer.id}
+                        value={layer.id}
+                        className="text-white"
+                      >
+                        <span className="text-sm">{layer.name}</span>
+                      </Radio>
                     ))}
-                  </ul>
+                  </Radio.Group>
                 </div>
-              )}
 
-              {/* Acknowledgement - shown for all layers */}
-              <div>
-                <h5 className="text-md font-medium mb-2">Acknowledgement:</h5>
-                <p className="text-xs text-gray-400">
-                  The data presented were produced within the project AGATA (Accessible ecoloGicAl daTA for resilient Viticulture), jointly financed by Eurac Research and the University of Verona as part of the &ldquo;JOINT RESEARCH 2022&rdquo; Call.
-                </p>
+                {/* Layer Description */}
+                <div className="border-t border-gray-600 pt-6 pb-10">
+                  <div className="mb-4">
+                    <h4 className="text-lg font-medium mb-2">{selectedLayer.name}</h4>
+                    <p className="text-sm text-gray-300 leading-relaxed">
+                      {renderTextWithLinks(selectedLayer.description)}
+                    </p>
+                  </div>
+
+                  {selectedLayer.references && (
+                    <div className="mb-4">
+                      <h5 className="text-md font-medium mb-2">References:</h5>
+                      <ul className="text-xs text-gray-400 space-y-1">
+                        {selectedLayer.references.map((ref, index) => (
+                          <li key={index}>• {renderTextWithLinks(ref)}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {selectedLayer.inputData && (
+                    <div className="mb-4">
+                      <h5 className="text-md font-medium mb-2">Input Data:</h5>
+                      <ul className="text-xs text-gray-400 space-y-1">
+                        {selectedLayer.inputData.map((data, index) => (
+                          <li key={index}>• {renderTextWithLinks(data)}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Acknowledgement - shown for all layers */}
+                  <div>
+                    <h5 className="text-md font-medium mb-2">Acknowledgement:</h5>
+                    <p className="text-xs text-gray-400">
+                      The data presented were produced within the project AGATA (Accessible ecoloGicAl daTA for resilient Viticulture), jointly financed by Eurac Research and the University of Verona as part of the &ldquo;JOINT RESEARCH 2022&rdquo; Call.
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
             </div>
           </div>
         </ResizablePanel>
 
         <ResizableHandle
           withHandle
-          className={`${
-            isMobile
+          className={`${isMobile
               ? "h-3 w-full cursor-row-resize hover:h-4"
               : "w-2 h-full cursor-col-resize hover:w-3"
-          } flex items-center justify-center bg-[#E91E63] text-[#E91E63] hover:brightness-110 transition-all relative z-20`}
+            } flex items-center justify-center bg-[#E91E63] opacity-60 hover:opacity-100 text-[#E91E63] hover:brightness-110 transition-all relative z-20`}
         />
 
         <ResizablePanel className="relative">

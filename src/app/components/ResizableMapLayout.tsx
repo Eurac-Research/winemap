@@ -41,11 +41,10 @@ export function ResizableMapLayout({ sidebar, map, hasSidebar }: ResizableMapLay
       {/* Resize Handle */}
       <ResizableHandle
         withHandle
-        className={`${
-          isMobile
-            ? "w-full h-3 flex-row cursor-row-resize"
-            : "w-3 h-full flex-col cursor-col-resize"
-        } bg-white/10 hover:bg-[#E91E63] transition-colors relative group`}
+        className={`${isMobile
+          ? "w-full h-3 flex-row cursor-row-resize"
+          : "w-3 h-full flex-col cursor-col-resize"
+          } bg-white/10 hover:bg-[#E91E63] transition-colors relative group`}
       />
 
       {/* Map Panel */}
