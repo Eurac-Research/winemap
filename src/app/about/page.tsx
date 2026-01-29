@@ -326,36 +326,19 @@ export default function About() {
         </div>
       </section>
 
-      <p className="mt-12">Read more:</p>
-      <p className="mt-6">
-        <i>
-          Candiago, S., Tscholl, S., Bassani, L. et al. A geospatial inventory
-          of regulatory information for wine protected designations of origin in
-          Europe. Sci Data 9, 394 (2022).
-        </i>{" "}
-        <a
-          target="_blank"
-          rel="noreferrer"
-          href="https://doi.org/10.1038/s41597-022-01513-0"
-          style={{ textDecoration: "underline" }}
+      <section className="mt-12">
+        <Link
+          href="/literature"
+          className="block rounded-lg border border-white/10 bg-white/5 p-6 transition-colors hover:bg-white/10"
         >
-          https://doi.org/10.1038/s41597-022-01513-0
-        </a>
-      </p>
-      <p className="mt-6">
-        <i>
-          Tscholl, S., Candiago, S., Marsoner, T. et al. Climate resilience of
-          European wine regions. Nat Commun 15, 6254 (2024).
-        </i>
-        <a
-          target="_blank"
-          rel="noreferrer"
-          href="https://doi.org/10.1038/s41467-024-50549-w"
-          style={{ textDecoration: "underline" }}
-        >
-          https://doi.org/10.1038/s41467-024-50549-w
-        </a>
-      </p>
+          <h2>Scientific literature</h2>
+          <p className="text-white/70">
+            Explore the publications behind the Winemap project, including data
+            sources and the climate resilience study.
+          </p>
+          <span className="inline-block mt-4 underline">Go to literature →</span>
+        </Link>
+      </section>
 
       <p className="mt-12">
         Winemap is part of the Eurac Research{" "}

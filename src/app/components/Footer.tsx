@@ -115,7 +115,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="text-white/70 hover:text-white transition-colors text-sm flex items-center gap-1"
                 >
-                  AlpEnv Institute
+                  Institute for Alpine Environment
                   <ExternalLink className="w-3 h-3" />
                 </a>
               </li>
