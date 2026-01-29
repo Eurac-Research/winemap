@@ -340,13 +340,13 @@ export default function EnvironmentalPage() {
                   <Radio.Group
                     value={selectedLayerId}
                     onChange={handleLayerChange}
-                    className="flex flex-col space-y-2"
+                    className="flex flex-col space-y-2 "
                   >
                     {selectedGroup.layers.map(layer => (
                       <Radio
                         key={layer.id}
                         value={layer.id}
-                        className="text-white block"
+                        className="text-white block w-full"
                       >
                         <span className="text-sm">{layer.name}</span>
                       </Radio>
