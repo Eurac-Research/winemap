@@ -291,7 +291,7 @@
     top: 100px;
     left: 20px;
     width: auto;
-    max-width: 600px;
+    max-width: calc(100% - 40px);
     padding: 20px 20px 20px 20px;
     border-radius: 12px;
   }
