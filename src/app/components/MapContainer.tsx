@@ -14,6 +14,7 @@ import {
   ScaleControl,
   type MapRef,
 } from "react-map-gl";
+import type { Layout } from "react-resizable-panels";
 import {
   ResizablePanelGroup,
   ResizablePanel,
@@ -897,8 +898,8 @@ export default function MapContainer({ viewType }: MapContainerProps) {
   }, [updateGroupWidth]);
 
   const handlePanelLayout = useCallback(
-    (nextLayout: number[]) => {
-      setPanelLayout(nextLayout);
+    (nextLayout: Layout) => {
+      setPanelLayout(Object.values(nextLayout));
       requestAnimationFrame(() => {
         updateGroupWidth();
         mapRef.current?.getMap().resize();

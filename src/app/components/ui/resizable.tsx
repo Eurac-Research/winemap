@@ -12,21 +12,23 @@ const ResizableDirectionContext = React.createContext<"horizontal" | "vertical">
 
 type ResizablePanelGroupProps = Omit<
   React.ComponentProps<typeof ResizablePrimitive.Group>,
-  "orientation" | "onLayout"
+  "orientation" | "onLayoutChange" | "onLayoutChanged"
 > & {
   direction?: "horizontal" | "vertical"
-  onLayout?: (sizes: number[]) => void
+  onLayout?: ResizablePrimitive.GroupProps["onLayoutChanged"]
 }
 
 const ResizablePanelGroup = ({
   className,
   direction = "horizontal",
+  onLayout,
   ...props
 }: ResizablePanelGroupProps) => (
   <ResizableDirectionContext.Provider value={direction}>
     <ResizablePrimitive.Group
       data-direction={direction}
       orientation={direction}
+      onLayoutChanged={onLayout}
       className={cn(
         "flex h-full w-full",
         direction === "vertical" && "flex-col",

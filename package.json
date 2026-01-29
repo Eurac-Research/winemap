@@ -20,9 +20,10 @@
     "@turf/bbox": "^6.5.0",
     "@types/mapbox-gl": "^3.1.0",
     "@types/node": "18.11.9",
-    "@types/react": "18.0.25",
-    "@types/react-dom": "18.0.9",
+    "@types/react": "19.2.10",
+    "@types/react-dom": "19.2.3",
     "antd": "^5.3.1",
+    "baseline-browser-mapping": "^2.9.19",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "echarts": "^5.4.2",
@@ -30,13 +31,13 @@
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.545.0",
     "mapbox-gl": "^3.3.0",
-    "next": "^14.2.5",
-    "next-plausible": "^3.12.0",
+    "next": "16.1.6",
+    "next-plausible": "^3.12.5",
     "postcss": "^8.4.38",
-    "react": "^18.2.0",
+    "react": "19.2.4",
     "react-circular-progressbar": "^2.1.0",
     "react-device-detect": "^2.2.3",
-    "react-dom": "^18.2.0",
+    "react-dom": "19.2.4",
     "react-map-gl": "^7.1.7",
     "react-resizable-panels": "^4.5.2",
     "tailwind-merge": "^2.3.0",
@@ -47,11 +48,21 @@
     "@ianvs/prettier-plugin-sort-imports": "^3.7.2",
     "@tailwindcss/postcss": "^4.1.0",
     "@types/js-cookie": "^3.0.3",
-    "eslint": "^8.41.0",
-    "eslint-config-next": "^13.4.3",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
     "postcss-nesting": "^14.0.0",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0",
     "typescript": "^5.0.4"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "19.2.10",
+      "@types/react-dom": "19.2.3"
+    },
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "sharp"
+    ]
   }
 }

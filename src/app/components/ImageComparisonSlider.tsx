@@ -138,7 +138,7 @@ export default function ImageComparisonSlider({
     containerRef,
     useFullscreenRef
   }: {
-    containerRef: React.RefObject<HTMLDivElement>;
+    containerRef: React.RefObject<HTMLDivElement | null>;
     useFullscreenRef?: boolean
   }) => (
     <div
