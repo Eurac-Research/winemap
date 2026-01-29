@@ -1,11 +1,27 @@
 "use client";
 
-import { MouseEvent, useEffect, useState } from "react";
+import { MouseEvent, useState, useSyncExternalStore } from "react";
 import Cookies from "js-cookie";
 
 const USER_CONSENT_COOKIE_KEY = "cookie_consent";
 const USER_CONSENT_COOKIE_EXPIRE_DATE =
   new Date().getTime() + 365 * 24 * 60 * 60;
+
+const getCookieConsent = () => {
+  if (typeof document === "undefined") {
+    return true;
+  }
+  return Cookies.get(USER_CONSENT_COOKIE_KEY) === "true";
+};
+
+const subscribeToCookie = (onStoreChange: () => void) => {
+  if (typeof window === "undefined") {
+    return () => {};
+  }
+
+  const id = window.setTimeout(onStoreChange, 0);
+  return () => window.clearTimeout(id);
+};
 
 /**
  * CookieConsent component displays a cookie consent banner at the bottom of the page.
@@ -29,12 +45,12 @@ const USER_CONSENT_COOKIE_EXPIRE_DATE =
  * - `onClick` to handle the button click event for accepting cookies.
  */
 const CookieConsent = () => {
-  const [cookieConsentIsTrue, setCookieConsentIsTrue] = useState(true);
-
-  useEffect(() => {
-    const consentIsTrue = Cookies.get(USER_CONSENT_COOKIE_KEY) === "true";
-    setCookieConsentIsTrue(consentIsTrue);
-  }, []);
+  const [hasConsented, setHasConsented] = useState(false);
+  const cookieConsentIsTrue = useSyncExternalStore(
+    subscribeToCookie,
+    getCookieConsent,
+    () => true,
+  );
 
   const onClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -43,11 +59,11 @@ const CookieConsent = () => {
       Cookies.set(USER_CONSENT_COOKIE_KEY, "true", {
         expires: USER_CONSENT_COOKIE_EXPIRE_DATE,
       });
-      setCookieConsentIsTrue(true);
+      setHasConsented(true);
     }
   };
 
-  if (cookieConsentIsTrue) {
+  if (cookieConsentIsTrue || hasConsented) {
     return null;
   }
 

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { Maximize2, X } from 'lucide-react';
 
@@ -13,6 +13,119 @@ interface ImageComparisonSliderProps {
   aspectRatio?: string; // Optional: e.g., "16/9", "4/3", "auto"
   caption?: string; // Optional caption to display below the image
 }
+
+interface SliderContentProps {
+  containerRef: React.RefObject<HTMLDivElement | null>;
+  useFullscreenRef?: boolean;
+  containerStyle: React.CSSProperties;
+  sliderPosition: number;
+  beforeImage: string;
+  afterImage: string;
+  beforeLabel: string;
+  afterLabel: string;
+  alt: string;
+  onMouseMove: (e: React.MouseEvent, useFullscreenRef?: boolean) => void;
+  onMouseDown: () => void;
+  onMouseUp: () => void;
+  onClick: (e: React.MouseEvent, useFullscreenRef?: boolean) => void;
+  onTouchMove: (e: React.TouchEvent, useFullscreenRef?: boolean) => void;
+  onTouchStart: () => void;
+  onTouchEnd: () => void;
+}
+
+const SliderContent = ({
+  containerRef,
+  useFullscreenRef,
+  containerStyle,
+  sliderPosition,
+  beforeImage,
+  afterImage,
+  beforeLabel,
+  afterLabel,
+  alt,
+  onMouseMove,
+  onMouseDown,
+  onMouseUp,
+  onClick,
+  onTouchMove,
+  onTouchStart,
+  onTouchEnd,
+}: SliderContentProps) => (
+  <div
+    ref={containerRef}
+    className="relative w-full h-full overflow-hidden rounded-lg select-none cursor-ew-resize"
+    style={useFullscreenRef ? { height: '100%' } : containerStyle}
+    onMouseMove={(e) => onMouseMove(e, useFullscreenRef)}
+    onMouseDown={onMouseDown}
+    onMouseUp={onMouseUp}
+    onClick={(e) => onClick(e, useFullscreenRef)}
+    onTouchMove={(e) => onTouchMove(e, useFullscreenRef)}
+    onTouchStart={onTouchStart}
+    onTouchEnd={onTouchEnd}
+    role="img"
+    aria-label={`Image comparison slider: ${beforeLabel} and ${afterLabel}. ${alt}`}
+  >
+    {/* After Image (Background) */}
+    <div className="absolute inset-0">
+      <Image
+        src={afterImage}
+        alt={`${alt} - ${afterLabel}`}
+        fill
+        className="object-contain"
+        priority
+      />
+      {/* After Label */}
+      <div
+        className="absolute top-4 right-4 bg-black/70 text-white px-3 py-1 rounded text-sm font-medium"
+        aria-label={`${afterLabel} image`}
+      >
+        {afterLabel}
+      </div>
+    </div>
+
+    {/* Before Image (Overlay with clip) */}
+    <div
+      className="absolute inset-0 overflow-hidden"
+      style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+    >
+      <Image
+        src={beforeImage}
+        alt={`${alt} - ${beforeLabel}`}
+        fill
+        className="object-contain"
+        priority
+      />
+      {/* Before Label */}
+      <div
+        className="absolute top-4 left-4 bg-black/70 text-white px-3 py-1 rounded text-sm font-medium"
+        aria-label={`${beforeLabel} image`}
+      >
+        {beforeLabel}
+      </div>
+    </div>
+
+    {/* Slider Line and Handle */}
+    <div
+      className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize"
+      style={{ left: `${sliderPosition}%` }}
+      role="slider"
+      aria-label="Comparison slider"
+      aria-valuenow={Math.round(sliderPosition)}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuetext={`${Math.round(sliderPosition)}% ${beforeLabel} visible`}
+      tabIndex={0}
+    >
+      {/* Slider Handle */}
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center">
+        <div className="flex gap-1">
+          <div className="w-0.5 h-4 bg-gray-700"></div>
+          <div className="w-0.5 h-4 bg-gray-700"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
 
 export default function ImageComparisonSlider({
   beforeImage,
@@ -116,8 +229,7 @@ export default function ImageComparisonSlider({
     };
   }, [isFullscreen]);
 
-  // Calculate the style for the container
-  const getContainerStyle = (): React.CSSProperties => {
+  const containerStyle = useMemo((): React.CSSProperties => {
     if (aspectRatio === 'auto' && imageDimensions) {
       return {
         aspectRatio: `${imageDimensions.width} / ${imageDimensions.height}`,
@@ -131,97 +243,29 @@ export default function ImageComparisonSlider({
     return {
       minHeight: '400px',
     };
-  };
-
-  // Slider content component to avoid duplication
-  const SliderContent = ({
-    containerRef,
-    useFullscreenRef
-  }: {
-    containerRef: React.RefObject<HTMLDivElement | null>;
-    useFullscreenRef?: boolean
-  }) => (
-    <div
-      ref={containerRef}
-      className="relative w-full h-full overflow-hidden rounded-lg select-none cursor-ew-resize"
-      style={useFullscreenRef ? { height: '100%' } : getContainerStyle()}
-      onMouseMove={(e) => handleMouseMove(e, useFullscreenRef)}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-      onClick={(e) => handleClick(e, useFullscreenRef)}
-      onTouchMove={(e) => handleTouchMove(e, useFullscreenRef)}
-      onTouchStart={() => setIsDragging(true)}
-      onTouchEnd={() => setIsDragging(false)}
-      role="img"
-      aria-label={`Image comparison slider: ${beforeLabel} and ${afterLabel}. ${alt}`}
-    >
-      {/* After Image (Background) */}
-      <div className="absolute inset-0">
-        <Image
-          src={afterImage}
-          alt={`${alt} - ${afterLabel}`}
-          fill
-          className="object-contain"
-          priority
-        />
-        {/* After Label */}
-        <div
-          className="absolute top-4 right-4 bg-black/70 text-white px-3 py-1 rounded text-sm font-medium"
-          aria-label={`${afterLabel} image`}
-        >
-          {afterLabel}
-        </div>
-      </div>
-
-      {/* Before Image (Overlay with clip) */}
-      <div
-        className="absolute inset-0 overflow-hidden"
-        style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
-      >
-        <Image
-          src={beforeImage}
-          alt={`${alt} - ${beforeLabel}`}
-          fill
-          className="object-contain"
-          priority
-        />
-        {/* Before Label */}
-        <div
-          className="absolute top-4 left-4 bg-black/70 text-white px-3 py-1 rounded text-sm font-medium"
-          aria-label={`${beforeLabel} image`}
-        >
-          {beforeLabel}
-        </div>
-      </div>
-
-      {/* Slider Line and Handle */}
-      <div
-        className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize"
-        style={{ left: `${sliderPosition}%` }}
-        role="slider"
-        aria-label="Comparison slider"
-        aria-valuenow={Math.round(sliderPosition)}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuetext={`${Math.round(sliderPosition)}% ${beforeLabel} visible`}
-        tabIndex={0}
-      >
-        {/* Slider Handle */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center">
-          <div className="flex gap-1">
-            <div className="w-0.5 h-4 bg-gray-700"></div>
-            <div className="w-0.5 h-4 bg-gray-700"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  }, [aspectRatio, imageDimensions]);
 
   return (
     <>
       <div className="my-8">
         <div className="relative">
-          <SliderContent containerRef={containerRef} />
+          <SliderContent
+            containerRef={containerRef}
+            containerStyle={containerStyle}
+            sliderPosition={sliderPosition}
+            beforeImage={beforeImage}
+            afterImage={afterImage}
+            beforeLabel={beforeLabel}
+            afterLabel={afterLabel}
+            alt={alt}
+            onMouseMove={handleMouseMove}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            onClick={handleClick}
+            onTouchMove={handleTouchMove}
+            onTouchStart={() => setIsDragging(true)}
+            onTouchEnd={() => setIsDragging(false)}
+          />
 
           {/* Fullscreen Button */}
           <button
@@ -267,7 +311,24 @@ export default function ImageComparisonSlider({
 
           {/* Fullscreen Slider Content */}
           <div className="w-full h-full max-w-7xl max-h-[90vh] flex flex-col">
-            <SliderContent containerRef={fullscreenContainerRef} useFullscreenRef={true} />
+            <SliderContent
+              containerRef={fullscreenContainerRef}
+              useFullscreenRef={true}
+              containerStyle={containerStyle}
+              sliderPosition={sliderPosition}
+              beforeImage={beforeImage}
+              afterImage={afterImage}
+              beforeLabel={beforeLabel}
+              afterLabel={afterLabel}
+              alt={alt}
+              onMouseMove={handleMouseMove}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              onClick={handleClick}
+              onTouchMove={handleTouchMove}
+              onTouchStart={() => setIsDragging(true)}
+              onTouchEnd={() => setIsDragging(false)}
+            />
 
             {/* Caption in fullscreen */}
             {caption && (

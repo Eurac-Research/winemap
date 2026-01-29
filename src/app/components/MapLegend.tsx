@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Map } from "mapbox-gl";
 
 interface LegendItem {
@@ -17,7 +17,6 @@ interface MapLegendProps {
 }
 
 export default function MapLegend({ map, layerId, layerName, isVisible }: MapLegendProps) {
-  const [legendItems, setLegendItems] = useState<LegendItem[]>([]);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
 
@@ -124,10 +123,9 @@ export default function MapLegend({ map, layerId, layerName, isVisible }: MapLeg
     ];
   }, []);
 
-  useEffect(() => {
+  const legendItems = useMemo(() => {
     if (!map || !isVisible) {
-      setLegendItems([]);
-      return;
+      return [];
     }
 
     const extractLegendFromPaint = (paint: any[]): LegendItem[] => {
@@ -141,7 +139,7 @@ export default function MapLegend({ map, layerId, layerName, isVisible }: MapLeg
             items.push({
               value: stops[i].toString(),
               color: stops[i + 1],
-              label: formatValue(stops[i])
+              label: formatValue(stops[i] as number),
             });
           }
         }
@@ -154,9 +152,7 @@ export default function MapLegend({ map, layerId, layerName, isVisible }: MapLeg
       // Try to get the layer from the map
       const layer = map.getLayer(layerId);
       if (!layer) {
-        console.log(`Layer ${layerId} not found`);
-        setLegendItems(createGenericLegend(layerName));
-        return;
+        return createGenericLegend(layerName);
       }
 
       //console.log(`Legend for: ${layerId}`, layer);
@@ -179,18 +175,16 @@ export default function MapLegend({ map, layerId, layerName, isVisible }: MapLeg
         // Handle data-driven paint properties
         const items = extractLegendFromPaint(paint);
         if (items.length > 0) {
-          setLegendItems(items);
           //console.log(`Extracted ${items.length} legend items from paint property`);
-          return;
+          return items;
         }
       }
 
       // Fallback: Create a generic legend based on layer type
       //console.log(`Using generic legend for ${layerName}`);
-      setLegendItems(createGenericLegend(layerName));
-    } catch (error) {
-      console.log(`Error extracting legend for ${layerId}:`, error);
-      setLegendItems(createGenericLegend(layerName));
+      return createGenericLegend(layerName);
+    } catch {
+      return createGenericLegend(layerName);
     }
   }, [map, layerId, layerName, isVisible, formatValue, createGenericLegend]);
 
@@ -204,7 +198,7 @@ export default function MapLegend({ map, layerId, layerName, isVisible }: MapLeg
         <h4 className="text-sm font-medium truncate mr-2">{layerName}</h4>
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="text-xs text-gray-300 hover:text-white flex-shrink-0 w-6 h-6 flex items-center justify-center rounded hover:bg-white/10 transition-colors"
+          className="text-xs text-gray-300 hover:text-white shrink-0 w-6 h-6 flex items-center justify-center rounded hover:bg-white/10 transition-colors"
           title={isCollapsed ? "Expand legend" : "Collapse legend"}
         >
           {isCollapsed ? "+" : "−"}
@@ -217,7 +211,7 @@ export default function MapLegend({ map, layerId, layerName, isVisible }: MapLeg
             {legendItems.map((item, index) => (
               <div key={index} className="flex items-center gap-3">
                 <div
-                  className="w-5 h-4 rounded border border-gray-500 flex-shrink-0"
+                  className="w-5 h-4 rounded border border-gray-500 shrink-0"
                   style={{ backgroundColor: item.color }}
                 />
                 <span className="text-xs leading-tight">{item.label || item.value}</span>

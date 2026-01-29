@@ -2,7 +2,8 @@
 
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Map, { MapRef, NavigationControl, ScaleControl } from "react-map-gl";
+import Map, { MapRef, NavigationControl, ScaleControl } from "react-map-gl/mapbox";
+import type { Map as MapboxMap } from "mapbox-gl";
 import { Radio, RadioChangeEvent } from "antd";
 import MapLegend from "@/app/components/MapLegend";
 import styles from "@/styles/Home.module.css";
@@ -187,6 +188,7 @@ export default function EnvironmentalPage() {
   const mapRef = useRef<MapRef>(null);
 
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [mapInstance, setMapInstance] = useState<MapboxMap | null>(null);
   const [selectedGroupId, setSelectedGroupId] = useState(layerGroups[0].id);
   const [selectedLayerId, setSelectedLayerId] = useState(layerGroups[0].layers[0].id);
   const handlePanelLayout = useCallback(() => {
@@ -421,7 +423,10 @@ export default function EnvironmentalPage() {
               style={{ width: "100%", height: "100%" }}
               mapStyle="mapbox://styles/tiacop/cmdg1whvv001s01r2diojaxic"
               mapboxAccessToken={MAPBOX_TOKEN}
-              onLoad={() => setMapLoaded(true)}
+              onLoad={(event) => {
+                setMapLoaded(true);
+                setMapInstance(event.target);
+              }}
             >
               <NavigationControl
                 position="bottom-right"
@@ -432,7 +437,7 @@ export default function EnvironmentalPage() {
             </ReactMap>
 
             <MapLegend
-              map={mapRef.current?.getMap() || null}
+              map={mapInstance}
               layerId={selectedLayer.mapboxLayerId}
               layerName={selectedLayer.name}
               isVisible={mapLoaded}

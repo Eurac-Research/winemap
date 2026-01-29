@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Layers, HelpCircle, X, ExternalLink } from "lucide-react"
 import Link from "next/link"
-import Map, { MapRef } from "react-map-gl"
+import Map, { MapRef } from "react-map-gl/mapbox"
 import "mapbox-gl/dist/mapbox-gl.css"
 import { isMobile } from "react-device-detect"
 

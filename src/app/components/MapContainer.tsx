@@ -13,7 +13,7 @@ import {
   Map as ReactMap,
   ScaleControl,
   type MapRef,
-} from "react-map-gl";
+} from "react-map-gl/mapbox";
 import type { Layout } from "react-resizable-panels";
 import {
   ResizablePanelGroup,
@@ -130,7 +130,10 @@ export default function MapContainer({ viewType }: MapContainerProps) {
 
   const data = pdoData;
   const allCountries = countryData;
-  const allPDOPoints = pdoPointsData ?? { features: [] };
+  const allPDOPoints = useMemo(
+    () => pdoPointsData ?? { features: [] },
+    [pdoPointsData],
+  );
   const vulnerability = vulnerabilityData;
 
   useEffect(() => {
@@ -223,11 +226,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
     return { top: 100, bottom: 25, left: leftPadding, right: 5 };
   }, [hasSidebar, sidebarWidthPx]);
 
-  useEffect(() => {
-    if (!isMobile) {
-      setFilterBarOpen(true);
-    }
-  }, []);
+  const didApplyInitialParams = useRef(false);
 
   /* vulnerability magic */
   const { matchExpression, showOnlyVulneralIDs } = useMemo(() => {
@@ -742,21 +741,17 @@ export default function MapContainer({ viewType }: MapContainerProps) {
             false,
           ]);
 
-      const coordinateArr = new Array();
-      allPDOPoints?.features?.some((i) => {
-        showIDs.includes(i?.properties?.PDOid) &&
-          coordinateArr.push(i.geometry.coordinates);
-      });
+      const filteredFeatures =
+        allPDOPoints?.features?.filter((feature) =>
+          showIDs.includes(feature?.properties?.PDOid),
+        ) ?? [];
 
-      const bounds = {
-        type: "Feature",
-        geometry: {
-          type: "Polygon",
-          coordinates: [coordinateArr],
-        },
-      };
+      if (filteredFeatures.length > 0) {
+        const bounds = {
+          type: "FeatureCollection" as const,
+          features: filteredFeatures,
+        };
 
-      if (coordinateArr.length > 0) {
         const [minLng, minLat, maxLng, maxLat] = bbox(bounds);
 
         mapRef.current &&
@@ -916,12 +911,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
     // console.log("search:", value);
   };
 
-  // Handle URL params on mount
-  useEffect(() => {
-    if (!mapLoaded || !dataReady) {
-      return;
-    }
-
+  const applyUrlParams = useCallback(() => {
     const searchParams = new URLSearchParams(window.location.search);
 
     if (searchParams?.get("country")) {
@@ -947,17 +937,40 @@ export default function MapContainer({ viewType }: MapContainerProps) {
       showPDOonMap(decodeURI(searchParams?.get("pdo")!) ?? "");
     }
   }, [
-    dataReady,
-    mapLoaded,
     onSelectCountryNameChange,
-    openDetail,
-    showPDOonMap,
+    onSelectPdoNameChange,
     onSearchCatChange,
     onSearchVarietyChange,
     onSelectMunicChange,
-    onSelectPdoNameChange,
-    onClearFilter,
+    openDetail,
+    showPDOonMap,
   ]);
+
+  // Handle URL params on mount and back/forward navigation.
+  useEffect(() => {
+    if (!mapLoaded || !dataReady) {
+      return;
+    }
+
+    const handlePopState = () => {
+      applyUrlParams();
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    let timeoutId: number | undefined;
+    if (!didApplyInitialParams.current) {
+      didApplyInitialParams.current = true;
+      timeoutId = window.setTimeout(handlePopState, 0);
+    }
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+      if (timeoutId !== undefined) {
+        window.clearTimeout(timeoutId);
+      }
+    };
+  }, [applyUrlParams, dataReady, mapLoaded]);
 
   const updateGroupWidth = useCallback(() => {
     const width = groupRef.current?.offsetWidth ?? 0;
@@ -967,10 +980,20 @@ export default function MapContainer({ viewType }: MapContainerProps) {
   }, []);
 
   useEffect(() => {
-    updateGroupWidth();
-    window.addEventListener("resize", updateGroupWidth);
-    return () => window.removeEventListener("resize", updateGroupWidth);
-  }, [updateGroupWidth]);
+    const element = groupRef.current;
+    if (!element) return;
+
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      const width = entry?.contentRect?.width ?? element.offsetWidth;
+      if (width > 0) {
+        setGroupWidth(width);
+      }
+    });
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
 
   const handlePanelLayout = useCallback(
     (nextLayout: Layout) => {
