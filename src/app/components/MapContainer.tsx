@@ -338,121 +338,99 @@ export default function MapContainer({ viewType }: MapContainerProps) {
 
   const openDetail = useCallback(
     async (id: string) => {
-      let PDO: JSONObject[] = data.filter(
-        (i: { pdoid: any }) => id === i.pdoid,
-      );
-      if (!PDO.length) return;
+      const match = data.find((i: { pdoid: any }) => id === i.pdoid);
+      if (!match) return;
 
       if (vulnerabilityVisibility) {
         const vulnerabilityData = vulnerabilityById.get(id);
 
         if (!vulnerabilityData) {
-          setActivePDO(PDO[0]);
+          setActivePDO(match);
           return;
         }
 
-        PDO[0].vulneral = { ...vulnerabilityData };
+        const vulneral = { ...vulnerabilityData };
 
-        if (PDO[0].vulneral.adaptiveCap * 100 < 38) {
-          PDO[0].vulneral.AdaptiveTxt = "low";
-        } else if (PDO[0].vulneral.adaptiveCap * 100 < 55) {
-          PDO[0].vulneral.AdaptiveTxt = "moderate";
+        if (vulneral.adaptiveCap * 100 < 38) {
+          vulneral.AdaptiveTxt = "low";
+        } else if (vulneral.adaptiveCap * 100 < 55) {
+          vulneral.AdaptiveTxt = "moderate";
         } else {
-          PDO[0].vulneral.AdaptiveTxt = "high";
+          vulneral.AdaptiveTxt = "high";
         }
 
-        if (PDO[0].vulneral.Sensitivity * 100 < 55) {
-          PDO[0].vulneral.SensitivityTxt = "low";
-        } else if (PDO[0].vulneral.Sensitivity * 100 < 72) {
-          PDO[0].vulneral.SensitivityTxt = "moderate";
+        if (vulneral.Sensitivity * 100 < 55) {
+          vulneral.SensitivityTxt = "low";
+        } else if (vulneral.Sensitivity * 100 < 72) {
+          vulneral.SensitivityTxt = "moderate";
         } else {
-          PDO[0].vulneral.SensitivityTxt = "high";
+          vulneral.SensitivityTxt = "high";
         }
 
-        if (PDO[0].vulneral.Exposure * 100 < 62) {
-          PDO[0].vulneral.ExposureTxt = "low";
-        } else if (PDO[0].vulneral.Exposure * 100 < 75) {
-          PDO[0].vulneral.ExposureTxt = "moderate";
+        if (vulneral.Exposure * 100 < 62) {
+          vulneral.ExposureTxt = "low";
+        } else if (vulneral.Exposure * 100 < 75) {
+          vulneral.ExposureTxt = "moderate";
         } else {
-          PDO[0].vulneral.ExposureTxt = "high";
+          vulneral.ExposureTxt = "high";
         }
+
+        history.replaceState({}, "", `?pdo=${encodeURI(id)}`);
+        setActivePDO({ ...match, vulneral });
+        return;
       }
 
       history.replaceState({}, "", `?pdo=${encodeURI(id)}`);
-      setActivePDO(PDO[0]);
+      setActivePDO(match);
     },
     [data, vulnerabilityById, vulnerabilityVisibility],
   );
 
   function getPDONameById(id: string | undefined) {
-    const matchingPDOs: JSONObject[] = data.filter(
-      (pdo: { pdoid: any }) => id === pdo.pdoid,
-    );
-
-    if (vulnerabilityVisibility) {
-      const vulnerabilityData = vulnerabilityById.get(id ?? "");
-      if (vulnerabilityData) {
-        matchingPDOs[0].vulneral = vulnerabilityData;
-      }
-    }
-
-    return matchingPDOs.length > 0 ? matchingPDOs[0].pdoname : "Unknown PDO";
+    const matchingPDO = data.find((pdo: { pdoid: any }) => id === pdo.pdoid);
+    return matchingPDO ? matchingPDO.pdoname : "Unknown PDO";
   }
 
-  // unique PDONames for select
-  const uniquePdonames = [...new Set(data.map((item) => item.pdoname))];
-  let selectPdonames = uniquePdonames.sort().map((pdoName) => {
-    let object = {
-      label: pdoName,
-      value: pdoName,
-    };
-    return object;
-  });
+  const selectPdonames = useMemo(() => {
+    const uniquePdonames = [...new Set(data.map((item) => item.pdoname))];
+    return uniquePdonames
+      .filter(Boolean)
+      .sort()
+      .map((pdoName) => ({ label: pdoName, value: pdoName }));
+  }, [data]);
 
-  // unique varieties for select
-  const varieties = data.map((item) => item?.varietiesOiv?.split("/"));
-  let uniqueVarieties = [...new Set(varieties.flat())];
-  let selectVarieties = uniqueVarieties.sort().map((varietyName) => {
-    let object = {
-      label: varietyName,
-      value: varietyName,
-    };
-    return object;
-  });
+  const selectVarieties = useMemo(() => {
+    const varieties = data.flatMap(
+      (item) => item?.varietiesOiv?.split("/") ?? [],
+    );
+    const uniqueVarieties = [...new Set(varieties)].filter(Boolean);
+    return uniqueVarieties
+      .sort()
+      .map((varietyName) => ({ label: varietyName, value: varietyName }));
+  }, [data]);
 
-  // unique categories for select
-  const categories = data.map((item) => item.category.split("/"));
-  let uniqueCategories = [...new Set(categories.flat())];
-  let selectCategories = uniqueCategories.sort().map((categoryName) => {
-    let object = {
-      label: categoryName,
-      value: categoryName,
-    };
-    return object;
-  });
+  const selectCategories = useMemo(() => {
+    const categories = data.flatMap((item) => item.category.split("/"));
+    const uniqueCategories = [...new Set(categories)].filter(Boolean);
+    return uniqueCategories
+      .sort()
+      .map((categoryName) => ({ label: categoryName, value: categoryName }));
+  }, [data]);
 
-  // unique municipalities for select
-  const munic = data.map((item) => item.munic.split("/"));
-  let uniqueMunic = [...new Set(munic.flat())];
-  let selectMunic = uniqueMunic.sort().map((municName) => {
-    let object = {
-      label: municName,
-      value: municName,
-    };
-    return object;
-  });
+  const selectMunic = useMemo(() => {
+    const munic = data.flatMap((item) => item.munic.split("/"));
+    const uniqueMunic = [...new Set(munic)].filter(Boolean);
+    return uniqueMunic
+      .sort()
+      .map((municName) => ({ label: municName, value: municName }));
+  }, [data]);
 
-  // unique countries for select
-  const country = data.map((item) => item.country);
-  let uniqueCountry = [...new Set(country.flat())];
-
-  let selectCountry = allCountries.filter((country) => {
-    for (const cc of uniqueCountry) {
-      if (cc === country.code) {
-        return cc;
-      }
-    }
-  });
+  const selectCountry = useMemo(() => {
+    const countryCodes = new Set(data.map((item) => item.country).filter(Boolean));
+    return allCountries.filter((country) =>
+      country.code ? countryCodes.has(country.code) : false,
+    );
+  }, [allCountries, data]);
 
   const onHover = useCallback((event: mapboxgl.MapLayerMouseEvent) => {
     const {
@@ -503,18 +481,20 @@ export default function MapContainer({ viewType }: MapContainerProps) {
 
   const getListData = useCallback(
     async (overlappingPDOs: any[] | undefined) => {
-      const PDOList = overlappingPDOs?.map((item: any) => {
-        let myData = data.filter((i: { pdoid: any }) => item === i.pdoid);
+      const flattenPDOS =
+        overlappingPDOs?.flatMap((item: any) =>
+          data
+            .filter((i: { pdoid: any }) => item === i.pdoid)
+            .map((pdo) =>
+              vulnerabilityVisibility
+                ? {
+                    ...pdo,
+                    vulneral: vulnerabilityById.get(pdo.pdoid) ?? null,
+                  }
+                : pdo,
+            ),
+        ) ?? [];
 
-        if (vulnerabilityVisibility) {
-          myData.map((i: any) => {
-            i.vulneral = vulnerabilityById.get(i.pdoid) ?? null;
-          });
-        }
-        return myData;
-      });
-
-      const flattenPDOS = PDOList?.flat();
       if (flattenPDOS) {
         setPdos(flattenPDOS);
       }
@@ -551,38 +531,33 @@ export default function MapContainer({ viewType }: MapContainerProps) {
   }, []);
 
   const toggleVineyards = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setVineyardVisibility(!vineyardVisibility);
-    mapRef.current &&
-      mapRef.current
-        .getMap()
-        .setPaintProperty("vineyards", "fill-color", "#00d619")
-        .setPaintProperty(
-          "vineyards",
-          "fill-opacity",
-          vineyardVisibility === false ? 0.6 : 0,
-        );
+    setVineyardVisibility((prev) => {
+      const next = !prev;
+      mapRef.current &&
+        mapRef.current
+          .getMap()
+          .setPaintProperty("vineyards", "fill-color", "#00d619")
+          .setPaintProperty("vineyards", "fill-opacity", next ? 0.6 : 0);
+      return next;
+    });
   };
 
   const getPDOsByVulnerability = useCallback(
     async (value: string) => {
-      const PDOList = data?.map((item: any) => {
-        const vulnerabilityData = vulnerabilityById.get(item.pdoid);
-        item.vulneral = vulnerabilityData ?? null;
+      const flattenPDOS = data.flatMap((item: JSONObject) => {
+        const vulnerabilityData = vulnerabilityById.get(item.pdoid) ?? null;
+        const withVulneral = { ...item, vulneral: vulnerabilityData };
 
         if (value === "all") {
-          if (vulnerabilityData) {
-            return item;
-          }
-          return null;
+          return vulnerabilityData ? [withVulneral] : [];
         }
+
         if (vulnerabilityData?.Vulnerability?.startsWith(value)) {
-          return item;
+          return [withVulneral];
         }
+
+        return [];
       });
-
-      PDOList.filter((item) => item);
-
-      const flattenPDOS = PDOList.filter((item) => item)?.flat();
       if (flattenPDOS) {
         setPdos(flattenPDOS);
       }

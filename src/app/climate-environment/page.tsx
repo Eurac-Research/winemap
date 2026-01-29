@@ -211,8 +211,8 @@ export default function EnvironmentalPage() {
           if (map.getLayer(layer.mapboxLayerId)) {
             map.setLayoutProperty(layer.mapboxLayerId, 'visibility', 'none');
           }
-        } catch (error) {
-          console.log(`Layer ${layer.mapboxLayerId} not found in map style`);
+        } catch {
+          // Layer not present in map style.
         }
       });
     });
@@ -222,8 +222,8 @@ export default function EnvironmentalPage() {
       if (map.getLayer(selectedLayer.mapboxLayerId)) {
         map.setLayoutProperty(selectedLayer.mapboxLayerId, 'visibility', 'visible');
       }
-    } catch (error) {
-      console.log(`Selected layer ${selectedLayer.mapboxLayerId} not found in map style`);
+    } catch {
+      // Layer not present in map style.
     }
   }, [mapLoaded, selectedLayer.mapboxLayerId]);
 
