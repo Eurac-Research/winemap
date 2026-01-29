@@ -5,7 +5,7 @@ import Link from "next/link";
 import Map, { MapRef, NavigationControl, ScaleControl } from "react-map-gl";
 import { Radio, RadioChangeEvent } from "antd";
 import MapLegend from "@/app/components/MapLegend";
-import styles from "@/styles/Home.module.scss";
+import styles from "@/styles/Home.module.css";
 import { isMobile } from "react-device-detect";
 import {
   ResizableHandle,
@@ -318,14 +318,14 @@ export default function EnvironmentalPage() {
 
                 {/* Group Selection Tabs */}
                 <div className="mb-6">
-                  <div className="flex bg-white bg-opacity-10 rounded-lg p-1 w-fit gap-1">
+                  <div className="flex bg-white/10 rounded-lg p-1 w-fit gap-1">
                     {layerGroups.map(group => (
                       <button
                         key={group.id}
                         onClick={() => handleGroupChange(group.id)}
                         className={`px-4 py-2 rounded-md text-sm font-medium transition-all !mt-0 duration-200 ${selectedGroupId === group.id
                           ? 'bg-white text-black shadow-sm'
-                          : 'text-white hover:bg-white hover:bg-opacity-20'
+                          : 'text-white hover:bg-white/20'
                           }`}
                       >
                         {group.id === 'ecosystem-conditions' ? 'Ecosystem Conditions' : 'Ecosystem Services'}

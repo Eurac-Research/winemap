@@ -199,12 +199,12 @@ export default function MapLegend({ map, layerId, layerName, isVisible }: MapLeg
   }
 
   return (
-    <div className="absolute bottom-4 left-4 bg-black bg-opacity-90 text-white rounded-lg shadow-lg max-w-xs z-50 border border-gray-600 pointer-events-auto">
+    <div className="absolute bottom-4 left-4 bg-black/90 text-white rounded-lg shadow-lg max-w-xs z-50 border border-gray-600 pointer-events-auto">
       <div className="flex items-center justify-between p-3 border-b border-gray-600">
         <h4 className="text-sm font-medium truncate mr-2">{layerName}</h4>
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="text-xs text-gray-300 hover:text-white flex-shrink-0 w-6 h-6 flex items-center justify-center rounded hover:bg-white hover:bg-opacity-10 transition-colors"
+          className="text-xs text-gray-300 hover:text-white flex-shrink-0 w-6 h-6 flex items-center justify-center rounded hover:bg-white/10 transition-colors"
           title={isCollapsed ? "Expand legend" : "Collapse legend"}
         >
           {isCollapsed ? "+" : "−"}

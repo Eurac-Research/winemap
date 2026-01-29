@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import styles from "@/styles/Home.module.scss";
+import styles from "@/styles/Home.module.css";
 
 export default function Imprint() {
   const year = new Date().getFullYear();

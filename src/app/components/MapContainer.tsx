@@ -21,7 +21,7 @@ import {
 } from "@/app/components/ui/resizable";
 
 import Accordion from "@/app/components/accordion";
-import styles from "@/styles/Home.module.scss";
+import styles from "@/styles/Home.module.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Image from "next/image";
 import Link from "next/link";

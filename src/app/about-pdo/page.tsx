@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
-import styles from "@/styles/Home.module.scss";
+import styles from "@/styles/Home.module.css";
 import Textnavigation from "../components/textnavigation";
 import pdoicon from "/public/icons/pdo-label.svg";
 

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import styles from "@/styles/Home.module.scss";
+import styles from "@/styles/Home.module.css";
 
 /**
  * A functional component that renders the text navigation for the front page.

@@ -53,7 +53,7 @@ const CookieConsent = () => {
 
   return (
     <>
-      <div className="CookieBg fixed left-0 top-0 z-10 h-full w-full bg-black bg-opacity-70 blur-lg"></div>
+      <div className="CookieBg fixed left-0 top-0 z-10 h-full w-full bg-black/70 blur-lg"></div>
       <section className="CookieConsent fixed bottom-0 left-0 z-20 w-full py-2 opacity-100 blur-0 md:py-4">
         <div className="flex flex-col items-start space-y-2 bg-gray-200 px-8 py-8 md:flex-row md:items-stretch md:space-x-2 md:space-y-0">
           <div className="flex flex-grow items-center text-gray-900">
