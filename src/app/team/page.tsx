@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import styles from "@/styles/Home.module.css";
-import Textnavigation from "../components/textnavigation";
 
 /**
  * The `About` component renders the "About" page of the application.
@@ -128,7 +127,6 @@ export default function About() {
         </span>
       </p>
 
-      <Textnavigation />
     </main>
   );
 }

@@ -64,17 +64,17 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/about-data" className="text-white/70 hover:text-white transition-colors text-sm">
+                <Link href="/about#data" className="text-white/70 hover:text-white transition-colors text-sm">
                   About the Data
                 </Link>
               </li>
               <li>
-                <Link href="/about-pdo" className="text-white/70 hover:text-white transition-colors text-sm">
+                <Link href="/about#pdo" className="text-white/70 hover:text-white transition-colors text-sm">
                   About PDO Wine Regions
                 </Link>
               </li>
               <li>
-                <Link href="/vulnerability" className="text-white/70 hover:text-white transition-colors text-sm">
+                <Link href="/about#vulnerability" className="text-white/70 hover:text-white transition-colors text-sm">
                   Vulnerability Assessment
                 </Link>
               </li>

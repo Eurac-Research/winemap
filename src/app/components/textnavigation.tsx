@@ -6,12 +6,10 @@ import styles from "@/styles/Home.module.css";
  * A functional component that renders the text navigation for the front page.
  * It includes links to various sections of the website such as "About the project",
  * "What’s a PDO?", "About the data", "Vulnerability Index", and "The Team".
- * Additionally, it displays the current year and a link to the imprint/privacy page.
  *
  * @returns {JSX.Element} The rendered text navigation component.
  */
 export default function Textnavigation() {
-  const year = new Date().getFullYear();
   return (
     <>
       <div className={styles.frontpageContent} style={{ padding: "0" }}>
@@ -21,17 +19,17 @@ export default function Textnavigation() {
           </Link>
         </p>
         <p>
-          <Link href="/about-pdo" className={styles.homeNavigationItem}>
+          <Link href="/about#pdo" className={styles.homeNavigationItem}>
             What’s a PDO?
           </Link>
         </p>
         <p>
-          <Link href="/about-data" className={styles.homeNavigationItem}>
+          <Link href="/about#data" className={styles.homeNavigationItem}>
             About the data
           </Link>
         </p>
         <p>
-          <Link href="/vulnerability" className={styles.homeNavigationItem}>
+          <Link href="/about#vulnerability" className={styles.homeNavigationItem}>
             Vulnerability Index
           </Link>
         </p>

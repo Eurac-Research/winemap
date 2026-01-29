@@ -75,21 +75,21 @@ export function Sidebar() {
                 → About the project
               </Link>
               <Link
-                href="/about-pdo"
+                href="/about#pdo"
                 onClick={() => setIsOpen(false)}
                 className="block text-white/80 hover:text-white hover:bg-white/5 p-2 rounded transition-colors"
               >
                 → What&apos;s a PDO?
               </Link>
               <Link
-                href="/about-data"
+                href="/about#data"
                 onClick={() => setIsOpen(false)}
                 className="block text-white/80 hover:text-white hover:bg-white/5 p-2 rounded transition-colors"
               >
                 → About the data
               </Link>
               <Link
-                href="/vulnerability"
+                href="/about#vulnerability"
                 onClick={() => setIsOpen(false)}
                 className="block text-white/80 hover:text-white hover:bg-white/5 p-2 rounded transition-colors"
               >

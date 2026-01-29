@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import styles from "@/styles/Home.module.css";
-import Textnavigation from "../components/textnavigation";
 
 export const metadata: Metadata = {
   title: "What’s a PDO? - Winemap Europe by Eurac Research",
@@ -60,7 +59,6 @@ export default function AboutPdo() {
           https://agriculture.ec.europa.eu/...
         </span>
       </a>
-      <Textnavigation />
     </main>
   );
 }

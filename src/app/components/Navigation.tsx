@@ -237,7 +237,7 @@ export function Navigation() {
                   {/* Right side - List of subsections */}
                   <div className="grid gap-1 p-5">
                     <NavigationMenuLink
-                      href="/about-data"
+                      href="/about#data"
                       className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">About the Data</div>
@@ -247,7 +247,7 @@ export function Navigation() {
                     </NavigationMenuLink>
 
                     <NavigationMenuLink
-                      href="/about-pdo"
+                      href="/about#pdo"
                       className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">About PDO Wine Regions</div>
@@ -257,7 +257,7 @@ export function Navigation() {
                     </NavigationMenuLink>
 
                     <NavigationMenuLink
-                      href="/vulnerability"
+                      href="/about#vulnerability"
                       className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">Vulnerability Assessment</div>
@@ -369,21 +369,21 @@ export function Navigation() {
                 </Link>
                 <div className="pl-4 space-y-2">
                   <Link
-                    href="/about-data"
+                    href="/about#data"
                     className="block text-white/70 text-sm hover:text-white transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     About the Data
                   </Link>
                   <Link
-                    href="/about-pdo"
+                    href="/about#pdo"
                     className="block text-white/70 text-sm hover:text-white transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     About PDO Wine Regions
                   </Link>
                   <Link
-                    href="/vulnerability"
+                    href="/about#vulnerability"
                     className="block text-white/70 text-sm hover:text-white transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >

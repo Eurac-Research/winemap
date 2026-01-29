@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import styles from "@/styles/Home.module.css";
-import Textnavigation from "../components/textnavigation";
 
 export default function AboutData() {
   return (
@@ -75,7 +74,6 @@ export default function AboutData() {
         vineyards were recorded in our dataset. For details on coverage and
         extent, please refer to individual sources.
       </p>
-      <Textnavigation />
     </main>
   );
 }

@@ -1016,7 +1016,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
               region is an indication of its resilience towards climate change...
             </p>
             <p className="mt-2 text-sm">
-              <Link href="/vulnerability" className="underline">
+              <Link href="/about#vulnerability" className="underline">
                 read more
               </Link>
             </p>
@@ -1055,7 +1055,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
           </Link>
         </p>
         <p>
-          <Link href="/about-pdo" className={styles.homeNavigationItem}>
+          <Link href="/about#pdo" className={styles.homeNavigationItem}>
             What&apos;s a PDO?
           </Link>
         </p>
@@ -1065,7 +1065,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
           </Link>
         </p>
         <p>
-          <Link href="/about-data" className={styles.homeNavigationItem}>
+          <Link href="/about#data" className={styles.homeNavigationItem}>
             About the data
           </Link>
         </p>
@@ -1187,7 +1187,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
                 <hr className="my-6" />
                 <h3 className="text-[24px] font-medium mb-4 flex items-center gap-2">
                   Vulnerability Index{" "}
-                  <Link href="/vulnerability" className="info">
+                  <Link href="/about#vulnerability" className="info">
                     i
                   </Link>
                 </h3>
@@ -1762,7 +1762,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
                       change...
                     </p>
                     <p className="mt-2 text-sm">
-                      <Link href="/vulnerability" className="underline">
+                      <Link href="/about#vulnerability" className="underline">
                         read more
                       </Link>
                     </p>
@@ -1801,7 +1801,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
                   </Link>
                 </p>
                 <p>
-                  <Link href="/about-pdo" className={styles.homeNavigationItem}>
+                  <Link href="/about#pdo" className={styles.homeNavigationItem}>
                     What&apos;s a PDO?
                   </Link>
                 </p>
@@ -1814,7 +1814,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
                   </Link>
                 </p>
                 <p>
-                  <Link href="/about-data" className={styles.homeNavigationItem}>
+                  <Link href="/about#data" className={styles.homeNavigationItem}>
                     About the data
                   </Link>
                 </p>
@@ -1967,7 +1967,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
                   <div className="vulnerabilityLegend flex flex-col lg:flex-row gap-6">
                     <div className="uppercase flex font-bold items-center gap-2 ">
                       Vulnerability Index{" "}
-                      <Link href="/vulnerability" className="info">
+                      <Link href="/about#vulnerability" className="info">
                         i
                       </Link>
                     </div>

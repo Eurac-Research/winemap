@@ -15,6 +15,25 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/about-data",
+        destination: "/about#data",
+        permanent: true,
+      },
+      {
+        source: "/about-pdo",
+        destination: "/about#pdo",
+        permanent: true,
+      },
+      {
+        source: "/vulnerability",
+        destination: "/about#vulnerability",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
