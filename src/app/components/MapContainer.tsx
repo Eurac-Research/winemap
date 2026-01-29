@@ -34,10 +34,6 @@ import type {
 } from "mapbox-gl";
 import { isMobile } from "react-device-detect";
 
-import data from "@/app/data/PDO_EU_id.json";
-import allCountries from "@/app/data/countryCodesFromDataHub.io.json";
-import allPDOPoints from "@/app/data/pdo-points.json";
-import vulnerability from "@/app/data/vulnerability.json";
 import amendmentIcon from "@/public/icons/Amendment-outline.svg";
 import categoryIcon from "@/public/icons/Category.svg";
 import countryIcon from "@/public/icons/CountryName-outline.svg";
@@ -118,6 +114,69 @@ export default function MapContainer({ viewType }: MapContainerProps) {
     null,
   );
   const [selectVarValue, setSelectVarValue] = useState<string | null>(null);
+  const [pdoData, setPdoData] = useState<JSONObject[]>([]);
+  const [countryData, setCountryData] = useState<
+    { code: string; name?: string }[]
+  >([]);
+  const [pdoPointsData, setPdoPointsData] = useState<{ features?: any[] } | null>(
+    null,
+  );
+  const [vulnerabilityData, setVulnerabilityData] = useState<
+    VulnerabilityType[]
+  >([]);
+
+  const dataReady =
+    pdoData.length > 0 && countryData.length > 0 && !!pdoPointsData;
+
+  const data = pdoData;
+  const allCountries = countryData;
+  const allPDOPoints = pdoPointsData ?? { features: [] };
+  const vulnerability = vulnerabilityData;
+
+  useEffect(() => {
+    let isActive = true;
+    const controller = new AbortController();
+
+    const loadData = async () => {
+      try {
+        const [pdoRes, countryRes, pointsRes, vulnRes] = await Promise.all([
+          fetch("/api/data/pdo-eu-id", { signal: controller.signal }),
+          fetch("/api/data/country-codes", { signal: controller.signal }),
+          fetch("/api/data/pdo-points", { signal: controller.signal }),
+          fetch("/api/data/vulnerability", { signal: controller.signal }),
+        ]);
+
+        if (!pdoRes.ok || !countryRes.ok || !pointsRes.ok || !vulnRes.ok) {
+          return;
+        }
+
+        const [pdoJson, countryJson, pointsJson, vulnJson] =
+          await Promise.all([
+            pdoRes.json(),
+            countryRes.json(),
+            pointsRes.json(),
+            vulnRes.json(),
+          ]);
+
+        if (!isActive) return;
+
+        setPdoData(pdoJson);
+        setCountryData(countryJson);
+        setPdoPointsData(pointsJson);
+        setVulnerabilityData(vulnJson);
+      } catch (error) {
+        if ((error as Error).name === "AbortError") return;
+        console.error("Failed to load map datasets.", error);
+      }
+    };
+
+    loadData();
+
+    return () => {
+      isActive = false;
+      controller.abort();
+    };
+  }, []);
 
   const [fromSearch, setFromSearch] = useState(false);
   const [zoomLevel, setZoomLevel] = useState<number | null>(null);
@@ -130,6 +189,15 @@ export default function MapContainer({ viewType }: MapContainerProps) {
 
   // Set vulnerability visibility based on viewType prop
   const vulnerabilityVisibility = viewType === "adaptation";
+  const vulnerabilityById = useMemo(() => {
+    const map = new Map<string, VulnerabilityType>();
+    for (const entry of vulnerability) {
+      if (entry?.PDOid) {
+        map.set(entry.PDOid, entry);
+      }
+    }
+    return map;
+  }, [vulnerability]);
 
   const isOverviewState = !pdos && !activePDO;
   const showOverviewSidebar =
@@ -191,7 +259,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
     expression.push("rgba(0,0,0,0)");
 
     return { matchExpression: expression, showOnlyVulneralIDs: ids };
-  }, [vulnerabilityVisibility]);
+  }, [vulnerabilityVisibility, vulnerability]);
 
   const circleRadiusValues = useMemo<DataDrivenPropertyValueSpecification<number>>(
     () => ({
@@ -219,7 +287,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
   );
 
   useEffect(() => {
-    if (!mapLoaded || !mapRef.current) return;
+    if (!mapLoaded || !mapRef.current || !dataReady) return;
 
     const map = mapRef.current.getMap();
     const hasAreaLayer = !!map.getLayer("pdo-area");
@@ -245,8 +313,10 @@ export default function MapContainer({ viewType }: MapContainerProps) {
         ]);
       }
 
-      map.setPaintProperty("pdo-area", "fill-color", matchExpression);
-      map.setPaintProperty("pdo-pins", "circle-color", matchExpression);
+      if (showOnlyVulneralIDs.length > 0) {
+        map.setPaintProperty("pdo-area", "fill-color", matchExpression);
+        map.setPaintProperty("pdo-pins", "circle-color", matchExpression);
+      }
       map.setPaintProperty("pdo-pins", "circle-radius", circleRadiusValues);
       map.setPaintProperty("pdo-pins", "circle-opacity", circleOpacityValues);
       return;
@@ -259,6 +329,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
   }, [
     circleOpacityValues,
     circleRadiusValues,
+    dataReady,
     fromSearch,
     mapLoaded,
     matchExpression,
@@ -274,16 +345,14 @@ export default function MapContainer({ viewType }: MapContainerProps) {
       if (!PDO.length) return;
 
       if (vulnerabilityVisibility) {
-        const vulnerabilityData = vulnerability.filter(
-          (v: any) => id === v.PDOid,
-        );
+        const vulnerabilityData = vulnerabilityById.get(id);
 
-        if (!vulnerabilityData[0]) {
+        if (!vulnerabilityData) {
           setActivePDO(PDO[0]);
           return;
         }
 
-        PDO[0].vulneral = vulnerabilityData[0];
+        PDO[0].vulneral = { ...vulnerabilityData };
 
         if (PDO[0].vulneral.adaptiveCap * 100 < 38) {
           PDO[0].vulneral.AdaptiveTxt = "low";
@@ -313,7 +382,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
       history.replaceState({}, "", `?pdo=${encodeURI(id)}`);
       setActivePDO(PDO[0]);
     },
-    [vulnerabilityVisibility],
+    [data, vulnerabilityById, vulnerabilityVisibility],
   );
 
   function getPDONameById(id: string | undefined) {
@@ -322,11 +391,9 @@ export default function MapContainer({ viewType }: MapContainerProps) {
     );
 
     if (vulnerabilityVisibility) {
-      const vulnerabilityData = vulnerability.filter(
-        (vul: any) => id === vul.PDOid,
-      );
-      if (vulnerabilityData.length > 0) {
-        matchingPDOs[0].vulneral = vulnerabilityData[0];
+      const vulnerabilityData = vulnerabilityById.get(id ?? "");
+      if (vulnerabilityData) {
+        matchingPDOs[0].vulneral = vulnerabilityData;
       }
     }
 
@@ -442,10 +509,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
 
         if (vulnerabilityVisibility) {
           myData.map((i: any) => {
-            const vulnerabilityData = vulnerability.filter(
-              (v: any) => i.pdoid === v.PDOid,
-            );
-            i.vulneral = vulnerabilityData[0];
+            i.vulneral = vulnerabilityById.get(i.pdoid) ?? null;
           });
         }
         return myData;
@@ -456,7 +520,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
         setPdos(flattenPDOS);
       }
     },
-    [vulnerabilityVisibility, setPdos],
+    [data, vulnerabilityById, vulnerabilityVisibility, setPdos],
   );
 
   const onOut = useCallback((event: mapboxgl.MapLayerMouseEvent) => {
@@ -503,16 +567,16 @@ export default function MapContainer({ viewType }: MapContainerProps) {
   const getPDOsByVulnerability = useCallback(
     async (value: string) => {
       const PDOList = data?.map((item: any) => {
-        let myData = vulnerability.filter((v: any) => item.pdoid === v.PDOid);
-        item.vulneral = myData[0];
+        const vulnerabilityData = vulnerabilityById.get(item.pdoid);
+        item.vulneral = vulnerabilityData ?? null;
 
         if (value === "all") {
-          if (item.vulneral) {
+          if (vulnerabilityData) {
             return item;
           }
           return null;
         }
-        if (myData[0]?.Vulnerability?.startsWith(value)) {
+        if (vulnerabilityData?.Vulnerability?.startsWith(value)) {
           return item;
         }
       });
@@ -552,7 +616,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
             false,
           ]);
     },
-    [setPdos, mapRef],
+    [data, vulnerabilityById, setPdos, mapRef],
   );
 
   const getPdoIDsByPdoName = useCallback(
@@ -595,12 +659,13 @@ export default function MapContainer({ viewType }: MapContainerProps) {
             true,
             false,
           ]);
-      const filteredFeatures = allPDOPoints.features?.filter(
-        (item: { properties: { PDOid: string } }) =>
-          item?.properties?.PDOid === showIDs[0],
-      );
+      const filteredFeatures =
+        allPDOPoints.features?.filter(
+          (item: { properties: { PDOid: string } }) =>
+            item?.properties?.PDOid === showIDs[0],
+        ) ?? [];
 
-      if (filteredFeatures) {
+      if (filteredFeatures.length > 0) {
         const [minLng, minLat, maxLng, maxLat] = bbox(filteredFeatures[0]);
         mapRef.current &&
           mapRef.current.fitBounds(
@@ -616,7 +681,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
           );
       }
     },
-    [onClearFilter, openDetail, mapRef, paddingResponsive],
+    [data, allPDOPoints, onClearFilter, openDetail, mapRef, paddingResponsive],
   );
 
   const getPdoIDsByFilter = useCallback(
@@ -635,11 +700,16 @@ export default function MapContainer({ viewType }: MapContainerProps) {
 
       const showIDs = PDOList.map((item) => {
         if (vulnerabilityVisibility) {
-          const vul = vulnerability.filter((v) => item.pdoid === v.PDOid);
-          return vul.length > 0 ? vul[0].PDOid : null;
+          const vul = vulnerabilityById.get(item.pdoid);
+          return vul ? vul.PDOid : null;
         }
         return item.pdoid;
       }).filter((id) => id !== null) as string[];
+
+      if (showIDs.length === 0) {
+        onClearFilter();
+        return;
+      }
 
       if (showIDs.length === 1) {
         openDetail(showIDs[0]);
@@ -704,21 +774,25 @@ export default function MapContainer({ viewType }: MapContainerProps) {
       }
     },
     [
+      data,
+      allPDOPoints,
       onClearFilter,
       openDetail,
       setPdos,
       mapRef,
       paddingResponsive,
       vulnerabilityVisibility,
+      vulnerabilityById,
     ],
   );
 
   const showPDOonMap = useCallback(
     (id: string) => {
-      const filteredFeatures = allPDOPoints.features?.filter(
-        (item: { properties: { PDOid: string } }) =>
-          item?.properties?.PDOid === id,
-      );
+      const filteredFeatures =
+        allPDOPoints.features?.filter(
+          (item: { properties: { PDOid: string } }) =>
+            item?.properties?.PDOid === id,
+        ) ?? [];
 
       if (!filteredFeatures.length) return;
 
@@ -742,7 +816,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
           },
         );
     },
-    [mapRef, paddingResponsive],
+    [allPDOPoints, mapRef, paddingResponsive],
   );
 
   const onSelectPdoNameChange = useCallback(
@@ -844,7 +918,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
 
   // Handle URL params on mount
   useEffect(() => {
-    if (!mapLoaded) {
+    if (!mapLoaded || !dataReady) {
       return;
     }
 
@@ -873,6 +947,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
       showPDOonMap(decodeURI(searchParams?.get("pdo")!) ?? "");
     }
   }, [
+    dataReady,
     mapLoaded,
     onSelectCountryNameChange,
     openDetail,
@@ -1024,9 +1099,9 @@ export default function MapContainer({ viewType }: MapContainerProps) {
               {pdos.length} {!fromSearch && "overlapping"} PDOs found
             </h3>
           )}
-          {pdos.map((pdo) => (
+          {pdos.map((pdo, index) => (
             <div
-              key={pdo?.pdoid}
+              key={`${pdo?.pdoid}-${index}`}
               className={`${styles.PDOlistitem}`}
               onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
                 openDetail(pdo?.pdoid)
