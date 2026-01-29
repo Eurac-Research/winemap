@@ -52,7 +52,7 @@ export default function Pie(props: { percentage: number; label?: string }) {
         color="#eee"
         classNames={{ root: "text-black" }}
         styles={{
-          body: {
+          container: {
             color: "#000",
             padding: "14px",
             fontSize: "12px",
