@@ -4,7 +4,6 @@ import Link from "next/link";
 
 import styles from "@/styles/Home.module.css";
 import Textnavigation from "../components/textnavigation";
-import pdoicon from "/public/icons/pdo-label.svg";
 
 export const metadata: Metadata = {
   title: "What’s a PDO? - Winemap Europe by Eurac Research",
@@ -54,7 +53,7 @@ export default function AboutPdo() {
         className={styles.contentImageBox}
         href="https://agriculture.ec.europa.eu/farming/geographical-indications-and-quality-schemes/geographical-indications-and-quality-schemes-explained_en#pdo"
       >
-        <Image src={pdoicon} alt="pdo logo" />
+        <Image src="/icons/pdo-label.svg" alt="pdo logo" width={212} height={212} />
         <span>
           Official PDO logo from the Eurpean Commission
           <br />
