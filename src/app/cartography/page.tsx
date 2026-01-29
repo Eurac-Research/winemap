@@ -218,7 +218,7 @@ export default function CartographyPage() {
                           key={layer.id}
                           className="p-4 rounded-lg border border-white/10 bg-white/5"
                         >
-                          <div className="flex items-start gap-3">
+                          <div className="flex items-center gap-3">
                             {/* Toggle Switch */}
                             <button
                               onClick={() => toggleLayer(layer.id)}
@@ -235,8 +235,16 @@ export default function CartographyPage() {
 
                             {/* Layer Info */}
                             <div className="flex-grow">
-                              <div className="flex items-start justify-between gap-2">
-                                <h4 className="text-white font-semibold text-sm">{layer.name}</h4>
+                              <div className="flex items-center justify-between gap-2">
+                                <button
+                                  type="button"
+                                  onClick={() => toggleLayer(layer.id)}
+                                  className="text-left text-white font-semibold text-sm hover:text-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black/60 rounded-sm"
+                                  aria-pressed={layer.enabled}
+                                  aria-label={`Toggle ${layer.name}`}
+                                >
+                                  {layer.name}
+                                </button>
                                 <button
                                   onClick={() => setSelectedInfo(layer)}
                                   className="text-white/40 hover:text-white transition-colors"
