@@ -346,7 +346,7 @@ export default function EnvironmentalPage() {
                       <Radio
                         key={layer.id}
                         value={layer.id}
-                        className="text-white"
+                        className="text-white block"
                       >
                         <span className="text-sm">{layer.name}</span>
                       </Radio>
@@ -401,8 +401,8 @@ export default function EnvironmentalPage() {
         <ResizableHandle
           withHandle
           className={`${isMobile
-              ? "h-3 w-full cursor-row-resize hover:h-4"
-              : "w-2 h-full cursor-col-resize hover:w-3"
+            ? "h-3 w-full cursor-row-resize hover:h-4"
+            : "w-2 h-full cursor-col-resize hover:w-3"
             } flex items-center justify-center bg-[#E91E63] opacity-60 hover:opacity-100 text-[#E91E63] hover:brightness-110 transition-all relative z-20`}
         />
 
