@@ -259,10 +259,13 @@ export default function HomePage() {
               of Origin (PDO) label (as of November 2021). It is an essential resource for anyone interested in wine or
               who works in the wine industry or related sectors.
             </p>
-            <p className="text-white/70 leading-relaxed">
-              The map is based on a collection of legal information, including grape varieties, geospatial boundaries, and
-              production details, and is the first representation of European PDO regions in one comprehensive resource.
-            </p>
+            <div className="grid items-center gap-4 md:grid-cols-[50px_1fr]">
+              <p className="text-white/70 leading-relaxed">
+                The Winemap was developed in the framework of the <strong>RESPOnD</strong> project.
+                RESPOnD is co-financed by the European Regional Development Fund through the Interreg
+                Alpine Space programme 2021-2027
+              </p>
+            </div>
           </div>
         </section>
 
