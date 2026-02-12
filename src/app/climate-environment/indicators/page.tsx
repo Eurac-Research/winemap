@@ -1,252 +1,235 @@
+"use client";
+
 import Link from "next/link";
+import { ReactNode, useState } from "react";
 import ImageComparisonSlider from "@/app/components/ImageComparisonSlider";
+
+function CollapsiblePanel({
+  title,
+  children,
+  defaultOpen = false,
+}: {
+  title: string;
+  children: ReactNode;
+  defaultOpen?: boolean;
+}) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+
+  const handleToggle = () => setIsOpen(prev => !prev);
+
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={handleToggle}
+      onKeyDown={event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          handleToggle();
+        }
+      }}
+      className={`mt-4 cursor-pointer rounded-xl border bg-black/30 p-5 transition-colors ${isOpen
+          ? "border-[#E91E63]/80"
+          : "border-white/15 hover:border-[#E91E63]"
+        }`}
+      aria-expanded={isOpen}
+    >
+      <div className="flex items-center justify-between gap-4">
+        <h4 className="text-lg font-semibold text-white">{title}</h4>
+        <span className="rounded-md border border-white/15 px-2 py-0.5 text-xs text-white/60">
+          {isOpen ? "Hide" : "Show"}
+        </span>
+      </div>
+
+      {isOpen ? <div className="mt-4 text-white/80">{children}</div> : null}
+    </div>
+  );
+}
 
 export default function ClimateIndicatorsPage() {
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Header Navigation
-      <header className="border-b border-gray-800 bg-black/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-6 py-4">
-          <Link
-            href="/"
-            className="text-white hover:text-gray-300 transition-colors flex items-center gap-2 text-lg font-semibold"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-              <polyline points="9 22 9 12 15 12 15 22" />
-            </svg>
-            WINEMAP
-          </Link>
-        </div>
-      </header> */}
-
-      <div className="container mx-auto px-6 py-32 max-w-5xl">
-        {/* Page Content */}
-        <article className="prose prose-invert prose-lg max-w-none">
-          <h1 className="text-4xl font-bold mb-8">Climate indicators and scenarios</h1>
-
-          <p className="text-lg leading-relaxed mb-6">
-            Wine production and its quality are highly sensitive to local weather variability and broader climatic conditions. Indeed, climate is often considered the most important factor influencing viticultural productivity and quality, largely determining which grape varieties can be grown and the distinctive wines that can be produced in a specific region, contributing significantly to its &apos;Terroir&apos;. The global distribution of high-quality viticulture is therefore strongly influenced by specific climatic conditions.
-          </p>
-
-          <p className="text-lg leading-relaxed mb-6">
-            Given this strong dependence, climate change poses a severe threat to the global wine industry, already causing shifts in suitability and altering product quality in many regions. To address this challenge, bioclimatic indicators serve as indispensable instruments. These tools are designed to evaluate shifts in climatic conditions and growing suitability over time, providing essential information on present-day and future climatic conditions for wine-growing regions.
-          </p>
-
-          <h2 className="text-3xl font-semibold mt-12 mb-6">Why are these indicators used?</h2>
-
-          <p className="text-lg leading-relaxed mb-6">
-            Bioclimatic indices are employed to describe various attributes of wine production, including aspects of vine development, grape ripening, and water availability for the plants. They range from simple measures, such as mean temperature over the vegetation period, to more complex methods incorporating latitudinal temperature adjustments and specific temperature thresholds. These indices, for example, allow characterisation of the water availability in the soil or night temperatures during the crucial ripening phase, which are important for the development of sensory characteristics like polyphenols and aromas in grapes.
-          </p>
-
-          <p className="text-lg leading-relaxed mb-6">
-            By understanding the identified changes in these bioclimatic indices under future climate scenarios, it becomes possible to determine the necessity for certain adaptation strategies, which can help to improve the climate resilience of wine regions. They provide a uniform climatic description of different grape-growing regions, enabling comparisons and a broader understanding of global viticultural climates. Ultimately, these indicators help viticulturists and policymakers make informed decisions regarding planting choices and management practices to foster climate-resilient wine production.
-          </p>
-
-          {/* Box 1: Huglin Index */}
-          <div className="bg-gray-900 border border-gray-700 rounded-lg p-4 lg:p-8 my-12">
-            <h3 className="text-2xl font-semibold mb-6">Huglin Index</h3>
-
-            <h4 className="text-xl font-medium mb-4">General Introduction</h4>
-            <p className="mb-6">
-              The Huglin Index (HI) is a bioclimatic indicator that describes the thermal growing conditions throughout the vegetation period in a wine region. It is primarily linked to vine phenology and development. The HI assesses the temperatures required for adequate grapevine development and grape berry ripening. It plays a critical role in determining viticultural suitability and also demonstrates a good relationship with the potential sugar content of grapes.
+    <main className="min-h-screen bg-black text-white">
+      <div className="mx-auto max-w-6xl px-6 py-32">
+        <article className="space-y-12">
+          <section className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/10 to-white/5 p-8 md:p-12">
+            <span className="inline-flex rounded-full border border-white/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-white/70">
+              Climate and Environment
+            </span>
+            <h1 className="mt-5 text-4xl font-bold leading-tight md:text-5xl">Climate Indicators and Scenarios</h1>
+            <p className="mt-6 max-w-4xl text-lg leading-relaxed text-white/80">
+              Wine production and its quality are highly sensitive to local weather variability and broader climatic conditions.
+              Climate is often considered the most important factor influencing viticultural productivity and quality, largely
+              determining which grape varieties can be grown and the distinctive wines that can be produced in a specific
+              region.
+            </p>
+            <p className="mt-4 max-w-4xl text-lg leading-relaxed text-white/80">
+              Bioclimatic indicators help evaluate shifts in climatic conditions and growing suitability over time. They provide
+              essential information on present-day and future climatic conditions for wine-growing regions and support adaptation
+              planning.
             </p>
 
-            <h4 className="text-xl font-medium mb-4">Interpretation</h4>
-            <p className="mb-4">
-              The HI categorises climatic conditions into several classes, ranging from &apos;very cool&apos; to &apos;too hot&apos;, each indicating different suitability levels for grape varieties and their ripening.
+            <div className="mt-8" />
+
+            <h2 className="text-xl font-semibold text-white">Jump to indicator</h2>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <a href="#huglin" className="rounded-lg border border-white/15 bg-black/30 px-4 py-2 text-sm font-medium text-white/85 transition-colors hover:border-[#E91E63] hover:text-white">
+                Huglin Index
+              </a>
+              <a href="#cool-night" className="rounded-lg border border-white/15 bg-black/30 px-4 py-2 text-sm font-medium text-white/85 transition-colors hover:border-[#E91E63] hover:text-white">
+                Cool Night Index
+              </a>
+              <a href="#dryness" className="rounded-lg border border-white/15 bg-black/30 px-4 py-2 text-sm font-medium text-white/85 transition-colors hover:border-[#E91E63] hover:text-white">
+                Dryness Index
+              </a>
+            </div>
+            <p className="mt-4 text-sm text-white/60">Tip: expand only the sections you need with the toggles below.</p>
+          </section>
+          
+          <section id="huglin" className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/10 to-white/5 p-5 md:p-8">
+            <h3 className="text-2xl font-semibold text-white">Huglin Index</h3>
+            <p className="mt-2 text-sm text-white/60">Thermal growing conditions and ripening suitability</p>
+
+            <p className="mt-4 text-white/80">
+              The Huglin Index (HI) is a bioclimatic indicator that describes the thermal growing conditions throughout the
+              vegetation period in a wine region. It is primarily linked to vine phenology and development and demonstrates a
+              good relationship with potential sugar content in grapes.
             </p>
 
-            <ul className="space-y-4 mb-6">
-              <li>
-                <strong>1200–1500 GDD (Very cool):</strong> These regions are at the inferior thermal limit for vines. Only very early-ripening varieties, especially white ones like Muller-Thurgau, Pinot blanc, Gamay, or Gewurztraminer, can reach maturity. Certain regions may need to use interspecific hybrids or American Vitis varieties, which are more cold-resistant than Vitis vinifera.
-              </li>
-              <li>
-                <strong>1500–1800 GDD (Cool):</strong> The thermal potential in this class allows a wide range of early-ripening grape varieties, both white and red, to ripen. Examples include Riesling, Pinot noir, Chardonnay, Merlot, and Cabernet franc.
-              </li>
-              <li>
-                <strong>1800–2100 GDD (Temperate):</strong> In these conditions, later-ripening varieties, such as Cabernet-Sauvignon, Ugni Blanc, and Syrah, can also reach maturity.
-              </li>
-              <li>
-                <strong>2100–2400 GDD (Warm temperate):</strong> In the warm temperate class, late-ripening and predominantly red varieties such as Grenache, Mourvèdre or Carignan can reach their full potential.
-              </li>
-              <li>
-                <strong>2400–2700 GDD (Warm):</strong> Climates in this class are characterised by a thermal potential that exceeds the needs for most varieties, even late-ripening ones, with some associated risks of thermal stress.
-              </li>
-              <li>
-                <strong>2700–3000 GDD (Very warm):</strong> Under very warm viticultural climates, conditions are typical of intertropical zones, where it may even be possible to achieve more than one harvest per year using specialized grape varieties.
-              </li>
-            </ul>
+            <div className="mt-6 mx-auto w-full max-w-3xl">
+              <ImageComparisonSlider
+                beforeImage="/images/indicators/huglin_1981_2010.png"
+                afterImage="/images/indicators/huglin_2071_2100.png"
+                beforeLabel="1981-2010"
+                afterLabel="2071-2100"
+                alt="Huglin Index Comparison"
+                aspectRatio="auto"
+                caption="Figure 1: Comparison of Huglin Index between historical (1981-2010) and projected (2071-2100) climate scenarios showing increased thermal suitability across European wine regions."
+              />
+            </div>
 
+            <CollapsiblePanel title="Interpretation">
+              <p className="mt-4 text-white/80">
+                The HI categorises climatic conditions into classes ranging from very cool to very warm, indicating different
+                suitability levels for grape varieties and ripening.
+              </p>
+              <ul className="mt-4 space-y-3 text-white/80">
+                <li><strong>1200-1500 GDD (Very cool):</strong> Only very early-ripening varieties are likely to reach maturity.</li>
+                <li><strong>1500-1800 GDD (Cool):</strong> Supports many early-ripening white and red varieties.</li>
+                <li><strong>1800-2100 GDD (Temperate):</strong> Later-ripening varieties such as Syrah can also mature.</li>
+                <li><strong>2100-2400 GDD (Warm temperate):</strong> Late-ripening and predominantly red varieties can reach full potential.</li>
+                <li><strong>2400-2700 GDD (Warm):</strong> Thermal potential exceeds needs for many varieties, with possible heat stress.</li>
+                <li><strong>2700-3000 GDD (Very warm):</strong> Typical of intertropical climates with very high heat availability.</li>
+              </ul>
+            </CollapsiblePanel>
 
-            {/* place before/after slider here */}
-            <ImageComparisonSlider
-              beforeImage="/images/indicators/huglin_1981_2010.png"
-              afterImage="/images/indicators/huglin_2071_2100.png"
-              beforeLabel="1981-2010"
-              afterLabel="2071-2100"
-              alt="Huglin Index Comparison"
-              aspectRatio="auto"
-              caption="Figure 1: Comparison of Huglin Index between historical (1981-2010) and projected (2071-2100) climate scenarios showing increased thermal suitability across European wine regions."
-            />
+            <CollapsiblePanel title="Methodology">
+              <p className="mt-4 text-white/80">
+                The Huglin Index is calculated over a 6-month period (typically 1 April to 30 September in the Northern
+                Hemisphere).
+              </p>
+              <div className="mt-4 rounded-lg border border-white/10 bg-black p-4 font-mono text-sm text-white/90">
+                HI = Sigma(((T - 10) + (Tmax - 10)) / 2) * d
+              </div>
+              <ul className="mt-4 space-y-2 text-white/80">
+                <li><strong>T</strong> = Mean air temperature (deg C)</li>
+                <li><strong>Tmax</strong> = Maximum air temperature (deg C)</li>
+                <li><strong>d</strong> = Day-length coefficient (1.00 to 1.06 depending on latitude)</li>
+              </ul>
+            </CollapsiblePanel>
+          </section>
 
+          <section id="cool-night" className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/10 to-white/5 p-5 md:p-8">
+            <h3 className="text-2xl font-semibold text-white">Cool Night Index</h3>
+            <p className="mt-2 text-sm text-white/60">Night-time temperature during ripening</p>
 
-
-
-            <h4 className="text-xl font-medium mb-4">Methodology</h4>
-            <p className="mb-4">
-              The Huglin Index is calculated for a 6-month period, typically from 1 April to 30 September in the Northern Hemisphere, or 1 October to 31 March in the Southern Hemisphere.
-            </p>
-            <p className="mb-4">
-              The formula for the Huglin Index (HI) is:
-            </p>
-            <p className="font-mono bg-black p-4 rounded mb-4">
-              HI = Σ ( (T − 10) + (T<sub>max</sub> − 10) ) / 2 * d
-            </p>
-            <p className="mb-2">Where:</p>
-            <ul className="space-y-2 mb-4">
-              <li><strong>T</strong> = Mean air temperature (°C).</li>
-              <li><strong>T<sub>max</sub></strong> = Maximum air temperature (°C).</li>
-              <li><strong>d</strong> = Length of day coefficient, which adjusts for latitudinal variations in day length during the growing season. This coefficient ranges from 1.00 to 1.06 depending on the latitude.</li>
-            </ul>
-            <p>
-              The index is typically calculated from monthly climatic means. The input data for HI consists of daily mean and maximum temperature data.
-            </p>
-          </div>
-
-          {/* Box 2: Cool Night Index */}
-          <div className="bg-gray-900 border border-gray-700 rounded-lg p-4 lg:p-8 my-12">
-            <h3 className="text-2xl font-semibold mb-6">Cool Night Index</h3>
-
-            <h4 className="text-xl font-medium mb-4">General Introduction</h4>
-            <p className="mb-6">
-              The Cool Night Index (CNI) is a bioclimatic indicator that specifically describes the minimum temperature during the ripening phase of grapes. This index is crucial for understanding the development of the sensory characteristics of grapes, such as polyphenols and aromas. The CNI&apos;s purpose is to assess the qualitative potentials of wine-growing regions, particularly concerning the secondary metabolites in grapes, which significantly influence grape and wine colour and aromas.
+            <p className="mt-4 text-white/80">
+              The Cool Night Index (CNI) describes minimum temperature during the ripening phase of grapes. It is useful for
+              evaluating sensory qualities such as aroma and polyphenol development.
             </p>
 
-            <h4 className="text-xl font-medium mb-4">Interpretation</h4>
-            <p className="mb-4">
-              The CNI classifies night temperatures during ripening, each class having distinct implications for grape quality and wine style.
+            <div className="mt-6 mx-auto w-full max-w-3xl">
+              <ImageComparisonSlider
+                beforeImage="/images/indicators/cni_1981_2010.png"
+                afterImage="/images/indicators/cni_2071_2100.png"
+                beforeLabel="1981-2010"
+                afterLabel="2071-2100"
+                alt="Cool Night Index Comparison"
+                aspectRatio="auto"
+                caption="Figure 2: Comparison of Cool Night Index between historical (1981-2010) and projected (2071-2100) climate scenarios indicating shifts towards warmer night temperatures during grape ripening in many wine regions."
+              />
+            </div>
+
+            <CollapsiblePanel title="Interpretation">
+              <ul className="mt-4 space-y-3 text-white/80">
+                <li><strong>Below 12 deg C (Very cool):</strong> Can be favorable if thermal potential is still sufficient for ripening.</li>
+                <li><strong>12-14 deg C (Cool):</strong> Typically beneficial for color and aroma development.</li>
+                <li><strong>14-18 deg C (Temperate):</strong> Intermediate condition; effects depend on variety and ripening timing.</li>
+                <li><strong>Above 18 deg C (Warm):</strong> Higher risk of aroma loss and reduced color development, especially in reds.</li>
+              </ul>
+            </CollapsiblePanel>
+
+            <CollapsiblePanel title="Methodology">
+              <p className="mt-4 text-white/80">
+                CNI is calculated as the average minimum temperature in September (Northern Hemisphere) or March (Southern
+                Hemisphere), using daily minimum temperature data.
+              </p>
+            </CollapsiblePanel>
+          </section>
+
+          <section id="dryness" className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/10 to-white/5 p-5 md:p-8">
+            <h3 className="text-2xl font-semibold text-white">Dryness Index</h3>
+            <p className="mt-2 text-sm text-white/60">Soil water balance and drought pressure</p>
+
+            <p className="mt-4 text-white/80">
+              The Dryness Index (DI) evaluates water availability for grapevines by combining precipitation, evapotranspiration,
+              and soil water reserve assumptions. It helps characterise drought pressure and adaptation needs.
             </p>
 
-            <ul className="space-y-4 mb-6">
-              <li>
-                <strong>Less than 12°C (Very cool):</strong> Regions in this class experience very low night temperatures during ripening. The positive effect of these temperatures largely depends on a sufficiently high thermal potential to ensure good grape ripening for the specific variety. Many regions renowned for high-quality white wines fall into this category.
-              </li>
-              <li>
-                <strong>12–14°C (Cool):</strong> Ripening occurs under conditions that are cooler than temperate nights. Night temperatures tend to not exceed maximum values favourable for ripening, which is generally beneficial for grape colours and aromas.
-              </li>
-              <li>
-                <strong>14–18°C (Temperate):</strong> This class represents an intermediate condition between cool and warm nights. While later-ripening varieties will still tend to mature under lower night temperatures, early-ripening varieties might experience comparatively warm ripening conditions.
-              </li>
-              <li>
-                <strong>Greater than 18°C (Warm):</strong> In these regions, high nocturnal temperatures occur during grape ripening. Such conditions can negatively impact berry colour and aromatic potential. There is also a tendency for loss of aromas, and red varieties may develop a relatively lighter colour.
-              </li>
-            </ul>
+            <div className="mt-6 mx-auto w-full max-w-3xl">
+              <ImageComparisonSlider
+                beforeImage="/images/indicators/di_1981_2010.png"
+                afterImage="/images/indicators/di_2071_2100.png"
+                beforeLabel="1981-2010"
+                afterLabel="2071-2100"
+                alt="Dryness Index Comparison"
+                aspectRatio="auto"
+                caption="Figure 3: Comparison of Dryness Index between historical (1981-2010) and projected (2071-2100) climate scenarios showing increased dryness in many traditional wine regions, highlighting the growing importance of water management and irrigation strategies."
+              />
+            </div>
 
-            {/* place before/after slider here */}
-            <ImageComparisonSlider
-              beforeImage="/images/indicators/cni_1981_2010.png"
-              afterImage="/images/indicators/cni_2071_2100.png"
-              beforeLabel="1981-2010"
-              afterLabel="2071-2100"
-              alt="Cool Night Index Comparison"
-              aspectRatio="auto"
-              caption="Figure 2: Comparison of Cool Night Index between historical (1981-2010) and projected (2071-2100) climate scenarios indicating shifts towards warmer night temperatures during grape ripening in many wine regions."
-            />
+            <CollapsiblePanel title="Interpretation">
+              <ul className="mt-4 space-y-3 text-white/80">
+                <li><strong>Above 150 mm (Humid):</strong> High water availability, sometimes beyond optimum for quality.</li>
+                <li><strong>50-150 mm (Subhumid):</strong> Lower drought risk; some varieties may still benefit from moderate dryness.</li>
+                <li><strong>-100 to 50 mm (Moderately dry):</strong> Can support quality through controlled stress, depending on management.</li>
+                <li><strong>Below -100 mm (Very dry):</strong> High drought stress risk, often requiring irrigation.</li>
+              </ul>
+            </CollapsiblePanel>
 
+            <CollapsiblePanel title="Methodology">
+              <p className="mt-4 text-white/80">
+                DI is computed over a 6-month period and follows a water balance equation:
+              </p>
+              <div className="mt-4 rounded-lg border border-white/10 bg-black p-4 font-mono text-sm text-white/90">
+                W = Wo + P - Tv - Es
+              </div>
+              <ul className="mt-4 space-y-2 text-white/80">
+                <li><strong>W</strong> = Soil water reserve at the end of the period</li>
+                <li><strong>Wo</strong> = Initial useful soil water reserve (often 200 mm)</li>
+                <li><strong>P</strong> = Precipitation</li>
+                <li><strong>Tv</strong> = Potential vineyard transpiration</li>
+                <li><strong>Es</strong> = Direct evaporation from soil</li>
+              </ul>
+            </CollapsiblePanel>
+          </section>
 
-            <h4 className="text-xl font-medium mb-4">Methodology</h4>
-            <p>
-              The Cool Night Index (CNI) is calculated by averaging the minimum temperature during the month of September for the Northern Hemisphere or during March for the Southern Hemisphere. The input data required for the CNI calculation are daily minimum temperature data.
-            </p>
-          </div>
-
-          {/* Box 3: Dryness Index */}
-          <div className="bg-gray-900 border border-gray-700 rounded-lg p-4 lg:p-8 my-12">
-            <h3 className="text-2xl font-semibold mb-6">Dryness Index</h3>
-
-            <h4 className="text-xl font-medium mb-4">General Introduction</h4>
-            <p className="mb-6">
-              The Dryness Index (DI) is a bioclimatic indicator that describes the water availability for grapevines. It evaluates the soil water availability essential for vine development by estimating soil water reserves, precipitation, and potential evapotranspiration. The DI is related to vine growth and berry development and is based on an adaptation of Riou&apos;s potential water balance of the soil index, specifically developed for vineyard use. This index allows for the characterisation of the water component of the climate in a grape-growing region, indicating the potential water availability in the soil in relation to the level of dryness. It is also considered important for grape ripening and overall wine quality.
-            </p>
-
-            <h4 className="text-xl font-medium mb-4">Interpretation</h4>
-            <p className="mb-4">
-              The DI classifies regions based on their water availability, broadly categorising them into wet and dry climates.
-            </p>
-
-            <ul className="space-y-4 mb-6">
-              <li>
-                <strong>Greater than 150 mm (Humid):</strong> This class indicates regions with a high level of water availability, often tending towards excess in relation to quality. Optimal grape ripening is frequently observed in less humid years within these regions.
-              </li>
-              <li>
-                <strong>50–150 mm (Subhumid):</strong> Regions falling into the subhumid class are typically characterised by a level of water balance which minimizes the risk of water stress and dryness. However, for some vines a certain level of dryness is beneficial for quality and therefore optimum wine quality is often found in regions with lower water availability levels.
-              </li>
-              <li>
-                <strong>-100 to 50 mm (Moderately dry):</strong> In this group, vines may experience a certain level of dryness. This situation, often involving significant stomatal regulation of the plant, is generally favourable for maturation and may lead to high-quality wines. Irrigation may be practised in some cases. Mediterranean-type climates, which often experience water deficits in summer, typically start to appear around a DI value of less than 50 mm.
-              </li>
-              <li>
-                <strong>Less than -100 mm (Very dry):</strong> Potential dryness is pronounced in these regions, frequently leading to stress effects on vines. Irrigation is common and often mandatory when the DI falls below -200 mm, due to a high deficit of available soil water and a frequent risk of severe stress if not adequately irrigated.
-              </li>
-            </ul>
-
-
-            {/* place before/after slider here */}
-            <ImageComparisonSlider
-              beforeImage="/images/indicators/di_1981_2010.png"
-              afterImage="/images/indicators/di_2071_2100.png"
-              beforeLabel="1981-2010"
-              afterLabel="2071-2100"
-              alt="Dryness Index Comparison"
-              aspectRatio="auto"
-              caption="Figure 3: Comparison of Dryness Index between historical (1981-2010) and projected (2071-2100) climate scenarios showing increased dryness in many traditional wine regions, highlighting the growing importance of water management and irrigation strategies."
-            />
-
-
-            <h4 className="text-xl font-medium mb-4">Methodology</h4>
-            <p className="mb-4">
-              The Dryness Index (DI) is calculated based on a 6-month period, consistent with the Huglin Index, from 1 April to 30 September in the Northern Hemisphere.
-            </p>
-            <p className="mb-4">
-              The formula for calculating the DI is:
-            </p>
-            <p className="font-mono bg-black p-4 rounded mb-4">
-              W = W<sub>o</sub> + P − T<sub>v</sub> − E<sub>s</sub>
-            </p>
-            <p className="mb-2">Where:</p>
-            <ul className="space-y-2 mb-4">
-              <li><strong>W</strong> = The estimated soil water reserve at the end of a given period. The DI itself is the value of W obtained at the final moment of the 6-month calculation period.</li>
-              <li><strong>W<sub>o</sub></strong> = The initial useful soil water reserve, which can be accessed by the roots. This is typically set at 200 mm.</li>
-              <li><strong>P</strong> = Precipitation (mm).</li>
-              <li><strong>T<sub>v</sub></strong> = Potential vineyard transpiration (mm). This is calculated as Potential Evapotranspiration (ETP) multiplied by &apos;k&apos;, a coefficient of radiation absorption by the vine plant, which varies by month (e.g., 0.1 for April, 0.3 for May, and 0.5 for June-September in the Northern Hemisphere). ETP can be calculated using different methods, for instance the Thornthwaite approach.</li>
-              <li><strong>E<sub>s</sub></strong> = Direct evaporation from the soil (mm). This is calculated using ETP, &apos;k&apos;, the number of days in the month (N), and rainfall per month (JPm).</li>
-            </ul>
-            <p>
-              The input data for DI include the initial soil water content, precipitation, and potential evapotranspiration.
-            </p>
-          </div>
-
-          {/* Back to top link */}
-          <div className="mt-16 pt-8 border-t border-gray-700">
-            <Link
-              href="/"
-              className="text-gray-400 hover:text-white transition-colors inline-flex items-center gap-2"
-            >
-              ← Back to WINEMAP
+          <div className="border-t border-gray-700 pt-8">
+            <Link href="/climate-environment" className="inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-white">
+              {"<-"} Back to Climate and Environment
             </Link>
           </div>
         </article>
       </div>
-    </div>
+    </main>
   );
 }
