@@ -83,7 +83,7 @@ export function Navigation() {
                     </NavigationMenuLink>
 
                     <NavigationMenuLink
-                      href="#vulnerability"
+                      href="/climate-environment/vulnerability"
                       className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">Vulnerability & Risks</div>

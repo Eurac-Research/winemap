@@ -96,7 +96,7 @@ export default function HomePage() {
                     </h3>
                   </Link>
                   <Link
-                    href="/climate-environment?vulnerability=true"
+                    href="/climate-environment/vulnerability"
                     className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
                   >
                     <h3 className="text-white/90 font-semibold text-sm group-hover/link:text-[#E91E63] transition-colors">
