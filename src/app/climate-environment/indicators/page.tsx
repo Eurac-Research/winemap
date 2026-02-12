@@ -82,7 +82,6 @@ export default function ClimateIndicatorsPage() {
                 Dryness Index
               </a>
             </div>
-            <p className="mt-4 text-sm text-white/60">Tip: expand only the sections you need with the toggles below.</p>
           </section>
           
           <section id="huglin" className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/10 to-white/5 p-5 md:p-8">
@@ -91,8 +90,8 @@ export default function ClimateIndicatorsPage() {
 
             <p className="mt-4 text-white/80">
               The Huglin Index (HI) is a bioclimatic indicator that describes the thermal growing conditions throughout the
-              vegetation period in a wine region. It is primarily linked to vine phenology and development and demonstrates a
-              good relationship with potential sugar content in grapes.
+              vegetation period in a wine region. It is primarily linked to vine phenology and development and plays 
+              a critical role in determining viticultural suitability.
             </p>
 
             <div className="mt-6 mx-auto w-full max-w-3xl">
@@ -128,7 +127,7 @@ export default function ClimateIndicatorsPage() {
                 Hemisphere).
               </p>
               <div className="mt-4 rounded-lg border border-white/10 bg-black p-4 font-mono text-sm text-white/90">
-                HI = Sigma(((T - 10) + (Tmax - 10)) / 2) * d
+                HI = Σ ( (T − 10) + (T<sub>max</sub> − 10) ) / 2 * d
               </div>
               <ul className="mt-4 space-y-2 text-white/80">
                 <li><strong>T</strong> = Mean air temperature (deg C)</li>
@@ -143,7 +142,7 @@ export default function ClimateIndicatorsPage() {
             <p className="mt-2 text-sm text-white/60">Night-time temperature during ripening</p>
 
             <p className="mt-4 text-white/80">
-              The Cool Night Index (CNI) describes minimum temperature during the ripening phase of grapes. It is useful for
+              The Cool Night Index (CNI) describes the minimum temperatures during the ripening phase of grapes. It is useful for
               evaluating sensory qualities such as aroma and polyphenol development.
             </p>
 
@@ -161,10 +160,10 @@ export default function ClimateIndicatorsPage() {
 
             <CollapsiblePanel title="Interpretation">
               <ul className="mt-4 space-y-3 text-white/80">
-                <li><strong>Below 12 deg C (Very cool):</strong> Can be favorable if thermal potential is still sufficient for ripening.</li>
-                <li><strong>12-14 deg C (Cool):</strong> Typically beneficial for color and aroma development.</li>
-                <li><strong>14-18 deg C (Temperate):</strong> Intermediate condition; effects depend on variety and ripening timing.</li>
-                <li><strong>Above 18 deg C (Warm):</strong> Higher risk of aroma loss and reduced color development, especially in reds.</li>
+                <li><strong>Below 12°C (Very cool):</strong> Very low night temperatures can be favorable for wine quality if thermal potential during the day is still sufficient for ripening.</li>
+                <li><strong>12-14°C (Cool):</strong> Warmer nights but still cool enough to have positive effects on grape colour and aroma.</li>
+                <li><strong>14-18°C (Temperate):</strong> Conditions become too warm for some early-ripening varieties.</li>
+                <li><strong>Above 18°C (Warm):</strong> Higher risk of aroma loss and reduced color development for many varieties.</li>
               </ul>
             </CollapsiblePanel>
 
@@ -182,7 +181,7 @@ export default function ClimateIndicatorsPage() {
 
             <p className="mt-4 text-white/80">
               The Dryness Index (DI) evaluates water availability for grapevines by combining precipitation, evapotranspiration,
-              and soil water reserve assumptions. It helps characterise drought pressure and adaptation needs.
+              and soil water reserve assumptions. It helps characterise drought pressure and corresponding adaptation needs.
             </p>
 
             <div className="mt-6 mx-auto w-full max-w-3xl">
@@ -200,8 +199,8 @@ export default function ClimateIndicatorsPage() {
             <CollapsiblePanel title="Interpretation">
               <ul className="mt-4 space-y-3 text-white/80">
                 <li><strong>Above 150 mm (Humid):</strong> High water availability, sometimes beyond optimum for quality.</li>
-                <li><strong>50-150 mm (Subhumid):</strong> Lower drought risk; some varieties may still benefit from moderate dryness.</li>
-                <li><strong>-100 to 50 mm (Moderately dry):</strong> Can support quality through controlled stress, depending on management.</li>
+                <li><strong>50-150 mm (Subhumid):</strong> Low drought risk in general; but some varieties need drier conditions to produce optimum quality.</li>
+                <li><strong>-100 to 50 mm (Moderately dry):</strong> Some dryness may occur, which can support quality through controlled stress.</li>
                 <li><strong>Below -100 mm (Very dry):</strong> High drought stress risk, often requiring irrigation.</li>
               </ul>
             </CollapsiblePanel>
@@ -211,14 +210,14 @@ export default function ClimateIndicatorsPage() {
                 DI is computed over a 6-month period and follows a water balance equation:
               </p>
               <div className="mt-4 rounded-lg border border-white/10 bg-black p-4 font-mono text-sm text-white/90">
-                W = Wo + P - Tv - Es
+                W = W<sub>o</sub> + P - T<sub>v</sub> - E<sub>s</sub>
               </div>
               <ul className="mt-4 space-y-2 text-white/80">
                 <li><strong>W</strong> = Soil water reserve at the end of the period</li>
-                <li><strong>Wo</strong> = Initial useful soil water reserve (often 200 mm)</li>
+                <li><strong>W<sub>o</sub></strong> = Initial useful soil water reserve (often 200 mm)</li>
                 <li><strong>P</strong> = Precipitation</li>
-                <li><strong>Tv</strong> = Potential vineyard transpiration</li>
-                <li><strong>Es</strong> = Direct evaporation from soil</li>
+                <li><strong>T<sub>v</sub></strong> = Potential vineyard transpiration</li>
+                <li><strong>E<sub>s</sub></strong> = Direct evaporation from soil</li>
               </ul>
             </CollapsiblePanel>
           </section>
