@@ -190,27 +190,35 @@ export function Navigation() {
                   {/* Right side - List of subsections */}
                   <div className="grid gap-1 p-5">
                     <NavigationMenuLink
-                      href="#eu-regulations"
+                      href="/legal/eu-policy"
                       className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                     >
-                      <div className="font-semibold text-white mb-1.5 text-base">EU Planting and Plant Health Regulations</div>
+                      <div className="font-semibold text-white mb-1.5 text-base">EU Policy</div>
                       <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        The EU Planting and Plant Health Regulations aim to ensure the sustainable management of plant
-                        health risks and promote biodiversity in viticulture.
+                        test test
                       </div>
                     </NavigationMenuLink>
 
                     <NavigationMenuLink
-                      href="/legal/geographic-indications"
+                      href="/legal/participatory-approaches"
                       className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                     >
-                      <div className="font-semibold text-white mb-1.5 text-base">Geographic indications</div>
+                      <div className="font-semibold text-white mb-1.5 text-base">Particpiatory Approaches</div>
                       <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        Geographical indications at the EU level are a form of intellectual property protection that
-                        safeguard the names of products whose qualities, reputation, or characteristics are linked to
-                        their specific geographical origin.
+                        test test
                       </div>
                     </NavigationMenuLink>
+
+                    <NavigationMenuLink
+                      href="/legal/courses"
+                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
+                    >
+                      <div className="font-semibold text-white mb-1.5 text-base">Courses</div>
+                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
+                        test test
+                      </div>
+                    </NavigationMenuLink>
+
                   </div>
                 </div>
               </NavigationMenuContent>
@@ -349,7 +357,7 @@ export function Navigation() {
                 </Link>
                 <div className="pl-4 space-y-2">
                   <Link
-                    href="/legal/geographic-indications"
+                    href="/legal/eu-policy"
                     className="block text-white/70 text-sm hover:text-white transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >

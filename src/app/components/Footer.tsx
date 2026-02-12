@@ -40,7 +40,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/legal/geographic-indications" className="text-white/60 hover:text-white transition-colors text-sm pl-4">
+                <Link href="/legal/eu-policy" className="text-white/60 hover:text-white transition-colors text-sm pl-4">
                   → Geographic Indications
                 </Link>
               </li>
