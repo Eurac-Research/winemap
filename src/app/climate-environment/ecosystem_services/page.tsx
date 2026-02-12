@@ -53,7 +53,7 @@ export default function EcosystemServicesPage() {
         <article className="space-y-12">
           <section className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/10 to-white/5 p-8 md:p-12">
             <span className="inline-flex rounded-full border border-white/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-white/70">
-              Ecosystem Services
+              Climate and Environment
             </span>
             <h1 className="mt-5 text-4xl font-bold leading-tight md:text-5xl">Ecosystem Services</h1>
             <p className="mt-6 max-w-4xl text-lg leading-relaxed text-white/80">
