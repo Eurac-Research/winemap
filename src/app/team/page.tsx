@@ -21,54 +21,8 @@ export default function About() {
 
 
       <h1>The Team</h1>
+
       <p>
-        An interdisciplinary research team from Eurac Research Bolzano, the
-        University of Venice, the University of Trás-os-Montes and Alto Douro
-        and the University of Innsbruck came together for the initiative. Led by
-        Eurac Research, the team have successfully collaborated to set up this
-        database on PDO vines. With their combined expertise and dedication, the
-        team has compiled an extensive collection of information for PDO wine
-        production in Europe. The results were published as an article in
-        Nature’s Scientific Data in 2022:
-      </p>
-      <p>
-        <i>
-          A geospatial inventory of regulatory information for wine protected
-          designations of origin in Europe,- Scientific Data Volume 9, Article
-          number: 394 (2022).
-        </i>{" "}
-        <a
-          target="_blank"
-          rel="noreferrer"
-          href="https://doi.org/10.1038/s41597-022-01513-0"
-          style={{ textDecoration: "underline" }}
-        >
-          https://doi.org/10.1038/s41597-022-01513-0
-        </a>
-      </p>
-      <p>
-        <span className={styles.teamItem}>
-          <Image
-            src="https://webassets.eurac.edu/31538/1620137491-candiagosebastian.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2"
-            width={150}
-            height={150}
-            alt="Sebastian Candiago"
-            quality={95}
-          ></Image>
-          <span>
-            <a
-              href="https://www.unive.it/data/persone/18664532"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span>Sebastian Candiago</span>
-            </a>
-            <span>Eurac Research, Institute for Alpine Environment</span>
-            <span>
-              Department of Economics, Ca’ Foscari University of Venice
-            </span>
-          </span>
-        </span>
         <span className={styles.teamItem}>
           <Image
             src="https://webassets.eurac.edu/31538/1620655782-tschollsimon.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2"
@@ -86,7 +40,6 @@ export default function About() {
               <span>Simon Tscholl</span>
             </a>
             <span>Eurac Research, Institute for Alpine Environment</span>
-            <span>University of Innsbruck, Department of Ecology</span>
           </span>
         </span>
         <span className={styles.teamItem}>
@@ -107,8 +60,89 @@ export default function About() {
             </a>
             <span>Eurac Research, Institute for Alpine Environment</span>
           </span>
-        </span>
+          </span>
+          <span className={styles.teamItem}>
+            <Image
+              src="https://webassets.eurac.edu/31538/1626080384-simionheidi.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2t"
+              width={150}
+              height={150}
+              alt="Heidi Simion"
+              quality={95}
+            ></Image>
+            <span>
+              <a
+                href="https://www.eurac.edu/en/people/heidi-simion"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span>Heidi Simion</span>
+              </a>
+              <span>Eurac Research, Institute for Alpine Environment</span>
+            </span>
+          </span>
+          <span className={styles.teamItem}>
+            <Image
+              src="https://webassets.eurac.edu/31538/1744019504-kleblfabian.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2t"
+              width={150}
+              height={150}
+              alt="Fabian Klebl"
+              quality={95}
+            ></Image>
+            <span>
+              <a
+                href="https://www.eurac.edu/en/people/fabian-norbert-klebl"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span>Fabian Klebl</span>
+              </a>
+              <span>Eurac Research, Institute for Alpine Environment</span>
+            </span>
+          </span>
+          <span className={styles.teamItem}>
+            <Image
+              src="https://webassets.eurac.edu/31538/1731321601-mauremathilde.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2t"
+              width={150}
+              height={150}
+              alt="Mathilde Maure"
+              quality={95}
+            ></Image>
+            <span>
+              <a
+                href="https://www.eurac.edu/en/people/mathilde-maure"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span>Mathilde Maure</span>
+              </a>
+              <span>Eurac Research, Institute for Alpine Environment</span>
+            </span>
+          </span>
       </p>
+
+      <br></br>
+      <h1>Former Collaborators</h1>
+        <span className={styles.teamItem}>
+          <Image
+            src="https://webassets.eurac.edu/31538/1620137491-candiagosebastian.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2"
+            width={150}
+            height={150}
+            alt="Sebastian Candiago"
+            quality={95}
+          ></Image>
+          <span>
+            <a
+              href="https://www.pes.uni-bayreuth.de/en/professorship/team/candiago-sebastian/index.php"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span>Sebastian Candiago</span>
+            </a>
+            <span>
+              University of Bayreuth, Faculty of Biology, Chemistry and Earth Sciences - Department of Earth Science
+            </span>
+          </span>
+        </span>
 
       <section className="mt-12">
         <Link
