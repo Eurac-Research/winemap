@@ -14,7 +14,7 @@ import {
   ResizablePanelGroup,
 } from "@/app/components/ui/resizable"
 
-type LayerGroup = "all" | "ecosystem" | "services"
+type LayerGroup = "all" | string
 
 interface Layer {
   id: string
@@ -36,11 +36,15 @@ const formatCategoryLabel = (category: string) =>
 const availableLayers: Layer[] = getIndicatorsWithMap().map((indicator) => ({
   id: indicator.id,
   name: indicator.name,
-  description: indicator.subtitle,
+  description: indicator.description.join(" "),
   category: indicator.category,
   mapboxLayerId: indicator.mapboxLayerId!,
   enabled: false,
 }))
+
+const availableCategories = Array.from(
+  new Set(availableLayers.map((layer) => layer.category))
+)
 
 const mapApplications = [
   {
@@ -97,23 +101,18 @@ export default function CartographyPage() {
   }
 
   const groupedLayers = () => {
-    if (groupBy === "ecosystem") {
-      return [{
-        title: "Ecosystem Conditions",
-        items: layers.filter((l) => l.category === "ecosystem-conditions"),
-      }]
-    } else if (groupBy === "services") {
-      return [{
-        title: "Ecosystem Services",
-        items: layers.filter((l) => l.category === "ecosystem-services"),
-      }]
-    } else {
+    if (groupBy === "all") {
       const categories = Array.from(new Set(layers.map((l) => l.category)))
       return categories.map((category) => ({
         title: formatCategoryLabel(category),
         items: layers.filter((l) => l.category === category),
       }))
     }
+
+    return [{
+      title: formatCategoryLabel(groupBy),
+      items: layers.filter((l) => l.category === groupBy),
+    }]
   }
 
   return (
@@ -157,24 +156,18 @@ export default function CartographyPage() {
                   >
                     All
                   </button>
-                  <button
-                    onClick={() => setGroupBy("ecosystem")}
-                    className={`px-3 py-1.5 rounded text-sm transition-colors ${groupBy === "ecosystem"
-                      ? "bg-[#E91E63] text-white"
-                      : "bg-white/10 text-white/70 hover:bg-white/20"
-                      }`}
-                  >
-                    Ecosystem
-                  </button>
-                  <button
-                    onClick={() => setGroupBy("services")}
-                    className={`px-3 py-1.5 rounded text-sm transition-colors ${groupBy === "services"
-                      ? "bg-[#E91E63] text-white"
-                      : "bg-white/10 text-white/70 hover:bg-white/20"
-                      }`}
-                  >
-                    Services
-                  </button>
+                  {availableCategories.map((category) => (
+                    <button
+                      key={category}
+                      onClick={() => setGroupBy(category)}
+                      className={`px-3 py-1.5 rounded text-sm transition-colors ${groupBy === category
+                        ? "bg-[#E91E63] text-white"
+                        : "bg-white/10 text-white/70 hover:bg-white/20"
+                        }`}
+                    >
+                      {formatCategoryLabel(category)}
+                    </button>
+                  ))}
                 </div>
               </div>
 
