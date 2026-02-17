@@ -174,6 +174,20 @@ export const Indicators: Indicator[] = [
         "Karger, D. N., Schmatz, D. R., Dettling, G. & Zimmermann, N. E. High-resolution monthly precipitation and temperature time series from 2006 to 2100. Sci Data 7, 248 (2020).",
         "Karger, D. N. et al. Climatologies at high resolution for the earth's land surface areas. Sci Data 4, 170122 (2017)."
       ],
-      mapboxLayerId: "env_climatic_waterbalance_1me376vw"
+    mapboxLayerId: "env_climatic_waterbalance_1me376vw"
     }
 ];
+
+export const getIndicatorsByCategory = (category: string) =>
+  Indicators.filter(indicator => indicator.category === category);
+
+export const getIndicatorsWithMap = () =>
+  Indicators.filter(indicator => indicator.mapboxLayerId);
+
+export const getIndicatorsWithMapByCategory = (category: string) =>
+  Indicators.filter(
+    indicator => indicator.category === category && indicator.mapboxLayerId
+  );
+
+export const getIndicatorById = (id: string) =>
+  Indicators.find(indicator => indicator.id === id);
