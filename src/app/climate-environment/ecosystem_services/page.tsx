@@ -12,6 +12,11 @@ const renderParagraphs = (paragraphs: string[], className = "mt-4 text-white/80"
   ));
 
 export default function EcosystemServicesPage() {
+  const categories = new Set(["ecosystem-services", "ecosystem-conditions"]);
+  const ecosystemIndicators = Indicators.filter(indicator =>
+    categories.has(indicator.category)
+  );
+
   return (
     <main className="min-h-screen bg-black text-white">
       <div className="mx-auto max-w-6xl px-6 py-32">
@@ -48,7 +53,7 @@ export default function EcosystemServicesPage() {
 
             <h2 className="text-xl font-semibold text-white">Jump to indicator</h2>
             <div className="mt-4 flex flex-wrap gap-3">
-              {Indicators.map(indicator => (
+              {ecosystemIndicators.map(indicator => (
                 <a
                   key={indicator.id}
                   href={`#${indicator.id}`}
@@ -60,7 +65,7 @@ export default function EcosystemServicesPage() {
             </div>
           </section>
           
-          {Indicators.map(indicator => (
+          {ecosystemIndicators.map(indicator => (
             <section
               key={indicator.id}
               id={indicator.id}
