@@ -68,10 +68,14 @@ export default function EcosystemServicesPage() {
           {ecosystemIndicators.map(indicator => (
             <section
               key={indicator.id}
-              id={indicator.id}
               className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/10 to-white/5 p-5 md:p-8"
             >
-              <h3 className="text-2xl font-semibold text-white">{indicator.name}</h3>
+              <h3
+                id={indicator.id}
+                className="scroll-mt-64 text-2xl font-semibold text-white"
+              >
+                {indicator.name}
+              </h3>
               {indicator.subtitle ? (
                 <p className="mt-2 text-sm text-white/60">{indicator.subtitle}</p>
               ) : null}
