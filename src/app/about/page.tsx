@@ -38,73 +38,73 @@ export default function About() {
           </p>
           <div className="mt-6 grid gap-4">
             <section id="respond">
-              <div className="rounded-xl border border-white/10 bg-white/5 p-6 transition-colors hover:border-white/30 hover:bg-white/10">
+              <a
+                href="https://www.alpine-space.eu/project/respond/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block rounded-xl border border-white/10 bg-white/5 p-6 transition-colors hover:border-white/30 hover:bg-white/10"
+              >
                 <h3 className="text-lg font-semibold">RESPOnD Project</h3>
                 <p className="mt-2 text-white/70">
                   The RESPOnD project aims to co-design ecosystem-based adaptation solutions 
                   with wine practitioners and decision-makers to increase the climate resilience
                   of alpine wine orchards
                 </p>
-                <a
-                  href="https://www.alpine-space.eu/project/respond/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-2 underline underline-offset-4"
-                >
+                <span className="mt-4 inline-flex items-center gap-2 underline underline-offset-4">
                   Visit RESPOnD project page &rarr;
-                </a>
-              </div>
+                </span>
+              </a>
             </section>
             <section id="kultivas">
-              <div className="rounded-xl border border-white/10 bg-white/5 p-6 transition-colors hover:border-white/30 hover:bg-white/10">
+              <a
+                href="https://kultivas.eu/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block rounded-xl border border-white/10 bg-white/5 p-6 transition-colors hover:border-white/30 hover:bg-white/10"
+              >
                 <h3 className="text-lg font-semibold">KULTIVAS Project</h3>
                 <p className="mt-2 text-white/70">
                 KULTIVAS is a modern big-data application that uses high resolution climatic and remote sensing data combined with 
                 machine learning to enable data-based decision making in agriculture and forestry.
                 </p>
-                <a
-                  href="https://kultivas.eu/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-2 underline underline-offset-4"
-                >
+                <span className="mt-4 inline-flex items-center gap-2 underline underline-offset-4">
                   Visit KULTIVAS project page &rarr;
-                </a>
-              </div>
+                </span>
+              </a>
             </section>
             <section id="rebecka">
-              <div className="rounded-xl border border-white/10 bg-white/5 p-6 transition-colors hover:border-white/30 hover:bg-white/10">
+              <a
+                href="https://www.eurac.edu/en/projects/rebecka"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block rounded-xl border border-white/10 bg-white/5 p-6 transition-colors hover:border-white/30 hover:bg-white/10"
+              >
                 <h3 className="text-lg font-semibold">REBECKA Project</h3>
                 <p className="mt-2 text-white/70">
                 The REBECKA project aims to develop a land-suitability model for viticulture based
                 on historical harvest data, grape quality assessments and climatic models.
                 </p>
-                <a
-                  href="https://www.eurac.edu/en/projects/rebecka"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-2 underline underline-offset-4"
-                >
+                <span className="mt-4 inline-flex items-center gap-2 underline underline-offset-4">
                   Visit REBECKA project page &rarr;
-                </a>
-              </div>
+                </span>
+              </a>
             </section>
             <section id="clim-smart">
-              <div className="rounded-xl border border-white/10 bg-white/5 p-6 transition-colors hover:border-white/30 hover:bg-white/10">
+              <a
+                href="https://fusiongrant.info/de/fusion-grant/archiv/climsmart-climate-smart-agriculture-entscheidungshilfen-fuer-die-suedtiroler-landwirtschaft-zur-anpassung-an-den-klimawandel"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block rounded-xl border border-white/10 bg-white/5 p-6 transition-colors hover:border-white/30 hover:bg-white/10"
+              >
                 <h3 className="text-lg font-semibold">ClimSmart Project</h3>
                 <p className="mt-2 text-white/70">
                 The ClimSmart Project combines high-resolution climate data and modern analytical methods
                 to identify targeted adaptation strategies for mountain agriculture.
                 </p>
-                <a
-                  href="https://fusiongrant.info/de/fusion-grant/archiv/climsmart-climate-smart-agriculture-entscheidungshilfen-fuer-die-suedtiroler-landwirtschaft-zur-anpassung-an-den-klimawandel"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-2 underline underline-offset-4"
-                >
+                <span className="mt-4 inline-flex items-center gap-2 underline underline-offset-4">
                   Visit ClimSmart project page &rarr;
-                </a>
-              </div>
+                </span>
+              </a>
             </section>
           </div>
         </div>
