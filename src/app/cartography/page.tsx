@@ -6,6 +6,7 @@ import Link from "next/link"
 import Map, { MapRef } from "react-map-gl/mapbox"
 import "mapbox-gl/dist/mapbox-gl.css"
 import { isMobile } from "react-device-detect"
+import { getIndicatorsWithMap } from "@/app/components/indicators/indicator-index"
 
 import {
   ResizableHandle,
@@ -26,56 +27,20 @@ interface Layer {
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN
 
-const availableLayers: Layer[] = [
-  {
-    id: "naturalness-index",
-    name: "Naturalness Index",
-    description: "The degree of land use/land cover naturalness. Natural and seminatural areas support pest and disease control.",
-    category: "Ecosystem Conditions",
-    mapboxLayerId: "env_naturalness_index-4gh1u3nd",
-    enabled: false,
-  },
-  {
-    id: "distance-to-nature",
-    name: "Land Use Integrity",
-    description: "Degree of land use integrity based on distance to natural and near-natural areas.",
-    category: "Ecosystem Conditions",
-    mapboxLayerId: "env_distance_to_nature-4pdad6jf",
-    enabled: false,
-  },
-  {
-    id: "landuse-diversity",
-    name: "Land Use Diversity",
-    description: "Diversity of land use/land cover classes. Higher landscape heterogeneity promotes biodiversity.",
-    category: "Ecosystem Conditions",
-    mapboxLayerId: "env_landuse_diversity_index-35je19qp",
-    enabled: false,
-  },
-  {
-    id: "climatic-waterbalance",
-    name: "Climate Water Balance",
-    description: "Water available from precipitation after accounting for evapotranspiration.",
-    category: "Ecosystem Conditions",
-    mapboxLayerId: "env_climatic_waterbalance_1me376vw",
-    enabled: false,
-  },
-  {
-    id: "pest-control",
-    name: "Pest Control Potential",
-    description: "Relative potential to sustain natural pest control in agricultural areas.",
-    category: "Ecosystem Services",
-    mapboxLayerId: "env_pestcontrol_100m-bplrmwe4",
-    enabled: false,
-  },
-  {
-    id: "pollination",
-    name: "Pollination Potential",
-    description: "Relative potential for pollination service provision in agricultural areas.",
-    category: "Ecosystem Services",
-    mapboxLayerId: "env_pollination_potential_100m-cgzjjo3l",
-    enabled: false,
-  },
-]
+const formatCategoryLabel = (category: string) =>
+  category
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ")
+
+const availableLayers: Layer[] = getIndicatorsWithMap().map((indicator) => ({
+  id: indicator.id,
+  name: indicator.name,
+  description: indicator.subtitle,
+  category: indicator.category,
+  mapboxLayerId: indicator.mapboxLayerId!,
+  enabled: false,
+}))
 
 const mapApplications = [
   {
@@ -133,13 +98,19 @@ export default function CartographyPage() {
 
   const groupedLayers = () => {
     if (groupBy === "ecosystem") {
-      return [{ title: "Ecosystem Conditions", items: layers.filter((l) => l.category === "Ecosystem Conditions") }]
+      return [{
+        title: "Ecosystem Conditions",
+        items: layers.filter((l) => l.category === "ecosystem-conditions"),
+      }]
     } else if (groupBy === "services") {
-      return [{ title: "Ecosystem Services", items: layers.filter((l) => l.category === "Ecosystem Services") }]
+      return [{
+        title: "Ecosystem Services",
+        items: layers.filter((l) => l.category === "ecosystem-services"),
+      }]
     } else {
       const categories = Array.from(new Set(layers.map((l) => l.category)))
       return categories.map((category) => ({
-        title: category,
+        title: formatCategoryLabel(category),
         items: layers.filter((l) => l.category === category),
       }))
     }
@@ -361,7 +332,7 @@ export default function CartographyPage() {
 
               <div>
                 <span className="text-white/60 text-sm font-semibold">Category:</span>
-                <p className="text-white/80">{selectedInfo.category}</p>
+                <p className="text-white/80">{formatCategoryLabel(selectedInfo.category)}</p>
               </div>
 
               <div className="pt-4 border-t border-white/20">
@@ -369,7 +340,7 @@ export default function CartographyPage() {
                   href="/climate-environment"
                   className="text-[#E91E63] hover:text-[#ff4081] text-sm flex items-center gap-2 transition-colors"
                 >
-                  View full description with references and input data
+                  View full description
                   <ExternalLink className="w-4 h-4" />
                 </Link>
               </div>
