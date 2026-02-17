@@ -20,7 +20,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/climate-environment/indicators" className="text-white/60 hover:text-white transition-colors text-sm pl-4">
+                <Link href="/climate-environment/climate" className="text-white/60 hover:text-white transition-colors text-sm pl-4">
                   → Indicators
                 </Link>
               </li>

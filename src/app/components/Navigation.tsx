@@ -73,7 +73,7 @@ export function Navigation() {
                   {/* Right side - List of subsections */}
                   <div className="grid gap-1 p-5">
                     <NavigationMenuLink
-                      href="/climate-environment/indicators"
+                      href="/climate-environment/climate"
                       className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">Climate Indicators</div>
@@ -317,7 +317,7 @@ export function Navigation() {
                 </Link>
                 <div className="pl-4 space-y-2">
                   <Link
-                    href="/climate-environment/indicators"
+                    href="/climate-environment/climate"
                     className="block text-white/70 text-sm hover:text-white transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >
