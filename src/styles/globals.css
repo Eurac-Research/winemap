@@ -8,6 +8,10 @@ body {
   background-color: #222;
 }
 
+html {
+  scroll-padding-top: var(--scroll-offset, 7rem);
+}
+
 a {
   text-decoration: none;
 }

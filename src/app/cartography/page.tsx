@@ -33,6 +33,17 @@ const formatCategoryLabel = (category: string) =>
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ")
 
+const categoryToDetailPage: Record<string, string> = {
+  climate: "/climate-environment/climate",
+  "ecosystem-services": "/climate-environment/ecosystem-services",
+  "ecosystem-conditions": "/climate-environment/ecosystem-services",
+}
+
+const getDetailHref = (category: string, indicatorId: string) => {
+  const base = categoryToDetailPage[category] ?? "/climate-environment"
+  return indicatorId ? `${base}#${indicatorId}` : base
+}
+
 const availableLayers: Layer[] = getIndicatorsWithMap().map((indicator) => ({
   id: indicator.id,
   name: indicator.name,
@@ -330,7 +341,7 @@ export default function CartographyPage() {
 
               <div className="pt-4 border-t border-white/20">
                 <Link
-                  href="/climate-environment"
+                  href={getDetailHref(selectedInfo.category, selectedInfo.id)}
                   className="text-[#E91E63] hover:text-[#ff4081] text-sm flex items-center gap-2 transition-colors"
                 >
                   View full description
