@@ -326,6 +326,100 @@ export const Indicators: Indicator[] = [
     ],
     references: [
     ],
+  },
+
+
+  {
+    id: "exposure-index",
+    name: "Exposure",
+    category: "vulnerability",
+    subtitle: "The amount of climate change a system experiences.",
+    description: [
+      "Exposure refers to the extent and type of significant climate changes or events that a system experiences. As such, it describes the expected changes in climatic conditions in a particular area. This can include various aspects of weather and climate, from long-term shifts in average temperatures and rainfall to the occurrence of specific weather events. The level of exposure an area faces depends both on wider global climate change patterns and its specific geographical location. It focuses on the general trends and magnitude of these climatic shifts.",
+      "For European wine regions, higher levels of climate exposure are frequently observed in Southern and Eastern European areas, particularly in mountainous terrains. This indicates that these regions are expected to experience more significant climatic changes. Conversely, regions influenced by strong oceanic climates or located at higher latitudes generally experience lower levels of exposure.",
+    ],
+    contentBlocks: [
+      {
+        type: "image",
+        src: "/images/vulnerability/1_Exposure_bioclim.png",
+        alt: "Climate Change Exposure of European Wine Regions",
+        caption: "Climate Change Exposure of European Wine Regions",
+        wrapperClassName: "w-full max-w-2xl mx-auto px-4 mt-6",
+      }
+    ],
+    methodology: [
+    ],
+    references: [
+    ],
+  },
+  {
+    id: "sensitivity-index",
+    name: "Sensitivity",
+    category: "vulnerability",
+    subtitle: "The degree to which a system is impacted by climate change.",
+    description: [
+      "Sensitivity is defined as the degree to which a system is influenced or affected by climate-related changes, whether positively or negatively. This impact can be direct, such as changes in the growth of certain plants due to temperature shifts, or indirect, like the damage caused by increased flooding. Not every part of a system will be affected in the same way by every climate stimulus. Essentially, it highlights how a system's unique characteristics determine its reaction to different climatic conditions.",
+      "Many Southern European wine regions often show higher sensitivity to climate changes. This is frequently linked to a limited range of grape varieties or existing warm conditions that are already close to the optimal growing limits of cultivated varieties. However, areas with lower sensitivity can also be found in Southern Europe and some higher latitude regions exhibit increased sensitivity.",
+    ],
+    contentBlocks: [
+      {
+        type: "image",
+        src: "/images/vulnerability/2_Sensitivity_bioclim.png",
+        alt: "Climate Change Sensitivity of European Wine Regions",
+        caption: "Climate Change Sensitivity of European Wine Regions",
+        wrapperClassName: "w-full max-w-2xl mx-auto px-4 mt-6",
+      }
+    ],
+    methodology: [
+    ],
+    references: [
+    ],
+  },
+  {
+    id: "adaptive-capacity-index",
+    name: "Adaptive Capacity",
+    category: "vulnerability",
+    subtitle: "The ability of a system to adapt to climate change.",
+    description: [
+      "Adaptive capacity is the ability of a system to adjust to climate change, to reduce potential harm, take advantage of new opportunities, or manage the consequences. It shows a region's readiness and potential to successfully respond to a changing climate. This capacity is essential for developing and putting into practice effective strategies to deal with climate change. It may include a wide range of a region's resources and strengths, such as its financial stability, natural resources, physical infrastructure, social networks, and human knowledge and skills, all of which contribute to its ability to respond to climate impacts.",
+      "European wine regions with elevated adaptive capacity are typically found in mountainous regions, particularly in the central-southern European alpine areas. This suggests these regions have a greater potential and readiness to adjust to climate change. In contrast, parts of central Southern Europe and Eastern Europe tend to have lower adaptive capacity. Many regions at higher latitudes generally fall into a moderate adaptive capacity range.",
+    ],
+    contentBlocks: [
+      {
+        type: "image",
+        src: "/images/vulnerability/3_adaptive_capacity_bioclim.png",
+        alt: "Adaptive Capacity to Climate Change of European Wine Regions",
+        caption: "Adaptive Capacity to Climate Change of European Wine Regions",
+        wrapperClassName: "w-full max-w-2xl mx-auto px-4 mt-6",
+      }
+    ],
+    methodology: [
+    ],
+    references: [
+    ],
+  },
+  {
+    id: "vulnerability",
+    name: "Vulnerability",
+    category: "vulnerability",
+    subtitle: "The susceptibility of a system to the negative effects of climate change.",
+    description: [
+      "Vulnerability describes how susceptible a system, such as a community, an environment, or an economy, is to the negative effects of climate change, including extreme weather and changing climate patterns. It provides an overall understanding of the expected level of negative effects on a system due to external pressures. When assessing vulnerability, experts consider how much a system is exposed to climate changes, how sensitive it is to those changes, and its ability to adapt. Vulnerability thus brings together the concepts of exposure, sensitivity, and adaptive capacity.",
+      "Southern and Eastern European wine regions tend to show the highest vulnerability to climate change. This means these areas are considered most susceptible to negative climate impacts. Regions situated in cooler, higher latitude zones or certain mountainous areas often demonstrate lower to moderate levels of vulnerability.",
+    ],
+    contentBlocks: [
+      {
+        type: "image",
+        src: "/images/vulnerability/4_vulnerability_bioclim.png",
+        alt: "Climate Change Vulnerability of European Wine Regions",
+        caption: "Climate Change Vulnerability of European Wine Regions",
+        wrapperClassName: "w-full max-w-2xl mx-auto px-4 mt-6",
+      }
+    ],
+    methodology: [
+    ],
+    references: [
+    ],
   }
 ];
 

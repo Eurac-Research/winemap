@@ -36,7 +36,7 @@ export type ImageBlock = {
   alt: string;
   caption?: string;
   aspectRatio?: string;
-  sizes?: string;
+  wrapperClassName?: string;
   objectFit?: "contain" | "cover";
 };
 
@@ -100,7 +100,10 @@ export default function IndicatorContent({ blocks = [] }: IndicatorContentProps)
 
           case "image":
             return (
-              <figure key={key} className="w-full max-w-4xl mx-auto px-4">
+              <figure
+                key={key}
+                className={block.wrapperClassName ?? "w-full max-w-4xl mx-auto px-4"}
+              >
                 <div
                   className="relative"
                   style={{ aspectRatio: block.aspectRatio ?? "3 / 2" }}
@@ -114,7 +117,6 @@ export default function IndicatorContent({ blocks = [] }: IndicatorContentProps)
                         ? "object-cover"
                         : "object-contain"
                     }
-                    sizes={block.sizes ?? "(min-width: 1024px) 800px, 100vw"}
                   />
                 </div>
                 {block.caption ? (
