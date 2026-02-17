@@ -238,39 +238,19 @@ export function Navigation() {
                     <BookOpen className="size-12 text-white mb-4" />
                     <h3 className="text-2xl font-semibold text-white mb-3">About Winemap</h3>
                     <p className="text-base text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                      Learn about the project, data, and research behind Winemap.
+                      Learn about the data and the research projects behind Winemap.
                     </p>
                   </NavigationMenuLink>
 
                   {/* Right side - List of subsections */}
                   <div className="grid gap-1 p-5">
                     <NavigationMenuLink
-                      href="/about#data"
+                      href="/about#institute"
                       className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                     >
-                      <div className="font-semibold text-white mb-1.5 text-base">About the Data</div>
+                      <div className="font-semibold text-white mb-1.5 text-base">Institute for Alpine Environment</div>
                       <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        Discover the data sources and methodologies behind Winemap.
-                      </div>
-                    </NavigationMenuLink>
-
-                    <NavigationMenuLink
-                      href="/about#pdo"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
-                    >
-                      <div className="font-semibold text-white mb-1.5 text-base">About PDO Wine Regions</div>
-                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        Explore Protected Designation of Origin wine regions across Europe.
-                      </div>
-                    </NavigationMenuLink>
-
-                    <NavigationMenuLink
-                      href="/about#vulnerability"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
-                    >
-                      <div className="font-semibold text-white mb-1.5 text-base">Vulnerability Assessment</div>
-                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        Understand climate change vulnerability analysis for wine regions.
+                        Discover the scientific institute behind Winemap.
                       </div>
                     </NavigationMenuLink>
 
@@ -280,7 +260,7 @@ export function Navigation() {
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">Scientific Literature</div>
                       <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        Browse relevant scientific publications and research papers.
+                        Explore the publications behind the Winemap project.
                       </div>
                     </NavigationMenuLink>
                   </div>
