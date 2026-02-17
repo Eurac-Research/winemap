@@ -218,6 +218,114 @@ export const Indicators: Indicator[] = [
       "Karger, D. N. et al. Climatologies at high resolution for the earth's land surface areas. Sci Data 4, 170122 (2017)."
     ],
     mapboxLayerId: "env_climatic_waterbalance_1me376vw"
+  },
+
+
+  {
+    id: "huglin",
+    name: "Huglin Index",
+    category: "climate",
+    subtitle: "Thermal growing conditions and ripening suitability.",
+    description: [
+      "The Huglin Index (HI) is a bioclimatic indicator that describes the thermal growing conditions throughout the vegetation period in a wine region. It is primarily linked to vine phenology and development and plays a critical role in determining viticultural suitability."
+    ],
+    contentBlocks: [
+      {
+        type: "imageComparison",
+        beforeImage: "/images/indicators/huglin_1981_2010.png",
+        afterImage: "/images/indicators/huglin_2071_2100.png",
+        beforeLabel: "1981-2010",
+        afterLabel: "2071-2100",
+        alt: "Huglin Index Comparison",
+        aspectRatio: "auto",
+        caption: "Figure 1: Comparison of Huglin Index between historical (1981-2010) and projected (2071-2100) climate scenarios showing increased thermal suitability across European wine regions."
+      }
+    ],
+    methodology: [
+      "The Huglin Index is calculated over a 6-month period (typically 1 April to 30 September in the Northern Hemisphere) using the following formula:",
+      "HI = ((T - 10) + (Tmax - 10)) / 2 * d.",
+      "T = mean air temperature (deg C).",
+      "Tmax = maximum air temperature (deg C).",
+      "d = day-length coefficient (1.00 to 1.06 depending on latitude).",
+      " ",
+      "The HI categorises climatic conditions into classes ranging from very cool to very warm, indicating different suitability levels for grape varieties and ripening:",
+      "- 1200-1500 GDD (Very cool) - Only very early-ripening varieties are likely to reach maturity.",
+      "- 1500-1800 GDD (Cool) - Supports many early-ripening white and red varieties.",
+      "- 1800-2100 GDD (Temperate) - Later-ripening varieties such as Syrah can also mature.",
+      "- 2100-2400 GDD (Warm temperate) - Late-ripening and predominantly red varieties can reach full potential.",
+      "- 2400-2700 GDD (Warm) - Thermal potential exceeds needs for many varieties, with possible heat stress.",
+      "- 2700-3000 GDD (Very warm) - Typical of intertropical climates with very high heat availability.",
+    ],
+    references: [
+    ],
+  },
+  {
+    id: "cool-night",
+    name: "Cool Night Index",
+    category: "climate",
+    subtitle: "Night-time temperature during ripening.",
+    description: [
+      "The Cool Night Index (CNI) describes the minimum temperatures during the ripening phase of grapes. It is useful for evaluating sensory qualities such as aroma and polyphenol development."
+    ],
+    contentBlocks: [
+      {
+        type: "imageComparison",
+        beforeImage: "/images/indicators/cni_1981_2010.png",
+        afterImage: "/images/indicators/cni_2071_2100.png",
+        beforeLabel: "1981-2010",
+        afterLabel: "2071-2100",
+        alt: "Cool Night Index Comparison",
+        aspectRatio: "auto",
+        caption: "Figure 2: Comparison of Cool Night Index between historical (1981-2010) and projected (2071-2100) climate scenarios indicating shifts towards warmer night temperatures during grape ripening in many wine regions."
+      }
+    ],
+    methodology: [
+      "The CNI is calculated as the average minimum temperature in September (Northern Hemisphere) or March (Southern Hemisphere), using daily minimum temperature data.",
+      "The CNI categorises climatic conditions into the following classes:",
+      "- Below 12 C (Very cool) - Very low night temperatures can be favorable for wine quality if thermal potential during the day is still sufficient for ripening.",
+      "- 12-14 C (Cool) - Warmer nights but still cool enough to have positive effects on grape colour and aroma.",
+      "- 14-18 C (Temperate) - Conditions become too warm for some early-ripening varieties.",
+      "- Above 18 C (Warm) - Higher risk of aroma loss and reduced color development for many varieties.",
+    ],
+    references: [
+    ],
+  },
+  {
+    id: "dryness-index",
+    name: "Dryness Index",
+    category: "climate",
+    subtitle: "Soil water balance and drought pressure.",
+    description: [
+      "The Dryness Index (DI) evaluates water availability for grapevines by combining precipitation, evapotranspiration, and soil water reserve assumptions. It helps characterise drought pressure and corresponding adaptation needs."
+    ],
+    contentBlocks: [
+      {
+        type: "imageComparison",
+        beforeImage: "/images/indicators/di_1981_2010.png",
+        afterImage: "/images/indicators/di_2071_2100.png",
+        beforeLabel: "1981-2010",
+        afterLabel: "2071-2100",
+        alt: "Dryness Index Comparison",
+        aspectRatio: "auto",
+        caption: "Figure 3: Comparison of Dryness Index between historical (1981-2010) and projected (2071-2100) climate scenarios showing increased dryness in many traditional wine regions, highlighting the growing importance of water management and irrigation strategies."
+      }
+    ],
+    methodology: [
+      "The Dryness Index (DI) is computed over a 6-month period and follows a water balance equation:",
+      "W = W0 + P - Tv - Es.",
+      "W = soil water reserve at the end of the period.",
+      "W0 = initial useful soil water reserve (often 200 mm).",
+      "P = precipitation.",
+      "Tv = potential vineyard transpiration.",
+      "Es = direct evaporation from soil.",
+      "The DI categorises climatic conditions into the following classes:",
+      "- Above 150 mm (Humid) - High water availability, sometimes beyond optimum for quality.",
+      "- 50-150 mm (Subhumid) - Low drought risk in general; but some varieties need drier conditions to produce optimum quality.",
+      "- -100 to 50 mm (Moderately dry) - Some dryness may occur, which can support quality through controlled stress.",
+      "- Below -100 mm (Very dry) - High drought stress risk, often requiring irrigation.",
+    ],
+    references: [
+    ],
   }
 ];
 
