@@ -2,87 +2,7 @@
 
 import Link from "next/link";
 import { ReactNode, useState } from "react";
-import Image from "next/image";
-
-type Indicator = {
-  id: string;
-  title: string;
-  subtitle?: string;
-  body: ReactNode;
-  methodology?: ReactNode;
-  references?: ReactNode;
-};
-
-const indicators: Indicator[] = [
-  {
-    id: "pollination",
-    title: "Pollination",
-    subtitle: "Thermal growing conditions and ripening suitability",
-    body: (
-      <p className="mt-4 text-white/80">
-        The indicator describes the relative capacity of ecosystems to support insect pollination (index). 
-        Crop pollination by wild insects is a key regulating ecosystem service with high economic implications. 
-        In fact, the productivity of many agricultural crops depends on the presence of pollinating insects 
-        and the ecosystems that support insect populations (Zulian et al., 2013). 
-      </p>
-    ),
-    methodology: (
-      <p className="mt-4 text-white/80">
-        The methodology used to map the pollination indicator focuses on wild bees as key animal pollinators. 
-        The indicator assumes that different habitats offer varying floral resources and nesting opportunities. 
-        The indicator also accounts for climatic variation in temperature and solar irradiance by calculating an 
-        annually averaged activity coefficient representing the pollination activity. In addition, given that 
-        pollination services decrease by increasing the distance from natural and semi-natural areas, a distance 
-        decay function is applied. The indicator values were mapped on a 0-100 scale, with higher values indicating 
-        a higher potential capacity to support insect pollination. 
-      </p>
-    ),
-    references: (
-      <ul className="mt-4 space-y-3 text-white/80">
-        <li>Zulian G, Maes J, Paracchini M. L. 2013 Linking Land Cover Data and Crop Yields for Mapping and Assessment of Pollination Services in Europe. Land 2013, 2, 472-492; doi:10.3390/land2030472</li>
-        <li>Vallecillo S, La Notte A, Polce C, Zulian G, Alexandris N, Ferrini S, Maes J. 2018. Ecosystem services accounting: Part I - Outdoor recreation and crop pollination, EUR 29024 EN; Publications Office of the European Union, Luxembourg, doi:10.2760/619793, JRC110321</li>
-        <li>Zulian G, Paracchini M, Maes J, Liquete Garcia M. ESTIMAP: Ecosystem services mapping at European scale. EUR 26474. Luxembourg (Luxembourg): Publications Office of the European Union; 2013. JRC87585 10.2788/64713</li>
-      </ul>
-    ),
-  },
-  {
-    id: "erosion-control",
-    title: "Soil Erosion Control",
-    subtitle: "Thermal growing conditions and ripening suitability",
-    body: (
-      <>
-        <p className="mt-4 text-white/80">
-          The indicator describes the prevention of soil erosion. Soil erosion is a widespread issue in natural and managed ecosystems, 
-          with several implications for environmental quality (soil deterioration) and social economy (decline in soil productivity). 
-          By protecting soil from wind and water processes, terrestrial ecosystems control soil erosion rates, therefore providing 
-          a fundamental ecosystem service that ensures human wellbeing. 
-        </p>
-
-        <br></br>
-
-        <p className="mt-4 text-white/80">
-          Learn more about soil erosion here  https://www.youtube.com/watch?v=BoSUEIkK_Y4 
-        </p>
-      </>
-    ),
-    methodology: (
-      <p className="mt-4 text-white/80">
-        Using the Revised Universal Soil Loss Equation, the soil erosion rates are calculated based on rainfall erosivity, 
-        soil erodibility, topography and soil retention, which is determined by vegetation cover. For the vegetation cover 
-        factor and erosion control practice factors, proxy values where used. The indicator values range on a 0-100 scale, 
-        with higher values indicating higher control of soil erosion. 
-      </p>
-    ),
-    references: (
-      <ul className="mt-4 space-y-3 text-white/80">
-        <li>Fu, B., Liu, Y. Lü, Y., He, C. Zeng, Y., Wu, B., (2011). Assessing the soil erosion control service of ecosystems change in the Loess Plateau of China. Ecological Complexity (8), Issue 4, 284-293. https://doi.org/10.1016/j.ecocom.2011.07.003.</li>
-        <li>Guerra, Carlos A., Maes, J. Geijzendorffer, I. Metzger, M.J. (2016). An assessment of soil erosion prevention by vegetation in Mediterranean Europe: Current trends of ecosystem service provision. Ecological Indicators (60), 213-222. https://doi.org/10.1016/j.ecolind.2015.06.043</li>
-        <li>Laaich, H. et al. (2016). Soil erodibility mapping using three approaches in the Tangiers province â€“Northern Morocco. International Soil and Water Conservation Research (4), 159-167.</li>
-        <li>Panagos, P. et al. (2015). Estimating the soil erosion cover-management factor at the European scale. Land Use Policy (48), 38-50.</li>
-      </ul>
-    ),
-  },
-];
+import { ecosystemServiceIndicators } from "@/app/components/indicators/ecosystem-services";
 
 function CollapsiblePanel({
   title,
@@ -126,6 +46,13 @@ function CollapsiblePanel({
   );
 }
 
+const renderParagraphs = (paragraphs: string[], className = "mt-4 text-white/80") =>
+  paragraphs.map((text, index) => (
+    <p key={`${className}-${index}`} className={className}>
+      {text}
+    </p>
+  ));
+
 export default function EcosystemServicesPage() {
   return (
     <main className="min-h-screen bg-black text-white">
@@ -163,37 +90,51 @@ export default function EcosystemServicesPage() {
 
             <h2 className="text-xl font-semibold text-white">Jump to indicator</h2>
             <div className="mt-4 flex flex-wrap gap-3">
-              {indicators.map(indicator => (
+              {ecosystemServiceIndicators.map(indicator => (
                 <a
                   key={indicator.id}
                   href={`#${indicator.id}`}
                   className="rounded-lg border border-white/15 bg-black/30 px-4 py-2 text-sm font-medium text-white/85 transition-colors hover:border-[#E91E63] hover:text-white"
                 >
-                  {indicator.title}
+                  {indicator.name}
                 </a>
               ))}
             </div>
           </section>
           
-          {indicators.map(indicator => (
+          {ecosystemServiceIndicators.map(indicator => (
             <section
               key={indicator.id}
               id={indicator.id}
               className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/10 to-white/5 p-5 md:p-8"
             >
-              <h3 className="text-2xl font-semibold text-white">{indicator.title}</h3>
+              <h3 className="text-2xl font-semibold text-white">{indicator.name}</h3>
               {indicator.subtitle ? (
                 <p className="mt-2 text-sm text-white/60">{indicator.subtitle}</p>
               ) : null}
 
-              {indicator.body}
+              {renderParagraphs(indicator.description)}
+
+              {indicator.video ? (
+                <p className="mt-4 text-white/80">
+                  {indicator.video.label} {indicator.video.url}
+                </p>
+              ) : null}
 
               {indicator.methodology ? (
-                <CollapsiblePanel title="Methodology">{indicator.methodology}</CollapsiblePanel>
+                <CollapsiblePanel title="Methodology">
+                  {renderParagraphs(indicator.methodology, "mt-4 text-white/80")}
+                </CollapsiblePanel>
               ) : null}
 
               {indicator.references ? (
-                <CollapsiblePanel title="References">{indicator.references}</CollapsiblePanel>
+                <CollapsiblePanel title="References">
+                  <ul className="mt-4 space-y-3 text-white/80">
+                    {indicator.references.map(reference => (
+                      <li key={reference}>{reference}</li>
+                    ))}
+                  </ul>
+                </CollapsiblePanel>
               ) : null}
             </section>
           ))}
