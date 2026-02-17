@@ -1,4 +1,6 @@
-﻿export type Indicator = {
+import type { IndicatorContentBlock } from "@/app/components/indicators/IndicatorContent";
+
+export type Indicator = {
   id: string;
   name: string;
   category: string;
@@ -6,6 +8,7 @@
   description: string[];
   methodology?: string[];
   references?: string[];
+  contentBlocks?: IndicatorContentBlock[];
   video?: {
     label: string;
     url: string;
@@ -231,3 +234,5 @@ export const getIndicatorsWithMapByCategory = (category: string) =>
 
 export const getIndicatorById = (id: string) =>
   Indicators.find(indicator => indicator.id === id);
+
+
