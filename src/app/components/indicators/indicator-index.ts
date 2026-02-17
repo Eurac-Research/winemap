@@ -18,13 +18,13 @@ export const Indicators: Indicator[] = [
     id: "pollination",
     name: "Pollination",
     category: "ecosystem-services",
-    subtitle: "Capacity of ecosystems to support insect pollination",
+    subtitle: "Relative potential for pollination service provision in agricultural areas.",
     description: [
-      "The indicator describes the relative capacity of ecosystems to support insect pollination (index). Crop pollination by wild insects is a key regulating ecosystem service with high economic implications. In fact, the productivity of many agricultural crops depends on the presence of pollinating insects and the ecosystems that support insect populations (Zulian et al., 2013).",
-      "The relative capacity of ecosystems to support insect pollination (index). Crop pollination by wild insects is a key regulating ecosystem service with high economic implications. The productivity of many agricultural crops depends on the presence of pollinating insects and the ecosystems that support insect populations (Zulian et al., 2013). The methodology used to map the pollination indicator focuses on wild bees as key animal pollinators. The indicator assumes that different habitats offer varying floral resources and nesting opportunities. The indicator also accounts for climatic variation in temperature and solar irradiance by calculating an annually averaged activity coefficient representing the pollination activity. In addition, given that pollination services decrease by increasing the distance from natural and semi-natural areas, a distance decay function is applied. The indicator values were mapped on a 0-100 scale, with higher values indicating a higher potential capacity to support insect pollination."
+      "The Pollination indicator represents the relative potential of ecosystems to support insect-mediated crop pollination. Pollination by wild insects—particularly bees—is a crucial regulating ecosystem service with significant ecological and economic importance, as many agricultural crops depend on insect pollination to maintain stable yields and product quality.",
+      "Healthy ecosystems provide floral resources, nesting habitats, and suitable microclimatic conditions that sustain pollinator populations. Landscapes rich in semi-natural habitats generally support higher pollinator abundance and diversity, thereby increasing pollination potential in nearby agricultural areas. The indicator expresses the relative capacity of a landscape to sustain pollination services on a standardized 0–100 scale, where higher values indicate more favorable ecological conditions for supporting wild pollinator communities."
     ],
     methodology: [
-      "The methodology used to map the pollination indicator focuses on wild bees as key animal pollinators. The indicator assumes that different habitats offer varying floral resources and nesting opportunities. The indicator also accounts for climatic variation in temperature and solar irradiance by calculating an annually averaged activity coefficient representing the pollination activity. In addition, given that pollination services decrease by increasing the distance from natural and semi-natural areas, a distance decay function is applied. The indicator values were mapped on a 0-100 scale, with higher values indicating a higher potential capacity to support insect pollination."
+      "The indicator focuses on wild bees as key pollinators and models pollination potential based on habitat suitability and landscape configuration. The assessment integrates habitat-specific availability of floral resources and nesting opportunities, climatic suitability derived from temperature and solar irradiance (represented through an annually averaged pollinator activity coefficient), and a distance-decay function reflecting decreasing pollination service delivery with increasing distance from natural and semi-natural habitats. The resulting spatial layers were combined and standardized to a 0–100 index, where higher values indicate greater potential to support pollination services."
     ],
     references: [
       "Zulian G, Maes J, Paracchini M. L. 2013 Linking Land Cover Data and Crop Yields for Mapping and Assessment of Pollination Services in Europe. Land 2013, 2, 472-492; doi:10.3390/land2030472",
@@ -40,18 +40,18 @@ export const Indicators: Indicator[] = [
     id: "erosion-control",
     name: "Soil Erosion Control",
     category: "ecosystem-services",
-    subtitle: "Protection of soils from water and wind erosion",
+    subtitle: "Relative capacity of ecosystems to prevent soil loss from water and wind erosion.",
     description: [
-      "The indicator describes the prevention of soil erosion. Soil erosion is a widespread issue in natural and managed ecosystems, with several implications for environmental quality (soil deterioration) and social economy (decline in soil productivity). By protecting soil from wind and water processes, terrestrial ecosystems control soil erosion rates, therefore providing a fundamental ecosystem service that ensures human wellbeing.",
-      "The prevention of soil erosion (index). Soil erosion is a widespread issue in natural and managed ecosystems, with several implications for environmental quality (soil deterioration) and social economy (decline in soil productivity). By protecting soil from wind and water processes, terrestrial ecosystems control soil erosion rates, therefore providing a fundamental ecosystem service that ensures human wellbeing. Using the Revised Universal Soil Loss Equation, the soil erosion rates are calculated based on rainfall erosivity, soil erodibility, topography and soil retention, which is determined by vegetation cover. For the vegetation cover factor and erosion control practice factors, proxy values where used. The indicator values range on a 0-100 scale, with higher values indicating higher control of soil erosion.",
+      "The Soil Erosion Control indicator represents the capacity of ecosystems to prevent soil loss caused by water and wind erosion. Soil erosion is a major environmental concern that affects soil fertility, agricultural productivity, water quality, and long-term landscape stability.",
+      "Vegetation cover plays a central role in stabilizing soils by intercepting rainfall, reducing surface runoff, improving soil structure, and protecting against wind exposure. Landscapes with well-established vegetation and favorable terrain characteristics generally provide stronger erosion control services. The indicator is expressed on a 0–100 scale, where higher values indicate greater capacity of ecosystems to protect soils from erosion."
+    ],
+    methodology: [
+      "Soil erosion risk was estimated using the Revised Universal Soil Loss Equation (RUSLE). The model incorporates rainfall erosivity, soil erodibility, topographic factors (slope length and steepness), vegetation cover, and land management practices. Vegetation cover and erosion-control practice factors were represented using proxy values derived from land cover datasets. The resulting erosion control capacity was standardized to a 0–100 index, with higher values indicating stronger erosion mitigation potential."
     ],
     video: {
       label: "Learn more about soil erosion here",
       url: "https://www.youtube.com/watch?v=BoSUEIkK_Y4"
     },
-    methodology: [
-      "Using the Revised Universal Soil Loss Equation, the soil erosion rates are calculated based on rainfall erosivity, soil erodibility, topography and soil retention, which is determined by vegetation cover. For the vegetation cover factor and erosion control practice factors, proxy values where used. The indicator values range on a 0-100 scale, with higher values indicating higher control of soil erosion."
-    ],
     references: [
       "Fu, B., Liu, Y. LÃ¼, Y., He, C. Zeng, Y., Wu, B., (2011). Assessing the soil erosion control service of ecosystems change in the Loess Plateau of China. Ecological Complexity (8), Issue 4, 284-293. https://doi.org/10.1016/j.ecocom.2011.07.003.",
       "Guerra, Carlos A., Maes, J. Geijzendorffer, I. Metzger, M.J. (2016). An assessment of soil erosion prevention by vegetation in Mediterranean Europe: Current trends of ecosystem service provision. Ecological Indicators (60), 213-222. https://doi.org/10.1016/j.ecolind.2015.06.043",
@@ -69,9 +69,13 @@ export const Indicators: Indicator[] = [
     id: "pest-control",
     name: "Pest control",
     category: "ecosystem-services",
-    subtitle: "Landscape potential for natural pest control",
+    subtitle: "Relative potential to sustain natural pest control in agricultural areas.",
     description: [
-        "The relative potential to sustain natural pest control in agricultural areas (index). Pest control by natural enemies (natural pest control) is an important regulating ecosystem service with significant implications for the sustainability of agroecosystems. The presence of semi-natural habitats and landscape heterogeneity are key determinants of the delivery of this service and for the long-term sustainability of agroecosystems (Rega et al., 2018). The indicator model considers landscape composition in terms of semi-natural habitat types, abundance, spatial configuration and distance from the focal field. It combines recent high-resolution geospatial layers with empirical results from extensive field surveys measuring the specific contribution of different semi-natural habitats to support flying insects and enemies providing natural pest control (Rega et al., 2018). The original dataset from Rega et al. (2018) has been extracted for the agricultural areas within the study area. The indicator values are scaled on a 0-100 scale, with higher values indicating higher natural pest control potential.",
+      "The Pest Control indicator represents the relative potential of agricultural landscapes to sustain natural pest regulation by beneficial organisms. Natural pest control is an important regulating ecosystem service that supports sustainable agriculture by reducing reliance on chemical pesticides and enhancing agroecosystem resilience.",
+      "Semi-natural habitats such as hedgerows, woodlands, and grasslands provide refuge, breeding sites, and food resources for natural enemies of crop pests. Landscape heterogeneity and connectivity strongly influence the effectiveness of this service. The indicator reflects the capacity of landscapes to support biologically based pest regulation and is expressed on a 0–100 scale, where higher values indicate greater natural pest control potential."
+    ],
+    methodology: [
+      "The indicator is based on a pan-European spatial model linking landscape structure to pest control potential. The model integrates the composition and abundance of semi-natural habitats, their spatial configuration, and distance from agricultural fields. Empirical field survey data quantifying habitat-specific contributions to natural enemy populations were incorporated. Agricultural areas within the study region were extracted and standardized to a 0–100 index scale."
     ],
     references: [
       "Rega, C. et al. (2018). A pan-European model of landscape potential to support natural pest control services. Ecological Indicators, 90: 653-664. doi.org/10.1016/j.ecolind.2018.03.075, https://publications.jrc.ec.europa.eu/repository/handle/JRC111488"
@@ -82,9 +86,13 @@ export const Indicators: Indicator[] = [
     id: "net-primary-production",
     name: "Net primary production",
     category: "ecosystem-services",
-    subtitle: "Average plant growth carbon uptake",
+    subtitle: "Thermal growing conditions and ripening suitability",
     description: [
-        "Total amount of carbon dioxide used for plant growth per unit time (index). The Net Primary Production (NPP) dataset quantifies the total amount of carbon dioxide used for plant growth per unit time (index). The yearly NPP (g C/m²/year) is calculated from yearly Gross Primary Production multiplied with a Carbon Use Efficiency factor of 0.5. The original datasets (EEA, 2023) for the years 2018-2022 were averaged to get the average NPP value for the study areas and then standardized on a 0-100 range.",
+      "The Net Primary Production (NPP) indicator represents the amount of carbon fixed by vegetation through photosynthesis and available for plant growth. It is a fundamental measure of ecosystem productivity and reflects the capacity of ecosystems to generate biomass.",
+      "Higher NPP values indicate more productive ecosystems with favorable growing conditions, contributing to carbon sequestration, biomass availability, and overall ecosystem functioning. The indicator is expressed on a standardized 0–100 scale, where higher values correspond to greater ecosystem productivity."
+    ],
+    methodology: [
+      "Annual Net Primary Production (g C/m²/year) was derived from Gross Primary Production using a Carbon Use Efficiency factor of 0.5. The original EEA dataset (2018–2022) was averaged across the five-year period for the study area. The resulting values were standardized to a 0–100 index scale."
     ],
     references: [
       "European Environment Agency, 2023. Medium Resolution Net Primary Production [Dataset]- NPP, raster 196m version 1, Nov. 2023. European Environment Agency. Available at: https://sdi.eea.europa.eu/catalogue/srv/api/records/28d6b823-e2fd-4bf4-a6aa-cb6a359c52da?language=all (Accessed: 01/2025)(eea_r_3035_196_m_modis-npp_p_2000-2022_v01_r00)"
@@ -93,11 +101,15 @@ export const Indicators: Indicator[] = [
   },
   {
     id: "outdoor-recreation",
-    name: "Outdoor recreation (index)",
+    name: "Outdoor recreation",
     category: "ecosystem-services",
-    subtitle: "Potential for nature-based recreation",
+    subtitle: "Relative potential of landscapes to provide accessible nature-based recreation opportunities.",
     description: [
-        "The relative capacity of ecosystems to support nature-based recreation opportunities (index). Outdoor recreation in natural and semi-natural environments plays a crucial role for physical and mental health and contributes substantially to human well-being. The outdoor recreation potential of different ecosystems is modelled based on the following six landscape factors: naturalness, presence of protected areas (Natura2000), presence of water, landscape diversity, terrain ruggedness, density of mountain peaks, and is weighted by the degree of accessibility of a specific area (Schirpke et al., 2018). The indicator values range on a 0-100 scale, with higher values indicating higher outdoor recreation potential.",
+      "The Outdoor Recreation indicator represents the relative capacity of ecosystems to provide nature-based recreational opportunities. Access to natural and semi-natural environments contributes substantially to physical health, mental well-being, and overall quality of life.",
+      "Recreational attractiveness depends on multiple landscape characteristics, including naturalness, scenic diversity, terrain features, water presence, and accessibility. Areas combining ecological value with good accessibility typically offer higher recreational potential. The indicator is expressed on a 0–100 scale, where higher values indicate greater potential to support outdoor recreational activities."
+    ],
+    methodology: [
+      "The model integrates six spatial components: degree of naturalness, presence of protected areas (e.g., Natura 2000), presence of water bodies, landscape diversity, terrain ruggedness, and density of mountain peaks. Accessibility weighting was applied to account for proximity to infrastructure and settlements. The composite indicator was standardized to a 0–100 scale."
     ],
     references: [
       "Schirpke, Uta, et al. \"Revealing spatial and temporal patterns of outdoor recreation in the European Alps and their surroundings.\" Ecosystem services 31 (2018): 336-350.",
@@ -110,11 +122,15 @@ export const Indicators: Indicator[] = [
   },
   {
     id: "landscape-aesthetics",
-    name: "Landscape aesthetics (index)",
+    name: "Landscape aesthetics",
     category: "ecosystem-services",
-    subtitle: "Scenic quality of visible landscapes",
+    subtitle: "Relative scenic value of landscapes based on visibility and landscape composition.",
     description: [
-        "The relative aesthetic value of a landscape (index). The scenic beauty of landscapes is highly appreciated for enjoying nature and carrying out recreational activities. The aesthetic value of a landscape is therefore an important aspect contributing to human well-being (Schirpke et al., 2021). The landscape aesthetic indicator is modelled considering two factors: the visibility and the objective aesthetic beauty of the visible landscape. For the landscape visibility, two separate visibility analysis are performed: 1) using one observer point of each 250m raster cell and 2) using one observer point for each built-up area as well as one observer point for every 250 people living in the area. Additionally, photo user day Flickr photo points were considered. The landscape aesthetic beauty is modelled using proxy values for landcover types, and by applying focal statistic with a 500m radius, since landscape is always perceived as a location with its surroundings. The indicator values range on a 0-100 scale, with higher values indicating higher landscape beauty.",
+      "The Landscape Aesthetics indicator represents the relative scenic value of landscapes. Scenic beauty influences human well-being, recreational behavior, and regional attractiveness, and is therefore an important cultural ecosystem service.",
+      "Landscape aesthetics depend on both intrinsic landscape characteristics and visibility. Diverse, natural, and visually structured environments are generally perceived as more attractive. The indicator is expressed on a 0–100 scale, where higher values indicate landscapes with higher relative scenic quality."
+    ],
+    methodology: [
+      "The indicator combines a visibility analysis and an assessment of landscape beauty. Visibility was calculated using observer points distributed across raster cells and built-up areas, including population-weighted locations. Landscape beauty was estimated using proxy values assigned to land cover types and applying focal statistics within a 500 m radius to account for the perception of surrounding landscapes. User-generated Flickr photo data were additionally considered as a proxy for perceived attractiveness. Results were standardized to a 0–100 scale."
     ],
     references: [
       "García, A. M., Santé, I., Loureiro, X. & Miranda, D. Green infrastructure spatial planning considering ecosystem services assessment and trade-off analysis. Application at landscape scale in Galicia region (NW Spain). Ecosystem Services 43, 101115 (2020).",
@@ -127,11 +143,15 @@ export const Indicators: Indicator[] = [
   },
   {
     id: "naturalness-index",
-    name: "Naturalness (index)",
+    name: "Naturalness",
     category: "ecosystem-conditions",
-    subtitle: "Degree of land-use naturalness",
+    subtitle: "Degree of naturalness based on land use intensity and ecological value.",
     description: [
-        "The degree of land use/land cover naturalness (index). Natural and seminatural areas play an important role for viticulture because they provide habitats for natural predators that can support pest and disease control. Because a shift in climatic conditions can change patterns of crop pathogens and pests, these areas are of critical importance for adaptation purposes, as they support the resilience of vineyard landscapes. The indicator is calculated by reclassifying a land use/land cover map on a 1-7 hemeroby scale as follows: 1 = Artificial, 2 = Artificial with natural elements, 3 = Cultural, 4 = Altered, 5 = Semi-natural, 6 = Near natural, 7 = Natural (Rüdisser et al., 2012). The original classification was reversed to assign higher values to more natural land use classes. In the second stage, the classification was integrated with Natura2000 (+1) and High Nature Value Farmland (+1) data. The final classification therefore ranges from 1 to 9. Values were rescaled on a 0-100 scale. The indicator was mapped at 100 m spatial resolution.",
+      "The Naturalness indicator represents the degree to which landscapes are characterized by natural or semi-natural ecosystems as opposed to intensively used or artificial land uses. Natural and semi-natural areas play a fundamental role in maintaining biodiversity, ecological processes, and ecosystem resilience.",
+      "Landscapes with higher naturalness typically provide more stable habitats, support greater species diversity, and enhance regulating ecosystem services such as pest control, pollination, and climate regulation. In agricultural regions, nearby natural areas can increase ecological resilience and adaptive capacity. The indicator is expressed on a 0–100 scale, where higher values indicate landscapes with a higher degree of naturalness and ecological integrity."
+    ],
+    methodology: [
+      "The indicator is derived from a land use/land cover classification reclassified according to a seven-level hemeroby (naturalness) scale ranging from artificial to natural ecosystems (Rüdisser et al., 2012). The original classification was reversed to ensure that higher values correspond to higher naturalness. The classification was further enhanced by integrating Natura 2000 areas and High Nature Value (HNV) farmland, each contributing an additional score. The resulting values were standardized to a 0–100 index and mapped at 100 m spatial resolution."
     ],
     references: [
       "Rüdisser, J., Tasser, E., & Tappeiner, U. (2012). Distance to nature—a new biodiversity relevant environmental indicator set at the landscape level. Ecological Indicators, 15(1), 208-216 doi.org/10.1016/j.ecolind.2011.09.027",
@@ -143,11 +163,15 @@ export const Indicators: Indicator[] = [
   },
   {
     id: "distance-to-nature",
-    name: "Land use integrity (index)",
+    name: "Land use integrity",
     category: "ecosystem-conditions",
-    subtitle: "Land-use integrity based on the proximity to natural areas",
+    subtitle: "Degree of landscape integrity based on proximity to natural and near-natural habitats.",
     description: [
-        "The degree of land use integrity based on the distance to natural and near-natural areas (index). The composition and configuration of different ecosystems in a landscape, and the way they are managed have an influence on biodiversity, and the quality of ecological processes and functions which are key to supporting a variety of ecosystem services. Biodiversity of intensively used landscapes can be enhanced through the proximity to natural habitats. The presence of natural and semi natural habitat patches can serve as habitats for otherwise regionally extinct species and as nesting and recolonization areas for many dispersing animal and plant species. Furthermore, natural and semi natural habitats can serve as \"steppingstones\" and habitat corridors between otherwise separated habitats (Rüdisser et al., 2012). The land use integrity indicator is based on the distance to nature index described in Rüdisser et al. (2012). Distance to nature represents a composite index which is calculated by multiplying the degree of naturalness (Nd) by the distance to natural habitats (Dn), defined as the average distance to the next natural or near natural ecosystem patch. For Nd, land use is reclassified along a seven qualitative staged naturalness scale (1-7), with 1 corresponding to natural ecosystems with no or minimal anthropogenic influence, and 7 corresponding to artificial systems or structures. The indicator values were transformed to indicate that a higher land use integrity and quality is reached when the indicator value is low (i.e., low distance to natural habitats). The indicator was mapped at 100 m spatial resolution and standardized on a 0-100 range.",
+      "The Land Use Integrity indicator reflects the structural and ecological integrity of landscapes based on their proximity to natural and near-natural habitats. The spatial arrangement of ecosystems and their connectivity strongly influence biodiversity, ecological processes, and the provision of ecosystem services.",
+      "Landscapes located closer to natural habitats tend to support higher species diversity, improved dispersal processes, and enhanced ecological resilience. Natural and semi-natural areas can function as refuges, stepping stones, and habitat corridors within otherwise intensively used landscapes. The indicator is expressed on a 0–100 scale, where higher values indicate higher land use integrity and closer proximity to natural habitats."
+    ],
+    methodology: [
+      "The indicator is based on the distance-to-nature concept described by Rüdisser et al. (2012). It combines two components: (1) the degree of naturalness derived from land use classification and (2) the average distance to the nearest natural or near-natural habitat patch. Naturalness was classified using a seven-stage qualitative scale, and distances were calculated spatially for each raster cell. The combined index was transformed so that higher values represent higher landscape integrity (i.e., shorter distance to natural habitats). Results were standardized to a 0–100 scale and mapped at 100 m resolution."
     ],
     references: [
       "Rüdisser, J., Tasser, E., & Tappeiner, U. (2012). Distance to nature—a new biodiversity relevant environmental indicator set at the landscape level. Ecological Indicators, 15(1), 208-216 doi.org/10.1016/j.ecolind.2011.09.027",
@@ -157,11 +181,15 @@ export const Indicators: Indicator[] = [
   },
   {
     id: "landuse-diversity",
-    name: "Land use diversity (index)",
+    name: "Land use diversity",
     category: "ecosystem-conditions",
-    subtitle: "Heterogeneity of land-use classes",
+    subtitle: "Landscape heterogeneity based on the diversity and distribution of land cover types.",
     description: [
-        "The diversity of land use/land cover classes (index). The composition and configuration of different ecosystems in a landscape, as well as the way they are managed have an influence on biodiversity, and on the quality of ecological processes and functions. Higher landscape heterogeneity is often considered an important environmental factor that promotes biodiversity and the provision of a variety of ecosystem services. The diversity of land use/land cover classes was calculated at 100 m resolution based on their richness (number of different land uses) and abundance (area coverage) as calculated through the Simpson diversity using the following formula: SUM pi * ln(pi) where pi is the proportion of each land use type on the total area considered (1 ha). Higher indicator values indicate a higher landscape complexity. The indicator was mapped at 100 m resolution and standardized on a 0-100 range.",
+      "The Land Use Diversity indicator represents the heterogeneity of landscapes in terms of the variety and relative distribution of land use and land cover classes. Landscape heterogeneity is widely recognized as an important factor supporting biodiversity, ecological stability, and multifunctionality.",
+      "More diverse landscapes often provide a broader range of habitats and ecological niches, enhancing ecosystem functioning and resilience. Heterogeneous landscapes are also better able to support multiple ecosystem services simultaneously. The indicator is expressed on a 0–100 scale, where higher values indicate greater landscape complexity and diversity."
+    ],
+    methodology: [
+      "Land use diversity was calculated at 100 m resolution using a diversity index that accounts for both richness (number of land use classes) and relative abundance (area coverage). Simpson-based diversity calculations were applied within a defined spatial unit (1 ha), using the proportion of each land use type relative to the total area. The resulting diversity values were standardized to a 0–100 index scale."
     ],
     references: [
       "Comer D., Greene, S. (2015). The development and application of a land use diversity index for Oklahoma City, OK. Applied Geography, 60, 46-57 doi.org/10.1016/j.apgeog.2015.02.015",
@@ -171,11 +199,15 @@ export const Indicators: Indicator[] = [
   },
   {
     id: "climatic-waterbalance",
-    name: "Climate water balance (index)",
+    name: "Climate water balance",
     category: "ecosystem-conditions",
-    subtitle: "Water availability after evapotranspiration",
+    subtitle: "Water availability from precipitation after accounting for evapotranspiration.",
     description: [
-        "The water available from precipitation after accounting for evapotranspiration (index). Artificial irrigation might not be feasible in all areas and can pose significant challenges to the natural water reserves of a region. The available water from precipitation (after accounting for evapotranspiration) is therefore critical to the adaptive capacity of a region. A higher availability of water is related to lower risk for drought and lower dependence on irrigation and may therefore protect regions from negative impacts of climate change. The indicator for climate water balance is based on the climate moisture index (cmi) from the CHELSA database, which is calculated as the difference between evapotranspiration and total precipitation (mm). For the computation, the average monthly cmi over the period 1981-2010 was used to calculate the average yearly climate water balance. The indicator was standardized on a 0-100 range, with higher values indicating increased water availability.",
+      "The Climate Water Balance indicator represents the amount of water available from precipitation after accounting for evapotranspiration. Water availability is a key determinant of ecosystem productivity, vegetation health, and agricultural suitability, particularly under changing climatic conditions.",
+      "Regions with higher positive water balance are generally less exposed to drought stress and may require less artificial irrigation. Adequate water availability enhances ecosystem resilience and supports long-term sustainability of land use systems. The indicator is expressed on a 0–100 scale, where higher values indicate greater climatic water availability."
+    ],
+    methodology: [
+      "The indicator is based on the Climate Moisture Index (CMI) derived from the CHELSA climate database. The CMI represents the difference between precipitation and potential evapotranspiration (mm). Average monthly CMI values for the period 1981–2010 were aggregated to calculate mean annual climate water balance. The resulting values were standardized to a 0–100 index scale, with higher values indicating greater water availability."
     ],
     references: [
       "Tscholl, S et al. (2024). Climate resilient winegrowing regions. Nature communications 15 (6254). doi.org/10.1038/s41467-024-50549-w",
