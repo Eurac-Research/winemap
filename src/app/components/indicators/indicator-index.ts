@@ -1,4 +1,4 @@
-﻿export type EcosystemServiceIndicator = {
+﻿export type Indicator = {
   id: string;
   name: string;
   category: string;
@@ -13,11 +13,11 @@
   mapboxLayerId?: string;
 };
 
-export const ecosystemServiceIndicators: EcosystemServiceIndicator[] = [
+export const Indicators: Indicator[] = [
   {
     id: "pollination",
     name: "Pollination",
-    category: "Ecosystem Services",
+    category: "ecosystem-services",
     subtitle: "Thermal growing conditions and ripening suitability",
     description: [
       "The indicator describes the relative capacity of ecosystems to support insect pollination (index). Crop pollination by wild insects is a key regulating ecosystem service with high economic implications. In fact, the productivity of many agricultural crops depends on the presence of pollinating insects and the ecosystems that support insect populations (Zulian et al., 2013).",
@@ -36,10 +36,10 @@ export const ecosystemServiceIndicators: EcosystemServiceIndicator[] = [
       ],
       mapboxLayerId: "env_pollination_potential_100m-cgzjjo3l"
     },
-  {
+    {
     id: "erosion-control",
     name: "Soil Erosion Control",
-    category: "Ecosystem Services",
+    category: "ecosystem-services",
     subtitle: "Thermal growing conditions and ripening suitability",
     description: [
       "The indicator describes the prevention of soil erosion. Soil erosion is a widespread issue in natural and managed ecosystems, with several implications for environmental quality (soil deterioration) and social economy (decline in soil productivity). By protecting soil from wind and water processes, terrestrial ecosystems control soil erosion rates, therefore providing a fundamental ecosystem service that ensures human wellbeing.",
@@ -68,7 +68,7 @@ export const ecosystemServiceIndicators: EcosystemServiceIndicator[] = [
     {
       id: "pest-control",
       name: "Pest control",
-      category: "Ecosystem Services",
+      category: "ecosystem-services",
       description: [
         "The relative potential to sustain natural pest control in agricultural areas (index). Pest control by natural enemies (natural pest control) is an important regulating ecosystem service with significant implications for the sustainability of agroecosystems. The presence of semi-natural habitats and landscape heterogeneity are key determinants of the delivery of this service and for the long-term sustainability of agroecosystems (Rega et al., 2018). The indicator model considers landscape composition in terms of semi-natural habitat types, abundance, spatial configuration and distance from the focal field. It combines recent high-resolution geospatial layers with empirical results from extensive field surveys measuring the specific contribution of different semi-natural habitats to support flying insects and enemies providing natural pest control (Rega et al., 2018). The original dataset from Rega et al. (2018) has been extracted for the agricultural areas within the study area. The indicator values are scaled on a 0-100 scale, with higher values indicating higher natural pest control potential.",
       ],
@@ -80,7 +80,7 @@ export const ecosystemServiceIndicators: EcosystemServiceIndicator[] = [
     {
       id: "net-primary-production",
       name: "Net primary production (index)",
-      category: "Ecosystem Services",
+      category: "ecosystem-services",
       description: [
         "Total amount of carbon dioxide used for plant growth per unit time (index). The Net Primary Production (NPP) dataset quantifies the total amount of carbon dioxide used for plant growth per unit time (index). The yearly NPP (g C/m²/year) is calculated from yearly Gross Primary Production multiplied with a Carbon Use Efficiency factor of 0.5. The original datasets (EEA, 2023) for the years 2018-2022 were averaged to get the average NPP value for the study areas and then standardized on a 0-100 range.",
       ],
@@ -92,7 +92,7 @@ export const ecosystemServiceIndicators: EcosystemServiceIndicator[] = [
     {
       id: "outdoor-recreation",
       name: "Outdoor recreation (index)",
-      category: "Ecosystem Services",
+      category: "ecosystem-services",
       description: [
         "The relative capacity of ecosystems to support nature-based recreation opportunities (index). Outdoor recreation in natural and semi-natural environments plays a crucial role for physical and mental health and contributes substantially to human well-being. The outdoor recreation potential of different ecosystems is modelled based on the following six landscape factors: naturalness, presence of protected areas (Natura2000), presence of water, landscape diversity, terrain ruggedness, density of mountain peaks, and is weighted by the degree of accessibility of a specific area (Schirpke et al., 2018). The indicator values range on a 0-100 scale, with higher values indicating higher outdoor recreation potential.",
       ],
@@ -108,7 +108,7 @@ export const ecosystemServiceIndicators: EcosystemServiceIndicator[] = [
     {
       id: "landscape-aesthetics",
       name: "Landscape aesthetics (index)",
-      category: "Ecosystem Services",
+      category: "ecosystem-services",
       description: [
         "The relative aesthetic value of a landscape (index). The scenic beauty of landscapes is highly appreciated for enjoying nature and carrying out recreational activities. The aesthetic value of a landscape is therefore an important aspect contributing to human well-being (Schirpke et al., 2021). The landscape aesthetic indicator is modelled considering two factors: the visibility and the objective aesthetic beauty of the visible landscape. For the landscape visibility, two separate visibility analysis are performed: 1) using one observer point of each 250m raster cell and 2) using one observer point for each built-up area as well as one observer point for every 250 people living in the area. Additionally, photo user day Flickr photo points were considered. The landscape aesthetic beauty is modelled using proxy values for landcover types, and by applying focal statistic with a 500m radius, since landscape is always perceived as a location with its surroundings. The indicator values range on a 0-100 scale, with higher values indicating higher landscape beauty.",
       ],
@@ -120,5 +120,60 @@ export const ecosystemServiceIndicators: EcosystemServiceIndicator[] = [
         "Schirpke, U., Meisch, C., Marsoner, T. & Tappeiner, U. Revealing spatial and temporal patterns of outdoor recreation in the European Alps and their surroundings. Ecosystem Services 31, 336–350 (2018)."
       ],
       mapboxLayerId: "env_landscape_aesthetics_100m-b1zuidds"
+    },
+    {
+      id: "naturalness-index",
+      name: "Naturalness (index)",
+      category: "ecosystem-conditions",
+      description: [
+        "The degree of land use/land cover naturalness (index). Natural and seminatural areas play an important role for viticulture because they provide habitats for natural predators that can support pest and disease control. Because a shift in climatic conditions can change patterns of crop pathogens and pests, these areas are of critical importance for adaptation purposes, as they support the resilience of vineyard landscapes. The indicator is calculated by reclassifying a land use/land cover map on a 1-7 hemeroby scale as follows: 1 = Artificial, 2 = Artificial with natural elements, 3 = Cultural, 4 = Altered, 5 = Semi-natural, 6 = Near natural, 7 = Natural (Rüdisser et al., 2012). The original classification was reversed to assign higher values to more natural land use classes. In the second stage, the classification was integrated with Natura2000 (+1) and High Nature Value Farmland (+1) data. The final classification therefore ranges from 1 to 9. Values were rescaled on a 0-100 scale. The indicator was mapped at 100 m spatial resolution.",
+      ],
+      references: [
+        "Rüdisser, J., Tasser, E., & Tappeiner, U. (2012). Distance to nature—a new biodiversity relevant environmental indicator set at the landscape level. Ecological Indicators, 15(1), 208-216 doi.org/10.1016/j.ecolind.2011.09.027",
+        "EU, Copernicus Land Monitoring Service. (2019). European Environment Agency (EEA)-dataset: CORINE land cover-2018, version 2020_20u1. https://land.copernicus.eu/pan-european/corine-land-cover",
+        "European Environment Agency (EEA)-dataset: High Nature Value (HNV) farmland 2012 (100 m) accounting version, Nov. 2017. European Environment Agency. Available at https://www.eea.europa.eu/en/datahub/datahubitem-view/1bd26e8f-8ea0-45e0-b6bf-9ed2baff5d28?activeAccordion=1070000 (Accessed 11/2024) (eea_r_3035_100_m_hnv-farm-2012-acc_p_2012_v01_r00)",
+        "European Environment Agency (EEA)-dataset: Natura 2000 (vector) - version 2017, Mar. 2018. European Environment Agency. Available at https://www.eea.europa.eu/en/datahub/datahubitem-view/6fc8ad2d-195d-40f4-bdec-576e7d1268e4?activeAccordion=1091667. (Accessed 11/2024) (eea_v_3035_100_k_natura2000_p_2022_v01_r00)"
+      ],
+      mapboxLayerId: "env_naturalness_index-4gh1u3nd"
+    },
+    {
+      id: "distance-to-nature",
+      name: "Land use integrity (index)",
+      category: "ecosystem-conditions",
+      description: [
+        "The degree of land use integrity based on the distance to natural and near-natural areas (index). The composition and configuration of different ecosystems in a landscape, and the way they are managed have an influence on biodiversity, and the quality of ecological processes and functions which are key to supporting a variety of ecosystem services. Biodiversity of intensively used landscapes can be enhanced through the proximity to natural habitats. The presence of natural and semi natural habitat patches can serve as habitats for otherwise regionally extinct species and as nesting and recolonization areas for many dispersing animal and plant species. Furthermore, natural and semi natural habitats can serve as \"steppingstones\" and habitat corridors between otherwise separated habitats (Rüdisser et al., 2012). The land use integrity indicator is based on the distance to nature index described in Rüdisser et al. (2012). Distance to nature represents a composite index which is calculated by multiplying the degree of naturalness (Nd) by the distance to natural habitats (Dn), defined as the average distance to the next natural or near natural ecosystem patch. For Nd, land use is reclassified along a seven qualitative staged naturalness scale (1-7), with 1 corresponding to natural ecosystems with no or minimal anthropogenic influence, and 7 corresponding to artificial systems or structures. The indicator values were transformed to indicate that a higher land use integrity and quality is reached when the indicator value is low (i.e., low distance to natural habitats). The indicator was mapped at 100 m spatial resolution and standardized on a 0-100 range.",
+      ],
+      references: [
+        "Rüdisser, J., Tasser, E., & Tappeiner, U. (2012). Distance to nature—a new biodiversity relevant environmental indicator set at the landscape level. Ecological Indicators, 15(1), 208-216 doi.org/10.1016/j.ecolind.2011.09.027",
+        "EU, Copernicus Land Monitoring Service. (2019). European Environment Agency (EEA)-dataset: CORINE land cover-2018, version 2020_20u1. https://land.copernicus.eu/pan-european/corine-land-cover"
+      ],
+      mapboxLayerId: "env_distance_to_nature-4pdad6jf"
+    },
+    {
+      id: "landuse-diversity",
+      name: "Land use diversity (index)",
+      category: "ecosystem-conditions",
+      description: [
+        "The diversity of land use/land cover classes (index). The composition and configuration of different ecosystems in a landscape, as well as the way they are managed have an influence on biodiversity, and on the quality of ecological processes and functions. Higher landscape heterogeneity is often considered an important environmental factor that promotes biodiversity and the provision of a variety of ecosystem services. The diversity of land use/land cover classes was calculated at 100 m resolution based on their richness (number of different land uses) and abundance (area coverage) as calculated through the Simpson diversity using the following formula: SUM pi * ln(pi) where pi is the proportion of each land use type on the total area considered (1 ha). Higher indicator values indicate a higher landscape complexity. The indicator was mapped at 100 m resolution and standardized on a 0-100 range.",
+      ],
+      references: [
+        "Comer D., Greene, S. (2015). The development and application of a land use diversity index for Oklahoma City, OK. Applied Geography, 60, 46-57 doi.org/10.1016/j.apgeog.2015.02.015",
+        "EU, Copernicus Land Monitoring Service. (2019). European Environment Agency (EEA)-dataset: CORINE land cover-2018, version 2020_20u1. https://land.copernicus.eu/pan-european/corine-land-cover"
+      ],
+      mapboxLayerId: "env_landuse_diversity_index-35je19qp"
+    },
+    {
+      id: "climatic-waterbalance",
+      name: "Climate water balance (index)",
+      category: "ecosystem-conditions",
+      description: [
+        "The water available from precipitation after accounting for evapotranspiration (index). Artificial irrigation might not be feasible in all areas and can pose significant challenges to the natural water reserves of a region. The available water from precipitation (after accounting for evapotranspiration) is therefore critical to the adaptive capacity of a region. A higher availability of water is related to lower risk for drought and lower dependence on irrigation and may therefore protect regions from negative impacts of climate change. The indicator for climate water balance is based on the climate moisture index (cmi) from the CHELSA database, which is calculated as the difference between evapotranspiration and total precipitation (mm). For the computation, the average monthly cmi over the period 1981-2010 was used to calculate the average yearly climate water balance. The indicator was standardized on a 0-100 range, with higher values indicating increased water availability.",
+      ],
+      references: [
+        "Tscholl, S et al. (2024). Climate resilient winegrowing regions. Nature communications 15 (6254). doi.org/10.1038/s41467-024-50549-w",
+        "Karger, D. N., Schmatz, D. R., Dettling, G. & Zimmermann, N. E. High-resolution monthly precipitation and temperature time series from 2006 to 2100. Sci Data 7, 248 (2020).",
+        "Karger, D. N. et al. Climatologies at high resolution for the earth's land surface areas. Sci Data 4, 170122 (2017)."
+      ],
+      mapboxLayerId: "env_climatic_waterbalance_1me376vw"
     }
 ];

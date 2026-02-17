@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ReactNode, useState } from "react";
-import { ecosystemServiceIndicators } from "@/app/components/indicators/ecosystem-services";
+import { Indicators } from "@/app/components/indicators/indicator-index";
 
 function CollapsiblePanel({
   title,
@@ -90,7 +90,7 @@ export default function EcosystemServicesPage() {
 
             <h2 className="text-xl font-semibold text-white">Jump to indicator</h2>
             <div className="mt-4 flex flex-wrap gap-3">
-              {ecosystemServiceIndicators.map(indicator => (
+              {Indicators.map(indicator => (
                 <a
                   key={indicator.id}
                   href={`#${indicator.id}`}
@@ -102,7 +102,7 @@ export default function EcosystemServicesPage() {
             </div>
           </section>
           
-          {ecosystemServiceIndicators.map(indicator => (
+          {Indicators.map(indicator => (
             <section
               key={indicator.id}
               id={indicator.id}
