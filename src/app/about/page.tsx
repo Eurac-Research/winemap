@@ -45,14 +45,35 @@ export default function About() {
                 className="block rounded-xl border border-white/10 bg-white/5 p-6 transition-colors hover:border-white/30 hover:bg-white/10"
               >
                 <h3 className="text-lg font-semibold">RESPOnD Project</h3>
-                <p className="mt-2 text-white/70">
-                  The RESPOnD project aims to co-design ecosystem-based adaptation solutions 
-                  with wine practitioners and decision-makers to increase the climate resilience
-                  of alpine wine orchards
-                </p>
+
+                <div className="flex items-start justify-between gap-6">
+                  <p className="mt-2 text-white/70">
+                    The RESPOnD project aims to co-design ecosystem-based adaptation solutions 
+                    with wine practitioners and decision-makers to increase the climate resilience
+                    of alpine wine orchards
+                  </p>
+                  <figure className="w-full">
+                    <img
+                      src="/RESPOnD_Logo_Monochrome.svg"
+                      alt="RESPOnD logo"
+                      className="w-[140px] h-auto object-contain"
+                    />
+                  </figure>
+                </div>
                 <span className="mt-4 inline-flex items-center gap-2 underline underline-offset-4">
                   Visit RESPOnD project page &rarr;
                 </span>
+              </a>
+            </section>
+            <section id="agata">
+              <a
+                href="/about#agata"
+                className="block rounded-xl border border-white/10 bg-white/5 p-6 transition-colors hover:border-white/30 hover:bg-white/10"
+              >
+                <h3 className="text-lg font-semibold">AGATA Project</h3>
+                <p className="mt-2 text-white/70">
+                  AGATA (Accessible ecoloGicAl daTA for resilient Viticulture)
+                </p>
               </a>
             </section>
             <section id="kultivas">
