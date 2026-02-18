@@ -45,7 +45,7 @@ export function Sidebar() {
               <div className="w-10 h-10 rounded-full bg-[#E91E63]/10 flex items-center justify-center">
                 <Info className="w-5 h-5 text-[#E91E63]" />
               </div>
-              <h2 className="text-xl font-bold text-white">About the Project</h2>
+              <h2 className="text-xl font-bold text-white">About the Winemap</h2>
             </div>
             <p className="text-white/70 leading-relaxed mb-4">
               The Winemap provides a comprehensive overview of all wine regions that fall under the Protected
@@ -65,37 +65,26 @@ export function Sidebar() {
               at Eurac Research in Bolzano, Italy. Our interdisciplinary research team specializes in climate
               adaptation, environmental science, and sustainable agriculture.
             </p>
+          </section>
 
-            <div className="space-y-2 mt-4">
-              <Link
-                href="/about"
-                onClick={() => setIsOpen(false)}
-                className="block text-white/80 hover:text-white hover:bg-white/5 p-2 rounded transition-colors"
-              >
-                → About the project
-              </Link>
-              <Link
-                href="/about#pdo"
-                onClick={() => setIsOpen(false)}
-                className="block text-white/80 hover:text-white hover:bg-white/5 p-2 rounded transition-colors"
-              >
-                → What&apos;s a PDO?
-              </Link>
-              <Link
-                href="/about#data"
-                onClick={() => setIsOpen(false)}
-                className="block text-white/80 hover:text-white hover:bg-white/5 p-2 rounded transition-colors"
-              >
-                → About the data
-              </Link>
-              <Link
-                href="/about#vulnerability"
-                onClick={() => setIsOpen(false)}
-                className="block text-white/80 hover:text-white hover:bg-white/5 p-2 rounded transition-colors"
-              >
-                → Vulnerability Index
-              </Link>
+          {/* Projects */}
+          <section className="mb-10">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-full bg-[#E91E63]/10 flex items-center justify-center">
+                <Users className="w-5 h-5 text-[#E91E63]" />
+              </div>
+              <h2 className="text-xl font-bold text-white">The Projects</h2>
             </div>
+            <p className="text-white/70 leading-relaxed mb-3">
+              Discover the research projects behind the Winemap.
+            </p>
+            <Link
+              href="/about#projects"
+              onClick={() => setIsOpen(false)}
+              className="inline-block text-[#E91E63] font-semibold hover:underline"
+            >
+              Learn more about our projects →
+            </Link>
           </section>
 
           {/* The Team */}
@@ -135,30 +124,28 @@ export function Sidebar() {
               onClick={() => setIsOpen(false)}
               className="inline-block text-[#E91E63] font-semibold hover:underline"
             >
-              Browse publications →
+              Learn more about our publications →
             </Link>
           </section>
 
-          {/* RESPOnD Project */}
+          {/* Institute */}
           <section className="mb-10">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-full bg-[#E91E63]/10 flex items-center justify-center">
-                <Network className="w-5 h-5 text-[#E91E63]" />
+                <Users className="w-5 h-5 text-[#E91E63]" />
               </div>
-              <h2 className="text-xl font-bold text-white">RESPOnD Project</h2>
+              <h2 className="text-xl font-bold text-white">The Institute</h2>
             </div>
             <p className="text-white/70 leading-relaxed mb-3">
-              This work is part of the RESPOnD project (Resilient Ecosystem Services in Declining Mountain Regions),
-              which aims to develop strategies for sustainable mountain development in the Alpine Space.
+              Meet the scientific Institute behind the Winemap
             </p>
-            <a
-              href="https://www.alpine-space.eu/project/respond/"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/about#institute"
+              onClick={() => setIsOpen(false)}
               className="inline-block text-[#E91E63] font-semibold hover:underline"
             >
-              Visit RESPOnD project page →
-            </a>
+              Learn more about our Institute →
+            </Link>
           </section>
 
           {/* Footer Links */}

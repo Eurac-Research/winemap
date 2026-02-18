@@ -245,6 +245,16 @@ export function Navigation() {
                   {/* Right side - List of subsections */}
                   <div className="grid gap-1 p-5">
                     <NavigationMenuLink
+                      href="/about#projects"
+                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
+                    >
+                      <div className="font-semibold text-white mb-1.5 text-base">Research Projects</div>
+                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
+                        Learn more about the research projects behind Winemap.
+                      </div>
+                    </NavigationMenuLink>
+
+                    <NavigationMenuLink
                       href="/about#institute"
                       className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                     >

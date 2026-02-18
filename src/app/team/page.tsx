@@ -143,21 +143,6 @@ export default function About() {
             </span>
           </span>
         </span>
-
-      <section className="mt-12">
-        <Link
-          href="/literature"
-          className="block rounded-lg border border-white/10 bg-white/5 p-6 transition-colors hover:bg-white/10"
-        >
-          <h2>Scientific literature</h2>
-          <p className="text-white/70">
-            Explore the publications behind the Winemap project, including data
-            sources and the climate resilience study.
-          </p>
-          <span className="inline-block mt-4 underline">Go to literature →</span>
-        </Link>
-      </section>
-
     </main>
   );
 }

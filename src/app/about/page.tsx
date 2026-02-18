@@ -29,7 +29,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="mt-10">
+      <section id='projects' className="mt-10">
         <div className="max-w-2xl">
           <h2 className="text-2xl md:text-3xl mt-4">Projects behind Winemap</h2>
           <p className="mt-3 text-white/70">
