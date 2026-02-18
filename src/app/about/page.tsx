@@ -8,14 +8,14 @@ export default function About() {
   return (
     <main className="min-h-screen bg-black text-white">
       <div className="mx-auto max-w-6xl px-6 py-32">
-        <article>
+        <article className="space-y-6">
 
-          <section id='general' className="p-8 md:p-12">
+          <section id='general' className="px-8 md:px-12">
             <h1 className="text-3xl md:text-4xl">Winemap</h1>
             <WinemapDescription className="mt-3 text-white/70"/>
           </section>
 
-          <section id='projects' className="p-8 md:p-12">
+          <section id='projects' className="px-8 md:px-12">
             <div>
               <h2 className="text-2xl md:text-3xl">Projects behind Winemap</h2>
               <p className="mt-3 text-white/70">
@@ -116,7 +116,7 @@ export default function About() {
             </div>
           </section>
 
-          <section id="institute" className="p-8 md:p-12">
+          <section id="institute" className="px-8 md:px-12">
             <div>
               <div className="rounded-xl border border-white/10 bg-white/5 p-6 mt-4">
                   <div className="flex items-start gap-3 mb-6">
@@ -212,7 +212,7 @@ export default function About() {
             </div>
           </section>
 
-          <section  className="p-8 md:p-12">
+          <section className="px-8 md:px-12">
             <div>
               <Link
                 href="/literature"
@@ -229,7 +229,7 @@ export default function About() {
             </div>
           </section>
 
-          <section className="mt-12">
+          <section className="px-8 md:px-12">
             <div className="max-w-2xl text-white/70">
               <p>
                 Winemap is part of the Eurac Research{" "}
