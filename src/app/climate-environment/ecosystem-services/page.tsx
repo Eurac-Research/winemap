@@ -27,25 +27,20 @@ export default function EcosystemServicesPage() {
             </span>
             <h1 className="mt-5 text-4xl font-bold leading-tight md:text-5xl">Ecosystem Services</h1>
             <p className="mt-6 max-w-4xl text-lg leading-relaxed text-white/80">
-              Nature not only provides us with all kinds of goods and benefits—as human beings, 
-              we are part of a holistic natural system upon which our lives depend. From food and 
-              raw materials to energy, water and breathable air, we rely on nature for our survival. 
-              Natural processes support us and contribute to our quality of life: they control the climate 
-              in which we live, purify the air we breathe and the water we drink; they protect us from 
-              hazards and disease. Nature also provides us with other intangible benefits that inspire us 
-              and provide us with space to relax and recreate. In the late nineties and early 2000s, there 
-              was a concerted effort from the scientific community to define and quantify the benefits that 
-              nature provides us with and that contribute to our well-being. Scientists believed that if we 
-              could see the hard data on what the environment gives us, we could more effectively coordinate 
-              how to protect these resources, for the sake of humans and nature. Out of this effort came the 
-              concept of “ecosystem services”, the benefits that humans receive from nature, and its three 
-              categories—Provisioning, Regulating and Cultural services.
+              Ecosystems provide essential services that sustain agricultural production, environmental stability, 
+              and human well-being. These services range from regulating functions such as pollination, 
+              natural pest control, and soil erosion prevention to cultural benefits including recreation and 
+              landscape aesthetics. At the same time, underlying ecosystem conditions—such as naturalness, 
+              landscape integrity, productivity, and water availability—strongly influence the capacity of 
+              landscapes to deliver these benefits.
+            </p>
+            <p className="mt-6 max-w-4xl text-lg leading-relaxed text-white/80">
+              The indicators presented here assess the relative potential of landscapes to provide key ecosystem 
+              services and maintain ecological functionality. Together, they offer a spatially explicit overview 
+              of ecosystem performance and resilience, supporting informed land management and long-term sustainability planning.
             </p>
 
-            <br></br>
-            <br></br>
-
-            <p>
+            <p className="mt-6 max-w-4xl text-lg leading-relaxed text-white/80">
               Learn more about ecosystem services here: https://www.youtube.com/watch?v=r7UCAsBT5Yg 
             </p>
 
