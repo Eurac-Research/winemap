@@ -270,7 +270,10 @@ export default function HomePage() {
               <p className="text-white/70 leading-relaxed">
                 The Winemap was developed in the framework of the <strong>RESPOnD</strong> project.
                 RESPOnD is co-financed by the European Regional Development Fund through the Interreg
-                Alpine Space programme 2021-2027
+                Alpine Space programme 2021-2027. WINEMAP is a comprehensive digital resource mapping all 
+                European wine regions under the Protected Designation of Origin (PDO) label. 
+                It combines climate data, environmental indicators, adaptation strategies, 
+                and legal frameworks to support sustainable viticulture in the face of climate change.
               </p>
             </div>
           </div>
@@ -282,16 +285,20 @@ export default function HomePage() {
             <h2 className="text-3xl font-bold text-white mb-12 text-center">Frequently Asked Questions</h2>
             <div className="space-y-8">
               <div className="group">
-                <h3 className="text-xl font-semibold text-white mb-3">What is the WINEMAP project?</h3>
-                <p className="text-white/70 leading-relaxed">
-                  WINEMAP is a comprehensive digital resource mapping all European wine regions under the Protected Designation of Origin (PDO) label. It combines climate data, environmental indicators, adaptation strategies, and legal frameworks to support sustainable viticulture in the face of climate change.
-                </p>
-              </div>
-
-              <div className="group">
                 <h3 className="text-xl font-semibold text-white mb-3">Who is behind this project?</h3>
                 <p className="text-white/70 leading-relaxed">
-                  WINEMAP is developed by the Institute for Alpine Environment at Eurac Research in Bolzano, Italy. Our interdisciplinary research team specializes in climate adaptation, environmental science, and sustainable agriculture, providing the scientific foundation for this platform. The project is part of{" "}
+                  WINEMAP is developed by the{" "}
+                  <a
+                    href="https://www.eurac.edu/en/institutes-centers/institute-for-alpine-environment"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#E91E63] hover:underline"
+                  >
+                    Institute for Alpine Environment{" "}
+                  </a>
+                  at Eurac Research in Bolzano, Italy. Our interdisciplinary research team 
+                  specializes in climate adaptation, environmental science, and sustainable 
+                  agriculture, providing the scientific foundation for this platform. The project is part of{" "}
                   <a
                     href="https://www.eurac.edu/en/data-in-action"
                     target="_blank"
@@ -304,6 +311,29 @@ export default function HomePage() {
                   <Link href="/team" className="text-[#E91E63] hover:underline">
                     our team
                   </Link>
+                  .
+                </p>
+              </div>
+
+              <div className="group">
+                <h3 className="text-xl font-semibold text-white mb-3">What is the research behind the Winemap?</h3>
+                <p className="text-white/70 leading-relaxed">
+                  The different datasets and map-applications show in the Winemap were created 
+                  in the framework of several projects and publications.
+                  You can find out more about the projects{" "}
+                  <a
+                    href="/about#projects"
+                    className="text-[#E91E63] hover:underline"
+                  >
+                    here{" "}
+                  </a>
+                  and browse through related publications{" "}
+                  <a
+                    href="/literature"
+                    className="text-[#E91E63] hover:underline"
+                  >
+                    here
+                  </a>
                   .
                 </p>
               </div>
@@ -323,13 +353,6 @@ export default function HomePage() {
                     contact us
                   </Link>
                   .
-                </p>
-              </div>
-
-              <div className="group">
-                <h3 className="text-xl font-semibold text-white mb-3">How is climate change affecting wine regions?</h3>
-                <p className="text-white/70 leading-relaxed">
-                  Climate change is significantly impacting wine production through rising temperatures, changing precipitation patterns, and increased frequency of extreme weather events. Our climate indicators show projected shifts in thermal suitability and growing conditions across European wine regions through 2100.
                 </p>
               </div>
             </div>
