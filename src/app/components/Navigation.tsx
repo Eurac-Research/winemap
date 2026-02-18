@@ -78,7 +78,7 @@ export function Navigation() {
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">Climate Indicators</div>
                       <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        Learn more about bioclimatic indicators, their use in the field of viticulture and investigate their historical and future spatial distribution over Europe using high resolution maps
+                        Learn more about bioclimatic indicators, their use in the field of viticulture and investigate their historical and future spatial distribution over Europe
                       </div>
                     </NavigationMenuLink>
 
@@ -88,7 +88,7 @@ export function Navigation() {
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">Vulnerability & Risks</div>
                       <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        Discover more about the vulnerability to climate change of European wine regions, which was assessed using multiple dimensions, including the exposure and sensitivity to climate change and the adaptive capacity of each region.
+                        Discover how vulnerable European wine regions are to climate change and investiate the central dimension that shape their vulnerability
                       </div>
                     </NavigationMenuLink>
 
@@ -98,7 +98,7 @@ export function Navigation() {
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">Ecosystem Services</div>
                       <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        Dive deeper into the multiple regulating, provisioning, and cultural benefits that viticulture provides for landscapes and communities. Explore how vineyards contribute to biodiversity, soil conservation, water regulation, and cultural heritage.
+                        Dive deeper into the multiple regulating, provisioning, and cultural benefits that viticulture provides for landscapes and communities.
                       </div>
                     </NavigationMenuLink>
                   </div>
@@ -195,7 +195,7 @@ export function Navigation() {
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">EU Policy</div>
                       <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        test test
+                        Discover the legal system behind high-quality European wine regions and how these regulations influence their climate resilience.
                       </div>
                     </NavigationMenuLink>
 
@@ -205,7 +205,7 @@ export function Navigation() {
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">Particpiatory Approaches</div>
                       <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        test test
+                        Get information about participatory approaches in scientific research and how they can be used to generate innovative solutions for the future sustainability of viticulture.
                       </div>
                     </NavigationMenuLink>
 
@@ -215,7 +215,7 @@ export function Navigation() {
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">Courses</div>
                       <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        test test
+                        Improve your knowledge on viticulture, climate change and ecosystem-based adaptation in a series of interactive courses.
                       </div>
                     </NavigationMenuLink>
 
