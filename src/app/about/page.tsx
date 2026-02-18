@@ -54,16 +54,14 @@ export default function About() {
                 </span>
               </a>
             </section>
-            <section id="agata">
-              <a
-                href="/about#agata"
-                className="block rounded-xl border border-white/10 bg-white/5 p-6 transition-colors hover:border-white/30 hover:bg-white/10"
-              >
+            <section id="agata" className="block rounded-xl border border-white/10 bg-white/5 p-6 transition-colors hover:border-white/30 hover:bg-white/10">
                 <h3 className="text-lg font-semibold">AGATA Project</h3>
                 <p className="mt-2 text-white/70">
-                  AGATA (Accessible ecoloGicAl daTA for resilient Viticulture)
+                  The AGATA (Accessible ecoloGicAl daTA for resilient Viticulture) project aims to 
+                  develop spatially explicit indicators that describe key ecological 
+                  conditions and ecosystem services provided by vineyard landscapes across the Alpine region, 
+                  with the goal of strengthening their ecological resilience and long‑term sustainability.
                 </p>
-              </a>
             </section>
             <section id="kultivas">
               <a
