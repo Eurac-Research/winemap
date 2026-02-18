@@ -6,59 +6,66 @@ import DatawrapperChart from "@/app/components/DatawrapperChart";
 
 export default function ClimateIndicatorsPage() {
   return (
-    <div className="min-h-screen bg-black text-white">
+  <main className="min-h-screen bg-black text-white">
+    <div className="mx-auto max-w-6xl px-6 py-32">
+        <article className="space-y-12">
+          <section className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/10 to-white/5 p-8 md:p-12">
+            <span className="inline-flex rounded-full border border-white/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-white/70">
+              Governance
+            </span>
+            <h1 className="mt-5 text-4xl font-bold leading-tight md:text-5xl">Geographic Indications</h1>
 
-      <div className="container mx-auto px-6 py-32 max-w-5xl">
-        {/* Page Content */}
-        <article className="prose prose-invert prose-lg max-w-none">
-          <h1 className="text-4xl font-bold mb-8">Geographic Indications</h1>
+            <p className="mt-6 max-w-4xl text-lg leading-relaxed text-white/80">
+              Europe is home to some of the world’s most prestigious wine regions.
+              In order to maintain the integrity and quality of these wines, the
+              European Union has established a quality scheme called Protected
+              Designation of Origin (PDO). This system sets rules and regulations
+              for the production, labelling, and promotion of wines within specific
+              regions of Europe. This classification ensures that wines produced
+              within those regions follow strict standards of quality and tradition,
+              protecting the reputation and authenticity of each wine. The PDO
+              designation is granted by the EU, and only wines that are produced
+              within a certain region and meet specific production criteria are
+              allowed to carry the PDO label.
+            </p>
 
-          <p className="text-lg leading-relaxed mb-6">
-            Europe is home to some of the world’s most prestigious wine regions.
-            In order to maintain the integrity and quality of these wines, the
-            European Union has established a quality scheme called Protected
-            Designation of Origin (PDO). This system sets rules and regulations
-            for the production, labelling, and promotion of wines within specific
-            regions of Europe. This classification ensures that wines produced
-            within those regions follow strict standards of quality and tradition,
-            protecting the reputation and authenticity of each wine. The PDO
-            designation is granted by the EU, and only wines that are produced
-            within a certain region and meet specific production criteria are
-            allowed to carry the PDO label.
-          </p>
-          <p className="text-lg leading-relaxed mb-6">
-            The PDO system is extensive and complex, covering thousands of wine
-            types from various regions in Europe. Until recently, wine enthusiasts
-            and industry professionals had to consult various sources to
-            understand these classifications.
-          </p>
-          <p className="text-lg leading-relaxed mb-6">
-            Now, Eurac Research has produced the first-ever comprehensive{" "}
-            <Link href="/" style={{ textDecoration: "underline" }}>
-              map of Europe’s wine regions classified under the PDO system
-            </Link>
-            .
-          </p>
-          <p className="text-lg leading-relaxed mb-6">
-            <a
-              className={styles.contentImageBox}
-              href="https://agriculture.ec.europa.eu/farming/geographical-indications-and-quality-schemes/geographical-indications-and-quality-schemes-explained_en#pdo"
-            >
-              <Image
-                src="/icons/pdo-label.svg"
-                alt="PDO logo"
-                width={212}
-                height={212}
-              />
-              <span>
-                Official PDO logo from the Eurpean Commission
-                <br />
-                https://agriculture.ec.europa.eu/...
-              </span>
-            </a>
-          </p>
+            <div className="text-lg leading-relaxed mb-6">
+              <a
+                className={styles.contentImageBox}
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://agriculture.ec.europa.eu/farming/geographical-indications-and-quality-schemes/geographical-indications-and-quality-schemes-explained_en#pdo"
+              >
+                <figure className="mx-auto flex max-w-4xl flex-col items-center px-4 text-center">
+                  <Image
+                    src="/icons/pdo-label.svg"
+                    alt="PDO logo"
+                    width={212}
+                    height={212}
+                    className="mx-auto"
+                  />
+                  <figcaption className="text-sm text-white/70">
+                    Official PDO logo from the Eurpean Commission
+                  </figcaption>
+                </figure>
+              </a>
+            </div>
 
-          <div className="my-8">
+            <p className="mt-6 max-w-4xl text-lg leading-relaxed text-white/80">
+              The PDO system is extensive and complex, covering thousands of wine
+              types from various regions in Europe. Until recently, wine enthusiasts
+              and industry professionals had to consult various sources to
+              understand these classifications.
+              Now, Eurac Research has produced the first-ever comprehensive{" "}
+              <Link href="/legal" style={{ textDecoration: "underline" }}>
+                map of Europe’s wine regions classified under the PDO system
+              </Link>
+              .
+            </p>
+
+          </section>
+
+          <div className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/10 to-white/5 p-8 md:p-12">
             <DatawrapperChart
               chartId="DEUDJ/6?dark=true"
               title="Nr. of registered PDOs"
@@ -182,7 +189,6 @@ export default function ClimateIndicatorsPage() {
             </Link>
           </div>
         </article>
-      </div>
 
       {/* Footer */}
       <footer className="border-t border-gray-800 mt-20 py-8">
@@ -196,5 +202,6 @@ export default function ClimateIndicatorsPage() {
         </div>
       </footer>
     </div>
+  </main>
   );
 }
