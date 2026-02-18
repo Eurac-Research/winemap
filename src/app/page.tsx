@@ -49,8 +49,7 @@ export default function HomePage() {
             </svg>
             </p>
             <p className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
-              A comprehensive overview of all wine regions that fall under the Protected Designation of Origin (PDO)
-              label. An essential resource for understanding wine heritage, climate adaptation, and governance frameworks.
+              An essential resource for stakeholders, farmers, and researchers on understanding wine heritage, climate adaptation, and governance frameworks.
             </p>
           </div>
         </section>
