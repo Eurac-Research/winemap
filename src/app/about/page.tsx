@@ -1,4 +1,5 @@
 import Link from "next/link";
+import WinemapDescription from "@/app/components/WinemapDescription";
 
 import styles from "@/styles/Home.module.css";
 
@@ -10,22 +11,10 @@ export default function About() {
         back to map
       </Link>
 
-      <section className="mt-6">
+      <section id='general' className="mt-6">
         <div className="max-w-2xl">
           <h1 className="mt-3 text-3xl md:text-4xl">Winemap</h1>
-          <p className="mt-4 text-white/80">
-            The Winemap is based on a collection and harmonization of data from
-            different sources and projects. The Winemap was created by the{" "}
-            <a
-              href="https://www.eurac.edu/en/institutes-centers/institute-for-alpine-environment"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline underline-offset-4"
-            >
-              <strong>Institute for Alpine Environment</strong>
-            </a>{" "}
-            at Eurac Research.
-          </p>
+          <WinemapDescription className="mt-3 text-white/70"/>
         </div>
       </section>
 

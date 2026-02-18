@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Leaf, Scale, ThermometerSun, Map as MapIcon } from "lucide-react";
 import { Sidebar } from "./components/Sidebar";
+import WinemapDescription from "@/app/components/WinemapDescription";
 
 export default function HomePage() {
   return (
@@ -260,23 +261,9 @@ export default function HomePage() {
         {/* About Section */}
         <section className="px-4 py-20 max-w-4xl mx-auto border-t border-white/10">
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-white mb-6">About the Project</h2>
-            <p className="text-white/70 leading-relaxed mb-4">
-              The Winemap provides a comprehensive overview of all wine regions that fall under the Protected Designation
-              of Origin (PDO) label (as of November 2021). It is an essential resource for anyone interested in wine or
-              who works in the wine industry or related sectors.
-            </p>
-            <div className="grid items-center gap-4 md:grid-cols-[50px_1fr]">
-              <p className="text-white/70 leading-relaxed">
-                The Winemap was developed in the framework of the <strong>RESPOnD</strong> project.
-                RESPOnD is co-financed by the European Regional Development Fund through the Interreg
-                Alpine Space programme 2021-2027. WINEMAP is a comprehensive digital resource mapping all 
-                European wine regions under the Protected Designation of Origin (PDO) label. 
-                It combines climate data, environmental indicators, adaptation strategies, 
-                and legal frameworks to support sustainable viticulture in the face of climate change.
-              </p>
-            </div>
+            <h2 className="text-3xl font-bold text-white mb-6">About the Winemap</h2>
           </div>
+          <WinemapDescription className="mt-3 text-white/70"/>
         </section>
 
         {/* FAQ Section */}

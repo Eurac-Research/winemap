@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { Menu, X, BookOpen, Users, Info, Network } from "lucide-react"
+import WinemapDescription from "@/app/components/WinemapDescription";
 
 export function Sidebar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -39,32 +40,24 @@ export function Sidebar() {
         aria-hidden={!isOpen}
       >
         <div className="p-8 pt-24">
-          {/* About the Project */}
+          {/* Winemap */}
           <section className="mb-10">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-full bg-[#E91E63]/10 flex items-center justify-center">
-                <Info className="w-5 h-5 text-[#E91E63]" />
+                <Users className="w-5 h-5 text-[#E91E63]" />
               </div>
-              <h2 className="text-xl font-bold text-white">About the Winemap</h2>
+              <h2 className="text-xl font-bold text-white">The Winemap</h2>
             </div>
-            <p className="text-white/70 leading-relaxed mb-4">
-              The Winemap provides a comprehensive overview of all wine regions that fall under the Protected
-              Designation of Origin (PDO) label. It is an essential resource for understanding wine heritage, climate
-              adaptation, and governance frameworks.
+            <p className="text-white/70 leading-relaxed mb-3">
+              Find out more about how the Winemap was created, where the data comes from and who is behind it
             </p>
-            <p className="text-white/70 leading-relaxed mb-4">
-              The map is developed by the{" "}
-              <a
-                href="https://www.eurac.edu/en/institutes-centers/institute-for-alpine-environment"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#E91E63] hover:underline"
-              >
-                Institute for Alpine Environment
-              </a>{" "}
-              at Eurac Research in Bolzano, Italy. Our interdisciplinary research team specializes in climate
-              adaptation, environmental science, and sustainable agriculture.
-            </p>
+            <Link
+              href="/about#general"
+              onClick={() => setIsOpen(false)}
+              className="inline-block text-[#E91E63] font-semibold hover:underline"
+            >
+              Learn more about the Winemap →
+            </Link>
           </section>
 
           {/* Projects */}
