@@ -59,7 +59,7 @@ export default function HomePage() {
         <section className="px-4 pb-12 max-w-5xl mx-auto">
           <div className="space-y-6">
             {/* Area 1: Climate & Environment */}
-            <div className="group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md rounded-xl shadow-xl hover:shadow-[#E91E63]/20">
+            <div id="climate-environment" className="group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md rounded-xl shadow-xl hover:shadow-[#E91E63]/20">
               <div className="grid md:grid-cols-[200px_1fr_250px] gap-6 p-8 items-center">
                 {/* Left - Icon and Title */}
                 <Link href="/climate-environment" className="flex flex-col items-center text-center group/main">
@@ -116,7 +116,7 @@ export default function HomePage() {
             </div>
 
             {/* Area 2: Adaptation */}
-            <div className="group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md rounded-xl shadow-xl hover:shadow-[#E91E63]/20">
+            <div id="adaptation" className="group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md rounded-xl shadow-xl hover:shadow-[#E91E63]/20">
               <div className="grid md:grid-cols-[200px_1fr_250px] gap-6 p-8 items-center">
                 {/* Left - Icon and Title */}
                 <Link href="/adaptation" className="flex flex-col items-center text-center group/main">
@@ -173,7 +173,7 @@ export default function HomePage() {
             </div>
 
             {/* Area 3: Governance */}
-            <div className="group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md rounded-xl shadow-xl hover:shadow-[#E91E63]/20">
+            <div id='governance' className="group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md rounded-xl shadow-xl hover:shadow-[#E91E63]/20">
               <div className="grid md:grid-cols-[200px_1fr_250px] gap-6 p-8 items-center">
                 {/* Left - Icon and Title */}
                 <Link href="/legal" className="flex flex-col items-center text-center group/main">
@@ -232,7 +232,7 @@ export default function HomePage() {
         </section>
 
         {/* Cartography Section */}
-        <section className="px-4 pb-16 max-w-5xl mx-auto">
+        <section id='cartography' className="px-4 pb-16 max-w-5xl mx-auto">
           <Link href="/cartography" className="group relative bg-white/5 border border-white/10 hover:border-[#E91E63]/50 transition-all duration-300 overflow-hidden backdrop-blur-md rounded-lg block">
             <div className="grid md:grid-cols-[140px_1fr] gap-4 p-6 items-center">
               {/* Left side - Icon */}

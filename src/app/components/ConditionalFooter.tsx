@@ -13,7 +13,7 @@ const MAP_ROUTE_PREFIXES = [
 
 function isMapRoute(pathname: string) {
   return MAP_ROUTE_PREFIXES.some(
-    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
+    (prefix) => pathname === prefix
   )
 }
 
