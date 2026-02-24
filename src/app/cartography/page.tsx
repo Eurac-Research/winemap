@@ -62,7 +62,7 @@ const mapApplications = [
     id: "climate-environment",
     name: "Climate & Environment Map",
     description: "Interactive map with climate indicators, vulnerability assessments, and environmental data",
-    href: "/climate-environment",
+    href: "/#climate-environment",
   },
   {
     id: "adaptation",

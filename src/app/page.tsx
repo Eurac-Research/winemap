@@ -62,7 +62,7 @@ export default function HomePage() {
             <div id="climate-environment" className="group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md rounded-xl shadow-xl hover:shadow-[#E91E63]/20">
               <div className="grid md:grid-cols-[200px_1fr_250px] gap-6 p-8 items-center">
                 {/* Left - Icon and Title */}
-                <Link href="/climate-environment" className="flex flex-col items-center text-center group/main">
+                <Link href="/#climate-environment" className="flex flex-col items-center text-center group/main">
                   <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#E91E63]/20 to-[#E91E63]/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                     <ThermometerSun className="w-12 h-12 text-[#E91E63]" aria-hidden="true" />
                   </div>
@@ -77,7 +77,7 @@ export default function HomePage() {
                     Explore climate data, vulnerability assessments, and environmental indicators for wine regions across Europe.
                   </p>
                   <Link
-                    href="/climate-environment"
+                    href="/#climate-environment"
                     className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-zinc-900/80 hover:bg-[#E91E63] text-white rounded-lg transition-all duration-300 font-semibold text-sm shadow-lg hover:shadow-[#E91E63]/50 self-start"
                   >
                     <MapIcon className="w-4 h-4" aria-hidden="true" />

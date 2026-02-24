@@ -60,7 +60,7 @@ export function Navigation() {
                 <div className="grid grid-cols-[340px_1fr] gap-0 w-[900px]">
                   {/* Left side - Large clickable main entry */}
                   <NavigationMenuLink
-                    href="/climate-environment"
+                    href="/#climate-environment"
                     className="flex flex-col justify-center p-10 bg-zinc-900 hover:bg-zinc-800 transition-colors border-r border-white/10 group"
                   >
                     <Map className="size-12 text-white mb-4" />
@@ -299,7 +299,7 @@ export function Navigation() {
               {/* Climate & Environment */}
               <div>
                 <Link
-                  href="/climate-environment"
+                  href="/#climate-environment"
                   className="block text-white font-semibold text-lg mb-2 hover:text-[#E91E63] transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
