@@ -179,28 +179,7 @@ export default function ClimateIndicatorsPage() {
             </p>
           </section>
 
-          {/* Back to top link */}
-          <div className="mt-16 pt-8 border-t border-gray-700">
-            <Link
-              href="/"
-              className="text-gray-400 hover:text-white transition-colors inline-flex items-center gap-2"
-            >
-              ← Back to WINEMAP
-            </Link>
-          </div>
         </article>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-800 mt-20 py-8">
-        <div className="container mx-auto px-6 text-center text-sm text-gray-500">
-          <p>
-            © {new Date().getFullYear()} Eurac Research{" "}
-            <Link href="/imprint-privacy" className="underline hover:text-gray-400">
-              Imprint / Privacy
-            </Link>
-          </p>
-        </div>
-      </footer>
     </div>
   </main>
   );

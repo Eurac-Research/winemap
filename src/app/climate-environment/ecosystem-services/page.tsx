@@ -101,11 +101,6 @@ export default function EcosystemServicesPage() {
             </section>
           ))}
 
-          <div className="border-t border-gray-700 pt-8">
-            <Link href="/climate-environment" className="inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-white">
-              {"<-"} Back to Climate and Environment
-            </Link>
-          </div>
         </article>
       </div>
     </main>

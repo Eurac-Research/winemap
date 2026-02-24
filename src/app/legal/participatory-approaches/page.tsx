@@ -59,12 +59,6 @@ export default function VulnerabilityPage() {
             </figure>
 
           </section>
-
-          <div className="border-t border-gray-700 pt-8">
-            <Link href="/legal" className="inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-white">
-              {"<-"} Back to Governance
-            </Link>
-          </div>
         </article>
       </div>
     </main>

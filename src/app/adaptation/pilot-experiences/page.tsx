@@ -126,17 +126,6 @@ export default function PilotExperiencesPage() {
             </div>
           ))}
         </div>
-
-        {/* Back Link */}
-        <div className="text-center">
-          <Link
-            href="/adaptation"
-            className="text-white/60 hover:text-white transition-colors inline-flex items-center gap-2"
-          >
-            <span>←</span>
-            Back to Adaptation Map
-          </Link>
-        </div>
       </div>
 
       {/* Video Modal */}
