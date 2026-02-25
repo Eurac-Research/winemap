@@ -8,9 +8,31 @@ export default function HomePage() {
     <div className="relative min-h-screen text-white p-0 overflow-x-hidden">
     {/* Sticky Hero Section */}
     <section className="relative sticky top-0 z-10 h-screen ">
+
+      {/* Background Image Layer */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: 'url(/images/winemap-bg.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed',
+        }}
+      />
+
+      {/* Radial Gradient Overlay to soften edges and focus center */}
+      <div
+        className="absolute inset-0 z-10"
+        style={{
+          background: 'radial-gradient(circle at center, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.9) 70%, rgba(0,0,0,0.95) 100%)',
+          backgroundAttachment: 'fixed',
+        }}
+      />
+
       <div className="h-full px-6 md:px-12">
         <div className="mx-auto flex h-full max-w-7xl items-center justify-end">
-          <div className="max-w-xl border border-white/20 bg-white/10 rounded-xl shadow-xl p-6 text-center">
+          <div className="max-w-xl border border-white/20 bg-white/10 rounded-xl shadow-xl p-6 text-center z-50">
             <h1 className="text-6xl md:text-8xl font-bold mb-6 text-white">WINEMAP</h1>
             <p className="text-xl md:text-2xl text-white/60 mb-4 font-light flex items-center justify-center gap-2">by         <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -40,26 +62,6 @@ export default function HomePage() {
 
       {/* Background + Content Layer */}
       <div className="relative z-20 w-full -mt-[100vh] bg-black min-h-screen pt-4">
-        {/* Background Image Layer */}
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: 'url(/images/winemap-bg.jpg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            backgroundAttachment: 'fixed',
-          }}
-        />
-
-        {/* Radial Gradient Overlay to soften edges and focus center */}
-        <div
-          className="absolute inset-0 z-10"
-          style={{
-            background: 'radial-gradient(circle at center, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.9) 70%, rgba(0,0,0,0.95) 100%)',
-            backgroundAttachment: 'fixed',
-          }}
-        />
 
         {/* Content Layer */}
         <div className="relative z-20 w-full">
