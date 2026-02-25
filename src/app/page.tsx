@@ -55,7 +55,7 @@ export default function HomePage() {
         <img
           src="/RESPOnD_Logo_Monochrome.svg"
           alt="RESPOnD Logo"
-          className="absolute top-6 left-6 z-50 h-24 w-auto rounded-md"
+          className="absolute top-6 left-6 z-50 h-24 md:h-32 w-auto"
         />
       </div>
     </section>
