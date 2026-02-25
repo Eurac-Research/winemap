@@ -6,8 +6,8 @@ export default function Footer() {
 
   return (
     <footer className="bg-black border-t border-white/20 text-white">
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+      <div className="max-w-5xl mx-auto px-4 md:px-6 py-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4 max-w-4xl mx-auto">
           {/* Column 1: Explore Maps */}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wide mb-4 text-[#E91E63]">
@@ -85,16 +85,15 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/20 text-center">
-          <p className="text-white/60 text-sm">
-            © {currentYear} Eurac Research •{" "}
-            <Link href="/imprint-privacy" className="hover:text-white transition-colors">
-              Imprint / Privacy
-            </Link>
-          </p>
-        </div>
+      </div>
+      {/* Bottom Bar */}
+      <div className="border-t border-white/20 text-center">
+        <p className="text-white/60 text-sm py-3">
+          © {currentYear} Eurac Research •{" "}
+          <Link href="/imprint-privacy" className="hover:text-white transition-colors">
+            Imprint / Privacy
+          </Link>
+        </p>
       </div>
     </footer>
   )
