@@ -5,35 +5,11 @@ import WinemapDescription from "@/app/components/WinemapDescription";
 
 export default function HomePage() {
   return (
-    <div className="relative min-h-screen text-white flex flex-col items-center p-6 overflow-hidden">
-      {/* Background Image Layer */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: 'url(/images/winemap-bg.jpg)',
-          backgroundSize: 'contain',
-          backgroundPosition: 'top',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed',
-        }}
-      />
-
-      {/* Radial Gradient Overlay to soften edges and focus center */}
-      <div
-        className="absolute inset-0 z-10"
-        style={{
-          background: 'radial-gradient(circle at center, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.9) 70%, rgba(0,0,0,0.95) 100%)',
-          backgroundAttachment: 'fixed',
-        }}
-      />
-
-      {/* Content Layer */}
-      <div className="relative z-20 w-full">
-        {/* Sidebar Component */}
-        <Sidebar />
-
-        {/* Hero Section */}
-        <section className="relative flex items-center justify-center pt-20 px-4 pb-16">
+    <div className="relative min-h-screen text-white flex flex-col items-center p-0 overflow-x-hidden">
+      {/* Title Layer (no background) */}
+      <div className="relative z-10 w-full">
+        {/* Fixed Hero Section */}
+        <section className="fixed inset-0 z-10 flex h-screen items-center justify-center px-4">
           <div className="max-w-5xl mx-auto text-center">
             <h1 className="text-6xl md:text-8xl font-bold mb-6 text-white">WINEMAP</h1>
             <p className="text-xl md:text-2xl text-white/60 mb-4 font-light flex items-center justify-center gap-2">by         <svg
@@ -54,9 +30,40 @@ export default function HomePage() {
             </p>
           </div>
         </section>
+        {/* Spacer to allow scroll before content overlays */}
+        <div className="h-screen" aria-hidden="true" />
+      </div>
+
+      {/* Background + Content Layer */}
+      <div className="relative z-20 w-full -mt-[35vh] bg-black min-h-screen">
+        {/* Background Image Layer */}
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: 'url(/images/winemap-bg.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: 'fixed',
+          }}
+        />
+
+        {/* Radial Gradient Overlay to soften edges and focus center */}
+        <div
+          className="absolute inset-0 z-10"
+          style={{
+            background: 'radial-gradient(circle at center, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.9) 70%, rgba(0,0,0,0.95) 100%)',
+            backgroundAttachment: 'fixed',
+          }}
+        />
+
+        {/* Content Layer */}
+        <div className="relative z-20 w-full">
+          {/* Sidebar Component */}
+          <Sidebar />
 
         {/* Main Areas - Vertical Layout */}
-        <section className="px-4 pb-12 max-w-5xl mx-auto">
+        <section className="relative z-30 px-4 pb-12 max-w-5xl mx-auto bg-black/90 backdrop-blur-xl rounded-3xl mt-4">
           <div className="space-y-6">
             {/* Area 1: Climate & Environment */}
             <div id="climate-environment" className="group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md rounded-xl shadow-xl hover:shadow-[#E91E63]/20">
@@ -345,6 +352,7 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+        </div>
       </div>
     </div>
   );
