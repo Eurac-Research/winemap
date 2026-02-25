@@ -6,15 +6,18 @@ interface WinemapNavigationProps {
   currentPage: "regions" | "adaptation" | "environment";
 }
 
-export default function WinemapNavigation({ currentPage }: WinemapNavigationProps) {
+export default function WinemapNavigation({
+  currentPage,
+}: WinemapNavigationProps) {
   return (
     <nav className="flex items-center gap-1 text-sm relative z-10 mt-4">
       <Link
         href="/?vulnerability=false"
-        className={`px-3 py-1 rounded transition-all border relative group ${currentPage === "regions"
-          ? "bg-white bg-opacity-20 text-white border-white border-opacity-50"
-          : "text-gray-300 hover:text-white hover:bg-white hover:bg-opacity-10 border-transparent hover:border-white hover:border-opacity-30"
-          }`}
+        className={`px-3 py-1 rounded transition-all border relative group ${
+          currentPage === "regions"
+            ? "bg-white bg-opacity-20 text-white border-white border-opacity-50"
+            : "text-gray-300 hover:text-white hover:bg-white hover:bg-opacity-10 border-transparent hover:border-white hover:border-opacity-30"
+        }`}
       >
         Regions
         <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-2 bg-black bg-opacity-90 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50 w-40 text-center">
@@ -25,10 +28,11 @@ export default function WinemapNavigation({ currentPage }: WinemapNavigationProp
       <span className="text-gray-400 mx-1">|</span>
       <Link
         href="/?vulnerability=true"
-        className={`px-3 py-1 rounded transition-all border relative group ${currentPage === "adaptation"
-          ? "bg-white bg-opacity-20 text-white border-white border-opacity-50"
-          : "text-gray-300 hover:text-white hover:bg-white hover:bg-opacity-10 border-transparent hover:border-white hover:border-opacity-30"
-          }`}
+        className={`px-3 py-1 rounded transition-all border relative group ${
+          currentPage === "adaptation"
+            ? "bg-white bg-opacity-20 text-white border-white border-opacity-50"
+            : "text-gray-300 hover:text-white hover:bg-white hover:bg-opacity-10 border-transparent hover:border-white hover:border-opacity-30"
+        }`}
       >
         Adaptation
         <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-2 bg-black bg-opacity-90 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50 w-40 text-center">
@@ -39,10 +43,11 @@ export default function WinemapNavigation({ currentPage }: WinemapNavigationProp
       <span className="text-gray-400 mx-1">|</span>
       <Link
         href="/climate-environment"
-        className={`px-3 py-1 rounded transition-all border relative group ${currentPage === "environment"
-          ? "bg-white bg-opacity-20 text-white border-white border-opacity-50"
-          : "text-gray-300 hover:text-white hover:bg-white hover:bg-opacity-10 border-transparent hover:border-white hover:border-opacity-30"
-          }`}
+        className={`px-3 py-1 rounded transition-all border relative group ${
+          currentPage === "environment"
+            ? "bg-white bg-opacity-20 text-white border-white border-opacity-50"
+            : "text-gray-300 hover:text-white hover:bg-white hover:bg-opacity-10 border-transparent hover:border-white hover:border-opacity-30"
+        }`}
       >
         Environment
         <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-2 bg-black bg-opacity-90 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50 w-40 text-center">

@@ -67,7 +67,7 @@ export default function About() {
       <p>
         <span className={styles.teamItem}>
           <Image
-            src="https://webassets.eurac.edu/31538/1620137491-candiagosebastian.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2"
+            src="https://www.datocms-assets.com/31538/1620137491-candiagosebastian.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2"
             width={150}
             height={150}
             alt="Sebastian Candiago"
@@ -89,7 +89,7 @@ export default function About() {
         </span>
         <span className={styles.teamItem}>
           <Image
-            src="https://webassets.eurac.edu/31538/1620655782-tschollsimon.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2"
+            src="https://www.datocms-assets.com/31538/1620655782-tschollsimon.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2"
             width={150}
             height={150}
             alt="Simon Tscholl"
@@ -109,7 +109,7 @@ export default function About() {
         </span>
         <span className={styles.teamItem}>
           <Image
-            src="https://webassets.eurac.edu/31538/1624523789-egarterlukas.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2"
+            src="https://www.datocms-assets.com/31538/1624523789-egarterlukas.jpg?w=150&h=150&fm=png&fit=crop&mask=ellipse&auto=format&dpr=2"
             width={150}
             height={150}
             alt="Lukas Egarter"

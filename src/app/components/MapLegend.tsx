@@ -16,10 +16,14 @@ interface MapLegendProps {
   isVisible: boolean;
 }
 
-export default function MapLegend({ map, layerId, layerName, isVisible }: MapLegendProps) {
+export default function MapLegend({
+  map,
+  layerId,
+  layerName,
+  isVisible,
+}: MapLegendProps) {
   const [legendItems, setLegendItems] = useState<LegendItem[]>([]);
   const [isCollapsed, setIsCollapsed] = useState(false);
-
 
   const formatValue = useCallback((value: number): string => {
     if (value >= 1000) {
@@ -120,7 +124,7 @@ export default function MapLegend({ map, layerId, layerName, isVisible }: MapLeg
       { value: "20-40", color: "#31688e", label: "20-40" },
       { value: "40-60", color: "#35b779", label: "40-60" },
       { value: "60-80", color: "#fde725", label: "60-80" },
-      { value: "80-100", color: "#ffffff", label: "80-100 (High)" }
+      { value: "80-100", color: "#ffffff", label: "80-100 (High)" },
     ];
   }, []);
 
@@ -141,7 +145,7 @@ export default function MapLegend({ map, layerId, layerName, isVisible }: MapLeg
             items.push({
               value: stops[i].toString(),
               color: stops[i + 1],
-              label: formatValue(stops[i])
+              label: formatValue(stops[i]),
             });
           }
         }
@@ -163,14 +167,14 @@ export default function MapLegend({ map, layerId, layerName, isVisible }: MapLeg
 
       // Extract paint properties for different layer types
       let paint = null;
-      if (layer.type === 'raster') {
-        paint = map.getPaintProperty(layerId, 'raster-color');
-      } else if (layer.type === 'fill') {
-        paint = map.getPaintProperty(layerId, 'fill-color');
-      } else if (layer.type === 'circle') {
-        paint = map.getPaintProperty(layerId, 'circle-color');
-      } else if (layer.type === 'heatmap') {
-        paint = map.getPaintProperty(layerId, 'heatmap-color');
+      if (layer.type === "raster") {
+        paint = map.getPaintProperty(layerId, "raster-color");
+      } else if (layer.type === "fill") {
+        paint = map.getPaintProperty(layerId, "fill-color");
+      } else if (layer.type === "circle") {
+        paint = map.getPaintProperty(layerId, "circle-color");
+      } else if (layer.type === "heatmap") {
+        paint = map.getPaintProperty(layerId, "heatmap-color");
       }
 
       //console.log(`Paint property for ${layerId}:`, paint);
@@ -220,7 +224,9 @@ export default function MapLegend({ map, layerId, layerName, isVisible }: MapLeg
                   className="w-5 h-4 rounded border border-gray-500 flex-shrink-0"
                   style={{ backgroundColor: item.color }}
                 />
-                <span className="text-xs leading-tight">{item.label || item.value}</span>
+                <span className="text-xs leading-tight">
+                  {item.label || item.value}
+                </span>
               </div>
             ))}
           </div>

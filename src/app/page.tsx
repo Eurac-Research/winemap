@@ -48,13 +48,13 @@ import varietiesOIVIcon from "@/public/icons/Varieties-OIV-outline.svg";
 import varietiesOtherIcon from "@/public/icons/Varieties-others-outline.svg";
 import yieldHlIcon from "@/public/icons/Yield-hl-3-outline.svg";
 import yieldKgIcon from "@/public/icons/Yield-kg-1-outline.svg";
+import WinemapNavigation from "./components/WinemapNavigation";
 //import Chart from "./components/charts/racechart";
 
 import AdaptiveChart from "./components/adaptiveChart";
 import Pie from "./components/pie";
 import Smallheader from "./components/smallheader";
 import VulnerabilityDot from "./components/vulnerabilityDot";
-import WinemapNavigation from "./components/WinemapNavigation";
 
 //import VulnerabilityLegend from "./components/vulnerabilityLegend";
 
@@ -1102,7 +1102,9 @@ export default function Page() {
                       >
                         WINEMAP{" "}
                         {vulnerabilityVisibility && (
-                          <span className="font-extralight italic">ADAPTATION</span>
+                          <span className="font-extralight italic">
+                            ADAPTATION
+                          </span>
                         )}
                       </Link>
                     </h1>
@@ -1127,7 +1129,9 @@ export default function Page() {
                     </a>
                   </div>
                   <WinemapNavigation
-                    currentPage={vulnerabilityVisibility ? "adaptation" : "regions"}
+                    currentPage={
+                      vulnerabilityVisibility ? "adaptation" : "regions"
+                    }
                   />
                 </div>
               </header>
@@ -1419,8 +1423,9 @@ export default function Page() {
               </div>
             )}
             <div
-              className={`${styles.PDOdetail}${pdos ? ` ${styles.margin}` : ``
-                } `}
+              className={`${styles.PDOdetail}${
+                pdos ? ` ${styles.margin}` : ``
+              } `}
             >
               <h2 className="text-[32px] font-bold mb-4 leading-tight ">
                 {activePDO.pdoname}
@@ -1466,19 +1471,19 @@ export default function Page() {
                     {activePDO.vulneral.Vulnerability === "low"
                       ? `is at low risk due to its ${activePDO.vulneral.ExposureTxt} exposure, ${activePDO.vulneral.SensitivityTxt} sensitivity and its ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
                       : activePDO.vulneral.Vulnerability === "moderate"
-                        ? `is at moderate risk due to its ${activePDO.vulneral.ExposureTxt} exposure, ${activePDO.vulneral.SensitivityTxt} sensitivity and ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
-                        : activePDO.vulneral.Vulnerability ===
-                          "high (low-mod Exposure)"
-                          ? `is at high risk due to its ${activePDO.vulneral.ExposureTxt} exposure, high sensitivity and low adaptive capacity.`
-                          : activePDO.vulneral.Vulnerability ===
-                            "high (low-mod Sensitivity)"
-                            ? `is at high risk due to its high exposure ${activePDO.vulneral.SensitivityTxt} sensitivity and low adaptive capacity.`
-                            : activePDO.vulneral.Vulnerability ===
-                              "high (mod-high Adapt. capacity)"
-                              ? `is at high risk due to its high exposure and sensitivity and its ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
-                              : activePDO.vulneral.Vulnerability === "very high"
-                                ? "is at very high risk due to its high exposure and sensitivity and low adaptive capacity."
-                                : ""}
+                      ? `is at moderate risk due to its ${activePDO.vulneral.ExposureTxt} exposure, ${activePDO.vulneral.SensitivityTxt} sensitivity and ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
+                      : activePDO.vulneral.Vulnerability ===
+                        "high (low-mod Exposure)"
+                      ? `is at high risk due to its ${activePDO.vulneral.ExposureTxt} exposure, high sensitivity and low adaptive capacity.`
+                      : activePDO.vulneral.Vulnerability ===
+                        "high (low-mod Sensitivity)"
+                      ? `is at high risk due to its high exposure ${activePDO.vulneral.SensitivityTxt} sensitivity and low adaptive capacity.`
+                      : activePDO.vulneral.Vulnerability ===
+                        "high (mod-high Adapt. capacity)"
+                      ? `is at high risk due to its high exposure and sensitivity and its ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
+                      : activePDO.vulneral.Vulnerability === "very high"
+                      ? "is at very high risk due to its high exposure and sensitivity and low adaptive capacity."
+                      : ""}
                   </span>
 
                   <hr className="my-6" />

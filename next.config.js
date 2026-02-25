@@ -13,7 +13,12 @@ const nextConfig = {
         hostname: "webassets.eurac.edu",
         // port: '',
         // pathname: '/account123/**',
-      },
+      },{
+            protocol: "https",
+            hostname: "www.datocms-assets.com",
+            port: "",
+            pathname: "/**",
+          },
     ],
   },
 };

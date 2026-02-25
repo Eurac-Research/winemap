@@ -24,7 +24,9 @@ export default function Smallheader(props: {
       >
         WINEMAP{" "}
         {props.vulneral && (
-          <span className="font-extralight italic uppercase mr-1">Adaptation</span>
+          <span className="font-extralight italic uppercase mr-1">
+            Adaptation
+          </span>
         )}{" "}
         by
       </Link>
