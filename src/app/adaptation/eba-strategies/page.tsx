@@ -138,10 +138,10 @@ export default function LiteraturePage() {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <BookOpen className="w-8 h-8 text-white" aria-hidden="true" />
-            <h1 className="text-4xl font-bold text-white">Scientific Publications</h1>
+            <h1 className="text-4xl font-bold text-white">EbA Strategies Catalogue</h1>
           </div>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Explore our collection of peer-reviewed research papers and academic publications
+            Explore our collection of factsheets describing Ecosystem Based Adaptation (EbA) strategies and their implementation
           </p>
         </div>
 
