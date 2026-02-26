@@ -1,0 +1,66 @@
+[
+  {
+    "id": "1",
+    "title": "Factsheet 1",
+    "authors": [
+      "Tscholl Simon"
+    ],
+    "year": 2026,
+    "category": "Cover Crops",
+    "summary": "Over centuries, European vintners have developed a profound knowledge about grapes, environment, and techniques that yield the most distinguishable wines. In many regions, this knowledge is reflected in the system of wine geographical indications (GI), but climate change is challenging this historical union. Here, we present a climate change vulnerability assessment of 1085 wine GIs across Europe and propose climate-resilient development pathways using an ensemble of biophysical and socioeconomic indicators. Results indicate that wine regions in Southern Europe are among the most vulnerable, with high levels also found in Eastern Europe. Vulnerability is influenced by the rigidity of the GI system, which restricts grape variety diversity and thus contributes to an increased sensitivity to climate change. Contextual deficiencies, such as limited socioeconomic resources, may further contribute to increased vulnerability. Building a climate-resilient wine sector will require rethinking the GI system by allowing innovation to compensate for the negative effects of climate change.",
+    "keywords": [
+      "KW1",
+      "KW2",
+      "KW3"
+    ],
+    "filename": "factsheet1.pdf"
+  },
+    {
+    "id": "2",
+    "title": "Factsheet 2",
+    "authors": [
+      "Simion Heidi"
+    ],
+    "year": 2026,
+    "category": "Cover Crops",
+    "summary": "Over centuries, European vintners have developed a profound knowledge about grapes, environment, and techniques that yield the most distinguishable wines. In many regions, this knowledge is reflected in the system of wine geographical indications (GI), but climate change is challenging this historical union. Here, we present a climate change vulnerability assessment of 1085 wine GIs across Europe and propose climate-resilient development pathways using an ensemble of biophysical and socioeconomic indicators. Results indicate that wine regions in Southern Europe are among the most vulnerable, with high levels also found in Eastern Europe. Vulnerability is influenced by the rigidity of the GI system, which restricts grape variety diversity and thus contributes to an increased sensitivity to climate change. Contextual deficiencies, such as limited socioeconomic resources, may further contribute to increased vulnerability. Building a climate-resilient wine sector will require rethinking the GI system by allowing innovation to compensate for the negative effects of climate change.",
+    "keywords": [
+      "KW1",
+      "KW2",
+      "KW3"
+    ],
+    "filename": "factsheet2.pdf"
+  },
+    {
+    "id": "3",
+    "title": "Factsheet 3",
+    "authors": [
+      "Klebl Fabian"
+    ],
+    "year": 2026,
+    "category": "Biodiversity",
+    "summary": "Over centuries, European vintners have developed a profound knowledge about grapes, environment, and techniques that yield the most distinguishable wines. In many regions, this knowledge is reflected in the system of wine geographical indications (GI), but climate change is challenging this historical union. Here, we present a climate change vulnerability assessment of 1085 wine GIs across Europe and propose climate-resilient development pathways using an ensemble of biophysical and socioeconomic indicators. Results indicate that wine regions in Southern Europe are among the most vulnerable, with high levels also found in Eastern Europe. Vulnerability is influenced by the rigidity of the GI system, which restricts grape variety diversity and thus contributes to an increased sensitivity to climate change. Contextual deficiencies, such as limited socioeconomic resources, may further contribute to increased vulnerability. Building a climate-resilient wine sector will require rethinking the GI system by allowing innovation to compensate for the negative effects of climate change.",
+    "keywords": [
+      "KW1",
+      "KW2",
+      "KW3"
+    ],
+    "filename": "factsheet3.pdf"
+  },
+    {
+    "id": "4",
+    "title": "Factsheet 4",
+    "authors": [
+      "Egarter Vigl Lukas"
+    ],
+    "year": 2026,
+    "category": "Soil Management",
+    "summary": "Over centuries, European vintners have developed a profound knowledge about grapes, environment, and techniques that yield the most distinguishable wines. In many regions, this knowledge is reflected in the system of wine geographical indications (GI), but climate change is challenging this historical union. Here, we present a climate change vulnerability assessment of 1085 wine GIs across Europe and propose climate-resilient development pathways using an ensemble of biophysical and socioeconomic indicators. Results indicate that wine regions in Southern Europe are among the most vulnerable, with high levels also found in Eastern Europe. Vulnerability is influenced by the rigidity of the GI system, which restricts grape variety diversity and thus contributes to an increased sensitivity to climate change. Contextual deficiencies, such as limited socioeconomic resources, may further contribute to increased vulnerability. Building a climate-resilient wine sector will require rethinking the GI system by allowing innovation to compensate for the negative effects of climate change.",
+    "keywords": [
+      "KW1",
+      "KW2",
+      "KW3"
+    ],
+    "filename": "factsheet4.pdf"
+  }
+]

@@ -127,7 +127,7 @@ export function Navigation() {
                   {/* Right side - List of subsections */}
                   <div className="grid gap-1 p-5">
                     <NavigationMenuLink
-                      href="#eba-catalogue"
+                      href="/adaptation/eba-strategies"
                       className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                     >
                       <div className="font-semibold text-white mb-1.5 text-base">Catalogue of EbA strategies</div>

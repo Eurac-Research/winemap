@@ -158,7 +158,7 @@ export default function HomePage() {
                   {/* Right - Categories */}
                   <div className="space-y-1 border-l border-white/10 pl-6">
                     <Link
-                      href="/adaptation"
+                      href="/adaptation/eba-strategies"
                       className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
                     >
                       <h3 className="text-white/90 font-semibold text-sm group-hover/link:text-[#E91E63] transition-colors">
