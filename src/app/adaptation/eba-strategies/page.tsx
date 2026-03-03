@@ -218,7 +218,7 @@ export default function LiteraturePage() {
         </div>
 
         {/* Publications List */}
-        <div className="space-y-6">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filteredAndSortedFactsheets.map((factsheet) => {
             const authorsExpanded = expandedAuthors.has(factsheet.id)
             const abstractExpanded = expandedAbstracts.has(factsheet.id)
@@ -228,7 +228,7 @@ export default function LiteraturePage() {
             return (
               <Card
                 key={factsheet.id}
-                className="hover:shadow-lg hover:border-white/30 transition-all duration-200 bg-white/5 border-white/10 backdrop-blur-sm"
+                className="h-full hover:shadow-lg hover:border-white/30 transition-all duration-200 bg-white/5 border-white/10 backdrop-blur-sm"
               >
                 <CardHeader>
                   <div className="flex items-start justify-between gap-4">
