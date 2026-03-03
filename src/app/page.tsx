@@ -6,34 +6,15 @@ import WinemapDescription from "@/app/components/WinemapDescription";
 export default function HomePage() {
   return (
     <div className="relative min-h-screen text-white p-0 overflow-x-hidden">
-      {/* Background Image Layer */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: 'url(/images/winemap-bg.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed',
-        }}
-      />
-
-      {/* Radial Gradient Overlay to soften edges and focus center */}
-      <div
-        className="absolute inset-0 z-10"
-        style={{
-          background: 'radial-gradient(circle at center, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.9) 70%, rgba(0,0,0,0.95) 100%)',
-          backgroundAttachment: 'fixed',
-        }}
-      />
 
       {/* Sticky Hero Section */}
-      <section className="relative top-0 z-10 h-screen">
+      <section className="relative sticky top-0 z-10 bg-gray-500" style={{ height: "75vh" }}>
         <div className="h-full px-6 md:px-12">
           <div className="mx-auto flex h-full max-w-7xl items-center justify-center">
-            <div className="max-w-xl border border-white/20 bg-white/10 rounded-xl shadow-xl p-6 text-center z-50">
+            <div className="max-w-xl border border-black bg-white/10 rounded-xl shadow-xl p-6 text-center z-50">
               <h1 className="text-6xl md:text-8xl font-bold mb-6 text-white">WINEMAP</h1>
-              <p className="text-xl md:text-2xl text-white/60 mb-4 font-light flex items-center justify-center gap-2">by         <svg
+              <p className="text-xl md:text-2xl text-white/20 mb-4 font-light flex items-center justify-center gap-2">by         
+              <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="178.793"
                 height="22"
@@ -46,7 +27,7 @@ export default function HomePage() {
                 ></path>
               </svg>
               </p>
-              <p className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-lg md:text-xl text-white/20 max-w-3xl mx-auto leading-relaxed">
                 An essential resource for stakeholders, farmers, and researchers on understanding wine heritage, climate adaptation, and governance frameworks.
               </p>
             </div>
@@ -54,7 +35,7 @@ export default function HomePage() {
           <img
             src="/RESPOnD_Logo_Monochrome.svg"
             alt="RESPOnD Logo"
-            className="absolute top-6 left-6 z-50 h-24 md:h-32 w-auto"
+            className="absolute bottom-4 right-6 z-50 h-24 md:h-32 w-auto"
           />
         </div>
       </section>
@@ -62,13 +43,34 @@ export default function HomePage() {
       {/* Background + Content Layer */}
       <div className="relative z-20 w-full">
 
+        {/* Background Image Layer */}
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: 'url(/images/winemap-bg.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: 'fixed',
+          }}
+        />
+
+        {/* Radial Gradient Overlay to soften edges and focus center */}
+        <div
+          className="absolute inset-0 z-10"
+          style={{
+            background: 'radial-gradient(circle at center, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.9) 70%, rgba(0,0,0,0.95) 100%)',
+            backgroundAttachment: 'fixed',
+          }}
+        />
+
         {/* Content Layer */}
         <div className="relative z-20 w-full">
           {/* Sidebar Component */}
           <Sidebar />
 
           {/* Main Areas - Vertical Layout */}
-          <section className="relative z-30 px-4 pb-12 max-w-5xl mx-auto bg-black/60 backdrop-blur-xl rounded-3xl mt-4">
+          <section className="relative z-30 px-4 pt-8 pb-12 max-w-5xl mx-auto bg-black/60 backdrop-blur-xl rounded-3xl mt-4">
             <div className="space-y-6">
               
               {/* Area 1: Climate & Environment */}
