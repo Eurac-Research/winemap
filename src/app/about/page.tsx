@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Leaf, Scale, ThermometerSun, Map as MapIcon } from "lucide-react";
 import WinemapDescription from "@/app/components/WinemapDescription";
+import RespondLogo from "@/app/components/ui/RespondLogo";
 
 import styles from "@/styles/Home.module.css";
 
@@ -38,13 +39,9 @@ export default function About() {
                         with wine practitioners and decision-makers to increase the climate resilience
                         of alpine wine orchards
                       </p>
-                      <figure className="w-full">
-                        <img
-                          src="/RESPOnD_Logo_Monochrome.svg"
-                          alt="RESPOnD logo"
-                          className="w-[140px] h-auto object-contain"
-                        />
-                      </figure>
+                      <div className="border border-white">
+                        <RespondLogo width={200} color="#ffffff" />
+                      </div>
                     </div>
                     <span className="mt-4 inline-flex items-center gap-2 underline underline-offset-4">
                       Visit RESPOnD project page &rarr;
