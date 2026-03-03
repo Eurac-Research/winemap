@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Leaf, Scale, ThermometerSun, Map as MapIcon } from "lucide-react";
 import { Sidebar } from "./components/Sidebar";
 import WinemapDescription from "@/app/components/WinemapDescription";
+import RespondLogo from "@/app/components/ui/RespondLogo";
 
 export default function HomePage() {
   return (
@@ -53,11 +54,9 @@ export default function HomePage() {
               </p>
             </div>
           </div>
-          <img
-            src="/RESPOnD_Logo_Monochrome.svg"
-            alt="RESPOnD Logo"
-            className="absolute top-4 left-2 z-50 h-24 md:h-32 w-auto"
-          />
+          <div className="absolute top-4 left-2 z-50 h-24 md:h-32 w-auto">
+            <RespondLogo width={200} color="#ffffff" />
+          </div>
         </div>
       </section>
 
@@ -69,7 +68,7 @@ export default function HomePage() {
           <Sidebar />
 
           {/* Main Areas - Vertical Layout */}
-          <section className="relative z-30 px-4 pt-8 pb-12 max-w-5xl mx-auto bg-black/60 backdrop-blur-xl rounded-3xl mt-4">
+          <section className="relative z-30 px-4 pt-8 pb-12 max-w-5xl mx-auto backdrop-blur-xl rounded-3xl mt-4">
             <div className="space-y-6">
               
               {/* Area 1: Climate & Environment */}
