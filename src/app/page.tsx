@@ -1,10 +1,12 @@
 import Link from "next/link";
-import { Leaf, Scale, ThermometerSun, Map as MapIcon } from "lucide-react";
+import { Map as MapIcon } from "lucide-react";
 import { Sidebar } from "./components/Sidebar";
 import WinemapDescription from "@/app/components/WinemapDescription";
 import RespondLogo from "@/app/components/ui/RespondLogo";
-import MapApplicationCard from "@/app/components/MapApplicationCard";
+import MapApplicationCard from "@/app/components/map-applications/MapApplicationCard";
 import { mapApplications } from "@/app/components/map-applications/mapApplications";
+import MainAreaCard from "@/app/components/winemap-sections/MainAreaCard";
+import { mainAreas } from "@/app/components/winemap-sections/mainAreas";
 
 export default function HomePage() {
 
@@ -71,158 +73,20 @@ export default function HomePage() {
           <Sidebar />
 
           {/* Main Areas - Vertical Layout */}
-          <section className="relative z-30 px-4 pt-8 pb-10 max-w-5xl mx-auto backdrop-blur-xl rounded-3xl mt-4">
+          <section id='main-areas' className="relative z-30 px-4 pt-8 pb-10 max-w-5xl mx-auto backdrop-blur-xl rounded-3xl mt-4">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              
-              {/* Area 1: Climate & Environment */}
-              <div id="climate-environment" className="group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md rounded-xl shadow-xl hover:shadow-[#E91E63]/20">
-                <div className="p-8">
-                  {/* Left - Icon and Title */}
-                  <Link href="/#climate-environment" className="flex flex-col items-center text-center group/main">
-                    <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#E91E63]/20 to-[#E91E63]/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <ThermometerSun className="w-12 h-12 text-[#E91E63]" aria-hidden="true" />
-                    </div>
-                    <h2 className="text-xl font-bold text-white uppercase tracking-wide group-hover/main:text-[#E91E63] transition-colors">
-                      Winemap<br />Climate
-                    </h2>
-                  </Link>
-
-                  {/* Middle - Description and Map Button */}
-                  <div className="py-4 text-center">
-                    <p className="text-white/70 text-sm leading-relaxed">
-                      Explore climate data, vulnerability assessments, and environmental indicators for wine regions across Europe.
-                    </p>
-                  </div>
-
-                  {/* Right - Categories */}
-                  <div>
-                    <Link
-                      href="/climate-environment/climate"
-                      className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
-                    >
-                      <h3 className="text-white/90 font-semibold text-sm group-hover/link:text-[#E91E63] transition-colors">
-                        Climate Indicators →
-                      </h3>
-                    </Link>
-                    <Link
-                      href="/climate-environment/vulnerability"
-                      className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
-                    >
-                      <h3 className="text-white/90 font-semibold text-sm group-hover/link:text-[#E91E63] transition-colors">
-                        Vulnerability & Risks →
-                      </h3>
-                    </Link>
-                    <Link
-                      href="/climate-environment/ecosystem-services"
-                      className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
-                    >
-                      <h3 className="text-white/90 font-semibold text-sm group-hover/link:text-[#E91E63] transition-colors">
-                        Ecosystem Services →
-                      </h3>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
-              {/* Area 2: Adaptation */}
-              <div id="adaptation" className="group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md rounded-xl shadow-xl hover:shadow-[#E91E63]/20">
-                <div className="p-8">
-                  {/* Left - Icon and Title */}
-                  <Link href="/#adaptation" className="flex flex-col items-center text-center group/main">
-                    <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#E91E63]/20 to-[#E91E63]/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <Leaf className="w-12 h-12 text-[#E91E63]" aria-hidden="true" />
-                    </div>
-                    <h2 className="text-xl font-bold text-white uppercase tracking-wide group-hover/main:text-[#E91E63] transition-colors">
-                      Winemap<br />Adaptation
-                    </h2>
-                  </Link>
-
-                  {/* Middle - Description and Map Button */}
-                  <div className="py-4 mb-4 text-center">
-                    <p className="text-white/70 text-sm leading-relaxed">
-                      Discover ecosystem-based adaptation strategies and pilot implementation experiences in wine regions.
-                    </p>
-                  </div>
-
-                  {/* Right - Categories */}
-                  <div className="space-y-1">
-                    <Link
-                      href="/adaptation/eba-strategies"
-                      className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
-                    >
-                      <h3 className="text-white/90 font-semibold text-sm group-hover/link:text-[#E91E63] transition-colors">
-                        EbA Strategies Catalogue →
-                      </h3>
-                    </Link>
-                    <Link
-                      href="/adaptation/pilot-experiences"
-                      className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
-                    >
-                      <h3 className="text-white/90 font-semibold text-sm group-hover/link:text-[#E91E63] transition-colors">
-                        Pilot Experiences →
-                      </h3>
-                    </Link>
-                    <Link
-                      href="/adaptation"
-                      className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
-                    >
-                      <h3 className="text-white/90 font-semibold text-sm group-hover/link:text-[#E91E63] transition-colors">
-                        Spatial Analogues →
-                      </h3>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
-              {/* Area 3: Governance */}
-              <div id='governance' className="group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md rounded-xl shadow-xl hover:shadow-[#E91E63]/20">
-                <div className="p-8">
-                  {/* Left - Icon and Title */}
-                  <Link href="/#governance" className="flex flex-col items-center text-center group/main">
-                    <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#E91E63]/20 to-[#E91E63]/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <Scale className="w-12 h-12 text-[#E91E63]" aria-hidden="true" />
-                    </div>
-                    <h2 className="text-xl font-bold text-white uppercase tracking-wide group-hover/main:text-[#E91E63] transition-colors">
-                      Winemap<br />Governance
-                    </h2>
-                  </Link>
-
-                  {/* Middle - Description and Map Button */}
-                  <div className="py-4 mb-4 text-center">
-                    <p className="text-white/70 text-sm leading-relaxed">
-                      Navigate legal frameworks, regulations, and geographic indications for wine production in Europe.
-                    </p>
-                  </div>
-
-                  {/* Right - Categories */}
-                  <div className="space-y-1">
-                    <Link
-                      href="/legal/eu-policy"
-                      className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
-                    >
-                      <h3 className="text-white/90 font-semibold text-sm group-hover/link:text-[#E91E63] transition-colors">
-                        EU Policy →
-                      </h3>
-                    </Link>
-                    <Link
-                      href="/legal/participatory-approaches"
-                      className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
-                    >
-                      <h3 className="text-white/90 font-semibold text-sm group-hover/link:text-[#E91E63] transition-colors">
-                        Participatory Approaches →
-                      </h3>
-                    </Link>
-                    <Link
-                      href="/legal/participatory-approaches"
-                      className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
-                    >
-                      <h3 className="text-white/90 font-semibold text-sm group-hover/link:text-[#E91E63] transition-colors">
-                        Courses →
-                      </h3>
-                    </Link>
-                  </div>
-                </div>
-              </div>
+              {mainAreas.map((area) => (
+                <MainAreaCard
+                  key={area.id}
+                  id={area.id}
+                  title={area.title}
+                  description={area.description}
+                  icon={area.icon}
+                  mainHref={area.mainHref}
+                  categories={area.categories}
+                  categoriesClassName={area.categoriesClassName}
+                />
+              ))}
             </div>
           </section>
 
@@ -363,3 +227,4 @@ export default function HomePage() {
     </div>
   );
 }
+
