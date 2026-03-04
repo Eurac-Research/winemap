@@ -17,15 +17,15 @@ export default function MapApplicationCard({
   return (
     <Link
       href={href}
-      className="min-w-[280px] sm:min-w-[320px] h-40 border border-white rounded-lg snap-start bg-white/5 hover:bg-white/10 transition-colors p-4 flex flex-col gap-3"
+      className="min-w-[220px] sm:min-w-[240px] h-40 border border-white rounded-xl snap-start bg-gradient-to-br from-white/10 to-white/0 hover:from-white/15 hover:to-white/5 transition-all duration-200 p-4 flex flex-col gap-3 shadow-lg shadow-black/20 hover:-translate-y-0.5"
     >
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-lg border border-white/40 flex items-center justify-center">
+        <div className="w-9 h-9 flex items-center justify-center">
           {icon}
         </div>
-        <h3 className="text-white font-semibold text-base">{title}</h3>
+        <h3 className="text-white font-semibold text-sm tracking-wide">{title}</h3>
       </div>
-      <p className="text-white/70 text-sm leading-relaxed">{description}</p>
+      <p className="text-white/70 text-xs leading-relaxed">{description}</p>
     </Link>
   );
 }
