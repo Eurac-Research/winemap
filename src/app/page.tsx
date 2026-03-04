@@ -37,10 +37,10 @@ export default function HomePage() {
       {/* Sticky Hero Section */}
       <section className="relative top-0 z-10" style={{ height: "75vh" }}>
         <div className="h-full px-6 md:px-12">
-          <div className="mx-auto flex h-full max-w-7xl items-center justify-center">
+          <div className="mx-auto flex h-full max-w-9xl items-center justify-center">
             <div className="max-w-xl border border-white/20 bg-white/10 rounded-xl shadow-xl p-6 text-center z-50">
               <h1 className="text-6xl md:text-8xl font-bold mb-6 text-white">WINEMAP</h1>
-              <p className="text-xl md:text-2xl text-white/20 mb-4 font-light flex items-center justify-center gap-2">by         
+              <p className="text-xl md:text-2xl text-white mb-4 font-light flex items-center justify-center gap-2">by         
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="178.793"
@@ -54,7 +54,7 @@ export default function HomePage() {
                 ></path>
               </svg>
               </p>
-              <p className="text-lg md:text-xl text-white/20 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-lg md:text-xl text-white max-w-3xl mx-auto leading-relaxed">
                 An essential resource for stakeholders, farmers, and researchers on understanding wine heritage, climate adaptation, and governance frameworks.
               </p>
             </div>
