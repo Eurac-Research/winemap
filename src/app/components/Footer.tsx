@@ -1,5 +1,7 @@
 import Link from "next/link"
 import { ExternalLink } from "lucide-react"
+import { mainAreas } from "@/app/components/winemap-sections/mainAreas";
+import { mapApplications } from "@/app/components/map-applications/mapApplications";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -7,33 +9,41 @@ export default function Footer() {
   return (
     <footer className="bg-black border-t border-white/20 text-white">
       <div className="max-w-5xl mx-auto px-4 md:px-6 py-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-4 max-w-8xl mx-auto">
           {/* Column 1: Explore Maps */}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wide mb-4 text-[#E91E63]">
-              Explore Maps
+              Explore
             </h3>
             <ul className="space-y-2">
-              <li>
-                <Link href="/#climate-environment" className="text-white/70 hover:text-white transition-colors text-sm">
-                  Climate & Environment
-                </Link>
-              </li>
-              <li>
-                <Link href="/#adaptation" className="text-white/70 hover:text-white transition-colors text-sm">
-                  Adaptation Strategies
-                </Link>
-              </li>
-              <li>
-                <Link href="/#governance" className="text-white/70 hover:text-white transition-colors text-sm">
-                  Legal & Governance
-                </Link>
-              </li>
+              {mainAreas.map((area) => (
+                <li key={area.id}>
+                  <Link href={area.mainHref} className="text-white/70 hover:text-white transition-colors text-sm">
+                    {area.titleText}
+                  </Link>
+                </li>
+              ))}
               <li>
                 <Link href="/cartography" className="text-white/70 hover:text-white transition-colors text-sm">
                   Cartography
                 </Link>
               </li>
+            </ul>
+          </div>
+
+          {/* Column 2: Applications */}
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wide mb-4 text-[#E91E63]">
+              Map Applications
+            </h3>
+            <ul className="space-y-2">
+              {mapApplications.map((app) => (
+                <li key={app.title}>
+                  <Link href={app.href} className="text-white/70 hover:text-white transition-colors text-sm">
+                  {app.title}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 type MainArea = {
   id: string;
   title: ReactNode;
+  titleText: string;
   description: string;
   icon: ReactNode;
   mainHref: string;
@@ -17,6 +18,7 @@ type MainArea = {
 export const mainAreas: MainArea[] = [
   {
     id: "climate-environment",
+    titleText: "Winemap Climate",
     title: (
       <>
         Winemap<br />Climate
@@ -34,6 +36,7 @@ export const mainAreas: MainArea[] = [
   },
   {
     id: "adaptation",
+    titleText: "Winemap Adaptation",
     title: (
       <>
         Winemap<br />Adaptation
@@ -52,6 +55,7 @@ export const mainAreas: MainArea[] = [
   },
   {
     id: "governance",
+    titleText: "Winemap Governance",
     title: (
       <>
         Winemap<br />Governance
