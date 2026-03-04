@@ -30,7 +30,7 @@ export default function MainAreaCard({
       id={id}
       className="group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md rounded-xl shadow-xl hover:shadow-[#E91E63]/20"
     >
-      <div className="p-8">
+      <div className="p-8 h-full flex flex-col">
         <Link href={mainHref} className="flex flex-col items-center text-center group/main">
           <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#E91E63]/20 to-[#E91E63]/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
             {icon}
@@ -40,7 +40,7 @@ export default function MainAreaCard({
           </h2>
         </Link>
 
-        <div className="py-4 text-center">
+        <div className="py-4 text-center flex-1">
           <p className="text-white/70 text-sm leading-relaxed">{description}</p>
         </div>
 
