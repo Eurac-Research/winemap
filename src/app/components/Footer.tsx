@@ -12,10 +12,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-4 max-w-8xl mx-auto">
           {/* Column 1: Explore Maps */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wide mb-4 text-[#E91E63]">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-[#E91E63]">
               Explore
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-1">
               {mainAreas.map((area) => (
                 <li key={area.id}>
                   <Link href={area.mainHref} className="text-white/70 hover:text-white transition-colors text-sm">
@@ -33,10 +33,10 @@ export default function Footer() {
 
           {/* Column 2: Applications */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wide mb-4 text-[#E91E63]">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-[#E91E63]">
               Map Applications
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-1">
               {mapApplications.map((app) => (
                 <li key={app.title}>
                   <Link href={app.href} className="text-white/70 hover:text-white transition-colors text-sm">
@@ -49,10 +49,10 @@ export default function Footer() {
 
           {/* Column 2: About */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wide mb-4 text-[#E91E63]">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-[#E91E63]">
               About
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-1">
               <li>
                 <Link href="/about#general" className="text-white/70 hover:text-white transition-colors text-sm">
                   About Winemap
@@ -83,10 +83,10 @@ export default function Footer() {
 
           {/* Column 4: Legal */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wide mb-4 text-[#E91E63]">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-[#E91E63]">
               Legal
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-1">
               <li>
                 <Link href="/imprint-privacy" className="text-white/70 hover:text-white transition-colors text-sm">
                   Imprint / Privacy Policy
