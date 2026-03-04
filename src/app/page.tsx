@@ -30,7 +30,7 @@ export default function HomePage() {
       />
 
       {/* Sticky Hero Section */}
-      <section className="relative top-0 z-10 bg-gray-500" style={{ height: "75vh" }}>
+      <section className="relative top-0 z-10 bg-gray-500" style={{ height: "65vh" }}>
         <div className="h-full px-6 md:px-12">
           <div className="mx-auto flex h-full max-w-7xl items-center justify-center">
             <div className="max-w-xl border border-white/20 bg-white/10 rounded-xl shadow-xl p-6 text-center z-50">
@@ -68,38 +68,31 @@ export default function HomePage() {
           <Sidebar />
 
           {/* Main Areas - Vertical Layout */}
-          <section className="relative z-30 px-4 pt-8 pb-12 max-w-5xl mx-auto backdrop-blur-xl rounded-3xl mt-4">
-            <div className="space-y-6">
+          <section className="relative z-30 px-4 pt-8 pb-10 max-w-5xl mx-auto backdrop-blur-xl rounded-3xl mt-4">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               
               {/* Area 1: Climate & Environment */}
               <div id="climate-environment" className="group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md rounded-xl shadow-xl hover:shadow-[#E91E63]/20">
-                <div className="grid md:grid-cols-[200px_1fr_250px] gap-6 p-8 items-center">
+                <div className="p-8">
                   {/* Left - Icon and Title */}
                   <Link href="/#climate-environment" className="flex flex-col items-center text-center group/main">
                     <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#E91E63]/20 to-[#E91E63]/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                       <ThermometerSun className="w-12 h-12 text-[#E91E63]" aria-hidden="true" />
                     </div>
                     <h2 className="text-xl font-bold text-white uppercase tracking-wide group-hover/main:text-[#E91E63] transition-colors">
-                      Climate &<br />Environment
+                      Winemap<br />Climate
                     </h2>
                   </Link>
 
                   {/* Middle - Description and Map Button */}
-                  <div className="flex flex-col justify-center space-y-4">
+                  <div className="py-4 text-center">
                     <p className="text-white/70 text-sm leading-relaxed">
                       Explore climate data, vulnerability assessments, and environmental indicators for wine regions across Europe.
                     </p>
-                    <Link
-                      href="/#climate-environment"
-                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-zinc-900/80 hover:bg-[#E91E63] text-white rounded-lg transition-all duration-300 font-semibold text-sm shadow-lg hover:shadow-[#E91E63]/50 self-start"
-                    >
-                      <MapIcon className="w-4 h-4" aria-hidden="true" />
-                      Open Map
-                    </Link>
                   </div>
 
                   {/* Right - Categories */}
-                  <div className="space-y-1 border-l border-white/10 pl-6">
+                  <div>
                     <Link
                       href="/climate-environment/climate"
                       className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
@@ -130,33 +123,26 @@ export default function HomePage() {
 
               {/* Area 2: Adaptation */}
               <div id="adaptation" className="group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md rounded-xl shadow-xl hover:shadow-[#E91E63]/20">
-                <div className="grid md:grid-cols-[200px_1fr_250px] gap-6 p-8 items-center">
+                <div className="p-8">
                   {/* Left - Icon and Title */}
                   <Link href="/adaptation" className="flex flex-col items-center text-center group/main">
                     <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#E91E63]/20 to-[#E91E63]/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                       <Leaf className="w-12 h-12 text-[#E91E63]" aria-hidden="true" />
                     </div>
                     <h2 className="text-xl font-bold text-white uppercase tracking-wide group-hover/main:text-[#E91E63] transition-colors">
-                      Adaptation
+                      Winemap<br />Adaptation
                     </h2>
                   </Link>
 
                   {/* Middle - Description and Map Button */}
-                  <div className="flex flex-col justify-center space-y-4">
+                  <div className="py-4 mb-4 text-center">
                     <p className="text-white/70 text-sm leading-relaxed">
                       Discover ecosystem-based adaptation strategies and pilot implementation experiences in wine regions.
                     </p>
-                    <Link
-                      href="/adaptation"
-                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-zinc-900/80 hover:bg-[#E91E63] text-white rounded-lg transition-all duration-300 font-semibold text-sm shadow-lg hover:shadow-[#E91E63]/50 self-start"
-                    >
-                      <MapIcon className="w-4 h-4" aria-hidden="true" />
-                      Open Map
-                    </Link>
                   </div>
 
                   {/* Right - Categories */}
-                  <div className="space-y-1 border-l border-white/10 pl-6">
+                  <div className="space-y-1">
                     <Link
                       href="/adaptation/eba-strategies"
                       className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
@@ -187,33 +173,26 @@ export default function HomePage() {
 
               {/* Area 3: Governance */}
               <div id='governance' className="group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md rounded-xl shadow-xl hover:shadow-[#E91E63]/20">
-                <div className="grid md:grid-cols-[200px_1fr_250px] gap-6 p-8 items-center">
+                <div className="p-8">
                   {/* Left - Icon and Title */}
                   <Link href="/legal" className="flex flex-col items-center text-center group/main">
                     <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#E91E63]/20 to-[#E91E63]/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                       <Scale className="w-12 h-12 text-[#E91E63]" aria-hidden="true" />
                     </div>
                     <h2 className="text-xl font-bold text-white uppercase tracking-wide group-hover/main:text-[#E91E63] transition-colors">
-                      Governance
+                      Winemap<br />Governance
                     </h2>
                   </Link>
 
                   {/* Middle - Description and Map Button */}
-                  <div className="flex flex-col justify-center space-y-4">
+                  <div className="py-4 mb-4 text-center">
                     <p className="text-white/70 text-sm leading-relaxed">
                       Navigate legal frameworks, regulations, and geographic indications for wine production in Europe.
                     </p>
-                    <Link
-                      href="/legal"
-                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-zinc-900/80 hover:bg-[#E91E63] text-white rounded-lg transition-all duration-300 font-semibold text-sm shadow-lg hover:shadow-[#E91E63]/50 self-start"
-                    >
-                      <MapIcon className="w-4 h-4" aria-hidden="true" />
-                      Open Map
-                    </Link>
                   </div>
 
                   {/* Right - Categories */}
-                  <div className="space-y-1 border-l border-white/10 pl-6">
+                  <div className="space-y-1">
                     <Link
                       href="/legal/eu-policy"
                       className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
