@@ -168,65 +168,29 @@ export function Navigation() {
           {/* Menu Content */}
           <div className="lg:hidden bg-black border-t border-white/20 h-[calc(100vh-80px)] overflow-y-auto fixed left-0 right-0 top-[80px] z-[100]">
             <div className="px-6 py-4 space-y-4">
-              {/* Climate & Environment */}
-              <div>
-                <Link
-                  href="/#climate-environment"
-                  className="block text-white font-semibold text-lg mb-2 hover:text-[#E91E63] transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Climate & Environment
-                </Link>
-                <div className="pl-4 space-y-2">
+              {mainAreas.map((area) => (
+                <div key={area.id}>
                   <Link
-                    href="/climate-environment/climate"
-                    className="block text-white/70 text-sm hover:text-white transition-colors"
+                    href={area.mainHref}
+                    className="block text-white font-semibold text-lg mb-2 hover:text-[#E91E63] transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    Climate Indicators
+                    {area.titleText}
                   </Link>
+                  <div className="pl-4 space-y-2">
+                    {area.categories.map((category) => (
+                      <Link
+                        key={category.label}
+                        href={category.href}
+                        className="block text-white/70 text-sm hover:text-white transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {category.label.replace(" →", "")}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
-              </div>
-
-              {/* Adaptation */}
-              <div>
-                <Link
-                  href="/adaptation"
-                  className="block text-white font-semibold text-lg mb-2 hover:text-[#E91E63] transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Adaptation
-                </Link>
-                <div className="pl-4 space-y-2">
-                  <Link
-                    href="/adaptation/pilot-experiences"
-                    className="block text-white/70 text-sm hover:text-white transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Pilot Experiences
-                  </Link>
-                </div>
-              </div>
-
-              {/* Governance */}
-              <div>
-                <Link
-                  href="/legal"
-                  className="block text-white font-semibold text-lg mb-2 hover:text-[#E91E63] transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Governance
-                </Link>
-                <div className="pl-4 space-y-2">
-                  <Link
-                    href="/legal/eu-policy"
-                    className="block text-white/70 text-sm hover:text-white transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Geographic Indications
-                  </Link>
-                </div>
-              </div>
+              ))}
 
               {/* About */}
               <div>
