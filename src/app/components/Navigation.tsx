@@ -11,6 +11,8 @@ import {
   NavigationMenuTrigger,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu"
+import { mainAreas } from "@/app/components/winemap-sections/mainAreas";
+import { mapApplications } from "@/app/components/map-applications/mapApplications";
 
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -52,177 +54,47 @@ export function Navigation() {
         {/* Desktop Navigation */}
         <NavigationMenu className="hidden lg:flex justify-center py-6 w-full">
           <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-black text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white text-base px-5 py-3 uppercase">
-                Climate & Environment
-              </NavigationMenuTrigger>
-              <NavigationMenuContent className="bg-black border-white/20">
-                <div className="grid grid-cols-[340px_1fr] gap-0 w-[900px]">
-                  {/* Left side - Large clickable main entry */}
-                  <NavigationMenuLink
-                    href="/#climate-environment"
-                    className="flex flex-col justify-center p-10 bg-zinc-900 hover:bg-zinc-800 transition-colors border-r border-white/10 group"
-                  >
-                    <Map className="size-12 text-white mb-4" />
-                    <h3 className="text-2xl font-semibold text-white mb-3">Wine map climate & environment</h3>
-                    <p className="text-base text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                      Explore climate data and environmental indicators for wine regions.
-                    </p>
-                  </NavigationMenuLink>
 
-                  {/* Right side - List of subsections */}
-                  <div className="grid gap-1 p-5">
-                    <NavigationMenuLink
-                      href="/climate-environment/climate"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
-                    >
-                      <div className="font-semibold text-white mb-1.5 text-base">Climate Indicators</div>
-                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        Learn more about bioclimatic indicators, their use in the field of viticulture and investigate their historical and future spatial distribution over Europe
+              {mainAreas.map((area) => (
+                <NavigationMenuItem>
+
+                  <NavigationMenuTrigger className="bg-black text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white text-base px-5 py-3 uppercase">
+                    {area.titleText}
+                  </NavigationMenuTrigger>
+
+                  <NavigationMenuContent className="bg-black border-white/20">
+                    <div className="grid grid-cols-[340px_1fr] gap-0 w-[900px]">
+                      {/* Left side - Large clickable main entry */}
+                      <NavigationMenuLink
+                        href={area.mainHref}
+                        className="flex flex-col justify-center p-10 bg-zinc-900 hover:bg-zinc-800 transition-colors border-r border-white/10 group"
+                      >
+                        {area.icon}
+                        <h3 className="text-2xl font-semibold text-white mb-3">{area.title}</h3>
+                        <p className="text-base text-white/60 group-hover:text-white leading-relaxed transition-colors">
+                          {area.description}
+                        </p>
+                      </NavigationMenuLink>
+
+                      {/* Right side - List of subsections */}
+                      <div className="grid gap-1 p-5">
+                        {area.categories.map((cat) => (
+                          <NavigationMenuLink
+                            href={cat.href}
+                            className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
+                          >
+                            <div className="font-semibold text-white mb-1.5 text-base">{cat.label}</div>
+                            <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
+                              {cat.description}
+                            </div>
+                          </NavigationMenuLink>
+                        ))}
                       </div>
-                    </NavigationMenuLink>
+                    </div>
 
-                    <NavigationMenuLink
-                      href="/climate-environment/vulnerability"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
-                    >
-                      <div className="font-semibold text-white mb-1.5 text-base">Vulnerability & Risks</div>
-                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        Discover how vulnerable European wine regions are to climate change and investiate the central dimension that shape their vulnerability
-                      </div>
-                    </NavigationMenuLink>
-
-                    <NavigationMenuLink
-                      href="/climate-environment/ecosystem-services"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
-                    >
-                      <div className="font-semibold text-white mb-1.5 text-base">Ecosystem Services</div>
-                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        Dive deeper into the multiple regulating, provisioning, and cultural benefits that viticulture provides for landscapes and communities.
-                      </div>
-                    </NavigationMenuLink>
-                  </div>
-                </div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-black text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white text-base px-5 py-3 uppercase">
-                ADAPTATION
-              </NavigationMenuTrigger>
-              <NavigationMenuContent className="bg-black border-white/20">
-                <div className="grid grid-cols-[340px_1fr] gap-0 w-[900px]">
-                  {/* Left side - Large clickable main entry */}
-                  <NavigationMenuLink
-                    href="/adaptation"
-                    className="flex flex-col justify-center p-10 bg-zinc-900 hover:bg-zinc-800 transition-colors border-r border-white/10 group"
-                  >
-                    <Map className="size-12 text-white mb-4" />
-                    <h3 className="text-2xl font-semibold text-white mb-3">Wine map adaptation</h3>
-                    <p className="text-base text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                      Discover ecosystem-based adaptation strategies for viticulture.
-                    </p>
-                  </NavigationMenuLink>
-
-                  {/* Right side - List of subsections */}
-                  <div className="grid gap-1 p-5">
-                    <NavigationMenuLink
-                      href="/adaptation/eba-strategies"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
-                    >
-                      <div className="font-semibold text-white mb-1.5 text-base">Catalogue of EbA strategies</div>
-                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        The Catalogue of EbA strategies brings together approaches that harness biodiversity and
-                        ecosystem functions to mitigate risks.
-                      </div>
-                    </NavigationMenuLink>
-
-                    <NavigationMenuLink
-                      href="/adaptation/pilot-experiences"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
-                    >
-                      <div className="font-semibold text-white mb-1.5 flex items-center gap-2 text-base">
-                        <div className="bg-white rounded-md p-1 flex items-center justify-center">
-                          <Video className="size-4 text-black" />
-                        </div>
-                        Pilot implementation experiences
-                      </div>
-                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        Through short films from pilot regions, you can discover how winegrowers, researchers and
-                        communities are working with their landscapes to address climate challenges while preserving
-                        local traditions.
-                      </div>
-                    </NavigationMenuLink>
-
-                    <NavigationMenuLink
-                      href="#spatial-analogues"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
-                    >
-                      <div className="font-semibold text-white mb-1.5 text-base">Spatial analogues</div>
-                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        This section includes an interactive tool to select and visualize spatial analogues for
-                        individual European wine regions.
-                      </div>
-                    </NavigationMenuLink>
-                  </div>
-                </div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-black text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white text-base px-5 py-3 uppercase">
-                GOVERNANCE
-              </NavigationMenuTrigger>
-              <NavigationMenuContent className="bg-black border-white/20">
-                <div className="grid grid-cols-[340px_1fr] gap-0 w-[900px]">
-                  {/* Left side - Large clickable main entry */}
-                  <NavigationMenuLink
-                    href="/legal"
-                    className="flex flex-col justify-center p-10 bg-zinc-900 hover:bg-zinc-800 transition-colors border-r border-white/10 group"
-                  >
-                    <Map className="size-12 text-white mb-4" />
-                    <h3 className="text-2xl font-semibold text-white mb-3">Wine map legal</h3>
-                    <p className="text-base text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                      Navigate regulations and governance frameworks for wine production.
-                    </p>
-                  </NavigationMenuLink>
-
-                  {/* Right side - List of subsections */}
-                  <div className="grid gap-1 p-5">
-                    <NavigationMenuLink
-                      href="/legal/eu-policy"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
-                    >
-                      <div className="font-semibold text-white mb-1.5 text-base">EU Policy</div>
-                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        Discover the legal system behind high-quality European wine regions and how these regulations influence their climate resilience.
-                      </div>
-                    </NavigationMenuLink>
-
-                    <NavigationMenuLink
-                      href="/legal/participatory-approaches"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
-                    >
-                      <div className="font-semibold text-white mb-1.5 text-base">Particpiatory Approaches</div>
-                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        Get information about participatory approaches in scientific research and how they can be used to generate innovative solutions for the future sustainability of viticulture.
-                      </div>
-                    </NavigationMenuLink>
-
-                    <NavigationMenuLink
-                      href="/legal/courses"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
-                    >
-                      <div className="font-semibold text-white mb-1.5 text-base">Courses</div>
-                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        Improve your knowledge on viticulture, climate change and ecosystem-based adaptation in a series of interactive courses.
-                      </div>
-                    </NavigationMenuLink>
-
-                  </div>
-                </div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              ))}
 
             <NavigationMenuItem>
               <NavigationMenuTrigger className="bg-black text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white text-base px-5 py-3 uppercase">

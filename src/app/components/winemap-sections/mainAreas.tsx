@@ -11,6 +11,7 @@ type MainArea = {
   categories: {
     label: string;
     href: string;
+    description?: string,
   }[];
   categoriesClassName?: string;
 };
@@ -29,9 +30,9 @@ export const mainAreas: MainArea[] = [
     icon: <ThermometerSun className="w-12 h-12 text-[#E91E63]" aria-hidden="true" />,
     mainHref: "/#climate-environment",
     categories: [
-      { label: "Climate Indicators →", href: "/climate-environment/climate" },
-      { label: "Vulnerability & Risks →", href: "/climate-environment/vulnerability" },
-      { label: "Ecosystem Services →", href: "/climate-environment/ecosystem-services" },
+      { label: "Climate Indicators →", href: "/climate-environment/climate", description: "Learn more about bioclimatic indicators, their use in the field of viticulture and investigate their historical and future spatial distribution over Europe"},
+      { label: "Vulnerability & Risks →", href: "/climate-environment/vulnerability", description: "Discover how vulnerable European wine regions are to climate change and investiate the central dimension that shape their vulnerability" },
+      { label: "Ecosystem Services →", href: "/climate-environment/ecosystem-services", description: "Dive deeper into the multiple regulating, provisioning, and cultural benefits that viticulture provides for landscapes and communities." },
     ],
   },
   {
@@ -43,14 +44,14 @@ export const mainAreas: MainArea[] = [
       </>
     ),
     description:
-      "Discover ecosystem-based adaptation strategies and pilot implementation experiences in wine regions.",
+      "Discover ecosystem-based adaptation strategies and pilot implementation experiences for viticulture.",
     icon: <Leaf className="w-12 h-12 text-[#E91E63]" aria-hidden="true" />,
     mainHref: "/#adaptation",
     categoriesClassName: "space-y-1",
     categories: [
-      { label: "EbA Strategies Catalogue →", href: "/adaptation/eba-strategies" },
-      { label: "Pilot Experiences →", href: "/adaptation/pilot-experiences" },
-      { label: "Spatial Analogues →", href: "/adaptation" },
+      { label: "EbA Strategies Catalogue →", href: "/adaptation/eba-strategies", description: "The Catalogue of EbA strategies brings together approaches that harness biodiversity and ecosystem functions to mitigate risks." },
+      { label: "Pilot Experiences →", href: "/adaptation/pilot-experiences", description: "Through short films from pilot regions, you can discover how winegrowers, researchers and communities are working with their landscapes to address climate challenges while preserving local traditions." },
+      { label: "Spatial Analogues →", href: "/adaptation", description: "This section includes an interactive tool to select and visualize spatial analogues for individual European wine regions." },
     ],
   },
   {
@@ -67,9 +68,9 @@ export const mainAreas: MainArea[] = [
     mainHref: "/#governance",
     categoriesClassName: "space-y-1",
     categories: [
-      { label: "EU Policy →", href: "/legal/eu-policy" },
-      { label: "Participatory Approaches →", href: "/legal/participatory-approaches" },
-      { label: "Courses →", href: "/legal/participatory-approaches" },
+      { label: "EU Policy →", href: "/legal/eu-policy", description: "Discover the legal system behind high-quality European wine regions and how these regulations influence their climate resilience." },
+      { label: "Participatory Approaches →", href: "/legal/participatory-approaches", description: "Get information about participatory approaches in scientific research and how they can be used to generate innovative solutions for the future sustainability of viticulture." },
+      { label: "Courses →", href: "/legal/participatory-approaches", description: "Improve your knowledge on viticulture, climate change and ecosystem-based adaptation in a series of interactive courses." },
     ],
   },
 ];
