@@ -13,7 +13,7 @@ export function Sidebar() {
       {/* Hamburger Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-6 right-6 z-[60] bg-black/80 backdrop-blur-md border border-white/20 rounded-lg p-3 hover:bg-white/10 transition-colors"
+        className="fixed mt-8 top-6 right-6 z-[60] bg-black/80 backdrop-blur-md border border-white/20 rounded-lg p-3 hover:bg-white/10 transition-colors"
         aria-label={isOpen ? "Close sidebar" : "Open sidebar"}
         aria-expanded={isOpen}
       >

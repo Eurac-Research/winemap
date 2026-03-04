@@ -7,9 +7,9 @@ export function ConditionalNavigation() {
   const pathname = usePathname()
 
   // Don't show navigation on landing page
-  if (pathname === "/") {
-    return null
-  }
+  // if (pathname === "/") {
+  //   return null
+  // }
 
   return <Navigation />
 }

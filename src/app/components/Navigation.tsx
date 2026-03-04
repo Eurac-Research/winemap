@@ -20,7 +20,7 @@ export function Navigation() {
     <div className="bg-black fixed top-0 left-0 w-full z-[100] border-b border-white/20">
       <div className="px-6 flex justify-between items-center">
         {/* Logo */}
-        <div className="flex items-center gap-2 py-6 hover:opacity-90 transition-opacity lg:w-1/3">
+        <div className="flex items-center gap-2 hover:opacity-90 transition-opacity lg:w-1/3">
           <Link href="/" className="flex items-center justify-center gap-2">
             <span className="text-white font-medium text-lg tracking-wide">WINEMAP</span>
             <span className="text-white/60 text-xs">by</span>
@@ -51,7 +51,7 @@ export function Navigation() {
         </button>
 
         {/* Desktop Navigation */}
-        <NavigationMenu className="hidden lg:flex justify-center py-6 w-full">
+        <NavigationMenu className="hidden lg:flex justify-center py-1 w-full">
           <NavigationMenuList>
 
               {mainAreas.map((area) => (
