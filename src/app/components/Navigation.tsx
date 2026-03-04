@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Map, Video, BookOpen, Menu, X } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -12,7 +12,6 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu"
 import { mainAreas } from "@/app/components/winemap-sections/mainAreas";
-import { mapApplications } from "@/app/components/map-applications/mapApplications";
 
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -80,6 +79,7 @@ export function Navigation() {
                       <div className="grid gap-1 p-5">
                         {area.categories.map((cat) => (
                           <NavigationMenuLink
+                            key={cat.label}
                             href={cat.href}
                             className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
                           >
@@ -96,59 +96,6 @@ export function Navigation() {
                 </NavigationMenuItem>
               ))}
 
-            <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-black text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white text-base px-5 py-3 uppercase">
-                About
-              </NavigationMenuTrigger>
-              <NavigationMenuContent className="bg-black border-white/20">
-                <div className="grid grid-cols-[340px_1fr] gap-0 w-[900px]">
-                  {/* Left side - Large clickable main entry */}
-                  <NavigationMenuLink
-                    href="/about"
-                    className="flex flex-col justify-center p-10 bg-zinc-900 hover:bg-zinc-800 transition-colors border-r border-white/10 group"
-                  >
-                    <BookOpen className="size-12 text-white mb-4" />
-                    <h3 className="text-2xl font-semibold text-white mb-3">About Winemap</h3>
-                    <p className="text-base text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                      Learn about the data and the research projects behind Winemap.
-                    </p>
-                  </NavigationMenuLink>
-
-                  {/* Right side - List of subsections */}
-                  <div className="grid gap-1 p-5">
-                    <NavigationMenuLink
-                      href="/about#projects"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
-                    >
-                      <div className="font-semibold text-white mb-1.5 text-base">Research Projects</div>
-                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        Learn more about the research projects behind Winemap.
-                      </div>
-                    </NavigationMenuLink>
-
-                    <NavigationMenuLink
-                      href="/about#institute"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
-                    >
-                      <div className="font-semibold text-white mb-1.5 text-base">Institute for Alpine Environment</div>
-                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        Discover the scientific institute behind Winemap.
-                      </div>
-                    </NavigationMenuLink>
-
-                    <NavigationMenuLink
-                      href="/literature"
-                      className="block rounded-md p-4 hover:bg-white/10 transition-colors group"
-                    >
-                      <div className="font-semibold text-white mb-1.5 text-base">Scientific Literature</div>
-                      <div className="text-sm text-white/60 group-hover:text-white leading-relaxed transition-colors">
-                        Explore the publications behind the Winemap project.
-                      </div>
-                    </NavigationMenuLink>
-                  </div>
-                </div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
 
@@ -192,46 +139,6 @@ export function Navigation() {
                 </div>
               ))}
 
-              {/* About */}
-              <div>
-                <Link
-                  href="/about"
-                  className="block text-white font-semibold text-lg mb-2 hover:text-[#E91E63] transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  About
-                </Link>
-                <div className="pl-4 space-y-2">
-                  <Link
-                    href="/about#data"
-                    className="block text-white/70 text-sm hover:text-white transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    About the Data
-                  </Link>
-                  <Link
-                    href="/about#pdo"
-                    className="block text-white/70 text-sm hover:text-white transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    About PDO Wine Regions
-                  </Link>
-                  <Link
-                    href="/about#vulnerability"
-                    className="block text-white/70 text-sm hover:text-white transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Vulnerability Assessment
-                  </Link>
-                  <Link
-                    href="/literature"
-                    className="block text-white/70 text-sm hover:text-white transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Scientific Literature
-                  </Link>
-                </div>
-              </div>
             </div>
           </div>
         </>

@@ -1,17 +1,18 @@
-import { Leaf, Scale, ThermometerSun } from "lucide-react";
+import { BookOpen, Leaf, Scale, ThermometerSun } from "lucide-react";
 import { ReactNode } from "react";
 
 type MainArea = {
   id: string;
   title: ReactNode;
   titleText: string;
+  showOnLanding: boolean;
   description: string;
   icon: ReactNode;
   mainHref: string;
   categories: {
     label: string;
     href: string;
-    description?: string,
+    description?: string;
   }[];
   categoriesClassName?: string;
 };
@@ -20,6 +21,7 @@ export const mainAreas: MainArea[] = [
   {
     id: "climate-environment",
     titleText: "Winemap Climate",
+    showOnLanding: true,
     title: (
       <>
         Winemap<br />Climate
@@ -38,6 +40,7 @@ export const mainAreas: MainArea[] = [
   {
     id: "adaptation",
     titleText: "Winemap Adaptation",
+    showOnLanding: true,
     title: (
       <>
         Winemap<br />Adaptation
@@ -57,6 +60,7 @@ export const mainAreas: MainArea[] = [
   {
     id: "governance",
     titleText: "Winemap Governance",
+    showOnLanding: true,
     title: (
       <>
         Winemap<br />Governance
@@ -71,6 +75,37 @@ export const mainAreas: MainArea[] = [
       { label: "EU Policy →", href: "/legal/eu-policy", description: "Discover the legal system behind high-quality European wine regions and how these regulations influence their climate resilience." },
       { label: "Participatory Approaches →", href: "/legal/participatory-approaches", description: "Get information about participatory approaches in scientific research and how they can be used to generate innovative solutions for the future sustainability of viticulture." },
       { label: "Courses →", href: "/legal/participatory-approaches", description: "Improve your knowledge on viticulture, climate change and ecosystem-based adaptation in a series of interactive courses." },
+    ],
+  },
+  {
+    id: "about",
+    titleText: "About",
+    showOnLanding: false,
+    title: "About Winemap",
+    description: "Learn about the data and the research projects behind Winemap.",
+    icon: <BookOpen className="w-12 h-12 text-[#E91E63]" aria-hidden="true" />,
+    mainHref: "/about",
+    categories: [
+      {
+        label: "Research Projects →",
+        href: "/about#projects",
+        description: "Learn more about the research projects behind Winemap.",
+      },
+      {
+        label: "The Institute →",
+        href: "/about#institute",
+        description: "Discover the scientific institute behind Winemap.",
+      },
+      {
+        label: "The Team →",
+        href: "/team",
+        description: "Get to know the people behind the Winemap project.",
+      },
+      {
+        label: "Scientific Literature →",
+        href: "/literature",
+        description: "Explore the publications behind the Winemap project.",
+      },
     ],
   },
 ];

@@ -75,7 +75,7 @@ export default function HomePage() {
           {/* Main Areas - Vertical Layout */}
           <section id='main-areas' className="relative z-30 px-4 pt-8 pb-10 max-w-5xl mx-auto backdrop-blur-xl rounded-3xl mt-4">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {mainAreas.map((area) => (
+              {mainAreas.filter((area) => area.showOnLanding).map((area) => (
                 <MainAreaCard
                   key={area.id}
                   id={area.id}

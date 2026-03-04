@@ -16,7 +16,7 @@ export default function Footer() {
               Explore
             </h3>
             <ul className="space-y-1">
-              {mainAreas.map((area) => (
+              {mainAreas.filter((area) => area.showOnLanding).map((area) => (
                 <li key={area.id}>
                   <Link href={area.mainHref} className="text-white/70 hover:text-white transition-colors text-sm">
                     {area.titleText}
@@ -47,8 +47,24 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 2: About */}
+          {/* About */}
           <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-[#E91E63]">
+              About
+            </h3>
+            <ul className="space-y-1">
+              {mainAreas
+                .find((area) => area.id === "about")
+                ?.categories.map((cat) => (
+                  <li key={cat.label}>
+                    <Link href={cat.href} className="text-white/70 hover:text-white transition-colors text-sm">
+                      {cat.label.replace(" →", "")}
+                    </Link>
+                  </li>
+                ))}
+            </ul>
+          </div>
+          {/* <div>
             <h3 className="text-sm font-semibold uppercase tracking-wide text-[#E91E63]">
               About
             </h3>
@@ -79,7 +95,7 @@ export default function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Column 4: Legal */}
           <div>
