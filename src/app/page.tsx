@@ -3,8 +3,11 @@ import { Leaf, Scale, ThermometerSun, Map as MapIcon } from "lucide-react";
 import { Sidebar } from "./components/Sidebar";
 import WinemapDescription from "@/app/components/WinemapDescription";
 import RespondLogo from "@/app/components/ui/RespondLogo";
+import MapApplicationCard from "@/app/components/MapApplicationCard";
+import { mapApplications } from "@/app/components/map-applications/mapApplications";
 
 export default function HomePage() {
+
   return (
     <div className="relative min-h-screen text-white p-0 overflow-x-hidden">
 
@@ -125,7 +128,7 @@ export default function HomePage() {
               <div id="adaptation" className="group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md rounded-xl shadow-xl hover:shadow-[#E91E63]/20">
                 <div className="p-8">
                   {/* Left - Icon and Title */}
-                  <Link href="/adaptation" className="flex flex-col items-center text-center group/main">
+                  <Link href="/#adaptation" className="flex flex-col items-center text-center group/main">
                     <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#E91E63]/20 to-[#E91E63]/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                       <Leaf className="w-12 h-12 text-[#E91E63]" aria-hidden="true" />
                     </div>
@@ -175,7 +178,7 @@ export default function HomePage() {
               <div id='governance' className="group relative bg-gradient-to-br from-white/10 to-white/5 border border-white/20 hover:border-[#E91E63] transition-all duration-300 overflow-hidden backdrop-blur-md rounded-xl shadow-xl hover:shadow-[#E91E63]/20">
                 <div className="p-8">
                   {/* Left - Icon and Title */}
-                  <Link href="/legal" className="flex flex-col items-center text-center group/main">
+                  <Link href="/#governance" className="flex flex-col items-center text-center group/main">
                     <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#E91E63]/20 to-[#E91E63]/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                       <Scale className="w-12 h-12 text-[#E91E63]" aria-hidden="true" />
                     </div>
@@ -248,6 +251,24 @@ export default function HomePage() {
                 </div>
               </div>
             </Link>
+          </section>
+
+          {/* Map-Applications */}
+          <section id='map-applications' className="px-4 py-20 max-w-4xl mx-auto border-t border-white/10">
+            <div className="text-center">
+              <h2 className="text-3xl font-bold text-white mb-6">Map Applications</h2>
+            </div>
+            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory w-full max-w-[900px] mx-auto">
+              {mapApplications.map((app) => (
+                <MapApplicationCard
+                  key={app.title}
+                  href={app.href}
+                  title={app.title}
+                  description={app.description}
+                  icon={app.icon}
+                />
+              ))}
+            </div>
           </section>
 
           {/* About Section */}
