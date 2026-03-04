@@ -38,7 +38,7 @@ export default function HomePage() {
       <section className="relative top-0 z-10" style={{ height: "75vh" }}>
         <div className="h-full px-6 md:px-12">
           <div className="mx-auto flex h-full max-w-9xl items-center justify-center">
-            <div className="max-w-xl border border-white/20 bg-white/10 rounded-xl shadow-xl p-6 text-center z-50">
+            <div className="max-w-3xl border border-white/20 bg-white/10 rounded-xl shadow-xl p-6 text-center z-50">
               <h1 className="text-6xl md:text-8xl font-bold mb-6 text-white">WINEMAP</h1>
               <p className="text-xl md:text-2xl text-white mb-4 font-light flex items-center justify-center gap-2">by         
               <svg
@@ -122,7 +122,7 @@ export default function HomePage() {
             <div className="text-center">
               <h2 className="text-3xl font-bold text-white mb-6">Map Applications</h2>
             </div>
-            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory w-full max-w-[900px] mx-auto">
+            <div className="flex gap-4 overflow-x-auto pt-2 pb-6 snap-x snap-mandatory w-full mx-auto">
               {mapApplications.map((app) => (
                 <MapApplicationCard
                   key={app.title}
