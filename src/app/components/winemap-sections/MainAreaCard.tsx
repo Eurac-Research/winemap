@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 type MainAreaCategory = {
   href: string;
   label: string;
+  description: string
 };
 
 type MainAreaCardProps = {
@@ -49,6 +50,7 @@ export default function MainAreaCard({
             <Link
               key={category.label}
               href={category.href}
+              title={category.description}
               className="block px-3 py-2 rounded-lg hover:bg-white/10 transition-colors group/link"
             >
               <h3 className="text-white/90 font-semibold text-sm group-hover/link:text-[#E91E63] transition-colors">

@@ -12,7 +12,7 @@ type MainArea = {
   categories: {
     label: string;
     href: string;
-    description?: string;
+    description: string;
   }[];
   categoriesClassName?: string;
 };
