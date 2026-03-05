@@ -34,10 +34,10 @@ export default function HomePage() {
       />
 
       {/* Sticky Hero Section */}
-      <section className="relative top-0 z-10" style={{ height: "75vh" }}>
+      <section className="relative pt-24 z-10">
         <div className="h-full px-6 md:px-12">
           <div className="mx-auto flex h-full max-w-9xl items-center justify-center">
-            <div className="max-w-3xl border border-white/20 bg-white/10 rounded-xl shadow-xl p-6 text-center z-50">
+            <div className="max-w-3xl text-center z-50">
               <h1 className="text-6xl md:text-8xl font-bold mb-6 text-white">WINEMAP</h1>
               <p className="text-xl md:text-2xl text-white mb-4 font-light flex items-center justify-center gap-2">by         
               <svg
