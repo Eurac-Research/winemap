@@ -55,7 +55,7 @@ export function Navigation() {
           <NavigationMenuList>
 
               {mainAreas.filter((area) => area.id !== 'about').map((area) => (
-                <NavigationMenuItem>
+                <NavigationMenuItem key = {area.id}>
 
                   <NavigationMenuTrigger className="bg-black text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white text-base px-5 py-3 uppercase">
                     {area.titleText}
