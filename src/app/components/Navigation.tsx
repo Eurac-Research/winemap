@@ -54,7 +54,7 @@ export function Navigation() {
         <NavigationMenu className="hidden lg:flex justify-center py-1 w-full">
           <NavigationMenuList>
 
-              {mainAreas.map((area) => (
+              {mainAreas.filter((area) => area.id !== 'about').map((area) => (
                 <NavigationMenuItem>
 
                   <NavigationMenuTrigger className="bg-black text-white hover:bg-white/10 hover:text-white data-[state=open]:bg-white/10 data-[state=open]:text-white text-base px-5 py-3 uppercase">
@@ -115,7 +115,7 @@ export function Navigation() {
           {/* Menu Content */}
           <div className="lg:hidden bg-black border-t border-white/20 h-[calc(100vh-80px)] overflow-y-auto fixed left-0 right-0 top-[80px] z-[100]">
             <div className="px-6 py-4 space-y-4">
-              {mainAreas.map((area) => (
+              {mainAreas.filter((area) => area.id !== 'about').map((area) => (
                 <div key={area.id}>
                   <Link
                     href={area.mainHref}

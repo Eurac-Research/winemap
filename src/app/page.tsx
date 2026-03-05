@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Map as MapIcon } from "lucide-react";
-import { Sidebar } from "./components/Sidebar";
 import WinemapDescription from "@/app/components/WinemapDescription";
 import RespondLogo from "@/app/components/ui/RespondLogo";
 import MapApplicationCard from "@/app/components/map-applications/MapApplicationCard";
@@ -69,9 +68,6 @@ export default function HomePage() {
       <div className="relative z-20 w-full">
         {/* Content Layer */}
         <div className="relative z-20 w-full">
-          {/* Sidebar Component */}
-          <Sidebar />
-
           {/* Main Areas - Vertical Layout */}
           <section id='main-areas' className="relative z-30 px-4 pt-8 pb-10 max-w-5xl mx-auto backdrop-blur-xl rounded-3xl mt-4">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

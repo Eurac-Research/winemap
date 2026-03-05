@@ -89,22 +89,22 @@ export const mainAreas: MainArea[] = [
       {
         label: "Research Projects →",
         href: "/about#projects",
-        description: "Learn more about the research projects behind Winemap.",
+        description: "Learn more about the research projects behind the Winemap.",
       },
       {
         label: "The Institute →",
         href: "/about#institute",
-        description: "Discover the scientific institute behind Winemap.",
+        description: "Discover the scientific institute behind the Winemap.",
       },
       {
         label: "The Team →",
         href: "/team",
-        description: "Get to know the people behind the Winemap project.",
+        description: "Get to know the people behind the Winemap.",
       },
       {
         label: "Scientific Literature →",
         href: "/literature",
-        description: "Explore the publications behind the Winemap project.",
+        description: "Explore the publications behind the Winemap.",
       },
     ],
   },
