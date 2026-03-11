@@ -39,6 +39,19 @@ export interface PDORecord {
 type PdoPointFeature = Feature<Geometry, GeoJsonProperties & { PDOid?: string }>;
 type PdoPointCollection = FeatureCollection<Geometry, GeoJsonProperties & { PDOid?: string }>;
 
+interface CountryOption {
+  code: string;
+  name: string;
+}
+
+interface FilterState {
+  pdoName?: string;
+  country?: string;
+  municipality?: string;
+  category?: string;
+  variety?: string;
+}
+
 const MAPBOX_TOKEN = "";
 const INITIAL_VIEW_STATE = {
   latitude: 46,
@@ -54,7 +67,8 @@ export default function PdoExplorerPage() {
 
   const [pdoData, setPdoData] = useState<PDORecord[]>([]);
   const [pdoPointsData, setPdoPointsData] = useState<PdoPointCollection | null>(null);
-  const [selectedPdoName, setSelectedPdoName] = useState<string | undefined>();
+  const [countryData, setCountryData] = useState<CountryOption[]>([]);
+  const [filters, setFilters] = useState<FilterState>({});
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
 
@@ -67,24 +81,27 @@ export default function PdoExplorerPage() {
       setLoadError(null);
 
       try {
-        const [pdoRes, pointsRes] = await Promise.all([
+        const [pdoRes, pointsRes, countryRes] = await Promise.all([
           fetch("/api/data/pdo-eu-id", { signal: controller.signal }),
           fetch("/api/data/pdo-points", { signal: controller.signal }),
+          fetch("/api/data/country-codes", { signal: controller.signal }),
         ]);
 
-        if (!pdoRes.ok || !pointsRes.ok) {
+        if (!pdoRes.ok || !pointsRes.ok || !countryRes.ok) {
           throw new Error("Failed to fetch PDO explorer data");
         }
 
-        const [pdoJson, pointsJson] = await Promise.all([
+        const [pdoJson, pointsJson, countryJson] = await Promise.all([
           pdoRes.json(),
           pointsRes.json(),
+          countryRes.json(),
         ]);
 
         if (!isActive) return;
 
         setPdoData(Array.isArray(pdoJson) ? pdoJson : []);
         setPdoPointsData(pointsJson);
+        setCountryData(Array.isArray(countryJson) ? countryJson : []);
       } catch (error) {
         if ((error as Error).name === "AbortError") {
           return;
@@ -117,6 +134,71 @@ export default function PdoExplorerPage() {
       .map((pdoname) => ({ label: pdoname, value: pdoname }));
   }, [pdoData]);
 
+  const municipalityOptions = useMemo(() => {
+    const uniqueMunicipalities = [
+      ...new Set(
+        pdoData.flatMap((item) =>
+          item.munic
+            .split("/")
+            .map((entry) => entry.trim())
+            .filter(Boolean),
+        ),
+      ),
+    ];
+
+    return uniqueMunicipalities
+      .sort((a, b) => a.localeCompare(b))
+      .map((municipality) => ({ label: municipality, value: municipality }));
+  }, [pdoData]);
+
+  const categoryOptions = useMemo(() => {
+    const uniqueCategories = [
+      ...new Set(
+        pdoData.flatMap((item) =>
+          item.category
+            .split("/")
+            .map((entry) => entry.trim())
+            .filter(Boolean),
+        ),
+      ),
+    ];
+
+    return uniqueCategories
+      .sort((a, b) => a.localeCompare(b))
+      .map((category) => ({ label: category, value: category }));
+  }, [pdoData]);
+
+  const varietyOptions = useMemo(() => {
+    const uniqueVarieties = [
+      ...new Set(
+        pdoData.flatMap((item) =>
+          (item.varietiesOiv ?? "")
+            .split("/")
+            .map((entry) => entry.trim())
+            .filter(Boolean),
+        ),
+      ),
+    ];
+
+    return uniqueVarieties
+      .sort((a, b) => a.localeCompare(b))
+      .map((variety) => ({ label: variety, value: variety }));
+  }, [pdoData]);
+
+  const countryOptions = useMemo(() => {
+    const usedCountryCodes = new Set(
+      pdoData.map((item) => item.country.trim()).filter(Boolean),
+    );
+
+    return countryData
+      .filter((country) => usedCountryCodes.has(country.code))
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map((country) => ({
+        label: country.name,
+        value: country.code,
+      }));
+  }, [countryData, pdoData]);
+
   const pointFeatureByPdoId = useMemo(() => {
     const lookup = new Map<string, PdoPointFeature>();
 
@@ -144,39 +226,21 @@ export default function PdoExplorerPage() {
       });
   }, []);
 
-  const clearSelection = useCallback(() => {
-    setSelectedPdoName(undefined);
-    resetMapView();
-    history.replaceState({}, "", window.location.pathname);
-  }, [resetMapView]);
+  const fitMapToPdoIds = useCallback(
+    (pdoIds: string[]) => {
+      if (!pdoIds.length || !mapRef.current) return;
 
-  const handlePdoChange = useCallback(
-    (value: string | undefined) => {
-      if (!value) {
-        clearSelection();
-        return;
-      }
+      const matchingFeatures = pdoIds
+        .map((id) => pointFeatureByPdoId.get(id))
+        .filter((feature): feature is PdoPointFeature => Boolean(feature));
 
-      setSelectedPdoName(value);
-      history.replaceState({}, "", `?pdoname=${encodeURI(value)}`);
+      if (!matchingFeatures.length) return;
 
-      const matchingPdos = pdoData.filter((item) => item.pdoname === value);
-      if (!matchingPdos.length) {
-        clearSelection();
-        return;
-      }
+      const [minLng, minLat, maxLng, maxLat] = bbox({
+        type: "FeatureCollection",
+        features: matchingFeatures,
+      });
 
-      const showIds = matchingPdos.map((item) => item.pdoid);
-      const map = mapRef.current?.getMap();
-
-      map
-        ?.setFilter("pdo-area", ["match", ["get", "PDOid"], showIds, true, false])
-        ?.setFilter("pdo-pins", ["match", ["get", "PDOid"], showIds, true, false]);
-
-      const selectedFeature = pointFeatureByPdoId.get(showIds[0]);
-      if (!selectedFeature || !mapRef.current) return;
-
-      const [minLng, minLat, maxLng, maxLat] = bbox(selectedFeature);
       mapRef.current.fitBounds(
         [
           [minLng, minLat],
@@ -189,7 +253,130 @@ export default function PdoExplorerPage() {
         },
       );
     },
-    [clearSelection, pdoData, pointFeatureByPdoId],
+    [pointFeatureByPdoId],
+  );
+
+  const showPdoIdsOnMap = useCallback(
+    (pdoIds: string[]) => {
+      const map = mapRef.current?.getMap();
+      if (!map) return;
+
+      if (!pdoIds.length) {
+        resetMapView();
+        return;
+      }
+
+      map
+        .setFilter("pdo-area", ["match", ["get", "PDOid"], pdoIds, true, false])
+        .setFilter("pdo-pins", ["match", ["get", "PDOid"], pdoIds, true, false]);
+
+      fitMapToPdoIds(pdoIds);
+    },
+    [fitMapToPdoIds, resetMapView],
+  );
+
+  const updateUrlForFilter = useCallback((nextFilters: FilterState) => {
+    const params = new URLSearchParams();
+
+    if (nextFilters.pdoName) params.set("pdoname", nextFilters.pdoName);
+    else if (nextFilters.country) params.set("country", nextFilters.country);
+    else if (nextFilters.municipality) params.set("munic", nextFilters.municipality);
+    else if (nextFilters.category) params.set("cat", nextFilters.category);
+    else if (nextFilters.variety) params.set("variety", nextFilters.variety);
+
+    const query = params.toString();
+    history.replaceState({}, "", query ? `?${query}` : window.location.pathname);
+  }, []);
+
+  const clearSelection = useCallback(() => {
+    setFilters({});
+    resetMapView();
+    history.replaceState({}, "", window.location.pathname);
+  }, [resetMapView]);
+
+  const applyFilter = useCallback(
+    (nextFilters: FilterState, matchingPdos: PDORecord[]) => {
+      if (!matchingPdos.length) {
+        clearSelection();
+        return;
+      }
+
+      setFilters(nextFilters);
+      updateUrlForFilter(nextFilters);
+      showPdoIdsOnMap(matchingPdos.map((item) => item.pdoid));
+    },
+    [clearSelection, showPdoIdsOnMap, updateUrlForFilter],
+  );
+
+  const handlePdoChange = useCallback(
+    (value: string | undefined) => {
+      if (!value) {
+        clearSelection();
+        return;
+      }
+
+      const matchingPdos = pdoData.filter((item) => item.pdoname === value);
+      applyFilter({ pdoName: value }, matchingPdos);
+    },
+    [applyFilter, clearSelection, pdoData],
+  );
+
+  const handleCountryChange = useCallback(
+    (value: string | undefined) => {
+      if (!value) {
+        clearSelection();
+        return;
+      }
+
+      const matchingPdos = pdoData.filter((item) => item.country === value);
+      applyFilter({ country: value }, matchingPdos);
+    },
+    [applyFilter, clearSelection, pdoData],
+  );
+
+  const handleMunicipalityChange = useCallback(
+    (value: string | undefined) => {
+      if (!value) {
+        clearSelection();
+        return;
+      }
+
+      const matchingPdos = pdoData.filter((item) =>
+        item.munic.split("/").some((entry) => entry.trim() === value),
+      );
+      applyFilter({ municipality: value }, matchingPdos);
+    },
+    [applyFilter, clearSelection, pdoData],
+  );
+
+  const handleCategoryChange = useCallback(
+    (value: string | undefined) => {
+      if (!value) {
+        clearSelection();
+        return;
+      }
+
+      const matchingPdos = pdoData.filter((item) =>
+        item.category.split("/").some((entry) => entry.trim() === value),
+      );
+      applyFilter({ category: value }, matchingPdos);
+    },
+    [applyFilter, clearSelection, pdoData],
+  );
+
+  const handleVarietyChange = useCallback(
+    (value: string | undefined) => {
+      if (!value) {
+        clearSelection();
+        return;
+      }
+
+      const matchingPdos = pdoData.filter((item) =>
+        (item.varietiesOiv ?? "").split("/").some((entry) => entry.trim() === value),
+      );
+      applyFilter({ variety: value }, matchingPdos);
+    },
+    [applyFilter, clearSelection, pdoData],
   );
 
   return (
@@ -211,11 +398,65 @@ export default function PdoExplorerPage() {
                       popupMatchSelectWidth={290}
                       onChange={handlePdoChange}
                       options={pdoOptions}
-                      value={selectedPdoName}
+                      value={filters.pdoName}
                       className="w-full"
                       disabled={isLoadingData || !!loadError}
                       notFoundContent={loadError ?? "No PDOs found"}
                     />
+                    <Select
+                      showSearch
+                      allowClear
+                      placeholder="country"
+                      popupMatchSelectWidth={290}
+                      onChange={handleCountryChange}
+                      options={countryOptions}
+                      value={filters.country}
+                      className="w-full"
+                      disabled={isLoadingData || !!loadError}
+                      notFoundContent={loadError ?? "No countries found"}
+                    />
+                    <Select
+                      showSearch
+                      allowClear
+                      placeholder="municipality"
+                      popupMatchSelectWidth={290}
+                      onChange={handleMunicipalityChange}
+                      options={municipalityOptions}
+                      value={filters.municipality}
+                      className="w-full"
+                      disabled={isLoadingData || !!loadError}
+                      notFoundContent={loadError ?? "No municipalities found"}
+                    />
+                    <Select
+                      showSearch
+                      allowClear
+                      placeholder="category"
+                      popupMatchSelectWidth={290}
+                      onChange={handleCategoryChange}
+                      options={categoryOptions}
+                      value={filters.category}
+                      className="w-full"
+                      disabled={isLoadingData || !!loadError}
+                      notFoundContent={loadError ?? "No categories found"}
+                    />
+                    <Select
+                      showSearch
+                      allowClear
+                      placeholder="variety"
+                      popupMatchSelectWidth={290}
+                      onChange={handleVarietyChange}
+                      options={varietyOptions}
+                      value={filters.variety}
+                      className="w-full"
+                      disabled={isLoadingData || !!loadError}
+                      notFoundContent={loadError ?? "No varieties found"}
+                    />
+                    <button
+                      className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
+                      onClick={clearSelection}
+                    >
+                      reset
+                    </button>
                   </div>
                   {loadError && <p className="mt-4 text-sm text-white/70">{loadError}</p>}
                 </div>
