@@ -106,6 +106,11 @@ function FilterSelect({
         options={options}
         value={value}
         className={styles.filterSelect}
+        classNames={{
+          popup: {
+            root: styles.filterDropdown,
+          },
+        }}
         disabled={disabled}
         notFoundContent={emptyText}
       />
@@ -502,6 +507,15 @@ export default function PdoExplorerPage() {
             <div className={styles.panelFrame}>
               <div className={styles.frontpageContent}>
                 <div id="map-filter-content" className={styles.filterBarContent}>
+                  <div className={styles.filterIntro}>
+                    <p className={styles.filterEyebrow}>PDO Explorer</p>
+                    <h2 className={styles.filterHeading}>Filter wine regions</h2>
+                    <p className={styles.filterHelper}>
+                      Narrow the map by PDO name, geography, production category,
+                      or grape variety. Each filter focuses the map on matching
+                      regions.
+                    </p>
+                  </div>
 
                   {/* Filters */}
                   <div className={styles.filterFields}>

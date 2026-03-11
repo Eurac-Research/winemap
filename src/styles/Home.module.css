@@ -390,7 +390,40 @@
 }
 
 .filterBarContent {
-  @apply mt-2.5;
+  max-width: 300;
+  background: rgba(179, 177, 177, 0.14);
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 15px;
+}
+
+.filterIntro {
+  max-width: 340px;
+  margin-bottom: 18px;
+}
+
+.filterEyebrow {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(233, 30, 99, 0.85);
+}
+
+.filterHeading {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.05;
+  color: #fff;
+}
+
+.filterHelper {
+  margin: 10px 0 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.68);
 }
 
 .filterFields {
@@ -451,6 +484,42 @@
 .filterSelect :global(.ant-select-arrow),
 .filterSelect :global(.ant-select-clear) {
   color: rgba(255, 255, 255, 0.58) !important;
+}
+
+.filterDropdown {
+  padding: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  background: rgba(10, 10, 10, 0.96) !important;
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(14px);
+}
+
+.filterDropdown :global(.ant-select-item) {
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.9);
+  transition:
+    background-color 140ms ease,
+    color 140ms ease;
+}
+
+.filterDropdown :global(.ant-select-item-option-content) {
+  font-size: 14px;
+}
+
+.filterDropdown :global(.ant-select-item-option-active:not(.ant-select-item-option-selected)) {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.filterDropdown :global(.ant-select-item-option-selected) {
+  background: rgba(233, 30, 99, 0.16);
+  color: #fff;
+}
+
+.filterDropdown :global(.ant-empty-description) {
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .filterResetWrap {
