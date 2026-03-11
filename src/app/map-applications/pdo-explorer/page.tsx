@@ -15,6 +15,7 @@ import {
 import { isMobile } from "react-device-detect";
 import styles from "@/styles/Home.module.css";
 import { Select } from "antd";
+import type { SelectProps } from "antd";
 import bbox from "@turf/bbox";
 import type { Feature, FeatureCollection, Geometry, GeoJsonProperties } from "geojson";
 
@@ -52,6 +53,17 @@ interface FilterState {
   variety?: string;
 }
 
+type FilterKey = keyof FilterState;
+type FilterOption = NonNullable<SelectProps["options"]>[number];
+
+interface FilterFieldConfig {
+  key: FilterKey;
+  placeholder: string;
+  options: FilterOption[];
+  emptyText: string;
+  onChange: (value: string | undefined) => void;
+}
+
 const MAPBOX_TOKEN = "";
 const INITIAL_VIEW_STATE = {
   latitude: 46,
@@ -61,6 +73,39 @@ const INITIAL_VIEW_STATE = {
   pitch: 0,
 };
 const DEFAULT_PADDING = { top: 100, bottom: 25, left: 0, right: 5 };
+
+function FilterSelect({
+  placeholder,
+  value,
+  options,
+  onChange,
+  disabled,
+  emptyText,
+  loadingPlaceholder,
+}: {
+  placeholder: string;
+  value?: string;
+  options: FilterOption[];
+  onChange: (value: string | undefined) => void;
+  disabled: boolean;
+  emptyText: string;
+  loadingPlaceholder?: string;
+}) {
+  return (
+    <Select
+      showSearch
+      allowClear
+      placeholder={loadingPlaceholder ?? placeholder}
+      popupMatchSelectWidth={290}
+      onChange={onChange}
+      options={options}
+      value={value}
+      className="w-full"
+      disabled={disabled}
+      notFoundContent={emptyText}
+    />
+  );
+}
 
 export default function PdoExplorerPage() {
   const mapRef = useRef<MapRef>(null);
@@ -379,80 +424,94 @@ export default function PdoExplorerPage() {
     [applyFilter, clearSelection, pdoData],
   );
 
+  const filterFields = useMemo<FilterFieldConfig[]>(
+    () => [
+      {
+        key: "pdoName",
+        placeholder: "PDO",
+        options: pdoOptions,
+        emptyText: loadError ?? "No PDOs found",
+        onChange: handlePdoChange,
+      },
+      {
+        key: "country",
+        placeholder: "country",
+        options: countryOptions,
+        emptyText: loadError ?? "No countries found",
+        onChange: handleCountryChange,
+      },
+      {
+        key: "municipality",
+        placeholder: "municipality",
+        options: municipalityOptions,
+        emptyText: loadError ?? "No municipalities found",
+        onChange: handleMunicipalityChange,
+      },
+      {
+        key: "category",
+        placeholder: "category",
+        options: categoryOptions,
+        emptyText: loadError ?? "No categories found",
+        onChange: handleCategoryChange,
+      },
+      {
+        key: "variety",
+        placeholder: "variety",
+        options: varietyOptions,
+        emptyText: loadError ?? "No varieties found",
+        onChange: handleVarietyChange,
+      },
+    ],
+    [
+      categoryOptions,
+      countryOptions,
+      handleCategoryChange,
+      handleCountryChange,
+      handleMunicipalityChange,
+      handlePdoChange,
+      handleVarietyChange,
+      loadError,
+      municipalityOptions,
+      pdoOptions,
+      varietyOptions,
+    ],
+  );
+
+  const filtersDisabled = isLoadingData || !!loadError;
+
   return (
     <div className="fixed inset-0 z-10 pt-[60px]">
       <ResizablePanelGroup
         direction={isMobile ? "vertical" : "horizontal"}
         className="h-full w-full"
       >
+        {/* Sidebar */}
         <ResizablePanel defaultSize={isMobile ? 30 : 25} className="relative min-w-0 overflow-hidden">
           <Suspense fallback={<div>Loading...</div>}>
             <div className={styles.panelFrame}>
               <div className={styles.frontpageContent}>
                 <div id="map-filter-content" className={styles.filterBarContent}>
-                  <div className={styles.filter}>
-                    <Select
-                      showSearch
-                      allowClear
-                      placeholder={isLoadingData ? "Loading PDOs..." : "PDO"}
-                      popupMatchSelectWidth={290}
-                      onChange={handlePdoChange}
-                      options={pdoOptions}
-                      value={filters.pdoName}
-                      className="w-full"
-                      disabled={isLoadingData || !!loadError}
-                      notFoundContent={loadError ?? "No PDOs found"}
-                    />
-                    <Select
-                      showSearch
-                      allowClear
-                      placeholder="country"
-                      popupMatchSelectWidth={290}
-                      onChange={handleCountryChange}
-                      options={countryOptions}
-                      value={filters.country}
-                      className="w-full"
-                      disabled={isLoadingData || !!loadError}
-                      notFoundContent={loadError ?? "No countries found"}
-                    />
-                    <Select
-                      showSearch
-                      allowClear
-                      placeholder="municipality"
-                      popupMatchSelectWidth={290}
-                      onChange={handleMunicipalityChange}
-                      options={municipalityOptions}
-                      value={filters.municipality}
-                      className="w-full"
-                      disabled={isLoadingData || !!loadError}
-                      notFoundContent={loadError ?? "No municipalities found"}
-                    />
-                    <Select
-                      showSearch
-                      allowClear
-                      placeholder="category"
-                      popupMatchSelectWidth={290}
-                      onChange={handleCategoryChange}
-                      options={categoryOptions}
-                      value={filters.category}
-                      className="w-full"
-                      disabled={isLoadingData || !!loadError}
-                      notFoundContent={loadError ?? "No categories found"}
-                    />
-                    <Select
-                      showSearch
-                      allowClear
-                      placeholder="variety"
-                      popupMatchSelectWidth={290}
-                      onChange={handleVarietyChange}
-                      options={varietyOptions}
-                      value={filters.variety}
-                      className="w-full"
-                      disabled={isLoadingData || !!loadError}
-                      notFoundContent={loadError ?? "No varieties found"}
-                    />
+
+                  {/* Filters */}
+                  <div className="grid grid-rows gap-4 max-w-1xl border border-white">
+                    {filterFields.map((field) => (
+                      <FilterSelect
+                        key={field.key}
+                        placeholder={field.placeholder}
+                        loadingPlaceholder={
+                          field.key === "pdoName" && isLoadingData
+                            ? "Loading PDOs..."
+                            : undefined
+                        }
+                        value={filters[field.key]}
+                        options={field.options}
+                        onChange={field.onChange}
+                        disabled={filtersDisabled}
+                        emptyText={field.emptyText}
+                      />
+                    ))}
                     <button
-                      className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
+                      className="flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black"
                       onClick={clearSelection}
                     >
                       reset
@@ -473,6 +532,7 @@ export default function PdoExplorerPage() {
             } flex items-center justify-center bg-[#E91E63] opacity-60 hover:opacity-100 text-[#E91E63] hover:brightness-110 transition-all relative group z-20`}
         />
 
+        {/* Map Panel */}
         <ResizablePanel
           defaultSize={isMobile ? 60 : 70}
           minSize={isMobile ? 30 : 30}
