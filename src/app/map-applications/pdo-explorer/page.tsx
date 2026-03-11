@@ -65,6 +65,8 @@ interface FilterFieldConfig {
   onChange: (value: string | undefined) => void;
 }
 
+type SidebarView = "overview" | "list" | "detail";
+
 const MAPBOX_TOKEN = "";
 const INITIAL_VIEW_STATE = {
   latitude: 46,
@@ -125,6 +127,7 @@ export default function PdoExplorerPage() {
   const [pdoPointsData, setPdoPointsData] = useState<PdoPointCollection | null>(null);
   const [countryData, setCountryData] = useState<CountryOption[]>([]);
   const [filters, setFilters] = useState<FilterState>({});
+  const [selectedPdoId, setSelectedPdoId] = useState<string | null>(null);
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
 
@@ -255,6 +258,70 @@ export default function PdoExplorerPage() {
       }));
   }, [countryData, pdoData]);
 
+  const filterSummary = useMemo(() => {
+    if (filters.pdoName) return `PDO: ${filters.pdoName}`;
+    if (filters.country) {
+      return `Country: ${countryOptions.find((option) => option?.value === filters.country)?.label ?? filters.country}`;
+    }
+    if (filters.municipality) return `Municipality: ${filters.municipality}`;
+    if (filters.category) return `Category: ${filters.category}`;
+    if (filters.variety) return `Variety: ${filters.variety}`;
+    return null;
+  }, [countryOptions, filters]);
+
+  const filteredPdos = useMemo(() => {
+    if (filters.pdoName) {
+      return pdoData.filter((item) => item.pdoname === filters.pdoName);
+    }
+    if (filters.country) {
+      return pdoData.filter((item) => item.country === filters.country);
+    }
+    if (filters.municipality) {
+      return pdoData.filter((item) =>
+        item.munic.split("/").some((entry) => entry.trim() === filters.municipality),
+      );
+    }
+    if (filters.category) {
+      return pdoData.filter((item) =>
+        item.category.split("/").some((entry) => entry.trim() === filters.category),
+      );
+    }
+    if (filters.variety) {
+      return pdoData.filter((item) =>
+        (item.varietiesOiv ?? "").split("/").some((entry) => entry.trim() === filters.variety),
+      );
+    }
+    return [];
+  }, [filters, pdoData]);
+
+  const selectedPdo = useMemo(
+    () => pdoData.find((item) => item.pdoid === selectedPdoId) ?? null,
+    [pdoData, selectedPdoId],
+  );
+
+  const sidebarView = useMemo<SidebarView>(() => {
+    if (selectedPdo) return "detail";
+    if (filteredPdos.length > 0) return "list";
+    return "overview";
+  }, [filteredPdos.length, selectedPdo]);
+
+  const overviewStats = useMemo(() => {
+    const countryCount = new Set(pdoData.map((item) => item.country).filter(Boolean)).size;
+    const categoryCount = new Set(
+      pdoData.flatMap((item) => item.category.split("/").map((entry) => entry.trim()).filter(Boolean)),
+    ).size;
+    const varietyCount = new Set(
+      pdoData.flatMap((item) => (item.varietiesOiv ?? "").split("/").map((entry) => entry.trim()).filter(Boolean)),
+    ).size;
+
+    return [
+      { label: "PDO regions", value: pdoData.length.toLocaleString() },
+      { label: "Countries", value: countryCount.toString() },
+      { label: "Categories", value: categoryCount.toString() },
+      { label: "Varieties", value: varietyCount.toString() },
+    ];
+  }, [pdoData]);
+
   const pointFeatureByPdoId = useMemo(() => {
     const lookup = new Map<string, PdoPointFeature>();
 
@@ -331,10 +398,11 @@ export default function PdoExplorerPage() {
     [fitMapToPdoIds, resetMapView],
   );
 
-  const updateUrlForFilter = useCallback((nextFilters: FilterState) => {
+  const updateSidebarUrl = useCallback((nextFilters: FilterState, detailPdoId?: string | null) => {
     const params = new URLSearchParams();
 
-    if (nextFilters.pdoName) params.set("pdoname", nextFilters.pdoName);
+    if (detailPdoId) params.set("pdo", detailPdoId);
+    else if (nextFilters.pdoName) params.set("pdoname", nextFilters.pdoName);
     else if (nextFilters.country) params.set("country", nextFilters.country);
     else if (nextFilters.municipality) params.set("munic", nextFilters.municipality);
     else if (nextFilters.category) params.set("cat", nextFilters.category);
@@ -346,6 +414,7 @@ export default function PdoExplorerPage() {
 
   const clearSelection = useCallback(() => {
     setFilters({});
+    setSelectedPdoId(null);
     resetMapView();
     history.replaceState({}, "", window.location.pathname);
   }, [resetMapView]);
@@ -357,11 +426,12 @@ export default function PdoExplorerPage() {
         return;
       }
 
+      setSelectedPdoId(null);
       setFilters(nextFilters);
-      updateUrlForFilter(nextFilters);
+      updateSidebarUrl(nextFilters, null);
       showPdoIdsOnMap(matchingPdos.map((item) => item.pdoid));
     },
-    [clearSelection, showPdoIdsOnMap, updateUrlForFilter],
+    [clearSelection, showPdoIdsOnMap, updateSidebarUrl],
   );
 
   const handlePdoChange = useCallback(
@@ -435,6 +505,27 @@ export default function PdoExplorerPage() {
     [applyFilter, clearSelection, pdoData],
   );
 
+  const openPdoDetail = useCallback(
+    (pdoId: string) => {
+      setSelectedPdoId(pdoId);
+      showPdoIdsOnMap([pdoId]);
+      updateSidebarUrl(filters, pdoId);
+    },
+    [filters, showPdoIdsOnMap, updateSidebarUrl],
+  );
+
+  const closePdoDetail = useCallback(() => {
+    setSelectedPdoId(null);
+
+    if (filteredPdos.length > 0) {
+      showPdoIdsOnMap(filteredPdos.map((item) => item.pdoid));
+      updateSidebarUrl(filters, null);
+      return;
+    }
+
+    updateSidebarUrl({}, null);
+  }, [filteredPdos, filters, showPdoIdsOnMap, updateSidebarUrl]);
+
   const filterFields = useMemo<FilterFieldConfig[]>(
     () => [
       {
@@ -505,9 +596,10 @@ export default function PdoExplorerPage() {
         <ResizablePanel defaultSize={isMobile ? 30 : 25} className="relative min-w-0 overflow-hidden">
           <Suspense fallback={<div>Loading...</div>}>
             <div className={styles.panelFrame}>
-              <div className={styles.frontpageContent}>
+              <div className={styles.sidebarShell}>
                 <div id="map-filter-content" className={styles.filterBarContent}>
-                  <div className={styles.filterIntro}>
+                  <div className={styles.filterPanel}>
+                    <div className={styles.filterIntro}>
                     <p className={styles.filterEyebrow}>PDO Explorer</p>
                     <h2 className={styles.filterHeading}>Filter wine regions</h2>
                     <p className={styles.filterHelper}>
@@ -515,37 +607,136 @@ export default function PdoExplorerPage() {
                       or grape variety. Each filter focuses the map on matching
                       regions.
                     </p>
-                  </div>
-
-                  {/* Filters */}
-                  <div className={styles.filterFields}>
-                    {filterFields.map((field) => (
-                      <FilterSelect
-                        key={field.key}
-                        label={field.label}
-                        placeholder={field.placeholder}
-                        loadingPlaceholder={
-                          field.key === "pdoName" && isLoadingData
-                            ? "Loading PDOs..."
-                            : undefined
-                        }
-                        value={filters[field.key]}
-                        options={field.options}
-                        onChange={field.onChange}
-                        disabled={filtersDisabled}
-                        emptyText={field.emptyText}
-                      />
-                    ))}
-                    <div className={styles.filterResetWrap}>
-                      <button
-                        className={styles.filterResetButton}
-                        onClick={clearSelection}
-                      >
-                        reset
-                      </button>
                     </div>
+
+                    <div className={styles.filterFields}>
+                      {filterFields.map((field) => (
+                        <FilterSelect
+                          key={field.key}
+                          label={field.label}
+                          placeholder={field.placeholder}
+                          loadingPlaceholder={
+                            field.key === "pdoName" && isLoadingData
+                              ? "Loading PDOs..."
+                              : undefined
+                          }
+                          value={filters[field.key]}
+                          options={field.options}
+                          onChange={field.onChange}
+                          disabled={filtersDisabled}
+                          emptyText={field.emptyText}
+                        />
+                      ))}
+                      <div className={styles.filterResetWrap}>
+                        <button
+                          className={styles.filterResetButton}
+                          onClick={clearSelection}
+                        >
+                          reset
+                        </button>
+                      </div>
+                    </div>
+                    {loadError && <p className="mt-4 text-sm text-white/70">{loadError}</p>}
                   </div>
-                  {loadError && <p className="mt-4 text-sm text-white/70">{loadError}</p>}
+                </div>
+
+                <div className={styles.sidebarBody}>
+                  {sidebarView === "overview" && (
+                    <div className={styles.sidebarSection}>
+                      <div className={styles.sidebarSectionHeader}>
+                        <p className={styles.sidebarSectionEyebrow}>Overview</p>
+                        <h3 className={styles.sidebarSectionTitle}>Explore the dataset</h3>
+                        <p className={styles.sidebarSectionText}>
+                          Use the filters above to focus the map. Matching PDOs will
+                          appear here, and selecting one opens a more detailed
+                          sidebar view.
+                        </p>
+                      </div>
+                      <div className={styles.statsGrid}>
+                        {overviewStats.map((stat) => (
+                          <article key={stat.label} className={styles.statCard}>
+                            <span className={styles.statValue}>{stat.value}</span>
+                            <span className={styles.statLabel}>{stat.label}</span>
+                          </article>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {sidebarView === "list" && (
+                    <div className={styles.sidebarSection}>
+                      <div className={styles.sidebarSectionHeader}>
+                        <p className={styles.sidebarSectionEyebrow}>Results</p>
+                        <h3 className={styles.sidebarSectionTitle}>
+                          {filteredPdos.length.toLocaleString()} matching PDOs
+                        </h3>
+                        {filterSummary && (
+                          <p className={styles.sidebarSectionText}>{filterSummary}</p>
+                        )}
+                      </div>
+                      <div className={styles.resultList}>
+                        {filteredPdos.map((pdo) => (
+                          <button
+                            key={pdo.pdoid}
+                            type="button"
+                            className={styles.resultItem}
+                            onClick={() => openPdoDetail(pdo.pdoid)}
+                          >
+                            <span className={styles.resultItemTitle}>{pdo.pdoname}</span>
+                            <span className={styles.resultItemMeta}>
+                              {pdo.country} · {pdo.category}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {sidebarView === "detail" && selectedPdo && (
+                    <div className={styles.sidebarSection}>
+                      <div className={styles.detailHeader}>
+                        <button
+                          type="button"
+                          className={styles.detailBackButton}
+                          onClick={closePdoDetail}
+                        >
+                          Back to results
+                        </button>
+                        <p className={styles.sidebarSectionEyebrow}>PDO detail</p>
+                        <h3 className={styles.detailTitle}>{selectedPdo.pdoname}</h3>
+                        <p className={styles.sidebarSectionText}>
+                          {selectedPdo.country} · {selectedPdo.category}
+                        </p>
+                      </div>
+                      <dl className={styles.detailGrid}>
+                        <div className={styles.detailItem}>
+                          <dt>Registration</dt>
+                          <dd>{selectedPdo.registration ?? "Unknown"}</dd>
+                        </div>
+                        <div className={styles.detailItem}>
+                          <dt>Municipalities</dt>
+                          <dd>{selectedPdo.munic}</dd>
+                        </div>
+                        <div className={styles.detailItem}>
+                          <dt>Allowed varieties</dt>
+                          <dd>{selectedPdo.varietiesOiv ?? "No data"}</dd>
+                        </div>
+                        <div className={styles.detailItem}>
+                          <dt>PDO information</dt>
+                          <dd>
+                            <a
+                              href={selectedPdo.pdoinfo}
+                              target="_blank"
+                              rel="noreferrer"
+                              className={styles.detailLink}
+                            >
+                              Open official entry
+                            </a>
+                          </dd>
+                        </div>
+                      </dl>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
