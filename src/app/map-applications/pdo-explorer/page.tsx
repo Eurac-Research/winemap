@@ -98,7 +98,7 @@ function FilterSelect({
 }) {
   return (
     <div className={styles.filterField}>
-      <span className={styles.filterLabel}>{label}</span>
+      {/* <span className={styles.filterLabel}>{label}</span> */}
       <Select
         showSearch
         allowClear
@@ -531,7 +531,7 @@ export default function PdoExplorerPage() {
       {
         key: "pdoName",
         label: "PDO name",
-        placeholder: "PDO",
+        placeholder: "Name",
         options: pdoOptions,
         emptyText: loadError ?? "No PDOs found",
         onChange: handlePdoChange,
@@ -539,7 +539,7 @@ export default function PdoExplorerPage() {
       {
         key: "country",
         label: "Country",
-        placeholder: "country",
+        placeholder: "Country",
         options: countryOptions,
         emptyText: loadError ?? "No countries found",
         onChange: handleCountryChange,
@@ -547,7 +547,7 @@ export default function PdoExplorerPage() {
       {
         key: "municipality",
         label: "Municipality",
-        placeholder: "municipality",
+        placeholder: "Municipality",
         options: municipalityOptions,
         emptyText: loadError ?? "No municipalities found",
         onChange: handleMunicipalityChange,
@@ -555,7 +555,7 @@ export default function PdoExplorerPage() {
       {
         key: "category",
         label: "Category",
-        placeholder: "category",
+        placeholder: "Category",
         options: categoryOptions,
         emptyText: loadError ?? "No categories found",
         onChange: handleCategoryChange,
@@ -563,7 +563,7 @@ export default function PdoExplorerPage() {
       {
         key: "variety",
         label: "Variety",
-        placeholder: "variety",
+        placeholder: "Variety",
         options: varietyOptions,
         emptyText: loadError ?? "No varieties found",
         onChange: handleVarietyChange,
@@ -602,11 +602,6 @@ export default function PdoExplorerPage() {
                     <div className={styles.filterIntro}>
                     <p className={styles.filterEyebrow}>PDO Explorer</p>
                     <h2 className={styles.filterHeading}>Filter wine regions</h2>
-                    <p className={styles.filterHelper}>
-                      Narrow the map by PDO name, geography, production category,
-                      or grape variety. Each filter focuses the map on matching
-                      regions.
-                    </p>
                     </div>
 
                     <div className={styles.filterFields}>
