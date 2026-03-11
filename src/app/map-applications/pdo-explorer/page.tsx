@@ -544,14 +544,14 @@ export default function PdoExplorerPage() {
         emptyText: loadError ?? "No countries found",
         onChange: handleCountryChange,
       },
-      {
-        key: "municipality",
-        label: "Municipality",
-        placeholder: "Municipality",
-        options: municipalityOptions,
-        emptyText: loadError ?? "No municipalities found",
-        onChange: handleMunicipalityChange,
-      },
+      // {
+      //   key: "municipality",
+      //   label: "Municipality",
+      //   placeholder: "Municipality",
+      //   options: municipalityOptions,
+      //   emptyText: loadError ?? "No municipalities found",
+      //   onChange: handleMunicipalityChange,
+      // },
       {
         key: "category",
         label: "Category",
@@ -599,9 +599,19 @@ export default function PdoExplorerPage() {
               <div className={styles.sidebarShell}>
                 <div id="map-filter-content" className={styles.filterBarContent}>
                   <div className={styles.filterPanel}>
-                    <div className={styles.filterIntro}>
-                    <p className={styles.filterEyebrow}>PDO Explorer</p>
-                    <h2 className={styles.filterHeading}>Filter wine regions</h2>
+                    <div className={styles.filterHeader}>
+                      <div className={styles.filterIntro}>
+                        <p className={styles.filterEyebrow}>PDO Explorer</p>
+                        <h2 className={styles.filterHeading}>Filter wine regions</h2>
+                      </div>
+                      <div className={styles.filterResetWrap}>
+                        <button
+                          className={styles.filterResetButton}
+                          onClick={clearSelection}
+                        >
+                          reset
+                        </button>
+                      </div>
                     </div>
 
                     <div className={styles.filterFields}>
@@ -622,14 +632,6 @@ export default function PdoExplorerPage() {
                           emptyText={field.emptyText}
                         />
                       ))}
-                      <div className={styles.filterResetWrap}>
-                        <button
-                          className={styles.filterResetButton}
-                          onClick={clearSelection}
-                        >
-                          reset
-                        </button>
-                      </div>
                     </div>
                     {loadError && <p className="mt-4 text-sm text-white/70">{loadError}</p>}
                   </div>

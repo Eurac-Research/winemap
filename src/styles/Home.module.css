@@ -398,7 +398,7 @@
 
 .filterBarContent {
   flex: 0 0 auto;
-  padding: 50px 24px 20px;
+  padding: 60px 24px 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01)),
@@ -407,12 +407,22 @@
 }
 
 .filterPanel {
-  max-width: 360px;
+  width: 100%;
+  max-width: 520px;
+  container-type: inline-size;
+}
+
+.filterHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
 }
 
 .filterIntro {
   max-width: 340px;
-  margin-bottom: 18px;
+  min-width: 0;
 }
 
 .filterEyebrow {
@@ -443,12 +453,18 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 14px;
-  justify-items: start;
+}
+
+@container (min-width: 250px) {
+  .filterFields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 14px;
+  }
 }
 
 .filterField {
   width: 100%;
-  max-width: 240px;
+  max-width: none;
   display: grid;
   gap: 6px;
 }
@@ -536,20 +552,22 @@
 }
 
 .filterResetWrap {
-  width: 100%;
-  max-width: 140px;
+  flex: 0 0 auto;
+  width: auto;
+  max-width: none;
 }
 
 .filterResetButton {
-  width: 100%;
-  height: 40px;
+  min-width: 78px;
+  height: 30px;
+  padding: 0 12px;
   border-radius: 9999px;
   border: 1px solid rgba(255, 255, 255, 0.22);
   background: transparent;
   color: rgba(255, 255, 255, 0.92);
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   cursor: pointer;
   transition:
