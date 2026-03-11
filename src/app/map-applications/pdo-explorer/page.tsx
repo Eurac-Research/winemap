@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Image, { type StaticImageData } from "next/image";
 import {
   NavigationControl,
   Map as ReactMap,
@@ -18,6 +19,20 @@ import { Select } from "antd";
 import type { SelectProps } from "antd";
 import bbox from "@turf/bbox";
 import type { Feature, FeatureCollection, Geometry, GeoJsonProperties } from "geojson";
+import { ChevronLeft } from "lucide-react";
+import amendmentIcon from "@/public/icons/Amendment-outline.svg";
+import categoryIcon from "@/public/icons/Category.svg";
+import countryIcon from "@/public/icons/CountryName-outline.svg";
+import infoIcon from "@/public/icons/Information-outline.svg";
+import irrigationIcon from "@/public/icons/Irrigation-outline.svg";
+import municIcon from "@/public/icons/Municipalities-outline.svg";
+import pdoIcon from "@/public/icons/PDOid.svg";
+import densityIcon from "@/public/icons/Planting-density-2-outline.svg";
+import registrationIcon from "@/public/icons/Registration-outline.svg";
+import varietiesOIVIcon from "@/public/icons/Varieties-OIV-outline.svg";
+import varietiesOtherIcon from "@/public/icons/Varieties-others-outline.svg";
+import yieldHlIcon from "@/public/icons/Yield-hl-3-outline.svg";
+import yieldKgIcon from "@/public/icons/Yield-kg-1-outline.svg";
 
 export interface PDORecord {
   country: string;
@@ -66,6 +81,12 @@ interface FilterFieldConfig {
 }
 
 type SidebarView = "overview" | "list" | "detail";
+
+interface DetailField {
+  label: string;
+  value: string | number | null;
+  icon: StaticImageData;
+}
 
 const MAPBOX_TOKEN = "";
 const INITIAL_VIEW_STATE = {
@@ -270,25 +291,34 @@ export default function PdoExplorerPage() {
   }, [countryOptions, filters]);
 
   const filteredPdos = useMemo(() => {
+    const sortByName = (items: PDORecord[]) =>
+      [...items].sort((a, b) => a.pdoname.localeCompare(b.pdoname));
+
     if (filters.pdoName) {
-      return pdoData.filter((item) => item.pdoname === filters.pdoName);
+      return sortByName(pdoData.filter((item) => item.pdoname === filters.pdoName));
     }
     if (filters.country) {
-      return pdoData.filter((item) => item.country === filters.country);
+      return sortByName(pdoData.filter((item) => item.country === filters.country));
     }
     if (filters.municipality) {
-      return pdoData.filter((item) =>
-        item.munic.split("/").some((entry) => entry.trim() === filters.municipality),
+      return sortByName(
+        pdoData.filter((item) =>
+          item.munic.split("/").some((entry) => entry.trim() === filters.municipality),
+        ),
       );
     }
     if (filters.category) {
-      return pdoData.filter((item) =>
-        item.category.split("/").some((entry) => entry.trim() === filters.category),
+      return sortByName(
+        pdoData.filter((item) =>
+          item.category.split("/").some((entry) => entry.trim() === filters.category),
+        ),
       );
     }
     if (filters.variety) {
-      return pdoData.filter((item) =>
-        (item.varietiesOiv ?? "").split("/").some((entry) => entry.trim() === filters.variety),
+      return sortByName(
+        pdoData.filter((item) =>
+          (item.varietiesOiv ?? "").split("/").some((entry) => entry.trim() === filters.variety),
+        ),
       );
     }
     return [];
@@ -585,6 +615,57 @@ export default function PdoExplorerPage() {
   );
 
   const filtersDisabled = isLoadingData || !!loadError;
+  const detailFields: DetailField[] = selectedPdo
+    ? [
+        { label: "Country", value: selectedPdo.country, icon: countryIcon },
+        { label: "PDO ID", value: selectedPdo.pdoid, icon: pdoIcon },
+        { label: "PDO name", value: selectedPdo.pdoname, icon: pdoIcon },
+        { label: "Registration", value: selectedPdo.registration, icon: registrationIcon },
+        { label: "Category", value: selectedPdo.category, icon: categoryIcon },
+        {
+          label: "Varieties OIV",
+          value: selectedPdo.varietiesOiv?.replaceAll("/", ", ") ?? null,
+          icon: varietiesOIVIcon,
+        },
+        {
+          label: "Varieties",
+          value: selectedPdo.varieties?.replaceAll("/", ", ") ?? null,
+          icon: varietiesOtherIcon,
+        },
+        {
+          label: "Max yield (hl)",
+          value:
+            selectedPdo["max-yield-hl"] != null
+              ? `${selectedPdo["max-yield-hl"]} hl`
+              : null,
+          icon: yieldHlIcon,
+        },
+        {
+          label: "Max yield (kg)",
+          value:
+            selectedPdo["max-yield-kg"] != null
+              ? `${selectedPdo["max-yield-kg"]} kg`
+              : null,
+          icon: yieldKgIcon,
+        },
+        {
+          label: "Min planting density",
+          value:
+            selectedPdo["min-planting-density"] != null
+              ? `${selectedPdo["min-planting-density"]} vine stocks/ha`
+              : null,
+          icon: densityIcon,
+        },
+        { label: "Irrigation", value: selectedPdo.irrigation, icon: irrigationIcon },
+        { label: "Amendment", value: selectedPdo.amendment, icon: amendmentIcon },
+        {
+          label: "Municipalities",
+          value: selectedPdo.munic.replaceAll("/", ", "),
+          icon: municIcon,
+        },
+        { label: "Begin LIFES", value: selectedPdo["begin-lifes"], icon: infoIcon },
+      ]
+    : [];
 
   return (
     <div className="fixed inset-0 z-10 pt-[60px]">
@@ -697,7 +778,8 @@ export default function PdoExplorerPage() {
                           className={styles.detailBackButton}
                           onClick={closePdoDetail}
                         >
-                          Back to results
+                          <ChevronLeft size={14} strokeWidth={2.25} />
+                          <span>Back to results</span>
                         </button>
                         <p className={styles.sidebarSectionEyebrow}>PDO detail</p>
                         <h3 className={styles.detailTitle}>{selectedPdo.pdoname}</h3>
@@ -706,20 +788,32 @@ export default function PdoExplorerPage() {
                         </p>
                       </div>
                       <dl className={styles.detailGrid}>
+                        {detailFields.map((field) => (
+                          <div key={field.label} className={styles.detailItem}>
+                            <dt>
+                              <Image
+                                src={field.icon}
+                                alt=""
+                                width={22}
+                                height={22}
+                                className={styles.detailIcon}
+                              />
+                              <span>{field.label}</span>
+                            </dt>
+                            <dd>{field.value ?? "No data"}</dd>
+                          </div>
+                        ))}
                         <div className={styles.detailItem}>
-                          <dt>Registration</dt>
-                          <dd>{selectedPdo.registration ?? "Unknown"}</dd>
-                        </div>
-                        <div className={styles.detailItem}>
-                          <dt>Municipalities</dt>
-                          <dd>{selectedPdo.munic}</dd>
-                        </div>
-                        <div className={styles.detailItem}>
-                          <dt>Allowed varieties</dt>
-                          <dd>{selectedPdo.varietiesOiv ?? "No data"}</dd>
-                        </div>
-                        <div className={styles.detailItem}>
-                          <dt>PDO information</dt>
+                          <dt>
+                            <Image
+                              src={infoIcon}
+                              alt=""
+                              width={22}
+                              height={22}
+                              className={styles.detailIcon}
+                            />
+                            <span>PDO information</span>
+                          </dt>
                           <dd>
                             <a
                               href={selectedPdo.pdoinfo}
