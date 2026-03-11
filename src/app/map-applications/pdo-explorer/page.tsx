@@ -58,6 +58,7 @@ type FilterOption = NonNullable<SelectProps["options"]>[number];
 
 interface FilterFieldConfig {
   key: FilterKey;
+  label: string;
   placeholder: string;
   options: FilterOption[];
   emptyText: string;
@@ -75,6 +76,7 @@ const INITIAL_VIEW_STATE = {
 const DEFAULT_PADDING = { top: 100, bottom: 25, left: 0, right: 5 };
 
 function FilterSelect({
+  label,
   placeholder,
   value,
   options,
@@ -83,6 +85,7 @@ function FilterSelect({
   emptyText,
   loadingPlaceholder,
 }: {
+  label: string;
   placeholder: string;
   value?: string;
   options: FilterOption[];
@@ -92,18 +95,21 @@ function FilterSelect({
   loadingPlaceholder?: string;
 }) {
   return (
-    <Select
-      showSearch
-      allowClear
-      placeholder={loadingPlaceholder ?? placeholder}
-      popupMatchSelectWidth={290}
-      onChange={onChange}
-      options={options}
-      value={value}
-      className="w-full"
-      disabled={disabled}
-      notFoundContent={emptyText}
-    />
+    <div className={styles.filterField}>
+      <span className={styles.filterLabel}>{label}</span>
+      <Select
+        showSearch
+        allowClear
+        placeholder={loadingPlaceholder ?? placeholder}
+        popupMatchSelectWidth={290}
+        onChange={onChange}
+        options={options}
+        value={value}
+        className={styles.filterSelect}
+        disabled={disabled}
+        notFoundContent={emptyText}
+      />
+    </div>
   );
 }
 
@@ -428,6 +434,7 @@ export default function PdoExplorerPage() {
     () => [
       {
         key: "pdoName",
+        label: "PDO name",
         placeholder: "PDO",
         options: pdoOptions,
         emptyText: loadError ?? "No PDOs found",
@@ -435,6 +442,7 @@ export default function PdoExplorerPage() {
       },
       {
         key: "country",
+        label: "Country",
         placeholder: "country",
         options: countryOptions,
         emptyText: loadError ?? "No countries found",
@@ -442,6 +450,7 @@ export default function PdoExplorerPage() {
       },
       {
         key: "municipality",
+        label: "Municipality",
         placeholder: "municipality",
         options: municipalityOptions,
         emptyText: loadError ?? "No municipalities found",
@@ -449,6 +458,7 @@ export default function PdoExplorerPage() {
       },
       {
         key: "category",
+        label: "Category",
         placeholder: "category",
         options: categoryOptions,
         emptyText: loadError ?? "No categories found",
@@ -456,6 +466,7 @@ export default function PdoExplorerPage() {
       },
       {
         key: "variety",
+        label: "Variety",
         placeholder: "variety",
         options: varietyOptions,
         emptyText: loadError ?? "No varieties found",
@@ -493,10 +504,11 @@ export default function PdoExplorerPage() {
                 <div id="map-filter-content" className={styles.filterBarContent}>
 
                   {/* Filters */}
-                  <div className="grid grid-rows gap-4 max-w-1xl border border-white">
+                  <div className={styles.filterFields}>
                     {filterFields.map((field) => (
                       <FilterSelect
                         key={field.key}
+                        label={field.label}
                         placeholder={field.placeholder}
                         loadingPlaceholder={
                           field.key === "pdoName" && isLoadingData
@@ -510,12 +522,14 @@ export default function PdoExplorerPage() {
                         emptyText={field.emptyText}
                       />
                     ))}
-                    <button
-                      className="flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black"
-                      onClick={clearSelection}
-                    >
-                      reset
-                    </button>
+                    <div className={styles.filterResetWrap}>
+                      <button
+                        className={styles.filterResetButton}
+                        onClick={clearSelection}
+                      >
+                        reset
+                      </button>
+                    </div>
                   </div>
                   {loadError && <p className="mt-4 text-sm text-white/70">{loadError}</p>}
                 </div>
