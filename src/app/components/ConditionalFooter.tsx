@@ -9,11 +9,12 @@ const MAP_ROUTE_PREFIXES = [
   "/adaptation",
   "/climate-environment",
   "/cartography",
+  "/map-applications",
 ]
 
 function isMapRoute(pathname: string) {
   return MAP_ROUTE_PREFIXES.some(
-    (prefix) => pathname === prefix
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
   )
 }
 
