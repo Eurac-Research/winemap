@@ -1,6 +1,13 @@
 "use client";
 
-import { Suspense, useRef } from "react";
+import {
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   NavigationControl,
   Map as ReactMap,
@@ -14,10 +21,169 @@ import {
 } from "@/app/components/ui/resizable";
 import { isMobile } from "react-device-detect";
 import styles from "@/styles/Home.module.css";
+import { Radio, RadioChangeEvent, Select } from "antd";
+import bbox from "@turf/bbox";
+
+export interface JSONObject {
+  country: string;
+  pdoid: string;
+  pdoname: string;
+  registration: string | null;
+  category: string;
+  varietiesOiv: string | null;
+  varieties: string | null;
+  "max-yield-hl": number | null;
+  "max-yield-kg": number | null;
+  "min-planting-density": number | null;
+  irrigation: string | null;
+  amendment: string;
+  pdoinfo: string;
+  munic: string;
+  "begin-lifes": string;
+}
 
 export default function MapContainer() {
   const mapRef = useRef<MapRef>(null);
   const MAPBOX_TOKEN = "";
+
+  const [pdos, setPdos] = useState<JSONObject[] | null>(null);
+  const [activePDO, setActivePDO] = useState<JSONObject | null>(null);
+  const [selectValue, setSelectValue] = useState<string | null>(null);
+  const [selectCatValue, setSelectCatValue] = useState<string | null>(null);
+  const [selectMunicValue, setSelectMunicValue] = useState<string | null>(null);
+  const [selectCountryValue, setSelectCountryValue] = useState<string | null>(
+    null,
+  );
+  const [selectVarValue, setSelectVarValue] = useState<string | null>(null);
+  const [pdoData, setPdoData] = useState<JSONObject[]>([]);
+  const data = pdoData;
+  const [fromSearch, setFromSearch] = useState(false);
+  const [pdoPointsData, setPdoPointsData] = useState<{ features?: any[] } | null>(
+    null,
+  );
+  const allPDOPoints = useMemo(
+    () => pdoPointsData ?? { features: [] },
+    [pdoPointsData],
+  );
+  const paddingResponsive = { top: 100, bottom: 25, left: 0, right: 5 };
+
+  const onClearFilter = useCallback(async () => {
+    setFromSearch(false);
+    setActivePDO(null);
+    setSelectValue(null);
+    setSelectMunicValue(null);
+    setSelectCatValue(null);
+    setSelectVarValue(null);
+    setPdos(null);
+    mapRef.current &&
+      mapRef.current
+        .getMap()
+        .setFilter("pdo-area", null)
+        .setFilter("pdo-pins", null)
+        .setCenter([5, 46])
+        .zoomTo(3.6, {
+          duration: 1000,
+          offset: [100, 50],
+        });
+    history.replaceState({}, "", window.location.pathname);
+  }, [mapRef]);
+
+  const openDetail = useCallback(
+    async (id: string) => {
+      const match = data.find((i: { pdoid: any }) => id === i.pdoid);
+      if (!match) return;
+      history.replaceState({}, "", `?pdo=${encodeURI(id)}`);
+      setActivePDO(match);
+    },
+    [data],
+  );
+
+  const getPdoIDsByPdoName = useCallback(
+    async (pdoname: string) => {
+      const PDOList = data.filter((i) => pdoname === i.pdoname);
+
+      if (!PDOList.length) {
+        onClearFilter();
+        return;
+      }
+
+      const showIDs = PDOList.map((item) => {
+        return item.pdoid;
+      });
+
+      openDetail(showIDs[0]);
+
+      const clearFilter =
+        mapRef.current &&
+        mapRef.current
+          .getMap()
+          .setFilter("pdo-area", null)
+          .setFilter("pdo-pins", null);
+
+      const filter =
+        mapRef.current &&
+        mapRef.current
+          .getMap()
+          .setFilter("pdo-area", [
+            "match",
+            ["get", "PDOid"],
+            showIDs,
+            true,
+            false,
+          ])
+          .setFilter("pdo-pins", [
+            "match",
+            ["get", "PDOid"],
+            showIDs,
+            true,
+            false,
+          ]);
+      const filteredFeatures =
+        allPDOPoints.features?.filter(
+          (item: { properties: { PDOid: string } }) =>
+            item?.properties?.PDOid === showIDs[0],
+        ) ?? [];
+
+      if (filteredFeatures.length > 0) {
+        const [minLng, minLat, maxLng, maxLat] = bbox(filteredFeatures[0]);
+        mapRef.current &&
+          mapRef.current.fitBounds(
+            [
+              [minLng, minLat],
+              [maxLng, maxLat],
+            ],
+            {
+              padding: paddingResponsive,
+              duration: 500,
+              maxZoom: 8,
+            },
+          );
+      }
+    },
+    [data, allPDOPoints, onClearFilter, openDetail, mapRef, paddingResponsive],
+  );
+
+  const onSelectPdoNameChange = useCallback(
+    (value: string) => {
+      history.replaceState({}, "", `?pdoname=${encodeURI(value.toString())}`);
+      setActivePDO(null);
+      setSelectValue(value);
+      setSelectMunicValue(null);
+      setSelectCatValue(null);
+      setSelectVarValue(null);
+      setSelectCountryValue(null);
+      getPdoIDsByPdoName(value);
+    },
+    [getPdoIDsByPdoName],
+  );
+
+  const selectPdonames = useMemo(() => {
+    const uniquePdonames = [...new Set(data.map((item) => item.pdoname))];
+    return uniquePdonames
+      .filter(Boolean)
+      .sort()
+      .map((pdoName) => ({ label: pdoName, value: pdoName }));
+  }, [data]);
 
   return (
     <div className="fixed inset-0 z-10 pt-[60px]">
@@ -34,21 +200,108 @@ export default function MapContainer() {
           <Suspense fallback={<div>Loading...</div>}>
             <div className={styles.panelFrame}>
               <div className={styles.frontpageContent}>
-                <h2>Governance</h2>
-                <p>
-                  The Winemap provides a comprehensive overview of all European
-                  wine regions which fall under the{" "}
-                  <strong>Protected Designation of Origin (PDO)</strong> label
-                  (as of November 2021). It is an essential resource for anyone
-                  interested in wine or who works in the wine industry and can
-                  be used to increase knowledge as well as appreciation of
-                  regional wines and as an instrument for wine sector decision
-                  making. The map is based on a collection of legal
-                  information, including grape varieties, geospatial
-                  boundaries, and production details, and is the first
-                  representation of European PDO regions in one comprehensive
-                  resource.
-                </p>
+                <div id="map-filter-content" className={styles.filterBarContent}>
+                  <div className={styles.filter}>
+                    <Select
+                      showSearch
+                      placeholder="PDO"
+                      popupMatchSelectWidth={290}
+                      optionFilterProp="children"
+                      onChange={onSelectPdoNameChange}
+                      // onSearch={onSearch}
+                      filterOption={(input, option) =>
+                        (option?.value ?? "")
+                          .toLowerCase()
+                          .includes(input.toLowerCase())
+                      }
+                      fieldNames={{ label: "label", value: "value" }}
+                      options={selectPdonames}
+                      value={selectValue}
+                    />
+                    {/* <Select
+                      showSearch
+                      placeholder="country"
+                      popupMatchSelectWidth={290}
+                      optionFilterProp="children"
+                      onChange={onSelectCountryNameChange}
+                      onSearch={onSearch}
+                      filterOption={(input, option) =>
+                        (option?.name ?? "").toLowerCase().includes(input.toLowerCase())
+                      }
+                      fieldNames={{ label: "name", value: "code" }}
+                      options={selectCountry}
+                      value={selectCountryValue}
+                    />
+                    <Select
+                      showSearch
+                      placeholder="municipality"
+                      popupMatchSelectWidth={290}
+                      optionFilterProp="children"
+                      onChange={onSelectMunicChange}
+                      onSearch={onSearch}
+                      filterOption={(input, option) =>
+                        (option?.value ?? "")
+                          .toLowerCase()
+                          .includes(input.toLowerCase())
+                      }
+                      fieldNames={{ label: "label", value: "value" }}
+                      options={selectMunic}
+                      value={selectMunicValue}
+                    />
+                    <Select
+                      showSearch
+                      placeholder="category"
+                      popupMatchSelectWidth={290}
+                      optionFilterProp="children"
+                      onChange={onSearchCatChange}
+                      onSearch={onSearch}
+                      filterOption={(input, option) =>
+                        (option?.value ?? "")
+                          .toLowerCase()
+                          .includes(input.toLowerCase())
+                      }
+                      fieldNames={{ label: "label", value: "value" }}
+                      options={selectCategories}
+                      value={selectCatValue}
+                    />
+                    <Select
+                      showSearch
+                      placeholder="variety"
+                      popupMatchSelectWidth={290}
+                      optionFilterProp="children"
+                      onChange={onSearchVarietyChange}
+                      onSearch={onSearch}
+                      filterOption={(input, option) =>
+                        (option?.value ?? "")
+                          .toLowerCase()
+                          .includes(input.toLowerCase())
+                      }
+                      fieldNames={{ label: "label", value: "value" }}
+                      options={selectVarieties}
+                      value={selectVarValue}
+                    /> */}
+                    {/* <button
+                      className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
+                      onClick={() => onClearFilter()}
+                    >
+                      reset
+                    </button> */}
+                  </div>
+                  {/* <div className="flex items-center mt-5 gap-3">
+                    {zoomLevel && zoomLevel > 7 && (
+                      <div className={styles.toggleVineyards}>
+                        <button
+                          className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
+                          onClick={(
+                            e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+                          ) => toggleVineyards(e)}
+                        >
+                          {vineyardVisibility ? "hide" : "show"} vineyards
+                        </button>
+                      </div>
+                    )}
+                  </div> */}
+                </div>
               </div>
             </div>
           </Suspense>
