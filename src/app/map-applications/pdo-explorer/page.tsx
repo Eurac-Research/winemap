@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Suspense,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   NavigationControl,
   Map as ReactMap,
@@ -23,8 +16,9 @@ import { isMobile } from "react-device-detect";
 import styles from "@/styles/Home.module.css";
 import { Select } from "antd";
 import bbox from "@turf/bbox";
+import type { Feature, FeatureCollection, Geometry, GeoJsonProperties } from "geojson";
 
-export interface JSONObject {
+export interface PDORecord {
   country: string;
   pdoid: string;
   pdoname: string;
@@ -42,35 +36,36 @@ export interface JSONObject {
   "begin-lifes": string;
 }
 
-export default function MapContainer() {
-  const mapRef = useRef<MapRef>(null);
-  const MAPBOX_TOKEN = "";
+type PdoPointFeature = Feature<Geometry, GeoJsonProperties & { PDOid?: string }>;
+type PdoPointCollection = FeatureCollection<Geometry, GeoJsonProperties & { PDOid?: string }>;
 
-  const [pdos, setPdos] = useState<JSONObject[] | null>(null);
-  const [activePDO, setActivePDO] = useState<JSONObject | null>(null);
-  const [selectValue, setSelectValue] = useState<string | null>(null);
-  const [selectCatValue, setSelectCatValue] = useState<string | null>(null);
-  const [selectMunicValue, setSelectMunicValue] = useState<string | null>(null);
-  const [selectCountryValue, setSelectCountryValue] = useState<string | null>(
-    null,
-  );
-  const [selectVarValue, setSelectVarValue] = useState<string | null>(null);
-  const [pdoData, setPdoData] = useState<JSONObject[]>([]);
-  const data = pdoData;
-  const [pdoPointsData, setPdoPointsData] = useState<{ features?: any[] } | null>(
-    null,
-  );
-  const allPDOPoints = useMemo(
-    () => pdoPointsData ?? { features: [] },
-    [pdoPointsData],
-  );
-  const paddingResponsive = { top: 100, bottom: 25, left: 0, right: 5 };
+const MAPBOX_TOKEN = "";
+const INITIAL_VIEW_STATE = {
+  latitude: 46,
+  longitude: 5,
+  zoom: 3.6,
+  bearing: 0,
+  pitch: 0,
+};
+const DEFAULT_PADDING = { top: 100, bottom: 25, left: 0, right: 5 };
+
+export default function PdoExplorerPage() {
+  const mapRef = useRef<MapRef>(null);
+
+  const [pdoData, setPdoData] = useState<PDORecord[]>([]);
+  const [pdoPointsData, setPdoPointsData] = useState<PdoPointCollection | null>(null);
+  const [selectedPdoName, setSelectedPdoName] = useState<string | undefined>();
+  const [isLoadingData, setIsLoadingData] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     let isActive = true;
     const controller = new AbortController();
 
     const loadData = async () => {
+      setIsLoadingData(true);
+      setLoadError(null);
+
       try {
         const [pdoRes, pointsRes] = await Promise.all([
           fetch("/api/data/pdo-eu-id", { signal: controller.signal }),
@@ -78,7 +73,7 @@ export default function MapContainer() {
         ]);
 
         if (!pdoRes.ok || !pointsRes.ok) {
-          return;
+          throw new Error("Failed to fetch PDO explorer data");
         }
 
         const [pdoJson, pointsJson] = await Promise.all([
@@ -91,8 +86,16 @@ export default function MapContainer() {
         setPdoData(Array.isArray(pdoJson) ? pdoJson : []);
         setPdoPointsData(pointsJson);
       } catch (error) {
-        if ((error as Error).name !== "AbortError") {
-          console.error("Failed to load PDO explorer data", error);
+        if ((error as Error).name === "AbortError") {
+          return;
+        }
+
+        if (!isActive) return;
+        setLoadError("Failed to load PDO explorer data.");
+        console.error("Failed to load PDO explorer data", error);
+      } finally {
+        if (isActive) {
+          setIsLoadingData(false);
         }
       }
     };
@@ -105,122 +108,89 @@ export default function MapContainer() {
     };
   }, []);
 
-  const onClearFilter = useCallback(async () => {
-    setActivePDO(null);
-    setSelectValue(null);
-    setSelectMunicValue(null);
-    setSelectCatValue(null);
-    setSelectVarValue(null);
-    setPdos(null);
-    mapRef.current &&
-      mapRef.current
-        .getMap()
-        .setFilter("pdo-area", null)
-        .setFilter("pdo-pins", null)
-        .setCenter([5, 46])
-        .zoomTo(3.6, {
-          duration: 1000,
-          offset: [100, 50],
-        });
+  const pdoOptions = useMemo(() => {
+    const uniqueNames = [...new Set(pdoData.map((item) => item.pdoname.trim()))];
+
+    return uniqueNames
+      .filter(Boolean)
+      .sort((a, b) => a.localeCompare(b))
+      .map((pdoname) => ({ label: pdoname, value: pdoname }));
+  }, [pdoData]);
+
+  const pointFeatureByPdoId = useMemo(() => {
+    const lookup = new Map<string, PdoPointFeature>();
+
+    for (const feature of pdoPointsData?.features ?? []) {
+      const pdoId = feature.properties?.PDOid;
+      if (pdoId && !lookup.has(pdoId)) {
+        lookup.set(pdoId, feature);
+      }
+    }
+
+    return lookup;
+  }, [pdoPointsData]);
+
+  const resetMapView = useCallback(() => {
+    const map = mapRef.current?.getMap();
+    if (!map) return;
+
+    map
+      .setFilter("pdo-area", null)
+      .setFilter("pdo-pins", null)
+      .setCenter([INITIAL_VIEW_STATE.longitude, INITIAL_VIEW_STATE.latitude])
+      .zoomTo(INITIAL_VIEW_STATE.zoom, {
+        duration: 1000,
+        offset: [100, 50],
+      });
+  }, []);
+
+  const clearSelection = useCallback(() => {
+    setSelectedPdoName(undefined);
+    resetMapView();
     history.replaceState({}, "", window.location.pathname);
-  }, [mapRef]);
+  }, [resetMapView]);
 
-  const openDetail = useCallback(
-    async (id: string) => {
-      const match = data.find((i: { pdoid: any }) => id === i.pdoid);
-      if (!match) return;
-      history.replaceState({}, "", `?pdo=${encodeURI(id)}`);
-      setActivePDO(match);
-    },
-    [data],
-  );
-
-  const getPdoIDsByPdoName = useCallback(
-    async (pdoname: string) => {
-      const PDOList = data.filter((i) => pdoname === i.pdoname);
-
-      if (!PDOList.length) {
-        onClearFilter();
+  const handlePdoChange = useCallback(
+    (value: string | undefined) => {
+      if (!value) {
+        clearSelection();
         return;
       }
 
-      const showIDs = PDOList.map((item) => {
-        return item.pdoid;
-      });
+      setSelectedPdoName(value);
+      history.replaceState({}, "", `?pdoname=${encodeURI(value)}`);
 
-      openDetail(showIDs[0]);
-
-      const clearFilter =
-        mapRef.current &&
-        mapRef.current
-          .getMap()
-          .setFilter("pdo-area", null)
-          .setFilter("pdo-pins", null);
-
-      const filter =
-        mapRef.current &&
-        mapRef.current
-          .getMap()
-          .setFilter("pdo-area", [
-            "match",
-            ["get", "PDOid"],
-            showIDs,
-            true,
-            false,
-          ])
-          .setFilter("pdo-pins", [
-            "match",
-            ["get", "PDOid"],
-            showIDs,
-            true,
-            false,
-          ]);
-      const filteredFeatures =
-        allPDOPoints.features?.filter(
-          (item: { properties: { PDOid: string } }) =>
-            item?.properties?.PDOid === showIDs[0],
-        ) ?? [];
-
-      if (filteredFeatures.length > 0) {
-        const [minLng, minLat, maxLng, maxLat] = bbox(filteredFeatures[0]);
-        mapRef.current &&
-          mapRef.current.fitBounds(
-            [
-              [minLng, minLat],
-              [maxLng, maxLat],
-            ],
-            {
-              padding: paddingResponsive,
-              duration: 500,
-              maxZoom: 8,
-            },
-          );
+      const matchingPdos = pdoData.filter((item) => item.pdoname === value);
+      if (!matchingPdos.length) {
+        clearSelection();
+        return;
       }
-    },
-    [data, allPDOPoints, onClearFilter, openDetail, mapRef, paddingResponsive],
-  );
 
-  const onSelectPdoNameChange = useCallback(
-    (value: string) => {
-      history.replaceState({}, "", `?pdoname=${encodeURI(value.toString())}`);
-      setActivePDO(null);
-      setSelectValue(value);
-      setSelectMunicValue(null);
-      setSelectCatValue(null);
-      setSelectVarValue(null);
-      setSelectCountryValue(null);
-      getPdoIDsByPdoName(value);
-    },
-    [getPdoIDsByPdoName],
-  );
+      const showIds = matchingPdos.map((item) => item.pdoid);
+      const map = mapRef.current?.getMap();
 
-  const selectPdonames = useMemo(() => {
-    const uniquePdonames = [...new Set(data.map((item) => item.pdoname))];
-    return uniquePdonames
-      .filter(Boolean)
-      .sort()
-      .map((pdoName) => ({ label: pdoName, value: pdoName }));
-  }, [data]);
+      map
+        ?.setFilter("pdo-area", ["match", ["get", "PDOid"], showIds, true, false])
+        ?.setFilter("pdo-pins", ["match", ["get", "PDOid"], showIds, true, false]);
+
+      const selectedFeature = pointFeatureByPdoId.get(showIds[0]);
+      if (!selectedFeature || !mapRef.current) return;
+
+      const [minLng, minLat, maxLng, maxLat] = bbox(selectedFeature);
+      mapRef.current.fitBounds(
+        [
+          [minLng, minLat],
+          [maxLng, maxLat],
+        ],
+        {
+          padding: DEFAULT_PADDING,
+          duration: 500,
+          maxZoom: 8,
+        },
+      );
+    },
+    [clearSelection, pdoData, pointFeatureByPdoId],
+  );
 
   return (
     <div className="fixed inset-0 z-10 pt-[60px]">
@@ -228,12 +198,7 @@ export default function MapContainer() {
         direction={isMobile ? "vertical" : "horizontal"}
         className="h-full w-full"
       >
-        <ResizablePanel
-          defaultSize={isMobile ? 30 : 25}
-          // minSize={isMobile ? 15 : 25}
-          // maxSize={isMobile ? 70 : 45}
-          className="relative min-w-0 overflow-hidden"
-        >
+        <ResizablePanel defaultSize={isMobile ? 30 : 25} className="relative min-w-0 overflow-hidden">
           <Suspense fallback={<div>Loading...</div>}>
             <div className={styles.panelFrame}>
               <div className={styles.frontpageContent}>
@@ -241,96 +206,18 @@ export default function MapContainer() {
                   <div className={styles.filter}>
                     <Select
                       showSearch
-                      placeholder="PDO"
+                      allowClear
+                      placeholder={isLoadingData ? "Loading PDOs..." : "PDO"}
                       popupMatchSelectWidth={290}
-                      onChange={onSelectPdoNameChange}
-                      options={selectPdonames}
-                      value={selectValue}
-                      className = 'w-full'
+                      onChange={handlePdoChange}
+                      options={pdoOptions}
+                      value={selectedPdoName}
+                      className="w-full"
+                      disabled={isLoadingData || !!loadError}
+                      notFoundContent={loadError ?? "No PDOs found"}
                     />
-                    {/* <Select
-                      showSearch
-                      placeholder="country"
-                      popupMatchSelectWidth={290}
-                      optionFilterProp="children"
-                      onChange={onSelectCountryNameChange}
-                      onSearch={onSearch}
-                      filterOption={(input, option) =>
-                        (option?.name ?? "").toLowerCase().includes(input.toLowerCase())
-                      }
-                      fieldNames={{ label: "name", value: "code" }}
-                      options={selectCountry}
-                      value={selectCountryValue}
-                    />
-                    <Select
-                      showSearch
-                      placeholder="municipality"
-                      popupMatchSelectWidth={290}
-                      optionFilterProp="children"
-                      onChange={onSelectMunicChange}
-                      onSearch={onSearch}
-                      filterOption={(input, option) =>
-                        (option?.value ?? "")
-                          .toLowerCase()
-                          .includes(input.toLowerCase())
-                      }
-                      fieldNames={{ label: "label", value: "value" }}
-                      options={selectMunic}
-                      value={selectMunicValue}
-                    />
-                    <Select
-                      showSearch
-                      placeholder="category"
-                      popupMatchSelectWidth={290}
-                      optionFilterProp="children"
-                      onChange={onSearchCatChange}
-                      onSearch={onSearch}
-                      filterOption={(input, option) =>
-                        (option?.value ?? "")
-                          .toLowerCase()
-                          .includes(input.toLowerCase())
-                      }
-                      fieldNames={{ label: "label", value: "value" }}
-                      options={selectCategories}
-                      value={selectCatValue}
-                    />
-                    <Select
-                      showSearch
-                      placeholder="variety"
-                      popupMatchSelectWidth={290}
-                      optionFilterProp="children"
-                      onChange={onSearchVarietyChange}
-                      onSearch={onSearch}
-                      filterOption={(input, option) =>
-                        (option?.value ?? "")
-                          .toLowerCase()
-                          .includes(input.toLowerCase())
-                      }
-                      fieldNames={{ label: "label", value: "value" }}
-                      options={selectVarieties}
-                      value={selectVarValue}
-                    /> */}
-                    {/* <button
-                      className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
-                      onClick={() => onClearFilter()}
-                    >
-                      reset
-                    </button> */}
                   </div>
-                  {/* <div className="flex items-center mt-5 gap-3">
-                    {zoomLevel && zoomLevel > 7 && (
-                      <div className={styles.toggleVineyards}>
-                        <button
-                          className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
-                          onClick={(
-                            e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-                          ) => toggleVineyards(e)}
-                        >
-                          {vineyardVisibility ? "hide" : "show"} vineyards
-                        </button>
-                      </div>
-                    )}
-                  </div> */}
+                  {loadError && <p className="mt-4 text-sm text-white/70">{loadError}</p>}
                 </div>
               </div>
             </div>
@@ -354,13 +241,7 @@ export default function MapContainer() {
             <ReactMap
               ref={mapRef}
               minZoom={isMobile ? 1 : 3}
-              initialViewState={{
-                latitude: 46,
-                longitude: 5,
-                zoom: 3.6,
-                bearing: 0,
-                pitch: 0,
-              }}
+              initialViewState={INITIAL_VIEW_STATE}
               style={{ width: "100%", height: "100%" }}
               mapStyle="mapbox://styles/tiacop/clas8a92e003c15o2bpopdfqt"
               mapboxAccessToken={MAPBOX_TOKEN}
