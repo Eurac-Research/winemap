@@ -21,7 +21,7 @@ import {
 } from "@/app/components/ui/resizable";
 import { isMobile } from "react-device-detect";
 import styles from "@/styles/Home.module.css";
-import { Radio, RadioChangeEvent, Select } from "antd";
+import { Select } from "antd";
 import bbox from "@turf/bbox";
 
 export interface JSONObject {
@@ -57,7 +57,6 @@ export default function MapContainer() {
   const [selectVarValue, setSelectVarValue] = useState<string | null>(null);
   const [pdoData, setPdoData] = useState<JSONObject[]>([]);
   const data = pdoData;
-  const [fromSearch, setFromSearch] = useState(false);
   const [pdoPointsData, setPdoPointsData] = useState<{ features?: any[] } | null>(
     null,
   );
@@ -67,8 +66,46 @@ export default function MapContainer() {
   );
   const paddingResponsive = { top: 100, bottom: 25, left: 0, right: 5 };
 
+  useEffect(() => {
+    let isActive = true;
+    const controller = new AbortController();
+
+    const loadData = async () => {
+      try {
+        const [pdoRes, pointsRes] = await Promise.all([
+          fetch("/api/data/pdo-eu-id", { signal: controller.signal }),
+          fetch("/api/data/pdo-points", { signal: controller.signal }),
+        ]);
+
+        if (!pdoRes.ok || !pointsRes.ok) {
+          return;
+        }
+
+        const [pdoJson, pointsJson] = await Promise.all([
+          pdoRes.json(),
+          pointsRes.json(),
+        ]);
+
+        if (!isActive) return;
+
+        setPdoData(Array.isArray(pdoJson) ? pdoJson : []);
+        setPdoPointsData(pointsJson);
+      } catch (error) {
+        if ((error as Error).name !== "AbortError") {
+          console.error("Failed to load PDO explorer data", error);
+        }
+      }
+    };
+
+    void loadData();
+
+    return () => {
+      isActive = false;
+      controller.abort();
+    };
+  }, []);
+
   const onClearFilter = useCallback(async () => {
-    setFromSearch(false);
     setActivePDO(null);
     setSelectValue(null);
     setSelectMunicValue(null);
@@ -206,17 +243,10 @@ export default function MapContainer() {
                       showSearch
                       placeholder="PDO"
                       popupMatchSelectWidth={290}
-                      optionFilterProp="children"
                       onChange={onSelectPdoNameChange}
-                      // onSearch={onSearch}
-                      filterOption={(input, option) =>
-                        (option?.value ?? "")
-                          .toLowerCase()
-                          .includes(input.toLowerCase())
-                      }
-                      fieldNames={{ label: "label", value: "value" }}
                       options={selectPdonames}
                       value={selectValue}
+                      className = 'w-full'
                     />
                     {/* <Select
                       showSearch
