@@ -425,6 +425,13 @@
   min-width: 0;
 }
 
+.filterEyebrowRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
 .filterEyebrow {
   margin: 0 0 6px;
   font-size: 15px;
@@ -432,6 +439,34 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: rgba(233, 30, 99, 0.85);
+}
+
+.filterHelpButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-bottom: 6px;
+  padding: 0;
+  border: none;
+  border-radius: 9999px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.filterHelpButton:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.filterHelpButton:focus-visible {
+  outline: 2px solid rgba(233, 30, 99, 0.65);
+  outline-offset: 2px;
 }
 
 .filterHeading {
@@ -549,6 +584,17 @@
 
 .filterDropdown :global(.ant-empty-description) {
   color: rgba(255, 255, 255, 0.5);
+}
+
+.filterHelpPopup :global(.ant-popover-arrow)::before {
+  background: rgba(10, 10, 10, 0.96) !important;
+}
+
+.filterHelpContent {
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.86);
 }
 
 .filterResetWrap {

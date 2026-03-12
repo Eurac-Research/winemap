@@ -1,7 +1,10 @@
 "use client";
 
+import { Popover } from "antd";
+import type { ReactNode } from "react";
 import styles from "@/styles/Home.module.css";
 import { PdoFilterSelect, type FilterOption } from "./PdoFilterSelect";
+import { HelpCircle } from "lucide-react";
 
 export interface FilterFieldConfig {
   key: string;
@@ -15,6 +18,7 @@ export interface FilterFieldConfig {
 interface PdoFilterPanelProps {
   eyebrow: string;
   heading: string;
+  helpContent?: ReactNode;
   filterFields: FilterFieldConfig[];
   filters: Record<string, string | undefined>;
   isLoadingData: boolean;
@@ -26,6 +30,7 @@ interface PdoFilterPanelProps {
 export function PdoFilterPanel({
   eyebrow,
   heading,
+  helpContent,
   filterFields,
   filters,
   isLoadingData,
@@ -37,11 +42,40 @@ export function PdoFilterPanel({
     <div id="map-filter-content" className={styles.filterPanel}>
       <div className={styles.filterHeader}>
         <div className={styles.filterIntro}>
-          <p className={styles.filterEyebrow}>{eyebrow}</p>
+          <div className={styles.filterEyebrowRow}>
+            <p className={styles.filterEyebrow}>{eyebrow}</p>
+            {helpContent ? (
+              <Popover
+                trigger="click"
+                content={<div className={styles.filterHelpContent}>{helpContent}</div>}
+                classNames={{ root: styles.filterHelpPopup }}
+                styles={{
+                  container: {
+                    maxWidth: 320,
+                    padding: 0,
+                    border: "1px solid rgba(255, 255, 255, 0.14)",
+                    borderRadius: 14,
+                    background: "rgba(10, 10, 10, 0.96)",
+                    boxShadow:
+                      "0 16px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.04)",
+                    backdropFilter: "blur(14px)",
+                  },
+                }}
+              >
+                <button
+                  type="button"
+                  className={styles.filterHelpButton}
+                  aria-label={`Open help for ${heading}`}
+                >
+                  <HelpCircle className="h-4 w-4" />
+                </button>
+              </Popover>
+            ) : null}
+          </div>
           <h2 className={styles.filterHeading}>{heading}</h2>
         </div>
         <div className={styles.filterResetWrap}>
-          <button className={styles.filterResetButton} onClick={onReset}>
+          <button type="button" className={styles.filterResetButton} onClick={onReset}>
             reset
           </button>
         </div>

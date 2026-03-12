@@ -384,6 +384,7 @@ export default function PdoExplorerPage() {
     <PdoFilterPanel
       eyebrow="European PDO Atlas"
       heading="Filter wine regions"
+      helpContent="Short explanatory text for this application."
       filterFields={filterFields}
       filters={filters}
       isLoadingData={isLoadingData}
