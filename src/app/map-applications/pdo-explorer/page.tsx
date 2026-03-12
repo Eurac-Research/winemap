@@ -4,8 +4,10 @@ import { Suspense, useCallback, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { NavigationControl, Map as ReactMap, ScaleControl, type MapRef } from "react-map-gl/mapbox";
 import { isMobile } from "react-device-detect";
-import bbox from "@turf/bbox";
 import { ChevronLeft } from "lucide-react";
+import styles from "@/styles/Home.module.css";
+
+{/* Import reusable map components */}
 import { DetailFieldList, type DetailField } from "@/app/components/pdo-app/DetailFieldList";
 import { PdoFilterPanel, type FilterFieldConfig } from "@/app/components/pdo-app/PdoFilterPanel";
 import { PdoMapLayout } from "@/app/components/pdo-app/PdoMapLayout";
@@ -14,9 +16,10 @@ import { PdoSidebarShell } from "@/app/components/pdo-app/PdoSidebarShell";
 import {
   usePdoData,
   type PDORecord,
-  type PdoPointFeature,
 } from "@/app/components/pdo-app/usePdoData";
-import styles from "@/styles/Home.module.css";
+import { usePdoMapFiltering } from "@/app/components/pdo-app/usePdoMapFiltering";
+
+{/* Import Icons */}
 import amendmentIcon from "@/public/icons/Amendment-outline.svg";
 import categoryIcon from "@/public/icons/Category.svg";
 import countryIcon from "@/public/icons/CountryName-outline.svg";
@@ -141,69 +144,12 @@ export default function PdoExplorerPage() {
       { label: "Varieties", value: varietyCount.toString() },
     ];
   }, [pdoData]);
-
-  const resetMapView = useCallback(() => {
-    const map = mapRef.current?.getMap();
-    if (!map) return;
-
-    map
-      .setFilter("pdo-area", null)
-      .setFilter("pdo-pins", null)
-      .setCenter([INITIAL_VIEW_STATE.longitude, INITIAL_VIEW_STATE.latitude])
-      .zoomTo(INITIAL_VIEW_STATE.zoom, {
-        duration: 1000,
-        offset: [100, 50],
-      });
-  }, []);
-
-  const fitMapToPdoIds = useCallback(
-    (pdoIds: string[]) => {
-      if (!pdoIds.length || !mapRef.current) return;
-
-      const matchingFeatures = pdoIds
-        .map((id) => pointFeatureByPdoId.get(id))
-        .filter((feature): feature is PdoPointFeature => Boolean(feature));
-
-      if (!matchingFeatures.length) return;
-
-      const [minLng, minLat, maxLng, maxLat] = bbox({
-        type: "FeatureCollection",
-        features: matchingFeatures,
-      });
-
-      mapRef.current.fitBounds(
-        [
-          [minLng, minLat],
-          [maxLng, maxLat],
-        ],
-        {
-          padding: DEFAULT_PADDING,
-          duration: 500,
-          maxZoom: 8,
-        },
-      );
-    },
-    [pointFeatureByPdoId],
-  );
-
-  const showPdoIdsOnMap = useCallback(
-    (pdoIds: string[]) => {
-      const map = mapRef.current?.getMap();
-      if (!map) return;
-
-      if (!pdoIds.length) {
-        resetMapView();
-        return;
-      }
-
-      map
-        .setFilter("pdo-area", ["match", ["get", "PDOid"], pdoIds, true, false])
-        .setFilter("pdo-pins", ["match", ["get", "PDOid"], pdoIds, true, false]);
-
-      fitMapToPdoIds(pdoIds);
-    },
-    [fitMapToPdoIds, resetMapView],
-  );
+  const { resetMapView, showPdoIdsOnMap } = usePdoMapFiltering({
+    mapRef,
+    pointFeatureByPdoId,
+    initialViewState: INITIAL_VIEW_STATE,
+    defaultPadding: DEFAULT_PADDING,
+  });
 
   const updateSidebarUrl = useCallback((nextFilters: FilterState, detailPdoId?: string | null) => {
     const params = new URLSearchParams();
