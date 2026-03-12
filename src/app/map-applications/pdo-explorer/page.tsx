@@ -2,38 +2,28 @@
 
 import { Suspense, useCallback, useMemo, useRef, useState } from "react";
 import Image, { type StaticImageData } from "next/image";
-import {
-  NavigationControl,
-  Map as ReactMap,
-  ScaleControl,
-  type MapRef,
-} from "react-map-gl/mapbox";
-import {
-  ResizablePanelGroup,
-  ResizablePanel,
-  ResizableHandle,
-} from "@/app/components/ui/resizable";
+import { NavigationControl, Map as ReactMap, ScaleControl, type MapRef } from "react-map-gl/mapbox";
 import { isMobile } from "react-device-detect";
-import styles from "@/styles/Home.module.css";
 import { Select } from "antd";
 import type { SelectProps } from "antd";
 import bbox from "@turf/bbox";
 import { ChevronLeft } from "lucide-react";
+import { PdoMapLayout } from "@/app/components/pdo-app/PdoMapLayout";
+import { PdoSidebarShell } from "@/app/components/pdo-app/PdoSidebarShell";
 import {
   usePdoData,
   type PDORecord,
   type PdoPointFeature,
 } from "@/app/components/pdo-app/usePdoData";
-
-
+import styles from "@/styles/Home.module.css";
 import amendmentIcon from "@/public/icons/Amendment-outline.svg";
 import categoryIcon from "@/public/icons/Category.svg";
 import countryIcon from "@/public/icons/CountryName-outline.svg";
+import densityIcon from "@/public/icons/Planting-density-2-outline.svg";
 import infoIcon from "@/public/icons/Information-outline.svg";
 import irrigationIcon from "@/public/icons/Irrigation-outline.svg";
 import municIcon from "@/public/icons/Municipalities-outline.svg";
 import pdoIcon from "@/public/icons/PDOid.svg";
-import densityIcon from "@/public/icons/Planting-density-2-outline.svg";
 import registrationIcon from "@/public/icons/Registration-outline.svg";
 import varietiesOIVIcon from "@/public/icons/Varieties-OIV-outline.svg";
 import varietiesOtherIcon from "@/public/icons/Varieties-others-outline.svg";
@@ -99,7 +89,6 @@ function FilterSelect({
 }) {
   return (
     <div className={styles.filterField}>
-      {/* <span className={styles.filterLabel}>{label}</span> */}
       <Select
         showSearch
         allowClear
@@ -116,6 +105,7 @@ function FilterSelect({
         }}
         disabled={disabled}
         notFoundContent={emptyText}
+        aria-label={label}
       />
     </div>
   );
@@ -419,14 +409,6 @@ export default function PdoExplorerPage() {
         emptyText: loadError ?? "No countries found",
         onChange: handleCountryChange,
       },
-      // {
-      //   key: "municipality",
-      //   label: "Municipality",
-      //   placeholder: "Municipality",
-      //   options: municipalityOptions,
-      //   emptyText: loadError ?? "No municipalities found",
-      //   onChange: handleMunicipalityChange,
-      // },
       {
         key: "category",
         label: "Category",
@@ -449,11 +431,9 @@ export default function PdoExplorerPage() {
       countryOptions,
       handleCategoryChange,
       handleCountryChange,
-      handleMunicipalityChange,
       handlePdoChange,
       handleVarietyChange,
       loadError,
-      municipalityOptions,
       pdoOptions,
       varietyOptions,
     ],
@@ -512,212 +492,188 @@ export default function PdoExplorerPage() {
       ]
     : [];
 
-  return (
-    <div className="fixed inset-0 z-10 pt-[60px]">
-      <ResizablePanelGroup
-        direction={isMobile ? "vertical" : "horizontal"}
-        className="h-full w-full"
-      >
-        {/* Sidebar */}
-        <ResizablePanel defaultSize={isMobile ? 30 : 25} className="relative min-w-0 overflow-hidden">
-          <Suspense fallback={<div>Loading...</div>}>
-            <div className={styles.panelFrame}>
-              <div className={styles.sidebarShell}>
-                <div id="map-filter-content" className={styles.filterBarContent}>
-                  <div className={styles.filterPanel}>
-                    <div className={styles.filterHeader}>
-                      <div className={styles.filterIntro}>
-                        <p className={styles.filterEyebrow}>European PDO Atlas</p>
-                        <h2 className={styles.filterHeading}>Filter wine regions</h2>
-                      </div>
-                      <div className={styles.filterResetWrap}>
-                        <button
-                          className={styles.filterResetButton}
-                          onClick={clearSelection}
-                        >
-                          reset
-                        </button>
-                      </div>
-                    </div>
+  const sidebarTop = (
+    <div id="map-filter-content" className={styles.filterPanel}>
+      <div className={styles.filterHeader}>
+        <div className={styles.filterIntro}>
+          <p className={styles.filterEyebrow}>European PDO Atlas</p>
+          <h2 className={styles.filterHeading}>Filter wine regions</h2>
+        </div>
+        <div className={styles.filterResetWrap}>
+          <button className={styles.filterResetButton} onClick={clearSelection}>
+            reset
+          </button>
+        </div>
+      </div>
 
-                    <div className={styles.filterFields}>
-                      {filterFields.map((field) => (
-                        <FilterSelect
-                          key={field.key}
-                          label={field.label}
-                          placeholder={field.placeholder}
-                          loadingPlaceholder={
-                            field.key === "pdoName" && isLoadingData
-                              ? "Loading PDOs..."
-                              : undefined
-                          }
-                          value={filters[field.key]}
-                          options={field.options}
-                          onChange={field.onChange}
-                          disabled={filtersDisabled}
-                          emptyText={field.emptyText}
-                        />
-                      ))}
-                    </div>
-                    {loadError && <p className="mt-4 text-sm text-white/70">{loadError}</p>}
-                  </div>
-                </div>
-
-                <div className={styles.sidebarBody}>
-                  {sidebarView === "overview" && (
-                    <div className={styles.sidebarSection}>
-                      <div className={styles.sidebarSectionHeader}>
-                        <p className={styles.sidebarSectionEyebrow}>Overview</p>
-                        <h3 className={styles.sidebarSectionTitle}>Explore the dataset</h3>
-                        <p className={styles.sidebarSectionText}>
-                          Use the filters above to focus the map. Matching PDOs will
-                          appear here, and selecting one opens a more detailed
-                          sidebar view.
-                        </p>
-                      </div>
-                      <div className={styles.statsGrid}>
-                        {overviewStats.map((stat) => (
-                          <article key={stat.label} className={styles.statCard}>
-                            <span className={styles.statValue}>{stat.value}</span>
-                            <span className={styles.statLabel}>{stat.label}</span>
-                          </article>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {sidebarView === "list" && (
-                    <div className={styles.sidebarSection}>
-                      <div className={styles.sidebarSectionHeader}>
-                        <p className={styles.sidebarSectionEyebrow}>Results</p>
-                        <h3 className={styles.sidebarSectionTitle}>
-                          {filteredPdos.length.toLocaleString()} matching PDOs
-                        </h3>
-                        {filterSummary && (
-                          <p className={styles.sidebarSectionText}>{filterSummary}</p>
-                        )}
-                      </div>
-                      <div className={styles.resultList}>
-                        {filteredPdos.map((pdo) => (
-                          <button
-                            key={pdo.pdoid}
-                            type="button"
-                            className={styles.resultItem}
-                            onClick={() => openPdoDetail(pdo.pdoid)}
-                          >
-                            <span className={styles.resultItemTitle}>{pdo.pdoname}</span>
-                            <span className={styles.resultItemMeta}>
-                              {pdo.country} · {pdo.category}
-                            </span>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {sidebarView === "detail" && selectedPdo && (
-                    <div className={styles.sidebarSection}>
-                      <div className={styles.detailHeader}>
-                        <button
-                          type="button"
-                          className={styles.detailBackButton}
-                          onClick={closePdoDetail}
-                        >
-                          <ChevronLeft size={14} strokeWidth={2.25} />
-                          <span>Back to results</span>
-                        </button>
-                        <p className={styles.sidebarSectionEyebrow}>PDO detail</p>
-                        <h3 className={styles.detailTitle}>{selectedPdo.pdoname}</h3>
-                        <p className={styles.sidebarSectionText}>
-                          {selectedPdo.country} · {selectedPdo.category}
-                        </p>
-                      </div>
-                      <dl className={styles.detailGrid}>
-                        {detailFields.map((field) => (
-                          <div key={field.label} className={styles.detailItem}>
-                            <dt>
-                              <Image
-                                src={field.icon}
-                                alt=""
-                                width={22}
-                                height={22}
-                                className={styles.detailIcon}
-                              />
-                              <span>{field.label}</span>
-                            </dt>
-                            <dd>{field.value ?? "No data"}</dd>
-                          </div>
-                        ))}
-                        <div className={styles.detailItem}>
-                          <dt>
-                            <Image
-                              src={infoIcon}
-                              alt=""
-                              width={22}
-                              height={22}
-                              className={styles.detailIcon}
-                            />
-                            <span>PDO information</span>
-                          </dt>
-                          <dd>
-                            <a
-                              href={selectedPdo.pdoinfo}
-                              target="_blank"
-                              rel="noreferrer"
-                              className={styles.detailLink}
-                            >
-                              Open eAmbrosia
-                            </a>
-                          </dd>
-                        </div>
-                      </dl>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </Suspense>
-        </ResizablePanel>
-
-        <ResizableHandle
-          withHandle
-          className={`${isMobile
-            ? "h-3 w-full cursor-row-resize hover:h-4"
-            : "h-full w-2 cursor-col-resize hover:w-3"
-            } flex items-center justify-center bg-[#E91E63] opacity-60 hover:opacity-100 text-[#E91E63] hover:brightness-110 transition-all relative group z-20`}
-        />
-
-        {/* Map Panel */}
-        <ResizablePanel
-          defaultSize={isMobile ? 60 : 70}
-          minSize={isMobile ? 30 : 30}
-          className="relative min-w-0 overflow-hidden"
-        >
-          <Suspense fallback={<div>Loading...</div>}>
-            <ReactMap
-              ref={mapRef}
-              minZoom={isMobile ? 1 : 3}
-              initialViewState={INITIAL_VIEW_STATE}
-              style={{ width: "100%", height: "100%" }}
-              mapStyle="mapbox://styles/tiacop/clas8a92e003c15o2bpopdfqt"
-              mapboxAccessToken={MAPBOX_TOKEN}
-              interactiveLayerIds={[
-                "pdo-area",
-                "pdo-pins",
-                "pdo-municipality",
-                "vulnerabilityLayer",
-              ]}
-            >
-              <NavigationControl
-                position="bottom-right"
-                visualizePitch={true}
-                showCompass={true}
-              />
-              <ScaleControl position="bottom-right" />
-            </ReactMap>
-          </Suspense>
-        </ResizablePanel>
-      </ResizablePanelGroup>
+      <div className={styles.filterFields}>
+        {filterFields.map((field) => (
+          <FilterSelect
+            key={field.key}
+            label={field.label}
+            placeholder={field.placeholder}
+            loadingPlaceholder={
+              field.key === "pdoName" && isLoadingData ? "Loading PDOs..." : undefined
+            }
+            value={filters[field.key]}
+            options={field.options}
+            onChange={field.onChange}
+            disabled={filtersDisabled}
+            emptyText={field.emptyText}
+          />
+        ))}
+      </div>
+      {loadError && <p className="mt-4 text-sm text-white/70">{loadError}</p>}
     </div>
+  );
+
+  const sidebarBody = (
+    <>
+      {sidebarView === "overview" && (
+        <div className={styles.sidebarSection}>
+          <div className={styles.sidebarSectionHeader}>
+            <p className={styles.sidebarSectionEyebrow}>Overview</p>
+            <h3 className={styles.sidebarSectionTitle}>Explore the dataset</h3>
+            <p className={styles.sidebarSectionText}>
+              Use the filters above to focus the map. Matching PDOs will appear
+              here, and selecting one opens a more detailed sidebar view.
+            </p>
+          </div>
+          <div className={styles.statsGrid}>
+            {overviewStats.map((stat) => (
+              <article key={stat.label} className={styles.statCard}>
+                <span className={styles.statValue}>{stat.value}</span>
+                <span className={styles.statLabel}>{stat.label}</span>
+              </article>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {sidebarView === "list" && (
+        <div className={styles.sidebarSection}>
+          <div className={styles.sidebarSectionHeader}>
+            <p className={styles.sidebarSectionEyebrow}>Results</p>
+            <h3 className={styles.sidebarSectionTitle}>
+              {filteredPdos.length.toLocaleString()} matching PDOs
+            </h3>
+            {filterSummary && (
+              <p className={styles.sidebarSectionText}>{filterSummary}</p>
+            )}
+          </div>
+          <div className={styles.resultList}>
+            {filteredPdos.map((pdo) => (
+              <button
+                key={pdo.pdoid}
+                type="button"
+                className={styles.resultItem}
+                onClick={() => openPdoDetail(pdo.pdoid)}
+              >
+                <span className={styles.resultItemTitle}>{pdo.pdoname}</span>
+                <span className={styles.resultItemMeta}>
+                  {pdo.country} · {pdo.category}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {sidebarView === "detail" && selectedPdo && (
+        <div className={styles.sidebarSection}>
+          <div className={styles.detailHeader}>
+            <button
+              type="button"
+              className={styles.detailBackButton}
+              onClick={closePdoDetail}
+            >
+              <ChevronLeft size={14} strokeWidth={2.25} />
+              <span>Back to results</span>
+            </button>
+            <p className={styles.sidebarSectionEyebrow}>PDO detail</p>
+            <h3 className={styles.detailTitle}>{selectedPdo.pdoname}</h3>
+            <p className={styles.sidebarSectionText}>
+              {selectedPdo.country} · {selectedPdo.category}
+            </p>
+          </div>
+          <dl className={styles.detailGrid}>
+            {detailFields.map((field) => (
+              <div key={field.label} className={styles.detailItem}>
+                <dt>
+                  <Image
+                    src={field.icon}
+                    alt=""
+                    width={22}
+                    height={22}
+                    className={styles.detailIcon}
+                  />
+                  <span>{field.label}</span>
+                </dt>
+                <dd>{field.value ?? "No data"}</dd>
+              </div>
+            ))}
+            <div className={styles.detailItem}>
+              <dt>
+                <Image
+                  src={infoIcon}
+                  alt=""
+                  width={22}
+                  height={22}
+                  className={styles.detailIcon}
+                />
+                <span>PDO information</span>
+              </dt>
+              <dd>
+                <a
+                  href={selectedPdo.pdoinfo}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={styles.detailLink}
+                >
+                  Open eAmbrosia
+                </a>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      )}
+    </>
+  );
+
+  const mapContent = (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ReactMap
+        ref={mapRef}
+        minZoom={isMobile ? 1 : 3}
+        initialViewState={INITIAL_VIEW_STATE}
+        style={{ width: "100%", height: "100%" }}
+        mapStyle="mapbox://styles/tiacop/clas8a92e003c15o2bpopdfqt"
+        mapboxAccessToken={MAPBOX_TOKEN}
+        interactiveLayerIds={[
+          "pdo-area",
+          "pdo-pins",
+          "pdo-municipality",
+          "vulnerabilityLayer",
+        ]}
+      >
+        <NavigationControl
+          position="bottom-right"
+          visualizePitch={true}
+          showCompass={true}
+        />
+        <ScaleControl position="bottom-right" />
+      </ReactMap>
+    </Suspense>
+  );
+
+  return (
+    <PdoMapLayout
+      sidebar={
+        <Suspense fallback={<div>Loading...</div>}>
+          <PdoSidebarShell top={sidebarTop} body={sidebarBody} />
+        </Suspense>
+      }
+      map={mapContent}
+    />
   );
 }
