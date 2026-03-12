@@ -1,14 +1,15 @@
 "use client";
 
 import { Suspense, useCallback, useMemo, useRef, useState } from "react";
-import Image, { type StaticImageData } from "next/image";
+import Image from "next/image";
 import { NavigationControl, Map as ReactMap, ScaleControl, type MapRef } from "react-map-gl/mapbox";
 import { isMobile } from "react-device-detect";
-import { Select } from "antd";
-import type { SelectProps } from "antd";
 import bbox from "@turf/bbox";
 import { ChevronLeft } from "lucide-react";
+import { DetailFieldList, type DetailField } from "@/app/components/pdo-app/DetailFieldList";
+import { PdoFilterPanel, type FilterFieldConfig } from "@/app/components/pdo-app/PdoFilterPanel";
 import { PdoMapLayout } from "@/app/components/pdo-app/PdoMapLayout";
+import { PdoResultsList } from "@/app/components/pdo-app/PdoResultsList";
 import { PdoSidebarShell } from "@/app/components/pdo-app/PdoSidebarShell";
 import {
   usePdoData,
@@ -39,24 +40,8 @@ interface FilterState {
 }
 
 type FilterKey = keyof FilterState;
-type FilterOption = NonNullable<SelectProps["options"]>[number];
-
-interface FilterFieldConfig {
-  key: FilterKey;
-  label: string;
-  placeholder: string;
-  options: FilterOption[];
-  emptyText: string;
-  onChange: (value: string | undefined) => void;
-}
 
 type SidebarView = "overview" | "list" | "detail";
-
-interface DetailField {
-  label: string;
-  value: string | number | null;
-  icon: StaticImageData;
-}
 
 const MAPBOX_TOKEN = "";
 const INITIAL_VIEW_STATE = {
@@ -67,49 +52,6 @@ const INITIAL_VIEW_STATE = {
   pitch: 0,
 };
 const DEFAULT_PADDING = { top: 100, bottom: 25, left: 0, right: 5 };
-
-function FilterSelect({
-  label,
-  placeholder,
-  value,
-  options,
-  onChange,
-  disabled,
-  emptyText,
-  loadingPlaceholder,
-}: {
-  label: string;
-  placeholder: string;
-  value?: string;
-  options: FilterOption[];
-  onChange: (value: string | undefined) => void;
-  disabled: boolean;
-  emptyText: string;
-  loadingPlaceholder?: string;
-}) {
-  return (
-    <div className={styles.filterField}>
-      <Select
-        showSearch
-        allowClear
-        placeholder={loadingPlaceholder ?? placeholder}
-        popupMatchSelectWidth={290}
-        onChange={onChange}
-        options={options}
-        value={value}
-        className={styles.filterSelect}
-        classNames={{
-          popup: {
-            root: styles.filterDropdown,
-          },
-        }}
-        disabled={disabled}
-        notFoundContent={emptyText}
-        aria-label={label}
-      />
-    </div>
-  );
-}
 
 export default function PdoExplorerPage() {
   const mapRef = useRef<MapRef>(null);
@@ -493,38 +435,16 @@ export default function PdoExplorerPage() {
     : [];
 
   const sidebarTop = (
-    <div id="map-filter-content" className={styles.filterPanel}>
-      <div className={styles.filterHeader}>
-        <div className={styles.filterIntro}>
-          <p className={styles.filterEyebrow}>European PDO Atlas</p>
-          <h2 className={styles.filterHeading}>Filter wine regions</h2>
-        </div>
-        <div className={styles.filterResetWrap}>
-          <button className={styles.filterResetButton} onClick={clearSelection}>
-            reset
-          </button>
-        </div>
-      </div>
-
-      <div className={styles.filterFields}>
-        {filterFields.map((field) => (
-          <FilterSelect
-            key={field.key}
-            label={field.label}
-            placeholder={field.placeholder}
-            loadingPlaceholder={
-              field.key === "pdoName" && isLoadingData ? "Loading PDOs..." : undefined
-            }
-            value={filters[field.key]}
-            options={field.options}
-            onChange={field.onChange}
-            disabled={filtersDisabled}
-            emptyText={field.emptyText}
-          />
-        ))}
-      </div>
-      {loadError && <p className="mt-4 text-sm text-white/70">{loadError}</p>}
-    </div>
+    <PdoFilterPanel
+      eyebrow="European PDO Atlas"
+      heading="Filter wine regions"
+      filterFields={filterFields}
+      filters={filters}
+      isLoadingData={isLoadingData}
+      filtersDisabled={filtersDisabled}
+      loadError={loadError}
+      onReset={clearSelection}
+    />
   );
 
   const sidebarBody = (
@@ -551,32 +471,12 @@ export default function PdoExplorerPage() {
       )}
 
       {sidebarView === "list" && (
-        <div className={styles.sidebarSection}>
-          <div className={styles.sidebarSectionHeader}>
-            <p className={styles.sidebarSectionEyebrow}>Results</p>
-            <h3 className={styles.sidebarSectionTitle}>
-              {filteredPdos.length.toLocaleString()} matching PDOs
-            </h3>
-            {filterSummary && (
-              <p className={styles.sidebarSectionText}>{filterSummary}</p>
-            )}
-          </div>
-          <div className={styles.resultList}>
-            {filteredPdos.map((pdo) => (
-              <button
-                key={pdo.pdoid}
-                type="button"
-                className={styles.resultItem}
-                onClick={() => openPdoDetail(pdo.pdoid)}
-              >
-                <span className={styles.resultItemTitle}>{pdo.pdoname}</span>
-                <span className={styles.resultItemMeta}>
-                  {pdo.country} · {pdo.category}
-                </span>
-              </button>
-            ))}
-          </div>
-        </div>
+        <PdoResultsList
+          title={`${filteredPdos.length.toLocaleString()} matching PDOs`}
+          summary={filterSummary}
+          items={filteredPdos}
+          onSelect={openPdoDetail}
+        />
       )}
 
       {sidebarView === "detail" && selectedPdo && (
@@ -596,22 +496,8 @@ export default function PdoExplorerPage() {
               {selectedPdo.country} · {selectedPdo.category}
             </p>
           </div>
+          <DetailFieldList fields={detailFields} />
           <dl className={styles.detailGrid}>
-            {detailFields.map((field) => (
-              <div key={field.label} className={styles.detailItem}>
-                <dt>
-                  <Image
-                    src={field.icon}
-                    alt=""
-                    width={22}
-                    height={22}
-                    className={styles.detailIcon}
-                  />
-                  <span>{field.label}</span>
-                </dt>
-                <dd>{field.value ?? "No data"}</dd>
-              </div>
-            ))}
             <div className={styles.detailItem}>
               <dt>
                 <Image
