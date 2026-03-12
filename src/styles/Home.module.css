@@ -427,7 +427,7 @@
 
 .filterEyebrow {
   margin: 0 0 6px;
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -590,7 +590,7 @@
 }
 
 .sidebarSection {
-  max-width: 360px;
+  max-width: 520px;
 }
 
 .sidebarSectionHeader {

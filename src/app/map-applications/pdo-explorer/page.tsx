@@ -682,7 +682,7 @@ export default function PdoExplorerPage() {
                   <div className={styles.filterPanel}>
                     <div className={styles.filterHeader}>
                       <div className={styles.filterIntro}>
-                        <p className={styles.filterEyebrow}>PDO Explorer</p>
+                        <p className={styles.filterEyebrow}>European PDO Atlas</p>
                         <h2 className={styles.filterHeading}>Filter wine regions</h2>
                       </div>
                       <div className={styles.filterResetWrap}>
@@ -821,7 +821,7 @@ export default function PdoExplorerPage() {
                               rel="noreferrer"
                               className={styles.detailLink}
                             >
-                              Open official entry
+                              Open eAmbrosia
                             </a>
                           </dd>
                         </div>
