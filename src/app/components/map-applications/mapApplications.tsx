@@ -13,7 +13,7 @@ export const mapApplications: MapApplication[] = [
     title: "European PDO Atlas",
     description:
       "Placeholder description for a map application. Replace with real content.",
-    href: "/legal",
+    href: "/map-applications/pdo-explorer",
     icon: <MapIcon className="w-5 h-5 text-white" aria-hidden="true" />,
   },
   {
