@@ -42,9 +42,9 @@ export function PdoMapLayout({
         <ResizableHandle
           withHandle
           className={`${isMobile
-            ? "h-3 w-full cursor-row-resize hover:h-4"
-            : "h-full w-2 cursor-col-resize hover:w-3"
-            } flex items-center justify-center bg-[#E91E63] opacity-60 hover:opacity-100 text-[#E91E63] hover:brightness-110 transition-all relative group z-20`}
+            ? "h-3 w-full cursor-row-resize"
+            : "h-full w-2 cursor-col-resize"
+            } flex items-center justify-center opacity-60 transition-all relative group z-20`}
         />
 
         <ResizablePanel
