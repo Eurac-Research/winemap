@@ -10,6 +10,7 @@ import styles from "@/styles/Home.module.css";
 {/* Import reusable map components */}
 import { DetailFieldList, type DetailField } from "@/app/components/pdo-app/DetailFieldList";
 import { PdoFilterPanel, type FilterFieldConfig } from "@/app/components/pdo-app/PdoFilterPanel";
+import { PdoMapHoverTooltip } from "@/app/components/pdo-app/PdoMapHoverTooltip";
 import { PdoMapLayout } from "@/app/components/pdo-app/PdoMapLayout";
 import { PdoResultsList } from "@/app/components/pdo-app/PdoResultsList";
 import { PdoSidebarShell } from "@/app/components/pdo-app/PdoSidebarShell";
@@ -17,6 +18,7 @@ import {
   usePdoData,
   type PDORecord,
 } from "@/app/components/pdo-app/usePdoData";
+import { usePdoMapHover } from "@/app/components/pdo-app/usePdoMapHover";
 import { usePdoMapFiltering } from "@/app/components/pdo-app/usePdoMapFiltering";
 
 {/* Import Icons */}
@@ -71,6 +73,7 @@ export default function PdoExplorerPage() {
     countryOptions,
     pointFeatureByPdoId,
   } = usePdoData();
+  const { hoverInfo, getPdoNameById, onHover, clearHover } = usePdoMapHover(pdoData);
 
   const filterSummary = useMemo(() => {
     if (filters.pdoName) return `PDO: ${filters.pdoName}`;
@@ -488,6 +491,8 @@ export default function PdoExplorerPage() {
           "pdo-municipality",
           "vulnerabilityLayer",
         ]}
+        onMouseMove={onHover}
+        onMouseLeave={clearHover}
       >
         <NavigationControl
           position="bottom-right"
@@ -496,6 +501,12 @@ export default function PdoExplorerPage() {
         />
         <ScaleControl position="bottom-right" />
       </ReactMap>
+      {hoverInfo && (
+        <PdoMapHoverTooltip
+          hoverInfo={hoverInfo}
+          getPdoNameById={getPdoNameById}
+        />
+      )}
     </Suspense>
   );
 
