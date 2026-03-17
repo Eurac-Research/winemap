@@ -3,6 +3,7 @@
 import { Suspense, useCallback, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { NavigationControl, Map as ReactMap, ScaleControl, type MapRef } from "react-map-gl/mapbox";
+import type { MapMouseEvent } from "mapbox-gl";
 import { isMobile } from "react-device-detect";
 import { ChevronLeft } from "lucide-react";
 import styles from "@/styles/Home.module.css";
@@ -62,6 +63,7 @@ export default function PdoExplorerPage() {
   const mapRef = useRef<MapRef>(null);
   const [filters, setFilters] = useState<FilterState>({});
   const [selectedPdoId, setSelectedPdoId] = useState<string | null>(null);
+  const [mapSelectedPdoIds, setMapSelectedPdoIds] = useState<string[]>([]);
   const {
     pdoData,
     isLoadingData,
@@ -125,11 +127,19 @@ export default function PdoExplorerPage() {
     [pdoData, selectedPdoId],
   );
 
+  const mapSelectedPdos = useMemo(
+    () => pdoData.filter((item) => mapSelectedPdoIds.includes(item.pdoid)),
+    [mapSelectedPdoIds, pdoData],
+  );
+
+  const sidebarListPdos = mapSelectedPdos.length > 0 ? mapSelectedPdos : filteredPdos;
+  const listSummary = filterSummary ?? (mapSelectedPdos.length > 0 ? "Selected from map" : null);
+
   const sidebarView = useMemo<SidebarView>(() => {
     if (selectedPdo) return "detail";
-    if (filteredPdos.length > 0) return "list";
+    if (sidebarListPdos.length > 0) return "list";
     return "overview";
-  }, [filteredPdos.length, selectedPdo]);
+  }, [selectedPdo, sidebarListPdos.length]);
 
   const overviewStats = useMemo(() => {
     const countryCount = new Set(pdoData.map((item) => item.country).filter(Boolean)).size;
@@ -171,6 +181,7 @@ export default function PdoExplorerPage() {
   const clearSelection = useCallback(() => {
     setFilters({});
     setSelectedPdoId(null);
+    setMapSelectedPdoIds([]);
     resetMapView();
     history.replaceState({}, "", window.location.pathname);
   }, [resetMapView]);
@@ -183,6 +194,7 @@ export default function PdoExplorerPage() {
       }
 
       setSelectedPdoId(null);
+      setMapSelectedPdoIds([]);
       setFilters(nextFilters);
       updateSidebarUrl(nextFilters, null);
       showPdoIdsOnMap(matchingPdos.map((item) => item.pdoid));
@@ -273,6 +285,12 @@ export default function PdoExplorerPage() {
   const closePdoDetail = useCallback(() => {
     setSelectedPdoId(null);
 
+    if (mapSelectedPdoIds.length > 0) {
+      showPdoIdsOnMap(mapSelectedPdoIds);
+      history.replaceState({}, "", window.location.pathname);
+      return;
+    }
+
     if (filteredPdos.length > 0) {
       showPdoIdsOnMap(filteredPdos.map((item) => item.pdoid));
       updateSidebarUrl(filters, null);
@@ -280,7 +298,36 @@ export default function PdoExplorerPage() {
     }
 
     updateSidebarUrl({}, null);
-  }, [filteredPdos, filters, showPdoIdsOnMap, updateSidebarUrl]);
+  }, [filteredPdos, filters, mapSelectedPdoIds, showPdoIdsOnMap, updateSidebarUrl]);
+
+  const handleMapClick = useCallback(
+    (event: MapMouseEvent) => {
+      const pdoIds = Array.from(
+        new Set(
+          event.features
+            ?.map((feature) => {
+              const pdoId = feature?.properties?.PDOid;
+              return typeof pdoId === "string" ? pdoId : null;
+            })
+            .filter((pdoId): pdoId is string => Boolean(pdoId)) ?? [],
+        ),
+      );
+
+      if (!pdoIds.length) return;
+
+      if (pdoIds.length > 1) {
+        setSelectedPdoId(null);
+        setMapSelectedPdoIds(pdoIds);
+        showPdoIdsOnMap(pdoIds);
+        history.replaceState({}, "", window.location.pathname);
+        return;
+      }
+
+      setMapSelectedPdoIds([]);
+      openPdoDetail(pdoIds[0]);
+    },
+    [openPdoDetail, showPdoIdsOnMap],
+  );
 
   const filterFields = useMemo<FilterFieldConfig[]>(
     () => [
@@ -422,9 +469,9 @@ export default function PdoExplorerPage() {
 
       {sidebarView === "list" && (
         <PdoResultsList
-          title={`${filteredPdos.length.toLocaleString()} matching PDOs`}
-          summary={filterSummary}
-          items={filteredPdos}
+          title={`${sidebarListPdos.length.toLocaleString()} matching PDOs`}
+          summary={listSummary}
+          items={sidebarListPdos}
           onSelect={openPdoDetail}
         />
       )}
@@ -491,6 +538,7 @@ export default function PdoExplorerPage() {
           "pdo-municipality",
           "vulnerabilityLayer",
         ]}
+        onClick={handleMapClick}
         onMouseMove={onHover}
         onMouseLeave={clearHover}
       >
