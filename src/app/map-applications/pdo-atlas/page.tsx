@@ -46,7 +46,7 @@ type FilterKey = keyof FilterState;
 
 type SidebarView = "overview" | "list" | "detail";
 
-const MAPBOX_TOKEN = "";
+const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 const INITIAL_VIEW_STATE = {
   latitude: 46,
   longitude: 5,
