@@ -178,13 +178,18 @@ export default function PdoExplorerPage() {
     history.replaceState({}, "", query ? `?${query}` : window.location.pathname);
   }, []);
 
-  const clearSelection = useCallback(() => {
+  const clearSelectionInPlace = useCallback(() => {
     setFilters({});
     setSelectedPdoId(null);
     setMapSelectedPdoIds([]);
-    resetMapView();
+    mapRef.current?.getMap().setFilter("pdo-area", null).setFilter("pdo-pins", null);
     history.replaceState({}, "", window.location.pathname);
-  }, [resetMapView]);
+  }, []);
+
+  const clearSelection = useCallback(() => {
+    clearSelectionInPlace();
+    resetMapView();
+  }, [clearSelectionInPlace, resetMapView]);
 
   const applyFilter = useCallback(
     (nextFilters: FilterState, matchingPdos: PDORecord[]) => {
@@ -313,7 +318,10 @@ export default function PdoExplorerPage() {
         ),
       );
 
-      if (!pdoIds.length) return;
+      if (!pdoIds.length) {
+        clearSelectionInPlace();
+        return;
+      }
 
       if (pdoIds.length > 1) {
         setSelectedPdoId(null);
@@ -326,7 +334,7 @@ export default function PdoExplorerPage() {
       setMapSelectedPdoIds([]);
       openPdoDetail(pdoIds[0]);
     },
-    [openPdoDetail, showPdoIdsOnMap],
+    [clearSelectionInPlace, openPdoDetail, showPdoIdsOnMap],
   );
 
   const filterFields = useMemo<FilterFieldConfig[]>(
