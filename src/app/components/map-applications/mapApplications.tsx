@@ -27,7 +27,7 @@ export const mapApplications: MapApplication[] = [
     title: "Vulnerability Explorer",
     description:
       "Placeholder description for a map application. Replace with real content.",
-    href: "/adaptation",
+    href: "/map-applications/vulnerability-explorer",
     icon: <MapIcon className="w-5 h-5 text-white" aria-hidden="true" />,
   },
   {
