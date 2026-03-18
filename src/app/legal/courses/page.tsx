@@ -7,7 +7,7 @@ interface Course {
   id: string;
   title: string;
   url: string;
-  thumbnail: string;
+  thumbnail?: string;
 }
 
 const courses: Course[] = [
@@ -62,11 +62,16 @@ export default function CoursesPage() {
             >
               {/* Course Thumbnail */}
               <div className="relative aspect-video bg-black">
-                <img
-                  src={course.thumbnail}
-                  alt={course.title}
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
+                {course.thumbnail ? (
+                  <img
+                    src={course.thumbnail}
+                    alt={course.title}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />) : ( 
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <NotebookPen className="h-10 w-10" />
+                  </div>
+                )}
                 <div className="absolute inset-0 bg-black/20 transition-all duration-300 group-hover:bg-black/35" />
               </div>
 
