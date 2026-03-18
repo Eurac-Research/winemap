@@ -38,16 +38,6 @@ export default function CoursesPage() {
         {/* Page Content */}
         <article className="prose prose-invert prose-lg max-w-none mb-16">
           <h1 className="text-4xl font-bold mb-8">Courses</h1>
-
-          <p className="text-lg leading-relaxed mb-12">
-            How do adaptation measures look in practice? This section gathers stories from vineyards
-            where new and traditional approaches are being tested side by side. Through short films
-            from pilot regions of the Interreg Alpine Space project RESPOnD, you can discover how
-            winegrowers, researchers and communities are working with their landscapes to address
-            climate challenges while preserving local traditions.
-          </p>
-
-          <h2 className="text-3xl font-semibold mt-12 mb-8">Video case studies</h2>
         </article>
 
         {/* Course Grid */}
