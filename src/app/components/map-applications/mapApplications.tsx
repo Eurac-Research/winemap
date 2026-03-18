@@ -27,14 +27,14 @@ export const mapApplications: MapApplication[] = [
     title: "European PDO Atlas",
     description:
       "Discover detailed geospatial and regulatory information about European Wine PDO regions in the form of an interactive map.",
-    href: "/legal",
+    href: "/map-applications/pdo-atlas",
     icon: <MapIcon className="w-5 h-5 text-white" aria-hidden="true" />,
   },
   {
     title: "Vulnerability Explorer",
     description:
       "How vulnerable are European PDO regions to the effects of climate change? Get detailed, region-specific information in this interactive map.",
-    href: "/adaptation",
+    href: "/map-applications/vulnerablity-explorer",
     icon: <MapIcon className="w-5 h-5 text-white" aria-hidden="true" />,
   },
   {
