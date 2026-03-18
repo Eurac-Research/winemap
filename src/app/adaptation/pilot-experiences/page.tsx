@@ -20,7 +20,7 @@ const videos: Video[] = [
     caption: "Varietal Selection",
     location: "Vrhpolje, Vipava Valley",
     thumbnail: "/video-thumbnails/south-tyrol.jpg",
-    videoUrl: "https://www.youtube.com/watch?v=Bt5I0sXKvJ0",
+    videoUrl: "https://www.youtube.com/embed?v=Bt5I0sXKvJ0",
   },
   {
     id: "box-2-2",
