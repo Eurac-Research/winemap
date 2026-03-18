@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { X } from "lucide-react";
 
@@ -9,9 +8,17 @@ interface Video {
   title: string;
   caption: string;
   location: string;
-  thumbnail: string;
-  videoUrl: string;
+  youtubeId: string;
 }
+
+const getEmbedUrl = (youtubeId: string) =>
+  `https://www.youtube.com/embed/${youtubeId}`;
+
+const getThumbnailUrl = (youtubeId: string) =>
+  `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
+
+const getFallbackThumbnailUrl = (youtubeId: string) =>
+  `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
 
 const videos: Video[] = [
   {
@@ -19,32 +26,28 @@ const videos: Video[] = [
     title: "Varietal Selection in Vrhpolje, Vipava Valley",
     caption: "Varietal Selection",
     location: "Vrhpolje, Vipava Valley",
-    thumbnail: "/video-thumbnails/south-tyrol.jpg",
-    videoUrl: "https://www.youtube.com/embed?v=Bt5I0sXKvJ0",
+    youtubeId: "Bt5I0sXKvJ0",
   },
   {
     id: "box-2-2",
     title: "Education & Innovation in Nova Gorica, Slovenia",
     caption: "Education & Innovation",
     location: "Nova Gorica, Slovenia",
-    thumbnail: "/video-thumbnails/vosges.jpg",
-    videoUrl: "https://www.youtube.com/watch?v=0phj_rOHpNA",
+    youtubeId: "0phj_rOHpNA",
   },
   {
     id: "box-2-3",
     title: "Stakeholder Engagement in Südburgenland, Austria",
     caption: "Stakeholder Engagement",
     location: "Südburgenland, Austria",
-    thumbnail: "/video-thumbnails/cinque-terre.jpg",
-    videoUrl: "https://www.youtube.com/watch?v=7ElF4lYi3_I",
+    youtubeId: "7ElF4lYi3_I",
   },
   {
     id: "box-2-4",
     title: "Climate change impacts & long-term adaptation in Südburgenland, Austria",
     caption: "Climate change impacts & long-term adaptation",
     location: "Südburgenland, Austria",
-    thumbnail: "/video-thumbnails/sudburgenland.jpg",
-    videoUrl: "https://www.youtube.com/watch?v=Mhy180EeNDc",
+    youtubeId: "Mhy180EeNDc",
   },
 ];
 
@@ -71,18 +74,27 @@ export default function PilotExperiencesPage() {
 
         {/* Video Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          {videos.map((video, index) => (
+          {videos.map((video) => (
             <div
               key={video.id}
               onClick={() => setSelectedVideo(video)}
               className="group relative bg-gradient-to-br from-[#2a2a2a] to-[#1f1f1f] border border-white/10 rounded-lg overflow-hidden hover:border-white/30 transition-all duration-300 cursor-pointer"
             >
               {/* Video Thumbnail */}
-              <div className="relative aspect-video bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center">
-                {/* Placeholder for video thumbnail - replace with actual images */}
+              <div className="relative aspect-video bg-black flex items-center justify-center">
+                <img
+                  src={getThumbnailUrl(video.youtubeId)}
+                  alt={video.title}
+                  className="absolute inset-0 h-full w-full object-cover"
+                  onError={(event) => {
+                    const image = event.currentTarget;
+                    image.onerror = null;
+                    image.src = getFallbackThumbnailUrl(video.youtubeId);
+                  }}
+                />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <svg
-                    className="w-16 h-16 text-white/40 group-hover:text-white/60 transition-colors"
+                    className="w-16 h-16 text-white/70 group-hover:text-white transition-colors"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -90,7 +102,7 @@ export default function PilotExperiencesPage() {
                   </svg>
                 </div>
                 {/* Overlay on hover */}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300" />
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/35 transition-all duration-300" />
               </div>
 
               {/* Caption */}
@@ -125,7 +137,7 @@ export default function PilotExperiencesPage() {
             {/* Video Container */}
             <div className="relative aspect-video bg-black">
               <iframe
-                src={selectedVideo.videoUrl}
+                src={getEmbedUrl(selectedVideo.youtubeId)}
                 title={selectedVideo.title}
                 className="w-full h-full"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
