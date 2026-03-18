@@ -74,7 +74,7 @@ export const mainAreas: MainArea[] = [
     categories: [
       { label: "EU Policy →", href: "/legal/eu-policy", description: "Discover the legal system behind high-quality European wine regions and how these regulations influence their climate resilience." },
       { label: "Participatory Approaches →", href: "/legal/participatory-approaches", description: "Get information about participatory approaches in scientific research and how they can be used to generate innovative solutions for the future sustainability of viticulture." },
-      { label: "Courses →", href: "/legal/participatory-approaches", description: "Improve your knowledge on viticulture, climate change and ecosystem-based adaptation in a series of interactive courses." },
+      { label: "Courses →", href: "/legal/courses", description: "Improve your knowledge on viticulture, climate change and ecosystem-based adaptation in a series of interactive courses." },
     ],
   },
   {
