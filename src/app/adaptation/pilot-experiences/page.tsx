@@ -30,9 +30,9 @@ const videos: Video[] = [
   },
   {
     id: "box-2-2",
-    title: "Education & Innovation in Nova Gorica, Slovenia",
+    title: "Education & Innovation in Vrhpolje, Vipava Valley",
     caption: "Education & Innovation",
-    location: "Nova Gorica, Slovenia",
+    location: "Vrhpolje, Vipava Valley",
     youtubeId: "0phj_rOHpNA",
   },
   {
