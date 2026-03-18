@@ -86,33 +86,6 @@ export default function HomePage() {
             </div>
           </section>
 
-          {/* Cartography Section */}
-          <section id='cartography' className="px-4 pb-16 max-w-5xl mx-auto">
-            <Link href="/cartography" className="group relative bg-white/5 border border-white/10 hover:border-[#E91E63]/50 transition-all duration-300 overflow-hidden backdrop-blur-md rounded-lg block">
-              <div className="grid md:grid-cols-[140px_1fr] gap-4 p-6 items-center">
-                {/* Left side - Icon */}
-                <div className="flex flex-col items-center justify-center">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#E91E63]/10 to-[#E91E63]/5 flex items-center justify-center mb-2">
-                    <MapIcon className="w-7 h-7 text-[#E91E63]" aria-hidden="true" />
-                  </div>
-                  <span className="text-white/80 font-semibold text-sm text-center">
-                    Cartography
-                  </span>
-                </div>
-
-                {/* Right side - Description */}
-                <div className="flex flex-col justify-center">
-                  <h2 className="text-lg font-bold text-white mb-2 group-hover:text-[#E91E63] transition-colors">
-                    Cartographic Interface
-                  </h2>
-                  <p className="text-white/60 text-sm leading-relaxed">
-                    Access all map layers in one unified interface. Toggle layers, organize by scale or category, and explore detailed information.
-                  </p>
-                </div>
-              </div>
-            </Link>
-          </section>
-
           {/* Map-Applications */}
           <section id='map-applications' className="px-4 py-20 max-w-4xl mx-auto border-t border-white/10">
             <div className="text-center">
