@@ -16,59 +16,35 @@ interface Video {
 const videos: Video[] = [
   {
     id: "box-2-1",
-    title: "Water management in South Tyrol, Italy",
-    caption: "Water management",
-    location: "South Tyrol, Italy",
+    title: "Varietal Selection in Vrhpolje, Vipava Valley",
+    caption: "Varietal Selection",
+    location: "Vrhpolje, Vipava Valley",
     thumbnail: "/video-thumbnails/south-tyrol.jpg",
-    videoUrl: "https://www.youtube.com/embed/VIDEO_ID_1",
+    videoUrl: "https://www.youtube.com/watch?v=Bt5I0sXKvJ0",
   },
   {
     id: "box-2-2",
-    title: "Dry-stone walls in Ballons des Vosges, France",
-    caption: "Dry-stone walls",
-    location: "Ballons des Vosges, France",
+    title: "Education & Innovation in Nova Gorica, Slovenia",
+    caption: "Education & Innovation",
+    location: "Nova Gorica, Slovenia",
     thumbnail: "/video-thumbnails/vosges.jpg",
-    videoUrl: "https://www.youtube.com/embed/VIDEO_ID_2",
+    videoUrl: "https://www.youtube.com/watch?v=0phj_rOHpNA",
   },
   {
     id: "box-2-3",
-    title: "Terraces in the Cinque Terre National Park, Italy",
-    caption: "Terraces",
-    location: "Cinque Terre National Park, Italy",
+    title: "Stakeholder Engagement in Südburgenland, Austria",
+    caption: "Stakeholder Engagement",
+    location: "Südburgenland, Austria",
     thumbnail: "/video-thumbnails/cinque-terre.jpg",
-    videoUrl: "https://www.youtube.com/embed/VIDEO_ID_3",
+    videoUrl: "https://www.youtube.com/watch?v=7ElF4lYi3_I",
   },
   {
     id: "box-2-4",
-    title: "Vine pruning techniques, cover crops and humus enhancement in Südburgenland, Austria",
-    caption: "Vine pruning techniques, cover crops and humus enhancement",
+    title: "Climate change impacts & long-term adaptation in Südburgenland, Austria",
+    caption: "Climate change impacts & long-term adaptation",
     location: "Südburgenland, Austria",
     thumbnail: "/video-thumbnails/sudburgenland.jpg",
-    videoUrl: "https://www.youtube.com/embed/VIDEO_ID_4",
-  },
-  {
-    id: "box-2-5",
-    title: "Microclimate manipulation and water harvesting in Vipava Valley, Slovenia",
-    caption: "Microclimate manipulation and water harvesting",
-    location: "Vipava Valley, Slovenia",
-    thumbnail: "/video-thumbnails/vipava.jpg",
-    videoUrl: "https://www.youtube.com/embed/VIDEO_ID_5",
-  },
-  {
-    id: "box-2-6",
-    title: "New varieties and rootstock selection in Franken, Germany",
-    caption: "New varieties and rootstock selection",
-    location: "Franken, Germany",
-    thumbnail: "/video-thumbnails/franken.jpg",
-    videoUrl: "https://www.youtube.com/embed/VIDEO_ID_6",
-  },
-  {
-    id: "box-2-7",
-    title: "The potential of Kaolin to prevent sunburn damage in Valle d'Aosta, Italy",
-    caption: "Kaolin to prevent sunburn damage",
-    location: "Valle d'Aosta, Italy",
-    thumbnail: "/video-thumbnails/valle-aosta.jpg",
-    videoUrl: "https://www.youtube.com/embed/VIDEO_ID_7",
+    videoUrl: "https://www.youtube.com/watch?v=Mhy180EeNDc",
   },
 ];
 
@@ -119,7 +95,7 @@ export default function PilotExperiencesPage() {
 
               {/* Caption */}
               <div className="p-4">
-                <div className="text-xs text-white/40 mb-1">Box 2.{index + 1}</div>
+                {/* <div className="text-xs text-white/40 mb-1">Box 2.{index + 1}</div> */}
                 <h3 className="font-semibold text-white mb-1 text-sm">{video.caption}</h3>
                 <p className="text-xs text-white/60">{video.location}</p>
               </div>
