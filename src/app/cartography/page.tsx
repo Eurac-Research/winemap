@@ -106,11 +106,6 @@ export default function CartographyPage() {
     ];
   }, [groupBy, layers]);
 
-  const activeLayers = useMemo(
-    () => layers.filter((layer) => layer.enabled).length,
-    [layers],
-  );
-
   const sidebarTop = (
     <div className={styles.filterPanel}>
       <div className={styles.filterHeader}>
@@ -121,109 +116,51 @@ export default function CartographyPage() {
               type="button"
               className={styles.filterHelpButton}
               onClick={() => setSelectedInfo(null)}
-              aria-label="Cartography layers are described below in the overview and list."
+              aria-label="Cartography layer controls"
             >
               <HelpCircle className="h-4 w-4" />
             </button>
           </div>
-          <h2 className={styles.filterHeading}>Explore geotiff layers</h2>
-          <p className={styles.filterHelper}>
-            Turn layers on and off, group them by theme, and open the linked
-            indicator detail page for full documentation.
-          </p>
-        </div>
-        <div className={styles.filterResetWrap}>
-          <button
-            type="button"
-            className={styles.filterResetButton}
-            onClick={() =>
-              setLayers((prev) => prev.map((layer) => ({ ...layer, enabled: false })))
-            }
-          >
-            reset
-          </button>
         </div>
       </div>
+        <section className={styles.sidebarSection}>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => setGroupBy("all")}
+              className={`rounded-full border px-3 py-1.5 text-sm font-semibold transition-colors ${
+                groupBy === "all"
+                  ? "border-[#E91E63] bg-[#E91E63] text-white"
+                  : "border-white/15 bg-white/5 text-white/70 hover:bg-white/10"
+              }`}
+            >
+              All
+            </button>
+            {availableCategories.map((category) => (
+              <button
+                key={category}
+                type="button"
+                onClick={() => setGroupBy(category)}
+                className={`rounded-full border px-3 py-1.5 text-sm font-semibold transition-colors ${
+                  groupBy === category
+                    ? "border-[#E91E63] bg-[#E91E63] text-white"
+                    : "border-white/15 bg-white/5 text-white/70 hover:bg-white/10"
+                }`}
+              >
+                {formatCategoryLabel(category)}
+              </button>
+            ))}
+          </div>
+        </section>
     </div>
   );
 
   const sidebarBody = (
     <div className="space-y-8">
-      <section className={styles.sidebarSection}>
-        <div className={styles.sidebarSectionHeader}>
-          <p className={styles.sidebarSectionEyebrow}>Overview</p>
-          <h3 className={styles.sidebarSectionTitle}>Layer catalogue</h3>
-          <p className={styles.sidebarSectionText}>
-            This map follows the same atlas layout, but focuses on environmental
-            raster layers instead of PDO entities.
-          </p>
-        </div>
-        <div className={styles.statsGrid}>
-          <article className={styles.statCard}>
-            <span className={styles.statValue}>{layers.length}</span>
-            <span className={styles.statLabel}>Available layers</span>
-          </article>
-          <article className={styles.statCard}>
-            <span className={styles.statValue}>{availableCategories.length}</span>
-            <span className={styles.statLabel}>Themes</span>
-          </article>
-          <article className={styles.statCard}>
-            <span className={styles.statValue}>{activeLayers}</span>
-            <span className={styles.statLabel}>Active layers</span>
-          </article>
-          <article className={styles.statCard}>
-            <span className={styles.statValue}>GeoTIFF</span>
-            <span className={styles.statLabel}>Layer format</span>
-          </article>
-        </div>
-      </section>
-
-      <section className={styles.sidebarSection}>
-        <div className={styles.sidebarSectionHeader}>
-          <p className={styles.sidebarSectionEyebrow}>Filter</p>
-          <h3 className={styles.sidebarSectionTitle}>Browse by category</h3>
-          <p className={styles.sidebarSectionText}>
-            Select a theme to reduce the layer list, or keep all themes visible.
-          </p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={() => setGroupBy("all")}
-            className={`rounded-full border px-3 py-1.5 text-sm font-semibold transition-colors ${
-              groupBy === "all"
-                ? "border-[#E91E63] bg-[#E91E63] text-white"
-                : "border-white/15 bg-white/5 text-white/70 hover:bg-white/10"
-            }`}
-          >
-            All
-          </button>
-          {availableCategories.map((category) => (
-            <button
-              key={category}
-              type="button"
-              onClick={() => setGroupBy(category)}
-              className={`rounded-full border px-3 py-1.5 text-sm font-semibold transition-colors ${
-                groupBy === category
-                  ? "border-[#E91E63] bg-[#E91E63] text-white"
-                  : "border-white/15 bg-white/5 text-white/70 hover:bg-white/10"
-              }`}
-            >
-              {formatCategoryLabel(category)}
-            </button>
-          ))}
-        </div>
-      </section>
-
       {groupedLayers.map((group) => (
-        <section key={group.title} className={styles.sidebarSection}>
+        <section key={group.title} className={ `$styles.sidebarSection` }>
           <div className={styles.sidebarSectionHeader}>
-            <p className={styles.sidebarSectionEyebrow}>Layers</p>
             <h3 className={styles.sidebarSectionTitle}>{group.title}</h3>
-            <p className={styles.sidebarSectionText}>
-              {group.items.length.toLocaleString()} layer
-              {group.items.length === 1 ? "" : "s"} in this theme.
-            </p>
           </div>
           <div className={styles.resultList}>
             {group.items.map((layer) => (
