@@ -1,6 +1,6 @@
 "use client"
 
-import { ReactNode } from "react"
+import { ReactNode, useCallback, useEffect, useRef } from "react"
 import { isMobile } from "react-device-detect"
 import {
   ResizablePanelGroup,
@@ -15,9 +15,44 @@ interface ResizableMapLayoutProps {
 }
 
 export function ResizableMapLayout({ sidebar, map, hasSidebar }: ResizableMapLayoutProps) {
+  const mapPanelRef = useRef<HTMLDivElement | null>(null)
+  const resizeTimeoutRef = useRef<number | null>(null)
+
+  const notifyMapResize = useCallback(() => {
+    if (resizeTimeoutRef.current != null) {
+      window.clearTimeout(resizeTimeoutRef.current)
+    }
+
+    resizeTimeoutRef.current = window.setTimeout(() => {
+      resizeTimeoutRef.current = null
+      window.dispatchEvent(new Event("resize"))
+    }, 120)
+  }, [])
+
+  useEffect(() => {
+    const element = mapPanelRef.current
+    if (!element) return
+
+    const observer = new ResizeObserver(() => {
+      notifyMapResize()
+    })
+
+    observer.observe(element)
+    return () => {
+      observer.disconnect()
+      if (resizeTimeoutRef.current != null) {
+        window.clearTimeout(resizeTimeoutRef.current)
+      }
+    }
+  }, [notifyMapResize])
+
   if (!hasSidebar) {
     // No sidebar, show full map
-    return <div className="h-screen w-screen fixed inset-0">{map}</div>
+    return (
+      <div ref={mapPanelRef} className="h-screen w-screen fixed inset-0">
+        {map}
+      </div>
+    )
   }
 
   return (
@@ -52,7 +87,7 @@ export function ResizableMapLayout({ sidebar, map, hasSidebar }: ResizableMapLay
         defaultSize={isMobile ? "60%" : "70%"}
         className="relative"
       >
-        <div className="h-full w-full">{map}</div>
+        <div ref={mapPanelRef} className="h-full w-full">{map}</div>
       </ResizablePanel>
     </ResizablePanelGroup>
   )

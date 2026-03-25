@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode } from "react";
+import { type ReactNode, useCallback, useEffect, useRef } from "react";
 import { isMobile } from "react-device-detect";
 import {
   ResizableHandle,
@@ -25,6 +25,37 @@ export function PdoMapLayout({
   sidebarMinSize,
   mapMinSize = isMobile ? 30 : 30,
 }: PdoMapLayoutProps) {
+  const mapPanelRef = useRef<HTMLDivElement | null>(null);
+  const resizeTimeoutRef = useRef<number | null>(null);
+
+  const notifyMapResize = useCallback(() => {
+    if (resizeTimeoutRef.current != null) {
+      window.clearTimeout(resizeTimeoutRef.current);
+    }
+
+    resizeTimeoutRef.current = window.setTimeout(() => {
+      resizeTimeoutRef.current = null;
+      window.dispatchEvent(new Event("resize"));
+    }, 120);
+  }, []);
+
+  useEffect(() => {
+    const element = mapPanelRef.current;
+    if (!element) return;
+
+    const observer = new ResizeObserver(() => {
+      notifyMapResize();
+    });
+
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
+      if (resizeTimeoutRef.current != null) {
+        window.clearTimeout(resizeTimeoutRef.current);
+      }
+    };
+  }, [notifyMapResize]);
+
   return (
     <div className="fixed inset-0 z-10 pt-[60px]">
       <ResizablePanelGroup
@@ -52,7 +83,9 @@ export function PdoMapLayout({
           minSize={mapMinSize}
           className="relative min-w-0 overflow-hidden"
         >
-          {map}
+          <div ref={mapPanelRef} className="h-full w-full">
+            {map}
+          </div>
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
