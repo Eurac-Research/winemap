@@ -53,8 +53,18 @@ type RasterLayerMetadata = {
 type HoverInfo = {
   x: number;
   y: number;
+  value: number | null;
   label: string;
 };
+
+function formatLegendValue(value: number) {
+  if (!Number.isFinite(value)) return "N/A";
+  if (Math.abs(value) >= 100 || Number.isInteger(value)) {
+    return value.toFixed(0);
+  }
+
+  return value.toFixed(1);
+}
 
 function buildRasterPaint(ramp: RampKey, min: number, max: number) {
   const expression = [
@@ -257,6 +267,7 @@ export default function ClimateExplorerPage() {
         setHoverInfo({
           x: hoverPoint.point.x,
           y: hoverPoint.point.y,
+          value,
           label: value == null ? "No data" : value.toFixed(2),
         });
       } catch {
@@ -264,6 +275,7 @@ export default function ClimateExplorerPage() {
         setHoverInfo({
           x: hoverPoint.point.x,
           y: hoverPoint.point.y,
+          value: null,
           label: "No data",
         });
       }
@@ -379,6 +391,27 @@ export default function ClimateExplorerPage() {
     </div>
   );
 
+  const activeRange = layerRanges[selectedLayerId] ?? null;
+  const activeRampStops = RAMPS[ramp];
+  const legendGradient = useMemo(() => {
+    const stops = activeRampStops
+      .map(([stop, color]) => `${color} ${stop * 100}%`)
+      .join(", ");
+
+    return `linear-gradient(to top, ${stops})`;
+  }, [activeRampStops]);
+
+  const hoverMarkerOffset = useMemo(() => {
+    if (!activeRange || hoverInfo?.value == null) return null;
+
+    const [min, max] = activeRange;
+    if (max <= min) return null;
+
+    const normalized = (hoverInfo.value - min) / (max - min);
+    const clamped = Math.min(1, Math.max(0, normalized));
+    return `${(1 - clamped) * 100}%`;
+  }, [activeRange, hoverInfo]);
+
   const mapContent = (
     <div className="relative h-full w-full">
       <Map
@@ -414,6 +447,48 @@ export default function ClimateExplorerPage() {
           <div className="mt-1 text-sm font-semibold">{hoverInfo.label}</div>
         </div>
       )}
+
+      <div className={styles.mapLegend}>
+        <div className={styles.mapLegendTitle}>
+          Legend
+        </div>
+        <div className={styles.mapLegendContent}>
+          <div className={styles.mapLegendRamp}>
+            <div
+              className={styles.mapLegendRampFill}
+              style={{ background: legendGradient }}
+            />
+            {hoverMarkerOffset && (
+              <div
+                className={styles.mapLegendMarker}
+                style={{ top: hoverMarkerOffset }}
+              />
+            )}
+          </div>
+          <div className={styles.mapLegendValues}>
+            <div>
+              <div className={styles.mapLegendLabel}>Max</div>
+              <div className={styles.mapLegendValue}>
+                {activeRange ? formatLegendValue(activeRange[1]) : "Loading"}
+              </div>
+            </div>
+            {hoverInfo?.value != null && (
+              <div>
+                <div className={styles.mapLegendLabel}>Hover</div>
+                <div className={styles.mapLegendValue}>
+                  {formatLegendValue(hoverInfo.value)}
+                </div>
+              </div>
+            )}
+            <div>
+              <div className={styles.mapLegendLabel}>Min</div>
+              <div className={styles.mapLegendValue}>
+                {activeRange ? formatLegendValue(activeRange[0]) : "Loading"}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 
