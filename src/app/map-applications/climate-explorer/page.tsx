@@ -101,7 +101,7 @@ function applyRasterPaint(
   const paint = buildRasterPaint(ramp, range[0], range[1]);
   map.setPaintProperty(LAYER_ID, "raster-color", paint["raster-color"]);
   map.setPaintProperty(LAYER_ID, "raster-color-range", paint["raster-color-range"]);
-  map.setPaintProperty(LAYER_ID, "raster-opacity", 1);
+  map.setPaintProperty(LAYER_ID, "raster-opacity", .7);
   map.setPaintProperty(LAYER_ID, "raster-fade-duration", 0);
   map.triggerRepaint();
 }
@@ -160,7 +160,7 @@ export default function ClimateExplorerPage() {
           source: SOURCE_ID,
           "source-layer": metadata.sourceLayerId,
           paint: {
-            "raster-opacity": 1,
+            "raster-opacity": .7,
             "raster-fade-duration": 0,
           },
         } as mapboxgl.LayerSpecification);
@@ -358,7 +358,7 @@ export default function ClimateExplorerPage() {
                   setHoverInfo(null);
                   setSelectedLayerId(layer.id);
                 }}
-                className={`${styles.resultItem} ${isActive ? "border-[#E91E63] bg-white/8" : ""}`}
+                className={`${isActive ? styles.resultActiveItem : styles.resultItem}`}
                 aria-pressed={isActive}
               >
                 <span className={styles.resultItemTitle}>{layer.label}</span>

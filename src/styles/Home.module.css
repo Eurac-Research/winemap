@@ -718,6 +718,23 @@
     transform 160ms ease;
 }
 
+.resultActiveItem {
+  width: 100%;
+  display: grid;
+  gap: 6px;
+  padding: 14px 16px;
+  text-align: left;
+  border: 1px solid rgba(146, 3, 3, 0.99);
+  border-radius: 16px;
+  background: rgba(221, 10, 10, 0.14);
+  color: #fff;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
 .resultItem:hover {
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(233, 30, 99, 0.28);
