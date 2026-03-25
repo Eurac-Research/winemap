@@ -20,7 +20,7 @@ export const mapApplications: MapApplication[] = [
     title: "Climate Explorer",
     description:
       "Analyse how climatic conditions will change throughout Europe in this high-resolution map across different scenarios and indicators.",
-    href: "/",
+    href: "/map-applications/climate-explorer",
     icon: <MapIcon className="w-5 h-5 text-white" aria-hidden="true" />,
   },
   {
