@@ -101,6 +101,9 @@ function applyRasterPaint(
   const paint = buildRasterPaint(ramp, range[0], range[1]);
   map.setPaintProperty(LAYER_ID, "raster-color", paint["raster-color"]);
   map.setPaintProperty(LAYER_ID, "raster-color-range", paint["raster-color-range"]);
+  map.setPaintProperty(LAYER_ID, "raster-opacity", 1);
+  map.setPaintProperty(LAYER_ID, "raster-fade-duration", 0);
+  map.triggerRepaint();
 }
 
 function extractRasterValue(result: unknown, layerName: string | null) {
@@ -118,6 +121,7 @@ function extractRasterValue(result: unknown, layerName: string | null) {
 
 export default function ClimateExplorerPage() {
   const mapRef = useRef<MapRef>(null);
+  const rampRef = useRef<RampKey>("viridis");
   const sourceLayerIdRef = useRef<string | null>(null);
   const hoverThrottleRef = useRef<number | null>(null);
   const hoverRequestIdRef = useRef(0);
@@ -136,6 +140,10 @@ export default function ClimateExplorerPage() {
   );
 
   useEffect(() => {
+    rampRef.current = ramp;
+  }, [ramp]);
+
+  useEffect(() => {
     const map = mapRef.current?.getMap();
     if (!map || !mapReady || !selectedLayer) return;
 
@@ -151,6 +159,10 @@ export default function ClimateExplorerPage() {
           type: "raster",
           source: SOURCE_ID,
           "source-layer": metadata.sourceLayerId,
+          paint: {
+            "raster-opacity": 1,
+            "raster-fade-duration": 0,
+          },
         } as mapboxgl.LayerSpecification);
       }
 
@@ -163,17 +175,17 @@ export default function ClimateExplorerPage() {
         return { ...current, [selectedLayer.id]: metadata.range };
       });
 
-      if (metadata.bounds) {
-        map.fitBounds(
-          [
-            [metadata.bounds[0], metadata.bounds[1]],
-            [metadata.bounds[2], metadata.bounds[3]],
-          ],
-          { padding: 40, duration: 500 },
-        );
-      }
+    //   if (metadata.bounds) {
+    //     map.fitBounds(
+    //       [
+    //         [metadata.bounds[0], metadata.bounds[1]],
+    //         [metadata.bounds[2], metadata.bounds[3]],
+    //       ],
+    //       { padding: 40, duration: 500 },
+    //     );
+    //   }
 
-      applyRasterPaint(map, ramp, metadata.range);
+      applyRasterPaint(map, rampRef.current, metadata.range);
       setLoadError(null);
       setHoverInfo(null);
 
@@ -193,7 +205,7 @@ export default function ClimateExplorerPage() {
       type: "raster-array",
       url: `mapbox://${selectedLayer.id}`,
       tileSize: 512,
-    } as mapboxgl.AnySourceData);
+    } as mapboxgl.SourceSpecification);
 
     if (mountLayer()) return;
 
@@ -212,7 +224,7 @@ export default function ClimateExplorerPage() {
     return () => {
       map.off("sourcedata", handleSourceData);
     };
-  }, [mapReady, ramp, selectedLayer]);
+  }, [mapReady, selectedLayer]);
 
   useEffect(() => {
     const map = mapRef.current?.getMap();
