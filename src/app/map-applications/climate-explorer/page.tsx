@@ -10,6 +10,8 @@ import { PdoSidebarShell } from "@/app/components/pdo-app/PdoSidebarShell";
 
 const SOURCE_ID = "climate-raster-source";
 const LAYER_ID = "climate-raster-layer";
+const DEM_SOURCE_ID = "climate-dem-source";
+const HILLSHADE_LAYER_ID = "climate-hillshading";
 const INITIAL_VIEW_STATE = {
   longitude: 10,
   latitude: 45,
@@ -374,9 +376,6 @@ export default function ClimateExplorerPage() {
                 aria-pressed={isActive}
               >
                 <span className={styles.resultItemTitle}>{layer.label}</span>
-                <span className={styles.resultItemMeta}>
-                  {isActive ? "Active layer" : "Click to view"}
-                </span>
               </button>
             );
           })}
@@ -420,7 +419,27 @@ export default function ClimateExplorerPage() {
         initialViewState={INITIAL_VIEW_STATE}
         style={{ width: "100%", height: "100%" }}
         mapStyle="mapbox://styles/mapbox/light-v11"
-        onLoad={() => setMapReady(true)}
+        onLoad={() => {
+          const map = mapRef.current?.getMap();
+
+          if (map && !map.getSource(DEM_SOURCE_ID)) {
+            map.addSource(DEM_SOURCE_ID, {
+              type: "raster-dem",
+              url: "mapbox://mapbox.mapbox-terrain-dem-v1",
+            });
+          }
+
+          if (map && !map.getLayer(HILLSHADE_LAYER_ID)) {
+            map.addLayer({
+              id: HILLSHADE_LAYER_ID,
+              source: DEM_SOURCE_ID,
+              type: "hillshade",
+              slot: "bottom",
+            } as mapboxgl.LayerSpecification);
+          }
+
+          setMapReady(true);
+        }}
         onError={() => setLoadError("Unable to load the selected climate layer.")}
       >
         <NavigationControl position="bottom-right" visualizePitch showCompass />
@@ -430,21 +449,6 @@ export default function ClimateExplorerPage() {
       {!MAPBOX_TOKEN && (
         <div className="absolute left-4 top-4 z-10 rounded-lg bg-black px-3 py-2 text-sm text-white">
           Missing `NEXT_PUBLIC_MAPBOX_TOKEN`
-        </div>
-      )}
-
-      {hoverInfo && (
-        <div
-          className="pointer-events-none absolute z-10 rounded-lg bg-black/90 px-3 py-2 text-xs text-white shadow-lg"
-          style={{
-            left: hoverInfo.x + 16,
-            top: hoverInfo.y + 16,
-          }}
-        >
-          <div className="text-[10px] uppercase tracking-[0.16em] text-white/60">
-            Pixel value
-          </div>
-          <div className="mt-1 text-sm font-semibold">{hoverInfo.label}</div>
         </div>
       )}
 
