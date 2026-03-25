@@ -257,12 +257,12 @@ export default function CartographyPage() {
             aria-hidden="true"
           />
           <div
-            className="fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 px-4"
+            className={styles.modalDialog}
             role="dialog"
             aria-modal="true"
             aria-labelledby="layer-info-title"
           >
-            <div className="rounded-3xl border border-white/15 bg-black/95 p-8 shadow-2xl">
+            <div className={styles.modalSurface}>
               <div className={styles.detailHeader}>
                 <p className={styles.sidebarSectionEyebrow}>Layer detail</p>
                 <h3 id="layer-info-title" className={styles.detailTitle}>
@@ -280,13 +280,6 @@ export default function CartographyPage() {
                     <span>Description</span>
                   </dt>
                   <dd>{selectedInfo.description}</dd>
-                </div>
-                <div className={styles.detailItem}>
-                  <dt>
-                    <Layers className="h-4 w-4" />
-                    <span>Map layer id</span>
-                  </dt>
-                  <dd>{selectedInfo.mapboxLayerId}</dd>
                 </div>
                 <div className={styles.detailItem}>
                   <dt>

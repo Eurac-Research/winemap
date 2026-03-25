@@ -739,6 +739,28 @@
   margin-bottom: 18px;
 }
 
+.modalDialog {
+  position: fixed;
+  top: calc(50% + 30px);
+  left: 50%;
+  z-index: 80;
+  width: 100%;
+  max-width: 32rem;
+  max-height: calc(100vh - 4.5rem);
+  overflow-y: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  transform: translate(-50%, -50%);
+}
+
+.modalSurface {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 1.5rem;
+  background: rgba(0, 0, 0, 0.95);
+  padding: 2rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+}
+
 .detailBackButton {
   display: inline-flex;
   align-items: center;
