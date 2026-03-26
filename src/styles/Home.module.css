@@ -787,6 +787,34 @@
   gap: 12px;
 }
 
+.mapLegendScaleLabels {
+  position: relative;
+  width: 140px;
+  height: 160px;
+  flex: 0 0 140px;
+}
+
+.mapLegendScaleLabel {
+  position: absolute;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.mapLegendScaleText {
+  font-size: 11px;
+  line-height: 1.1;
+  color: rgba(255, 255, 255, 0.62);
+  text-align: right;
+}
+
+.mapLegendScaleTextActive {
+  font-size: 11px;
+  line-height: 1.1;
+  color: rgba(233, 30, 99, 0.98);
+  text-align: right;
+  font-weight: 700;
+}
+
 .mapLegendRamp {
   position: relative;
   width: 16px;
@@ -808,6 +836,22 @@
   right: -6px;
   height: 1px;
   background: #fff;
+}
+
+.mapLegendBreakLine {
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.mapLegendBreakLineActive {
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.85);
 }
 
 .mapLegendValues {

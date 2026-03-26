@@ -47,6 +47,11 @@ const RAMPS = {
 } as const;
 
 type RampKey = keyof typeof RAMPS;
+type ClassificationBreak = {
+  label: string;
+  min?: number;
+  max?: number;
+};
 type RasterLayerMetadata = {
   sourceLayerId: string | null;
   range: [number, number] | null;
@@ -59,6 +64,19 @@ type HoverInfo = {
   label: string;
 };
 
+const LAYER_CLASSIFICATIONS: Partial<Record<(typeof MAP_LAYERS)[number]["id"], ClassificationBreak[]>> = {
+  "sitscholl.huglin_1981-2010": [
+    { label: "Too cool", max: 1200 },
+    { label: "Very cool", min: 1200, max: 1500 },
+    { label: "Cool", min: 1500, max: 1800 },
+    { label: "Temperate", min: 1800, max: 2100 },
+    { label: "Warm temperate", min: 2100, max: 2400 },
+    { label: "Warm", min: 2400, max: 2700 },
+    { label: "Very warm", min: 2700, max: 3000 },
+    { label: "Too hot", min: 3000 },
+  ],
+};
+
 function formatLegendValue(value: number) {
   if (!Number.isFinite(value)) return "N/A";
   if (Math.abs(value) >= 100 || Number.isInteger(value)) {
@@ -66,6 +84,21 @@ function formatLegendValue(value: number) {
   }
 
   return value.toFixed(1);
+}
+
+function matchesClassBreak(value: number, classBreak: ClassificationBreak) {
+  const meetsMin = classBreak.min == null || value >= classBreak.min;
+  const meetsMax = classBreak.max == null || value < classBreak.max;
+  return meetsMin && meetsMax;
+}
+
+function getBreakOffset(value: number, range: [number, number]) {
+  const [min, max] = range;
+  if (max <= min) return "100%";
+
+  const normalized = (value - min) / (max - min);
+  const clamped = Math.min(1, Math.max(0, normalized));
+  return `${(1 - clamped) * 100}%`;
 }
 
 function buildRasterPaint(ramp: RampKey, min: number, max: number) {
@@ -391,6 +424,7 @@ export default function ClimateExplorerPage() {
   );
 
   const activeRange = layerRanges[selectedLayerId] ?? null;
+  const activeClassification = LAYER_CLASSIFICATIONS[selectedLayerId];
   const activeRampStops = RAMPS[ramp];
   const legendGradient = useMemo(() => {
     const stops = activeRampStops
@@ -402,14 +436,29 @@ export default function ClimateExplorerPage() {
 
   const hoverMarkerOffset = useMemo(() => {
     if (!activeRange || hoverInfo?.value == null) return null;
-
-    const [min, max] = activeRange;
-    if (max <= min) return null;
-
-    const normalized = (hoverInfo.value - min) / (max - min);
-    const clamped = Math.min(1, Math.max(0, normalized));
-    return `${(1 - clamped) * 100}%`;
+    return getBreakOffset(hoverInfo.value, activeRange);
   }, [activeRange, hoverInfo]);
+
+  const hoveredClassBreak = useMemo(() => {
+    if (!activeClassification || hoverInfo?.value == null) return null;
+    return activeClassification.find((classBreak) => matchesClassBreak(hoverInfo.value!, classBreak)) ?? null;
+  }, [activeClassification, hoverInfo]);
+
+  const classMarkers = useMemo(() => {
+    if (!activeClassification || !activeRange) return [];
+
+    return activeClassification
+      .map((classBreak) => {
+        if (classBreak.min == null) return null;
+
+        return {
+          label: classBreak.label,
+          top: getBreakOffset(classBreak.min, activeRange),
+          isActive: hoveredClassBreak?.label === classBreak.label,
+        };
+      })
+      .filter((marker): marker is { label: string; top: string; isActive: boolean } => marker !== null);
+  }, [activeClassification, activeRange, hoveredClassBreak]);
 
   const mapContent = (
     <div className="relative h-full w-full">
@@ -457,11 +506,41 @@ export default function ClimateExplorerPage() {
           Legend
         </div>
         <div className={styles.mapLegendContent}>
+          <div className={styles.mapLegendScaleLabels}>
+            {activeClassification?.map((classBreak) => {
+              const markerValue = classBreak.min;
+              const markerTop = activeRange && markerValue != null
+                ? getBreakOffset(markerValue, activeRange)
+                : null;
+              const isActive = hoveredClassBreak?.label === classBreak.label;
+
+              if (markerTop == null) return null;
+
+              return (
+                <div
+                  key={`${classBreak.label}-${markerValue}`}
+                  className={styles.mapLegendScaleLabel}
+                  style={{ top: markerTop }}
+                >
+                  <div className={isActive ? styles.mapLegendScaleTextActive : styles.mapLegendScaleText}>
+                    {classBreak.label}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
           <div className={styles.mapLegendRamp}>
             <div
               className={styles.mapLegendRampFill}
               style={{ background: legendGradient }}
             />
+            {classMarkers.map((marker) => (
+              <div
+                key={`${marker.label}-${marker.top}`}
+                className={marker.isActive ? styles.mapLegendBreakLineActive : styles.mapLegendBreakLine}
+                style={{ top: marker.top }}
+              />
+            ))}
             {hoverMarkerOffset && (
               <div
                 className={styles.mapLegendMarker}
