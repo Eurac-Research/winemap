@@ -834,24 +834,24 @@
   position: absolute;
   left: -6px;
   right: -6px;
-  height: 1px;
-  background: #fff;
+  height: 0;
+  border-top: 1px solid #fff;
 }
 
 .mapLegendBreakLine {
   position: absolute;
   left: -2px;
   right: -2px;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.85);
+  height: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.85);
 }
 
 .mapLegendBreakLineActive {
   position: absolute;
   left: -2px;
   right: -2px;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.85);
+  height: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.85);
 }
 
 .mapLegendValues {

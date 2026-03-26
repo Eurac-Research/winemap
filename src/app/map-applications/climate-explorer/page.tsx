@@ -76,6 +76,18 @@ const LAYER_CLASSIFICATIONS: Partial<Record<(typeof MAP_LAYERS)[number]["id"], C
     { label: "Very warm", min: 2700, max: 3000 },
     { label: "Too hot", min: 3000 },
   ],
+  "sitscholl.cni_1981-2010": [
+    { label: "Very cool", max: 12 },
+    { label: "Cool", min: 12, max: 14 },
+    { label: "Temperate", min: 14, max: 18 },
+    { label: "Warm", min: 18 },
+  ],
+  "sitscholl.di_1981-2010": [
+    { label: "Very dry", max: -100 },
+    { label: "Moderately dry", min: -100, max: 50 },
+    { label: "Subhumid", min: 50, max: 150 },
+    { label: "Humid", min: 150 },
+  ],
 };
 
 function formatLegendValue(value: number) {
