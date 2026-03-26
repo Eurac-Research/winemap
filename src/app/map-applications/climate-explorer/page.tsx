@@ -12,6 +12,7 @@ const SOURCE_ID = "climate-raster-source";
 const LAYER_ID = "climate-raster-layer";
 const DEM_SOURCE_ID = "climate-dem-source";
 const HILLSHADE_LAYER_ID = "climate-hillshading";
+const LEGEND_RAMP_HEIGHT = 160;
 const INITIAL_VIEW_STATE = {
   longitude: 10,
   latitude: 45,
@@ -94,11 +95,11 @@ function matchesClassBreak(value: number, classBreak: ClassificationBreak) {
 
 function getBreakOffset(value: number, range: [number, number]) {
   const [min, max] = range;
-  if (max <= min) return "100%";
+  if (max <= min) return `${LEGEND_RAMP_HEIGHT}px`;
 
   const normalized = (value - min) / (max - min);
   const clamped = Math.min(1, Math.max(0, normalized));
-  return `${(1 - clamped) * 100}%`;
+  return `${Math.round((1 - clamped) * LEGEND_RAMP_HEIGHT)}px`;
 }
 
 function buildRasterPaint(ramp: RampKey, min: number, max: number) {
