@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import type { Feature, FeatureCollection, Geometry, GeoJsonProperties } from "geojson";
+import type {
+  Feature,
+  FeatureCollection,
+  GeoJsonProperties,
+  Geometry,
+} from "@/types/geojson";
 
 export interface PDORecord {
   country: string;
