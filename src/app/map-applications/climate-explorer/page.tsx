@@ -1,17 +1,33 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import mapboxgl from "mapbox-gl";
-import Map, { type MapRef, NavigationControl, ScaleControl } from "react-map-gl/mapbox";
-import "mapbox-gl/dist/mapbox-gl.css";
-import styles from "@/styles/Home.module.css";
+import {
+  cogProtocol,
+  locationValues,
+  setColorFunction,
+} from "@geomatico/maplibre-cog-protocol";
+import type {
+  CogMetadata,
+  TypedArray,
+} from "@geomatico/maplibre-cog-protocol/dist/types/types";
+import maplibregl from "maplibre-gl";
+import type { LngLat, MapMouseEvent, PointLike } from "maplibre-gl";
+import Map, {
+  NavigationControl,
+  ScaleControl,
+  type MapRef,
+} from "react-map-gl/maplibre";
+
+import "maplibre-gl/dist/maplibre-gl.css";
+
 import { PdoMapLayout } from "@/app/components/pdo-app/PdoMapLayout";
 import { PdoSidebarShell } from "@/app/components/pdo-app/PdoSidebarShell";
+import styles from "@/styles/Home.module.css";
 
+const BASEMAP_STYLE =
+  "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
 const SOURCE_ID = "climate-raster-source";
 const LAYER_ID = "climate-raster-layer";
-const DEM_SOURCE_ID = "climate-dem-source";
-const HILLSHADE_LAYER_ID = "climate-hillshading";
 const LEGEND_RAMP_HEIGHT = 160;
 const INITIAL_VIEW_STATE = {
   longitude: 10,
@@ -20,9 +36,24 @@ const INITIAL_VIEW_STATE = {
 };
 
 const MAP_LAYERS = [
-  { id: "sitscholl.huglin_1981-2010", label: "Huglin Index 1981-2010" },
-  { id: "sitscholl.cni_1981-2010", label: "Cool Night Index 1981-2010" },
-  { id: "sitscholl.di_1981-2010", label: "Dryness Index 1981-2010" },
+  {
+    id: "huglin_1981-2010",
+    label: "Huglin Index 1981-2010",
+    url: "https://pub-7fe518f63b9f4e28b80569979cc136fc.r2.dev/huglin_1981-2010.tiff",
+    range: [900, 3300] as [number, number],
+  },
+  {
+    id: "cni_1981-2010",
+    label: "Cool Night Index 1981-2010",
+    url: "https://pub-7fe518f63b9f4e28b80569979cc136fc.r2.dev/cni_1981-2010.tiff",
+    range: [8, 24] as [number, number],
+  },
+  {
+    id: "di_1981-2010",
+    label: "Dryness Index 1981-2010",
+    url: "https://pub-7fe518f63b9f4e28b80569979cc136fc.r2.dev/di_1981-2010.tiff",
+    range: [-200, 250] as [number, number],
+  },
 ] as const;
 
 const RAMPS = {
@@ -48,15 +79,11 @@ const RAMPS = {
 } as const;
 
 type RampKey = keyof typeof RAMPS;
+type LayerId = (typeof MAP_LAYERS)[number]["id"];
 type ClassificationBreak = {
   label: string;
   min?: number;
   max?: number;
-};
-type RasterLayerMetadata = {
-  sourceLayerId: string | null;
-  range: [number, number] | null;
-  bounds: [number, number, number, number] | null;
 };
 type HoverInfo = {
   x: number;
@@ -65,8 +92,8 @@ type HoverInfo = {
   label: string;
 };
 
-const LAYER_CLASSIFICATIONS: Partial<Record<(typeof MAP_LAYERS)[number]["id"], ClassificationBreak[]>> = {
-  "sitscholl.huglin_1981-2010": [
+const LAYER_CLASSIFICATIONS: Partial<Record<LayerId, ClassificationBreak[]>> = {
+  "huglin_1981-2010": [
     { label: "Too cool", max: 1200 },
     { label: "Very cool", min: 1200, max: 1500 },
     { label: "Cool", min: 1500, max: 1800 },
@@ -76,19 +103,25 @@ const LAYER_CLASSIFICATIONS: Partial<Record<(typeof MAP_LAYERS)[number]["id"], C
     { label: "Very warm", min: 2700, max: 3000 },
     { label: "Too hot", min: 3000 },
   ],
-  "sitscholl.cni_1981-2010": [
+  "cni_1981-2010": [
     { label: "Very cool", max: 12 },
     { label: "Cool", min: 12, max: 14 },
     { label: "Temperate", min: 14, max: 18 },
     { label: "Warm", min: 18 },
   ],
-  "sitscholl.di_1981-2010": [
+  "di_1981-2010": [
     { label: "Very dry", max: -100 },
     { label: "Moderately dry", min: -100, max: 50 },
     { label: "Subhumid", min: 50, max: 150 },
     { label: "Humid", min: 150 },
   ],
 };
+
+let cogProtocolRegistered = false;
+if (!cogProtocolRegistered) {
+  maplibregl.addProtocol("cog", cogProtocol);
+  cogProtocolRegistered = true;
+}
 
 function formatLegendValue(value: number) {
   if (!Number.isFinite(value)) return "N/A";
@@ -114,209 +147,172 @@ function getBreakOffset(value: number, range: [number, number]) {
   return `${Math.round((1 - clamped) * LEGEND_RAMP_HEIGHT)}px`;
 }
 
-function buildRasterPaint(ramp: RampKey, min: number, max: number) {
-  const expression = [
-    "interpolate",
-    ["linear"],
-    ["raster-value"],
-  ] as mapboxgl.ExpressionSpecification;
+function hexToRgb(hex: string): [number, number, number] {
+  const normalized = hex.replace("#", "");
+  const value = Number.parseInt(normalized, 16);
 
-  for (const [stop, color] of RAMPS[ramp]) {
-    expression.push(min + stop * (max - min), color);
+  return [(value >> 16) & 255, (value >> 8) & 255, value & 255];
+}
+
+function buildRampInterpolator(ramp: RampKey, range: [number, number]) {
+  const [min, max] = range;
+  const stops = RAMPS[ramp].map(([stop, color]) => ({
+    stop,
+    rgb: hexToRgb(color),
+  }));
+
+  return (value: number, color: Uint8ClampedArray) => {
+    if (!Number.isFinite(value)) {
+      color.set([0, 0, 0, 0]);
+      return;
+    }
+
+    const normalized = Math.min(1, Math.max(0, (value - min) / (max - min)));
+
+    for (let index = 1; index < stops.length; index += 1) {
+      const previous = stops[index - 1];
+      const current = stops[index];
+
+      if (normalized > current.stop) continue;
+
+      const segmentSpan = current.stop - previous.stop || 1;
+      const segmentOffset = (normalized - previous.stop) / segmentSpan;
+      color[0] = Math.round(
+        previous.rgb[0] + (current.rgb[0] - previous.rgb[0]) * segmentOffset,
+      );
+      color[1] = Math.round(
+        previous.rgb[1] + (current.rgb[1] - previous.rgb[1]) * segmentOffset,
+      );
+      color[2] = Math.round(
+        previous.rgb[2] + (current.rgb[2] - previous.rgb[2]) * segmentOffset,
+      );
+      color[3] = 255;
+      return;
+    }
+
+    const last = stops[stops.length - 1]!;
+    color[0] = last.rgb[0];
+    color[1] = last.rgb[1];
+    color[2] = last.rgb[2];
+    color[3] = 255;
+  };
+}
+
+function isNoDataValue(value: number, noData: number | undefined) {
+  if (Number.isNaN(value)) return true;
+  if (noData == null) return false;
+  return Number.isNaN(noData) ? Number.isNaN(value) : value === noData;
+}
+
+function removeRasterLayer(map: maplibregl.Map) {
+  if (map.getLayer(LAYER_ID)) {
+    map.removeLayer(LAYER_ID);
   }
 
-  return {
-    "raster-color": expression,
-    "raster-color-range": [min, max] as [number, number],
-  };
-}
-
-function readRasterMetadata(source: unknown): RasterLayerMetadata {
-  const typedSource = source as {
-    rasterLayers?: Array<{
-      id?: string;
-      fields?: { range?: [number, number] };
-    }>;
-    bounds?: [number, number, number, number];
-  } | null;
-
-  const rasterLayer = typedSource?.rasterLayers?.[0];
-
-  return {
-    sourceLayerId: rasterLayer?.id ?? null,
-    range: rasterLayer?.fields?.range ?? null,
-    bounds: typedSource?.bounds ?? null,
-  };
-}
-
-function applyRasterPaint(
-  map: mapboxgl.Map,
-  ramp: RampKey,
-  range: [number, number] | null,
-) {
-  if (!range || !map.getLayer(LAYER_ID) || range[0] === range[1]) return;
-
-  const paint = buildRasterPaint(ramp, range[0], range[1]);
-  map.setPaintProperty(LAYER_ID, "raster-color", paint["raster-color"]);
-  map.setPaintProperty(LAYER_ID, "raster-color-range", paint["raster-color-range"]);
-  map.setPaintProperty(LAYER_ID, "raster-opacity", .7);
-  map.setPaintProperty(LAYER_ID, "raster-fade-duration", 0);
-  map.triggerRepaint();
-}
-
-function extractRasterValue(result: unknown, layerName: string | null) {
-  if (!result || typeof result !== "object") return null;
-
-  const layers = result as Record<string, Record<string, number[] | null> | null>;
-  const targetLayer = layerName ? layers[layerName] : Object.values(layers)[0];
-  if (!targetLayer || typeof targetLayer !== "object") return null;
-
-  const firstBand = Object.values(targetLayer)[0];
-  if (!Array.isArray(firstBand) || typeof firstBand[0] !== "number") return null;
-
-  return firstBand[0];
+  if (map.getSource(SOURCE_ID)) {
+    map.removeSource(SOURCE_ID);
+  }
 }
 
 export default function ClimateExplorerPage() {
   const mapRef = useRef<MapRef>(null);
-  const rampRef = useRef<RampKey>("viridis");
-  const sourceLayerIdRef = useRef<string | null>(null);
   const hoverThrottleRef = useRef<number | null>(null);
   const hoverRequestIdRef = useRef(0);
-  const hoverPointRef = useRef<{ point: mapboxgl.Point; lngLat: mapboxgl.LngLat } | null>(null);
+  const hoverPointRef = useRef<{
+    point: { x: number; y: number };
+    lngLat: LngLat;
+  } | null>(null);
 
-  const [selectedLayerId, setSelectedLayerId] = useState(MAP_LAYERS[0]?.id ?? "");
+  const [selectedLayerId, setSelectedLayerId] = useState<LayerId>(
+    MAP_LAYERS[0]?.id ?? "huglin_1981-2010",
+  );
   const [ramp, setRamp] = useState<RampKey>("viridis");
   const [mapReady, setMapReady] = useState(false);
-  const [layerRanges, setLayerRanges] = useState<Record<string, [number, number]>>({});
   const [loadError, setLoadError] = useState<string | null>(null);
   const [hoverInfo, setHoverInfo] = useState<HoverInfo | null>(null);
 
   const selectedLayer = useMemo(
-    () => MAP_LAYERS.find((layer) => layer.id === selectedLayerId) ?? MAP_LAYERS[0],
+    () =>
+      MAP_LAYERS.find((layer) => layer.id === selectedLayerId) ?? MAP_LAYERS[0],
     [selectedLayerId],
   );
-
-  useEffect(() => {
-    rampRef.current = ramp;
-  }, [ramp]);
 
   useEffect(() => {
     const map = mapRef.current?.getMap();
     if (!map || !mapReady || !selectedLayer) return;
 
-    const mountLayer = () => {
-      const metadata = readRasterMetadata(map.getSource(SOURCE_ID));
-      if (!metadata.sourceLayerId || !metadata.range) return false;
-
-      sourceLayerIdRef.current = metadata.sourceLayerId;
-
-      if (!map.getLayer(LAYER_ID)) {
-        map.addLayer({
-          id: LAYER_ID,
-          type: "raster",
-          source: SOURCE_ID,
-          "source-layer": metadata.sourceLayerId,
-          paint: {
-            "raster-opacity": .7,
-            "raster-fade-duration": 0,
-          },
-        } as mapboxgl.LayerSpecification);
-      }
-
-      setLayerRanges((current) => {
-        const existing = current[selectedLayer.id];
-        if (existing?.[0] === metadata.range?.[0] && existing?.[1] === metadata.range?.[1]) {
-          return current;
+    const colorizePixel = buildRampInterpolator(ramp, selectedLayer.range);
+    setColorFunction(
+      selectedLayer.url,
+      (pixel: TypedArray, color: Uint8ClampedArray, metadata: CogMetadata) => {
+        const value = pixel[0];
+        if (
+          typeof value !== "number" ||
+          isNoDataValue(value, metadata.noData)
+        ) {
+          color.set([0, 0, 0, 0]);
+          return;
         }
 
-        return { ...current, [selectedLayer.id]: metadata.range };
-      });
+        colorizePixel(value, color);
+      },
+    );
 
-    //   if (metadata.bounds) {
-    //     map.fitBounds(
-    //       [
-    //         [metadata.bounds[0], metadata.bounds[1]],
-    //         [metadata.bounds[2], metadata.bounds[3]],
-    //       ],
-    //       { padding: 40, duration: 500 },
-    //     );
-    //   }
-
-      applyRasterPaint(map, rampRef.current, metadata.range);
-      setLoadError(null);
-      setHoverInfo(null);
-
-      return true;
-    };
-
-    if (map.getLayer(LAYER_ID)) {
-      map.removeLayer(LAYER_ID);
-    }
-    if (map.getSource(SOURCE_ID)) {
-      map.removeSource(SOURCE_ID);
-    }
-
-    sourceLayerIdRef.current = null;
+    removeRasterLayer(map);
 
     map.addSource(SOURCE_ID, {
-      type: "raster-array",
-      url: `mapbox://${selectedLayer.id}`,
-      tileSize: 512,
-    } as mapboxgl.SourceSpecification);
+      type: "raster",
+      url: `cog://${selectedLayer.url}`,
+      tileSize: 256,
+    });
 
-    if (mountLayer()) return;
+    map.addLayer({
+      id: LAYER_ID,
+      type: "raster",
+      source: SOURCE_ID,
+      paint: {
+        "raster-opacity": 0.7,
+        "raster-fade-duration": 0,
+      },
+    });
 
-    const handleSourceData = (event: mapboxgl.MapSourceDataEvent) => {
-      if (event.sourceId !== SOURCE_ID || event.sourceDataType !== "metadata") return;
-      if (mountLayer()) {
-        map.off("sourcedata", handleSourceData);
-        return;
-      }
-
-      setLoadError("Unable to derive the range for the selected climate layer.");
-    };
-
-    map.on("sourcedata", handleSourceData);
+    setLoadError(null);
+    setHoverInfo(null);
 
     return () => {
-      map.off("sourcedata", handleSourceData);
+      removeRasterLayer(map);
     };
-  }, [mapReady, selectedLayer]);
+  }, [mapReady, ramp, selectedLayer]);
 
   useEffect(() => {
     const map = mapRef.current?.getMap();
-    if (!map || !mapReady) return;
-
-    applyRasterPaint(map, ramp, layerRanges[selectedLayerId] ?? null);
-  }, [layerRanges, mapReady, ramp, selectedLayerId]);
-
-  useEffect(() => {
-    const map = mapRef.current?.getMap();
-    if (!map || !mapReady) return;
+    if (!map || !mapReady || !selectedLayer) return;
 
     const runHoverQuery = async () => {
       hoverThrottleRef.current = null;
 
       const hoverPoint = hoverPointRef.current;
-      const sourceLayerId = sourceLayerIdRef.current;
-      if (!hoverPoint || !sourceLayerId || !map.getSource(SOURCE_ID)) return;
+      if (!hoverPoint) return;
 
       const requestId = ++hoverRequestIdRef.current;
 
       try {
-        const result = await map.queryRasterValue(SOURCE_ID, hoverPoint.lngLat, {
-          layerName: sourceLayerId,
-        });
+        const [value] = await locationValues(
+          selectedLayer.url,
+          {
+            latitude: hoverPoint.lngLat.lat,
+            longitude: hoverPoint.lngLat.lng,
+          },
+          map.getZoom(),
+        );
 
         if (requestId !== hoverRequestIdRef.current) return;
 
-        const value = extractRasterValue(result, sourceLayerId);
         setHoverInfo({
           x: hoverPoint.point.x,
           y: hoverPoint.point.y,
-          value,
-          label: value == null ? "No data" : value.toFixed(2),
+          value: Number.isFinite(value) ? value : null,
+          label: Number.isFinite(value) ? value.toFixed(2) : "No data",
         });
       } catch {
         if (requestId !== hoverRequestIdRef.current) return;
@@ -336,8 +332,11 @@ export default function ClimateExplorerPage() {
       }, 80);
     };
 
-    const handleMouseMove = (event: mapboxgl.MapMouseEvent) => {
-      hoverPointRef.current = { point: event.point, lngLat: event.lngLat };
+    const handleMouseMove = (event: MapMouseEvent & { point: PointLike }) => {
+      hoverPointRef.current = {
+        point: { x: event.point.x, y: event.point.y },
+        lngLat: event.lngLat,
+      };
       scheduleHoverQuery();
     };
 
@@ -362,7 +361,7 @@ export default function ClimateExplorerPage() {
         hoverThrottleRef.current = null;
       }
     };
-  }, [mapReady]);
+  }, [mapReady, selectedLayer]);
 
   const sidebarTop = (
     <div className={styles.filterPanel}>
@@ -436,8 +435,10 @@ export default function ClimateExplorerPage() {
     </div>
   );
 
-  const activeRange = layerRanges[selectedLayerId] ?? null;
-  const activeClassification = LAYER_CLASSIFICATIONS[selectedLayerId];
+  const activeRange = selectedLayer?.range ?? null;
+  const activeClassification = selectedLayer
+    ? LAYER_CLASSIFICATIONS[selectedLayer.id]
+    : undefined;
   const activeRampStops = RAMPS[ramp];
   const legendGradient = useMemo(() => {
     const stops = activeRampStops
@@ -454,7 +455,12 @@ export default function ClimateExplorerPage() {
 
   const hoveredClassBreak = useMemo(() => {
     if (!activeClassification || hoverInfo?.value == null) return null;
-    return activeClassification.find((classBreak) => matchesClassBreak(hoverInfo.value!, classBreak)) ?? null;
+    const hoverValue = hoverInfo.value;
+    return (
+      activeClassification.find((classBreak) =>
+        matchesClassBreak(hoverValue, classBreak),
+      ) ?? null
+    );
   }, [activeClassification, hoverInfo]);
 
   const classMarkers = useMemo(() => {
@@ -470,61 +476,41 @@ export default function ClimateExplorerPage() {
           isActive: hoveredClassBreak?.label === classBreak.label,
         };
       })
-      .filter((marker): marker is { label: string; top: string; isActive: boolean } => marker !== null);
+      .filter(
+        (marker): marker is { label: string; top: string; isActive: boolean } =>
+          marker !== null,
+      );
   }, [activeClassification, activeRange, hoveredClassBreak]);
 
   const mapContent = (
     <div className="relative h-full w-full">
       <Map
         ref={mapRef}
-        mapboxAccessToken={MAPBOX_TOKEN}
+        mapLib={maplibregl}
         initialViewState={INITIAL_VIEW_STATE}
         style={{ width: "100%", height: "100%" }}
-        mapStyle="mapbox://styles/mapbox/light-v11"
+        mapStyle={BASEMAP_STYLE}
         onLoad={() => {
-          const map = mapRef.current?.getMap();
-
-          if (map && !map.getSource(DEM_SOURCE_ID)) {
-            map.addSource(DEM_SOURCE_ID, {
-              type: "raster-dem",
-              url: "mapbox://mapbox.mapbox-terrain-dem-v1",
-            });
-          }
-
-          if (map && !map.getLayer(HILLSHADE_LAYER_ID)) {
-            map.addLayer({
-              id: HILLSHADE_LAYER_ID,
-              source: DEM_SOURCE_ID,
-              type: "hillshade",
-              slot: "bottom",
-            } as mapboxgl.LayerSpecification);
-          }
-
           setMapReady(true);
         }}
-        onError={() => setLoadError("Unable to load the selected climate layer.")}
+        onError={() =>
+          setLoadError("Unable to load the selected climate layer.")
+        }
       >
         <NavigationControl position="bottom-right" visualizePitch showCompass />
         <ScaleControl position="bottom-right" />
       </Map>
 
-      {!MAPBOX_TOKEN && (
-        <div className="absolute left-4 top-4 z-10 rounded-lg bg-black px-3 py-2 text-sm text-white">
-          Missing `NEXT_PUBLIC_MAPBOX_TOKEN`
-        </div>
-      )}
-
       <div className={styles.mapLegend}>
-        <div className={styles.mapLegendTitle}>
-          Legend
-        </div>
+        <div className={styles.mapLegendTitle}>Legend</div>
         <div className={styles.mapLegendContent}>
           <div className={styles.mapLegendScaleLabels}>
             {activeClassification?.map((classBreak) => {
               const markerValue = classBreak.min;
-              const markerTop = activeRange && markerValue != null
-                ? getBreakOffset(markerValue, activeRange)
-                : null;
+              const markerTop =
+                activeRange && markerValue != null
+                  ? getBreakOffset(markerValue, activeRange)
+                  : null;
               const isActive = hoveredClassBreak?.label === classBreak.label;
 
               if (markerTop == null) return null;
@@ -535,7 +521,13 @@ export default function ClimateExplorerPage() {
                   className={styles.mapLegendScaleLabel}
                   style={{ top: markerTop }}
                 >
-                  <div className={isActive ? styles.mapLegendScaleTextActive : styles.mapLegendScaleText}>
+                  <div
+                    className={
+                      isActive
+                        ? styles.mapLegendScaleTextActive
+                        : styles.mapLegendScaleText
+                    }
+                  >
                     {classBreak.label}
                   </div>
                 </div>
@@ -550,7 +542,11 @@ export default function ClimateExplorerPage() {
             {classMarkers.map((marker) => (
               <div
                 key={`${marker.label}-${marker.top}`}
-                className={marker.isActive ? styles.mapLegendBreakLineActive : styles.mapLegendBreakLine}
+                className={
+                  marker.isActive
+                    ? styles.mapLegendBreakLineActive
+                    : styles.mapLegendBreakLine
+                }
                 style={{ top: marker.top }}
               />
             ))}
