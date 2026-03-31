@@ -40,19 +40,19 @@ const MAP_LAYERS = [
     id: "huglin_1981-2010",
     label: "Huglin Index 1981-2010",
     url: "https://pub-7fe518f63b9f4e28b80569979cc136fc.r2.dev/huglin_1981-2010.tiff",
-    range: [900, 3300] as [number, number],
+    range: [0, 3500] as [number, number],
   },
   {
     id: "cni_1981-2010",
     label: "Cool Night Index 1981-2010",
     url: "https://pub-7fe518f63b9f4e28b80569979cc136fc.r2.dev/cni_1981-2010.tiff",
-    range: [8, 24] as [number, number],
+    range: [-5, 25] as [number, number],
   },
   {
     id: "di_1981-2010",
     label: "Dryness Index 1981-2010",
     url: "https://pub-7fe518f63b9f4e28b80569979cc136fc.r2.dev/di_1981-2010.tiff",
-    range: [-200, 250] as [number, number],
+    range: [-60, 200] as [number, number],
   },
 ] as const;
 
@@ -198,6 +198,12 @@ function buildRampInterpolator(ramp: RampKey, range: [number, number]) {
   };
 }
 
+function applyScaleOffset(value: number, metadata: CogMetadata) {
+  const scale = metadata.scale ?? 1;
+  const offset = metadata.offset ?? 0;
+  return offset + value * scale;
+}
+
 function isNoDataValue(value: number, noData: number | undefined) {
   if (Number.isNaN(value)) return true;
   if (noData == null) return false;
@@ -245,16 +251,16 @@ export default function ClimateExplorerPage() {
     setColorFunction(
       selectedLayer.url,
       (pixel: TypedArray, color: Uint8ClampedArray, metadata: CogMetadata) => {
-        const value = pixel[0];
+        const rawValue = pixel[0];
         if (
-          typeof value !== "number" ||
-          isNoDataValue(value, metadata.noData)
+          typeof rawValue !== "number" ||
+          isNoDataValue(rawValue, metadata.noData)
         ) {
           color.set([0, 0, 0, 0]);
           return;
         }
 
-        colorizePixel(value, color);
+        colorizePixel(applyScaleOffset(rawValue, metadata), color);
       },
     );
 
@@ -500,6 +506,21 @@ export default function ClimateExplorerPage() {
         <NavigationControl position="bottom-right" visualizePitch showCompass />
         <ScaleControl position="bottom-right" />
       </Map>
+
+      {hoverInfo && (
+        <div
+          className="pointer-events-none absolute z-10 -translate-y-full rounded-lg border border-white/15 bg-black/80 px-3 py-2 text-xs text-white shadow-lg backdrop-blur"
+          style={{
+            left: hoverInfo.x + 12,
+            top: hoverInfo.y - 12,
+          }}
+        >
+          <div className="font-medium">
+            {selectedLayer?.label ?? "Climate layer"}
+          </div>
+          <div>{hoverInfo.label}</div>
+        </div>
+      )}
 
       <div className={styles.mapLegend}>
         <div className={styles.mapLegendTitle}>Legend</div>
