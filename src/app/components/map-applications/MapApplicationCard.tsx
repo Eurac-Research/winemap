@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ReactNode } from "react";
+import styles from "@/styles/Home.module.css";
 
 type MapApplicationCardProps = {
   href: string;
@@ -17,8 +18,7 @@ export default function MapApplicationCard({
   return (
     <Link
       href={href}
-      className="min-w-[220px] sm:min-w-[240px] h-40 rounded-xl snap-start transition-all duration-200 p-4 flex flex-col gap-3 hover:-translate-y-0.5 border [border-color:var(--border-soft)] bg-gradient-to-br from-[color:var(--surface-panel-muted)] to-[color:transparent] hover:from-[color:var(--surface-overlay)] hover:to-[color:var(--surface-panel-muted)] shadow-lg"
-      style={{ boxShadow: "var(--shadow-soft)" }}
+      className={`min-w-[220px] sm:min-w-[240px] h-40 snap-start p-4 flex flex-col gap-3 ${styles.interactiveBox}`}
     >
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 flex items-center justify-center">

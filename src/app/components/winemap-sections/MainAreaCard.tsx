@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ReactNode } from "react";
+import styles from "@/styles/Home.module.css";
 
 type MainAreaCategory = {
   href: string;
@@ -29,7 +30,7 @@ export default function MainAreaCard({
   return (
     <div
       id={id}
-      className="group relative transition-all duration-300 overflow-hidden border [border-color:var(--border-strong)] bg-[color:var(--surface-panel-muted)] hover:border-[color:var(--accent-strong)] hover:-translate-y-1.5 hover:shadow-lg"
+      className={`group relative ${styles.interactiveBox}`}
     >
       <div className="p-8 h-full flex flex-col">
         <Link href={mainHref} className="flex flex-col items-center text-center group/main">
@@ -55,7 +56,7 @@ export default function MainAreaCard({
               title={category.description}
               className="block px-3 py-2 rounded-lg transition-colors group/link hover:bg-[color:var(--accent-soft)]"
             >
-              <h3 className="font-semibold text-sm transition-colors text-[color:var(--text-base)] hover:text-[color:var(--text-strong)]">
+              <h3 className="font-semibold text-sm transition-colors text-[color:var(--text-base)] hover:font-bold">
                 {category.label}
               </h3>
             </Link>
