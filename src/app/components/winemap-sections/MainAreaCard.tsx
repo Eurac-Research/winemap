@@ -54,9 +54,9 @@ export default function MainAreaCard({
               key={category.label}
               href={category.href}
               title={category.description}
-              className="group block px-3 py-2 rounded-lg transition-colors group/link hover:bg-[color:var(--accent-soft)]"
+              className={`group block px-3 py-2 ${styles.interactiveLink}`}
             >
-              <h3 className="font-semibold text-sm transition-colors text-[color:var(--text-base)] group-hover:font-bold">
+              <h3 className={`font-semibold text-sm ${styles.interactiveLinkLabel}`}>
                 {category.label}
               </h3>
             </Link>

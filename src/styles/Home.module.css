@@ -161,6 +161,31 @@
   }
 }
 
+.interactiveLink {
+  display: block;
+  border-radius: 0.5rem;
+  background-color: transparent;
+  transition: background-color 300ms ease;
+
+  &:hover {
+    background-color: var(--accent-soft);
+  }
+}
+
+.interactiveLinkLabel {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-base);
+  transition:
+    color 300ms ease,
+    font-weight 300ms ease;
+
+  .interactiveLink:hover & {
+    font-weight: 700;
+    color: var(--text-strong);
+  }
+}
+
 .PDOdetail {
   padding: 30px;
   height: auto;
