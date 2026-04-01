@@ -17,7 +17,7 @@ export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <div className="fixed top-0 left-0 w-full z-[100] border-b bg-[color:var(--surface-panel-strong)] border-[color:var(--border-soft)]">
+    <div className="fixed top-0 left-0 w-full z-[100] border-b bg-[color:var(--background)] border-[color:var(--border-soft)]">
       <div className="px-6 flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center gap-2 hover:opacity-90 transition-opacity lg:w-1/3">

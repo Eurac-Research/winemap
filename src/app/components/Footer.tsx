@@ -7,7 +7,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="border-t text-[color:var(--text-strong)] bg-[color:var(--surface-panel-strong)] border-[color:var(--border-soft)]">
+    <footer className="border-t pt-2 text-[color:var(--text-strong)] bg-[color:var(--background)] border-[color:var(--border-soft)]">
       <div className="max-w-5xl mx-auto px-4 md:px-6 py-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-4 max-w-8xl mx-auto">
           {/* Column 1: Explore Maps */}
@@ -64,42 +64,10 @@ export default function Footer() {
                 ))}
             </ul>
           </div>
-          {/* <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-[color:var(--accent-strong)]">
-              About
-            </h3>
-            <ul className="space-y-1">
-              <li>
-                <Link href="/about#general" className="text-white/70 hover:text-white transition-colors text-sm">
-                  About Winemap
-                </Link>
-              </li>
-              <li>
-                <Link href="/about#projects" className="text-white/70 hover:text-white transition-colors text-sm">
-                  Projects
-                </Link>
-              </li>
-              <li>
-                <Link href="/about#institute" className="text-white/70 hover:text-white transition-colors text-sm">
-                  The Institute
-                </Link>
-              </li>
-              <li>
-                <Link href="/team" className="text-white/70 hover:text-white transition-colors text-sm">
-                  The Team
-                </Link>
-              </li>
-              <li>
-                <Link href="/literature" className="text-white/70 hover:text-white transition-colors text-sm">
-                  Scientific Literature
-                </Link>
-              </li>
-            </ul>
-          </div> */}
 
           {/* Column 4: Legal */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-[#E91E63]">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-[color:var(--accent-strong)]">
               Legal
             </h3>
             <ul className="space-y-1">

@@ -5,7 +5,7 @@
     color-scheme: light;
 
     /* Core app tokens */
-    --background: oklch(0.97 0.01 95);
+    --background: oklch(99.336% 0.00316 15.246);
     --foreground: oklch(0.24 0.02 255);
     --surface: oklch(0.99 0.004 95);
     --surface-elevated: oklch(0.965 0.008 95);
