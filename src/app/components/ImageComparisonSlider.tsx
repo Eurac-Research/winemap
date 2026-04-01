@@ -76,7 +76,7 @@ const SliderContent = ({
       />
       {/* After Label */}
       <div
-        className="absolute top-4 right-4 bg-black/70 text-white px-3 py-1 rounded text-sm font-medium"
+        className="absolute top-4 right-4 px-3 py-1 rounded text-sm font-medium bg-[color:var(--surface-panel-strong)] text-[color:var(--text-strong)]"
         aria-label={`${afterLabel} image`}
       >
         {afterLabel}
@@ -97,7 +97,7 @@ const SliderContent = ({
       />
       {/* Before Label */}
       <div
-        className="absolute top-4 left-4 bg-black/70 text-white px-3 py-1 rounded text-sm font-medium"
+        className="absolute top-4 left-4 px-3 py-1 rounded text-sm font-medium bg-[color:var(--surface-panel-strong)] text-[color:var(--text-strong)]"
         aria-label={`${beforeLabel} image`}
       >
         {beforeLabel}
@@ -106,7 +106,7 @@ const SliderContent = ({
 
     {/* Slider Line and Handle */}
     <div
-      className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize"
+      className="absolute top-0 bottom-0 w-1 bg-[color:var(--surface)] cursor-ew-resize"
       style={{ left: `${sliderPosition}%` }}
       role="slider"
       aria-label="Comparison slider"
@@ -117,10 +117,10 @@ const SliderContent = ({
       tabIndex={0}
     >
       {/* Slider Handle */}
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center">
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full shadow-lg flex items-center justify-center bg-[color:var(--surface)]">
         <div className="flex gap-1">
-          <div className="w-0.5 h-4 bg-gray-700"></div>
-          <div className="w-0.5 h-4 bg-gray-700"></div>
+          <div className="w-0.5 h-4 bg-[color:var(--text-muted)]"></div>
+          <div className="w-0.5 h-4 bg-[color:var(--text-muted)]"></div>
         </div>
       </div>
     </div>
@@ -270,7 +270,7 @@ export default function ImageComparisonSlider({
           {/* Fullscreen Button */}
           <button
             onClick={() => setIsFullscreen(true)}
-            className="absolute bottom-4 right-4 z-10 bg-black/70 hover:bg-black/90 text-white p-2 rounded-lg transition-colors"
+            className="absolute bottom-4 right-4 z-10 p-2 rounded-lg transition-colors bg-[color:var(--surface-panel-strong)] hover:bg-[color:var(--surface-panel-muted)] text-[color:var(--text-strong)]"
             aria-label="View image comparison in fullscreen mode"
             title="View in fullscreen"
           >
@@ -280,13 +280,13 @@ export default function ImageComparisonSlider({
 
         {/* Caption */}
         {caption && (
-          <p className="text-center text-sm text-gray-300 mt-3 mb-2">
+          <p className="text-center text-sm mt-3 mb-2 text-[color:var(--text-base)]">
             {caption}
           </p>
         )}
 
         {/* Instructions */}
-        <p className="text-center text-sm text-gray-400 mt-4">
+        <p className="text-center text-sm mt-4 text-[color:var(--text-muted)]">
           Click or drag the slider to compare the images
         </p>
       </div>
@@ -294,7 +294,7 @@ export default function ImageComparisonSlider({
       {/* Fullscreen Modal */}
       {isFullscreen && (
         <div
-          className="fixed inset-0 z-50 bg-black flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[color:var(--surface-inverse)]/30"
           role="dialog"
           aria-modal="true"
           aria-label="Fullscreen image comparison"
@@ -302,7 +302,7 @@ export default function ImageComparisonSlider({
           {/* Close Button */}
           <button
             onClick={() => setIsFullscreen(false)}
-            className="absolute top-4 right-4 z-50 bg-white/10 hover:bg-white/20 text-white p-2 rounded-lg transition-colors"
+            className="absolute top-4 right-4 z-50 p-2 rounded-lg transition-colors bg-[color:var(--surface-overlay)] hover:bg-[color:var(--surface-panel-muted)] text-[color:var(--text-strong)]"
             aria-label="Close fullscreen view and return to page"
             title="Close fullscreen (ESC)"
           >
@@ -332,13 +332,13 @@ export default function ImageComparisonSlider({
 
             {/* Caption in fullscreen */}
             {caption && (
-              <p className="text-center text-sm text-gray-300 mt-4">
+              <p className="text-center text-sm mt-4 text-[color:var(--text-base)]">
                 {caption}
               </p>
             )}
 
             {/* Instructions in fullscreen */}
-            <p className="text-center text-sm text-gray-400 mt-2" role="status" aria-live="polite">
+            <p className="text-center text-sm mt-2 text-[color:var(--text-muted)]" role="status" aria-live="polite">
               Click or drag the slider to compare the images • Press ESC to close
             </p>
           </div>

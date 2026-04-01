@@ -1171,7 +1171,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
             </h2>
             <div className={styles.buttonDiv}>
               <button
-                className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
+                className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] rounded-[20px] cursor-pointer items-center justify-center transition duration-300 border-[color:var(--border-strong)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface)] hover:text-[color:var(--text-strong)]"
                 onClick={(
                   e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
                 ) => showPDOonMap(activePDO.pdoid)}
@@ -1180,7 +1180,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
               </button>
               <button
                 onClick={() => onClearFilter()}
-                className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
+                className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] rounded-[20px] cursor-pointer items-center justify-center transition duration-300 border-[color:var(--border-strong)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface)] hover:text-[color:var(--text-strong)]"
               >
                 reset
               </button>
@@ -1205,7 +1205,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
                       : activePDO.vulneral.Vulnerability}{" "}
                   </span>
                 </div>
-                <span className="mt-6 text-[16px] leading-[150%] block text-white font-medium mb-4">
+                <span className="mt-6 text-[16px] leading-[150%] block text-[color:var(--text-strong)] font-medium mb-4">
                   {activePDO.pdoname}{" "}
                   {activePDO.vulneral.Vulnerability === "low"
                     ? `is at low risk due to its ${activePDO.vulneral.ExposureTxt} exposure, ${activePDO.vulneral.SensitivityTxt} sensitivity and its ${activePDO.vulneral.AdaptiveTxt} adaptive capacity.`
@@ -1536,7 +1536,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
             className={`${isMobile
               ? "w-full h-3 cursor-row-resize hover:h-4"
               : "w-2 h-full cursor-col-resize hover:w-3"
-              } flex items-center justify-center bg-[#E91E63] opacity-60 hover:opacity-100 text-[#E91E63] hover:brightness-110 transition-all relative group z-20`}
+              } flex items-center justify-center bg-[color:var(--accent-strong)] opacity-60 hover:opacity-100 text-[color:var(--accent-strong)] hover:brightness-110 transition-all relative group z-20`}
           />
         </>
       )}
@@ -1929,7 +1929,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
                     value={selectVarValue}
                   />
                   <button
-                    className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
+                    className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] rounded-[20px] cursor-pointer items-center justify-center transition duration-300 border-[color:var(--border-strong)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface)] hover:text-[color:var(--text-strong)]"
                     onClick={() => onClearFilter()}
                   >
                     reset
@@ -1940,14 +1940,14 @@ export default function MapContainer({ viewType }: MapContainerProps) {
                     <Link
                       onClick={() => onClearFilter()}
                       href="/legal"
-                      className="px-4 py-1 inline-flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black"
+                      className="px-4 py-1 inline-flex h-[30px] border leading-1 text-[13px] rounded-[20px] cursor-pointer items-center justify-center transition duration-300 border-[color:var(--border-strong)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface)] hover:text-[color:var(--text-strong)]"
                     >
                       exit adaptation mode
                     </Link>
                   ) : (
                     <Link
                       href="/adaptation"
-                      className="px-4 py-1 inline-flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black"
+                      className="px-4 py-1 inline-flex h-[30px] border leading-1 text-[13px] rounded-[20px] cursor-pointer items-center justify-center transition duration-300 border-[color:var(--border-strong)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface)] hover:text-[color:var(--text-strong)]"
                     >
                       enter adaptation mode
                     </Link>
@@ -1956,7 +1956,7 @@ export default function MapContainer({ viewType }: MapContainerProps) {
                   {zoomLevel && zoomLevel > 7 && (
                     <div className={styles.toggleVineyards}>
                       <button
-                        className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] border-white rounded-[20px] cursor-pointer items-center justify-center transition duration-300 hover:bg-white hover:text-black "
+                        className="px-4 py-1 flex h-[30px] border leading-1 text-[13px] rounded-[20px] cursor-pointer items-center justify-center transition duration-300 border-[color:var(--border-strong)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface)] hover:text-[color:var(--text-strong)]"
                         onClick={(
                           e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
                         ) => toggleVineyards(e)}

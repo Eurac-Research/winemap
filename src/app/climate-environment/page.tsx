@@ -148,7 +148,7 @@ export default function EnvironmentalPage() {
   };
 
   return (
-    <div className="h-screen w-full bg-black pt-24">
+    <div className="h-screen w-full bg-background pt-24">
       <ResizablePanelGroup
         direction={isMobile ? "vertical" : "horizontal"}
         onLayout={handlePanelLayout}
@@ -158,10 +158,10 @@ export default function EnvironmentalPage() {
           defaultSize={isMobile ? "48%" : "32%"}
           minSize={isMobile ? "28%" : "24%"}
           maxSize={isMobile ? "78%" : "45%"}
-          className="bg-black/95 backdrop-blur-md overflow-hidden"
+          className="bg-[color:var(--surface-panel-strong)] backdrop-blur-md overflow-hidden"
         >
           <div
-            className={`h-full overflow-hidden ${isMobile ? "border-b" : "border-r"} border-white/20`}
+            className={`h-full overflow-hidden ${isMobile ? "border-b" : "border-r"} border-[color:var(--border-soft)]`}
           >
             <div className={styles.panelFrame}>
               <div className={styles.frontpageContent}>
@@ -205,14 +205,14 @@ export default function EnvironmentalPage() {
 
                 {/* Group Selection Tabs */}
                 <div className="mb-6">
-                  <div className="flex bg-white/10 rounded-lg p-1 w-fit gap-1">
+                  <div className="flex rounded-lg p-1 w-fit gap-1 bg-[color:var(--surface-overlay)]">
                     {layerGroups.map(group => (
                       <button
                         key={group.id}
                         onClick={() => handleGroupChange(group.id)}
                         className={`px-4 py-2 rounded-md text-sm font-medium transition-all !mt-0 duration-200 ${selectedGroupId === group.id
-                          ? 'bg-white text-black shadow-sm'
-                          : 'text-white hover:bg-white/20'
+                          ? 'bg-[color:var(--surface)] text-[color:var(--text-strong)] shadow-sm'
+                          : 'text-[color:var(--text-strong)] hover:bg-[color:var(--surface-panel-muted)]'
                           }`}
                       >
                         {group.title}
@@ -233,7 +233,7 @@ export default function EnvironmentalPage() {
                       <Radio
                         key={layer.id}
                         value={layer.id}
-                        className="text-white block w-full"
+                        className="text-[color:var(--text-strong)] block w-full"
                       >
                         <span className="text-sm">{layer.name}</span>
                       </Radio>
@@ -242,10 +242,10 @@ export default function EnvironmentalPage() {
                 </div>
 
                 {/* Layer Description */}
-                <div className="border-t border-gray-600 pt-6 pb-10">
+                <div className="border-t border-[color:var(--border-soft)] pt-6 pb-10">
                   <div className="mb-4">
                     <h4 className="text-lg font-medium mb-2">{selectedLayer?.name}</h4>
-                    <p className="text-sm text-gray-300 leading-relaxed">
+                    <p className="text-sm leading-relaxed text-[color:var(--text-base)]">
                       {selectedLayer ? renderTextWithLinks(selectedLayer.description) : null}
                     </p>
                   </div>
@@ -253,7 +253,7 @@ export default function EnvironmentalPage() {
                   {selectedLayer?.references && (
                     <div className="mb-4">
                       <h5 className="text-md font-medium mb-2">References:</h5>
-                      <ul className="text-xs text-gray-400 space-y-1">
+                      <ul className="text-xs space-y-1 text-[color:var(--text-muted)]">
                         {selectedLayer.references.map((ref, index) => (
                           <li key={index}>• {renderTextWithLinks(ref)}</li>
                         ))}
@@ -264,7 +264,7 @@ export default function EnvironmentalPage() {
                   {/* Acknowledgement - shown for all layers */}
                   <div>
                     <h5 className="text-md font-medium mb-2">Acknowledgement:</h5>
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-[color:var(--text-muted)]">
                       The data presented were produced within the project AGATA (Accessible ecoloGicAl daTA for resilient Viticulture), jointly financed by Eurac Research and the University of Verona as part of the &ldquo;JOINT RESEARCH 2022&rdquo; Call.
                     </p>
                   </div>
@@ -279,7 +279,7 @@ export default function EnvironmentalPage() {
           className={`${isMobile
             ? "h-3 w-full cursor-row-resize hover:h-4"
             : "w-2 h-full cursor-col-resize hover:w-3"
-            } flex items-center justify-center bg-[#E91E63] opacity-60 hover:opacity-100 text-[#E91E63] hover:brightness-110 transition-all relative z-20`}
+            } flex items-center justify-center bg-[color:var(--accent-strong)] opacity-60 hover:opacity-100 text-[color:var(--accent-strong)] hover:brightness-110 transition-all relative z-20`}
         />
 
         <ResizablePanel className="relative">

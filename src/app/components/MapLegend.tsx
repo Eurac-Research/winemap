@@ -193,12 +193,12 @@ export default function MapLegend({ map, layerId, layerName, isVisible }: MapLeg
   }
 
   return (
-    <div className="absolute bottom-4 left-4 bg-black/90 text-white rounded-lg shadow-lg max-w-xs z-50 border border-gray-600 pointer-events-auto">
-      <div className="flex items-center justify-between p-3 border-b border-gray-600">
+    <div className="absolute bottom-4 left-4 rounded-lg shadow-lg max-w-xs z-50 border pointer-events-auto bg-[color:var(--surface-panel-strong)] text-[color:var(--text-strong)] border-[color:var(--border-soft)]">
+      <div className="flex items-center justify-between p-3 border-b border-[color:var(--border-soft)]">
         <h4 className="text-sm font-medium truncate mr-2">{layerName}</h4>
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="text-xs text-gray-300 hover:text-white shrink-0 w-6 h-6 flex items-center justify-center rounded hover:bg-white/10 transition-colors"
+          className="text-xs shrink-0 w-6 h-6 flex items-center justify-center rounded transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--text-strong)] hover:bg-[color:var(--surface-overlay)]"
           title={isCollapsed ? "Expand legend" : "Collapse legend"}
         >
           {isCollapsed ? "+" : "−"}
@@ -211,7 +211,7 @@ export default function MapLegend({ map, layerId, layerName, isVisible }: MapLeg
             {legendItems.map((item, index) => (
               <div key={index} className="flex items-center gap-3">
                 <div
-                  className="w-5 h-4 rounded border border-gray-500 shrink-0"
+                  className="w-5 h-4 rounded border shrink-0 border-[color:var(--border-soft)]"
                   style={{ backgroundColor: item.color }}
                 />
                 <span className="text-xs leading-tight">{item.label || item.value}</span>

@@ -29,7 +29,7 @@ export const mainAreas: MainArea[] = [
     ),
     description:
       "Explore climate data, vulnerability assessments, and environmental indicators for wine regions across Europe.",
-    icon: <ThermometerSun className="w-12 h-12 text-[#E91E63]" aria-hidden="true" />,
+    icon: <ThermometerSun className="w-12 h-12 text-[color:var(--accent-strong)]" aria-hidden="true" />,
     mainHref: "/#climate-environment",
     categories: [
       { label: "Climate Indicators →", href: "/climate-environment/climate", description: "Learn more about bioclimatic indicators, their use in the field of viticulture and investigate their historical and future spatial distribution over Europe"},
@@ -48,7 +48,7 @@ export const mainAreas: MainArea[] = [
     ),
     description:
       "Discover ecosystem-based adaptation strategies and pilot implementation experiences for viticulture.",
-    icon: <Leaf className="w-12 h-12 text-[#E91E63]" aria-hidden="true" />,
+    icon: <Leaf className="w-12 h-12 text-[color:var(--accent-strong)]" aria-hidden="true" />,
     mainHref: "/#adaptation",
     categoriesClassName: "space-y-1",
     categories: [
@@ -68,7 +68,7 @@ export const mainAreas: MainArea[] = [
     ),
     description:
       "Navigate legal frameworks, regulations, and geographic indications for wine production in Europe.",
-    icon: <Scale className="w-12 h-12 text-[#E91E63]" aria-hidden="true" />,
+    icon: <Scale className="w-12 h-12 text-[color:var(--accent-strong)]" aria-hidden="true" />,
     mainHref: "/#governance",
     categoriesClassName: "space-y-1",
     categories: [
@@ -83,7 +83,7 @@ export const mainAreas: MainArea[] = [
     showOnLanding: false,
     title: "About Winemap",
     description: "Learn about the data and the research projects behind Winemap.",
-    icon: <BookOpen className="w-12 h-12 text-[#E91E63]" aria-hidden="true" />,
+    icon: <BookOpen className="w-12 h-12 text-[color:var(--accent-strong)]" aria-hidden="true" />,
     mainHref: "/about",
     categories: [
       {

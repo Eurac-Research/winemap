@@ -33,7 +33,7 @@ const courses: Course[] = [
 
 export default function CoursesPage() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto px-6 py-32 max-w-6xl">
         {/* Page Content */}
         <article className="prose prose-invert prose-lg max-w-none mb-16">
@@ -48,10 +48,10 @@ export default function CoursesPage() {
               href={course.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden rounded-lg border border-white/10 bg-gradient-to-br from-[#2a2a2a] to-[#1f1f1f] transition-all duration-300 hover:border-white/30"
+              className="group relative overflow-hidden rounded-lg border transition-all duration-300 border-[color:var(--border-soft)] bg-gradient-to-br from-[color:var(--surface-panel-muted)] to-[color:var(--surface-overlay)] hover:border-[color:var(--border-strong)]"
             >
               {/* Course Thumbnail */}
-              <div className="relative aspect-video bg-black">
+              <div className="relative aspect-video bg-[color:var(--surface-panel-strong)]">
                 {course.thumbnail ? (
                   <img
                     src={course.thumbnail}
@@ -62,12 +62,12 @@ export default function CoursesPage() {
                     <NotebookPen className="h-10 w-10" />
                   </div>
                 )}
-                <div className="absolute inset-0 bg-black/20 transition-all duration-300 group-hover:bg-black/35" />
+                <div className="absolute inset-0 bg-[color:var(--surface-inverse)]/10 transition-all duration-300 group-hover:bg-[color:var(--surface-inverse)]/20" />
               </div>
 
               {/* Caption */}
               <div className="p-4">
-                <h3 className="text-sm font-semibold text-white">{course.title}</h3>
+                <h3 className="text-sm font-semibold text-[color:var(--text-strong)]">{course.title}</h3>
               </div>
             </Link>
           ))}

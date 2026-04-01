@@ -51,7 +51,7 @@ export default function LiteraturePage() {
 
     return parts.map((part, index) =>
       regex.test(part) ? (
-        <mark key={index} className="bg-[#E91E63]/90 text-white px-1 rounded">
+        <mark key={index} className="px-1 rounded bg-[color:var(--accent-strong)] text-[color:var(--text-inverse)]">
           {part}
         </mark>
       ) : (
@@ -184,13 +184,13 @@ export default function LiteraturePage() {
   }, [publications, searchTerm, sortBy, sortOrder, categoryFilter])
 
   return (
-    <div className="min-h-screen bg-black pt-24 transition-colors duration-300">
+    <div className="min-h-screen bg-background pt-24 transition-colors duration-300">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <BookOpen className="w-8 h-8 text-white" aria-hidden="true" />
-            <h1 className="text-4xl font-bold text-white">Scientific Publications</h1>
+            <BookOpen className="w-8 h-8 text-[color:var(--text-strong)]" aria-hidden="true" />
+            <h1 className="text-4xl font-bold text-[color:var(--text-strong)]">Scientific Publications</h1>
           </div>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto">
             Explore our collection of peer-reviewed research papers and academic publications
@@ -205,45 +205,45 @@ export default function LiteraturePage() {
               placeholder="Search publications, authors, journals or year ..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-10 h-12 bg-white/5 border-white/20 text-white placeholder:text-gray-500 hover:bg-white/10 focus:bg-white/10 transition-colors"
+              className="pl-10 pr-10 h-12 transition-colors bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--text-strong)] placeholder:text-[color:var(--text-muted)] hover:bg-[color:var(--surface-panel-muted)] focus:bg-[color:var(--surface-panel-muted)]"
               aria-label="Search publications"
             />
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm("")}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-white transition-colors"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--text-strong)]"
                 aria-label="Clear search"
               >
                 <X className="w-4 h-4" aria-hidden="true" />
               </button>
             )}
           </div>
-          <div className="flex gap-2 text-white">
+          <div className="flex gap-2 text-[color:var(--text-strong)]">
             <Select value={categoryFilter} onValueChange={(value: string) => setCategoryFilter(value)}>
-              <SelectTrigger className="w-48 h-12 bg-white/5 border-white/20 text-white hover:bg-white/10" aria-label="Filter by category">
+              <SelectTrigger className="w-48 h-12 bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface-panel-muted)]" aria-label="Filter by category">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="bg-black border-white/20">
-                <SelectItem value="all" className="text-white">All Categories</SelectItem>
+              <SelectContent className="bg-[color:var(--surface-panel-strong)] border-[color:var(--border-soft)]">
+                <SelectItem value="all" className="text-[color:var(--text-strong)]">All Categories</SelectItem>
                 {uniqueCategories.map((category) => (
-                  <SelectItem key={category} value={category} className="text-white">
+                  <SelectItem key={category} value={category} className="text-[color:var(--text-strong)]">
                     {category}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
             <Select value={sortBy} onValueChange={(value: "year" | "author") => setSortBy(value)}>
-              <SelectTrigger className="w-32 h-12 bg-white/5 border-white/20 text-white hover:bg-white/10" aria-label="Sort by">
+              <SelectTrigger className="w-32 h-12 bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface-panel-muted)]" aria-label="Sort by">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="bg-black border-white/20">
-                <SelectItem value="year" className="text-white">
+              <SelectContent className="bg-[color:var(--surface-panel-strong)] border-[color:var(--border-soft)]">
+                <SelectItem value="year" className="text-[color:var(--text-strong)]">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" aria-hidden="true" />
                     Year
                   </div>
                 </SelectItem>
-                <SelectItem value="author" className="text-white">
+                <SelectItem value="author" className="text-[color:var(--text-strong)]">
                   <div className="flex items-center gap-2">
                     <User className="w-4 h-4" aria-hidden="true" />
                     Author
@@ -254,7 +254,7 @@ export default function LiteraturePage() {
             <Button
               variant="outline"
               onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
-              className="h-12 px-3 bg-white/5 border-white/20 text-white hover:bg-white/10 hover:text-white"
+              className="h-12 px-3 bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface-panel-muted)] hover:text-[color:var(--text-strong)]"
               aria-label={`Sort ${sortOrder === "asc" ? "descending" : "ascending"}`}
             >
               {sortOrder === "desc" ? "↓" : "↑"}
@@ -280,12 +280,12 @@ export default function LiteraturePage() {
             return (
               <Card
                 key={publication.id}
-                className="hover:shadow-lg hover:border-white/30 transition-all duration-200 bg-white/5 border-white/10 backdrop-blur-sm"
+                className="hover:shadow-lg transition-all duration-200 backdrop-blur-sm bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] hover:border-[color:var(--border-strong)]"
               >
                 <CardHeader>
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                      <CardTitle className="text-xl mb-2 leading-tight text-white">
+                      <CardTitle className="text-xl mb-2 leading-tight text-[color:var(--text-strong)]">
                         {highlightText(publication.title, searchTerm)}
                       </CardTitle>
                       <div className="flex flex-wrap items-center gap-2 text-sm text-gray-400 mb-3">
@@ -301,7 +301,7 @@ export default function LiteraturePage() {
                           {publication.authors.length > AUTHOR_LIMIT && !authorsExpanded && (
                             <button
                               onClick={() => toggleAuthors(publication.id)}
-                              className="ml-1 text-[#E91E63] hover:text-[#E8958F] hover:underline inline-flex items-center"
+                              className="ml-1 text-[color:var(--accent-strong)] hover:underline inline-flex items-center"
                               aria-label={`Show ${publication.authors.length - AUTHOR_LIMIT} more authors`}
                             >
                               ... +{publication.authors.length - AUTHOR_LIMIT} more
@@ -311,7 +311,7 @@ export default function LiteraturePage() {
                           {authorsExpanded && publication.authors.length > AUTHOR_LIMIT && (
                             <button
                               onClick={() => toggleAuthors(publication.id)}
-                              className="ml-1 text-[#E91E63] hover:text-[#E8958F] hover:underline inline-flex items-center"
+                              className="ml-1 text-[color:var(--accent-strong)] hover:underline inline-flex items-center"
                               aria-label="Show fewer authors"
                             >
                               <ChevronUp className="w-3 h-3 ml-1" aria-hidden="true" />
@@ -332,11 +332,11 @@ export default function LiteraturePage() {
                       <div className="flex items-center gap-3 mb-3 flex-wrap">
                         <div className="flex items-center gap-1.5">
                           <span className="text-xs font-semibold text-gray-500">Category:</span>
-                          <span className="text-xs font-medium text-gray-300 px-2 py-0.5 bg-white/5 rounded">
+                          <span className="text-xs font-medium px-2 py-0.5 rounded text-[color:var(--text-base)] bg-[color:var(--surface-panel-muted)]">
                             {publication.category}
                           </span>
                         </div>
-                        <Button variant="outline" size="sm" asChild className="h-6 px-2 text-xs bg-white/10 border-white/30 hover:bg-white/20 hover:border-white/40 text-white hover:text-white">
+                        <Button variant="outline" size="sm" asChild className="h-6 px-2 text-xs bg-[color:var(--surface-panel-muted)] border-[color:var(--border-strong)] hover:bg-[color:var(--surface-overlay)] hover:border-[color:var(--border)] text-[color:var(--text-strong)] hover:text-[color:var(--text-strong)]">
                           <a
                             href={`https://doi.org/${publication.doi}`}
                             target="_blank"
@@ -356,7 +356,7 @@ export default function LiteraturePage() {
                               <button
                                 key={index}
                                 onClick={() => setSearchTerm(searchTerm === keyword ? "" : keyword)}
-                                className="text-xs font-medium px-2.5 py-1 rounded-full bg-[#E91E63]/10 text-[#E91E63] border border-[#E91E63]/40 hover:bg-[#E91E63]/20 hover:border-[#E91E63]/60 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#E91E63] focus:ring-offset-1 focus:ring-offset-black"
+                                className="text-xs font-medium px-2.5 py-1 rounded-full transition-all cursor-pointer focus:outline-none focus:ring-2 bg-[color:var(--accent-soft)] text-[color:var(--accent-strong)] border border-[color:var(--accent-strong)] hover:brightness-105 focus:ring-[color:var(--accent-strong)] focus:ring-offset-1 focus:ring-offset-[color:var(--background)]"
                                 aria-label={`Search for ${keyword}`}
                               >
                                 {highlightText(keyword, searchTerm)}
@@ -368,12 +368,12 @@ export default function LiteraturePage() {
                     </div>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="outline" size="sm" className="bg-white/10 border-white/30 hover:bg-white/20 hover:border-white/40 text-white hover:text-white" aria-label="Citation options">
+                        <Button variant="outline" size="sm" className="bg-[color:var(--surface-panel-muted)] border-[color:var(--border-strong)] hover:bg-[color:var(--surface-overlay)] hover:border-[color:var(--border)] text-[color:var(--text-strong)] hover:text-[color:var(--text-strong)]" aria-label="Citation options">
                           <Download className="w-4 h-4 mr-2" aria-hidden="true" />
                           Cite
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="bg-black border-white/30 text-white">
+                      <DropdownMenuContent align="end" className="bg-[color:var(--surface-panel-strong)] border-[color:var(--border-strong)] text-[color:var(--text-strong)]">
                         <DropdownMenuItem
                           onClick={() =>
                             downloadCitation(generateRIS(publication), `${publication.doi.replace(/[/.]/g, "_")}.ris`)
@@ -419,7 +419,7 @@ export default function LiteraturePage() {
                         {publication.abstract.length > ABSTRACT_LIMIT && (
                           <button
                             onClick={() => toggleAbstract(publication.id)}
-                            className="ml-2 text-[#E91E63] hover:underline inline-flex items-center"
+                            className="ml-2 text-[color:var(--accent-strong)] hover:underline inline-flex items-center"
                             aria-label={abstractExpanded ? "Show less of abstract" : "Show full abstract"}
                           >
                             {abstractExpanded ? (

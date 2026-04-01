@@ -130,8 +130,8 @@ export default function CartographyPage() {
               onClick={() => setGroupBy("all")}
               className={`rounded-full border px-3 py-1.5 text-sm font-semibold transition-colors ${
                 groupBy === "all"
-                  ? "border-[#E91E63] bg-[#E91E63] text-white"
-                  : "border-white/15 bg-white/5 text-white/70 hover:bg-white/10"
+                  ? "border-[color:var(--accent-strong)] bg-[color:var(--accent-strong)] text-[color:var(--text-inverse)]"
+                  : "border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] text-[color:var(--text-muted)] hover:bg-[color:var(--surface-panel-muted)]"
               }`}
             >
               All
@@ -143,8 +143,8 @@ export default function CartographyPage() {
                 onClick={() => setGroupBy(category)}
                 className={`rounded-full border px-3 py-1.5 text-sm font-semibold transition-colors ${
                   groupBy === category
-                    ? "border-[#E91E63] bg-[#E91E63] text-white"
-                    : "border-white/15 bg-white/5 text-white/70 hover:bg-white/10"
+                    ? "border-[color:var(--accent-strong)] bg-[color:var(--accent-strong)] text-[color:var(--text-inverse)]"
+                    : "border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] text-[color:var(--text-muted)] hover:bg-[color:var(--surface-panel-muted)]"
                 }`}
               >
                 {formatCategoryLabel(category)}
@@ -170,13 +170,13 @@ export default function CartographyPage() {
                     type="button"
                     onClick={() => toggleLayer(layer.id)}
                     className={`relative mt-0.5 h-5 w-10 flex-shrink-0 rounded-full transition-colors ${
-                      layer.enabled ? "bg-[#E91E63]" : "bg-white/20"
+                      layer.enabled ? "bg-[color:var(--accent-strong)]" : "bg-[color:var(--border-strong)]"
                     }`}
                     aria-label={`Toggle ${layer.name}`}
                     aria-pressed={layer.enabled}
                   >
                     <span
-                      className={`absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white transition-transform ${
+                      className={`absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-[color:var(--surface)] transition-transform ${
                         layer.enabled ? "translate-x-[1.125rem]" : "translate-x-0"
                       }`}
                     />
@@ -195,7 +195,7 @@ export default function CartographyPage() {
                       <button
                         type="button"
                         onClick={() => setSelectedInfo(layer)}
-                        className="text-white/50 transition-colors hover:text-white"
+                        className="transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--text-strong)]"
                         aria-label={`More info about ${layer.name}`}
                       >
                         <HelpCircle className="h-4 w-4" />
@@ -252,7 +252,7 @@ export default function CartographyPage() {
       {selectedInfo && (
         <>
           <div
-            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-40 backdrop-blur-sm bg-[color:var(--surface-inverse)]/20"
             onClick={() => setSelectedInfo(null)}
             aria-hidden="true"
           />
@@ -304,14 +304,14 @@ export default function CartographyPage() {
                     toggleLayer(selectedInfo.id);
                     setSelectedInfo(null);
                   }}
-                  className="rounded-full bg-[#E91E63] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#ff4081]"
+                  className="rounded-full px-4 py-2 text-sm font-semibold transition-colors bg-[color:var(--accent-strong)] text-[color:var(--text-inverse)] hover:brightness-110"
                 >
                   {selectedInfo.enabled ? "Hide layer" : "Show layer"}
                 </button>
                 <button
                   type="button"
                   onClick={() => setSelectedInfo(null)}
-                  className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+                  className="rounded-full border px-4 py-2 text-sm font-semibold transition-colors border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface-panel-muted)]"
                 >
                   Close
                 </button>

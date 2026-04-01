@@ -68,7 +68,7 @@ export function ResizableMapLayout({ sidebar, map, hasSidebar }: ResizableMapLay
         collapsible={false}
         className="relative overflow-hidden"
       >
-        <div className="h-full overflow-auto bg-black/80 backdrop-blur-md">
+        <div className="h-full overflow-auto backdrop-blur-md bg-[color:var(--surface-panel-strong)]">
           {sidebar}
         </div>
       </ResizablePanel>
@@ -79,7 +79,7 @@ export function ResizableMapLayout({ sidebar, map, hasSidebar }: ResizableMapLay
         className={`${isMobile
           ? "w-full h-3 flex-row cursor-row-resize"
           : "w-3 h-full flex-col cursor-col-resize"
-          } bg-white/10 hover:bg-[#E91E63] transition-colors relative group`}
+          } bg-[color:var(--surface-overlay)] hover:bg-[color:var(--accent-strong)] transition-colors relative group`}
       />
 
       {/* Map Panel */}

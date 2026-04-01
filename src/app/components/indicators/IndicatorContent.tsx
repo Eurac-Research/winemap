@@ -62,14 +62,14 @@ export default function IndicatorContent({ blocks = [] }: IndicatorContentProps)
         switch (block.type) {
           case "text":
             return (
-              <p key={key} className="mt-4 text-white/80">
+              <p key={key} className="mt-4 text-[color:var(--text-base)]">
                 {block.text}
               </p>
             );
 
           case "list":
             return (
-              <ul key={key} className="mt-4 space-y-3 text-white/80">
+              <ul key={key} className="mt-4 space-y-3 text-[color:var(--text-base)]">
                 {block.items.map(item => (
                   <li key={item}>{item}</li>
                 ))}
@@ -78,7 +78,7 @@ export default function IndicatorContent({ blocks = [] }: IndicatorContentProps)
 
           case "video":
             return (
-              <p key={key} className="mt-4 text-white/80">
+              <p key={key} className="mt-4 text-[color:var(--text-base)]">
                 {block.label} {block.url}
               </p>
             );
@@ -120,7 +120,7 @@ export default function IndicatorContent({ blocks = [] }: IndicatorContentProps)
                   />
                 </div>
                 {block.caption ? (
-                  <figcaption className="mt-3 text-sm text-center text-white/70">
+                  <figcaption className="mt-3 text-sm text-center text-[color:var(--text-muted)]">
                     {block.caption}
                   </figcaption>
                 ) : null}

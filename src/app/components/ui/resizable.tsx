@@ -64,7 +64,7 @@ const ResizableHandle = ({
       {withHandle && (
         <div
           className={cn(
-            "pointer-events-none z-10 flex items-center justify-center border border-white/30 bg-black/70 shadow-sm",
+            "pointer-events-none z-10 flex items-center justify-center border shadow-sm border-[color:var(--border-strong)] bg-[color:var(--surface-panel-strong)]",
             direction === "horizontal"
               ? "h-6 w-4 rounded-sm"
               : "h-5 w-20 rounded-full"
@@ -72,7 +72,7 @@ const ResizableHandle = ({
         >
           <GripVertical
             className={cn(
-              "text-white/80",
+              "text-[color:var(--text-muted)]",
               direction === "horizontal" ? "h-3 w-3" : "h-3 w-3 rotate-90"
             )}
           />

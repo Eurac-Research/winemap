@@ -44,7 +44,7 @@
     --border-soft: rgb(102 118 138 / 0.18);
     --border-strong: rgb(102 118 138 / 0.3);
     --accent-soft: rgb(207 47 88 / 0.12);
-    --accent-strong: rgb(207 47 88 / 0.82);
+    --accent-strong: rgba(151, 4, 41, 0.9);
     --shadow-soft: 0 16px 40px rgb(71 85 105 / 0.14);
     --shadow-strong: 0 24px 48px rgb(15 23 42 / 0.16);
 

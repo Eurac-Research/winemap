@@ -55,7 +55,7 @@ export default function PilotExperiencesPage() {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto px-6 py-32 max-w-6xl">
         {/* Page Content */}
         <article className="prose prose-invert prose-lg max-w-none mb-16">
@@ -78,10 +78,10 @@ export default function PilotExperiencesPage() {
             <div
               key={video.id}
               onClick={() => setSelectedVideo(video)}
-              className="group relative bg-gradient-to-br from-[#2a2a2a] to-[#1f1f1f] border border-white/10 rounded-lg overflow-hidden hover:border-white/30 transition-all duration-300 cursor-pointer"
+              className="group relative rounded-lg overflow-hidden transition-all duration-300 cursor-pointer border border-[color:var(--border-soft)] bg-gradient-to-br from-[color:var(--surface-panel-muted)] to-[color:var(--surface-overlay)] hover:border-[color:var(--border-strong)]"
             >
               {/* Video Thumbnail */}
-              <div className="relative aspect-video bg-black flex items-center justify-center">
+              <div className="relative aspect-video bg-[color:var(--surface-panel-strong)] flex items-center justify-center">
                 <img
                   src={getThumbnailUrl(video.youtubeId)}
                   alt={video.title}
@@ -94,7 +94,7 @@ export default function PilotExperiencesPage() {
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <svg
-                    className="w-16 h-16 text-white/70 group-hover:text-white transition-colors"
+                    className="w-16 h-16 text-[color:var(--text-muted)] group-hover:text-[color:var(--text-strong)] transition-colors"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -102,14 +102,14 @@ export default function PilotExperiencesPage() {
                   </svg>
                 </div>
                 {/* Overlay on hover */}
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/35 transition-all duration-300" />
+                <div className="absolute inset-0 bg-[color:var(--surface-inverse)]/10 group-hover:bg-[color:var(--surface-inverse)]/20 transition-all duration-300" />
               </div>
 
               {/* Caption */}
               <div className="p-4">
                 {/* <div className="text-xs text-white/40 mb-1">Box 2.{index + 1}</div> */}
-                <h3 className="font-semibold text-white mb-1 text-sm">{video.caption}</h3>
-                <p className="text-xs text-white/60">{video.location}</p>
+                <h3 className="font-semibold mb-1 text-sm text-[color:var(--text-strong)]">{video.caption}</h3>
+                <p className="text-xs text-[color:var(--text-muted)]">{video.location}</p>
               </div>
             </div>
           ))}
@@ -119,23 +119,23 @@ export default function PilotExperiencesPage() {
       {/* Video Modal */}
       {selectedVideo && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm p-4 bg-[color:var(--surface-inverse)]/30"
           onClick={() => setSelectedVideo(null)}
         >
           <div
-            className="relative w-full max-w-5xl bg-zinc-900 rounded-lg overflow-hidden"
+            className="relative w-full max-w-5xl rounded-lg overflow-hidden bg-[color:var(--surface-panel-strong)]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
               onClick={() => setSelectedVideo(null)}
-              className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/70 rounded-full transition-colors"
+              className="absolute top-4 right-4 z-10 p-2 rounded-full transition-colors bg-[color:var(--surface-inverse)]/25 hover:bg-[color:var(--surface-inverse)]/40"
             >
-              <X className="w-6 h-6 text-white" />
+              <X className="w-6 h-6 text-[color:var(--text-strong)]" />
             </button>
 
             {/* Video Container */}
-            <div className="relative aspect-video bg-black">
+            <div className="relative aspect-video bg-[color:var(--surface-panel-strong)]">
               <iframe
                 src={getEmbedUrl(selectedVideo.youtubeId)}
                 title={selectedVideo.title}
@@ -146,9 +146,9 @@ export default function PilotExperiencesPage() {
             </div>
 
             {/* Video Info */}
-            <div className="p-6 border-t border-white/10">
-              <h3 className="text-xl font-semibold text-white mb-2">{selectedVideo.caption}</h3>
-              <p className="text-white/60">{selectedVideo.location}</p>
+            <div className="p-6 border-t border-[color:var(--border-soft)]">
+              <h3 className="text-xl font-semibold mb-2 text-[color:var(--text-strong)]">{selectedVideo.caption}</h3>
+              <p className="text-[color:var(--text-muted)]">{selectedVideo.location}</p>
             </div>
           </div>
         </div>
