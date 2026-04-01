@@ -6,8 +6,8 @@ import styles from "@/styles/Home.module.css";
 import { PdoFilterSelect, type FilterOption } from "./PdoFilterSelect";
 import { HelpCircle } from "lucide-react";
 
-export interface FilterFieldConfig {
-  key: string;
+export interface FilterFieldConfig<TKey extends string = string> {
+  key: TKey;
   label: string;
   placeholder: string;
   options: FilterOption[];
@@ -15,19 +15,19 @@ export interface FilterFieldConfig {
   onChange: (value: string | undefined) => void;
 }
 
-interface PdoFilterPanelProps {
+interface PdoFilterPanelProps<TKey extends string> {
   eyebrow: string;
   heading: string;
   helpContent?: ReactNode;
-  filterFields: FilterFieldConfig[];
-  filters: Record<string, string | undefined>;
+  filterFields: FilterFieldConfig<TKey>[];
+  filters: Partial<Record<TKey, string | undefined>>;
   isLoadingData: boolean;
   filtersDisabled: boolean;
   loadError: string | null;
   onReset: () => void;
 }
 
-export function PdoFilterPanel({
+export function PdoFilterPanel<TKey extends string>({
   eyebrow,
   heading,
   helpContent,
@@ -37,7 +37,7 @@ export function PdoFilterPanel({
   filtersDisabled,
   loadError,
   onReset,
-}: PdoFilterPanelProps) {
+}: PdoFilterPanelProps<TKey>) {
   return (
     <div id="map-filter-content" className={styles.filterPanel}>
       <div className={styles.filterHeader}>

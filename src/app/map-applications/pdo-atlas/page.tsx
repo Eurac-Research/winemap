@@ -337,7 +337,7 @@ export default function PdoExplorerPage() {
     [clearSelectionInPlace, openPdoDetail, showPdoIdsOnMap],
   );
 
-  const filterFields = useMemo<FilterFieldConfig[]>(
+  const filterFields = useMemo<FilterFieldConfig<FilterKey>[]>(
     () => [
       {
         key: "pdoName",
