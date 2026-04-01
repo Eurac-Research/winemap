@@ -34,7 +34,7 @@ export const mapApplications: MapApplication[] = [
     title: "Vulnerability Explorer",
     description:
       "How vulnerable are European PDO regions to the effects of climate change? Get detailed, region-specific information in this interactive map.",
-    href: "/map-applications/vulnerablity-explorer",
+    href: "/map-applications/vulnerability-explorer",
     icon: <MapIcon className="w-5 h-5 text-white" aria-hidden="true" />,
   },
   {

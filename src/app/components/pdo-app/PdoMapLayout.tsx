@@ -57,7 +57,7 @@ export function PdoMapLayout({
   }, [notifyMapResize]);
 
   return (
-    <div className="fixed inset-0 z-10 pt-[60px]">
+    <div className="fixed inset-0 z-10 pt-[45px]">
       <ResizablePanelGroup
         direction={isMobile ? "vertical" : "horizontal"}
         className="h-full w-full"
