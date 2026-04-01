@@ -30,10 +30,10 @@ export default function MainAreaCard({
   return (
     <div
       id={id}
-      className={`group relative ${styles.interactiveBox}`}
+      className={`relative ${styles.interactiveBox}`}
     >
       <div className="p-8 h-full flex flex-col">
-        <Link href={mainHref} className="flex flex-col items-center text-center group/main">
+        <Link href={mainHref} className="flex flex-col items-center text-center">
           <div
             className="w-24 h-24 rounded-2xl flex items-center justify-center mb-4 shadow-sm"
           >
@@ -54,9 +54,9 @@ export default function MainAreaCard({
               key={category.label}
               href={category.href}
               title={category.description}
-              className="block px-3 py-2 rounded-lg transition-colors group/link hover:bg-[color:var(--accent-soft)]"
+              className="group block px-3 py-2 rounded-lg transition-colors group/link hover:bg-[color:var(--accent-soft)]"
             >
-              <h3 className="font-semibold text-sm transition-colors text-[color:var(--text-base)] hover:font-bold">
+              <h3 className="font-semibold text-sm transition-colors text-[color:var(--text-base)] group-hover:font-bold">
                 {category.label}
               </h3>
             </Link>
