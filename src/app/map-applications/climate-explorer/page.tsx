@@ -387,15 +387,38 @@ export default function ClimateExplorerPage() {
           id="climate-ramp-select"
           value={ramp}
           onChange={(event) => setRamp(event.target.value as RampKey)}
-          className="mt-2 w-full rounded-2xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white outline-none transition focus:border-[#E91E63]"
+          className="mt-2 w-full rounded-2xl border px-4 py-3 text-sm outline-none transition focus-visible:border-[color:var(--accent-strong)] focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)]"
+          style={{
+            borderColor: "var(--border-strong)",
+            background: "var(--surface-overlay)",
+            color: "var(--text-strong)",
+          }}
         >
-          <option value="viridis" className="text-black">
+          <option
+            value="viridis"
+            style={{
+              background: "var(--surface)",
+              color: "var(--text-strong)",
+            }}
+          >
             Viridis
           </option>
-          <option value="inferno" className="text-black">
+          <option
+            value="inferno"
+            style={{
+              background: "var(--surface)",
+              color: "var(--text-strong)",
+            }}
+          >
             Inferno
           </option>
-          <option value="redblue" className="text-black">
+          <option
+            value="redblue"
+            style={{
+              background: "var(--surface)",
+              color: "var(--text-strong)",
+            }}
+          >
             Red-Blue
           </option>
         </select>
@@ -509,10 +532,13 @@ export default function ClimateExplorerPage() {
 
       {hoverInfo && (
         <div
-          className="pointer-events-none absolute z-10 -translate-y-full rounded-lg border border-white/15 bg-black/80 px-3 py-2 text-xs text-white shadow-lg backdrop-blur"
+          className="pointer-events-none absolute z-10 -translate-y-full rounded-lg border px-3 py-2 text-xs shadow-lg backdrop-blur"
           style={{
             left: hoverInfo.x + 12,
             top: hoverInfo.y - 12,
+            borderColor: "var(--border-soft)",
+            background: "var(--surface-panel-strong)",
+            color: "var(--text-strong)",
           }}
         >
           <div className="font-medium">

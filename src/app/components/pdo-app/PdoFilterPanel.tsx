@@ -53,11 +53,10 @@ export function PdoFilterPanel<TKey extends string>({
                   container: {
                     maxWidth: 320,
                     padding: 0,
-                    border: "1px solid rgba(255, 255, 255, 0.14)",
+                    border: "1px solid var(--border-soft)",
                     borderRadius: 14,
-                    background: "rgba(10, 10, 10, 0.96)",
-                    boxShadow:
-                      "0 16px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.04)",
+                    background: "var(--surface-panel-strong)",
+                    boxShadow: "var(--shadow-soft), inset 0 1px 0 var(--border-soft)",
                     backdropFilter: "blur(14px)",
                   },
                 }}
@@ -99,7 +98,11 @@ export function PdoFilterPanel<TKey extends string>({
         ))}
       </div>
 
-      {loadError && <p className="mt-4 text-sm text-white/70">{loadError}</p>}
+      {loadError && (
+        <p className="mt-4 text-sm" style={{ color: "var(--text-muted)" }}>
+          {loadError}
+        </p>
+      )}
     </div>
   );
 }
