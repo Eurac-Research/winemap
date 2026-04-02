@@ -34,11 +34,24 @@ export default function HomePage() {
       /> */}
 
       {/* Sticky Hero Section */}
-      <section className="relative pt-24 z-10">
+      <section className="h-screen relative sm:pt-16 xl:pt-24 z-10">
+
+        {/* Background Image Layer */}
+        <div
+          className="h-full absolute inset-0 z-0"
+          style={{
+            backgroundImage: 'url(/images/landscape.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: 'fixed',
+          }}
+        />
+
         <div className="h-full px-6 md:px-12">
-          <div className="mx-auto flex h-full max-w-9xl items-center justify-center">
-            <div className="max-w-3xl text-center z-50">
-              <h1 className="text-6xl md:text-8xl font-bold mb-6 text-[color:var(--text-strong)]">WINEMAP</h1>
+          <div className="mx-auto flex max-w-9xl justify-center">
+            <div className="max-w-3xl text-center z-50 border bg-background/30">
+              <h1 className="text-6xl md:text-8xl font-bold text-[color:var(--text-strong)]">WINEMAP</h1>
               <p className="text-xl md:text-2xl mb-4 font-light flex items-center justify-center gap-2 text-[color:var(--text-strong)]">by         
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -64,12 +77,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Background + Content Layer */}
+      {/* Content */}
       <div className="relative z-20 w-full">
-        {/* Content Layer */}
         <div className="relative z-20 w-full">
+          
           {/* Main Areas - Vertical Layout */}
-          <section id='main-areas' className="relative z-30 px-4 pt-8 pb-10 max-w-5xl mx-auto backdrop-blur-xl rounded-3xl mt-4">
+          <section id='main-areas' className="relative z-30 px-4 pb-10 max-w-5xl mx-auto rounded-3xl -mt-40">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {mainAreas.filter((area) => area.showOnLanding).map((area) => (
                 <MainAreaCard
