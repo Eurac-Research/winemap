@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Map as MapIcon } from "lucide-react";
 import WinemapDescription from "@/app/components/WinemapDescription";
 import RespondLogo from "@/app/components/ui/RespondLogo";
 import MapApplicationCard from "@/app/components/map-applications/MapApplicationCard";
@@ -30,7 +29,7 @@ export default function HomePage() {
         </div>
 
         <div className="relative z-20 mx-auto flex min-h-[clamp(34rem,72vh,54rem)] max-w-7xl flex-col px-5 pb-32 pt-6 sm:px-8 sm:pb-36 sm:pt-8 lg:px-12 lg:pb-44 lg:pt-10 min-[1700px]:min-h-[clamp(38rem,78vh,62rem)] min-[1700px]:pb-56 min-[1700px]:pt-12">
-          <div className="mt-auto flex justify-center min-[1700px]:mt-15 min-[1700px]:pt-16">
+          <div className="mt-auto flex justify-center min-[1700px]:mt-[3.75rem] min-[1700px]:pt-16">
             <div className="z-50 max-w-3xl rounded-xl shadow-xl bg-background/30 px-4 py-6 text-center sm:px-6 sm:py-8">
               <div>
                 <h1 className="text-6xl font-bold text-[color:var(--text-strong)] md:text-8xl">
