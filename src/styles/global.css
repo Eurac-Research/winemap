@@ -5,7 +5,7 @@
     color-scheme: light;
 
     /* Core app tokens */
-    --background: oklch(99.336% 0.00316 15.246);
+    --background: rgb(255 255 255);
     --foreground: oklch(0.24 0.02 255);
     --surface: oklch(0.99 0.004 95);
     --surface-elevated: oklch(0.965 0.008 95);
@@ -35,7 +35,7 @@
     --page-fg: var(--foreground);
     --surface-panel: rgb(255 255 255 / 0.88);
     --surface-panel-strong: rgb(255 255 255 / 0.96);
-    --surface-panel-muted: rgb(255 255 255 / 0.68);
+    --surface-panel-muted: oklch(97% 0.00011 271.152);
     --surface-inverse: rgb(24 28 36 / 0.9);
     --text-strong: var(--foreground);
     --text-base: rgb(54 63 77 / 0.92);

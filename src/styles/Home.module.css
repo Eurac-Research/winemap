@@ -154,7 +154,6 @@
   background-color: var(--surface-panel-muted);
 
   &:hover {
-    background-color: var(--surface-overlay);
     border-color: var(--accent-strong);
     transform: translateY(-0.375rem);
     box-shadow: var(--shadow-strong);
