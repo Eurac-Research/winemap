@@ -32,10 +32,10 @@ export default function MainAreaCard({
       id={id}
       className={`relative ${styles.interactiveBox}`}
     >
-      <div className="p-8 h-full flex flex-col">
+      <div className="flex h-full flex-col p-8 sm:p-9">
         <Link href={mainHref} className="flex flex-col items-center text-center">
           <div
-            className="w-24 h-24 rounded-2xl flex items-center justify-center mb-4 shadow-sm"
+            className="mb-5 flex h-24 w-24 items-center justify-center rounded-[1.25rem] shadow-sm"
           >
             {icon}
           </div>
@@ -44,7 +44,7 @@ export default function MainAreaCard({
           </h2>
         </Link>
 
-        <div className="py-4 text-center flex-1">
+        <div className="flex-1 py-5 text-center">
           <p className="text-sm leading-relaxed text-[color:var(--text-muted)]">{description}</p>
         </div>
 
