@@ -29,8 +29,8 @@ export default function HomePage() {
           <RespondLogo width={200} />
         </div>
 
-        <div className="relative z-20 mx-auto flex min-h-[clamp(34rem,72vh,54rem)] max-w-7xl flex-col px-5 pb-32 pt-6 sm:px-8 sm:pb-36 sm:pt-8 lg:px-12 lg:pb-44 lg:pt-10">
-          <div className="mt-auto flex justify-center">
+        <div className="relative z-20 mx-auto flex min-h-[clamp(34rem,72vh,54rem)] max-w-7xl flex-col px-5 pb-32 pt-6 sm:px-8 sm:pb-36 sm:pt-8 lg:px-12 lg:pb-44 lg:pt-10 min-[1700px]:min-h-[clamp(38rem,78vh,62rem)] min-[1700px]:pb-56 min-[1700px]:pt-12">
+          <div className="mt-auto flex justify-center min-[1700px]:mt-15 min-[1700px]:pt-16">
             <div className="z-50 max-w-3xl rounded-xl shadow-xl bg-background/30 px-4 py-6 text-center sm:px-6 sm:py-8">
               <div>
                 <h1 className="text-6xl font-bold text-[color:var(--text-strong)] md:text-8xl">
@@ -67,7 +67,7 @@ export default function HomePage() {
           {/* Main Areas - Vertical Layout */}
           <section
             id='main-areas'
-            className="relative z-30 mx-auto -mt-20 max-w-6xl px-4 pb-12 sm:-mt-24 sm:px-6 lg:-mt-28 lg:px-8 lg:pb-16"
+            className="relative z-30 mx-auto -mt-20 max-w-6xl px-4 pb-12 sm:-mt-24 sm:px-6 lg:-mt-28 lg:px-8 lg:pb-16 min-[1700px]:-mt-16"
           >
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {mainAreas.filter((area) => area.showOnLanding).map((area) => (
