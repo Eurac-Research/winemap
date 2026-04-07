@@ -115,7 +115,7 @@ function createClimateMap(config: {
   unit: string;
   defaultRamp: RampKey;
   displayRange: [number, number];
-  classifications: ClassificationBreak[];
+  classifications?: ClassificationBreak[];
 }): IndicatorMapConfig {
   return {
     type: "cog",
@@ -376,6 +376,40 @@ export const Indicators = [
       "Karger, D. N. et al. Climatologies at high resolution for the earth's land surface areas. Sci Data 4, 170122 (2017).",
     ],
     map: createCartographyMap("climatic-waterbalance"),
+  },
+  {
+    id: "mean_temperature",
+    name: "Temperature",
+    category: "climate",
+    apps: ["climate-explorer"],
+    subtitle: "Average annual temperature.",
+    description: [
+      "",
+    ],
+    references: [],
+    map: createClimateMap({
+      assetId: "tmeanann",
+      unit: "deg C",
+      defaultRamp: "redblue",
+      displayRange: [-5, 25],
+    }),
+  },
+  {
+    id: "precipitation_sum",
+    name: "Precipitation",
+    category: "climate",
+    apps: ["climate-explorer"],
+    subtitle: "Annual precipitation sum.",
+    description: [
+      "",
+    ],
+    references: [],
+    map: createClimateMap({
+      assetId: "psum",
+      unit: "mm",
+      defaultRamp: "viridis",
+      displayRange: [0, 3000],
+    }),
   },
   {
     id: "huglin",

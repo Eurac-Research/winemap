@@ -22,6 +22,11 @@ export const RAMPS = {
     [0.5, "#ffffbf"],
     [1, "#d7191c"],
   ],
+  bluered: [
+    [0, "#d7191c"],
+    [0.5, "#ffffbf"],
+    [1, "#2c7bb6"],
+  ],
 } as const satisfies Record<string, readonly RampStop[]>;
 
 export type RampKey = keyof typeof RAMPS;
@@ -30,6 +35,7 @@ export const RAMP_LABELS: Record<RampKey, string> = {
   viridis: "Viridis",
   inferno: "Inferno",
   redblue: "Red-Blue",
+  bluered: "Blue-Red"
 };
 
 type LegendBreak = {
