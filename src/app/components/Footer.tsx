@@ -23,11 +23,6 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link href="/cartography" className="text-sm transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--text-strong)]">
-                  Cartography
-                </Link>
-              </li>
             </ul>
           </div>
 

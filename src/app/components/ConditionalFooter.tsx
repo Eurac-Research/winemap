@@ -8,7 +8,6 @@ const MAP_ROUTE_PREFIXES = [
   "/legal",
   "/adaptation",
   "/climate-environment",
-  "/cartography",
   "/map-applications",
 ]
 

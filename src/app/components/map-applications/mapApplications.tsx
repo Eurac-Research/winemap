@@ -13,7 +13,7 @@ export const mapApplications: MapApplication[] = [
     title: "Environment Browser",
     description:
       "Access all map layers in one unified interface. Toggle layers, organize by scale or category, and explore detailed geospatial information.",
-    href: "/cartography",
+    href: "/map-applications/environment-browser",
     icon: <MapIcon className="w-5 h-5 text-[color:var(--text-strong)]" aria-hidden="true" />,
   },
   {
