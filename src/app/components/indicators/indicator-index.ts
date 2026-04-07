@@ -180,7 +180,7 @@ export const Indicators = [
       "Fick, S.E. and R.J. Hijmans, 2017. WorldClim 2: new 1km spatial resolution climate surfaces for global land areas. International Journal of Climatology, 37(12): 4302-4315",
       "EU, Copernicus Land Monitoring Service. European Environment Agency (EEA) -Dataset: Riparian Zones status 2018 https://land.copernicus.eu/local/riparian-zones/riparian-zones-2018 (2021)",
     ],
-    map: createCartographyMap("pollination"),
+    map: createCartographyMap("relative_pollination_potential"),
   },
   {
     id: "erosion-control",
@@ -211,7 +211,7 @@ export const Indicators = [
       "Fick, S.E. and R.J. Hijmans, 2017. WorldClim 2: new 1km spatial resolution climate surfaces for global land areas. International Journal of Climatology, 37(12): 4302-4315",
       "European Environment Agency, 2016. EU-DEM v1.1. Copernicus Land Monitoring Service. https://sdi.eea.europa.eu/catalogue/srv/api/records/3473589f-0854-4601-919e-2e7dd172ff50",
     ],
-    map: createCartographyMap("erosion-control"),
+    map: createCartographyMap("soil_erosion_prevention"),
   },
   {
     id: "pest-control",
@@ -229,7 +229,7 @@ export const Indicators = [
     references: [
       "Rega, C. et al. (2018). A pan-European model of landscape potential to support natural pest control services. Ecological Indicators, 90: 653-664. doi.org/10.1016/j.ecolind.2018.03.075, https://publications.jrc.ec.europa.eu/repository/handle/JRC111488",
     ],
-    map: createCartographyMap("pest-control"),
+    map: createCartographyMap("pest_control_index_masked"),
   },
   {
     id: "net-primary-production",
@@ -247,7 +247,7 @@ export const Indicators = [
     references: [
       "European Environment Agency, 2023. Medium Resolution Net Primary Production [Dataset]- NPP, raster 196m version 1, Nov. 2023. European Environment Agency. Available at: https://sdi.eea.europa.eu/catalogue/srv/api/records/28d6b823-e2fd-4bf4-a6aa-cb6a359c52da?language=all (Accessed: 01/2025)(eea_r_3035_196_m_modis-npp_p_2000-2022_v01_r00)",
     ],
-    map: createCartographyMap("net-primary-production"),
+    map: createCartographyMap("netprimaryproduction"),
   },
   {
     id: "outdoor-recreation",
@@ -270,7 +270,7 @@ export const Indicators = [
       "European Environment Agency, 2016. EU-DEM v1.1. Copernicus Land Monitoring Service. https://sdi.eea.europa.eu/catalogue/srv/api/records/3473589f-0854-4601-919e-2e7dd172ff50",
       "OpenStreetMap contributors. Country shapefiles [Data files from 01.2020]. Retrieved from https://download.geofabrik.de (2020)",
     ],
-    map: createCartographyMap("outdoor-recreation"),
+    map: createCartographyMap("outdoor_recreation_index"),
   },
   {
     id: "landscape-aesthetics",
@@ -293,7 +293,7 @@ export const Indicators = [
       "European Environment Agency, 2016. EU-DEM v1.1. Copernicus Land Monitoring Service. https://sdi.eea.europa.eu/catalogue/srv/api/records/3473589f-0854-4601-919e-2e7dd172ff50",
       "Schirpke, U., Meisch, C., Marsoner, T. & Tappeiner, U. Revealing spatial and temporal patterns of outdoor recreation in the European Alps and their surroundings. Ecosystem Services 31, 336â€“350 (2018).",
     ],
-    map: createCartographyMap("landscape-aesthetics"),
+    map: createCartographyMap("landscape_aesthetics_index"),
   },
   {
     id: "naturalness-index",
@@ -314,7 +314,7 @@ export const Indicators = [
       "European Environment Agency (EEA)-dataset: High Nature Value (HNV) farmland 2012 (100 m) accounting version, Nov. 2017. European Environment Agency. Available at https://www.eea.europa.eu/en/datahub/datahubitem-view/1bd26e8f-8ea0-45e0-b6bf-9ed2baff5d28?activeAccordion=1070000 (Accessed 11/2024) (eea_r_3035_100_m_hnv-farm-2012-acc_p_2012_v01_r00)",
       "European Environment Agency (EEA)-dataset: Natura 2000 (vector) - version 2017, Mar. 2018. European Environment Agency. Available at https://www.eea.europa.eu/en/datahub/datahubitem-view/6fc8ad2d-195d-40f4-bdec-576e7d1268e4?activeAccordion=1091667. (Accessed 11/2024) (eea_v_3035_100_k_natura2000_p_2022_v01_r00)",
     ],
-    map: createCartographyMap("naturalness-index"),
+    map: createCartographyMap("naturalness_hemeroby"),
   },
   {
     id: "distance-to-nature",
@@ -334,7 +334,7 @@ export const Indicators = [
       "RÃ¼disser, J., Tasser, E., & Tappeiner, U. (2012). Distance to natureâ€”a new biodiversity relevant environmental indicator set at the landscape level. Ecological Indicators, 15(1), 208-216 doi.org/10.1016/j.ecolind.2011.09.027",
       "EU, Copernicus Land Monitoring Service. (2019). European Environment Agency (EEA)-dataset: CORINE land cover-2018, version 2020_20u1. https://land.copernicus.eu/pan-european/corine-land-cover",
     ],
-    map: createCartographyMap("distance-to-nature"),
+    map: createCartographyMap("distancetonature"),
   },
   {
     id: "landuse-diversity",
@@ -354,7 +354,7 @@ export const Indicators = [
       "Comer D., Greene, S. (2015). The development and application of a land use diversity index for Oklahoma City, OK. Applied Geography, 60, 46-57 doi.org/10.1016/j.apgeog.2015.02.015",
       "EU, Copernicus Land Monitoring Service. (2019). European Environment Agency (EEA)-dataset: CORINE land cover-2018, version 2020_20u1. https://land.copernicus.eu/pan-european/corine-land-cover",
     ],
-    map: createCartographyMap("landuse-diversity"),
+    map: createCartographyMap("landuse_diversity_sh"),
   },
   {
     id: "climatic-waterbalance",

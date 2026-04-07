@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
+import { ExternalLink, HelpCircle, Navigation2 } from "lucide-react";
 import {
   cogProtocol,
   locationValues,
@@ -49,6 +51,17 @@ const INITIAL_VIEW_STATE = {
 };
 
 const climateIndicators = getIndicatorsWithMapByApp("climate-explorer");
+
+const categoryToDetailPage: Record<string, string> = {
+  climate: "/climate-environment/climate",
+  "ecosystem-services": "/climate-environment/ecosystem-services",
+  "ecosystem-conditions": "/climate-environment/ecosystem-services",
+};
+
+const getDetailHref = (category: string, indicatorId: string) => {
+  const base = categoryToDetailPage[category] ?? "/climate-environment";
+  return indicatorId ? `${base}#${indicatorId}` : base;
+};
 
 type HoverSample = {
   scenarioId?: string;
@@ -229,6 +242,7 @@ export default function ClimateExplorerPage() {
   const [ramp, setRamp] = useState<RampKey>(
     initialIndicator?.map?.defaultRamp ?? "viridis",
   );
+  const [selectedInfoId, setSelectedInfoId] = useState<string | null>(null);
   const [mapReady, setMapReady] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [hoverInfo, setHoverInfo] = useState<HoverInfo | null>(null);
@@ -238,6 +252,8 @@ export default function ClimateExplorerPage() {
     initialIndicator;
 
   const mapConfig = selectedIndicator?.map;
+  const selectedInfo =
+    climateIndicators.find((indicator) => indicator.id === selectedInfoId) ?? null;
 
   const availableScenarios = mapConfig?.scenarios ?? [];
   const activeScenarioId =
@@ -496,6 +512,14 @@ export default function ClimateExplorerPage() {
         <div className={styles.filterIntro}>
           <div className={styles.filterEyebrowRow}>
             <p className={styles.filterEyebrow}>Climate Explorer</p>
+            <button
+              type="button"
+              className={styles.filterHelpButton}
+              onClick={() => setSelectedInfoId(selectedIndicator.id)}
+              aria-label={`More info about ${selectedIndicator.name}`}
+            >
+              <HelpCircle className="h-4 w-4" />
+            </button>
           </div>
         </div>
       </div>
@@ -533,12 +557,34 @@ export default function ClimateExplorerPage() {
                 className={isActive ? styles.resultActiveItem : styles.resultItem}
                 aria-pressed={isActive}
               >
-                <span className={styles.resultItemTitle}>{indicator.name}</span>
-                {indicator.map?.unit ? (
-                  <span className={styles.resultItemMeta}>
-                    Unit: {indicator.map.unit}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0 flex-1 text-left">
+                    <span className={styles.resultItemTitle}>{indicator.name}</span>
+                    {indicator.map?.unit ? (
+                      <span className={`${styles.resultItemMeta} mt-1 block`}>
+                        Unit: {indicator.map.unit}
+                      </span>
+                    ) : null}
+                  </div>
+                  <span
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setSelectedInfoId(indicator.id);
+                    }}
+                    className="cursor-pointer transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--text-strong)]"
+                    aria-label={`More info about ${indicator.name}`}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        setSelectedInfoId(indicator.id);
+                      }
+                    }}
+                  >
+                    <HelpCircle className="h-4 w-4" />
                   </span>
-                ) : null}
+                </div>
               </button>
             );
           })}
@@ -700,12 +746,84 @@ export default function ClimateExplorerPage() {
   );
 
   return (
-    <PdoMapLayout
-      sidebar={<PdoSidebarShell top={sidebarTop} body={sidebarBody} />}
-      map={mapContent}
-      sidebarDefaultSize={30}
-      mapDefaultSize={70}
-      sidebarMinSize={22}
-    />
+    <>
+      <PdoMapLayout
+        sidebar={<PdoSidebarShell top={sidebarTop} body={sidebarBody} />}
+        map={mapContent}
+        sidebarDefaultSize={30}
+        mapDefaultSize={70}
+        sidebarMinSize={22}
+      />
+
+      {selectedInfo ? (
+        <>
+          <div
+            className="fixed inset-0 z-40 backdrop-blur-sm bg-[color:var(--surface-inverse)]/20"
+            onClick={() => setSelectedInfoId(null)}
+            aria-hidden="true"
+          />
+          <div
+            className={styles.modalDialog}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="indicator-info-title"
+          >
+            <div className={styles.modalSurface}>
+              <div className={styles.detailHeader}>
+                <p className={styles.sidebarSectionEyebrow}>Indicator detail</p>
+                <h3 id="indicator-info-title" className={styles.detailTitle}>
+                  {selectedInfo.name}
+                </h3>
+                <p className={styles.sidebarSectionText}>{selectedInfo.subtitle}</p>
+              </div>
+
+              <dl className={styles.detailGrid}>
+                <div className={styles.detailItem}>
+                  <dt>
+                    <Navigation2 className="h-4 w-4" />
+                    <span>Description</span>
+                  </dt>
+                  <dd>{selectedInfo.description.join(" ")}</dd>
+                </div>
+                <div className={styles.detailItem}>
+                  <dt>
+                    <ExternalLink className="h-4 w-4" />
+                    <span>Documentation</span>
+                  </dt>
+                  <dd>
+                    <Link
+                      href={getDetailHref(selectedInfo.category, selectedInfo.id)}
+                      className={styles.detailLink}
+                    >
+                      View full description
+                    </Link>
+                  </dd>
+                </div>
+              </dl>
+
+              <div className="mt-6 flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedIndicatorId(selectedInfo.id);
+                    setSelectedInfoId(null);
+                  }}
+                  className="rounded-full px-4 py-2 text-sm font-semibold transition-colors bg-[color:var(--accent-strong)] text-[color:var(--text-inverse)] hover:brightness-110"
+                >
+                  Show indicator
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedInfoId(null)}
+                  className="rounded-full border px-4 py-2 text-sm font-semibold transition-colors border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface-panel-muted)]"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : null}
+    </>
   );
 }
