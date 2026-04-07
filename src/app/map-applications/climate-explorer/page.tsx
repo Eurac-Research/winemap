@@ -45,8 +45,8 @@ const SOURCE_ID = "climate-raster-source";
 const LAYER_ID = "climate-raster-layer";
 const LEGEND_RAMP_HEIGHT = 160;
 const INITIAL_VIEW_STATE = {
-  longitude: 10,
-  latitude: 45,
+  longitude: 14,
+  latitude: 46.611715,
   zoom: 4,
 };
 

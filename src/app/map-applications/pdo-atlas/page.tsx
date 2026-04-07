@@ -51,8 +51,8 @@ type SidebarView = "overview" | "list" | "detail";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 const INITIAL_VIEW_STATE = {
-  latitude: 46,
-  longitude: 5,
+  longitude: 14,
+  latitude: 46.611715,
   zoom: 3.6,
   bearing: 0,
   pitch: 0,

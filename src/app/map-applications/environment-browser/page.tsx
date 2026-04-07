@@ -43,8 +43,8 @@ const SOURCE_ID = "cartography-raster-source";
 const LAYER_ID = "cartography-raster-layer";
 const LEGEND_RAMP_HEIGHT = 160;
 const INITIAL_VIEW_STATE = {
-  longitude: 5,
-  latitude: 46,
+  longitude: 14,
+  latitude: 46.611715,
   zoom: 5.2,
 };
 
