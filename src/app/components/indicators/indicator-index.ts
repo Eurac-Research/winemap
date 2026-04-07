@@ -157,7 +157,7 @@ function createClimateMap(config: {
   };
 }
 
-export const Indicators = [
+export const Indicators: Indicator[] = [
   {
     id: "pollination",
     name: "Pollination",
@@ -648,7 +648,7 @@ export const Indicators = [
     methodology: [],
     references: [],
   },
-] satisfies Indicator[];
+];
 
 export const getIndicatorsByCategory = (category: IndicatorCategory) =>
   Indicators.filter((indicator) => indicator.category === category);
