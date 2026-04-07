@@ -20,6 +20,19 @@ import Map, {
 
 import "maplibre-gl/dist/maplibre-gl.css";
 
+import {
+  ColorRampSelect,
+  RAMPS,
+  type RampKey,
+  VerticalLegend,
+} from "@/app/components/colorRamps";
+import {
+  getIndicatorMapLayer,
+  getIndicatorsWithMapByApp,
+  type ClassificationBreak,
+  type IndicatorMapConfig,
+  type IndicatorMapOption,
+} from "@/app/components/indicators/indicator-index";
 import { PdoMapLayout } from "@/app/components/pdo-app/PdoMapLayout";
 import { PdoSidebarShell } from "@/app/components/pdo-app/PdoSidebarShell";
 import styles from "@/styles/Home.module.css";
@@ -34,210 +47,22 @@ const INITIAL_VIEW_STATE = {
   latitude: 45,
   zoom: 4,
 };
-const CLIMATE_DATA_BASE_URL =
-  "https://pub-7fe518f63b9f4e28b80569979cc136fc.r2.dev";
 
-const RAMPS = {
-  viridis: [
-    [0, "#440154"],
-    [0.25, "#3b528b"],
-    [0.5, "#21918c"],
-    [0.75, "#5ec962"],
-    [1, "#fde725"],
-  ],
-  inferno: [
-    [0, "#000004"],
-    [0.25, "#420a68"],
-    [0.5, "#932667"],
-    [0.75, "#dd513a"],
-    [1, "#fdea45"],
-  ],
-  redblue: [
-    [0, "#2c7bb6"],
-    [0.5, "#ffffbf"],
-    [1, "#d7191c"],
-  ],
-} as const;
+const climateIndicators = getIndicatorsWithMapByApp("climate-explorer");
 
-type RampKey = keyof typeof RAMPS;
-type ClimateIndexId = "huglin" | "cni" | "di";
-type ScenarioId = "historical" | "ssp370" | "ssp585";
-type PeriodId = "1981-2010" | "2041-2070" | "2071-2100";
-type ClassificationBreak = {
-  label: string;
-  min?: number;
-  max?: number;
-};
-type ClimateAsset = {
-  url: string;
-};
-type ClimateIndexConfig = {
-  id: ClimateIndexId;
-  label: string;
-  shortLabel: string;
-  unit: string;
-  defaultRamp: RampKey;
-  displayRange: [number, number];
-  classifications: ClassificationBreak[];
-  assets: Record<ScenarioId, Partial<Record<PeriodId, ClimateAsset>>>;
-};
 type HoverSample = {
-  scenarioId: ScenarioId;
-  periodId: PeriodId;
+  scenarioId?: string;
+  periodId?: string;
   label: string;
   value: number | null;
 };
+
 type HoverInfo = {
   x: number;
   y: number;
   currentValue: number | null;
   samples: HoverSample[];
 };
-
-const SCENARIO_OPTIONS: {
-  id: ScenarioId;
-  label: string;
-  shortLabel: string;
-}[] = [
-  { id: "historical", label: "Historical", shortLabel: "Historical" },
-  { id: "ssp370", label: "SSP3-7.0", shortLabel: "SSP3-7.0" },
-  { id: "ssp585", label: "SSP5-8.5", shortLabel: "SSP5-8.5" },
-];
-
-const PERIOD_OPTIONS: PeriodId[] = ["1981-2010", "2041-2070", "2071-2100"];
-
-function buildClimateAssetUrl(
-  indexId: ClimateIndexId,
-  scenarioId: ScenarioId,
-  periodId: PeriodId,
-) {
-  const fileName =
-    scenarioId === "historical"
-      ? `${indexId}_${periodId}.tiff`
-      : `${indexId}_${periodId}_${scenarioId}.tiff`;
-
-  return `${CLIMATE_DATA_BASE_URL}/${fileName}`;
-}
-
-const CLIMATE_INDICES: Record<ClimateIndexId, ClimateIndexConfig> = {
-  huglin: {
-    id: "huglin",
-    label: "Huglin Index",
-    shortLabel: "Huglin",
-    unit: "GDD",
-    defaultRamp: "redblue",
-    displayRange: [0, 3500],
-    classifications: [
-      { label: "Too cool", max: 1200 },
-      { label: "Very cool", min: 1200, max: 1500 },
-      { label: "Cool", min: 1500, max: 1800 },
-      { label: "Temperate", min: 1800, max: 2100 },
-      { label: "Warm temperate", min: 2100, max: 2400 },
-      { label: "Warm", min: 2400, max: 2700 },
-      { label: "Very warm", min: 2700, max: 3000 },
-      { label: "Too hot", min: 3000 },
-    ],
-    assets: {
-      historical: {
-        "1981-2010": {
-          url: buildClimateAssetUrl("huglin", "historical", "1981-2010"),
-        },
-      },
-      ssp370: {
-        "2041-2070": {
-          url: buildClimateAssetUrl("huglin", "ssp370", "2041-2070"),
-        },
-        "2071-2100": {
-          url: buildClimateAssetUrl("huglin", "ssp370", "2071-2100"),
-        },
-      },
-      ssp585: {
-        "2041-2070": {
-          url: buildClimateAssetUrl("huglin", "ssp585", "2041-2070"),
-        },
-        "2071-2100": {
-          url: buildClimateAssetUrl("huglin", "ssp585", "2071-2100"),
-        },
-      },
-    },
-  },
-  cni: {
-    id: "cni",
-    label: "Cool Night Index",
-    shortLabel: "Cool Night",
-    unit: "deg C",
-    defaultRamp: "viridis",
-    displayRange: [-5, 25],
-    classifications: [
-      { label: "Very cool", max: 12 },
-      { label: "Cool", min: 12, max: 14 },
-      { label: "Temperate", min: 14, max: 18 },
-      { label: "Warm", min: 18 },
-    ],
-    assets: {
-      historical: {
-        "1981-2010": {
-          url: buildClimateAssetUrl("cni", "historical", "1981-2010"),
-        },
-      },
-      ssp370: {
-        "2041-2070": {
-          url: buildClimateAssetUrl("cni", "ssp370", "2041-2070"),
-        },
-        "2071-2100": {
-          url: buildClimateAssetUrl("cni", "ssp370", "2071-2100"),
-        },
-      },
-      ssp585: {
-        "2041-2070": {
-          url: buildClimateAssetUrl("cni", "ssp585", "2041-2070"),
-        },
-        "2071-2100": {
-          url: buildClimateAssetUrl("cni", "ssp585", "2071-2100"),
-        },
-      },
-    },
-  },
-  di: {
-    id: "di",
-    label: "Dryness Index",
-    shortLabel: "Dryness",
-    unit: "mm",
-    defaultRamp: "inferno",
-    displayRange: [-150, 200],
-    classifications: [
-      { label: "Very dry", max: -100 },
-      { label: "Moderately dry", min: -100, max: 50 },
-      { label: "Subhumid", min: 50, max: 150 },
-      { label: "Humid", min: 150 },
-    ],
-    assets: {
-      historical: {
-        "1981-2010": {
-          url: buildClimateAssetUrl("di", "historical", "1981-2010"),
-        },
-      },
-      ssp370: {
-        "2041-2070": {
-          url: buildClimateAssetUrl("di", "ssp370", "2041-2070"),
-        },
-        "2071-2100": {
-          url: buildClimateAssetUrl("di", "ssp370", "2071-2100"),
-        },
-      },
-      ssp585: {
-        "2041-2070": {
-          url: buildClimateAssetUrl("di", "ssp585", "2041-2070"),
-        },
-        "2071-2100": {
-          url: buildClimateAssetUrl("di", "ssp585", "2071-2100"),
-        },
-      },
-    },
-  },
-};
-
-const CLIMATE_INDEX_ORDER: ClimateIndexId[] = ["huglin", "cni", "di"];
 
 let cogProtocolRegistered = false;
 if (!cogProtocolRegistered) {
@@ -254,9 +79,9 @@ function formatLegendValue(value: number) {
   return value.toFixed(1);
 }
 
-function formatSampleValue(value: number | null, unit: string) {
+function formatSampleValue(value: number | null, unit?: string) {
   if (value == null || !Number.isFinite(value)) return "No data";
-  return `${formatLegendValue(value)} ${unit}`;
+  return unit ? `${formatLegendValue(value)} ${unit}` : formatLegendValue(value);
 }
 
 function matchesClassBreak(value: number, classBreak: ClassificationBreak) {
@@ -347,24 +172,39 @@ function removeRasterLayer(map: maplibregl.Map) {
   }
 }
 
-function getScenarioLabel(scenarioId: ScenarioId) {
-  return (
-    SCENARIO_OPTIONS.find((option) => option.id === scenarioId)?.label ??
-    scenarioId
-  );
-}
-
-function getAvailablePeriods(
-  indexConfig: ClimateIndexConfig,
-  scenarioId: ScenarioId,
+function getOptionLabel(
+  options: IndicatorMapOption[] | undefined,
+  optionId: string | undefined,
 ) {
-  return PERIOD_OPTIONS.filter(
-    (periodId) => indexConfig.assets[scenarioId][periodId] != null,
+  if (!optionId) return "";
+  return options?.find((option) => option.id === optionId)?.label ?? optionId;
+}
+
+function getAvailablePeriods(mapConfig: IndicatorMapConfig, scenarioId?: string) {
+  const periods = mapConfig.periods ?? [];
+
+  if (periods.length === 0) return [];
+  if (!scenarioId) return periods;
+
+  return periods.filter((period) =>
+    mapConfig.layers.some(
+      (layer) =>
+        layer.periodId === period.id &&
+        (layer.scenarioId == null || layer.scenarioId === scenarioId),
+    ),
   );
 }
 
-function buildHoverSampleLabel(scenarioId: ScenarioId, periodId: PeriodId) {
-  return `${getScenarioLabel(scenarioId)} ${periodId}`;
+function buildHoverSampleLabel(
+  mapConfig: IndicatorMapConfig,
+  scenarioId?: string,
+  periodId?: string,
+) {
+  const scenarioLabel = getOptionLabel(mapConfig.scenarios, scenarioId);
+  const periodLabel = getOptionLabel(mapConfig.periods, periodId);
+
+  if (scenarioLabel && periodLabel) return `${scenarioLabel} ${periodLabel}`;
+  return scenarioLabel || periodLabel || "Active layer";
 }
 
 export default function ClimateExplorerPage() {
@@ -376,58 +216,80 @@ export default function ClimateExplorerPage() {
     lngLat: LngLat;
   } | null>(null);
 
-  const [selectedIndexId, setSelectedIndexId] =
-    useState<ClimateIndexId>("huglin");
-  const [selectedScenarioId, setSelectedScenarioId] =
-    useState<ScenarioId>("historical");
-  const [selectedPeriodId, setSelectedPeriodId] =
-    useState<PeriodId>("1981-2010");
+  const initialIndicator = climateIndicators[0] ?? null;
+  const [selectedIndicatorId, setSelectedIndicatorId] = useState(
+    initialIndicator?.id ?? "",
+  );
+  const [selectedScenarioId, setSelectedScenarioId] = useState(
+    initialIndicator?.map?.defaultScenarioId ?? "",
+  );
+  const [selectedPeriodId, setSelectedPeriodId] = useState(
+    initialIndicator?.map?.defaultPeriodId ?? "",
+  );
   const [ramp, setRamp] = useState<RampKey>(
-    CLIMATE_INDICES.huglin.defaultRamp,
+    initialIndicator?.map?.defaultRamp ?? "viridis",
   );
   const [mapReady, setMapReady] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [hoverInfo, setHoverInfo] = useState<HoverInfo | null>(null);
 
-  const selectedIndex = CLIMATE_INDICES[selectedIndexId];
+  const selectedIndicator =
+    climateIndicators.find((indicator) => indicator.id === selectedIndicatorId) ??
+    initialIndicator;
+
+  const mapConfig = selectedIndicator?.map;
+
+  const availableScenarios = mapConfig?.scenarios ?? [];
+  const activeScenarioId =
+    selectedScenarioId && availableScenarios.some((item) => item.id === selectedScenarioId)
+      ? selectedScenarioId
+      : (mapConfig?.defaultScenarioId ?? availableScenarios[0]?.id ?? "");
+
   const availablePeriods = useMemo(
-    () => getAvailablePeriods(selectedIndex, selectedScenarioId),
-    [selectedIndex, selectedScenarioId],
-  );
-  const activePeriodId = availablePeriods.includes(selectedPeriodId)
-    ? selectedPeriodId
-    : (availablePeriods[0] ?? "1981-2010");
-
-  const selectedAsset = useMemo(
-    () => selectedIndex.assets[selectedScenarioId][activePeriodId] ?? null,
-    [activePeriodId, selectedIndex, selectedScenarioId],
+    () => (mapConfig ? getAvailablePeriods(mapConfig, activeScenarioId) : []),
+    [activeScenarioId, mapConfig],
   );
 
-  const hoverSampleTargets = useMemo(
-    () =>
-      SCENARIO_OPTIONS.flatMap((scenario) =>
-        PERIOD_OPTIONS.flatMap((periodId) => {
-          const asset = selectedIndex.assets[scenario.id][periodId];
-          if (!asset) return [];
+  const activePeriodId =
+    selectedPeriodId && availablePeriods.some((item) => item.id === selectedPeriodId)
+      ? selectedPeriodId
+      : (mapConfig?.defaultPeriodId ?? availablePeriods[0]?.id ?? "");
 
-          return [
-            {
-              scenarioId: scenario.id,
-              periodId,
-              url: asset.url,
-              label: buildHoverSampleLabel(scenario.id, periodId),
-            },
-          ];
-        }),
-      ),
-    [selectedIndex],
-  );
+  const selectedAsset = useMemo(() => {
+    if (!selectedIndicator || !mapConfig) return null;
+    return (
+      getIndicatorMapLayer(selectedIndicator, {
+        scenarioId: activeScenarioId || undefined,
+        periodId: activePeriodId || undefined,
+      }) ?? mapConfig.layers[0] ?? null
+    );
+  }, [activePeriodId, activeScenarioId, mapConfig, selectedIndicator]);
+
+  const hoverSampleTargets = useMemo(() => {
+    if (!mapConfig) return [];
+
+    return mapConfig.layers.map((layer) => ({
+      scenarioId: layer.scenarioId,
+      periodId: layer.periodId,
+      url: layer.url,
+      label: buildHoverSampleLabel(mapConfig, layer.scenarioId, layer.periodId),
+    }));
+  }, [mapConfig]);
+
+  useEffect(() => {
+    if (!mapConfig) return;
+    setRamp(mapConfig.defaultRamp ?? "viridis");
+    setSelectedScenarioId(mapConfig.defaultScenarioId ?? "");
+    setSelectedPeriodId(mapConfig.defaultPeriodId ?? "");
+    setHoverInfo(null);
+    setLoadError(null);
+  }, [mapConfig, selectedIndicatorId]);
 
   useEffect(() => {
     const map = mapRef.current?.getMap();
-    if (!map || !mapReady || !selectedAsset) return;
+    if (!map || !mapReady || !selectedAsset || !mapConfig) return;
 
-    const colorizePixel = buildRampInterpolator(ramp, selectedIndex.displayRange);
+    const colorizePixel = buildRampInterpolator(ramp, mapConfig.displayRange);
     setColorFunction(
       selectedAsset.url,
       (pixel: TypedArray, color: Uint8ClampedArray, metadata: CogMetadata) => {
@@ -465,11 +327,11 @@ export default function ClimateExplorerPage() {
     return () => {
       removeRasterLayer(map);
     };
-  }, [mapReady, ramp, selectedAsset, selectedIndex.displayRange]);
+  }, [mapConfig, mapReady, ramp, selectedAsset]);
 
   useEffect(() => {
     const map = mapRef.current?.getMap();
-    if (!map || !mapReady || !selectedAsset) return;
+    if (!map || !mapReady || !selectedAsset || !mapConfig) return;
 
     const runHoverQuery = async () => {
       hoverThrottleRef.current = null;
@@ -515,8 +377,8 @@ export default function ClimateExplorerPage() {
       const currentSample =
         samples.find(
           (sample) =>
-            sample.scenarioId === selectedScenarioId &&
-            sample.periodId === activePeriodId,
+            sample.scenarioId === selectedAsset.scenarioId &&
+            sample.periodId === selectedAsset.periodId,
         ) ?? null;
 
       setHoverInfo({
@@ -563,13 +425,70 @@ export default function ClimateExplorerPage() {
         hoverThrottleRef.current = null;
       }
     };
-  }, [
-    activePeriodId,
-    hoverSampleTargets,
-    mapReady,
-    selectedAsset,
-    selectedScenarioId,
-  ]);
+  }, [hoverSampleTargets, mapConfig, mapReady, selectedAsset]);
+
+  if (!selectedIndicator || !mapConfig) {
+    return (
+      <PdoMapLayout
+        sidebar={
+          <PdoSidebarShell
+            top={
+              <div className={styles.filterPanel}>
+                <div className={styles.filterHeader}>
+                  <div className={styles.filterIntro}>
+                    <div className={styles.filterEyebrowRow}>
+                      <p className={styles.filterEyebrow}>Climate Explorer</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+            body={
+              <div className="space-y-6">
+                <section className={styles.sidebarSection}>
+                  <p className={styles.sidebarSectionText}>
+                    No climate indicators are available.
+                  </p>
+                </section>
+              </div>
+            }
+          />
+        }
+        map={<div className="h-full w-full" />}
+        sidebarDefaultSize={30}
+        mapDefaultSize={70}
+        sidebarMinSize={22}
+      />
+    );
+  }
+
+  const activeRange = mapConfig.displayRange;
+  const activeClassification = mapConfig.classifications ?? [];
+  const hoverMarkerOffset =
+    hoverInfo?.currentValue != null
+      ? getBreakOffset(hoverInfo.currentValue, activeRange)
+      : null;
+
+  const hoveredClassBreak =
+    hoverInfo?.currentValue != null
+      ? (activeClassification.find((classBreak) =>
+          matchesClassBreak(hoverInfo.currentValue as number, classBreak),
+        ) ?? null)
+      : null;
+
+  const legendBreaks = activeClassification
+    .filter((classBreak) => classBreak.min != null)
+    .map((classBreak) => ({
+      label: classBreak.label,
+      offset: getBreakOffset(classBreak.min as number, activeRange),
+      isActive: hoveredClassBreak?.label === classBreak.label,
+    }));
+
+  const activeLayerLabel = buildHoverSampleLabel(
+    mapConfig,
+    selectedAsset?.scenarioId,
+    selectedAsset?.periodId,
+  );
 
   const sidebarTop = (
     <div className={styles.filterPanel}>
@@ -582,48 +501,13 @@ export default function ClimateExplorerPage() {
       </div>
 
       <section className={styles.sidebarSection}>
-        <label className={styles.filterLabel} htmlFor="climate-ramp-select">
-          Color ramp
-        </label>
-        <select
+        <ColorRampSelect
           id="climate-ramp-select"
           value={ramp}
-          onChange={(event) => setRamp(event.target.value as RampKey)}
-          className="mt-2 w-full rounded-2xl border px-4 py-3 text-sm outline-none transition focus-visible:border-[color:var(--accent-strong)] focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)]"
-          style={{
-            borderColor: "var(--border-strong)",
-            background: "var(--surface-overlay)",
-            color: "var(--text-strong)",
-          }}
-        >
-          <option
-            value="viridis"
-            style={{
-              background: "var(--surface)",
-              color: "var(--text-strong)",
-            }}
-          >
-            Viridis
-          </option>
-          <option
-            value="inferno"
-            style={{
-              background: "var(--surface)",
-              color: "var(--text-strong)",
-            }}
-          >
-            Inferno
-          </option>
-          <option
-            value="redblue"
-            style={{
-              background: "var(--surface)",
-              color: "var(--text-strong)",
-            }}
-          >
-            Red-Blue
-          </option>
-        </select>
+          onChange={setRamp}
+          className="mt-2"
+          labelClassName={styles.filterLabel}
+        />
       </section>
     </div>
   );
@@ -636,29 +520,25 @@ export default function ClimateExplorerPage() {
           <h2 className={styles.sidebarSectionTitle}>Bioclimatic Indicators</h2>
         </div>
         <div className={styles.resultList}>
-          {CLIMATE_INDEX_ORDER.map((indexId) => {
-            const indexConfig = CLIMATE_INDICES[indexId];
-            const isActive = indexId === selectedIndexId;
+          {climateIndicators.map((indicator) => {
+            const isActive = indicator.id === selectedIndicator.id;
 
             return (
               <button
-                key={indexId}
+                key={indicator.id}
                 type="button"
                 onClick={() => {
-                  setLoadError(null);
-                  setHoverInfo(null);
-                  setSelectedIndexId(indexId);
-                  setRamp(indexConfig.defaultRamp);
+                  setSelectedIndicatorId(indicator.id);
                 }}
-                className={
-                  isActive ? styles.resultActiveItem : styles.resultItem
-                }
+                className={isActive ? styles.resultActiveItem : styles.resultItem}
                 aria-pressed={isActive}
               >
-                <span className={styles.resultItemTitle}>{indexConfig.label}</span>
-                <span className={styles.resultItemMeta}>
-                  Unit: {indexConfig.unit}
-                </span>
+                <span className={styles.resultItemTitle}>{indicator.name}</span>
+                {indicator.map?.unit ? (
+                  <span className={styles.resultItemMeta}>
+                    Unit: {indicator.map.unit}
+                  </span>
+                ) : null}
               </button>
             );
           })}
@@ -670,16 +550,17 @@ export default function ClimateExplorerPage() {
           <p className={styles.sidebarSectionEyebrow}>Projection</p>
           <h2 className={styles.sidebarSectionTitle}>Scenario and period</h2>
         </div>
+
         <label className={styles.filterLabel} htmlFor="climate-scenario-select">
           Scenario
         </label>
         <select
           id="climate-scenario-select"
-          value={selectedScenarioId}
+          value={activeScenarioId}
           onChange={(event) => {
             setLoadError(null);
             setHoverInfo(null);
-            setSelectedScenarioId(event.target.value as ScenarioId);
+            setSelectedScenarioId(event.target.value);
           }}
           className="mt-2 w-full rounded-2xl border px-4 py-3 text-sm outline-none transition focus-visible:border-[color:var(--accent-strong)] focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)]"
           style={{
@@ -688,15 +569,8 @@ export default function ClimateExplorerPage() {
             color: "var(--text-strong)",
           }}
         >
-          {SCENARIO_OPTIONS.map((scenario) => (
-            <option
-              key={scenario.id}
-              value={scenario.id}
-              style={{
-                background: "var(--surface)",
-                color: "var(--text-strong)",
-              }}
-            >
+          {availableScenarios.map((scenario) => (
+            <option key={scenario.id} value={scenario.id}>
               {scenario.label}
             </option>
           ))}
@@ -714,7 +588,7 @@ export default function ClimateExplorerPage() {
           onChange={(event) => {
             setLoadError(null);
             setHoverInfo(null);
-            setSelectedPeriodId(event.target.value as PeriodId);
+            setSelectedPeriodId(event.target.value);
           }}
           className="mt-2 w-full rounded-2xl border px-4 py-3 text-sm outline-none transition focus-visible:border-[color:var(--accent-strong)] focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)]"
           style={{
@@ -723,77 +597,25 @@ export default function ClimateExplorerPage() {
             color: "var(--text-strong)",
           }}
         >
-          {availablePeriods.map((periodId) => (
-            <option
-              key={periodId}
-              value={periodId}
-              style={{
-                background: "var(--surface)",
-                color: "var(--text-strong)",
-              }}
-            >
-              {periodId}
+          {availablePeriods.map((period) => (
+            <option key={period.id} value={period.id}>
+              {period.label}
             </option>
           ))}
         </select>
 
         <p className={`${styles.sidebarSectionText} mt-4`}>
-          Hover any location to compare {selectedIndex.shortLabel.toLowerCase()}{" "}
-          values across historical and future projections.
+          Hover any location to compare {selectedIndicator.name.toLowerCase()} values
+          across historical and future projections.
         </p>
       </section>
 
-      {loadError && (
+      {loadError ? (
         <section className={styles.sidebarSection}>
           <p className={styles.sidebarSectionText}>{loadError}</p>
         </section>
-      )}
+      ) : null}
     </div>
-  );
-
-  const activeRange = selectedIndex.displayRange;
-  const activeClassification = selectedIndex.classifications;
-  const activeRampStops = RAMPS[ramp];
-  const legendGradient = useMemo(() => {
-    const stops = activeRampStops
-      .map(([stop, color]) => `${color} ${stop * 100}%`)
-      .join(", ");
-
-    return `linear-gradient(to top, ${stops})`;
-  }, [activeRampStops]);
-
-  const hoverMarkerOffset = useMemo(() => {
-    if (hoverInfo?.currentValue == null) return null;
-    return getBreakOffset(hoverInfo.currentValue, activeRange);
-  }, [activeRange, hoverInfo]);
-
-  const hoveredClassBreak = useMemo(() => {
-    if (hoverInfo?.currentValue == null) return null;
-    const hoverValue = hoverInfo.currentValue;
-    return (
-      activeClassification.find((classBreak) =>
-        matchesClassBreak(hoverValue, classBreak),
-      ) ?? null
-    );
-  }, [activeClassification, hoverInfo]);
-
-  const classMarkers = useMemo(
-    () =>
-      activeClassification
-        .map((classBreak) => {
-          if (classBreak.min == null) return null;
-
-          return {
-            label: classBreak.label,
-            top: getBreakOffset(classBreak.min, activeRange),
-            isActive: hoveredClassBreak?.label === classBreak.label,
-          };
-        })
-        .filter(
-          (marker): marker is { label: string; top: string; isActive: boolean } =>
-            marker !== null,
-        ),
-    [activeClassification, activeRange, hoveredClassBreak],
   );
 
   const mapContent = (
@@ -816,7 +638,7 @@ export default function ClimateExplorerPage() {
         <ScaleControl position="bottom-right" />
       </Map>
 
-      {hoverInfo && (
+      {hoverInfo ? (
         <div
           className="pointer-events-none absolute z-10 max-w-[260px] -translate-y-full rounded-lg border px-3 py-2 text-xs shadow-lg backdrop-blur"
           style={{
@@ -827,22 +649,22 @@ export default function ClimateExplorerPage() {
             color: "var(--text-strong)",
           }}
         >
-          <div className="font-medium">{selectedIndex.label}</div>
+          <div className="font-medium">{selectedIndicator.name}</div>
           <div
             className="mt-1 text-[11px]"
             style={{ color: "var(--text-muted)" }}
           >
-            Active layer: {getScenarioLabel(selectedScenarioId)} {activePeriodId}
+            Active layer: {activeLayerLabel}
           </div>
           <div className="mt-2 space-y-1">
             {hoverInfo.samples.map((sample) => {
               const isActive =
-                sample.scenarioId === selectedScenarioId &&
-                sample.periodId === activePeriodId;
+                sample.scenarioId === selectedAsset?.scenarioId &&
+                sample.periodId === selectedAsset?.periodId;
 
               return (
                 <div
-                  key={`${sample.scenarioId}-${sample.periodId}`}
+                  key={`${sample.scenarioId ?? "none"}-${sample.periodId ?? "none"}`}
                   className="flex items-start justify-between gap-3"
                   style={{
                     color: isActive
@@ -852,92 +674,28 @@ export default function ClimateExplorerPage() {
                   }}
                 >
                   <span>{sample.label}</span>
-                  <span>{formatSampleValue(sample.value, selectedIndex.unit)}</span>
+                  <span>{formatSampleValue(sample.value, mapConfig.unit)}</span>
                 </div>
               );
             })}
           </div>
         </div>
-      )}
+      ) : null}
 
-      <div className={styles.mapLegend}>
-        <div className={styles.mapLegendTitle}>Legend</div>
-        <div className={styles.mapLegendContent}>
-          <div className={styles.mapLegendScaleLabels}>
-            {activeClassification.map((classBreak) => {
-              const markerValue = classBreak.min;
-              const markerTop =
-                markerValue != null ? getBreakOffset(markerValue, activeRange) : null;
-              const isActive = hoveredClassBreak?.label === classBreak.label;
-
-              if (markerTop == null) return null;
-
-              return (
-                <div
-                  key={`${classBreak.label}-${markerValue}`}
-                  className={styles.mapLegendScaleLabel}
-                  style={{ top: markerTop }}
-                >
-                  <div
-                    className={
-                      isActive
-                        ? styles.mapLegendScaleTextActive
-                        : styles.mapLegendScaleText
-                    }
-                  >
-                    {classBreak.label}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-          <div className={styles.mapLegendRamp}>
-            <div
-              className={styles.mapLegendRampFill}
-              style={{ background: legendGradient }}
-            />
-            {classMarkers.map((marker) => (
-              <div
-                key={`${marker.label}-${marker.top}`}
-                className={
-                  marker.isActive
-                    ? styles.mapLegendBreakLineActive
-                    : styles.mapLegendBreakLine
-                }
-                style={{ top: marker.top }}
-              />
-            ))}
-            {hoverMarkerOffset && (
-              <div
-                className={styles.mapLegendMarker}
-                style={{ top: hoverMarkerOffset }}
-              />
-            )}
-          </div>
-          <div className={styles.mapLegendValues}>
-            <div>
-              <div className={styles.mapLegendLabel}>Max</div>
-              <div className={styles.mapLegendValue}>
-                {formatLegendValue(activeRange[1])}
-              </div>
-            </div>
-            {hoverInfo?.currentValue != null && (
-              <div>
-                <div className={styles.mapLegendLabel}>Hover</div>
-                <div className={styles.mapLegendValue}>
-                  {formatLegendValue(hoverInfo.currentValue)}
-                </div>
-              </div>
-            )}
-            <div>
-              <div className={styles.mapLegendLabel}>Min</div>
-              <div className={styles.mapLegendValue}>
-                {formatLegendValue(activeRange[0])}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <VerticalLegend
+        ramp={ramp}
+        title="Legend"
+        breaks={legendBreaks}
+        currentOffset={hoverMarkerOffset}
+        currentLabel={
+          hoverInfo?.currentValue != null
+            ? formatLegendValue(hoverInfo.currentValue)
+            : undefined
+        }
+        maxLabel={formatLegendValue(activeRange[1])}
+        minLabel={formatLegendValue(activeRange[0])}
+        height={LEGEND_RAMP_HEIGHT}
+      />
     </div>
   );
 
