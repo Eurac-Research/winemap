@@ -1,9 +1,23 @@
 import type { IndicatorContentBlock } from "@/app/components/indicators/IndicatorContent";
+import { RAMPS } from "@/app/components/colorRamps"
+
+type RampKey = keyof typeof RAMPS;
+type ClassificationBreak = {
+  label: string;
+  min?: number;
+  max?: number;
+};
+
+type MapLayer = {
+  period: string;
+  scenario: string;
+  url: string;
+};
 
 export type Indicator = {
   id: string;
-  name: string;
   category: string;
+  name: string;
   subtitle?: string;
   description: string[];
   methodology?: string[];
@@ -13,7 +27,10 @@ export type Indicator = {
     label: string;
     url: string;
   };
-  mapboxLayerId?: string;
+  colorRamp?: RampKey;
+  displayRange: [number, number];
+  classification?: ClassificationBreak[];
+  layers?: MapLayer[];
 };
 
 export const Indicators: Indicator[] = [
