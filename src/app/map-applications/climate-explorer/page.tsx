@@ -730,7 +730,8 @@ export default function ClimateExplorerPage() {
 
       <VerticalLegend
         ramp={ramp}
-        title="Legend"
+        title={selectedIndicator.name}
+        subtitle={mapConfig.unit ? `Unit: ${mapConfig.unit}` : undefined}
         breaks={legendBreaks}
         currentOffset={hoverMarkerOffset}
         currentLabel={

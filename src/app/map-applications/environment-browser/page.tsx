@@ -560,7 +560,8 @@ export default function CartographyPage() {
 
       <VerticalLegend
         ramp={ramp}
-        title="Legend"
+        title={selectedIndicator.name}
+        subtitle={mapConfig.unit ? `Unit: ${mapConfig.unit}` : undefined}
         currentOffset={hoverMarkerOffset}
         currentLabel={
           hoverInfo?.value != null ? formatLegendValue(hoverInfo.value) : undefined

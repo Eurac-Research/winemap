@@ -122,6 +122,7 @@ type VerticalLegendProps = {
   currentOffset?: string | null;
   breaks?: LegendBreak[];
   title?: string;
+  subtitle?: string;
   height?: number;
   className?: string;
 };
@@ -134,18 +135,25 @@ export function VerticalLegend({
   currentOffset,
   breaks = [],
   title = "Legend",
+  subtitle,
   height = DEFAULT_LEGEND_HEIGHT,
   className,
 }: VerticalLegendProps) {
   const legendHeight = `${height}px`;
   const hasBreaks = breaks.length > 0;
-  const labelColumnWidth = hasBreaks
-    ? `${Math.max(...breaks.map((item) => item.label.length), 0)}ch`
-    : undefined;
+  const widestBreakLabel = hasBreaks
+    ? breaks.reduce(
+        (widest, item) => (item.label.length > widest.length ? item.label : widest),
+        "",
+      )
+    : "";
 
   return (
     <div className={className} style={defaultLegendShellStyle}>
-      <div style={defaultLegendTitleStyle}>{title}</div>
+      <div style={{ ...defaultLegendTitleStyle, marginBottom: subtitle ? "0rem" : "0.75rem" }}>{title}</div>
+      {subtitle ? (
+        <div style={defaultLegendSubtitleStyle}>{subtitle}</div>
+      ): null}
       <div
         style={{
           ...defaultLegendContentStyle,
@@ -157,9 +165,11 @@ export function VerticalLegend({
             style={{
               ...defaultLegendScaleLabelsStyle,
               height: legendHeight,
-              width: labelColumnWidth,
             }}
           >
+            <div aria-hidden="true" style={defaultLegendScaleLabelSizerStyle}>
+              {widestBreakLabel}
+            </div>
             {breaks.map((item) => (
               <div
                 key={`${item.label}-${item.offset}`}
@@ -270,25 +280,45 @@ const defaultLegendTitleStyle: CSSProperties = {
   fontSize: "0.8rem",
   fontWeight: 700,
   color: "var(--text-strong)",
+  maxWidth: "12rem",
+  lineHeight: 1.25,
+  overflowWrap: "anywhere",
+};
+
+const defaultLegendSubtitleStyle: CSSProperties = {
+  fontSize: "0.6rem",
+  color: "var(--text-light)",
   marginBottom: "0.75rem",
+  maxWidth: "6rem",
+  lineHeight: 1.3,
+  overflowWrap: "anywhere",
 };
 
 const defaultLegendContentStyle: CSSProperties = {
-  display: "grid",
+  display: "inline-grid",
   gridTemplateColumns: "1fr auto auto",
   alignItems: "stretch",
   columnGap: "0.75rem",
+  width: "fit-content",
 };
 
 const defaultLegendScaleLabelsStyle: CSSProperties = {
   position: "relative",
-  width: "100%",
+  minWidth: "max-content",
 };
 
 const defaultLegendScaleLabelStyle: CSSProperties = {
   position: "absolute",
   right: 0,
   transform: "translateY(-50%)",
+};
+
+const defaultLegendScaleLabelSizerStyle: CSSProperties = {
+  visibility: "hidden",
+  whiteSpace: "nowrap",
+  fontSize: "0.72rem",
+  fontWeight: 400,
+  pointerEvents: "none",
 };
 
 const defaultLegendScaleTextStyle: CSSProperties = {
