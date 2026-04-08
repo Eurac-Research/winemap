@@ -138,29 +138,46 @@ export function VerticalLegend({
   className,
 }: VerticalLegendProps) {
   const legendHeight = `${height}px`;
+  const hasBreaks = breaks.length > 0;
+  const labelColumnWidth = hasBreaks
+    ? `${Math.max(...breaks.map((item) => item.label.length), 0)}ch`
+    : undefined;
 
   return (
     <div className={className} style={defaultLegendShellStyle}>
       <div style={defaultLegendTitleStyle}>{title}</div>
-      <div style={defaultLegendContentStyle}>
-        <div style={{ ...defaultLegendScaleLabelsStyle, height: legendHeight }}>
-          {breaks.map((item) => (
-            <div
-              key={`${item.label}-${item.offset}`}
-              style={{ ...defaultLegendScaleLabelStyle, top: item.offset }}
-            >
+      <div
+        style={{
+          ...defaultLegendContentStyle,
+          gridTemplateColumns: hasBreaks ? "max-content auto auto" : "auto auto",
+        }}
+      >
+        {hasBreaks ? (
+          <div
+            style={{
+              ...defaultLegendScaleLabelsStyle,
+              height: legendHeight,
+              width: labelColumnWidth,
+            }}
+          >
+            {breaks.map((item) => (
               <div
-                style={
-                  item.isActive
-                    ? defaultLegendScaleTextActiveStyle
-                    : defaultLegendScaleTextStyle
-                }
+                key={`${item.label}-${item.offset}`}
+                style={{ ...defaultLegendScaleLabelStyle, top: item.offset }}
               >
-                {item.label}
+                <div
+                  style={
+                    item.isActive
+                      ? defaultLegendScaleTextActiveStyle
+                      : defaultLegendScaleTextStyle
+                  }
+                >
+                  {item.label}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : null}
 
         <div style={{ ...defaultLegendRampStyle, height: legendHeight }}>
           <div
@@ -235,10 +252,12 @@ const defaultSelectStyle: CSSProperties = {
 
 const defaultLegendShellStyle: CSSProperties = {
   position: "absolute",
-  right: "1rem",
+  left: "1rem",
   bottom: "1rem",
   zIndex: 5,
-  minWidth: "14rem",
+  width: "fit-content",
+  minWidth: "auto",
+  maxWidth: "min(18rem, calc(100vw - 2rem))",
   borderRadius: "1rem",
   border: "1px solid var(--border-soft)",
   background: "var(--surface-panel-strong)",
