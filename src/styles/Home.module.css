@@ -685,6 +685,39 @@
   margin-bottom: 18px;
 }
 
+.sidebarSectionToggle {
+  display: flex;
+  width: calc(100% + 32px);
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: -14px -16px 0;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 16px;
+  background: transparent;
+  color: var(--text-strong);
+  text-align: left;
+  cursor: pointer;
+}
+
+.sidebarSectionToggleOpen {
+  margin-bottom: 18px;
+}
+
+.sidebarSectionToggleClosed {
+  margin-bottom: -14px;
+}
+
+.sidebarSectionToggle:hover {
+  background: color-mix(in srgb, var(--surface-panel-muted) 55%, transparent);
+}
+
+.sidebarSectionToggle:focus-visible {
+  outline: 2px solid var(--accent-strong);
+  outline-offset: 2px;
+}
+
 .sidebarSectionEyebrow {
   margin: 0 0 8px;
   font-size: 11px;

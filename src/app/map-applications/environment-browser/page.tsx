@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ExternalLink, HelpCircle, Navigation2 } from "lucide-react";
+import { ChevronDown, ExternalLink, HelpCircle, Navigation2 } from "lucide-react";
 import {
   cogProtocol,
   locationValues,
@@ -78,6 +78,7 @@ const formatUnit = (unit: string | undefined) =>
   unit ? `Unit: ${unit}` : null;
 
 const groupedIndicators = categories.map((category) => ({
+  key: category,
   title: formatCategoryLabel(category),
   items: cartographyIndicators.filter((indicator) => indicator.category === category),
 }));
@@ -216,6 +217,12 @@ export default function CartographyPage() {
   const [mapReady, setMapReady] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [hoverInfo, setHoverInfo] = useState<HoverInfo | null>(null);
+  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>(
+    () =>
+      Object.fromEntries(
+        groupedIndicators.map((group) => [group.key, true]),
+      ) as Record<string, boolean>,
+  );
 
   const selectedIndicator =
     cartographyIndicators.find((indicator) => indicator.id === selectedIndicatorId) ??
@@ -228,6 +235,19 @@ export default function CartographyPage() {
     : null;
   const selectedBasemap =
     BASEMAPS.find((basemap) => basemap.id === selectedBasemapId) ?? BASEMAPS[0];
+
+  const toggleCategory = (categoryKey: string) => {
+    setOpenCategories((current) => ({
+      ...current,
+      [categoryKey]: !current[categoryKey],
+    }));
+  };
+
+  const selectIndicator = (indicatorId: string) => {
+    setSelectedIndicatorId(indicatorId);
+    setLoadError(null);
+    setHoverInfo(null);
+  };
 
   useEffect(() => {
     const map = mapRef.current?.getMap();
@@ -446,58 +466,71 @@ export default function CartographyPage() {
   );
 
   const sidebarBody = (
-    <div className="space-y-8">
+    <div className="space-y-3">
       {groupedIndicators.map((group) => (
-        <section key={group.title} className={styles.sidebarSection}>
-          <div className={styles.sidebarSectionHeader}>
-            <h3 className={styles.sidebarSectionTitle}>{group.title}</h3>
-          </div>
-          <div className={styles.resultList}>
-            {group.items.map((indicator) => {
-              const isActive = indicator.id === selectedIndicator.id;
+        <section key={group.key} className={styles.sidebarSection}>
+          <button
+            type="button"
+            className={`${styles.sidebarSectionToggle} ${
+              openCategories[group.key]
+                ? styles.sidebarSectionToggleOpen
+                : styles.sidebarSectionToggleClosed
+            }`}
+            aria-expanded={openCategories[group.key]}
+            aria-controls={`cartography-group-${group.key}`}
+            onClick={() => toggleCategory(group.key)}
+          >
+            <span className={styles.sidebarSectionTitle}>{group.title}</span>
+            <ChevronDown
+              className={`h-4 w-4 shrink-0 transition-transform ${
+                openCategories[group.key] ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+          {openCategories[group.key] ? (
+            <div id={`cartography-group-${group.key}`} className={styles.resultList}>
+              {group.items.map((indicator) => {
+                const isActive = indicator.id === selectedIndicator.id;
 
-              return (
-                <button
-                  key={indicator.id}
-                  type="button"
-                  onClick={() => {
-                    setSelectedIndicatorId(indicator.id);
-                    setLoadError(null);
-                    setHoverInfo(null);
-                  }}
-                  className={isActive ? styles.resultActiveItem : styles.resultItem}
-                  aria-pressed={isActive}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0 flex-1 text-left">
-                      <span className={styles.resultItemTitle}>{indicator.name}</span>
-                      <p className={`${styles.resultItemMeta} mt-1`}>
-                        {formatUnit(indicator.map?.unit)}
-                      </p>
-                    </div>
-                    <span
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        setSelectedInfo(indicator);
-                      }}
-                      className="cursor-pointer transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--text-strong)]"
-                      aria-label={`More info about ${indicator.name}`}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={(event) => {
-                        if (event.key === "Enter" || event.key === " ") {
-                          event.preventDefault();
+                return (
+                  <button
+                    key={indicator.id}
+                    type="button"
+                    onClick={() => selectIndicator(indicator.id)}
+                    className={isActive ? styles.resultActiveItem : styles.resultItem}
+                    aria-pressed={isActive}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0 flex-1 text-left">
+                        <span className={styles.resultItemTitle}>{indicator.name}</span>
+                        <p className={`${styles.resultItemMeta} mt-1`}>
+                          {formatUnit(indicator.map?.unit)}
+                        </p>
+                      </div>
+                      <span
+                        onClick={(event) => {
+                          event.stopPropagation();
                           setSelectedInfo(indicator);
-                        }
-                      }}
-                    >
-                      <HelpCircle className="h-4 w-4" />
-                    </span>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
+                        }}
+                        className="cursor-pointer transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--text-strong)]"
+                        aria-label={`More info about ${indicator.name}`}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(event) => {
+                          if (event.key === "Enter" || event.key === " ") {
+                            event.preventDefault();
+                            setSelectedInfo(indicator);
+                          }
+                        }}
+                      >
+                        <HelpCircle className="h-4 w-4" />
+                      </span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          ) : null}
         </section>
       ))}
 
@@ -641,9 +674,7 @@ export default function CartographyPage() {
                 <button
                   type="button"
                   onClick={() => {
-                    setSelectedIndicatorId(selectedInfo.id);
-                    setLoadError(null);
-                    setHoverInfo(null);
+                    selectIndicator(selectedInfo.id);
                     setSelectedInfo(null);
                   }}
                   className="rounded-full px-4 py-2 text-sm font-semibold transition-colors bg-[color:var(--accent-strong)] text-[color:var(--text-inverse)] hover:brightness-110"
