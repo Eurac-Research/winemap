@@ -207,10 +207,7 @@ export default function CartographyPage() {
     lngLat: LngLat;
   } | null>(null);
 
-  const initialIndicator = cartographyIndicators[0] ?? null;
-  const [selectedIndicatorId, setSelectedIndicatorId] = useState(
-    initialIndicator?.id ?? "",
-  );
+  const [selectedIndicatorId, setSelectedIndicatorId] = useState("");
   const [selectedInfo, setSelectedInfo] = useState<Indicator | null>(null);
   const [selectedBasemapId, setSelectedBasemapId] = useState("terrain");
   const [viewState, setViewState] = useState(INITIAL_VIEW_STATE);
@@ -220,13 +217,13 @@ export default function CartographyPage() {
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>(
     () =>
       Object.fromEntries(
-        groupedIndicators.map((group) => [group.key, true]),
+        groupedIndicators.map((group) => [group.key, false]),
       ) as Record<string, boolean>,
   );
 
   const selectedIndicator =
     cartographyIndicators.find((indicator) => indicator.id === selectedIndicatorId) ??
-    initialIndicator;
+    null;
 
   const mapConfig = selectedIndicator?.map;
   const ramp = (mapConfig?.defaultRamp ?? "viridis") as RampKey;
@@ -251,7 +248,11 @@ export default function CartographyPage() {
 
   useEffect(() => {
     const map = mapRef.current?.getMap();
-    if (!map || !mapReady || !selectedAsset || !mapConfig) return;
+    if (!map || !mapReady) return;
+    if (!selectedAsset || !mapConfig) {
+      removeRasterLayer(map);
+      return;
+    }
 
     const colorizePixel = buildRampInterpolator(ramp, mapConfig.displayRange);
     setColorFunction(
@@ -379,7 +380,7 @@ export default function CartographyPage() {
     };
   }, [mapReady, selectedAsset]);
 
-  if (!selectedIndicator || !mapConfig) {
+  if (cartographyIndicators.length === 0) {
     return (
       <PdoMapLayout
         sidebar={
@@ -414,9 +415,11 @@ export default function CartographyPage() {
     );
   }
 
-  const activeRange = mapConfig.displayRange;
+  const activeRange = mapConfig?.displayRange ?? null;
   const hoverMarkerOffset =
-    hoverInfo?.value != null ? getBreakOffset(hoverInfo.value, activeRange) : null;
+    hoverInfo?.value != null && activeRange
+      ? getBreakOffset(hoverInfo.value, activeRange)
+      : null;
 
   const sidebarTop = (
     <div className={styles.filterPanel}>
@@ -424,14 +427,16 @@ export default function CartographyPage() {
         <div className={styles.filterIntro}>
           <div className={styles.filterEyebrowRow}>
             <p className={styles.filterEyebrow}>Cartography</p>
-            <button
-              type="button"
-              className={styles.filterHelpButton}
-              onClick={() => setSelectedInfo(selectedIndicator)}
-              aria-label={`More info about ${selectedIndicator.name}`}
-            >
-              <HelpCircle className="h-4 w-4" />
-            </button>
+            {selectedIndicator ? (
+              <button
+                type="button"
+                className={styles.filterHelpButton}
+                onClick={() => setSelectedInfo(selectedIndicator)}
+                aria-label={`More info about ${selectedIndicator.name}`}
+              >
+                <HelpCircle className="h-4 w-4" />
+              </button>
+            ) : null}
           </div>
         </div>
       </div>
@@ -490,7 +495,7 @@ export default function CartographyPage() {
           {openCategories[group.key] ? (
             <div id={`cartography-group-${group.key}`} className={styles.resultList}>
               {group.items.map((indicator) => {
-                const isActive = indicator.id === selectedIndicator.id;
+                const isActive = indicator.id === selectedIndicatorId;
 
                 return (
                   <button
@@ -576,7 +581,7 @@ export default function CartographyPage() {
             color: "var(--text-strong)",
           }}
         >
-          <div className="font-medium">{selectedIndicator.name}</div>
+          <div className="font-medium">{selectedIndicator?.name}</div>
           {mapConfig.unit ? (
             <div
               className="mt-1 text-[11px]"
@@ -595,18 +600,22 @@ export default function CartographyPage() {
         <RespondLogo width={170} />
       </div>
 
-      <VerticalLegend
-        ramp={ramp}
-        title={selectedIndicator.name}
-        subtitle={mapConfig.unit ? `Unit: ${mapConfig.unit}` : undefined}
-        currentOffset={hoverMarkerOffset}
-        currentLabel={
-          hoverInfo?.value != null ? formatLegendValue(hoverInfo.value, mapConfig.unit) : undefined
-        }
-        maxLabel={formatLegendValue(activeRange[1], mapConfig.unit)}
-        minLabel={formatLegendValue(activeRange[0], mapConfig.unit)}
-        height={LEGEND_RAMP_HEIGHT}
-      />
+      {selectedIndicator && mapConfig && activeRange ? (
+        <VerticalLegend
+          ramp={ramp}
+          title={selectedIndicator.name}
+          subtitle={mapConfig.unit ? `Unit: ${mapConfig.unit}` : undefined}
+          currentOffset={hoverMarkerOffset}
+          currentLabel={
+            hoverInfo?.value != null
+              ? formatLegendValue(hoverInfo.value, mapConfig.unit)
+              : undefined
+          }
+          maxLabel={formatLegendValue(activeRange[1], mapConfig.unit)}
+          minLabel={formatLegendValue(activeRange[0], mapConfig.unit)}
+          height={LEGEND_RAMP_HEIGHT}
+        />
+      ) : null}
     </div>
   );
 
