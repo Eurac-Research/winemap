@@ -582,7 +582,7 @@ export default function CartographyPage() {
           }}
         >
           <div className="font-medium">{selectedIndicator?.name}</div>
-          {mapConfig.unit ? (
+          {mapConfig?.unit ? (
             <div
               className="mt-1 text-[11px]"
               style={{ color: "var(--text-muted)" }}
@@ -591,7 +591,7 @@ export default function CartographyPage() {
             </div>
           ) : null}
           <div className="mt-2 font-semibold">
-            {formatSampleValue(hoverInfo.value, mapConfig.unit)}
+            {formatSampleValue(hoverInfo.value, mapConfig?.unit)}
           </div>
         </div>
       ) : null}
