@@ -6,6 +6,7 @@ type RampKey = keyof typeof RAMPS;
 export type AppId = "cartography" | "climate-explorer";
 
 export type IndicatorCategory =
+  | "topography"
   | "ecosystem-services"
   | "ecosystem-conditions"
   | "climate"
@@ -64,6 +65,8 @@ const COG_DATA_BASE_URL =
 const CARTOGRAPHY_COG_BASE_URL = `${COG_DATA_BASE_URL}`;
 const CLIMATE_COG_BASE_URL = `${COG_DATA_BASE_URL}`;
 const DEFAULT_ENVIRONMENT_RANGE: [number, number] = [0, 100];
+const DEFAULT_CLIMATE_SCENARIO_ID = "historical";
+const DEFAULT_CLIMATE_PERIOD_ID = "1981-2010";
 
 export const CLIMATE_SCENARIOS = [
   { id: "historical", label: "Historical", shortLabel: "Historical" },
@@ -97,36 +100,50 @@ function buildClimateAssetUrl(
   return `${CLIMATE_COG_BASE_URL}/${fileName}`;
 }
 
-function createCartographyMap(
-  assetId: string,
-  options: Partial<Omit<IndicatorMapConfig, "type" | "displayRange" | "layers">> = {},
-): IndicatorMapConfig {
-  return {
-    type: "cog",
-    defaultRamp: "viridis",
-    displayRange: DEFAULT_ENVIRONMENT_RANGE,
-    layers: [{ url: buildCartographyAssetUrl(assetId) }],
-    ...options,
-  };
-}
-
-function createClimateMap(config: {
+type SingleLayerMapConfigInput = {
   assetId: string;
-  unit: string;
+  unit?: string;
+  defaultRamp?: RampKey;
+  displayRange?: [number, number];
+  classifications?: ClassificationBreak[];
+};
+
+type ScenarioMapConfigInput = {
+  assetId: string;
+  unit?: string;
   defaultRamp: RampKey;
   displayRange: [number, number];
   classifications?: ClassificationBreak[];
-}): IndicatorMapConfig {
-  return {
-    type: "cog",
+  scenarios: readonly IndicatorMapOption[];
+  periods: readonly IndicatorMapOption[];
+  defaultScenarioId?: string;
+  defaultPeriodId?: string;
+};
+
+function createMapConfig(
+  config: SingleLayerMapConfigInput | ScenarioMapConfigInput,
+): IndicatorMapConfig {
+  const baseConfig = {
+    type: "cog" as const,
     unit: config.unit,
-    defaultRamp: config.defaultRamp,
-    displayRange: config.displayRange,
+    defaultRamp: config.defaultRamp ?? "viridis",
+    displayRange: config.displayRange ?? DEFAULT_ENVIRONMENT_RANGE,
     classifications: config.classifications,
-    scenarios: [...CLIMATE_SCENARIOS],
-    periods: [...CLIMATE_PERIODS],
-    defaultScenarioId: "historical",
-    defaultPeriodId: "1981-2010",
+  };
+
+  if (!("scenarios" in config) || !("periods" in config)) {
+    return {
+      ...baseConfig,
+      layers: [{ url: buildCartographyAssetUrl(config.assetId) }],
+    };
+  }
+
+  return {
+    ...baseConfig,
+    scenarios: [...config.scenarios],
+    periods: [...config.periods],
+    defaultScenarioId: config.defaultScenarioId ?? DEFAULT_CLIMATE_SCENARIO_ID,
+    defaultPeriodId: config.defaultPeriodId ?? DEFAULT_CLIMATE_PERIOD_ID,
     layers: [
       {
         scenarioId: "historical",
@@ -159,6 +176,74 @@ function createClimateMap(config: {
 
 export const Indicators: Indicator[] = [
   {
+    id: "dem",
+    name: "Digital Elevation Model",
+    category: "topography",
+    apps: ["cartography"],
+    subtitle:
+      "Digital Elevation Model for Europe.",
+    description: [
+      ""
+    ],
+    map: createMapConfig({
+      assetId: "dem",
+      unit: "m",
+      defaultRamp: "viridis",
+      displayRange: [0, 4000],
+    }),
+  },
+  {
+    id: "aspect",
+    name: "Aspect",
+    category: "topography",
+    apps: ["cartography"],
+    subtitle:
+      "Aspect derived from the Digital Elevation Model.",
+    description: [
+      ""
+    ],
+    map: createMapConfig({
+      assetId: "aspect",
+      unit: "deg",
+      defaultRamp: "viridis",
+      displayRange: [0, 360],
+    }),
+  },
+  {
+    id: "slope",
+    name: "Slope",
+    category: "topography",
+    apps: ["cartography"],
+    subtitle:
+      "Slope derived from the Digital Elevation Model.",
+    description: [
+      ""
+    ],
+    map: createMapConfig({
+      assetId: "slope_degrees",
+      unit: "deg",
+      defaultRamp: "viridis",
+      displayRange: [0, 20],
+    }),
+  },
+  {
+    id: "solar-radiation",
+    name: "Solar Radiation",
+    category: "topography",
+    apps: ["cartography"],
+    subtitle:
+      "Potential Solar Radiation derived from the Digital Elevation Model.",
+    description: [
+      ""
+    ],
+    map: createMapConfig({
+      assetId: "solar_radiation",
+      unit: "kWh/m²",
+      defaultRamp: "viridis",
+      displayRange: [0, 1500],
+    }),
+  },
+  {
     id: "pollination",
     name: "Pollination",
     category: "ecosystem-services",
@@ -180,7 +265,7 @@ export const Indicators: Indicator[] = [
       "Fick, S.E. and R.J. Hijmans, 2017. WorldClim 2: new 1km spatial resolution climate surfaces for global land areas. International Journal of Climatology, 37(12): 4302-4315",
       "EU, Copernicus Land Monitoring Service. European Environment Agency (EEA) -Dataset: Riparian Zones status 2018 https://land.copernicus.eu/local/riparian-zones/riparian-zones-2018 (2021)",
     ],
-    map: createCartographyMap("relative_pollination_potential"),
+    map: createMapConfig({ assetId: "relative_pollination_potential" }),
   },
   {
     id: "erosion-control",
@@ -211,7 +296,7 @@ export const Indicators: Indicator[] = [
       "Fick, S.E. and R.J. Hijmans, 2017. WorldClim 2: new 1km spatial resolution climate surfaces for global land areas. International Journal of Climatology, 37(12): 4302-4315",
       "European Environment Agency, 2016. EU-DEM v1.1. Copernicus Land Monitoring Service. https://sdi.eea.europa.eu/catalogue/srv/api/records/3473589f-0854-4601-919e-2e7dd172ff50",
     ],
-    map: createCartographyMap("soil_erosion_prevention"),
+    map: createMapConfig({ assetId: "soil_erosion_prevention" }),
   },
   {
     id: "pest-control",
@@ -229,7 +314,7 @@ export const Indicators: Indicator[] = [
     references: [
       "Rega, C. et al. (2018). A pan-European model of landscape potential to support natural pest control services. Ecological Indicators, 90: 653-664. doi.org/10.1016/j.ecolind.2018.03.075, https://publications.jrc.ec.europa.eu/repository/handle/JRC111488",
     ],
-    map: createCartographyMap("pest_control_index_masked"),
+    map: createMapConfig({ assetId: "pest_control_index_masked" }),
   },
   {
     id: "net-primary-production",
@@ -247,7 +332,7 @@ export const Indicators: Indicator[] = [
     references: [
       "European Environment Agency, 2023. Medium Resolution Net Primary Production [Dataset]- NPP, raster 196m version 1, Nov. 2023. European Environment Agency. Available at: https://sdi.eea.europa.eu/catalogue/srv/api/records/28d6b823-e2fd-4bf4-a6aa-cb6a359c52da?language=all (Accessed: 01/2025)(eea_r_3035_196_m_modis-npp_p_2000-2022_v01_r00)",
     ],
-    map: createCartographyMap("netprimaryproduction"),
+    map: createMapConfig({ assetId: "netprimaryproduction" }),
   },
   {
     id: "outdoor-recreation",
@@ -270,7 +355,7 @@ export const Indicators: Indicator[] = [
       "European Environment Agency, 2016. EU-DEM v1.1. Copernicus Land Monitoring Service. https://sdi.eea.europa.eu/catalogue/srv/api/records/3473589f-0854-4601-919e-2e7dd172ff50",
       "OpenStreetMap contributors. Country shapefiles [Data files from 01.2020]. Retrieved from https://download.geofabrik.de (2020)",
     ],
-    map: createCartographyMap("outdoor_recreation_index"),
+    map: createMapConfig({ assetId: "outdoor_recreation_index" }),
   },
   {
     id: "landscape-aesthetics",
@@ -293,7 +378,7 @@ export const Indicators: Indicator[] = [
       "European Environment Agency, 2016. EU-DEM v1.1. Copernicus Land Monitoring Service. https://sdi.eea.europa.eu/catalogue/srv/api/records/3473589f-0854-4601-919e-2e7dd172ff50",
       "Schirpke, U., Meisch, C., Marsoner, T. & Tappeiner, U. Revealing spatial and temporal patterns of outdoor recreation in the European Alps and their surroundings. Ecosystem Services 31, 336â€“350 (2018).",
     ],
-    map: createCartographyMap("landscape_aesthetics_index"),
+    map: createMapConfig({ assetId: "landscape_aesthetics_index" }),
   },
   {
     id: "naturalness-index",
@@ -314,7 +399,7 @@ export const Indicators: Indicator[] = [
       "European Environment Agency (EEA)-dataset: High Nature Value (HNV) farmland 2012 (100 m) accounting version, Nov. 2017. European Environment Agency. Available at https://www.eea.europa.eu/en/datahub/datahubitem-view/1bd26e8f-8ea0-45e0-b6bf-9ed2baff5d28?activeAccordion=1070000 (Accessed 11/2024) (eea_r_3035_100_m_hnv-farm-2012-acc_p_2012_v01_r00)",
       "European Environment Agency (EEA)-dataset: Natura 2000 (vector) - version 2017, Mar. 2018. European Environment Agency. Available at https://www.eea.europa.eu/en/datahub/datahubitem-view/6fc8ad2d-195d-40f4-bdec-576e7d1268e4?activeAccordion=1091667. (Accessed 11/2024) (eea_v_3035_100_k_natura2000_p_2022_v01_r00)",
     ],
-    map: createCartographyMap("naturalness_hemeroby"),
+    map: createMapConfig({ assetId: "naturalness_hemeroby" }),
   },
   {
     id: "distance-to-nature",
@@ -334,7 +419,7 @@ export const Indicators: Indicator[] = [
       "RÃ¼disser, J., Tasser, E., & Tappeiner, U. (2012). Distance to natureâ€”a new biodiversity relevant environmental indicator set at the landscape level. Ecological Indicators, 15(1), 208-216 doi.org/10.1016/j.ecolind.2011.09.027",
       "EU, Copernicus Land Monitoring Service. (2019). European Environment Agency (EEA)-dataset: CORINE land cover-2018, version 2020_20u1. https://land.copernicus.eu/pan-european/corine-land-cover",
     ],
-    map: createCartographyMap("distancetonature"),
+    map: createMapConfig({ assetId: "distancetonature" }),
   },
   {
     id: "landuse-diversity",
@@ -354,7 +439,7 @@ export const Indicators: Indicator[] = [
       "Comer D., Greene, S. (2015). The development and application of a land use diversity index for Oklahoma City, OK. Applied Geography, 60, 46-57 doi.org/10.1016/j.apgeog.2015.02.015",
       "EU, Copernicus Land Monitoring Service. (2019). European Environment Agency (EEA)-dataset: CORINE land cover-2018, version 2020_20u1. https://land.copernicus.eu/pan-european/corine-land-cover",
     ],
-    map: createCartographyMap("landuse_diversity_sh"),
+    map: createMapConfig({ assetId: "landuse_diversity_sh" }),
   },
   {
     id: "climatic-waterbalance",
@@ -375,7 +460,7 @@ export const Indicators: Indicator[] = [
       "Karger, D. N., Schmatz, D. R., Dettling, G. & Zimmermann, N. E. High-resolution monthly precipitation and temperature time series from 2006 to 2100. Sci Data 7, 248 (2020).",
       "Karger, D. N. et al. Climatologies at high resolution for the earth's land surface areas. Sci Data 4, 170122 (2017).",
     ],
-    map: createCartographyMap("climatic-waterbalance"),
+    map: createMapConfig({ assetId: "climatic-waterbalance" }),
   },
   {
     id: "mean_temperature",
@@ -387,11 +472,13 @@ export const Indicators: Indicator[] = [
       "",
     ],
     references: [],
-    map: createClimateMap({
+    map: createMapConfig({
       assetId: "tmeanann",
       unit: "deg C",
       defaultRamp: "redblue",
       displayRange: [-5, 25],
+      scenarios: CLIMATE_SCENARIOS,
+      periods: CLIMATE_PERIODS,
     }),
   },
   {
@@ -404,11 +491,13 @@ export const Indicators: Indicator[] = [
       "",
     ],
     references: [],
-    map: createClimateMap({
+    map: createMapConfig({
       assetId: "psum",
       unit: "mm",
       defaultRamp: "viridis",
       displayRange: [0, 3000],
+      scenarios: CLIMATE_SCENARIOS,
+      periods: CLIMATE_PERIODS,
     }),
   },
   {
@@ -449,11 +538,13 @@ export const Indicators: Indicator[] = [
       "- 2700-3000 GDD (Very warm) - Typical of intertropical climates with very high heat availability.",
     ],
     references: [],
-    map: createClimateMap({
+    map: createMapConfig({
       assetId: "huglin",
       unit: "GDD",
       defaultRamp: "redblue",
       displayRange: [0, 3500],
+      scenarios: CLIMATE_SCENARIOS,
+      periods: CLIMATE_PERIODS,
       classifications: [
         { label: "Too cool", max: 1200 },
         { label: "Very cool", min: 1200, max: 1500 },
@@ -497,11 +588,13 @@ export const Indicators: Indicator[] = [
       "- Above 18 C (Warm) - Higher risk of aroma loss and reduced color development for many varieties.",
     ],
     references: [],
-    map: createClimateMap({
+    map: createMapConfig({
       assetId: "cni",
       unit: "deg C",
       defaultRamp: "viridis",
       displayRange: [-5, 25],
+      scenarios: CLIMATE_SCENARIOS,
+      periods: CLIMATE_PERIODS,
       classifications: [
         { label: "Very cool", max: 12 },
         { label: "Cool", min: 12, max: 14 },
@@ -547,11 +640,13 @@ export const Indicators: Indicator[] = [
       "- Below -100 mm (Very dry) - High drought stress risk, often requiring irrigation.",
     ],
     references: [],
-    map: createClimateMap({
+    map: createMapConfig({
       assetId: "di",
       unit: "mm",
       defaultRamp: "inferno",
       displayRange: [-150, 200],
+      scenarios: CLIMATE_SCENARIOS,
+      periods: CLIMATE_PERIODS,
       classifications: [
         { label: "Very dry", max: -100 },
         { label: "Moderately dry", min: -100, max: 50 },
