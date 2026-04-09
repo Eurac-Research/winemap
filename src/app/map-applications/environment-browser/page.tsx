@@ -33,6 +33,9 @@ import {
   VerticalLegend,
 } from "@/app/components/colorRamps";
 import {
+  BASEMAPS,
+} from "@/app/components/basemaps";
+import {
   getIndicatorMapLayer,
   getIndicatorsWithMapByApp,
   type Indicator,
@@ -52,50 +55,6 @@ const INITIAL_VIEW_STATE = {
 };
 
 const cartographyIndicators = getIndicatorsWithMapByApp("cartography");
-
-type BasemapOption = {
-  id: string;
-  label: string;
-  style: string | StyleSpecification;
-};
-
-const BASEMAPS: readonly BasemapOption[] = [
-  {
-    id: "light",
-    label: "Light basemap",
-    style: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
-  },
-  {
-    id: "streets",
-    label: "Street basemap",
-    style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
-  },
-  {
-    id: "satellite",
-    label: "Satellite basemap",
-    style: {
-      version: 8,
-      sources: {
-        esriSatellite: {
-          type: "raster",
-          tiles: [
-            "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-          ],
-          tileSize: 256,
-          attribution:
-            "Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community",
-        },
-      },
-      layers: [
-        {
-          id: "esri-satellite",
-          type: "raster",
-          source: "esriSatellite",
-        },
-      ],
-    },
-  },
-] as const;
 
 type HoverInfo = {
   x: number;
@@ -243,7 +202,7 @@ export default function CartographyPage() {
   );
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedInfo, setSelectedInfo] = useState<Indicator | null>(null);
-  const [selectedBasemapId, setSelectedBasemapId] = useState("light");
+  const [selectedBasemapId, setSelectedBasemapId] = useState("terrain");
   const [viewState, setViewState] = useState(INITIAL_VIEW_STATE);
   const [mapReady, setMapReady] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
