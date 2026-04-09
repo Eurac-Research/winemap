@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ExternalLink, HelpCircle, Navigation2 } from "lucide-react";
 import {
@@ -17,7 +17,6 @@ import type {
   LngLat,
   MapMouseEvent,
   PointLike,
-  StyleSpecification,
 } from "maplibre-gl";
 import Map, {
   NavigationControl,
@@ -32,9 +31,7 @@ import {
   type RampKey,
   VerticalLegend,
 } from "@/app/components/colorRamps";
-import {
-  BASEMAPS,
-} from "@/app/components/basemaps";
+import { BASEMAPS } from "@/app/components/basemaps";
 import {
   getIndicatorMapLayer,
   getIndicatorsWithMapByApp,
@@ -55,6 +52,9 @@ const INITIAL_VIEW_STATE = {
 };
 
 const cartographyIndicators = getIndicatorsWithMapByApp("cartography");
+const categories = Array.from(
+  new Set(cartographyIndicators.map((indicator) => indicator.category)),
+);
 
 type HoverInfo = {
   x: number;
@@ -74,6 +74,14 @@ const formatCategoryLabel = (category: string) =>
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 
+const formatUnit = (unit: string | undefined) =>
+  unit ? `Unit: ${unit}` : null;
+
+const groupedIndicators = categories.map((category) => ({
+  title: formatCategoryLabel(category),
+  items: cartographyIndicators.filter((indicator) => indicator.category === category),
+}));
+
 const categoryToDetailPage: Record<string, string> = {
   climate: "/climate-environment/climate",
   "ecosystem-services": "/climate-environment/ecosystem-services",
@@ -85,18 +93,20 @@ const getDetailHref = (category: string, indicatorId: string) => {
   return indicatorId ? `${base}#${indicatorId}` : base;
 };
 
-function formatLegendValue(value: number) {
+function formatLegendValue(value: number, unit: string | undefined) {
   if (!Number.isFinite(value)) return "N/A";
+  const suffix = unit ? ` ${unit}` : "";
+
   if (Math.abs(value) >= 100 || Number.isInteger(value)) {
-    return value.toFixed(0);
+    return `${value.toFixed(0)}${suffix}`;
   }
 
-  return value.toFixed(1);
+  return `${value.toFixed(1)}${suffix}`;
 }
 
-function formatSampleValue(value: number | null) {
+function formatSampleValue(value: number | null, unit: string | undefined) {
   if (value == null || !Number.isFinite(value)) return "No data";
-  return formatLegendValue(value);
+  return formatLegendValue(value, unit);
 }
 
 function getBreakOffset(value: number, range: [number, number]) {
@@ -200,7 +210,6 @@ export default function CartographyPage() {
   const [selectedIndicatorId, setSelectedIndicatorId] = useState(
     initialIndicator?.id ?? "",
   );
-  const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedInfo, setSelectedInfo] = useState<Indicator | null>(null);
   const [selectedBasemapId, setSelectedBasemapId] = useState("terrain");
   const [viewState, setViewState] = useState(INITIAL_VIEW_STATE);
@@ -219,26 +228,6 @@ export default function CartographyPage() {
     : null;
   const selectedBasemap =
     BASEMAPS.find((basemap) => basemap.id === selectedBasemapId) ?? BASEMAPS[0];
-
-  const availableCategories = Array.from(
-    new Set(cartographyIndicators.map((indicator) => indicator.category)),
-  );
-
-  const groupedIndicators = useMemo(() => {
-    const filtered =
-      selectedCategory === "all"
-        ? cartographyIndicators
-        : cartographyIndicators.filter(
-            (indicator) => indicator.category === selectedCategory,
-          );
-
-    const categories = Array.from(new Set(filtered.map((indicator) => indicator.category)));
-
-    return categories.map((category) => ({
-      title: formatCategoryLabel(category),
-      items: filtered.filter((indicator) => indicator.category === category),
-    }));
-  }, [selectedCategory]);
 
   useEffect(() => {
     const map = mapRef.current?.getMap();
@@ -428,36 +417,6 @@ export default function CartographyPage() {
       </div>
 
       <section className={styles.sidebarSection}>
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={() => setSelectedCategory("all")}
-            className={`rounded-full border px-3 py-1.5 text-sm font-semibold transition-colors ${
-              selectedCategory === "all"
-                ? "border-[color:var(--accent-strong)] bg-[color:var(--accent-strong)] text-[color:var(--text-inverse)]"
-                : "border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] text-[color:var(--text-muted)] hover:bg-[color:var(--surface-panel-muted)]"
-            }`}
-          >
-            All
-          </button>
-          {availableCategories.map((category) => (
-            <button
-              key={category}
-              type="button"
-              onClick={() => setSelectedCategory(category)}
-              className={`rounded-full border px-3 py-1.5 text-sm font-semibold transition-colors ${
-                selectedCategory === category
-                  ? "border-[color:var(--accent-strong)] bg-[color:var(--accent-strong)] text-[color:var(--text-inverse)]"
-                  : "border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] text-[color:var(--text-muted)] hover:bg-[color:var(--surface-panel-muted)]"
-              }`}
-            >
-              {formatCategoryLabel(category)}
-            </button>
-          ))}
-        </div>
-      </section>
-
-      <section className={styles.sidebarSection}>
         <label className={styles.filterLabel} htmlFor="cartography-basemap-select">
           Basemap
         </label>
@@ -513,7 +472,7 @@ export default function CartographyPage() {
                     <div className="min-w-0 flex-1 text-left">
                       <span className={styles.resultItemTitle}>{indicator.name}</span>
                       <p className={`${styles.resultItemMeta} mt-1`}>
-                        {formatCategoryLabel(indicator.category)}
+                        {formatUnit(indicator.map?.unit)}
                       </p>
                     </div>
                     <span
@@ -585,14 +544,16 @@ export default function CartographyPage() {
           }}
         >
           <div className="font-medium">{selectedIndicator.name}</div>
-          <div
-            className="mt-1 text-[11px]"
-            style={{ color: "var(--text-muted)" }}
-          >
-            {formatCategoryLabel(selectedIndicator.category)}
-          </div>
+          {mapConfig.unit ? (
+            <div
+              className="mt-1 text-[11px]"
+              style={{ color: "var(--text-muted)" }}
+            >
+              {formatUnit(mapConfig.unit)}
+            </div>
+          ) : null}
           <div className="mt-2 font-semibold">
-            {formatSampleValue(hoverInfo.value)}
+            {formatSampleValue(hoverInfo.value, mapConfig.unit)}
           </div>
         </div>
       ) : null}
@@ -607,10 +568,10 @@ export default function CartographyPage() {
         subtitle={mapConfig.unit ? `Unit: ${mapConfig.unit}` : undefined}
         currentOffset={hoverMarkerOffset}
         currentLabel={
-          hoverInfo?.value != null ? formatLegendValue(hoverInfo.value) : undefined
+          hoverInfo?.value != null ? formatLegendValue(hoverInfo.value, mapConfig.unit) : undefined
         }
-        maxLabel={formatLegendValue(activeRange[1])}
-        minLabel={formatLegendValue(activeRange[0])}
+        maxLabel={formatLegendValue(activeRange[1], mapConfig.unit)}
+        minLabel={formatLegendValue(activeRange[0], mapConfig.unit)}
         height={LEGEND_RAMP_HEIGHT}
       />
     </div>
@@ -645,9 +606,11 @@ export default function CartographyPage() {
                 <h3 id="layer-info-title" className={styles.detailTitle}>
                   {selectedInfo.name}
                 </h3>
-                <p className={styles.sidebarSectionText}>
-                  {formatCategoryLabel(selectedInfo.category)}
-                </p>
+                {selectedInfo.map?.unit ? (
+                  <p className={styles.sidebarSectionText}>
+                    {formatUnit(selectedInfo.map.unit)}
+                  </p>
+                ) : null}
               </div>
 
               <dl className={styles.detailGrid}>
