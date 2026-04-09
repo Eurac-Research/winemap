@@ -38,6 +38,7 @@ import {
 import { PdoMapLayout } from "@/app/components/pdo-app/PdoMapLayout";
 import { PdoSidebarShell } from "@/app/components/pdo-app/PdoSidebarShell";
 import styles from "@/styles/Home.module.css";
+import RespondLogo from "@/app/components/ui/RespondLogo";
 
 const BASEMAP_STYLE =
   "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
@@ -727,6 +728,10 @@ export default function ClimateExplorerPage() {
           </div>
         </div>
       ) : null}
+
+      <div className="absolute bottom-13 right-12 w-auto bg-background rounded-xl">
+        <RespondLogo width={170} />
+      </div>
 
       <VerticalLegend
         ramp={ramp}
