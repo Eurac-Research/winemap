@@ -13,7 +13,12 @@ import type {
   TypedArray,
 } from "@geomatico/maplibre-cog-protocol/dist/types/types";
 import maplibregl from "maplibre-gl";
-import type { LngLat, MapMouseEvent, PointLike } from "maplibre-gl";
+import type {
+  LngLat,
+  MapMouseEvent,
+  PointLike,
+  StyleSpecification,
+} from "maplibre-gl";
 import Map, {
   NavigationControl,
   ScaleControl,
@@ -23,7 +28,6 @@ import Map, {
 import "maplibre-gl/dist/maplibre-gl.css";
 
 import {
-  ColorRampSelect,
   RAMPS,
   type RampKey,
   VerticalLegend,
@@ -38,8 +42,6 @@ import { PdoSidebarShell } from "@/app/components/pdo-app/PdoSidebarShell";
 import styles from "@/styles/Home.module.css";
 import RespondLogo from "@/app/components/ui/RespondLogo";
 
-const BASEMAP_STYLE =
-  "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
 const SOURCE_ID = "cartography-raster-source";
 const LAYER_ID = "cartography-raster-layer";
 const LEGEND_RAMP_HEIGHT = 160;
@@ -50,6 +52,50 @@ const INITIAL_VIEW_STATE = {
 };
 
 const cartographyIndicators = getIndicatorsWithMapByApp("cartography");
+
+type BasemapOption = {
+  id: string;
+  label: string;
+  style: string | StyleSpecification;
+};
+
+const BASEMAPS: readonly BasemapOption[] = [
+  {
+    id: "light",
+    label: "Light basemap",
+    style: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
+  },
+  {
+    id: "streets",
+    label: "Street basemap",
+    style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+  },
+  {
+    id: "satellite",
+    label: "Satellite basemap",
+    style: {
+      version: 8,
+      sources: {
+        esriSatellite: {
+          type: "raster",
+          tiles: [
+            "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+          ],
+          tileSize: 256,
+          attribution:
+            "Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community",
+        },
+      },
+      layers: [
+        {
+          id: "esri-satellite",
+          type: "raster",
+          source: "esriSatellite",
+        },
+      ],
+    },
+  },
+] as const;
 
 type HoverInfo = {
   x: number;
@@ -166,13 +212,19 @@ function isNoDataValue(value: number, noData: number | undefined) {
   return Number.isNaN(noData) ? Number.isNaN(value) : value === noData;
 }
 
-function removeRasterLayer(map: maplibregl.Map) {
-  if (map.getLayer(LAYER_ID)) {
-    map.removeLayer(LAYER_ID);
-  }
+function removeRasterLayer(map: maplibregl.Map | null | undefined) {
+  if (!map) return;
 
-  if (map.getSource(SOURCE_ID)) {
-    map.removeSource(SOURCE_ID);
+  try {
+    if (map.getLayer(LAYER_ID)) {
+      map.removeLayer(LAYER_ID);
+    }
+
+    if (map.getSource(SOURCE_ID)) {
+      map.removeSource(SOURCE_ID);
+    }
+  } catch {
+    // MapLibre may already have disposed the previous map instance during remount.
   }
 }
 
@@ -191,9 +243,8 @@ export default function CartographyPage() {
   );
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedInfo, setSelectedInfo] = useState<Indicator | null>(null);
-  const [ramp, setRamp] = useState<RampKey>(
-    initialIndicator?.map?.defaultRamp ?? "viridis",
-  );
+  const [selectedBasemapId, setSelectedBasemapId] = useState("light");
+  const [viewState, setViewState] = useState(INITIAL_VIEW_STATE);
   const [mapReady, setMapReady] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [hoverInfo, setHoverInfo] = useState<HoverInfo | null>(null);
@@ -203,9 +254,12 @@ export default function CartographyPage() {
     initialIndicator;
 
   const mapConfig = selectedIndicator?.map;
+  const ramp = (mapConfig?.defaultRamp ?? "viridis") as RampKey;
   const selectedAsset = selectedIndicator
     ? getIndicatorMapLayer(selectedIndicator) ?? selectedIndicator.map?.layers[0] ?? null
     : null;
+  const selectedBasemap =
+    BASEMAPS.find((basemap) => basemap.id === selectedBasemapId) ?? BASEMAPS[0];
 
   const availableCategories = Array.from(
     new Set(cartographyIndicators.map((indicator) => indicator.category)),
@@ -228,13 +282,6 @@ export default function CartographyPage() {
   }, [selectedCategory]);
 
   useEffect(() => {
-    if (!selectedIndicator?.map) return;
-    setRamp(selectedIndicator.map.defaultRamp ?? "viridis");
-    setLoadError(null);
-    setHoverInfo(null);
-  }, [selectedIndicator]);
-
-  useEffect(() => {
     const map = mapRef.current?.getMap();
     if (!map || !mapReady || !selectedAsset || !mapConfig) return;
 
@@ -255,25 +302,37 @@ export default function CartographyPage() {
       },
     );
 
-    removeRasterLayer(map);
+    const syncRasterLayer = () => {
+      if (!map.isStyleLoaded()) return;
 
-    map.addSource(SOURCE_ID, {
-      type: "raster",
-      url: `cog://${selectedAsset.url}`,
-      tileSize: 256,
-    });
+      removeRasterLayer(map);
 
-    map.addLayer({
-      id: LAYER_ID,
-      type: "raster",
-      source: SOURCE_ID,
-      paint: {
-        "raster-opacity": 0.7,
-        "raster-fade-duration": 0,
-      },
-    });
+      map.addSource(SOURCE_ID, {
+        type: "raster",
+        url: `cog://${selectedAsset.url}`,
+        tileSize: 256,
+      });
+
+      map.addLayer({
+        id: LAYER_ID,
+        type: "raster",
+        source: SOURCE_ID,
+        paint: {
+          "raster-opacity": 0.7,
+          "raster-fade-duration": 0,
+        },
+      });
+    };
+
+    const handleStyleLoad = () => {
+      syncRasterLayer();
+    };
+
+    map.on("style.load", handleStyleLoad);
+    syncRasterLayer();
 
     return () => {
+      map.off("style.load", handleStyleLoad);
       removeRasterLayer(map);
     };
   }, [mapConfig, mapReady, ramp, selectedAsset]);
@@ -440,13 +499,30 @@ export default function CartographyPage() {
       </section>
 
       <section className={styles.sidebarSection}>
-        <ColorRampSelect
-          id="cartography-ramp-select"
-          value={ramp}
-          onChange={setRamp}
-          className="mt-2"
-          labelClassName={styles.filterLabel}
-        />
+        <label className={styles.filterLabel} htmlFor="cartography-basemap-select">
+          Basemap
+        </label>
+        <select
+          id="cartography-basemap-select"
+          value={selectedBasemap.id}
+          onChange={(event) => {
+            setMapReady(false);
+            setHoverInfo(null);
+            setSelectedBasemapId(event.target.value);
+          }}
+          className="mt-2 w-full rounded-2xl border px-4 py-3 text-sm outline-none transition focus-visible:border-[color:var(--accent-strong)] focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)]"
+          style={{
+            borderColor: "var(--border-strong)",
+            background: "var(--surface-overlay)",
+            color: "var(--text-strong)",
+          }}
+        >
+          {BASEMAPS.map((basemap) => (
+            <option key={basemap.id} value={basemap.id}>
+              {basemap.label}
+            </option>
+          ))}
+        </select>
       </section>
     </div>
   );
@@ -518,11 +594,14 @@ export default function CartographyPage() {
   const mapContent = (
     <div className="relative h-full w-full">
       <Map
+        key={selectedBasemap.id}
         ref={mapRef}
         mapLib={maplibregl}
-        initialViewState={INITIAL_VIEW_STATE}
+        {...viewState}
+        onMove={(event) => setViewState(event.viewState)}
         style={{ width: "100%", height: "100%" }}
-        mapStyle={BASEMAP_STYLE}
+        mapStyle={selectedBasemap.style}
+        styleDiffing={false}
         onLoad={() => {
           setLoadError(null);
           setMapReady(true);
@@ -641,6 +720,8 @@ export default function CartographyPage() {
                   type="button"
                   onClick={() => {
                     setSelectedIndicatorId(selectedInfo.id);
+                    setLoadError(null);
+                    setHoverInfo(null);
                     setSelectedInfo(null);
                   }}
                   className="rounded-full px-4 py-2 text-sm font-semibold transition-colors bg-[color:var(--accent-strong)] text-[color:var(--text-inverse)] hover:brightness-110"
