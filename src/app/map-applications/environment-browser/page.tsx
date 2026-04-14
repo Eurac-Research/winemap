@@ -240,7 +240,18 @@ export default function CartographyPage() {
     }));
   };
 
+  const clearSelection = () => {
+    setSelectedIndicatorId("");
+    setLoadError(null);
+    setHoverInfo(null);
+  };
+
   const selectIndicator = (indicatorId: string) => {
+    if (indicatorId === selectedIndicatorId) {
+      clearSelection();
+      return;
+    }
+
     setSelectedIndicatorId(indicatorId);
     setLoadError(null);
     setHoverInfo(null);
@@ -466,6 +477,20 @@ export default function CartographyPage() {
             </option>
           ))}
         </select>
+
+        <button
+          type="button"
+          onClick={clearSelection}
+          disabled={!selectedIndicator}
+          className="mt-3 w-full rounded-2xl border px-4 py-3 text-sm font-semibold outline-none transition disabled:cursor-not-allowed disabled:opacity-50"
+          style={{
+            borderColor: "var(--border-strong)",
+            background: "var(--surface-overlay)",
+            color: "var(--text-strong)",
+          }}
+        >
+          Clear selected layer
+        </button>
       </section>
     </div>
   );
