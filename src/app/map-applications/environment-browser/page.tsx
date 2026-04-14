@@ -32,6 +32,7 @@ import {
   type IndicatorMapConfig,
   type IndicatorMapOption,
 } from "@/app/components/indicators/indicator-index";
+import MapPlaceSearch from "@/app/components/maps/MapPlaceSearch";
 import { PdoMapLayout } from "@/app/components/pdo-app/PdoMapLayout";
 import { PdoSidebarShell } from "@/app/components/pdo-app/PdoSidebarShell";
 import styles from "@/styles/Home.module.css";
@@ -815,6 +816,20 @@ export default function EnvironmentBrowserPage() {
         <NavigationControl position="bottom-right" visualizePitch showCompass />
         <ScaleControl position="bottom-right" />
       </Map>
+
+      <div className="absolute left-4 top-4 z-20">
+        <MapPlaceSearch
+          onSelect={(result) => {
+            setLoadError(null);
+            setHoverInfo(null);
+            mapRef.current?.flyTo({
+              center: [result.longitude, result.latitude],
+              zoom: Math.max(viewState.zoom, 9),
+              essential: true,
+            });
+          }}
+        />
+      </div>
 
       {hoverInfo && selectedIndicator ? (
         <div
