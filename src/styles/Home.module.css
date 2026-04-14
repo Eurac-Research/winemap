@@ -561,6 +561,17 @@
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+  cursor: pointer;
+
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    opacity 160ms ease;
+}
+
+.mapDropdown:hover {
+  border-color: var(--accent-strong) !important;
 }
 
 .mapDropdownWrap::before {
@@ -595,7 +606,21 @@
   border: 1px solid var(--border-strong) !important;
   background: var(--surface-overlay);
   color: var(--text-strong);
-  pointer-events: none;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    opacity 160ms ease;
+}
+
+.clearButton:hover:not(:disabled) {
+  border-color: var(--accent-strong) !important;
+}
+
+.clearButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .filterLabel {
