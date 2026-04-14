@@ -756,7 +756,7 @@ export default function EnvironmentBrowserPage() {
                           event.stopPropagation();
                           setSelectedInfo(indicator);
                         }}
-                        className="cursor-pointer transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--text-strong)]"
+                        className="self-center cursor-pointer transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--text-strong)]"
                         aria-label={`More info about ${indicator.name}`}
                         role="button"
                         tabIndex={0}

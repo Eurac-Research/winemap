@@ -771,7 +771,7 @@
   margin: -14px -16px 0;
   padding: 14px 16px;
   border: none;
-  border-radius: 16px;
+  border-radius: 8px;
   background: transparent;
   color: var(--text-strong);
   text-align: left;
@@ -779,7 +779,7 @@
 }
 
 .sidebarSectionToggleOpen {
-  margin-bottom: 18px;
+  margin-bottom: 4px;
 }
 
 .sidebarSectionToggleClosed {
@@ -850,17 +850,17 @@
 
 .resultList {
   display: grid;
-  gap: 10px;
+  gap: 5px;
 }
 
 .resultItem {
   width: 100%;
   display: grid;
   gap: 6px;
-  padding: 14px 16px;
+  padding: 7px 16px;
   text-align: left;
   border: 1px solid var(--border-soft);
-  border-radius: 16px;
+  border-radius: 8px;
   background: var(--surface-overlay);
   color: var(--text-strong);
   cursor: pointer;
@@ -874,10 +874,10 @@
   width: 100%;
   display: grid;
   gap: 6px;
-  padding: 14px 16px;
+  padding: 7px 16px;
   text-align: left;
   border: 1px solid var(--accent-strong);
-  border-radius: 16px;
+  border-radius: 8px;
   background: var(--accent-soft);
   color: var(--text-strong);
   cursor: pointer;
