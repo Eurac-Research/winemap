@@ -9,10 +9,10 @@ export type AppId =
   | "environment-browser";
 
 export type IndicatorCategory =
+  | "climate"
   | "topography"
   | "ecosystem-services"
   | "ecosystem-conditions"
-  | "climate"
   | "vulnerability";
 
 export type ClassificationBreak = {

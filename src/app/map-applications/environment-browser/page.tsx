@@ -779,15 +779,6 @@ export default function EnvironmentBrowserPage() {
         </section>
       ))}
 
-      {selectedIndicator && hasScenarioOptions ? (
-        <section className={styles.sidebarSection}>
-          <p className={styles.sidebarSectionText}>
-            Hover any location to compare {selectedIndicator.name.toLowerCase()} values
-            across historical and future projections.
-          </p>
-        </section>
-      ) : null}
-
       {loadError ? (
         <section className={styles.sidebarSection}>
           <p className={styles.sidebarSectionText}>{loadError}</p>
