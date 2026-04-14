@@ -546,6 +546,58 @@
   gap: 6px;
 }
 
+.mapDropdownWrap {
+  position: relative;
+  margin-top: 2px;
+}
+
+.mapDropdown {
+  width: 100%;
+  padding: 5px 56px 5px 12px;
+  border-radius: 2px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface-overlay);
+  color: var(--text-strong);
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.mapDropdownWrap::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  right: 36px;
+  width: 1px;
+  background: var(--border-soft);
+  pointer-events: none;
+}
+
+.mapDropdownWrap::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid var(--text-muted);
+  border-bottom: 1.5px solid var(--text-muted);
+  transform: translateY(-60%) rotate(45deg);
+  pointer-events: none;
+}
+
+.clearButton {
+  margin-top: 8px;
+  width: 100%;
+  padding: 4px;
+  border-radius: 4px !important;
+  border: 1px solid var(--border-strong) !important;
+  background: var(--surface-overlay);
+  color: var(--text-strong);
+  pointer-events: none;
+}
+
 .filterLabel {
   display: block;
   font-size: 11px;

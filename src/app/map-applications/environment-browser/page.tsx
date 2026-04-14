@@ -624,38 +624,30 @@ export default function EnvironmentBrowserPage() {
         <label className={styles.filterLabel} htmlFor="environment-basemap-select">
           Basemap
         </label>
-        <select
-          id="environment-basemap-select"
-          value={selectedBasemap.id}
-          onChange={(event) => {
-            setMapReady(false);
-            setHoverInfo(null);
-            setSelectedBasemapId(event.target.value);
-          }}
-          className="mt-2 w-full rounded-2xl border px-4 py-3 text-sm outline-none transition focus-visible:border-[color:var(--accent-strong)] focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)]"
-          style={{
-            borderColor: "var(--border-strong)",
-            background: "var(--surface-overlay)",
-            color: "var(--text-strong)",
-          }}
-        >
-          {BASEMAPS.map((basemap) => (
-            <option key={basemap.id} value={basemap.id}>
-              {basemap.label}
-            </option>
-          ))}
-        </select>
+        <div className={styles.mapDropdownWrap}>
+          <select
+            id="environment-basemap-select"
+            value={selectedBasemap.id}
+            onChange={(event) => {
+              setMapReady(false);
+              setHoverInfo(null);
+              setSelectedBasemapId(event.target.value);
+            }}
+            className={styles.mapDropdown}
+          >
+            {BASEMAPS.map((basemap) => (
+              <option key={basemap.id} value={basemap.id}>
+                {basemap.label}
+              </option>
+            ))}
+          </select>
+        </div>
 
         <button
           type="button"
           onClick={clearSelection}
           disabled={!selectedIndicator}
-          className="mt-3 w-full rounded-2xl border px-4 py-3 text-sm font-semibold outline-none transition disabled:cursor-not-allowed disabled:opacity-50"
-          style={{
-            borderColor: "var(--border-strong)",
-            background: "var(--surface-overlay)",
-            color: "var(--text-strong)",
-          }}
+          className={styles.clearButton}
         >
           Clear selected layer
         </button>
@@ -668,27 +660,24 @@ export default function EnvironmentBrowserPage() {
             >
               Scenario
             </label>
-            <select
-              id="environment-scenario-select"
-              value={activeScenarioId}
-              onChange={(event) => {
-                setLoadError(null);
-                setHoverInfo(null);
-                setSelectedScenarioId(event.target.value);
-              }}
-              className="mt-2 w-full rounded-2xl border px-4 py-3 text-sm outline-none transition focus-visible:border-[color:var(--accent-strong)] focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)]"
-              style={{
-                borderColor: "var(--border-strong)",
-                background: "var(--surface-overlay)",
-                color: "var(--text-strong)",
-              }}
-            >
-              {availableScenarios.map((scenario) => (
-                <option key={scenario.id} value={scenario.id}>
-                  {scenario.label}
-                </option>
-              ))}
-            </select>
+            <div className={styles.mapDropdownWrap}>
+              <select
+                id="environment-scenario-select"
+                value={activeScenarioId}
+                onChange={(event) => {
+                  setLoadError(null);
+                  setHoverInfo(null);
+                  setSelectedScenarioId(event.target.value);
+                }}
+                className={styles.mapDropdown}
+              >
+                {availableScenarios.map((scenario) => (
+                  <option key={scenario.id} value={scenario.id}>
+                    {scenario.label}
+                  </option>
+                ))}
+              </select>
+            </div>
 
             <label
               className={`${styles.filterLabel} mt-4 block`}
@@ -696,27 +685,24 @@ export default function EnvironmentBrowserPage() {
             >
               Period
             </label>
-            <select
-              id="environment-period-select"
-              value={activePeriodId}
-              onChange={(event) => {
-                setLoadError(null);
-                setHoverInfo(null);
-                setSelectedPeriodId(event.target.value);
-              }}
-              className="mt-2 w-full rounded-2xl border px-4 py-3 text-sm outline-none transition focus-visible:border-[color:var(--accent-strong)] focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)]"
-              style={{
-                borderColor: "var(--border-strong)",
-                background: "var(--surface-overlay)",
-                color: "var(--text-strong)",
-              }}
-            >
-              {availablePeriods.map((period) => (
-                <option key={period.id} value={period.id}>
-                  {period.label}
-                </option>
-              ))}
-            </select>
+            <div className={styles.mapDropdownWrap}>
+              <select
+                id="environment-period-select"
+                value={activePeriodId}
+                onChange={(event) => {
+                  setLoadError(null);
+                  setHoverInfo(null);
+                  setSelectedPeriodId(event.target.value);
+                }}
+                className={styles.mapDropdown}
+              >
+                {availablePeriods.map((period) => (
+                  <option key={period.id} value={period.id}>
+                    {period.label}
+                  </option>
+                ))}
+              </select>
+            </div>
           </>
         ) : null}
       </section>
