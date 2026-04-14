@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { ChevronDown, ExternalLink, HelpCircle, Navigation2 } from "lucide-react";
 import {
@@ -13,11 +13,7 @@ import type {
   TypedArray,
 } from "@geomatico/maplibre-cog-protocol/dist/types/types";
 import maplibregl from "maplibre-gl";
-import type {
-  LngLat,
-  MapMouseEvent,
-  PointLike,
-} from "maplibre-gl";
+import type { LngLat, MapMouseEvent, PointLike } from "maplibre-gl";
 import Map, {
   NavigationControl,
   ScaleControl,
@@ -26,24 +22,23 @@ import Map, {
 
 import "maplibre-gl/dist/maplibre-gl.css";
 
-import {
-  RAMPS,
-  type RampKey,
-  VerticalLegend,
-} from "@/app/components/colorRamps";
+import { RAMPS, type RampKey, VerticalLegend } from "@/app/components/colorRamps";
 import { BASEMAPS } from "@/app/components/basemaps";
 import {
   getIndicatorMapLayer,
   getIndicatorsWithMapByApp,
+  type ClassificationBreak,
   type Indicator,
+  type IndicatorMapConfig,
+  type IndicatorMapOption,
 } from "@/app/components/indicators/indicator-index";
 import { PdoMapLayout } from "@/app/components/pdo-app/PdoMapLayout";
 import { PdoSidebarShell } from "@/app/components/pdo-app/PdoSidebarShell";
 import styles from "@/styles/Home.module.css";
 import RespondLogo from "@/app/components/ui/RespondLogo";
 
-const SOURCE_ID = "cartography-raster-source";
-const LAYER_ID = "cartography-raster-layer";
+const SOURCE_ID = "environment-raster-source";
+const LAYER_ID = "environment-raster-layer";
 const LEGEND_RAMP_HEIGHT = 160;
 const INITIAL_VIEW_STATE = {
   longitude: 14,
@@ -51,15 +46,39 @@ const INITIAL_VIEW_STATE = {
   zoom: 5.2,
 };
 
-const cartographyIndicators = getIndicatorsWithMapByApp("cartography");
+const environmentIndicators = getIndicatorsWithMapByApp("environment-browser");
 const categories = Array.from(
-  new Set(cartographyIndicators.map((indicator) => indicator.category)),
+  new Set(environmentIndicators.map((indicator) => indicator.category)),
 );
+
+const groupedIndicators = categories.map((category) => ({
+  key: category,
+  title: category
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" "),
+  items: environmentIndicators.filter((indicator) => indicator.category === category),
+}));
+
+type HoverSample = {
+  scenarioId?: string;
+  periodId?: string;
+  label: string;
+  value: number | null;
+};
 
 type HoverInfo = {
   x: number;
   y: number;
-  value: number | null;
+  value?: number | null;
+  currentValue?: number | null;
+  samples?: HoverSample[];
+};
+
+const categoryToDetailPage: Record<string, string> = {
+  climate: "/climate-environment/climate",
+  "ecosystem-services": "/climate-environment/ecosystem-services",
+  "ecosystem-conditions": "/climate-environment/ecosystem-services",
 };
 
 let cogProtocolRegistered = false;
@@ -68,26 +87,8 @@ if (!cogProtocolRegistered) {
   cogProtocolRegistered = true;
 }
 
-const formatCategoryLabel = (category: string) =>
-  category
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-
 const formatUnit = (unit: string | undefined) =>
   unit ? `Unit: ${unit}` : null;
-
-const groupedIndicators = categories.map((category) => ({
-  key: category,
-  title: formatCategoryLabel(category),
-  items: cartographyIndicators.filter((indicator) => indicator.category === category),
-}));
-
-const categoryToDetailPage: Record<string, string> = {
-  climate: "/climate-environment/climate",
-  "ecosystem-services": "/climate-environment/ecosystem-services",
-  "ecosystem-conditions": "/climate-environment/ecosystem-services",
-};
 
 const getDetailHref = (category: string, indicatorId: string) => {
   const base = categoryToDetailPage[category] ?? "/climate-environment";
@@ -108,6 +109,12 @@ function formatLegendValue(value: number, unit: string | undefined) {
 function formatSampleValue(value: number | null, unit: string | undefined) {
   if (value == null || !Number.isFinite(value)) return "No data";
   return formatLegendValue(value, unit);
+}
+
+function matchesClassBreak(value: number, classBreak: ClassificationBreak) {
+  const meetsMin = classBreak.min == null || value >= classBreak.min;
+  const meetsMax = classBreak.max == null || value < classBreak.max;
+  return meetsMin && meetsMax;
 }
 
 function getBreakOffset(value: number, range: [number, number]) {
@@ -198,7 +205,42 @@ function removeRasterLayer(map: maplibregl.Map | null | undefined) {
   }
 }
 
-export default function CartographyPage() {
+function getOptionLabel(
+  options: IndicatorMapOption[] | undefined,
+  optionId: string | undefined,
+) {
+  if (!optionId) return "";
+  return options?.find((option) => option.id === optionId)?.label ?? optionId;
+}
+
+function getAvailablePeriods(mapConfig: IndicatorMapConfig, scenarioId?: string) {
+  const periods = mapConfig.periods ?? [];
+
+  if (periods.length === 0) return [];
+  if (!scenarioId) return periods;
+
+  return periods.filter((period) =>
+    mapConfig.layers.some(
+      (layer) =>
+        layer.periodId === period.id &&
+        (layer.scenarioId == null || layer.scenarioId === scenarioId),
+    ),
+  );
+}
+
+function buildHoverSampleLabel(
+  mapConfig: IndicatorMapConfig,
+  scenarioId?: string,
+  periodId?: string,
+) {
+  const scenarioLabel = getOptionLabel(mapConfig.scenarios, scenarioId);
+  const periodLabel = getOptionLabel(mapConfig.periods, periodId);
+
+  if (scenarioLabel && periodLabel) return `${scenarioLabel} ${periodLabel}`;
+  return scenarioLabel || periodLabel || "Active layer";
+}
+
+export default function EnvironmentBrowserPage() {
   const mapRef = useRef<MapRef>(null);
   const hoverThrottleRef = useRef<number | null>(null);
   const hoverRequestIdRef = useRef(0);
@@ -210,6 +252,8 @@ export default function CartographyPage() {
   const [selectedIndicatorId, setSelectedIndicatorId] = useState("");
   const [selectedInfo, setSelectedInfo] = useState<Indicator | null>(null);
   const [selectedBasemapId, setSelectedBasemapId] = useState("terrain");
+  const [selectedScenarioId, setSelectedScenarioId] = useState("");
+  const [selectedPeriodId, setSelectedPeriodId] = useState("");
   const [viewState, setViewState] = useState(INITIAL_VIEW_STATE);
   const [mapReady, setMapReady] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -222,16 +266,64 @@ export default function CartographyPage() {
   );
 
   const selectedIndicator =
-    cartographyIndicators.find((indicator) => indicator.id === selectedIndicatorId) ??
+    environmentIndicators.find((indicator) => indicator.id === selectedIndicatorId) ??
     null;
 
   const mapConfig = selectedIndicator?.map;
-  const ramp = (mapConfig?.defaultRamp ?? "viridis") as RampKey;
-  const selectedAsset = selectedIndicator
-    ? getIndicatorMapLayer(selectedIndicator) ?? selectedIndicator.map?.layers[0] ?? null
-    : null;
   const selectedBasemap =
     BASEMAPS.find((basemap) => basemap.id === selectedBasemapId) ?? BASEMAPS[0];
+  const hasScenarioOptions =
+    (mapConfig?.scenarios?.length ?? 0) > 0 || (mapConfig?.periods?.length ?? 0) > 0;
+
+  const availableScenarios = mapConfig?.scenarios ?? [];
+  const activeScenarioId =
+    selectedScenarioId && availableScenarios.some((item) => item.id === selectedScenarioId)
+      ? selectedScenarioId
+      : (mapConfig?.defaultScenarioId ?? availableScenarios[0]?.id ?? "");
+
+  const availablePeriods = useMemo(
+    () => (mapConfig ? getAvailablePeriods(mapConfig, activeScenarioId) : []),
+    [activeScenarioId, mapConfig],
+  );
+
+  const activePeriodId =
+    selectedPeriodId && availablePeriods.some((item) => item.id === selectedPeriodId)
+      ? selectedPeriodId
+      : (mapConfig?.defaultPeriodId ?? availablePeriods[0]?.id ?? "");
+
+  const ramp = (mapConfig?.defaultRamp ?? "viridis") as RampKey;
+
+  const selectedAsset = useMemo(() => {
+    if (!selectedIndicator || !mapConfig) return null;
+
+    if (hasScenarioOptions) {
+      return (
+        getIndicatorMapLayer(selectedIndicator, {
+          scenarioId: activeScenarioId || undefined,
+          periodId: activePeriodId || undefined,
+        }) ?? mapConfig.layers[0] ?? null
+      );
+    }
+
+    return getIndicatorMapLayer(selectedIndicator) ?? mapConfig.layers[0] ?? null;
+  }, [
+    activePeriodId,
+    activeScenarioId,
+    hasScenarioOptions,
+    mapConfig,
+    selectedIndicator,
+  ]);
+
+  const hoverSampleTargets = useMemo(() => {
+    if (!mapConfig || !hasScenarioOptions) return [];
+
+    return mapConfig.layers.map((layer) => ({
+      scenarioId: layer.scenarioId,
+      periodId: layer.periodId,
+      url: layer.url,
+      label: buildHoverSampleLabel(mapConfig, layer.scenarioId, layer.periodId),
+    }));
+  }, [hasScenarioOptions, mapConfig]);
 
   const toggleCategory = (categoryKey: string) => {
     setOpenCategories((current) => ({
@@ -242,6 +334,8 @@ export default function CartographyPage() {
 
   const clearSelection = () => {
     setSelectedIndicatorId("");
+    setSelectedScenarioId("");
+    setSelectedPeriodId("");
     setLoadError(null);
     setHoverInfo(null);
   };
@@ -252,7 +346,10 @@ export default function CartographyPage() {
       return;
     }
 
+    const indicator = environmentIndicators.find((item) => item.id === indicatorId) ?? null;
     setSelectedIndicatorId(indicatorId);
+    setSelectedScenarioId(indicator?.map?.defaultScenarioId ?? "");
+    setSelectedPeriodId(indicator?.map?.defaultPeriodId ?? "");
     setLoadError(null);
     setHoverInfo(null);
   };
@@ -319,7 +416,7 @@ export default function CartographyPage() {
 
   useEffect(() => {
     const map = mapRef.current?.getMap();
-    if (!map || !mapReady || !selectedAsset) return;
+    if (!map || !mapReady || !selectedAsset || !mapConfig) return;
 
     const runHoverQuery = async () => {
       hoverThrottleRef.current = null;
@@ -333,6 +430,51 @@ export default function CartographyPage() {
         longitude: hoverPoint.lngLat.lng,
       };
       const zoom = map.getZoom();
+
+      if (hasScenarioOptions && hoverSampleTargets.length > 0) {
+        const results = await Promise.allSettled(
+          hoverSampleTargets.map(async (sampleTarget) => {
+            const [value] = await locationValues(sampleTarget.url, coordinates, zoom);
+            return {
+              scenarioId: sampleTarget.scenarioId,
+              periodId: sampleTarget.periodId,
+              label: sampleTarget.label,
+              value: Number.isFinite(value) ? value : null,
+            } satisfies HoverSample;
+          }),
+        );
+
+        if (requestId !== hoverRequestIdRef.current) return;
+
+        const samples = results.map((result, index) => {
+          const target = hoverSampleTargets[index]!;
+          if (result.status === "fulfilled") {
+            return result.value;
+          }
+
+          return {
+            scenarioId: target.scenarioId,
+            periodId: target.periodId,
+            label: target.label,
+            value: null,
+          } satisfies HoverSample;
+        });
+
+        const currentSample =
+          samples.find(
+            (sample) =>
+              sample.scenarioId === selectedAsset.scenarioId &&
+              sample.periodId === selectedAsset.periodId,
+          ) ?? null;
+
+        setHoverInfo({
+          x: hoverPoint.point.x,
+          y: hoverPoint.point.y,
+          currentValue: currentSample?.value ?? null,
+          samples,
+        });
+        return;
+      }
 
       try {
         const [value] = await locationValues(selectedAsset.url, coordinates, zoom);
@@ -389,9 +531,9 @@ export default function CartographyPage() {
         hoverThrottleRef.current = null;
       }
     };
-  }, [mapReady, selectedAsset]);
+  }, [hasScenarioOptions, hoverSampleTargets, mapConfig, mapReady, selectedAsset]);
 
-  if (cartographyIndicators.length === 0) {
+  if (environmentIndicators.length === 0) {
     return (
       <PdoMapLayout
         sidebar={
@@ -401,7 +543,7 @@ export default function CartographyPage() {
                 <div className={styles.filterHeader}>
                   <div className={styles.filterIntro}>
                     <div className={styles.filterEyebrowRow}>
-                      <p className={styles.filterEyebrow}>Cartography</p>
+                      <p className={styles.filterEyebrow}>Environment Browser</p>
                     </div>
                   </div>
                 </div>
@@ -411,7 +553,7 @@ export default function CartographyPage() {
               <div className="space-y-6">
                 <section className={styles.sidebarSection}>
                   <p className={styles.sidebarSectionText}>
-                    No cartography indicators are available.
+                    No environment indicators are available.
                   </p>
                 </section>
               </div>
@@ -427,17 +569,43 @@ export default function CartographyPage() {
   }
 
   const activeRange = mapConfig?.displayRange ?? null;
+  const activeClassification = mapConfig?.classifications ?? [];
+  const hoverValue = hoverInfo?.currentValue ?? hoverInfo?.value ?? null;
   const hoverMarkerOffset =
-    hoverInfo?.value != null && activeRange
-      ? getBreakOffset(hoverInfo.value, activeRange)
+    hoverValue != null && activeRange ? getBreakOffset(hoverValue, activeRange) : null;
+
+  const hoveredClassBreak =
+    hoverValue != null
+      ? (activeClassification.find((classBreak) =>
+          matchesClassBreak(hoverValue, classBreak),
+        ) ?? null)
       : null;
+
+  const legendBreaks = activeRange
+    ? activeClassification
+        .filter((classBreak) => classBreak.min != null)
+        .map((classBreak) => ({
+          label: classBreak.label,
+          offset: getBreakOffset(classBreak.min as number, activeRange),
+          isActive: hoveredClassBreak?.label === classBreak.label,
+        }))
+    : [];
+
+  const activeLayerLabel =
+    mapConfig && selectedAsset
+      ? buildHoverSampleLabel(
+          mapConfig,
+          selectedAsset.scenarioId,
+          selectedAsset.periodId,
+        )
+      : "";
 
   const sidebarTop = (
     <div className={styles.filterPanel}>
       <div className={styles.filterHeader}>
         <div className={styles.filterIntro}>
           <div className={styles.filterEyebrowRow}>
-            <p className={styles.filterEyebrow}>Cartography</p>
+            <p className={styles.filterEyebrow}>Environment Browser</p>
             {selectedIndicator ? (
               <button
                 type="button"
@@ -453,11 +621,11 @@ export default function CartographyPage() {
       </div>
 
       <section className={styles.sidebarSection}>
-        <label className={styles.filterLabel} htmlFor="cartography-basemap-select">
+        <label className={styles.filterLabel} htmlFor="environment-basemap-select">
           Basemap
         </label>
         <select
-          id="cartography-basemap-select"
+          id="environment-basemap-select"
           value={selectedBasemap.id}
           onChange={(event) => {
             setMapReady(false);
@@ -491,6 +659,66 @@ export default function CartographyPage() {
         >
           Clear selected layer
         </button>
+
+        {selectedIndicator && hasScenarioOptions ? (
+          <>
+            <label
+              className={`${styles.filterLabel} mt-4 block`}
+              htmlFor="environment-scenario-select"
+            >
+              Scenario
+            </label>
+            <select
+              id="environment-scenario-select"
+              value={activeScenarioId}
+              onChange={(event) => {
+                setLoadError(null);
+                setHoverInfo(null);
+                setSelectedScenarioId(event.target.value);
+              }}
+              className="mt-2 w-full rounded-2xl border px-4 py-3 text-sm outline-none transition focus-visible:border-[color:var(--accent-strong)] focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)]"
+              style={{
+                borderColor: "var(--border-strong)",
+                background: "var(--surface-overlay)",
+                color: "var(--text-strong)",
+              }}
+            >
+              {availableScenarios.map((scenario) => (
+                <option key={scenario.id} value={scenario.id}>
+                  {scenario.label}
+                </option>
+              ))}
+            </select>
+
+            <label
+              className={`${styles.filterLabel} mt-4 block`}
+              htmlFor="environment-period-select"
+            >
+              Period
+            </label>
+            <select
+              id="environment-period-select"
+              value={activePeriodId}
+              onChange={(event) => {
+                setLoadError(null);
+                setHoverInfo(null);
+                setSelectedPeriodId(event.target.value);
+              }}
+              className="mt-2 w-full rounded-2xl border px-4 py-3 text-sm outline-none transition focus-visible:border-[color:var(--accent-strong)] focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)]"
+              style={{
+                borderColor: "var(--border-strong)",
+                background: "var(--surface-overlay)",
+                color: "var(--text-strong)",
+              }}
+            >
+              {availablePeriods.map((period) => (
+                <option key={period.id} value={period.id}>
+                  {period.label}
+                </option>
+              ))}
+            </select>
+          </>
+        ) : null}
       </section>
     </div>
   );
@@ -507,7 +735,7 @@ export default function CartographyPage() {
                 : styles.sidebarSectionToggleClosed
             }`}
             aria-expanded={openCategories[group.key]}
-            aria-controls={`cartography-group-${group.key}`}
+            aria-controls={`environment-group-${group.key}`}
             onClick={() => toggleCategory(group.key)}
           >
             <span className={styles.sidebarSectionTitle}>{group.title}</span>
@@ -518,7 +746,7 @@ export default function CartographyPage() {
             />
           </button>
           {openCategories[group.key] ? (
-            <div id={`cartography-group-${group.key}`} className={styles.resultList}>
+            <div id={`environment-group-${group.key}`} className={styles.resultList}>
               {group.items.map((indicator) => {
                 const isActive = indicator.id === selectedIndicatorId;
 
@@ -564,6 +792,15 @@ export default function CartographyPage() {
         </section>
       ))}
 
+      {selectedIndicator && hasScenarioOptions ? (
+        <section className={styles.sidebarSection}>
+          <p className={styles.sidebarSectionText}>
+            Hover any location to compare {selectedIndicator.name.toLowerCase()} values
+            across historical and future projections.
+          </p>
+        </section>
+      ) : null}
+
       {loadError ? (
         <section className={styles.sidebarSection}>
           <p className={styles.sidebarSectionText}>{loadError}</p>
@@ -587,17 +824,15 @@ export default function CartographyPage() {
           setLoadError(null);
           setMapReady(true);
         }}
-        onError={() =>
-          setLoadError("Unable to load the selected cartography layer.")
-        }
+        onError={() => setLoadError("Unable to load the selected layer.")}
       >
         <NavigationControl position="bottom-right" visualizePitch showCompass />
         <ScaleControl position="bottom-right" />
       </Map>
 
-      {hoverInfo ? (
+      {hoverInfo && selectedIndicator ? (
         <div
-          className="pointer-events-none absolute z-10 max-w-[220px] -translate-y-full rounded-lg border px-3 py-2 text-xs shadow-lg backdrop-blur"
+          className="pointer-events-none absolute z-10 max-w-[260px] -translate-y-full rounded-lg border px-3 py-2 text-xs shadow-lg backdrop-blur"
           style={{
             left: hoverInfo.x + 12,
             top: hoverInfo.y - 12,
@@ -606,18 +841,54 @@ export default function CartographyPage() {
             color: "var(--text-strong)",
           }}
         >
-          <div className="font-medium">{selectedIndicator?.name}</div>
-          {mapConfig?.unit ? (
-            <div
-              className="mt-1 text-[11px]"
-              style={{ color: "var(--text-muted)" }}
-            >
-              {formatUnit(mapConfig.unit)}
-            </div>
-          ) : null}
-          <div className="mt-2 font-semibold">
-            {formatSampleValue(hoverInfo.value, mapConfig?.unit)}
-          </div>
+          <div className="font-medium">{selectedIndicator.name}</div>
+          {hoverInfo.samples && hoverInfo.samples.length > 0 ? (
+            <>
+              <div
+                className="mt-1 text-[11px]"
+                style={{ color: "var(--text-muted)" }}
+              >
+                Active layer: {activeLayerLabel}
+              </div>
+              <div className="mt-2 space-y-1">
+                {hoverInfo.samples.map((sample) => {
+                  const isActive =
+                    sample.scenarioId === selectedAsset?.scenarioId &&
+                    sample.periodId === selectedAsset?.periodId;
+
+                  return (
+                    <div
+                      key={`${sample.scenarioId ?? "none"}-${sample.periodId ?? "none"}`}
+                      className="flex items-start justify-between gap-3"
+                      style={{
+                        color: isActive
+                          ? "var(--accent-strong)"
+                          : "var(--text-strong)",
+                        fontWeight: isActive ? 600 : 400,
+                      }}
+                    >
+                      <span>{sample.label}</span>
+                      <span>{formatSampleValue(sample.value, mapConfig?.unit)}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          ) : (
+            <>
+              {mapConfig?.unit ? (
+                <div
+                  className="mt-1 text-[11px]"
+                  style={{ color: "var(--text-muted)" }}
+                >
+                  {formatUnit(mapConfig.unit)}
+                </div>
+              ) : null}
+              <div className="mt-2 font-semibold">
+                {formatSampleValue(hoverInfo.value ?? null, mapConfig?.unit)}
+              </div>
+            </>
+          )}
         </div>
       ) : null}
 
@@ -630,10 +901,11 @@ export default function CartographyPage() {
           ramp={ramp}
           title={selectedIndicator.name}
           subtitle={mapConfig.unit ? `Unit: ${mapConfig.unit}` : undefined}
+          breaks={legendBreaks.length > 0 ? legendBreaks : undefined}
           currentOffset={hoverMarkerOffset}
           currentLabel={
-            hoverInfo?.value != null
-              ? formatLegendValue(hoverInfo.value, mapConfig.unit)
+            hoverValue != null
+              ? formatLegendValue(hoverValue, mapConfig.unit)
               : undefined
           }
           maxLabel={formatLegendValue(activeRange[1], mapConfig.unit)}
@@ -673,7 +945,11 @@ export default function CartographyPage() {
                 <h3 id="layer-info-title" className={styles.detailTitle}>
                   {selectedInfo.name}
                 </h3>
-                {selectedInfo.map?.unit ? (
+                {selectedInfo.subtitle ? (
+                  <p className={styles.sidebarSectionText}>
+                    {selectedInfo.subtitle}
+                  </p>
+                ) : selectedInfo.map?.unit ? (
                   <p className={styles.sidebarSectionText}>
                     {formatUnit(selectedInfo.map.unit)}
                   </p>

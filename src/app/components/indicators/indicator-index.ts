@@ -3,7 +3,10 @@ import { RAMPS } from "@/app/components/colorRamps";
 
 type RampKey = keyof typeof RAMPS;
 
-export type AppId = "cartography" | "climate-explorer";
+export type AppId =
+  | "cartography"
+  | "climate-explorer"
+  | "environment-browser";
 
 export type IndicatorCategory =
   | "topography"
@@ -179,7 +182,7 @@ export const Indicators: Indicator[] = [
     id: "dem",
     name: "Digital Elevation Model",
     category: "topography",
-    apps: ["cartography"],
+    apps: ["cartography", "environment-browser"],
     subtitle:
       "Digital Elevation Model for Europe.",
     description: [
@@ -196,7 +199,7 @@ export const Indicators: Indicator[] = [
     id: "aspect",
     name: "Aspect",
     category: "topography",
-    apps: ["cartography"],
+    apps: ["cartography", "environment-browser"],
     subtitle:
       "Aspect derived from the Digital Elevation Model.",
     description: [
@@ -213,7 +216,7 @@ export const Indicators: Indicator[] = [
     id: "slope",
     name: "Slope",
     category: "topography",
-    apps: ["cartography"],
+    apps: ["cartography", "environment-browser"],
     subtitle:
       "Slope derived from the Digital Elevation Model.",
     description: [
@@ -230,7 +233,7 @@ export const Indicators: Indicator[] = [
     id: "solar-radiation",
     name: "Solar Radiation",
     category: "topography",
-    apps: ["cartography"],
+    apps: ["cartography", "environment-browser"],
     subtitle:
       "Potential Solar Radiation derived from the Digital Elevation Model.",
     description: [
@@ -247,7 +250,7 @@ export const Indicators: Indicator[] = [
     id: "pollination",
     name: "Pollination",
     category: "ecosystem-services",
-    apps: ["cartography"],
+    apps: ["cartography", "environment-browser"],
     subtitle:
       "Relative potential for pollination service provision in agricultural areas.",
     description: [
@@ -271,7 +274,7 @@ export const Indicators: Indicator[] = [
     id: "erosion-control",
     name: "Soil Erosion Control",
     category: "ecosystem-services",
-    apps: ["cartography"],
+    apps: ["cartography", "environment-browser"],
     subtitle:
       "Relative capacity of ecosystems to prevent soil loss from water and wind erosion.",
     description: [
@@ -302,7 +305,7 @@ export const Indicators: Indicator[] = [
     id: "pest-control",
     name: "Pest control",
     category: "ecosystem-services",
-    apps: ["cartography"],
+    apps: ["cartography", "environment-browser"],
     subtitle: "Relative potential to sustain natural pest control in agricultural areas.",
     description: [
       "The Pest Control indicator represents the relative potential of agricultural landscapes to sustain natural pest regulation by beneficial organisms. Natural pest control is an important regulating ecosystem service that supports sustainable agriculture by reducing reliance on chemical pesticides and enhancing agroecosystem resilience.",
@@ -320,7 +323,7 @@ export const Indicators: Indicator[] = [
     id: "net-primary-production",
     name: "Net primary production",
     category: "ecosystem-services",
-    apps: ["cartography"],
+    apps: ["cartography", "environment-browser"],
     subtitle: "Thermal growing conditions and ripening suitability",
     description: [
       "The Net Primary Production (NPP) indicator represents the amount of carbon fixed by vegetation through photosynthesis and available for plant growth. It is a fundamental measure of ecosystem productivity and reflects the capacity of ecosystems to generate biomass.",
@@ -338,7 +341,7 @@ export const Indicators: Indicator[] = [
     id: "outdoor-recreation",
     name: "Outdoor recreation",
     category: "ecosystem-services",
-    apps: ["cartography"],
+    apps: ["cartography", "environment-browser"],
     subtitle:
       "Relative potential of landscapes to provide accessible nature-based recreation opportunities.",
     description: [
@@ -361,7 +364,7 @@ export const Indicators: Indicator[] = [
     id: "landscape-aesthetics",
     name: "Landscape aesthetics",
     category: "ecosystem-services",
-    apps: ["cartography"],
+    apps: ["cartography", "environment-browser"],
     subtitle:
       "Relative scenic value of landscapes based on visibility and landscape composition.",
     description: [
@@ -384,7 +387,7 @@ export const Indicators: Indicator[] = [
     id: "naturalness-index",
     name: "Naturalness",
     category: "ecosystem-conditions",
-    apps: ["cartography"],
+    apps: ["cartography", "environment-browser"],
     subtitle: "Degree of naturalness based on land use intensity and ecological value.",
     description: [
       "The Naturalness indicator represents the degree to which landscapes are characterized by natural or semi-natural ecosystems as opposed to intensively used or artificial land uses. Natural and semi-natural areas play a fundamental role in maintaining biodiversity, ecological processes, and ecosystem resilience.",
@@ -405,7 +408,7 @@ export const Indicators: Indicator[] = [
     id: "distance-to-nature",
     name: "Land use integrity",
     category: "ecosystem-conditions",
-    apps: ["cartography"],
+    apps: ["cartography", "environment-browser"],
     subtitle:
       "Degree of landscape integrity based on proximity to natural and near-natural habitats.",
     description: [
@@ -425,7 +428,7 @@ export const Indicators: Indicator[] = [
     id: "landuse-diversity",
     name: "Land use diversity",
     category: "ecosystem-conditions",
-    apps: ["cartography"],
+    apps: ["cartography", "environment-browser"],
     subtitle:
       "Landscape heterogeneity based on the diversity and distribution of land cover types.",
     description: [
@@ -445,7 +448,7 @@ export const Indicators: Indicator[] = [
     id: "climatic-waterbalance",
     name: "Climate water balance",
     category: "ecosystem-conditions",
-    apps: ["cartography"],
+    apps: ["cartography", "environment-browser"],
     subtitle:
       "Water availability from precipitation after accounting for evapotranspiration.",
     description: [
@@ -466,7 +469,7 @@ export const Indicators: Indicator[] = [
     id: "mean_temperature",
     name: "Temperature",
     category: "climate",
-    apps: ["climate-explorer"],
+    apps: ["climate-explorer", "environment-browser"],
     subtitle: "Average annual temperature.",
     description: [
       "",
@@ -485,7 +488,7 @@ export const Indicators: Indicator[] = [
     id: "precipitation_sum",
     name: "Precipitation",
     category: "climate",
-    apps: ["climate-explorer"],
+    apps: ["climate-explorer", "environment-browser"],
     subtitle: "Annual precipitation sum.",
     description: [
       "",
@@ -504,7 +507,7 @@ export const Indicators: Indicator[] = [
     id: "huglin",
     name: "Huglin Index",
     category: "climate",
-    apps: ["climate-explorer"],
+    apps: ["climate-explorer", "environment-browser"],
     subtitle: "Thermal growing conditions and ripening suitability.",
     description: [
       "The Huglin Index (HI) is a bioclimatic indicator that describes the thermal growing conditions throughout the vegetation period in a wine region. It is primarily linked to vine phenology and development and plays a critical role in determining viticultural suitability.",
@@ -561,7 +564,7 @@ export const Indicators: Indicator[] = [
     id: "cool-night",
     name: "Cool Night Index",
     category: "climate",
-    apps: ["climate-explorer"],
+    apps: ["climate-explorer", "environment-browser"],
     subtitle: "Night-time temperature during ripening.",
     description: [
       "The Cool Night Index (CNI) describes the minimum temperatures during the ripening phase of grapes. It is useful for evaluating sensory qualities such as aroma and polyphenol development.",
@@ -607,7 +610,7 @@ export const Indicators: Indicator[] = [
     id: "dryness-index",
     name: "Dryness Index",
     category: "climate",
-    apps: ["climate-explorer"],
+    apps: ["climate-explorer", "environment-browser"],
     subtitle: "Soil water balance and drought pressure.",
     description: [
       "The Dryness Index (DI) evaluates water availability for grapevines by combining precipitation, evapotranspiration, and soil water reserve assumptions. It helps characterise drought pressure and corresponding adaptation needs.",
