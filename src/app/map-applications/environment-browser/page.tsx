@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { ChevronDown, ExternalLink, HelpCircle, Navigation2 } from "lucide-react";
+import { ChevronDown, ExternalLink, HelpCircle, Navigation2, Database } from "lucide-react";
 import {
   cogProtocol,
   locationValues,
@@ -955,6 +955,13 @@ export default function EnvironmentBrowserPage() {
                     <span>Description</span>
                   </dt>
                   <dd>{selectedInfo.description.join(" ")}</dd>
+                </div>
+                <div className={styles.detailItem}>
+                  <dt>
+                    <Database className="h-4 w-4" />
+                    <span>Source</span>
+                  </dt>
+                  <dd>{selectedInfo.source?.join(" ")}</dd>
                 </div>
                 <div className={styles.detailItem}>
                   <dt>

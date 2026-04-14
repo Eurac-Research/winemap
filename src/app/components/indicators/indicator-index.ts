@@ -54,6 +54,7 @@ export type Indicator = {
   subtitle?: string;
   description: string[];
   methodology?: string[];
+  source?: string[];
   references?: string[];
   contentBlocks?: IndicatorContentBlock[];
   video?: {
