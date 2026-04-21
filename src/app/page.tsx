@@ -5,6 +5,8 @@ import { mapApplications } from "@/app/components/map-applications/mapApplicatio
 import MainAreaCard from "@/app/components/winemap-sections/MainAreaCard";
 import { mainAreas } from "@/app/components/winemap-sections/mainAreas";
 
+import { ArrowRight } from 'lucide-react';
+
 export default function HomePage() {
 
   return (
@@ -22,11 +24,22 @@ export default function HomePage() {
         />
 
         <div className="relative z-20 mx-auto min-h-[clamp(34rem,72vh,54rem)] max-w-7xl">
-          <div className="absolute bottom-20 right-[8%] z-20 max-w-3xl sm:bottom-24 lg:bottom-35 lg:right-[30%] min-[1700px]:bottom-36 min-[1700px]:right-[12%]">
-            <div className="w-fit max-w-full bg-primary/70 px-4 py-4 text-center shadow-lg backdrop-blur-[2px]">
-              <p className="max-w-3xl text-lg leading-relaxed text-[color:var(--text-strong)] md:text-xl">
-                Explanatory Text
+          <div className="absolute bottom-10 right-5 z-20 max-w-3xl">
+            <div className="w-fit max-w-full px-4 py-4 text-white text-right">
+              <p className="text-xl leading-relaxed">
+                Winemap
               </p>
+              <p className="text-lg leading-relaxed">
+                An essential resource for stakeholders, farmers, and researchers on understanding wine heritage, climate adaptation, and governance frameworks.
+              </p>
+              <div className='flex cols-2 gap-10 justify-center mt-8'>
+                <Link href = '/about' className="border border-[color:var(--primary)] p-1 rounded-sm transition hover:bg-[color:var(--primary)]">
+                  Learn More <ArrowRight />
+                </Link>
+                <Link href = '/about#institute' className="border border-[color:var(--primary)] py-1 px-2 rounded-sm transition hover:bg-[color:var(--primary)]">
+                  Our Team <ArrowRight />
+                </Link>
+              </div>
             </div>
           </div>
         </div>
