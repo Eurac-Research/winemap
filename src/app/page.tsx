@@ -24,20 +24,22 @@ export default function HomePage() {
         />
 
         <div className="relative z-20 mx-auto min-h-[clamp(34rem,72vh,54rem)] max-w-7xl">
-          <div className="absolute bottom-10 right-5 z-20 max-w-3xl">
-            <div className="w-fit max-w-full px-4 py-4 text-white text-right">
-              <p className="text-xl leading-relaxed">
+          <div className="absolute bottom-10 left-4 right-4 z-20 max-w-3xl sm:left-auto sm:right-5">
+            <div className="w-fit max-w-full rounded-2xl border border-white/20 bg-black/35 px-6 py-6 text-right text-white">
+              <p className="text-5xl font-semibold uppercase tracking-[0.18em] sm:text-6xl lg:text-7xl">
                 Winemap
               </p>
-              <p className="text-lg leading-relaxed">
+              <p className="mt-3 max-w-2xl text-base leading-relaxed text-white/90 sm:ml-auto sm:text-lg">
                 An essential resource for stakeholders, farmers, and researchers on understanding wine heritage, climate adaptation, and governance frameworks.
               </p>
-              <div className='flex cols-2 gap-10 justify-center mt-8'>
-                <Link href = '/about' className="border border-[color:var(--primary)] p-1 rounded-sm transition hover:bg-[color:var(--primary)]">
-                  Learn More <ArrowRight />
+              <div className='mt-8 flex flex-wrap justify-end gap-4'>
+                <Link href='/about' className="inline-flex items-center gap-2 rounded-sm border border-[color:var(--primary)] px-4 py-2 transition hover:bg-[color:var(--primary)]">
+                  <span>Learn More</span>
+                  <ArrowRight className="h-4 w-4" />
                 </Link>
-                <Link href = '/about#institute' className="border border-[color:var(--primary)] py-1 px-2 rounded-sm transition hover:bg-[color:var(--primary)]">
-                  Our Team <ArrowRight />
+                <Link href='/about#institute' className="inline-flex items-center gap-2 rounded-sm border border-[color:var(--primary)] px-4 py-2 transition hover:bg-[color:var(--primary)]">
+                  <span>Our Team</span>
+                  <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
             </div>
