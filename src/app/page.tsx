@@ -3,12 +3,13 @@ import ImageComparisonSlider from "@/app/components/ImageComparisonSlider";
 import WinemapDescription from "@/app/components/WinemapDescription";
 import MapApplicationCard from "@/app/components/map-applications/MapApplicationCard";
 import { mapApplications } from "@/app/components/map-applications/mapApplications";
-import MainAreaCard from "@/app/components/winemap-sections/MainAreaCard";
+import MainAreaCarousel from "@/app/components/winemap-sections/MainAreaCarousel";
 import { mainAreas } from "@/app/components/winemap-sections/mainAreas";
 
 import { ArrowRight, Leaf, Scale, ThermometerSun } from 'lucide-react';
 
 export default function HomePage() {
+  const adaptationArea = mainAreas.find((area) => area.id === "adaptation");
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[color:var(--page-bg)] text-[color:var(--text-strong)]">
@@ -96,6 +97,9 @@ export default function HomePage() {
       <section className="border-y border-[color:var(--border-soft)] bg-[color:var(--primary)]/10">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,0.85fr)] lg:items-center lg:gap-12 lg:px-8 lg:py-12">
           <div className="relative min-h-[24rem] lg:min-h-[34rem]">
+            {adaptationArea ? (
+              <MainAreaCarousel items={adaptationArea.categories} />
+            ) : null}
           </div>
 
           <div className="max-w-lg lg:justify-self-end">
@@ -148,33 +152,6 @@ export default function HomePage() {
 
           <div className="relative min-h-[24rem] lg:min-h-[34rem]">
           </div>
-        </div>
-      </section>
-
-      {/* Main Areas */}
-      <section
-        id='main-areas'
-        className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8"
-      >
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold text-[color:var(--text-strong)] sm:text-4xl">
-            Discover Our Focus Areas
-          </h2>
-        </div>
-
-        <div className="mx-auto mt-10 grid max-w-4xl grid-cols-1 justify-items-center gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {mainAreas.filter((area) => area.showOnLanding).map((area) => (
-            <MainAreaCard
-              key={area.id}
-              id={area.id}
-              title={area.title}
-              description={area.description}
-              icon={area.icon}
-              mainHref={area.mainHref}
-              categories={area.categories}
-              categoriesClassName={area.categoriesClassName}
-            />
-          ))}
         </div>
       </section>
 
