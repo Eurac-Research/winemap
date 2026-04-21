@@ -13,14 +13,8 @@ import styles from "@/styles/Home.module.css";
 export default function About() {
   return (
     <main className={styles.staticContentBox}>
-      <Link href="/" className={styles.backLink}>
-        <span className={`${styles.arrow} ${styles.left}`}></span>
-        back to map
-      </Link>
 
-
-
-      <h1>The Team</h1>
+      <h1 className="mt-8">The Team</h1>
 
       <p>
         <span className={styles.teamItem}>

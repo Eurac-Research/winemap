@@ -12,35 +12,22 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu"
 import EuracLogo from "@/app/components/ui/EuracLogo"
-import RespondLogo from "@/app/components/ui/RespondLogo";
 import { mainAreas } from "@/app/components/winemap-sections/mainAreas";
-
-const navigationItems = [
-  { to: '/', label: 'Home', icon: Menu },
-  { to: '/fields', label: 'Anlagen', icon: Menu },
-  { to: '/irrigation', label: 'Bewaesserung', icon: Menu },
-  { to: '/variety', label: 'Sorten', icon: Menu },
-]
 
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
     <div className="fixed top-0 left-0 w-full z-[100] border-b bg-[color:var(--background)] border-[color:var(--border-soft)]">
-      <div className="px-6 flex justify-between items-center">
+      <div className="px-6 flex h-7 justify-between items-center">
 
-        {/* Logos */}
-        <div className="flex items-center py-2 gap-8 hover:opacity-90 transition-opacity lg:w-1/3">
-          <Link href="/" className="flex flex-col justify-center gap-0.5 leading-none h-20">
-            <span>
-              <span className="font-medium text-lg tracking-wide text-[color:var(--text-strong)]">WINEMAP</span>
-              <span className="text-xs text-[color:var(--text-muted)]"> by</span>
-            </span>
+        {/* Brand */}
+        <div className="flex items-center py-2 hover:opacity-90 transition-opacity lg:w-1/3">
+          <Link href="/" className="flex items-center gap-2 whitespace-nowrap leading-none">
+            <span className="font-medium text-md tracking-wide text-[color:var(--text-strong)]">WINEMAP</span>
+            <span className="text-sm text-[color:var(--text-muted)]">by</span>
             <EuracLogo className="h-3 text-[color:var(--text-strong)]" />
           </Link>
-          <div className='h-20'>
-            <RespondLogo className="h-full text-[color:var(--text-strong)]" />
-          </div>
         </div>
 
         {/* Mobile Menu Button */}
@@ -109,13 +96,13 @@ export function Navigation() {
         <>
           {/* Backdrop */}
           <div
-            className="lg:hidden fixed inset-0 z-[99] top-[80px] bg-[color:var(--surface-inverse)]/20"
+            className="lg:hidden fixed inset-0 z-[99] top-16 bg-[color:var(--surface-inverse)]/20"
             onClick={() => setMobileMenuOpen(false)}
             aria-hidden="true"
           />
 
           {/* Menu Content */}
-          <div className="lg:hidden h-[calc(100vh-80px)] overflow-y-auto fixed left-0 right-0 top-[80px] z-[100] bg-[color:var(--surface-panel-strong)] border-t border-[color:var(--border-soft)]">
+          <div className="lg:hidden h-[calc(100vh-64px)] overflow-y-auto fixed left-0 right-0 top-16 z-[100] bg-[color:var(--surface-panel-strong)] border-t border-[color:var(--border-soft)]">
             <div className="px-6 py-4 space-y-4">
               {mainAreas.filter((area) => area.id !== 'about').map((area) => (
                 <div key={area.id}>
