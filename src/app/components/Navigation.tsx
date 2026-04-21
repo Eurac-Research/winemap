@@ -14,12 +14,20 @@ import {
 import EuracLogo from "@/app/components/ui/EuracLogo"
 import { mainAreas } from "@/app/components/winemap-sections/mainAreas";
 
+
+const NavigationMenuEntries = [
+  {title: "Topics", mainHref: "/"},
+  {title: "Literature", mainHref: "/literature"},
+  {title: "Courses", mainHref: "/"},
+  {title: "About Us", mainHref: "/about"}
+]
+
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
     <div className="fixed top-0 left-0 w-full z-[100] border-b bg-[color:var(--background)] border-[color:var(--border-soft)]">
-      <div className="px-6 flex h-7 justify-between items-center">
+      <div className="px-6 flex h-8 justify-between items-center">
 
         {/* Brand */}
         <div className="flex items-center py-2 hover:opacity-90 transition-opacity lg:w-1/3">
@@ -42,6 +50,18 @@ export function Navigation() {
         {/* Desktop Navigation */}
         <NavigationMenu className="hidden lg:flex justify-center py-1 w-full">
           <NavigationMenuList>
+            {NavigationMenuEntries.map((entry) => (
+              <NavigationMenuItem key = {entry.title}>
+                  <NavigationMenuTrigger className="bg-transparent text-[color:var(--text-strong)] hover:bg-[color:var(--surface-overlay)] hover:text-[color:var(--text-strong)] data-[state=open]:bg-[color:var(--surface-overlay)] data-[state=open]:text-[color:var(--text-strong)] text-base px-5 py-3 uppercase">
+                    {entry.title}
+                  </NavigationMenuTrigger>
+              </NavigationMenuItem>
+            ))}
+          </NavigationMenuList>
+        </NavigationMenu>
+        
+        {/* <NavigationMenu className="hidden lg:flex justify-center py-1 w-full">
+          <NavigationMenuList>
 
               {mainAreas.filter((area) => area.id !== 'about').map((area) => (
                 <NavigationMenuItem key = {area.id}>
@@ -52,7 +72,6 @@ export function Navigation() {
 
                   <NavigationMenuContent className="bg-[color:var(--surface-panel-strong)] border-[color:var(--border-soft)]">
                     <div className="grid grid-cols-[340px_1fr] gap-0 w-[900px]">
-                      {/* Left side - Large clickable main entry */}
                       <NavigationMenuLink
                         href={area.mainHref}
                         className="flex flex-col justify-center p-10 transition-colors border-r group bg-[color:var(--surface-overlay)] hover:bg-[color:var(--surface-panel-muted)] border-[color:var(--border-soft)]"
@@ -64,7 +83,6 @@ export function Navigation() {
                         </p>
                       </NavigationMenuLink>
 
-                      {/* Right side - List of subsections */}
                       <div className="grid gap-1 p-5">
                         {area.categories.map((cat) => (
                           <NavigationMenuLink
@@ -86,7 +104,7 @@ export function Navigation() {
               ))}
 
           </NavigationMenuList>
-        </NavigationMenu>
+        </NavigationMenu> */}
 
         <div className="hidden lg:block lg:w-1/3"></div>
       </div>
@@ -104,16 +122,16 @@ export function Navigation() {
           {/* Menu Content */}
           <div className="lg:hidden h-[calc(100vh-64px)] overflow-y-auto fixed left-0 right-0 top-16 z-[100] bg-[color:var(--surface-panel-strong)] border-t border-[color:var(--border-soft)]">
             <div className="px-6 py-4 space-y-4">
-              {mainAreas.filter((area) => area.id !== 'about').map((area) => (
-                <div key={area.id}>
+              {NavigationMenuEntries.map((entry) => (
+                <div key={entry.title}>
                   <Link
-                    href={area.mainHref}
+                    href={entry.mainHref}
                     className="block font-semibold text-lg mb-2 transition-colors text-[color:var(--text-strong)] hover:text-[color:var(--accent-strong)]"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    {area.titleText}
+                    {entry.title}
                   </Link>
-                  <div className="pl-4 space-y-2">
+                  {/* <div className="pl-4 space-y-2">
                     {area.categories.map((category) => (
                       <Link
                         key={category.label}
@@ -124,7 +142,7 @@ export function Navigation() {
                         {category.label.replace(" â†’", "")}
                       </Link>
                     ))}
-                  </div>
+                  </div> */}
                 </div>
               ))}
 
