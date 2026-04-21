@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import WinemapDescription from "@/app/components/WinemapDescription";
 import MapApplicationCard from "@/app/components/map-applications/MapApplicationCard";
@@ -5,7 +6,7 @@ import { mapApplications } from "@/app/components/map-applications/mapApplicatio
 import MainAreaCard from "@/app/components/winemap-sections/MainAreaCard";
 import { mainAreas } from "@/app/components/winemap-sections/mainAreas";
 
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Leaf } from 'lucide-react';
 
 export default function HomePage() {
 
@@ -47,20 +48,67 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className='bg-[color:var(--primary)]/30 py-8'>
-        <div className="mx-auto max-w-3xl pb-6 text-center text-[color:var(--text-strong)] text-xl">
-          An essential resource for stakeholders, farmers, and researchers on understanding wine heritage, climate adaptation, and governance frameworks.
-        </div>
-        <div className="mx-auto max-w-3xl text-[color:var(--text-muted)] text-justify">
-          <WinemapDescription />
-        </div>
-        <div className='flex cols-2 gap-40 justify-center mt-8'>
-          <Link href = '/about' className="border border-[color:var(--primary)] p-1 rounded-sm transition hover:bg-[color:var(--primary)]">
-            About us
-          </Link>
-          <Link href = '/about#institute' className="border border-[color:var(--primary)] py-1 px-2 rounded-sm transition hover:bg-[color:var(--primary)]">
-            Our Institute
-          </Link>
+      <section className="border-y border-[color:var(--border-soft)] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,240,232,0.9))]">
+        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-20 lg:px-8 lg:py-12">
+          <div className="max-w-xl">
+            <div className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent-strong)]">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--accent-strong)]/25 bg-[color:var(--primary)]/20 text-[color:var(--accent-strong)]">
+                <Leaf className="h-4 w-4" />
+              </span>
+              <span>Winemap Climate</span>
+            </div>
+            <h2 className="max-w-lg text-4xl font-semibold leading-tight text-[color:var(--text-strong)] sm:text-5xl">
+              Discover how climate pressure is reshaping European viticulture.
+            </h2>
+            <p className="mt-6 max-w-md text-lg leading-8 text-[color:var(--text-strong)]">
+              Explore indicators, spatial patterns, and vulnerability insights designed to support adaptation planning across wine-growing regions.
+            </p>
+            <Link
+              href="/climate"
+              className="mt-8 inline-flex items-center gap-2 text-base font-medium text-[color:var(--accent-strong)] transition hover:gap-3"
+            >
+              <span>Learn more about climate indicators</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+
+          <div className="relative min-h-[24rem] lg:min-h-[34rem]">
+            <div className="absolute inset-x-0 top-6 hidden h-px bg-[color:var(--border-soft)] lg:block" />
+            <div className="absolute right-6 top-0 hidden h-20 w-20 rounded-full border border-[color:var(--accent-strong)]/25 bg-[color:var(--primary)]/35 lg:block" />
+
+            <div className="relative ml-auto w-full max-w-2xl">
+              <div className="relative overflow-hidden rounded-[2rem] border border-black/10 bg-white shadow-[0_30px_80px_rgba(21,20,18,0.16)]">
+                <div className="flex items-center justify-between border-b border-black/5 px-5 py-4 text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-[color:var(--text-muted)]">
+                  <span>Climate Indicator</span>
+                  <span>Projected Heat Accumulation</span>
+                </div>
+                <Image
+                  src="/images/indicators/huglin_2071_2100.png"
+                  alt="Projected viticulture climate indicator map"
+                  width={1200}
+                  height={900}
+                  className="h-auto w-full"
+                />
+                <div className="flex items-center justify-between bg-white/92 px-5 py-4 text-sm text-[color:var(--text-muted)] backdrop-blur">
+                  <span>Scenario window</span>
+                  <span className="font-medium text-[color:var(--text-strong)]">2071-2100</span>
+                </div>
+              </div>
+
+              <div className="relative mt-6 ml-0 w-52 overflow-hidden rounded-[1.5rem] border border-black/10 bg-white shadow-[0_18px_45px_rgba(21,20,18,0.14)] sm:-mt-24 sm:ml-[-2rem] sm:w-64">
+                <div className="px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--text-muted)]">
+                  Vulnerability
+                </div>
+                <Image
+                  src="/images/vulnerability/4_vulnerability_bioclim.png"
+                  alt="Bioclimatic vulnerability layer"
+                  width={700}
+                  height={700}
+                  className="h-auto w-full"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
