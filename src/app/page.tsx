@@ -178,14 +178,6 @@ export default function HomePage() {
             </div>
           </section>
 
-          {/* About Section */}
-          <section className="mx-auto max-w-5xl border-t border-[color:var(--border-soft)] px-4 py-20 sm:px-6 lg:px-8">
-            <div className="text-center">
-              <h2 className="text-3xl font-bold mb-6 text-[color:var(--text-strong)]">About the Winemap</h2>
-            </div>
-            <WinemapDescription className="mt-3 text-[color:var(--text-muted)]"/>
-          </section>
-
           {/* FAQ Section */}
           <section className="mx-auto max-w-5xl border-t border-[color:var(--border-soft)] px-4 py-20 sm:px-6 lg:px-8">
             <div>
