@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import ImageComparisonSlider from "@/app/components/ImageComparisonSlider";
 import WinemapDescription from "@/app/components/WinemapDescription";
 import MapApplicationCard from "@/app/components/map-applications/MapApplicationCard";
 import { mapApplications } from "@/app/components/map-applications/mapApplications";
@@ -77,34 +77,15 @@ export default function HomePage() {
             <div className="absolute right-6 top-0 hidden h-20 w-20 rounded-full border border-[color:var(--accent-strong)]/25 bg-[color:var(--primary)]/35 lg:block" />
 
             <div className="relative ml-auto w-full max-w-2xl">
-              <div className="relative overflow-hidden rounded-[2rem] border border-black/10 bg-white shadow-[0_30px_80px_rgba(21,20,18,0.16)]">
-                <div className="flex items-center justify-between border-b border-black/5 px-5 py-4 text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-[color:var(--text-muted)]">
-                  <span>Climate Indicator</span>
-                  <span>Projected Heat Accumulation</span>
-                </div>
-                <Image
-                  src="/images/indicators/huglin_2071_2100.png"
-                  alt="Projected viticulture climate indicator map"
-                  width={1200}
-                  height={900}
-                  className="h-auto w-full"
-                />
-                <div className="flex items-center justify-between bg-white/92 px-5 py-4 text-sm text-[color:var(--text-muted)] backdrop-blur">
-                  <span>Scenario window</span>
-                  <span className="font-medium text-[color:var(--text-strong)]">2071-2100</span>
-                </div>
-              </div>
-
-              <div className="relative mt-6 ml-0 w-52 overflow-hidden rounded-[1.5rem] border border-black/10 bg-white shadow-[0_18px_45px_rgba(21,20,18,0.14)] sm:-mt-24 sm:ml-[-2rem] sm:w-64">
-                <div className="px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--text-muted)]">
-                  Vulnerability
-                </div>
-                <Image
-                  src="/images/vulnerability/4_vulnerability_bioclim.png"
-                  alt="Bioclimatic vulnerability layer"
-                  width={700}
-                  height={700}
-                  className="h-auto w-full"
+              <div className="overflow-hidden rounded-[2rem] border border-black/10 bg-white px-5 py-4 shadow-[0_30px_80px_rgba(21,20,18,0.16)]">
+                <ImageComparisonSlider
+                  beforeImage="/images/indicators/huglin_1981_2010.png"
+                  afterImage="/images/indicators/huglin_2071_2100.png"
+                  beforeLabel="1981-2010"
+                  afterLabel="2071-2100"
+                  alt="Huglin Index Comparison"
+                  aspectRatio="auto"
+                  labelPosition="bottom"
                 />
               </div>
             </div>

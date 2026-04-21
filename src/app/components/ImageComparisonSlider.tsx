@@ -12,6 +12,7 @@ interface ImageComparisonSliderProps {
   alt?: string;
   aspectRatio?: string; // Optional: e.g., "16/9", "4/3", "auto"
   caption?: string; // Optional caption to display below the image
+  labelPosition?: 'top' | 'bottom';
 }
 
 interface SliderContentProps {
@@ -24,6 +25,7 @@ interface SliderContentProps {
   beforeLabel: string;
   afterLabel: string;
   alt: string;
+  labelPosition: 'top' | 'bottom';
   onMouseMove: (e: React.MouseEvent, useFullscreenRef?: boolean) => void;
   onMouseDown: () => void;
   onMouseUp: () => void;
@@ -43,6 +45,7 @@ const SliderContent = ({
   beforeLabel,
   afterLabel,
   alt,
+  labelPosition,
   onMouseMove,
   onMouseDown,
   onMouseUp,
@@ -76,7 +79,7 @@ const SliderContent = ({
       />
       {/* After Label */}
       <div
-        className="absolute top-4 right-4 px-3 py-1 rounded text-sm font-medium bg-[color:var(--surface-panel-strong)] text-[color:var(--text-strong)]"
+        className={`absolute ${labelPosition === 'bottom' ? 'bottom-4 right-4' : 'top-4 right-4'} px-3 py-1 rounded text-sm font-medium bg-[color:var(--surface-panel-strong)] text-[color:var(--text-strong)]`}
         aria-label={`${afterLabel} image`}
       >
         {afterLabel}
@@ -97,7 +100,7 @@ const SliderContent = ({
       />
       {/* Before Label */}
       <div
-        className="absolute top-4 left-4 px-3 py-1 rounded text-sm font-medium bg-[color:var(--surface-panel-strong)] text-[color:var(--text-strong)]"
+        className={`absolute ${labelPosition === 'bottom' ? 'bottom-4 left-4' : 'top-4 left-4'} px-3 py-1 rounded text-sm font-medium bg-[color:var(--surface-panel-strong)] text-[color:var(--text-strong)]`}
         aria-label={`${beforeLabel} image`}
       >
         {beforeLabel}
@@ -135,6 +138,7 @@ export default function ImageComparisonSlider({
   alt = 'Comparison',
   aspectRatio = 'auto',
   caption,
+  labelPosition = 'top',
 }: ImageComparisonSliderProps) {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
@@ -258,6 +262,7 @@ export default function ImageComparisonSlider({
             beforeLabel={beforeLabel}
             afterLabel={afterLabel}
             alt={alt}
+            labelPosition={labelPosition}
             onMouseMove={handleMouseMove}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
@@ -321,6 +326,7 @@ export default function ImageComparisonSlider({
               beforeLabel={beforeLabel}
               afterLabel={afterLabel}
               alt={alt}
+              labelPosition={labelPosition}
               onMouseMove={handleMouseMove}
               onMouseDown={handleMouseDown}
               onMouseUp={handleMouseUp}
