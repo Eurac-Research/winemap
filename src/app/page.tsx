@@ -6,7 +6,7 @@ import { mapApplications } from "@/app/components/map-applications/mapApplicatio
 import MainAreaCard from "@/app/components/winemap-sections/MainAreaCard";
 import { mainAreas } from "@/app/components/winemap-sections/mainAreas";
 
-import { ArrowRight, Leaf } from 'lucide-react';
+import { ArrowRight, Leaf, Scale } from 'lucide-react';
 
 export default function HomePage() {
 
@@ -89,6 +89,64 @@ export default function HomePage() {
                 />
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-[color:var(--border-soft)] bg-[color:var(--primary)]/10">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,0.85fr)] lg:items-center lg:gap-12 lg:px-8 lg:py-12">
+          <div className="relative min-h-[24rem] lg:min-h-[34rem]">
+          </div>
+
+          <div className="max-w-lg lg:justify-self-end">
+            <div className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent-strong)]">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--accent-strong)]/25 bg-[color:var(--primary)]/20 text-[color:var(--accent-strong)]">
+                <Leaf className="h-4 w-4" />
+              </span>
+              <span>Winemap Adaptation</span>
+            </div>
+            <h2 className="max-w-lg text-4xl font-semibold leading-tight text-[color:var(--text-strong)] sm:text-5xl">
+              Explore strategies that help vineyards adapt in place.
+            </h2>
+            <p className="mt-6 max-w-md text-lg leading-8 text-[color:var(--text-strong)]">
+              Discover ecosystem-based adaptation approaches, pilot experiences, and practical measures that connect climate resilience with everyday vineyard management.
+            </p>
+            <Link
+              href="/adaptation"
+              className="mt-8 inline-flex items-center gap-2 text-base font-medium text-[color:var(--accent-strong)] transition hover:gap-3"
+            >
+              <span>Learn more about adaptation pathways</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-[color:var(--border-soft)] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,240,232,0.9))]">
+        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-20 lg:px-8 lg:py-12">
+          <div className="max-w-xl">
+            <div className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent-strong)]">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--accent-strong)]/25 bg-[color:var(--primary)]/20 text-[color:var(--accent-strong)]">
+                <Scale className="h-4 w-4" />
+              </span>
+              <span>Winemap Governance</span>
+            </div>
+            <h2 className="max-w-lg text-4xl font-semibold leading-tight text-[color:var(--text-strong)] sm:text-5xl">
+              Understand the rules, institutions, and decisions shaping wine regions.
+            </h2>
+            <p className="mt-6 max-w-md text-lg leading-8 text-[color:var(--text-strong)]">
+              Navigate the policy frameworks, participatory approaches, and educational resources that influence how viticulture responds to environmental and social change.
+            </p>
+            <Link
+              href="/legal/eu-policy"
+              className="mt-8 inline-flex items-center gap-2 text-base font-medium text-[color:var(--accent-strong)] transition hover:gap-3"
+            >
+              <span>Learn more about governance frameworks</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+
+          <div className="relative min-h-[24rem] lg:min-h-[34rem]">
           </div>
         </div>
       </section>
