@@ -110,7 +110,7 @@ export default function HomePage() {
               <span>Winemap Adaptation</span>
             </div>
             <h2 className="max-w-lg text-4xl font-semibold leading-tight text-[color:var(--text-strong)] sm:text-5xl">
-              Explore strategies that help vineyards adapt in place.
+              Explore strategies to adapt vineyards to climate change.
             </h2>
             <p className="mt-6 max-w-md text-lg leading-8 text-[color:var(--text-strong)]">
               Discover ecosystem-based adaptation approaches, pilot experiences, and practical measures that connect climate resilience with everyday vineyard management.
