@@ -17,8 +17,9 @@ import { mainAreas } from "@/app/components/winemap-sections/mainAreas";
 
 const NavigationMenuEntries = [
   {title: "Topics", mainHref: "/"},
-  {title: "Literature", mainHref: "/literature"},
+  {title: "Maps", mainHref: "/"},
   {title: "Courses", mainHref: "/"},
+  {title: "Literature", mainHref: "/literature"},
   {title: "About Us", mainHref: "/about"}
 ]
 
