@@ -6,8 +6,9 @@ import MapApplicationCard from "@/app/components/map-applications/MapApplication
 import { mapApplications } from "@/app/components/map-applications/mapApplications";
 import MainAreaCarousel from "@/app/components/winemap-sections/MainAreaCarousel";
 import { mainAreas } from "@/app/components/winemap-sections/mainAreas";
+import styles from "@/styles/Home.module.css";
 
-import { ArrowRight, Leaf, Scale, ThermometerSun } from 'lucide-react';
+import { ArrowRight, ChevronDown, Leaf, Scale, ThermometerSun } from 'lucide-react';
 
 export default function HomePage() {
   const adaptationArea = mainAreas.find((area) => area.id === "adaptation");
@@ -186,10 +187,15 @@ export default function HomePage() {
           <section className="mx-auto max-w-5xl border-t border-[color:var(--border-soft)] px-4 py-20 sm:px-6 lg:px-8">
             <div>
               <h2 className="text-3xl font-bold mb-12 text-center text-[color:var(--text-strong)]">Frequently Asked Questions</h2>
-              <div className="grid sm:grid-cols-1 md:grid-cols-2">
-                <details className="group cursor-pointer">
-                  <summary className="text-xl font-semibold mb-3 text-[color:var(--text-strong)]">Who is behind this project?</summary>
-                  <p className="leading-relaxed text-[color:var(--text-muted)]">
+              <div className="mx-auto flex max-w-4xl flex-col gap-1">
+                <details className={styles.FAQDetails}>
+                  <summary className="flex list-none items-start justify-between gap-4 text-left text-xl font-semibold text-[color:var(--text-strong)] cursor-pointer marker:hidden [&::-webkit-details-marker]:hidden focus:outline-none focus-visible:rounded-lg focus-visible:ring-2 focus-visible:ring-[color:var(--accent-strong)]/40">
+                    <span>Who is behind this project?</span>
+                    <span className="mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center text-[color:var(--accent-strong)] transition duration-200 group-open:rotate-180">
+                      <ChevronDown className="h-4 w-4" />
+                    </span>
+                  </summary>
+                  <p className="pt-4 leading-relaxed text-[color:var(--text-muted)]">
                     WINEMAP is developed by the{" "}
                     <a
                       href="https://www.eurac.edu/en/institutes-centers/institute-for-alpine-environment"
@@ -218,39 +224,54 @@ export default function HomePage() {
                   </p>
                 </details>
 
-                <details className="group cursor-pointer">
-                  <summary className="text-xl font-semibold mb-3 text-[color:var(--text-strong)]">What is the research behind the Winemap?</summary>
-                  <p className="leading-relaxed text-[color:var(--text-muted)]">
+                <details className={styles.FAQDetails}>
+                  <summary className="flex list-none items-start justify-between gap-4 text-left text-xl font-semibold text-[color:var(--text-strong)] cursor-pointer marker:hidden [&::-webkit-details-marker]:hidden focus:outline-none focus-visible:rounded-lg focus-visible:ring-2 focus-visible:ring-[color:var(--accent-strong)]/40">
+                    <span>What is the research behind the Winemap?</span>
+                    <span className="mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[color:var(--border-soft)] bg-[color:var(--page-bg)] text-[color:var(--accent-strong)] transition duration-200 group-open:rotate-180 group-open:border-[color:var(--accent-strong)]/40 group-open:bg-[color:var(--accent-soft)]">
+                      <ChevronDown className="h-4 w-4" />
+                    </span>
+                  </summary>
+                  <p className="pt-4 leading-relaxed text-[color:var(--text-muted)]">
                     The different datasets and map-applications show in the Winemap were created 
                     in the framework of several projects and publications.
                     You can find out more about the projects{" "}
-                    <a
+                    <Link
                       href="/about#projects"
                       className="text-[color:var(--accent-strong)] hover:underline"
                     >
                       here{" "}
-                    </a>
+                    </Link>
                     and browse through related publications{" "}
-                    <a
+                    <Link
                       href="/literature"
                       className="text-[color:var(--accent-strong)] hover:underline"
                     >
                       here
-                    </a>
+                    </Link>
                     .
                   </p>
                 </details>
 
-                <details className="group cursor-pointer">
-                  <summary className="text-xl font-semibold mb-3 text-[color:var(--text-strong)]">What is the timeline of the project?</summary>
-                  <p className="leading-relaxed text-[color:var(--text-muted)]">
+                <details className="group rounded-2xl border border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)] px-6 py-5 shadow-[0_18px_45px_rgba(69,57,43,0.08)] transition-colors duration-200 open:border-[color:var(--accent-strong)]/40 open:bg-[color:var(--surface-panel-muted)]">
+                  <summary className="flex list-none items-start justify-between gap-4 text-left text-xl font-semibold text-[color:var(--text-strong)] cursor-pointer marker:hidden [&::-webkit-details-marker]:hidden focus:outline-none focus-visible:rounded-lg focus-visible:ring-2 focus-visible:ring-[color:var(--accent-strong)]/40">
+                    <span>What is the timeline of the project?</span>
+                    <span className="mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[color:var(--border-soft)] bg-[color:var(--page-bg)] text-[color:var(--accent-strong)] transition duration-200 group-open:rotate-180 group-open:border-[color:var(--accent-strong)]/40 group-open:bg-[color:var(--accent-soft)]">
+                      <ChevronDown className="h-4 w-4" />
+                    </span>
+                  </summary>
+                  <p className="pt-4 leading-relaxed text-[color:var(--text-muted)]">
                     The project began with the collection and digitization of PDO wine region data in 2020-2021. Climate and environmental data integration followed in 2022-2023, with ongoing updates to adaptation strategies and pilot implementation experiences. The platform continues to evolve with new data and features.
                   </p>
                 </details>
 
-                <details className="group cursor-pointer">
-                  <summary className="text-xl font-semibold mb-3 text-[color:var(--text-strong)]">How can I use this data?</summary>
-                  <p className="leading-relaxed text-[color:var(--text-muted)]">
+                <details className="group rounded-2xl border border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)] px-6 py-5 shadow-[0_18px_45px_rgba(69,57,43,0.08)] transition-colors duration-200 open:border-[color:var(--accent-strong)]/40 open:bg-[color:var(--surface-panel-muted)]">
+                  <summary className="flex list-none items-start justify-between gap-4 text-left text-xl font-semibold text-[color:var(--text-strong)] cursor-pointer marker:hidden [&::-webkit-details-marker]:hidden focus:outline-none focus-visible:rounded-lg focus-visible:ring-2 focus-visible:ring-[color:var(--accent-strong)]/40">
+                    <span>How can I use this data?</span>
+                    <span className="mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[color:var(--border-soft)] bg-[color:var(--page-bg)] text-[color:var(--accent-strong)] transition duration-200 group-open:rotate-180 group-open:border-[color:var(--accent-strong)]/40 group-open:bg-[color:var(--accent-soft)]">
+                      <ChevronDown className="h-4 w-4" />
+                    </span>
+                  </summary>
+                  <p className="pt-4 leading-relaxed text-[color:var(--text-muted)]">
                     The WINEMAP data is available for research, educational, and policy-making purposes. For specific data access, collaboration opportunities, or questions about data usage, please{" "}
                     <Link href="/imprint-privacy" className="text-[color:var(--accent-strong)] hover:underline">
                       contact us

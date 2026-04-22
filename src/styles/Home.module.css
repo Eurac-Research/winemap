@@ -1410,3 +1410,35 @@
   display: block;
   opacity: 0.5;
 }
+
+.FAQDetails {
+  padding: 6px 24px;
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    border-color 200ms ease,
+    background-color 200ms ease;
+}
+
+.FAQDetails:open {
+  background-color: var(--surface-panel-muted);
+}
+
+.FAQChevron {
+  margin-top: 3px;
+  height: 9;
+  width: 9;
+  align-items: center;
+  justify-items: center;
+  color: var(--accent-strong);
+
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    border-color 200ms ease,
+    background-color 200ms ease;
+}
+
+.FAQChevron:open {
+  rotate: 180;
+}
