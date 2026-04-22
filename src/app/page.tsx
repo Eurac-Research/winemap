@@ -187,21 +187,21 @@ export default function HomePage() {
           <section className="mx-auto max-w-5xl border-t border-[color:var(--border-soft)] px-4 py-20 sm:px-6 lg:px-8">
             <div>
               <h2 className="text-3xl font-bold mb-12 text-center text-[color:var(--text-strong)]">Frequently Asked Questions</h2>
-              <div className="mx-auto flex max-w-4xl flex-col gap-1">
+              <div className={styles.FAQList}>
                 <details className={styles.FAQDetails}>
-                  <summary className="flex list-none items-start justify-between gap-4 text-left text-xl font-semibold text-[color:var(--text-strong)] cursor-pointer marker:hidden [&::-webkit-details-marker]:hidden focus:outline-none focus-visible:rounded-lg focus-visible:ring-2 focus-visible:ring-[color:var(--accent-strong)]/40">
-                    <span>Who is behind this project?</span>
-                    <span className="mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center text-[color:var(--accent-strong)] transition duration-200 group-open:rotate-180">
+                  <summary className={styles.FAQSummary}>
+                    <span className={styles.FAQQuestion}>Who is behind this project?</span>
+                    <span className={styles.FAQChevron}>
                       <ChevronDown className="h-4 w-4" />
                     </span>
                   </summary>
-                  <p className="pt-4 leading-relaxed text-[color:var(--text-muted)]">
+                  <p className={styles.FAQAnswer}>
                     WINEMAP is developed by the{" "}
                     <a
                       href="https://www.eurac.edu/en/institutes-centers/institute-for-alpine-environment"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[color:var(--accent-strong)] hover:underline"
+                      className={styles.FAQLink}
                     >
                       Institute for Alpine Environment{" "}
                     </a>
@@ -212,12 +212,12 @@ export default function HomePage() {
                       href="https://www.eurac.edu/en/data-in-action"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[color:var(--accent-strong)] hover:underline"
+                      className={styles.FAQLink}
                     >
                       Data in Action
                     </a>
                     , an initiative by Eurac Research&apos;s Communication Department that transforms research data into accessible digital experiences. The platform&apos;s concept and technical development are handled by the Communication Department. Learn more about{" "}
-                    <Link href="/team" className="text-[color:var(--accent-strong)] hover:underline">
+                    <Link href="/team" className={styles.FAQLink}>
                       our team
                     </Link>
                     .
@@ -225,26 +225,26 @@ export default function HomePage() {
                 </details>
 
                 <details className={styles.FAQDetails}>
-                  <summary className="flex list-none items-start justify-between gap-4 text-left text-xl font-semibold text-[color:var(--text-strong)] cursor-pointer marker:hidden [&::-webkit-details-marker]:hidden focus:outline-none focus-visible:rounded-lg focus-visible:ring-2 focus-visible:ring-[color:var(--accent-strong)]/40">
-                    <span>What is the research behind the Winemap?</span>
-                    <span className="mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[color:var(--border-soft)] bg-[color:var(--page-bg)] text-[color:var(--accent-strong)] transition duration-200 group-open:rotate-180 group-open:border-[color:var(--accent-strong)]/40 group-open:bg-[color:var(--accent-soft)]">
+                  <summary className={styles.FAQSummary}>
+                    <span className={styles.FAQQuestion}>What is the research behind the Winemap?</span>
+                    <span className={styles.FAQChevron}>
                       <ChevronDown className="h-4 w-4" />
                     </span>
                   </summary>
-                  <p className="pt-4 leading-relaxed text-[color:var(--text-muted)]">
+                  <p className={styles.FAQAnswer}>
                     The different datasets and map-applications show in the Winemap were created 
                     in the framework of several projects and publications.
                     You can find out more about the projects{" "}
                     <Link
                       href="/about#projects"
-                      className="text-[color:var(--accent-strong)] hover:underline"
+                      className={styles.FAQLink}
                     >
                       here{" "}
                     </Link>
                     and browse through related publications{" "}
                     <Link
                       href="/literature"
-                      className="text-[color:var(--accent-strong)] hover:underline"
+                      className={styles.FAQLink}
                     >
                       here
                     </Link>
@@ -252,28 +252,28 @@ export default function HomePage() {
                   </p>
                 </details>
 
-                <details className="group rounded-2xl border border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)] px-6 py-5 shadow-[0_18px_45px_rgba(69,57,43,0.08)] transition-colors duration-200 open:border-[color:var(--accent-strong)]/40 open:bg-[color:var(--surface-panel-muted)]">
-                  <summary className="flex list-none items-start justify-between gap-4 text-left text-xl font-semibold text-[color:var(--text-strong)] cursor-pointer marker:hidden [&::-webkit-details-marker]:hidden focus:outline-none focus-visible:rounded-lg focus-visible:ring-2 focus-visible:ring-[color:var(--accent-strong)]/40">
-                    <span>What is the timeline of the project?</span>
-                    <span className="mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[color:var(--border-soft)] bg-[color:var(--page-bg)] text-[color:var(--accent-strong)] transition duration-200 group-open:rotate-180 group-open:border-[color:var(--accent-strong)]/40 group-open:bg-[color:var(--accent-soft)]">
+                <details className={styles.FAQDetails}>
+                  <summary className={styles.FAQSummary}>
+                    <span className={styles.FAQQuestion}>What is the timeline of the project?</span>
+                    <span className={styles.FAQChevron}>
                       <ChevronDown className="h-4 w-4" />
                     </span>
                   </summary>
-                  <p className="pt-4 leading-relaxed text-[color:var(--text-muted)]">
+                  <p className={styles.FAQAnswer}>
                     The project began with the collection and digitization of PDO wine region data in 2020-2021. Climate and environmental data integration followed in 2022-2023, with ongoing updates to adaptation strategies and pilot implementation experiences. The platform continues to evolve with new data and features.
                   </p>
                 </details>
 
-                <details className="group rounded-2xl border border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)] px-6 py-5 shadow-[0_18px_45px_rgba(69,57,43,0.08)] transition-colors duration-200 open:border-[color:var(--accent-strong)]/40 open:bg-[color:var(--surface-panel-muted)]">
-                  <summary className="flex list-none items-start justify-between gap-4 text-left text-xl font-semibold text-[color:var(--text-strong)] cursor-pointer marker:hidden [&::-webkit-details-marker]:hidden focus:outline-none focus-visible:rounded-lg focus-visible:ring-2 focus-visible:ring-[color:var(--accent-strong)]/40">
-                    <span>How can I use this data?</span>
-                    <span className="mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[color:var(--border-soft)] bg-[color:var(--page-bg)] text-[color:var(--accent-strong)] transition duration-200 group-open:rotate-180 group-open:border-[color:var(--accent-strong)]/40 group-open:bg-[color:var(--accent-soft)]">
+                <details className={styles.FAQDetails}>
+                  <summary className={styles.FAQSummary}>
+                    <span className={styles.FAQQuestion}>How can I use this data?</span>
+                    <span className={styles.FAQChevron}>
                       <ChevronDown className="h-4 w-4" />
                     </span>
                   </summary>
-                  <p className="pt-4 leading-relaxed text-[color:var(--text-muted)]">
+                  <p className={styles.FAQAnswer}>
                     The WINEMAP data is available for research, educational, and policy-making purposes. For specific data access, collaboration opportunities, or questions about data usage, please{" "}
-                    <Link href="/imprint-privacy" className="text-[color:var(--accent-strong)] hover:underline">
+                    <Link href="/imprint-privacy" className={styles.FAQLink}>
                       contact us
                     </Link>
                     .

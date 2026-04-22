@@ -1411,8 +1411,16 @@
   opacity: 0.5;
 }
 
+.FAQList {
+  margin: 0 auto;
+  max-width: 56rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
 .FAQDetails {
-  padding: 6px 24px;
+  padding: 3px 24px;
   transition:
     transform 200ms ease,
     box-shadow 200ms ease,
@@ -1420,25 +1428,71 @@
     background-color 200ms ease;
 }
 
-.FAQDetails:open {
+.FAQDetails[open] {
+  border: 1px solid var(--border-soft);
+  border-color: color-mix(in srgb, var(--accent-strong) 40%, transparent);
   background-color: var(--surface-panel-muted);
 }
 
-.FAQChevron {
-  margin-top: 3px;
-  height: 9;
-  width: 9;
-  align-items: center;
-  justify-items: center;
-  color: var(--accent-strong);
+.FAQSummary {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  cursor: pointer;
+  list-style: none;
+  text-align: left;
+  color: var(--text-strong);
+  font-size: 1.25rem;
+  font-weight: 600;
+  outline: none;
 
-  transition:
-    transform 200ms ease,
-    box-shadow 200ms ease,
-    border-color 200ms ease,
-    background-color 200ms ease;
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &::marker {
+    display: none;
+    content: "";
+  }
+
+  &:focus-visible {
+    border-radius: 0.5rem;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-strong) 40%, transparent);
+  }
 }
 
-.FAQChevron:open {
-  rotate: 180;
+.FAQQuestion {
+  flex: 1 1 auto;
+}
+
+.FAQChevron {
+  margin-top: 0.25rem;
+  display: inline-flex;
+  height: 2.25rem;
+  width: 2.25rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-strong);
+  transition:
+    transform 200ms ease,
+    color 200ms ease;
+}
+
+.FAQDetails[open] .FAQChevron {
+  transform: rotate(180deg);
+}
+
+.FAQAnswer {
+  color: var(--text-muted);
+  line-height: 1.625;
+}
+
+.FAQLink {
+  color: var(--accent-strong);
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
