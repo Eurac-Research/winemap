@@ -186,9 +186,9 @@ export default function HomePage() {
           <section className="mx-auto max-w-5xl border-t border-[color:var(--border-soft)] px-4 py-20 sm:px-6 lg:px-8">
             <div>
               <h2 className="text-3xl font-bold mb-12 text-center text-[color:var(--text-strong)]">Frequently Asked Questions</h2>
-              <div className="space-y-8">
-                <div className="group">
-                  <h3 className="text-xl font-semibold mb-3 text-[color:var(--text-strong)]">Who is behind this project?</h3>
+              <div className="grid sm:grid-cols-1 md:grid-cols-2">
+                <details className="group cursor-pointer">
+                  <summary className="text-xl font-semibold mb-3 text-[color:var(--text-strong)]">Who is behind this project?</summary>
                   <p className="leading-relaxed text-[color:var(--text-muted)]">
                     WINEMAP is developed by the{" "}
                     <a
@@ -216,10 +216,10 @@ export default function HomePage() {
                     </Link>
                     .
                   </p>
-                </div>
+                </details>
 
-                <div className="group">
-                  <h3 className="text-xl font-semibold mb-3 text-[color:var(--text-strong)]">What is the research behind the Winemap?</h3>
+                <details className="group cursor-pointer">
+                  <summary className="text-xl font-semibold mb-3 text-[color:var(--text-strong)]">What is the research behind the Winemap?</summary>
                   <p className="leading-relaxed text-[color:var(--text-muted)]">
                     The different datasets and map-applications show in the Winemap were created 
                     in the framework of several projects and publications.
@@ -239,17 +239,17 @@ export default function HomePage() {
                     </a>
                     .
                   </p>
-                </div>
+                </details>
 
-                <div className="group">
-                  <h3 className="text-xl font-semibold mb-3 text-[color:var(--text-strong)]">What is the timeline of the project?</h3>
+                <details className="group cursor-pointer">
+                  <summary className="text-xl font-semibold mb-3 text-[color:var(--text-strong)]">What is the timeline of the project?</summary>
                   <p className="leading-relaxed text-[color:var(--text-muted)]">
                     The project began with the collection and digitization of PDO wine region data in 2020-2021. Climate and environmental data integration followed in 2022-2023, with ongoing updates to adaptation strategies and pilot implementation experiences. The platform continues to evolve with new data and features.
                   </p>
-                </div>
+                </details>
 
-                <div className="group">
-                  <h3 className="text-xl font-semibold mb-3 text-[color:var(--text-strong)]">How can I use this data?</h3>
+                <details className="group cursor-pointer">
+                  <summary className="text-xl font-semibold mb-3 text-[color:var(--text-strong)]">How can I use this data?</summary>
                   <p className="leading-relaxed text-[color:var(--text-muted)]">
                     The WINEMAP data is available for research, educational, and policy-making purposes. For specific data access, collaboration opportunities, or questions about data usage, please{" "}
                     <Link href="/imprint-privacy" className="text-[color:var(--accent-strong)] hover:underline">
@@ -257,7 +257,7 @@ export default function HomePage() {
                     </Link>
                     .
                   </p>
-                </div>
+                </details>
               </div>
             </div>
           </section>
