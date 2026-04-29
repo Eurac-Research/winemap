@@ -485,7 +485,7 @@ export const Indicators: Indicator[] = [
     id: "mean_temperature",
     name: "Temperature",
     category: "climate",
-    apps: ["climate-explorer", "environment-browser"],
+    apps: ["environment-browser"],
     subtitle: "Average annual temperature.",
     description: [
       "Temperature represents the average annual air temperature for the selected climate period and scenario. It is a core climate variable for evaluating regional growing conditions and climate change exposure.",
@@ -504,7 +504,7 @@ export const Indicators: Indicator[] = [
     id: "precipitation_sum",
     name: "Precipitation",
     category: "climate",
-    apps: ["climate-explorer", "environment-browser"],
+    apps: ["environment-browser"],
     subtitle: "Annual precipitation sum.",
     description: [
       "Precipitation represents the total annual precipitation for the selected climate period and scenario. It provides a broad measure of water input relevant for drought exposure, irrigation demand, and ecosystem water availability.",
@@ -523,7 +523,7 @@ export const Indicators: Indicator[] = [
     id: "huglin",
     name: "Huglin Index",
     category: "climate",
-    apps: ["climate-explorer", "environment-browser"],
+    apps: ["environment-browser"],
     subtitle: "Thermal growing conditions and ripening suitability.",
     description: [
       "The Huglin Index (HI) is a bioclimatic indicator that describes the thermal growing conditions throughout the vegetation period in a wine region. It is primarily linked to vine phenology and development and plays a critical role in determining viticultural suitability.",
@@ -567,7 +567,7 @@ export const Indicators: Indicator[] = [
     id: "cool-night",
     name: "Cool Night Index",
     category: "climate",
-    apps: ["climate-explorer", "environment-browser"],
+    apps: ["environment-browser"],
     subtitle: "Night-time temperature during ripening.",
     description: [
       "The Cool Night Index (CNI) describes the minimum temperatures during the ripening phase of grapes. It is useful for evaluating sensory qualities such as aroma and polyphenol development.",
@@ -600,7 +600,7 @@ export const Indicators: Indicator[] = [
     id: "dryness-index",
     name: "Dryness Index",
     category: "climate",
-    apps: ["climate-explorer", "environment-browser"],
+    apps: ["environment-browser"],
     subtitle: "Soil water balance and drought pressure.",
     description: [
       "The Dryness Index (DI) evaluates water availability for grapevines by combining precipitation, evapotranspiration, and soil water reserve assumptions. It helps characterise drought pressure and corresponding adaptation needs.",

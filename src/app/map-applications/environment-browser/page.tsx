@@ -13,7 +13,6 @@ import type {
 } from "@geomatico/maplibre-cog-protocol/dist/types/types";
 import {
   ChevronDown,
-  Database,
   ExternalLink,
   HelpCircle,
   Navigation2,
@@ -999,13 +998,6 @@ export default function EnvironmentBrowserPage() {
                     <span>Description</span>
                   </dt>
                   <dd>{selectedInfo.description.join(" ")}</dd>
-                </div>
-                <div className={styles.detailItem}>
-                  <dt>
-                    <Database className="h-4 w-4" />
-                    <span>Source</span>
-                  </dt>
-                  <dd>{selectedInfo.source?.join(" ")}</dd>
                 </div>
                 <div className={styles.detailItem}>
                   <dt>

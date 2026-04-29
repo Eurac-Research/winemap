@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import {
   BookOpen,
-  Database,
+  ChevronDown,
   ExternalLink,
   Layers,
   ListTree,
@@ -198,6 +198,34 @@ function renderReference(reference: IndicatorReferenceContent, index: number) {
   );
 }
 
+function ExpandableIndicatorSection({
+  title,
+  icon,
+  children,
+}: {
+  title: string;
+  icon: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <details className="group mt-6 rounded-lg border border-[color:var(--border-soft)] bg-[color:var(--surface)]">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 [&::-webkit-details-marker]:hidden">
+        <span className="flex items-center gap-2 text-base font-semibold text-[color:var(--text-strong)]">
+          {icon}
+          {title}
+        </span>
+        <ChevronDown
+          className="h-4 w-4 shrink-0 text-[color:var(--text-muted)] transition-transform group-open:rotate-180"
+          aria-hidden="true"
+        />
+      </summary>
+      <div className="border-t border-[color:var(--border-soft)] px-4 pb-4 pt-2">
+        {children}
+      </div>
+    </details>
+  );
+}
+
 function IndicatorArticle({ indicator }: { indicator: Indicator }) {
   const descriptions = indicator.description.filter((paragraph) =>
     paragraph.trim(),
@@ -253,25 +281,23 @@ function IndicatorArticle({ indicator }: { indicator: Indicator }) {
       ) : null}
 
       {indicator.methodology?.length ? (
-        <section className="mt-6">
-          <h3 className="flex items-center gap-2 text-base font-semibold text-[color:var(--text-strong)]">
-            <ListTree className="h-4 w-4" aria-hidden="true" />
-            Methodology
-          </h3>
+        <ExpandableIndicatorSection
+          title="Methodology"
+          icon={<ListTree className="h-4 w-4" aria-hidden="true" />}
+        >
           {renderMethodology(indicator.methodology)}
-        </section>
+        </ExpandableIndicatorSection>
       ) : null}
 
       {references?.length ? (
-        <section className="mt-6">
-          <h3 className="flex items-center gap-2 text-base font-semibold text-[color:var(--text-strong)]">
-            <ExternalLink className="h-4 w-4" aria-hidden="true" />
-            References
-          </h3>
+        <ExpandableIndicatorSection
+          title="References"
+          icon={<ExternalLink className="h-4 w-4" aria-hidden="true" />}
+        >
           <ul className="mt-1 list-disc space-y-2 pl-5 text-[color:var(--text-base)]">
             {references.map(renderReference)}
           </ul>
-        </section>
+        </ExpandableIndicatorSection>
       ) : null}
 
       {apps.length ? (
