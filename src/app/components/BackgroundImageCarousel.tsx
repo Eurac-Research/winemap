@@ -104,16 +104,6 @@ export default function BackgroundImageCarousel({
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Link
-                href={activeItem.href}
-                className="inline-flex items-center gap-2 text-base font-semibold text-[color:var(--primary)] transition hover:gap-3 hover:text-white"
-              >
-                <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-current">
-                  <ArrowRight className="h-4 w-4" />
-                </span>
-                <span>{activeItem.ctaLabel ?? "Read more"}</span>
-              </Link>
-
               <div className="flex items-center gap-2" aria-label="Carousel slides">
                 {items.map((item, index) => (
                   <button
@@ -130,29 +120,22 @@ export default function BackgroundImageCarousel({
                   />
                 ))}
               </div>
+
+              <Link
+                href={activeItem.href}
+                className="inline-flex items-center gap-2 text-base font-semibold text-[color:var(--primary)] transition hover:gap-3 hover:text-white"
+              >
+                <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-current">
+                  <ArrowRight className="h-4 w-4" />
+                </span>
+                <span>{activeItem.ctaLabel ?? "Read more"}</span>
+              </Link>
+
             </div>
           </div>
         </div>
       </div>
 
-      <div className="absolute bottom-6 right-4 z-20 hidden items-center gap-3 sm:right-8 md:flex lg:right-12">
-        <button
-          type="button"
-          onClick={showPrevious}
-          className="inline-flex h-11 w-11 items-center justify-center border border-white/70 text-white transition hover:border-[color:var(--primary)] hover:bg-[color:var(--primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-          aria-label="Show previous carousel slide"
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </button>
-        <button
-          type="button"
-          onClick={showNext}
-          className="inline-flex h-11 w-11 items-center justify-center border border-white/70 text-white transition hover:border-[color:var(--primary)] hover:bg-[color:var(--primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-          aria-label="Show next carousel slide"
-        >
-          <ChevronRight className="h-5 w-5" />
-        </button>
-      </div>
     </section>
   );
 }

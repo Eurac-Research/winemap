@@ -2,7 +2,6 @@ import Link from "next/link";
 import BackgroundImageCarousel from "@/app/components/BackgroundImageCarousel";
 import ImageComparisonSlider from "@/app/components/ImageComparisonSlider";
 import RespondLogo from "@/app/components/ui/RespondLogo";
-import WinemapDescription from "@/app/components/WinemapDescription";
 import { mapApplications } from "@/app/components/map-applications/mapApplications";
 import MainAreaCarousel from "@/app/components/winemap-sections/MainAreaCarousel";
 import { mainAreas } from "@/app/components/winemap-sections/mainAreas";
