@@ -1,8 +1,8 @@
 import Link from "next/link";
+import BackgroundImageCarousel from "@/app/components/BackgroundImageCarousel";
 import ImageComparisonSlider from "@/app/components/ImageComparisonSlider";
 import RespondLogo from "@/app/components/ui/RespondLogo";
 import WinemapDescription from "@/app/components/WinemapDescription";
-import MapApplicationCard from "@/app/components/map-applications/MapApplicationCard";
 import { mapApplications } from "@/app/components/map-applications/mapApplications";
 import MainAreaCarousel from "@/app/components/winemap-sections/MainAreaCarousel";
 import { mainAreas } from "@/app/components/winemap-sections/mainAreas";
@@ -161,27 +161,14 @@ export default function HomePage() {
       </section>
 
 
-      {/* Content */}
       <div className="relative z-20 w-full">
         <div className="relative z-20 w-full">
-        
-          {/* Map-Applications */}
-          <section id='map-applications' className="mx-auto max-w-5xl border-t border-[color:var(--border-soft)] px-4 py-20 sm:px-6 lg:px-8">
-            <div className="text-center">
-              <h2 className="text-3xl font-bold mb-6 text-[color:var(--text-strong)]">Map Applications</h2>
-            </div>
-            <div className="flex gap-4 overflow-x-auto pt-2 pb-6 snap-x snap-mandatory w-full mx-auto">
-              {mapApplications.map((app) => (
-                <MapApplicationCard
-                  key={app.title}
-                  href={app.href}
-                  title={app.title}
-                  description={app.description}
-                  icon={app.icon}
-                />
-              ))}
-            </div>
-          </section>
+          <div id="map-applications" className="scroll-mt-28">
+            <BackgroundImageCarousel
+              items={mapApplications}
+              ariaLabel="Map applications carousel"
+            />
+          </div>
 
           {/* FAQ Section */}
           <section className="mx-auto max-w-5xl border-t border-[color:var(--border-soft)] px-4 py-20 sm:px-6 lg:px-8">

@@ -1,11 +1,12 @@
-import { Map as MapIcon } from "lucide-react";
-import { ReactNode } from "react";
-
 type MapApplication = {
   title: string;
   description: string;
   href: string;
-  icon: ReactNode;
+  backgroundImage: string;
+  backgroundAlt: string;
+  backgroundPosition?: string;
+  eyebrow: string;
+  ctaLabel: string;
 };
 
 export const mapApplications: MapApplication[] = [
@@ -14,27 +15,43 @@ export const mapApplications: MapApplication[] = [
     description:
       "Access all map layers in one unified interface. Toggle layers, organize by scale or category, and explore detailed geospatial information.",
     href: "/map-applications/environment-browser",
-    icon: <MapIcon className="w-5 h-5 text-[color:var(--text-strong)]" aria-hidden="true" />,
+    backgroundImage: "/images/landscape.jpg",
+    backgroundAlt: "A vineyard landscape used as a background for the Environment Browser map application.",
+    backgroundPosition: "center",
+    eyebrow: "Map applications",
+    ctaLabel: "Open application",
   },
   {
     title: "European PDO Atlas",
     description:
       "Discover detailed geospatial and regulatory information about European Wine PDO regions in the form of an interactive map.",
     href: "/map-applications/pdo-atlas",
-    icon: <MapIcon className="w-5 h-5 text-[color:var(--text-strong)]" aria-hidden="true" />,
+    backgroundImage: "/images/winemap-bg.jpg",
+    backgroundAlt: "A wine region map background for the European PDO Atlas.",
+    backgroundPosition: "center",
+    eyebrow: "Map applications",
+    ctaLabel: "Open atlas",
   },
   {
     title: "Vulnerability Explorer",
     description:
       "How vulnerable are European PDO regions to the effects of climate change? Get detailed, region-specific information in this interactive map.",
     href: "/map-applications/vulnerability-explorer",
-    icon: <MapIcon className="w-5 h-5 text-[color:var(--text-strong)]" aria-hidden="true" />,
+    backgroundImage: "/images/vulnerability/4_vulnerability_bioclim.png",
+    backgroundAlt: "A vulnerability map background for European wine regions.",
+    backgroundPosition: "center",
+    eyebrow: "Map applications",
+    ctaLabel: "Explore vulnerability",
   },
   {
     title: "Spatial Analogues Tool",
     description:
       "Explore how climatic conditions move in space under different climate scenarios.",
     href: "/",
-    icon: <MapIcon className="w-5 h-5 text-[color:var(--text-strong)]" aria-hidden="true" />,
+    backgroundImage: "/images/vineyard_sun.jpg",
+    backgroundAlt: "Sunlit vineyard rows used as a background for the Spatial Analogues Tool.",
+    backgroundPosition: "center",
+    eyebrow: "Map applications",
+    ctaLabel: "Explore tool",
   },
 ];
