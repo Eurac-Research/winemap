@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { ChevronDown, ExternalLink, HelpCircle, Navigation2, Database } from "lucide-react";
 import {
   cogProtocol,
   locationValues,
@@ -12,6 +11,13 @@ import type {
   CogMetadata,
   TypedArray,
 } from "@geomatico/maplibre-cog-protocol/dist/types/types";
+import {
+  ChevronDown,
+  Database,
+  ExternalLink,
+  HelpCircle,
+  Navigation2,
+} from "lucide-react";
 import maplibregl from "maplibre-gl";
 import type { LngLat, MapMouseEvent, PointLike } from "maplibre-gl";
 import Map, {
@@ -22,9 +28,14 @@ import Map, {
 
 import "maplibre-gl/dist/maplibre-gl.css";
 
-import { RAMPS, type RampKey, VerticalLegend } from "@/app/components/colorRamps";
 import { BASEMAPS } from "@/app/components/basemaps";
 import {
+  RAMPS,
+  VerticalLegend,
+  type RampKey,
+} from "@/app/components/colorRamps";
+import {
+  getIndicatorGlossaryHref,
   getIndicatorMapLayer,
   getIndicatorsWithMapByApp,
   type ClassificationBreak,
@@ -35,8 +46,8 @@ import {
 import MapPlaceSearch from "@/app/components/maps/MapPlaceSearch";
 import { PdoMapLayout } from "@/app/components/pdo-app/PdoMapLayout";
 import { PdoSidebarShell } from "@/app/components/pdo-app/PdoSidebarShell";
-import styles from "@/styles/Home.module.css";
 import RespondLogo from "@/app/components/ui/RespondLogo";
+import styles from "@/styles/Home.module.css";
 
 const SOURCE_ID = "environment-raster-source";
 const LAYER_ID = "environment-raster-layer";
@@ -58,7 +69,9 @@ const groupedIndicators = categories.map((category) => ({
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" "),
-  items: environmentIndicators.filter((indicator) => indicator.category === category),
+  items: environmentIndicators.filter(
+    (indicator) => indicator.category === category,
+  ),
 }));
 
 type HoverSample = {
@@ -76,12 +89,6 @@ type HoverInfo = {
   samples?: HoverSample[];
 };
 
-const categoryToDetailPage: Record<string, string> = {
-  climate: "/climate-environment/climate",
-  "ecosystem-services": "/climate-environment/ecosystem-services",
-  "ecosystem-conditions": "/climate-environment/ecosystem-services",
-};
-
 let cogProtocolRegistered = false;
 if (!cogProtocolRegistered) {
   maplibregl.addProtocol("cog", cogProtocol);
@@ -90,11 +97,6 @@ if (!cogProtocolRegistered) {
 
 const formatUnit = (unit: string | undefined) =>
   unit ? `Unit: ${unit}` : null;
-
-const getDetailHref = (category: string, indicatorId: string) => {
-  const base = categoryToDetailPage[category] ?? "/climate-environment";
-  return indicatorId ? `${base}#${indicatorId}` : base;
-};
 
 function formatLegendValue(value: number, unit: string | undefined) {
   if (!Number.isFinite(value)) return "N/A";
@@ -214,7 +216,10 @@ function getOptionLabel(
   return options?.find((option) => option.id === optionId)?.label ?? optionId;
 }
 
-function getAvailablePeriods(mapConfig: IndicatorMapConfig, scenarioId?: string) {
+function getAvailablePeriods(
+  mapConfig: IndicatorMapConfig,
+  scenarioId?: string,
+) {
   const periods = mapConfig.periods ?? [];
 
   if (periods.length === 0) return [];
@@ -267,18 +272,21 @@ export default function EnvironmentBrowserPage() {
   );
 
   const selectedIndicator =
-    environmentIndicators.find((indicator) => indicator.id === selectedIndicatorId) ??
-    null;
+    environmentIndicators.find(
+      (indicator) => indicator.id === selectedIndicatorId,
+    ) ?? null;
 
   const mapConfig = selectedIndicator?.map;
   const selectedBasemap =
     BASEMAPS.find((basemap) => basemap.id === selectedBasemapId) ?? BASEMAPS[0];
   const hasScenarioOptions =
-    (mapConfig?.scenarios?.length ?? 0) > 0 || (mapConfig?.periods?.length ?? 0) > 0;
+    (mapConfig?.scenarios?.length ?? 0) > 0 ||
+    (mapConfig?.periods?.length ?? 0) > 0;
 
   const availableScenarios = mapConfig?.scenarios ?? [];
   const activeScenarioId =
-    selectedScenarioId && availableScenarios.some((item) => item.id === selectedScenarioId)
+    selectedScenarioId &&
+    availableScenarios.some((item) => item.id === selectedScenarioId)
       ? selectedScenarioId
       : (mapConfig?.defaultScenarioId ?? availableScenarios[0]?.id ?? "");
 
@@ -288,7 +296,8 @@ export default function EnvironmentBrowserPage() {
   );
 
   const activePeriodId =
-    selectedPeriodId && availablePeriods.some((item) => item.id === selectedPeriodId)
+    selectedPeriodId &&
+    availablePeriods.some((item) => item.id === selectedPeriodId)
       ? selectedPeriodId
       : (mapConfig?.defaultPeriodId ?? availablePeriods[0]?.id ?? "");
 
@@ -302,11 +311,15 @@ export default function EnvironmentBrowserPage() {
         getIndicatorMapLayer(selectedIndicator, {
           scenarioId: activeScenarioId || undefined,
           periodId: activePeriodId || undefined,
-        }) ?? mapConfig.layers[0] ?? null
+        }) ??
+        mapConfig.layers[0] ??
+        null
       );
     }
 
-    return getIndicatorMapLayer(selectedIndicator) ?? mapConfig.layers[0] ?? null;
+    return (
+      getIndicatorMapLayer(selectedIndicator) ?? mapConfig.layers[0] ?? null
+    );
   }, [
     activePeriodId,
     activeScenarioId,
@@ -347,7 +360,8 @@ export default function EnvironmentBrowserPage() {
       return;
     }
 
-    const indicator = environmentIndicators.find((item) => item.id === indicatorId) ?? null;
+    const indicator =
+      environmentIndicators.find((item) => item.id === indicatorId) ?? null;
     setSelectedIndicatorId(indicatorId);
     setSelectedScenarioId(indicator?.map?.defaultScenarioId ?? "");
     setSelectedPeriodId(indicator?.map?.defaultPeriodId ?? "");
@@ -435,7 +449,11 @@ export default function EnvironmentBrowserPage() {
       if (hasScenarioOptions && hoverSampleTargets.length > 0) {
         const results = await Promise.allSettled(
           hoverSampleTargets.map(async (sampleTarget) => {
-            const [value] = await locationValues(sampleTarget.url, coordinates, zoom);
+            const [value] = await locationValues(
+              sampleTarget.url,
+              coordinates,
+              zoom,
+            );
             return {
               scenarioId: sampleTarget.scenarioId,
               periodId: sampleTarget.periodId,
@@ -478,7 +496,11 @@ export default function EnvironmentBrowserPage() {
       }
 
       try {
-        const [value] = await locationValues(selectedAsset.url, coordinates, zoom);
+        const [value] = await locationValues(
+          selectedAsset.url,
+          coordinates,
+          zoom,
+        );
         if (requestId !== hoverRequestIdRef.current) return;
 
         setHoverInfo({
@@ -532,7 +554,13 @@ export default function EnvironmentBrowserPage() {
         hoverThrottleRef.current = null;
       }
     };
-  }, [hasScenarioOptions, hoverSampleTargets, mapConfig, mapReady, selectedAsset]);
+  }, [
+    hasScenarioOptions,
+    hoverSampleTargets,
+    mapConfig,
+    mapReady,
+    selectedAsset,
+  ]);
 
   if (environmentIndicators.length === 0) {
     return (
@@ -544,7 +572,9 @@ export default function EnvironmentBrowserPage() {
                 <div className={styles.filterHeader}>
                   <div className={styles.filterIntro}>
                     <div className={styles.filterEyebrowRow}>
-                      <p className={styles.filterEyebrow}>Environment Browser</p>
+                      <p className={styles.filterEyebrow}>
+                        Environment Browser
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -573,7 +603,9 @@ export default function EnvironmentBrowserPage() {
   const activeClassification = mapConfig?.classifications ?? [];
   const hoverValue = hoverInfo?.currentValue ?? hoverInfo?.value ?? null;
   const hoverMarkerOffset =
-    hoverValue != null && activeRange ? getBreakOffset(hoverValue, activeRange) : null;
+    hoverValue != null && activeRange
+      ? getBreakOffset(hoverValue, activeRange)
+      : null;
 
   const hoveredClassBreak =
     hoverValue != null
@@ -622,7 +654,10 @@ export default function EnvironmentBrowserPage() {
       </div>
 
       <section className={styles.sidebarSection}>
-        <label className={styles.filterLabel} htmlFor="environment-basemap-select">
+        <label
+          className={styles.filterLabel}
+          htmlFor="environment-basemap-select"
+        >
           Basemap
         </label>
         <div className={styles.mapDropdownWrap}>
@@ -733,7 +768,10 @@ export default function EnvironmentBrowserPage() {
             />
           </button>
           {openCategories[group.key] ? (
-            <div id={`environment-group-${group.key}`} className={styles.resultList}>
+            <div
+              id={`environment-group-${group.key}`}
+              className={styles.resultList}
+            >
               {group.items.map((indicator) => {
                 const isActive = indicator.id === selectedIndicatorId;
 
@@ -742,12 +780,16 @@ export default function EnvironmentBrowserPage() {
                     key={indicator.id}
                     type="button"
                     onClick={() => selectIndicator(indicator.id)}
-                    className={isActive ? styles.resultActiveItem : styles.resultItem}
+                    className={
+                      isActive ? styles.resultActiveItem : styles.resultItem
+                    }
                     aria-pressed={isActive}
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0 flex-1 text-left">
-                        <span className={styles.resultItemTitle}>{indicator.name}</span>
+                        <span className={styles.resultItemTitle}>
+                          {indicator.name}
+                        </span>
                         <p className={`${styles.resultItemMeta} mt-1`}>
                           {formatUnit(indicator.map?.unit)}
                         </p>
@@ -860,7 +902,9 @@ export default function EnvironmentBrowserPage() {
                       }}
                     >
                       <span>{sample.label}</span>
-                      <span>{formatSampleValue(sample.value, mapConfig?.unit)}</span>
+                      <span>
+                        {formatSampleValue(sample.value, mapConfig?.unit)}
+                      </span>
                     </div>
                   );
                 })}
@@ -970,10 +1014,10 @@ export default function EnvironmentBrowserPage() {
                   </dt>
                   <dd>
                     <Link
-                      href={getDetailHref(selectedInfo.category, selectedInfo.id)}
+                      href={getIndicatorGlossaryHref(selectedInfo.id)}
                       className={styles.detailLink}
                     >
-                      View full description
+                      View definition
                     </Link>
                   </dd>
                 </div>

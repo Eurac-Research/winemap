@@ -1,12 +1,8 @@
-import type { IndicatorContentBlock } from "@/app/components/indicators/IndicatorContent";
 import { RAMPS } from "@/app/components/colorRamps";
 
 type RampKey = keyof typeof RAMPS;
 
-export type AppId =
-  | "cartography"
-  | "climate-explorer"
-  | "environment-browser";
+export type AppId = "cartography" | "climate-explorer" | "environment-browser";
 
 export type IndicatorCategory =
   | "climate"
@@ -46,6 +42,22 @@ export type IndicatorMapConfig = {
   layers: IndicatorMapLayer[];
 };
 
+export type RichTextSegment = {
+  text: string;
+  href?: string;
+  weight?: "normal" | "semibold" | "bold";
+  style?: "normal" | "italic";
+};
+
+export type RichTextContent = string | RichTextSegment | RichTextSegment[];
+
+export type IndicatorReference = {
+  label: string;
+  href?: string;
+};
+
+export type IndicatorReferenceContent = string | IndicatorReference;
+
 export type Indicator = {
   id: string;
   category: IndicatorCategory;
@@ -53,19 +65,27 @@ export type Indicator = {
   name: string;
   subtitle?: string;
   description: string[];
-  methodology?: string[];
-  source?: string[];
-  references?: string[];
-  contentBlocks?: IndicatorContentBlock[];
-  video?: {
-    label: string;
-    url: string;
-  };
+  methodology?: RichTextContent[];
+  references?: IndicatorReferenceContent[];
   map?: IndicatorMapConfig;
 };
 
-const COG_DATA_BASE_URL =
-  "https://pub-7fe518f63b9f4e28b80569979cc136fc.r2.dev";
+export const INDICATOR_CATEGORY_LABELS: Record<IndicatorCategory, string> = {
+  climate: "Climate",
+  topography: "Topography",
+  "ecosystem-services": "Ecosystem services",
+  "ecosystem-conditions": "Ecosystem conditions",
+  vulnerability: "Vulnerability",
+};
+
+export const INDICATOR_GLOSSARY_PATH = "/about/definitions";
+
+export const getIndicatorGlossaryHref = (indicatorId?: string) =>
+  indicatorId
+    ? `${INDICATOR_GLOSSARY_PATH}#${indicatorId}`
+    : INDICATOR_GLOSSARY_PATH;
+
+const COG_DATA_BASE_URL = "https://pub-7fe518f63b9f4e28b80569979cc136fc.r2.dev";
 const CARTOGRAPHY_COG_BASE_URL = `${COG_DATA_BASE_URL}`;
 const CLIMATE_COG_BASE_URL = `${COG_DATA_BASE_URL}`;
 const DEFAULT_ENVIRONMENT_RANGE: [number, number] = [0, 100];
@@ -183,11 +203,10 @@ export const Indicators: Indicator[] = [
     id: "dem",
     name: "Digital Elevation Model",
     category: "topography",
-    apps: ["cartography", "environment-browser"],
-    subtitle:
-      "Digital Elevation Model for Europe.",
+    apps: ["environment-browser"],
+    subtitle: "Digital Elevation Model for Europe.",
     description: [
-      ""
+      "The Digital Elevation Model represents terrain elevation above sea level. It provides the topographic baseline used to derive terrain-related indicators such as slope, aspect, and potential solar radiation.",
     ],
     map: createMapConfig({
       assetId: "dem",
@@ -200,11 +219,10 @@ export const Indicators: Indicator[] = [
     id: "aspect",
     name: "Aspect",
     category: "topography",
-    apps: ["cartography", "environment-browser"],
-    subtitle:
-      "Aspect derived from the Digital Elevation Model.",
+    apps: ["environment-browser"],
+    subtitle: "Aspect derived from the Digital Elevation Model.",
     description: [
-      ""
+      "Aspect describes the compass direction that a terrain surface faces. In viticulture it is relevant because slope orientation influences incoming solar radiation, microclimate, evapotranspiration, and ripening conditions.",
     ],
     map: createMapConfig({
       assetId: "aspect",
@@ -217,11 +235,10 @@ export const Indicators: Indicator[] = [
     id: "slope",
     name: "Slope",
     category: "topography",
-    apps: ["cartography", "environment-browser"],
-    subtitle:
-      "Slope derived from the Digital Elevation Model.",
+    apps: ["environment-browser"],
+    subtitle: "Slope derived from the Digital Elevation Model.",
     description: [
-      ""
+      "Slope measures the steepness of terrain. It affects mechanization, erosion risk, drainage, solar exposure, and the practical management conditions of vineyard landscapes.",
     ],
     map: createMapConfig({
       assetId: "slope_degrees",
@@ -234,15 +251,15 @@ export const Indicators: Indicator[] = [
     id: "solar-radiation",
     name: "Solar Radiation",
     category: "topography",
-    apps: ["cartography", "environment-browser"],
+    apps: ["environment-browser"],
     subtitle:
       "Potential Solar Radiation derived from the Digital Elevation Model.",
     description: [
-      ""
+      "Potential solar radiation estimates the amount of incoming solar energy that terrain can receive based on topography. It helps describe local growing conditions shaped by elevation, slope, and aspect.",
     ],
     map: createMapConfig({
       assetId: "solar_radiation",
-      unit: "kWh/m²",
+      unit: "kWh/m2",
       defaultRamp: "viridis",
       displayRange: [0, 1500],
     }),
@@ -251,7 +268,7 @@ export const Indicators: Indicator[] = [
     id: "pollination",
     name: "Pollination",
     category: "ecosystem-services",
-    apps: ["cartography", "environment-browser"],
+    apps: ["environment-browser"],
     subtitle:
       "Relative potential for pollination service provision in agricultural areas.",
     description: [
@@ -275,7 +292,7 @@ export const Indicators: Indicator[] = [
     id: "erosion-control",
     name: "Soil Erosion Control",
     category: "ecosystem-services",
-    apps: ["cartography", "environment-browser"],
+    apps: ["environment-browser"],
     subtitle:
       "Relative capacity of ecosystems to prevent soil loss from water and wind erosion.",
     description: [
@@ -285,10 +302,6 @@ export const Indicators: Indicator[] = [
     methodology: [
       "Soil erosion risk was estimated using the Revised Universal Soil Loss Equation (RUSLE). The model incorporates rainfall erosivity, soil erodibility, topographic factors (slope length and steepness), vegetation cover, and land management practices. Vegetation cover and erosion-control practice factors were represented using proxy values derived from land cover datasets. The resulting erosion control capacity was standardized to a 0–100 index, with higher values indicating stronger erosion mitigation potential.",
     ],
-    video: {
-      label: "Learn more about soil erosion here",
-      url: "https://www.youtube.com/watch?v=BoSUEIkK_Y4",
-    },
     references: [
       "Fu, B., Liu, Y. LÃ¼, Y., He, C. Zeng, Y., Wu, B., (2011). Assessing the soil erosion control service of ecosystems change in the Loess Plateau of China. Ecological Complexity (8), Issue 4, 284-293. https://doi.org/10.1016/j.ecocom.2011.07.003.",
       "Guerra, Carlos A., Maes, J. Geijzendorffer, I. Metzger, M.J. (2016). An assessment of soil erosion prevention by vegetation in Mediterranean Europe: Current trends of ecosystem service provision. Ecological Indicators (60), 213-222. https://doi.org/10.1016/j.ecolind.2015.06.043",
@@ -306,8 +319,9 @@ export const Indicators: Indicator[] = [
     id: "pest-control",
     name: "Pest control",
     category: "ecosystem-services",
-    apps: ["cartography", "environment-browser"],
-    subtitle: "Relative potential to sustain natural pest control in agricultural areas.",
+    apps: ["environment-browser"],
+    subtitle:
+      "Relative potential to sustain natural pest control in agricultural areas.",
     description: [
       "The Pest Control indicator represents the relative potential of agricultural landscapes to sustain natural pest regulation by beneficial organisms. Natural pest control is an important regulating ecosystem service that supports sustainable agriculture by reducing reliance on chemical pesticides and enhancing agroecosystem resilience.",
       "Semi-natural habitats such as hedgerows, woodlands, and grasslands provide refuge, breeding sites, and food resources for natural enemies of crop pests. Landscape heterogeneity and connectivity strongly influence the effectiveness of this service. The indicator reflects the capacity of landscapes to support biologically based pest regulation and is expressed on a 0–100 scale, where higher values indicate greater natural pest control potential.",
@@ -324,7 +338,7 @@ export const Indicators: Indicator[] = [
     id: "net-primary-production",
     name: "Net primary production",
     category: "ecosystem-services",
-    apps: ["cartography", "environment-browser"],
+    apps: ["environment-browser"],
     subtitle: "Thermal growing conditions and ripening suitability",
     description: [
       "The Net Primary Production (NPP) indicator represents the amount of carbon fixed by vegetation through photosynthesis and available for plant growth. It is a fundamental measure of ecosystem productivity and reflects the capacity of ecosystems to generate biomass.",
@@ -342,7 +356,7 @@ export const Indicators: Indicator[] = [
     id: "outdoor-recreation",
     name: "Outdoor recreation",
     category: "ecosystem-services",
-    apps: ["cartography", "environment-browser"],
+    apps: ["environment-browser"],
     subtitle:
       "Relative potential of landscapes to provide accessible nature-based recreation opportunities.",
     description: [
@@ -353,7 +367,7 @@ export const Indicators: Indicator[] = [
       "The model integrates six spatial components: degree of naturalness, presence of protected areas (e.g., Natura 2000), presence of water bodies, landscape diversity, terrain ruggedness, and density of mountain peaks. Accessibility weighting was applied to account for proximity to infrastructure and settlements. The composite indicator was standardized to a 0–100 scale.",
     ],
     references: [
-      "Schirpke, Uta, et al. \"Revealing spatial and temporal patterns of outdoor recreation in the European Alps and their surroundings.\" Ecosystem services 31 (2018): 336-350.",
+      'Schirpke, Uta, et al. "Revealing spatial and temporal patterns of outdoor recreation in the European Alps and their surroundings." Ecosystem services 31 (2018): 336-350.',
       "EU, Copernicus Land Monitoring Service. (2019). European Environment Agency (EEA)-dataset: CORINE land cover-2018, version 2020_20u1. https://land.copernicus.eu/pan-european/corine-land-cover",
       "European Environment Agency (EEA)-dataset: Natura 2000 (vector) - version 2017, Mar. 2018. European Environment Agency. Available at https://www.eea.europa.eu/en/datahub/datahubitem-view/6fc8ad2d-195d-40f4-bdec-576e7d1268e4?activeAccordion=1091667.(eea_v_3035_100_k_natura2000_p_2022_v01_r00)",
       "European Environment Agency, 2016. EU-DEM v1.1. Copernicus Land Monitoring Service. https://sdi.eea.europa.eu/catalogue/srv/api/records/3473589f-0854-4601-919e-2e7dd172ff50",
@@ -365,7 +379,7 @@ export const Indicators: Indicator[] = [
     id: "landscape-aesthetics",
     name: "Landscape aesthetics",
     category: "ecosystem-services",
-    apps: ["cartography", "environment-browser"],
+    apps: ["environment-browser"],
     subtitle:
       "Relative scenic value of landscapes based on visibility and landscape composition.",
     description: [
@@ -388,8 +402,9 @@ export const Indicators: Indicator[] = [
     id: "naturalness-index",
     name: "Naturalness",
     category: "ecosystem-conditions",
-    apps: ["cartography", "environment-browser"],
-    subtitle: "Degree of naturalness based on land use intensity and ecological value.",
+    apps: ["environment-browser"],
+    subtitle:
+      "Degree of naturalness based on land use intensity and ecological value.",
     description: [
       "The Naturalness indicator represents the degree to which landscapes are characterized by natural or semi-natural ecosystems as opposed to intensively used or artificial land uses. Natural and semi-natural areas play a fundamental role in maintaining biodiversity, ecological processes, and ecosystem resilience.",
       "Landscapes with higher naturalness typically provide more stable habitats, support greater species diversity, and enhance regulating ecosystem services such as pest control, pollination, and climate regulation. In agricultural regions, nearby natural areas can increase ecological resilience and adaptive capacity. The indicator is expressed on a 0–100 scale, where higher values indicate landscapes with a higher degree of naturalness and ecological integrity.",
@@ -409,7 +424,7 @@ export const Indicators: Indicator[] = [
     id: "distance-to-nature",
     name: "Land use integrity",
     category: "ecosystem-conditions",
-    apps: ["cartography", "environment-browser"],
+    apps: ["environment-browser"],
     subtitle:
       "Degree of landscape integrity based on proximity to natural and near-natural habitats.",
     description: [
@@ -429,7 +444,7 @@ export const Indicators: Indicator[] = [
     id: "landuse-diversity",
     name: "Land use diversity",
     category: "ecosystem-conditions",
-    apps: ["cartography", "environment-browser"],
+    apps: ["environment-browser"],
     subtitle:
       "Landscape heterogeneity based on the diversity and distribution of land cover types.",
     description: [
@@ -449,7 +464,7 @@ export const Indicators: Indicator[] = [
     id: "climatic-waterbalance",
     name: "Climate water balance",
     category: "ecosystem-conditions",
-    apps: ["cartography", "environment-browser"],
+    apps: ["environment-browser"],
     subtitle:
       "Water availability from precipitation after accounting for evapotranspiration.",
     description: [
@@ -473,7 +488,7 @@ export const Indicators: Indicator[] = [
     apps: ["climate-explorer", "environment-browser"],
     subtitle: "Average annual temperature.",
     description: [
-      "",
+      "Temperature represents the average annual air temperature for the selected climate period and scenario. It is a core climate variable for evaluating regional growing conditions and climate change exposure.",
     ],
     references: [],
     map: createMapConfig({
@@ -492,7 +507,7 @@ export const Indicators: Indicator[] = [
     apps: ["climate-explorer", "environment-browser"],
     subtitle: "Annual precipitation sum.",
     description: [
-      "",
+      "Precipitation represents the total annual precipitation for the selected climate period and scenario. It provides a broad measure of water input relevant for drought exposure, irrigation demand, and ecosystem water availability.",
     ],
     references: [],
     map: createMapConfig({
@@ -512,19 +527,6 @@ export const Indicators: Indicator[] = [
     subtitle: "Thermal growing conditions and ripening suitability.",
     description: [
       "The Huglin Index (HI) is a bioclimatic indicator that describes the thermal growing conditions throughout the vegetation period in a wine region. It is primarily linked to vine phenology and development and plays a critical role in determining viticultural suitability.",
-    ],
-    contentBlocks: [
-      {
-        type: "imageComparison",
-        beforeImage: "/images/indicators/huglin_1981_2010.png",
-        afterImage: "/images/indicators/huglin_2071_2100.png",
-        beforeLabel: "1981-2010",
-        afterLabel: "2071-2100",
-        alt: "Huglin Index Comparison",
-        aspectRatio: "auto",
-        caption:
-          "Figure 1: Comparison of Huglin Index between historical (1981-2010) and projected (2071-2100) climate scenarios showing increased thermal suitability across European wine regions.",
-      },
     ],
     methodology: [
       "The Huglin Index is calculated over a 6-month period (typically 1 April to 30 September in the Northern Hemisphere) using the following formula:",
@@ -570,19 +572,6 @@ export const Indicators: Indicator[] = [
     description: [
       "The Cool Night Index (CNI) describes the minimum temperatures during the ripening phase of grapes. It is useful for evaluating sensory qualities such as aroma and polyphenol development.",
     ],
-    contentBlocks: [
-      {
-        type: "imageComparison",
-        beforeImage: "/images/indicators/cni_1981_2010.png",
-        afterImage: "/images/indicators/cni_2071_2100.png",
-        beforeLabel: "1981-2010",
-        afterLabel: "2071-2100",
-        alt: "Cool Night Index Comparison",
-        aspectRatio: "auto",
-        caption:
-          "Figure 2: Comparison of Cool Night Index between historical (1981-2010) and projected (2071-2100) climate scenarios indicating shifts towards warmer night temperatures during grape ripening in many wine regions.",
-      },
-    ],
     methodology: [
       "The CNI is calculated as the average minimum temperature in September (Northern Hemisphere) or March (Southern Hemisphere), using daily minimum temperature data.",
       "The CNI categorises climatic conditions into the following classes:",
@@ -615,19 +604,6 @@ export const Indicators: Indicator[] = [
     subtitle: "Soil water balance and drought pressure.",
     description: [
       "The Dryness Index (DI) evaluates water availability for grapevines by combining precipitation, evapotranspiration, and soil water reserve assumptions. It helps characterise drought pressure and corresponding adaptation needs.",
-    ],
-    contentBlocks: [
-      {
-        type: "imageComparison",
-        beforeImage: "/images/indicators/di_1981_2010.png",
-        afterImage: "/images/indicators/di_2071_2100.png",
-        beforeLabel: "1981-2010",
-        afterLabel: "2071-2100",
-        alt: "Dryness Index Comparison",
-        aspectRatio: "auto",
-        caption:
-          "Figure 3: Comparison of Dryness Index between historical (1981-2010) and projected (2071-2100) climate scenarios showing increased dryness in many traditional wine regions, highlighting the growing importance of water management and irrigation strategies.",
-      },
     ],
     methodology: [
       "The Dryness Index (DI) is computed over a 6-month period and follows a water balance equation:",
@@ -669,15 +645,6 @@ export const Indicators: Indicator[] = [
       "Exposure refers to the extent and type of significant climate changes or events that a system experiences. As such, it describes the expected changes in climatic conditions in a particular area. This can include various aspects of weather and climate, from long-term shifts in average temperatures and rainfall to the occurrence of specific weather events. The level of exposure an area faces depends both on wider global climate change patterns and its specific geographical location. It focuses on the general trends and magnitude of these climatic shifts.",
       "For European wine regions, higher levels of climate exposure are frequently observed in Southern and Eastern European areas, particularly in mountainous terrains. This indicates that these regions are expected to experience more significant climatic changes. Conversely, regions influenced by strong oceanic climates or located at higher latitudes generally experience lower levels of exposure.",
     ],
-    contentBlocks: [
-      {
-        type: "image",
-        src: "/images/vulnerability/1_Exposure_bioclim.png",
-        alt: "Climate Change Exposure of European Wine Regions",
-        caption: "Climate Change Exposure of European Wine Regions",
-        wrapperClassName: "w-full max-w-2xl mx-auto px-4 mt-6",
-      },
-    ],
     methodology: [],
     references: [],
   },
@@ -690,15 +657,6 @@ export const Indicators: Indicator[] = [
     description: [
       "Sensitivity is defined as the degree to which a system is influenced or affected by climate-related changes, whether positively or negatively. This impact can be direct, such as changes in the growth of certain plants due to temperature shifts, or indirect, like the damage caused by increased flooding. Not every part of a system will be affected in the same way by every climate stimulus. Essentially, it highlights how a system's unique characteristics determine its reaction to different climatic conditions.",
       "Many Southern European wine regions often show higher sensitivity to climate changes. This is frequently linked to a limited range of grape varieties or existing warm conditions that are already close to the optimal growing limits of cultivated varieties. However, areas with lower sensitivity can also be found in Southern Europe and some higher latitude regions exhibit increased sensitivity.",
-    ],
-    contentBlocks: [
-      {
-        type: "image",
-        src: "/images/vulnerability/2_Sensitivity_bioclim.png",
-        alt: "Climate Change Sensitivity of European Wine Regions",
-        caption: "Climate Change Sensitivity of European Wine Regions",
-        wrapperClassName: "w-full max-w-2xl mx-auto px-4 mt-6",
-      },
     ],
     methodology: [],
     references: [],
@@ -713,15 +671,6 @@ export const Indicators: Indicator[] = [
       "Adaptive capacity is the ability of a system to adjust to climate change, to reduce potential harm, take advantage of new opportunities, or manage the consequences. It shows a region's readiness and potential to successfully respond to a changing climate. This capacity is essential for developing and putting into practice effective strategies to deal with climate change. It may include a wide range of a region's resources and strengths, such as its financial stability, natural resources, physical infrastructure, social networks, and human knowledge and skills, all of which contribute to its ability to respond to climate impacts.",
       "European wine regions with elevated adaptive capacity are typically found in mountainous regions, particularly in the central-southern European alpine areas. This suggests these regions have a greater potential and readiness to adjust to climate change. In contrast, parts of central Southern Europe and Eastern Europe tend to have lower adaptive capacity. Many regions at higher latitudes generally fall into a moderate adaptive capacity range.",
     ],
-    contentBlocks: [
-      {
-        type: "image",
-        src: "/images/vulnerability/3_adaptive_capacity_bioclim.png",
-        alt: "Adaptive Capacity to Climate Change of European Wine Regions",
-        caption: "Adaptive Capacity to Climate Change of European Wine Regions",
-        wrapperClassName: "w-full max-w-2xl mx-auto px-4 mt-6",
-      },
-    ],
     methodology: [],
     references: [],
   },
@@ -730,19 +679,11 @@ export const Indicators: Indicator[] = [
     name: "Vulnerability",
     category: "vulnerability",
     apps: [],
-    subtitle: "The susceptibility of a system to the negative effects of climate change.",
+    subtitle:
+      "The susceptibility of a system to the negative effects of climate change.",
     description: [
       "Vulnerability describes how susceptible a system, such as a community, an environment, or an economy, is to the negative effects of climate change, including extreme weather and changing climate patterns. It provides an overall understanding of the expected level of negative effects on a system due to external pressures. When assessing vulnerability, experts consider how much a system is exposed to climate changes, how sensitive it is to those changes, and its ability to adapt. Vulnerability thus brings together the concepts of exposure, sensitivity, and adaptive capacity.",
       "Southern and Eastern European wine regions tend to show the highest vulnerability to climate change. This means these areas are considered most susceptible to negative climate impacts. Regions situated in cooler, higher latitude zones or certain mountainous areas often demonstrate lower to moderate levels of vulnerability.",
-    ],
-    contentBlocks: [
-      {
-        type: "image",
-        src: "/images/vulnerability/4_vulnerability_bioclim.png",
-        alt: "Climate Change Vulnerability of European Wine Regions",
-        caption: "Climate Change Vulnerability of European Wine Regions",
-        wrapperClassName: "w-full max-w-2xl mx-auto px-4 mt-6",
-      },
     ],
     methodology: [],
     references: [],
