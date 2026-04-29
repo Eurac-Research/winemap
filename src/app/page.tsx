@@ -11,6 +11,7 @@ import { ArrowRight, ChevronDown, Leaf, Scale, ThermometerSun } from 'lucide-rea
 
 export default function HomePage() {
   const adaptationArea = mainAreas.find((area) => area.id === "adaptation");
+  const governanceArea = mainAreas.find((area) => area.id === "governance");
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[color:var(--page-bg)] text-[color:var(--text-strong)]">
@@ -152,10 +153,15 @@ export default function HomePage() {
               <span>Learn more about governance frameworks</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
+            
           </div>
 
           <div className="relative min-h-[24rem] lg:min-h-[34rem]">
+            {governanceArea ? (
+              <MainAreaCarousel items={governanceArea.categories} />
+            ) : null}
           </div>
+
         </div>
       </section>
 
