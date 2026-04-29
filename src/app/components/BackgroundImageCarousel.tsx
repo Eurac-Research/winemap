@@ -79,20 +79,20 @@ export default function BackgroundImageCarousel({
       ) : null}
 
       <div className="relative z-10 mx-auto flex min-h-[34rem] max-w-7xl items-center px-4 py-16 sm:min-h-[39rem] sm:px-6 lg:min-h-[44rem] lg:px-8">
-        <div className="grid w-full max-w-3xl grid-cols-[2.5rem_minmax(0,1fr)] gap-5 sm:grid-cols-[3.25rem_minmax(0,1fr)] sm:gap-7">
-          <div className="flex flex-col items-center pt-1">
-            <div className="h-full min-h-72 w-px bg-[color:var(--primary)]" />
+        <div className="grid h-[28rem] w-full max-w-3xl grid-cols-[2.5rem_minmax(0,1fr)] gap-5 sm:h-[30rem] sm:grid-cols-[3.25rem_minmax(0,1fr)] sm:gap-7 lg:h-[31rem]">
+          <div className="flex h-full flex-col items-center pt-1">
+            <div className="min-h-0 w-px flex-1 bg-[color:var(--primary)]" />
             <button
               type="button"
               onClick={showNext}
-              className="mt-5 inline-flex h-9 w-9 items-center justify-center text-[color:var(--primary)] transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+              className="mt-5 inline-flex h-9 w-9 flex-none items-center justify-center text-[color:var(--primary)] transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
               aria-label="Show next carousel slide"
             >
               <ArrowDown className="h-6 w-6" />
             </button>
           </div>
 
-          <div className="min-w-0 pt-14 sm:pt-20">
+          <div className="flex h-full min-w-0 flex-col pt-14 sm:pt-20">
             <p className="text-sm font-bold uppercase tracking-[0.16em] text-white">
               {activeItem.eyebrow ?? "Featured"}
             </p>
@@ -103,7 +103,7 @@ export default function BackgroundImageCarousel({
               {activeItem.description}
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-4">
+            <div className="mt-auto flex flex-wrap items-center gap-4 pt-8">
               <div className="flex items-center gap-2" aria-label="Carousel slides">
                 {items.map((item, index) => (
                   <button
