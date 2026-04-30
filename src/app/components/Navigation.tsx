@@ -77,15 +77,15 @@ const NavigationMenuEntries: NavigationEntry[] = [
       "Access learning material on viticulture, climate change, governance, and ecosystem-based adaptation.",
     icon: GraduationCap,
   },
+  // {
+  //   title: "Literature",
+  //   href: "/literature",
+  //   description:
+  //     "Explore scientific publications and references behind the Winemap platform.",
+  //   icon: Library,
+  // },
   {
-    title: "Literature",
-    href: "/literature",
-    description:
-      "Explore scientific publications and references behind the Winemap platform.",
-    icon: Library,
-  },
-  {
-    title: "About Us",
+    title: "About",
     href: "/about",
     description:
       "Learn about Winemap, the scientific team, core definitions, and the research foundation behind the platform.",
@@ -142,12 +142,12 @@ function DesktopNavigationEntry({ entry }: { entry: NavigationEntry }) {
             {overviewContent}
           </div>
 
-          <div className="grid gap-1 p-5">
+          <div className="grid gap-1">
             {entry.sections.map((section) => (
               <NavigationMenuLink key={section.href} asChild>
                 <Link
                   href={section.href}
-                  className="group block rounded-md p-4 transition-colors hover:bg-[color:var(--surface-overlay)]"
+                  className="group block border-b border-[color:var(--border-soft)] p-3 transition-colors hover:bg-[color:var(--surface-overlay)]"
                 >
                   <div className="mb-1.5 text-base font-semibold text-[color:var(--text-strong)]">
                     {section.label}
