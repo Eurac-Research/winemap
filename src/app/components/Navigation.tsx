@@ -1,156 +1,323 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { Menu, X } from "lucide-react"
+import { useState } from "react";
+import Link from "next/link";
+import {
+  BookOpen,
+  GraduationCap,
+  Library,
+  Map,
+  Menu,
+  Network,
+  X,
+  type LucideIcon,
+} from "lucide-react";
+
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
-  NavigationMenuTrigger,
   NavigationMenuList,
-} from "@/components/ui/navigation-menu"
-import EuracLogo from "@/app/components/ui/EuracLogo"
-import { mainAreas } from "@/app/components/winemap-sections/mainAreas";
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+import EuracLogo from "@/app/components/ui/EuracLogo";
 
+type NavigationSubsection = {
+  label: string;
+  href: string;
+  description: string;
+};
 
-const NavigationMenuEntries = [
-  {title: "Topics", mainHref: "/"},
-  {title: "Maps", mainHref: "/"},
-  {title: "Courses", mainHref: "/"},
-  {title: "Literature", mainHref: "/literature"},
-  {title: "About Us", mainHref: "/about"}
-]
+type NavigationEntry = {
+  title: string;
+  href?: string;
+  description: string;
+  icon: LucideIcon;
+  sections?: NavigationSubsection[];
+};
 
-export function Navigation() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+const NavigationMenuEntries: NavigationEntry[] = [
+  {
+    title: "Topics",
+    href: "/",
+    description:
+      "Explore the main thematic areas of Winemap: climate, adaptation, and governance for European wine regions.",
+    icon: Network,
+    sections: [
+      {
+        label: "Winemap Climate",
+        href: "/#climate-environment",
+        description:
+          "Climate data, vulnerability assessments, and environmental indicators for wine regions.",
+      },
+      {
+        label: "Winemap Adaptation",
+        href: "/#adaptation",
+        description:
+          "Ecosystem-based adaptation strategies and pilot implementation experiences.",
+      },
+      {
+        label: "Winemap Governance",
+        href: "/#governance",
+        description:
+          "Legal frameworks, regulations, and decision-making contexts for wine production.",
+      },
+    ],
+  },
+  {
+    title: "Maps",
+    description:
+      "Open the interactive map applications and spatial tools available in Winemap.",
+    icon: Map,
+    sections: [
+      {
+        label: "Environment Browser",
+        href: "/map-applications/environment-browser",
+        description:
+          "Explore climate, topographic, ecosystem service, and ecosystem condition layers.",
+      },
+      {
+        label: "Vulnerability Explorer",
+        href: "/map-applications/vulnerability-explorer",
+        description:
+          "Investigate climate vulnerability patterns across European wine regions.",
+      },
+      {
+        label: "PDO Atlas",
+        href: "/map-applications/pdo-atlas",
+        description:
+          "Browse Protected Designation of Origin wine regions across Europe.",
+      },
+    ],
+  },
+  {
+    title: "Courses",
+    href: "/legal/courses",
+    description:
+      "Access learning material on viticulture, climate change, governance, and ecosystem-based adaptation.",
+    icon: GraduationCap,
+  },
+  {
+    title: "Literature",
+    href: "/literature",
+    description:
+      "Explore scientific publications and references behind the Winemap platform.",
+    icon: Library,
+  },
+  {
+    title: "About Us",
+    href: "/about",
+    description:
+      "Learn about Winemap, the scientific team, core definitions, and the research foundation behind the platform.",
+    icon: BookOpen,
+    sections: [
+      {
+        label: "About Winemap",
+        href: "/about",
+        description:
+          "Read about the projects, institute, and research context behind Winemap.",
+      },
+      {
+        label: "Team",
+        href: "/team",
+        description: "Get to know the people behind the Winemap platform.",
+      },
+      {
+        label: "Indicator Definitions",
+        href: "/about/definitions",
+        description:
+          "Browse definitions, methods, data sources, and references for Winemap indicators.",
+      },
+      {
+        label: "Glossary",
+        href: "/about/glossary",
+        description:
+          "Look up scientific and technical terms used throughout the application.",
+      },
+    ],
+  },
+];
+
+const triggerClassName =
+  "bg-transparent px-5 py-3 text-base uppercase text-[color:var(--text-strong)] hover:bg-[color:var(--surface-overlay)] hover:text-[color:var(--text-strong)] data-[state=open]:bg-[color:var(--surface-overlay)] data-[state=open]:text-[color:var(--text-strong)]";
+
+const topLevelLinkClassName =
+  "inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-5 py-3 text-base font-medium uppercase text-[color:var(--text-strong)] transition-colors hover:bg-[color:var(--surface-overlay)] hover:text-[color:var(--text-strong)] focus:bg-[color:var(--surface-overlay)] focus:text-[color:var(--text-strong)] focus:outline-none";
+
+function DesktopNavigationEntry({ entry }: { entry: NavigationEntry }) {
+  const Icon = entry.icon;
+
+  if (!entry.sections?.length) {
+    return (
+      <NavigationMenuItem>
+        <NavigationMenuLink asChild>
+          <Link href={entry.href ?? "/"} className={topLevelLinkClassName}>
+            {entry.title}
+          </Link>
+        </NavigationMenuLink>
+      </NavigationMenuItem>
+    );
+  }
+
+  const overviewContent = (
+    <>
+      <Icon
+        className="h-12 w-12 text-[color:var(--accent-strong)]"
+        aria-hidden="true"
+      />
+      <h3 className="mt-6 text-2xl font-semibold text-[color:var(--text-strong)]">
+        {entry.title}
+      </h3>
+      <p className="mt-3 text-base leading-relaxed text-[color:var(--text-muted)]">
+        {entry.description}
+      </p>
+    </>
+  );
 
   return (
-    <div className="fixed top-0 left-0 w-full z-[100] border-b bg-[color:var(--background)] border-[color:var(--border-soft)]">
-      <div className="px-6 flex h-8 justify-between items-center">
+    <NavigationMenuItem>
+      <NavigationMenuTrigger className={triggerClassName}>
+        {entry.title}
+      </NavigationMenuTrigger>
 
-        {/* Brand */}
-        <div className="flex items-center py-2 hover:opacity-90 transition-opacity lg:w-1/3">
-          <Link href="/" className="flex items-center gap-2 whitespace-nowrap leading-none">
-            <span className="font-medium text-md tracking-wide text-[color:var(--text-strong)]">WINEMAP</span>
+      <NavigationMenuContent className="border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)]">
+        <div className="grid w-[900px] grid-cols-[340px_1fr] gap-0">
+          {entry.href ? (
+            <NavigationMenuLink asChild>
+              <Link
+                href={entry.href}
+                className="group flex flex-col justify-center border-r border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-10 transition-colors hover:bg-[color:var(--surface-panel-muted)]"
+              >
+                {overviewContent}
+              </Link>
+            </NavigationMenuLink>
+          ) : (
+            <div className="flex flex-col justify-center border-r border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-10">
+              {overviewContent}
+            </div>
+          )}
+
+          <div className="grid gap-1 p-5">
+            {entry.sections.map((section) => (
+              <NavigationMenuLink key={section.href} asChild>
+                <Link
+                  href={section.href}
+                  className="group block rounded-md p-4 transition-colors hover:bg-[color:var(--surface-overlay)]"
+                >
+                  <div className="mb-1.5 text-base font-semibold text-[color:var(--text-strong)]">
+                    {section.label}
+                  </div>
+                  <div className="text-sm leading-relaxed text-[color:var(--text-muted)] transition-colors group-hover:text-[color:var(--text-strong)]">
+                    {section.description}
+                  </div>
+                </Link>
+              </NavigationMenuLink>
+            ))}
+          </div>
+        </div>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
+  );
+}
+
+export function Navigation() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  return (
+    <div className="fixed left-0 top-0 z-[100] w-full border-b border-[color:var(--border-soft)] bg-[color:var(--background)]">
+      <div className="flex h-12 items-center justify-between px-6">
+        <div className="flex items-center py-2 transition-opacity hover:opacity-90 lg:w-1/3">
+          <Link
+            href="/"
+            className="flex items-center gap-2 whitespace-nowrap leading-none"
+          >
+            <span className="text-md font-medium tracking-wide text-[color:var(--text-strong)]">
+              WINEMAP
+            </span>
             <span className="text-sm text-[color:var(--text-muted)]">by</span>
             <EuracLogo className="h-3 text-[color:var(--text-strong)]" />
           </Link>
         </div>
 
-        {/* Mobile Menu Button */}
         <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden p-2 rounded transition-colors text-[color:var(--text-strong)] hover:bg-[color:var(--surface-overlay)]"
+          onClick={() => setMobileMenuOpen((isOpen) => !isOpen)}
+          className="rounded p-2 text-[color:var(--text-strong)] transition-colors hover:bg-[color:var(--surface-overlay)] lg:hidden"
           aria-label="Toggle mobile menu"
+          aria-expanded={mobileMenuOpen}
         >
-          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          {mobileMenuOpen ? (
+            <X className="h-6 w-6" />
+          ) : (
+            <Menu className="h-6 w-6" />
+          )}
         </button>
 
-        {/* Desktop Navigation */}
-        <NavigationMenu className="hidden lg:flex justify-center py-1 w-full">
+        <NavigationMenu className="hidden w-full justify-center py-1 lg:flex">
           <NavigationMenuList>
             {NavigationMenuEntries.map((entry) => (
-              <NavigationMenuItem key = {entry.title}>
-                  <NavigationMenuTrigger className="bg-transparent text-[color:var(--text-strong)] hover:bg-[color:var(--surface-overlay)] hover:text-[color:var(--text-strong)] data-[state=open]:bg-[color:var(--surface-overlay)] data-[state=open]:text-[color:var(--text-strong)] text-base px-5 py-3 uppercase">
-                    {entry.title}
-                  </NavigationMenuTrigger>
-              </NavigationMenuItem>
+              <DesktopNavigationEntry key={entry.title} entry={entry} />
             ))}
           </NavigationMenuList>
         </NavigationMenu>
-        
-        {/* <NavigationMenu className="hidden lg:flex justify-center py-1 w-full">
-          <NavigationMenuList>
 
-              {mainAreas.filter((area) => area.id !== 'about').map((area) => (
-                <NavigationMenuItem key = {area.id}>
-
-                  <NavigationMenuTrigger className="bg-transparent text-[color:var(--text-strong)] hover:bg-[color:var(--surface-overlay)] hover:text-[color:var(--text-strong)] data-[state=open]:bg-[color:var(--surface-overlay)] data-[state=open]:text-[color:var(--text-strong)] text-base px-5 py-3 uppercase">
-                    {area.titleText}
-                  </NavigationMenuTrigger>
-
-                  <NavigationMenuContent className="bg-[color:var(--surface-panel-strong)] border-[color:var(--border-soft)]">
-                    <div className="grid grid-cols-[340px_1fr] gap-0 w-[900px]">
-                      <NavigationMenuLink
-                        href={area.mainHref}
-                        className="flex flex-col justify-center p-10 transition-colors border-r group bg-[color:var(--surface-overlay)] hover:bg-[color:var(--surface-panel-muted)] border-[color:var(--border-soft)]"
-                      >
-                        {area.icon}
-                        <h3 className="text-2xl font-semibold mb-3 text-[color:var(--text-strong)]">{area.title}</h3>
-                        <p className="text-base leading-relaxed transition-colors text-[color:var(--text-muted)] group-hover:text-[color:var(--text-strong)]">
-                          {area.description}
-                        </p>
-                      </NavigationMenuLink>
-
-                      <div className="grid gap-1 p-5">
-                        {area.categories.map((cat) => (
-                          <NavigationMenuLink
-                            key={cat.label}
-                            href={cat.href}
-                            className="block rounded-md p-4 transition-colors group hover:bg-[color:var(--surface-overlay)]"
-                          >
-                            <div className="font-semibold mb-1.5 text-base text-[color:var(--text-strong)]">{cat.label}</div>
-                            <div className="text-sm leading-relaxed transition-colors text-[color:var(--text-muted)] group-hover:text-[color:var(--text-strong)]">
-                              {cat.description}
-                            </div>
-                          </NavigationMenuLink>
-                        ))}
-                      </div>
-                    </div>
-
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              ))}
-
-          </NavigationMenuList>
-        </NavigationMenu> */}
-
-        <div className="hidden lg:block lg:w-1/3"></div>
+        <div className="hidden lg:block lg:w-1/3" />
       </div>
 
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
+      {mobileMenuOpen ? (
         <>
-          {/* Backdrop */}
           <div
-            className="lg:hidden fixed inset-0 z-[99] top-16 bg-[color:var(--surface-inverse)]/20"
+            className="fixed inset-x-0 bottom-0 top-12 z-[99] bg-[color:var(--surface-inverse)]/20 lg:hidden"
             onClick={() => setMobileMenuOpen(false)}
             aria-hidden="true"
           />
 
-          {/* Menu Content */}
-          <div className="lg:hidden h-[calc(100vh-64px)] overflow-y-auto fixed left-0 right-0 top-16 z-[100] bg-[color:var(--surface-panel-strong)] border-t border-[color:var(--border-soft)]">
-            <div className="px-6 py-4 space-y-4">
+          <div className="fixed inset-x-0 top-12 z-[100] max-h-[calc(100vh-3rem)] overflow-y-auto border-t border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)] lg:hidden">
+            <div className="space-y-6 px-6 py-5">
               {NavigationMenuEntries.map((entry) => (
                 <div key={entry.title}>
-                  <Link
-                    href={entry.mainHref}
-                    className="block font-semibold text-lg mb-2 transition-colors text-[color:var(--text-strong)] hover:text-[color:var(--accent-strong)]"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {entry.title}
-                  </Link>
-                  {/* <div className="pl-4 space-y-2">
-                    {area.categories.map((category) => (
-                      <Link
-                        key={category.label}
-                        href={category.href}
-                        className="block text-sm transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--text-strong)]"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {category.label.replace(" â†’", "")}
-                      </Link>
-                    ))}
-                  </div> */}
+                  {entry.href ? (
+                    <Link
+                      href={entry.href}
+                      className="block text-lg font-semibold text-[color:var(--text-strong)] transition-colors hover:text-[color:var(--accent-strong)]"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {entry.title}
+                    </Link>
+                  ) : (
+                    <p className="text-lg font-semibold text-[color:var(--text-strong)]">
+                      {entry.title}
+                    </p>
+                  )}
+                  <p className="mt-1 text-sm leading-relaxed text-[color:var(--text-muted)]">
+                    {entry.description}
+                  </p>
+
+                  {entry.sections?.length ? (
+                    <div className="mt-3 space-y-2 border-l border-[color:var(--border-soft)] pl-4">
+                      {entry.sections.map((section) => (
+                        <Link
+                          key={section.href}
+                          href={section.href}
+                          className="block rounded py-1 text-sm text-[color:var(--text-muted)] transition-colors hover:text-[color:var(--text-strong)]"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          <span className="font-medium text-[color:var(--text-strong)]">
+                            {section.label}
+                          </span>
+                          <span className="mt-0.5 block leading-relaxed">
+                            {section.description}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                  ) : null}
                 </div>
               ))}
-
             </div>
           </div>
         </>
-      )}
+      ) : null}
     </div>
-  )
+  );
 }
