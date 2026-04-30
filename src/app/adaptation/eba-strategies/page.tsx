@@ -18,6 +18,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/ca
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/components/ui/select"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/app/components/ui/dropdown-menu"
 import ebaData from "@/app/data/eba_catalogue.json"
+import { GlossaryTermPopover } from "@/app/components/glossary/glossaryTerm"
 
 interface Catalogue {
   id: string
@@ -141,7 +142,7 @@ export default function LiteraturePage() {
             <h1 className="text-4xl font-bold text-[color:var(--text-strong)]">EbA Strategies Catalogue</h1>
           </div>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Explore our collection of factsheets describing Ecosystem Based Adaptation (EbA) strategies and their implementation
+            Explore our collection of factsheets describing <GlossaryTermPopover id = "ecosystem-based-adaptation"> Ecosystem Based Adaptation (EbA) strategies </GlossaryTermPopover> and their implementation
           </p>
         </div>
 
