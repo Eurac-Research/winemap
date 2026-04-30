@@ -124,19 +124,19 @@ export const mainAreas: MainArea[] = [
     categoriesClassName: "space-y-1",
     categories: [
       {
-        label: "EU Policy →",
+        label: "EU Policy",
         href: "/legal/eu-policy",
         description:
           "Discover the legal system behind high-quality European wine regions and how these regulations influence their climate resilience.",
       },
       {
-        label: "Participatory Approaches →",
+        label: "Participatory Approaches",
         href: "/legal/participatory-approaches",
         description:
           "Get information about participatory approaches in scientific research and how they can be used to generate innovative solutions for the future sustainability of viticulture.",
       },
       {
-        label: "Courses →",
+        label: "Courses",
         href: "/legal/courses",
         description:
           "Improve your knowledge on viticulture, climate change and ecosystem-based adaptation in a series of interactive courses.",
@@ -159,31 +159,37 @@ export const mainAreas: MainArea[] = [
     mainHref: "/about",
     categories: [
       {
-        label: "Research Projects →",
+        label: "Research Projects",
         href: "/about#projects",
         description:
           "Learn more about the research projects behind the Winemap.",
       },
       {
-        label: "The Institute →",
+        label: "The Institute",
         href: "/about#institute",
         description: "Discover the scientific institute behind the Winemap.",
       },
       {
-        label: "The Team →",
+        label: "The Team",
         href: "/team",
         description: "Get to know the people behind the Winemap.",
       },
       {
-        label: "Scientific Literature →",
+        label: "Scientific Literature",
         href: "/literature",
         description: "Explore the publications behind the Winemap.",
       },
       {
-        label: "Indicator Definitions ->",
+        label: "Indicator Definitions",
         href: "/about/definitions",
         description:
           "Browse the glossary of indicator definitions, methods, and references.",
+      },
+      {
+        label: "Glossary",
+        href: "/about/glossary",
+        description:
+          "Look up scientific and technical terms used throughout the application.",
       },
     ],
   },

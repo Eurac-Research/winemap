@@ -22,6 +22,8 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import EuracLogo from "@/app/components/ui/EuracLogo";
+import { mainAreas } from "@/app/components/winemap-sections/mainAreas"
+import { mapApplications } from "@/app/components/map-applications/mapApplications"
 
 type NavigationSubsection = {
   label: string;
@@ -37,6 +39,9 @@ type NavigationEntry = {
   sections?: NavigationSubsection[];
 };
 
+const TopicsSections = mainAreas.filter((area) => area.id !== 'about');
+const AboutSections = mainAreas.find((area) => area.id === 'about')?.categories ?? [];
+
 const NavigationMenuEntries: NavigationEntry[] = [
   {
     title: "Topics",
@@ -44,52 +49,26 @@ const NavigationMenuEntries: NavigationEntry[] = [
     description:
       "Explore the main thematic areas of Winemap: climate, adaptation, and governance for European wine regions.",
     icon: Network,
-    sections: [
-      {
-        label: "Winemap Climate",
-        href: "/#climate-environment",
-        description:
-          "Climate data, vulnerability assessments, and environmental indicators for wine regions.",
-      },
-      {
-        label: "Winemap Adaptation",
-        href: "/#adaptation",
-        description:
-          "Ecosystem-based adaptation strategies and pilot implementation experiences.",
-      },
-      {
-        label: "Winemap Governance",
-        href: "/#governance",
-        description:
-          "Legal frameworks, regulations, and decision-making contexts for wine production.",
-      },
-    ],
+    sections: TopicsSections.map((topic_section) => {
+      return {
+        label: topic_section.titleText,
+        href: topic_section.mainHref,
+        description: topic_section.description
+      }
+    })
   },
   {
     title: "Maps",
     description:
       "Open the interactive map applications and spatial tools available in Winemap.",
     icon: Map,
-    sections: [
-      {
-        label: "Environment Browser",
-        href: "/map-applications/environment-browser",
-        description:
-          "Explore climate, topographic, ecosystem service, and ecosystem condition layers.",
-      },
-      {
-        label: "Vulnerability Explorer",
-        href: "/map-applications/vulnerability-explorer",
-        description:
-          "Investigate climate vulnerability patterns across European wine regions.",
-      },
-      {
-        label: "PDO Atlas",
-        href: "/map-applications/pdo-atlas",
-        description:
-          "Browse Protected Designation of Origin wine regions across Europe.",
-      },
-    ],
+    sections: mapApplications.map((map_app) => {
+      return {
+        label: map_app.title,
+        href: map_app.href,
+        description: map_app.description
+      }
+    })
   },
   {
     title: "Courses",
@@ -111,31 +90,7 @@ const NavigationMenuEntries: NavigationEntry[] = [
     description:
       "Learn about Winemap, the scientific team, core definitions, and the research foundation behind the platform.",
     icon: BookOpen,
-    sections: [
-      {
-        label: "About Winemap",
-        href: "/about",
-        description:
-          "Read about the projects, institute, and research context behind Winemap.",
-      },
-      {
-        label: "Team",
-        href: "/team",
-        description: "Get to know the people behind the Winemap platform.",
-      },
-      {
-        label: "Indicator Definitions",
-        href: "/about/definitions",
-        description:
-          "Browse definitions, methods, data sources, and references for Winemap indicators.",
-      },
-      {
-        label: "Glossary",
-        href: "/about/glossary",
-        description:
-          "Look up scientific and technical terms used throughout the application.",
-      },
-    ],
+    sections: AboutSections,
   },
 ];
 
