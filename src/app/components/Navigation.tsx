@@ -138,20 +138,9 @@ function DesktopNavigationEntry({ entry }: { entry: NavigationEntry }) {
 
       <NavigationMenuContent className="border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)]">
         <div className="grid w-[900px] grid-cols-[340px_1fr] gap-0">
-          {entry.href ? (
-            <NavigationMenuLink asChild>
-              <Link
-                href={entry.href}
-                className="group flex flex-col justify-center border-r border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-10 transition-colors hover:bg-[color:var(--surface-panel-muted)]"
-              >
-                {overviewContent}
-              </Link>
-            </NavigationMenuLink>
-          ) : (
-            <div className="flex flex-col justify-center border-r border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-10">
-              {overviewContent}
-            </div>
-          )}
+          <div className="flex flex-col justify-center border-r border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-10">
+            {overviewContent}
+          </div>
 
           <div className="grid gap-1 p-5">
             {entry.sections.map((section) => (
