@@ -22,6 +22,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import EuracLogo from "@/app/components/ui/EuracLogo";
+import RespondLogo from "@/app/components/ui/RespondLogo";
 import { mainAreas } from "@/content/main-areas"
 import { mapApplications } from "@/content/map-applications"
 
@@ -170,23 +171,40 @@ export function Navigation() {
 
   return (
     <div className="fixed left-0 top-0 z-[100] w-full border-b border-[color:var(--border-soft)] bg-[color:var(--background)]">
-      <div className="flex h-12 items-center justify-between px-6">
-        <div className="flex items-center py-2 transition-opacity hover:opacity-90 lg:w-1/3">
+      <div className="flex h-20 items-center justify-between gap-3 px-3 sm:px-6">
+        <div className="flex min-w-0 flex-1 items-center gap-2 py-1 lg:w-1/3 lg:flex-none">
           <Link
             href="/"
-            className="flex items-center gap-2 whitespace-nowrap leading-none"
+            className="flex min-w-0 shrink items-center gap-1.5 whitespace-nowrap leading-none transition-opacity hover:opacity-90 sm:gap-2"
           >
-            <span className="text-md font-medium tracking-wide text-[color:var(--text-strong)]">
+            <span className="text-sm font-medium tracking-wide text-[color:var(--text-strong)] sm:text-base">
               WINEMAP
             </span>
-            <span className="text-sm text-[color:var(--text-muted)]">by</span>
-            <EuracLogo className="h-3 text-[color:var(--text-strong)]" />
+            <span className="hidden text-xs text-[color:var(--text-muted)] min-[360px]:inline sm:text-sm">
+              by
+            </span>
+            <EuracLogo className="h-2.5 shrink-0 text-[color:var(--text-strong)] sm:h-3" />
           </Link>
+
+          <div
+            className="h-7 w-px shrink-0 bg-[color:var(--border-soft)]"
+            aria-hidden="true"
+          />
+
+          <a
+            href="https://www.alpine-space.eu/project/respond/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex h-8 shrink-0 items-center transition-opacity hover:opacity-90 sm:h-9 lg:h-10"
+            aria-label="Visit the RESPOnD project website"
+          >
+            <RespondLogo className="h-18 w-auto" />
+          </a>
         </div>
 
         <button
           onClick={() => setMobileMenuOpen((isOpen) => !isOpen)}
-          className="rounded p-2 text-[color:var(--text-strong)] transition-colors hover:bg-[color:var(--surface-overlay)] lg:hidden"
+          className="shrink-0 rounded p-2 text-[color:var(--text-strong)] transition-colors hover:bg-[color:var(--surface-overlay)] lg:hidden"
           aria-label="Toggle mobile menu"
           aria-expanded={mobileMenuOpen}
         >

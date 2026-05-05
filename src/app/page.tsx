@@ -34,9 +34,6 @@ export default function HomePage() {
         />
 
         <div className="relative z-20 mx-auto min-h-[clamp(34rem,72vh,54rem)] max-w-7xl">
-          <div className="absolute z-20 text-white left-2 top-12">
-            <RespondLogo className="h-20 w-auto sm:h-24" />
-          </div>
           <div className="absolute bottom-10 left-4 right-4 z-20 max-w-3xl sm:left-auto sm:right-5">
             <div className="w-fit max-w-full rounded-2xl border border-white/20 bg-black/35 px-6 py-6 text-right text-white">
               <p className="text-5xl font-semibold uppercase tracking-[0.18em] sm:text-6xl lg:text-7xl">
