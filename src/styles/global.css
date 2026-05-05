@@ -50,6 +50,19 @@
     --accent-strong: rgba(151, 4, 41, 0.9);
     --shadow-soft: 0 16px 40px rgb(71 85 105 / 0.14);
     --shadow-strong: 0 24px 48px rgb(15 23 42 / 0.16);
+    --vulnerability-chart-text: var(--text-strong);
+    --vulnerability-chart-muted-text: var(--text-muted);
+    --vulnerability-chart-grid: var(--border-soft);
+    --vulnerability-chart-trail: rgb(51 65 85 / 0.14);
+    --vulnerability-chart-tooltip-bg: var(--surface-panel-strong);
+    --vulnerability-chart-tooltip-border: var(--border-strong);
+    --vulnerability-chart-low-text: #4f7b2d;
+    --vulnerability-chart-moderate-text: #8a6500;
+    --vulnerability-chart-high-text: #a43c36;
+    --vulnerability-chart-good: #5d8738;
+    --vulnerability-chart-moderate: #c49a24;
+    --vulnerability-chart-high: #c85e57;
+    --vulnerability-chart-bad: #b90f44;
 
     /* Tailwind theme bridge */
     --chart-1: oklch(0.646 0.222 41.116);
@@ -111,6 +124,19 @@
     --accent-strong: rgb(233 30 99 / 0.92);
     --shadow-soft: 0 16px 40px rgb(0 0 0 / 0.45);
     --shadow-strong: 0 24px 48px rgb(0 0 0 / 0.35);
+    --vulnerability-chart-text: var(--text-strong);
+    --vulnerability-chart-muted-text: var(--text-muted);
+    --vulnerability-chart-grid: var(--border-soft);
+    --vulnerability-chart-trail: rgb(255 255 255 / 0.12);
+    --vulnerability-chart-tooltip-bg: var(--surface-elevated);
+    --vulnerability-chart-tooltip-border: var(--border-strong);
+    --vulnerability-chart-low-text: #97be6c;
+    --vulnerability-chart-moderate-text: #e8c360;
+    --vulnerability-chart-high-text: #dd7c75;
+    --vulnerability-chart-good: #97be6c;
+    --vulnerability-chart-moderate: #e8c360;
+    --vulnerability-chart-high: #dd7c75;
+    --vulnerability-chart-bad: #de1355;
 
     --chart-1: oklch(0.488 0.243 264.376);
     --chart-2: oklch(0.696 0.17 162.48);
