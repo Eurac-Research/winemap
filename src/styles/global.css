@@ -4,6 +4,9 @@
   :root {
     color-scheme: light;
 
+    --top-nav-height: 5rem;
+    --scroll-offset: calc(var(--top-nav-height) + 2rem);
+
     /* Core app tokens */
     --background: rgb(255 255 255);
     --foreground: oklch(0.24 0.02 255);

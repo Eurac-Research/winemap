@@ -171,7 +171,7 @@ export function Navigation() {
 
   return (
     <div className="fixed left-0 top-0 z-[100] w-full border-b border-[color:var(--border-soft)] bg-[color:var(--background)]">
-      <div className="flex h-20 items-center justify-between gap-3 px-3 sm:px-6">
+      <div className="flex h-[var(--top-nav-height)] items-center justify-between gap-3 px-3 sm:px-6">
         <div className="flex min-w-0 flex-1 items-center gap-2 py-1 lg:w-1/3 lg:flex-none">
           <Link
             href="/"
@@ -229,12 +229,12 @@ export function Navigation() {
       {mobileMenuOpen ? (
         <>
           <div
-            className="fixed inset-x-0 bottom-0 top-20 z-[99] bg-[color:var(--surface-inverse)]/20 lg:hidden"
+            className="fixed inset-x-0 bottom-0 top-[var(--top-nav-height)] z-[99] bg-[color:var(--surface-inverse)]/20 lg:hidden"
             onClick={() => setMobileMenuOpen(false)}
             aria-hidden="true"
           />
 
-          <div className="fixed inset-x-0 top-20 z-[100] max-h-[calc(100vh-3rem)] overflow-y-auto border-t border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)] lg:hidden">
+          <div className="fixed inset-x-0 top-[var(--top-nav-height)] z-[100] max-h-[calc(100vh-var(--top-nav-height))] overflow-y-auto border-t border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)] lg:hidden">
             <div className="space-y-6 px-6 py-5">
               {NavigationMenuEntries.map((entry) => (
                 <div key={entry.title}>
