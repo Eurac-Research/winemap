@@ -167,4 +167,10 @@ export const glossaryTerms: GlossaryTerm[] = [
     definition:
       "The balance between the water entering and leaving a system over a given period.",
   },
+  {
+    id: "ecological-niche",
+    term: "Ecological niche",
+    definition:
+      "The specific roles and spaces that organisms occupy within an ecosystem, encompassing both their physical environment and the various interactions they engage in with other species and their surroundings."
+  }
 ];

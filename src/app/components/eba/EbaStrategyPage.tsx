@@ -55,7 +55,7 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
               {strategy.title}
             </h1>
             {strategy.summary ? (
-              <p className="mt-6 max-w-3xl text-lg leading-8 text-[color:var(--text-muted)]">
+              <p className="mt-6 max-w-3xl text-lg leading-8 text-[color:var(--text-muted)] text-justify">
                 {strategy.summary}
               </p>
             ) : null}
@@ -88,7 +88,7 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
           </aside>
         </header>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_18rem]">
+        <div className="mt-12 text-justify">
           <article>
             {hasCustomSections ? (
               content?.sections?.map((section) => (

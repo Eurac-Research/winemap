@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { GlossaryTermPopover } from "@/app/components/glossary/glossaryTerm"
 
 export type EbaFact = {
   label: string;
@@ -47,7 +48,7 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
             Dry-stone walls are integral components of terraced and agricultural landscapes, shaped over centuries
             through the interaction between human management and natural processes. They are considered “living”
             structures due to their ecological functions and interactions within the environment. Along with other
-            structural elements such as hedgerows and stone heaps, dry-stone walls, create valuable ecological niches
+            structural elements such as hedgerows and stone heaps, dry-stone walls, create valuable <GlossaryTermPopover id="ecological-niche">ecological niches</GlossaryTermPopover>{" "}
             in agricultural landscapes, particularly in viticultural areas.
           </p>
         </>
