@@ -229,12 +229,12 @@ export function Navigation() {
       {mobileMenuOpen ? (
         <>
           <div
-            className="fixed inset-x-0 bottom-0 top-12 z-[99] bg-[color:var(--surface-inverse)]/20 lg:hidden"
+            className="fixed inset-x-0 bottom-0 top-20 z-[99] bg-[color:var(--surface-inverse)]/20 lg:hidden"
             onClick={() => setMobileMenuOpen(false)}
             aria-hidden="true"
           />
 
-          <div className="fixed inset-x-0 top-12 z-[100] max-h-[calc(100vh-3rem)] overflow-y-auto border-t border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)] lg:hidden">
+          <div className="fixed inset-x-0 top-20 z-[100] max-h-[calc(100vh-3rem)] overflow-y-auto border-t border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)] lg:hidden">
             <div className="space-y-6 px-6 py-5">
               {NavigationMenuEntries.map((entry) => (
                 <div key={entry.title}>
