@@ -4,7 +4,7 @@ import { useId, useState, type KeyboardEvent, type ReactNode } from "react";
 import { ExternalLink } from "lucide-react";
 
 import { cn } from "@/app/lib/utils";
-import { glossaryTerms, type GlossaryTerm } from "./glossary-index";
+import { glossaryTerms, type GlossaryTerm } from "@/content/glossary";
 
 type GlossaryTermPopoverProps = {
   id: GlossaryTerm["id"];

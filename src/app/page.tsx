@@ -9,10 +9,10 @@ import {
 
 import BackgroundImageCarousel from "@/app/components/BackgroundImageCarousel";
 import ImageComparisonSlider from "@/app/components/ImageComparisonSlider";
-import { mapApplications } from "@/app/components/map-applications/mapApplications";
 import RespondLogo from "@/app/components/ui/RespondLogo";
 import MainAreaCarousel from "@/app/components/winemap-sections/MainAreaCarousel";
-import { mainAreas } from "@/app/components/winemap-sections/mainAreas";
+import { mainAreas } from "@/content/main-areas";
+import { mapApplications } from "@/content/map-applications";
 import styles from "@/styles/Home.module.css";
 
 export default function HomePage() {

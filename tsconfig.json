@@ -23,6 +23,9 @@
       "@/app/*": [
         "src/app/*"
       ],
+      "@/content/*": [
+        "src/content/*"
+      ],
       "@/components/*": [
         "src/app/components/*"
       ],

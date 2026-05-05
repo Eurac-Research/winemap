@@ -3,7 +3,7 @@ import { ExternalLink } from "lucide-react";
 import {
   glossaryTerms,
   type GlossaryTerm,
-} from "@/app/components/glossary/glossary-index";
+} from "@/content/glossary";
 
 export const metadata = {
   title: "Glossary | Winemap",

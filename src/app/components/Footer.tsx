@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { ExternalLink } from "lucide-react"
-import { mainAreas } from "@/app/components/winemap-sections/mainAreas";
-import { mapApplications } from "@/app/components/map-applications/mapApplications";
+import { mainAreas } from "@/content/main-areas";
+import { mapApplications } from "@/content/map-applications";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()

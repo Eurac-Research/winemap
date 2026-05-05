@@ -22,8 +22,8 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import EuracLogo from "@/app/components/ui/EuracLogo";
-import { mainAreas } from "@/app/components/winemap-sections/mainAreas"
-import { mapApplications } from "@/app/components/map-applications/mapApplications"
+import { mainAreas } from "@/content/main-areas"
+import { mapApplications } from "@/content/map-applications"
 
 type NavigationSubsection = {
   label: string;

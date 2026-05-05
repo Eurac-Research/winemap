@@ -41,7 +41,7 @@ import {
   type Indicator,
   type IndicatorMapConfig,
   type IndicatorMapOption,
-} from "@/app/components/indicators/indicator-index";
+} from "@/content/indicators";
 import MapPlaceSearch from "@/app/components/maps/MapPlaceSearch";
 import { PdoMapLayout } from "@/app/components/pdo-app/PdoMapLayout";
 import { PdoSidebarShell } from "@/app/components/pdo-app/PdoSidebarShell";

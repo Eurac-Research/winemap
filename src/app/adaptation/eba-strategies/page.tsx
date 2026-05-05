@@ -17,22 +17,11 @@ import { Button } from "@/app/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/components/ui/select"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/app/components/ui/dropdown-menu"
-import ebaData from "@/app/data/eba_catalogue.json"
 import { GlossaryTermPopover } from "@/app/components/glossary/glossaryTerm"
-
-interface Catalogue {
-  id: string
-  title: string
-  authors: string[]
-  year: number
-  category: string
-  summary?: string
-  keywords?: string[]
-  filename: string
-}
+import { ebaStrategies, type EbaStrategy } from "@/content/eba/catalogue"
 
 export default function LiteraturePage() {
-  const [factsheets] = useState<Catalogue[]>(ebaData)
+  const [factsheets] = useState<EbaStrategy[]>(ebaStrategies)
   const [searchTerm, setSearchTerm] = useState("")
   const [sortBy, setSortBy] = useState<"year" | "author">("year")
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc")

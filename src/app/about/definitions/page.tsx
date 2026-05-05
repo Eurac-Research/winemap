@@ -17,7 +17,7 @@ import {
   type IndicatorReferenceContent,
   type RichTextContent,
   type RichTextSegment,
-} from "@/app/components/indicators/indicator-index";
+} from "@/content/indicators";
 
 const CATEGORY_ORDER: IndicatorCategory[] = [
   "climate",
