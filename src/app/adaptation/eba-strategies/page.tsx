@@ -16,7 +16,6 @@ import { Input } from "@/app/components/ui/input"
 import { Button } from "@/app/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/components/ui/select"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/app/components/ui/dropdown-menu"
 import { GlossaryTermPopover } from "@/app/components/glossary/glossaryTerm"
 import { ebaStrategies, type EbaStrategy } from "@/content/eba/catalogue"
 
