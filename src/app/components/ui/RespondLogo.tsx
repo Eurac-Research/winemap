@@ -5,9 +5,22 @@ import * as React from "react";
 type LogoProps = React.SVGProps<SVGSVGElement> & {
   /** Sets the primary logo color via CSS variable. Defaults to currentColor. */
   color?: string;
+  /** Sets the EU flag background color. Defaults to the original RESPOnD blue. */
+  euFlagColor?: string;
+  /** Sets the EU flag star color. Defaults to EU yellow. */
+  euStarColor?: string;
+  /** Sets the EU flag outline color. Defaults to white. */
+  euBorderColor?: string;
 };
 
-export default function RespondLogo({ color, style, ...props }: LogoProps) {
+export default function RespondLogo({
+  color,
+  euFlagColor,
+  euStarColor,
+  euBorderColor,
+  style,
+  ...props
+}: LogoProps) {
   return (
     <svg
       id="svg1"
@@ -17,6 +30,9 @@ export default function RespondLogo({ color, style, ...props }: LogoProps) {
       style={{
         ...(style || {}),
         ...(color ? ({ ["--logo-primary" as any]: color } as React.CSSProperties) : {}),
+        ...(euFlagColor ? ({ ["--logo-eu-flag" as any]: euFlagColor } as React.CSSProperties) : {}),
+        ...(euStarColor ? ({ ["--logo-eu-star" as any]: euStarColor } as React.CSSProperties) : {}),
+        ...(euBorderColor ? ({ ["--logo-eu-border" as any]: euBorderColor } as React.CSSProperties) : {}),
       }}
       role={props.role ?? "img"}
       aria-label={props["aria-label"] ?? "RESPOnD logo"}
@@ -24,6 +40,9 @@ export default function RespondLogo({ color, style, ...props }: LogoProps) {
       <style>{`
 .logo-bg{fill:none;}
     .logo-primary{fill:var(--logo-primary, currentColor);}
+    .logo-eu-flag{fill:var(--logo-eu-flag, #254aa5);}
+    .logo-eu-border{fill:var(--logo-eu-border, #ffffff);}
+    .logo-eu-star{fill:var(--logo-eu-star, #fff200);}
 `}</style>
 
   <defs
@@ -616,72 +635,72 @@ export default function RespondLogo({ color, style, ...props }: LogoProps) {
          clipPath="url(#clipPath20)"
          id="path80" />
       <path
-         d="M 138.537,144.228 H 188.62 V 110.49 h -50.083 z" className="logo-bg"
+         d="M 138.537,144.228 H 188.62 V 110.49 h -50.083 z" className="logo-eu-flag"
          transform="matrix(1.3333333,0,0,-1.3333333,0,213.396)"
          clipPath="url(#clipPath21)"
          id="path81" />
       <path
-         d="M 188.094,111.015 H 139.06 v 32.688 h 49.034 z m 1.051,33.738 h -1.051 -49.034 -1.05 v -1.05 -32.688 -1.05 h 1.05 49.034 1.051 v 1.05 32.688 z" className="logo-primary"
+         d="M 188.094,111.015 H 139.06 v 32.688 h 49.034 z m 1.051,33.738 h -1.051 -49.034 -1.05 v -1.05 -32.688 -1.05 h 1.05 49.034 1.051 v 1.05 32.688 z" className="logo-eu-border"
          transform="matrix(1.3333333,0,0,-1.3333333,0,213.396)"
          clipPath="url(#clipPath22)"
          id="path82" />
       <path
-         d="M 0,0 0.396,1.238 0.793,10e-4 h 1.294 l -1.05,-0.754 0.394,-1.22 -1.035,0.755 -1.034,-0.755 0.393,1.22 -1.05,0.754 z" className="logo-primary"
+         d="M 0,0 0.396,1.238 0.793,10e-4 h 1.294 l -1.05,-0.754 0.394,-1.22 -1.035,0.755 -1.034,-0.755 0.393,1.22 -1.05,0.754 z" className="logo-eu-star"
          transform="matrix(1.3333333,0,0,-1.3333333,229.92733,35.788667)"
          clipPath="url(#clipPath23)"
          id="path83" />
       <path
-         d="M 0,0 0.397,1.238 0.792,0.003 h 1.297 l -1.052,-0.756 0.394,-1.221 -1.034,0.755 -1.036,-0.755 0.394,1.221 -1.05,0.756 z" className="logo-primary"
+         d="M 0,0 0.397,1.238 0.792,0.003 h 1.297 l -1.052,-0.756 0.394,-1.221 -1.034,0.755 -1.036,-0.755 0.394,1.221 -1.05,0.756 z" className="logo-eu-star"
          transform="matrix(1.3333333,0,0,-1.3333333,217.56187,28.655333)"
          clipPath="url(#clipPath24)"
          id="path84" />
       <path
-         d="M 0,0 1.298,-0.003 1.692,1.237 2.089,0 h 1.295 l -1.05,-0.755 0.394,-1.221 -1.036,0.754 -1.034,-0.754 0.393,1.221 z" className="logo-primary"
+         d="M 0,0 1.298,-0.003 1.692,1.237 2.089,0 h 1.295 l -1.05,-0.755 0.394,-1.221 -1.036,0.754 -1.034,-0.754 0.393,1.221 z" className="logo-eu-star"
          transform="matrix(1.3333333,0,0,-1.3333333,201.55413,42.9364)"
          clipPath="url(#clipPath25)"
          id="path85" />
       <path
-         d="M 0,0 -1.035,0.757 -2.069,0 -1.674,1.221 -2.725,1.977 -1.431,1.975 -1.035,3.214 -0.638,1.977 H 0.657 L -0.394,1.221 Z" className="logo-primary"
+         d="M 0,0 -1.035,0.757 -2.069,0 -1.674,1.221 -2.725,1.977 -1.431,1.975 -1.035,3.214 -0.638,1.977 H 0.657 L -0.394,1.221 Z" className="logo-eu-star"
          transform="matrix(1.3333333,0,0,-1.3333333,207.1068,52.7236)"
          clipPath="url(#clipPath26)"
          id="path86" />
       <path
-         d="M 0,0 0.394,-1.219 -0.641,-0.465 -1.674,-1.219 -1.28,0 -2.331,0.755 h 1.294 l 0.396,1.238 0.397,-1.238 h 1.295 z" className="logo-primary"
+         d="M 0,0 0.394,-1.219 -0.641,-0.465 -1.674,-1.219 -1.28,0 -2.331,0.755 h 1.294 l 0.396,1.238 0.397,-1.238 h 1.295 z" className="logo-eu-star"
          transform="matrix(1.3333333,0,0,-1.3333333,206.58107,36.8148)"
          clipPath="url(#clipPath27)"
          id="path87" />
       <path
-         d="M 0,0 0.396,1.238 0.793,10e-4 h 1.295 l -1.05,-0.756 0.393,-1.22 -1.033,0.756 -1.034,-0.756 0.392,1.22 -1.05,0.756 z" className="logo-primary"
+         d="M 0,0 0.396,1.238 0.793,10e-4 h 1.295 l -1.05,-0.756 0.393,-1.22 -1.033,0.756 -1.034,-0.756 0.392,1.22 -1.05,0.756 z" className="logo-eu-star"
          transform="matrix(1.3333333,0,0,-1.3333333,210.42133,30.572933)"
          clipPath="url(#clipPath28)"
          id="path88" />
       <path
-         d="M 0,0 -1.035,0.755 -2.068,0 l 0.393,1.222 -1.05,0.754 1.295,-10e-4 0.395,1.237 0.397,-1.236 h 1.295 l -1.05,-0.754 z" className="logo-primary"
+         d="M 0,0 -1.035,0.755 -2.068,0 l 0.393,1.222 -1.05,0.754 1.295,-10e-4 0.395,1.237 0.397,-1.236 h 1.295 l -1.05,-0.754 z" className="logo-eu-star"
          transform="matrix(1.3333333,0,0,-1.3333333,212.34107,57.957733)"
          clipPath="url(#clipPath29)"
          id="path89" />
       <path
-         d="M 0,0 -1.034,0.754 -2.069,0 -1.677,1.221 -2.728,1.976 -1.431,1.975 -1.035,3.213 -0.638,1.976 H 0.657 L -0.395,1.221 Z" className="logo-primary"
+         d="M 0,0 -1.034,0.754 -2.069,0 -1.677,1.221 -2.728,1.976 -1.431,1.975 -1.035,3.213 -0.638,1.976 H 0.657 L -0.395,1.221 Z" className="logo-eu-star"
          transform="matrix(1.3333333,0,0,-1.3333333,219.47133,59.852533)"
          clipPath="url(#clipPath30)"
          id="path90" />
       <path
-         d="M 0,0 -1.036,0.755 -2.07,0 l 0.393,1.222 -1.05,0.754 1.295,-10e-4 0.396,1.237 0.397,-1.236 H 0.657 L -0.396,1.222 Z" className="logo-primary"
+         d="M 0,0 -1.036,0.755 -2.07,0 l 0.393,1.222 -1.05,0.754 1.295,-10e-4 0.396,1.237 0.397,-1.236 H 0.657 L -0.396,1.222 Z" className="logo-eu-star"
          transform="matrix(1.3333333,0,0,-1.3333333,226.60173,57.957733)"
          clipPath="url(#clipPath31)"
          id="path91" />
       <path
-         d="M 0,0 0.393,-1.221 -0.639,-0.463 -1.676,-1.221 -1.282,0 -2.331,0.757 -1.037,0.755 -0.641,1.993 -0.245,0.757 h 1.296 z" className="logo-primary"
+         d="M 0,0 0.393,-1.221 -0.639,-0.463 -1.676,-1.221 -1.282,0 -2.331,0.757 -1.037,0.755 -0.641,1.993 -0.245,0.757 h 1.296 z" className="logo-eu-star"
          transform="matrix(1.3333333,0,0,-1.3333333,226.0964,31.5804)"
          clipPath="url(#clipPath32)"
          id="path92" />
       <path
-         d="M 0,0 -1.035,0.757 -2.07,0 l 0.393,1.221 -1.05,0.756 1.295,-0.002 0.397,1.239 0.397,-1.237 h 1.294 l -1.05,-0.756 z" className="logo-primary"
+         d="M 0,0 -1.035,0.757 -2.07,0 l 0.393,1.221 -1.05,0.756 1.295,-0.002 0.397,1.239 0.397,-1.237 h 1.294 l -1.05,-0.756 z" className="logo-eu-star"
          transform="matrix(1.3333333,0,0,-1.3333333,231.83613,52.7236)"
          clipPath="url(#clipPath33)"
          id="path93" />
       <path
-         d="M 0,0 -1.035,0.757 -2.067,0 l 0.392,1.221 -1.05,0.754 1.295,-0.002 0.395,1.24 0.397,-1.238 H 0.658 L -0.394,1.221 Z" className="logo-primary"
+         d="M 0,0 -1.035,0.757 -2.067,0 l 0.392,1.221 -1.05,0.754 1.295,-0.002 0.395,1.24 0.397,-1.238 H 0.658 L -0.394,1.221 Z" className="logo-eu-star"
          transform="matrix(1.3333333,0,0,-1.3333333,233.7296,45.551467)"
          clipPath="url(#clipPath34)"
          id="path94" />
