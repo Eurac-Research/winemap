@@ -1,10 +1,9 @@
 "use client"
 
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useMemo, useState } from "react"
 import {
   ArrowDown,
-  ArrowRight,
   ArrowUp,
   BookOpen,
   Calendar,
@@ -30,6 +29,7 @@ import {
 import { ebaStrategies, type EbaStrategy } from "@/content/eba/catalogue"
 
 export default function EbaStrategiesPage() {
+  const router = useRouter()
   const [factsheets] = useState<EbaStrategy[]>(ebaStrategies)
   const [searchTerm, setSearchTerm] = useState("")
   const [sortBy, setSortBy] = useState<"year" | "author">("year")
@@ -220,20 +220,25 @@ export default function EbaStrategiesPage() {
             const abstractExpanded = expandedAbstracts.has(factsheet.id)
             const authorLimit = 10
             const abstractLimit = 200
+            const strategyHref = `/adaptation/eba-strategies/${factsheet.slug}`
 
             return (
               <Card
                 key={factsheet.id}
-                className="h-full hover:shadow-lg transition-all duration-200 backdrop-blur-sm bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] hover:border-[color:var(--border-strong)]"
+                role="link"
+                tabIndex={0}
+                onClick={() => router.push(strategyHref)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault()
+                    router.push(strategyHref)
+                  }
+                }}
+                className="h-full cursor-pointer hover:shadow-lg transition-all duration-200 backdrop-blur-sm bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] hover:border-[color:var(--border-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent-strong)]"
               >
                 <CardHeader>
                   <CardTitle className="text-xl mb-2 leading-tight text-[color:var(--text-strong)]">
-                    <Link
-                      href={`/adaptation/eba-strategies/${factsheet.slug}`}
-                      className="transition-colors hover:text-[color:var(--accent-strong)]"
-                    >
-                      {highlightText(factsheet.title, searchTerm)}
-                    </Link>
+                    {highlightText(factsheet.title, searchTerm)}
                   </CardTitle>
 
                   <div className="flex flex-wrap items-center gap-2 text-sm text-gray-400 mb-3">
@@ -248,7 +253,10 @@ export default function EbaStrategiesPage() {
                       )}
                       {factsheet.authors.length > authorLimit && !authorsExpanded ? (
                         <button
-                          onClick={() => toggleAuthors(factsheet.id)}
+                          onClick={(event) => {
+                            event.stopPropagation()
+                            toggleAuthors(factsheet.id)
+                          }}
                           className="ml-1 text-[color:var(--accent-strong)] hover:underline inline-flex items-center"
                           aria-label={`Show ${factsheet.authors.length - authorLimit} more authors`}
                         >
@@ -258,7 +266,10 @@ export default function EbaStrategiesPage() {
                       ) : null}
                       {authorsExpanded && factsheet.authors.length > authorLimit ? (
                         <button
-                          onClick={() => toggleAuthors(factsheet.id)}
+                          onClick={(event) => {
+                            event.stopPropagation()
+                            toggleAuthors(factsheet.id)
+                          }}
                           className="ml-1 text-[color:var(--accent-strong)] hover:underline inline-flex items-center"
                           aria-label="Show fewer authors"
                         >
@@ -278,21 +289,12 @@ export default function EbaStrategiesPage() {
                       </span>
                     </div>
 
-                    <Button variant="outline" size="sm" asChild className="h-6 px-2 text-xs bg-[color:var(--accent-soft)] border-[color:var(--accent-strong)] text-[color:var(--accent-strong)] hover:bg-[color:var(--surface-overlay)] hover:text-[color:var(--accent-strong)]">
-                      <Link
-                        href={`/adaptation/eba-strategies/${factsheet.slug}`}
-                        aria-label={`Explore strategy ${factsheet.title}`}
-                      >
-                        <ArrowRight className="w-3 h-3 mr-1" aria-hidden="true" />
-                        Explore
-                      </Link>
-                    </Button>
-
                     <Button variant="outline" size="sm" asChild className="h-6 px-2 text-xs bg-[color:var(--surface-panel-muted)] border-[color:var(--border-strong)] hover:bg-[color:var(--surface-overlay)] hover:border-[color:var(--border)] text-[color:var(--text-strong)] hover:text-[color:var(--text-strong)]">
                       <a
                         href={`/factsheets/${factsheet.filename}`}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={(event) => event.stopPropagation()}
                         aria-label={`View Factsheet ${factsheet.title}`}
                       >
                         <ExternalLink className="w-3 h-3 mr-1" aria-hidden="true" />
@@ -308,7 +310,10 @@ export default function EbaStrategiesPage() {
                         {factsheet.keywords.map((keyword) => (
                           <button
                             key={keyword}
-                            onClick={() => setSearchTerm(searchTerm === keyword ? "" : keyword)}
+                            onClick={(event) => {
+                              event.stopPropagation()
+                              setSearchTerm(searchTerm === keyword ? "" : keyword)
+                            }}
                             className="text-xs font-medium px-2.5 py-1 rounded-full transition-all cursor-pointer focus:outline-none focus:ring-2 bg-[color:var(--accent-soft)] text-[color:var(--accent-strong)] border border-[color:var(--accent-strong)] hover:brightness-105 focus:ring-[color:var(--accent-strong)] focus:ring-offset-1 focus:ring-offset-[color:var(--background)]"
                             aria-label={`Search for ${keyword}`}
                           >
@@ -333,7 +338,10 @@ export default function EbaStrategiesPage() {
                         )}
                         {factsheet.summary.length > abstractLimit ? (
                           <button
-                            onClick={() => toggleAbstract(factsheet.id)}
+                            onClick={(event) => {
+                              event.stopPropagation()
+                              toggleAbstract(factsheet.id)
+                            }}
                             className="ml-2 text-[color:var(--accent-strong)] hover:underline inline-flex items-center"
                             aria-label={abstractExpanded ? "Show less of abstract" : "Show full abstract"}
                           >
