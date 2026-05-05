@@ -1,118 +1,15 @@
 import type { CSSProperties } from "react";
 
-export type RampStop = readonly [number, string];
-
-export const RAMPS = {
-  viridis: [
-    [0, "#440154"],
-    [0.25, "#3b528b"],
-    [0.5, "#21918c"],
-    [0.75, "#5ec962"],
-    [1, "#fde725"],
-  ],
-  inferno: [
-    [0, "#000004"],
-    [0.25, "#420a68"],
-    [0.5, "#932667"],
-    [0.75, "#dd513a"],
-    [1, "#fdea45"],
-  ],
-  redblue: [
-    [0, "#2c7bb6"],
-    [0.5, "#ffffbf"],
-    [1, "#d7191c"],
-  ],
-  bluered: [
-    [0, "#d7191c"],
-    [0.5, "#ffffbf"],
-    [1, "#2c7bb6"],
-  ],
-} as const satisfies Record<string, readonly RampStop[]>;
-
-export type RampKey = keyof typeof RAMPS;
-
-export const RAMP_LABELS: Record<RampKey, string> = {
-  viridis: "Viridis",
-  inferno: "Inferno",
-  redblue: "Red-Blue",
-  bluered: "Blue-Red"
-};
+import {
+  getRampGradient,
+  type RampKey,
+} from "@/content/maps/color-ramps";
 
 type LegendBreak = {
   label: string;
   offset: string;
   isActive?: boolean;
 };
-
-const DEFAULT_LEGEND_HEIGHT = 160;
-
-export function getRampStops(ramp: RampKey) {
-  return RAMPS[ramp];
-}
-
-export function getRampLabel(ramp: RampKey) {
-  return RAMP_LABELS[ramp];
-}
-
-export function getRampGradient(
-  ramp: RampKey,
-  direction: "to top" | "to bottom" | "to right" | "to left" = "to top",
-) {
-  const stops = RAMPS[ramp]
-    .map(([stop, color]) => `${color} ${stop * 100}%`)
-    .join(", ");
-
-  return `linear-gradient(${direction}, ${stops})`;
-}
-
-type ColorRampSelectProps = {
-  id?: string;
-  label?: string;
-  value: RampKey;
-  onChange: (value: RampKey) => void;
-  ramps?: readonly RampKey[];
-  className?: string;
-  selectClassName?: string;
-  labelClassName?: string;
-};
-
-export function ColorRampSelect({
-  id = "color-ramp-select",
-  label = "Color ramp",
-  value,
-  onChange,
-  ramps = Object.keys(RAMPS) as RampKey[],
-  className,
-  selectClassName,
-  labelClassName,
-}: ColorRampSelectProps) {
-  return (
-    <div className={className}>
-      {label ? (
-        <label
-          htmlFor={id}
-          className={labelClassName}
-          style={!labelClassName ? defaultLabelStyle : undefined}
-        >
-          {label}
-        </label>
-      ) : null}
-      <select
-        id={id}
-        value={value}
-        onChange={(event) => onChange(event.target.value as RampKey)}
-        className={selectClassName}
-        style={!selectClassName ? defaultSelectStyle : undefined}
-      >
-        {ramps.map((ramp) => (
-          <option key={ramp} value={ramp}>
-            {getRampLabel(ramp)}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-}
 
 type VerticalLegendProps = {
   ramp: RampKey;
@@ -126,6 +23,8 @@ type VerticalLegendProps = {
   height?: number;
   className?: string;
 };
+
+const DEFAULT_LEGEND_HEIGHT = 160;
 
 export function VerticalLegend({
   ramp,
@@ -143,21 +42,29 @@ export function VerticalLegend({
   const hasBreaks = breaks.length > 0;
   const widestBreakLabel = hasBreaks
     ? breaks.reduce(
-        (widest, item) => (item.label.length > widest.length ? item.label : widest),
+        (widest, item) =>
+          item.label.length > widest.length ? item.label : widest,
         "",
       )
     : "";
 
   return (
     <div className={className} style={defaultLegendShellStyle}>
-      <div style={{ ...defaultLegendTitleStyle, marginBottom: subtitle ? "0rem" : "0.75rem" }}>{title}</div>
-      {subtitle ? (
-        <div style={defaultLegendSubtitleStyle}>{subtitle}</div>
-      ): null}
+      <div
+        style={{
+          ...defaultLegendTitleStyle,
+          marginBottom: subtitle ? "0rem" : "0.75rem",
+        }}
+      >
+        {title}
+      </div>
+      {subtitle ? <div style={defaultLegendSubtitleStyle}>{subtitle}</div> : null}
       <div
         style={{
           ...defaultLegendContentStyle,
-          gridTemplateColumns: hasBreaks ? "max-content auto auto" : "auto auto",
+          gridTemplateColumns: hasBreaks
+            ? "max-content auto auto"
+            : "auto auto",
         }}
       >
         {hasBreaks ? (
@@ -239,26 +146,6 @@ export function VerticalLegend({
     </div>
   );
 }
-
-const defaultLabelStyle: CSSProperties = {
-  display: "block",
-  fontSize: "0.74rem",
-  fontWeight: 600,
-  letterSpacing: "0.04em",
-  color: "var(--text-muted)",
-  marginBottom: "0.5rem",
-};
-
-const defaultSelectStyle: CSSProperties = {
-  width: "100%",
-  borderRadius: "1rem",
-  border: "1px solid var(--border-strong)",
-  padding: "0.75rem 1rem",
-  fontSize: "0.875rem",
-  color: "var(--text-strong)",
-  background: "var(--surface-overlay)",
-  outline: "none",
-};
 
 const defaultLegendShellStyle: CSSProperties = {
   position: "absolute",

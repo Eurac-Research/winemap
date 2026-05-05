@@ -1,4 +1,4 @@
-import { RAMPS } from "@/app/components/colorRamps";
+import { RAMPS } from "@/content/maps/color-ramps";
 
 type RampKey = keyof typeof RAMPS;
 

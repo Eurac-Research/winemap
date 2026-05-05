@@ -27,12 +27,12 @@ import Map, {
 
 import "maplibre-gl/dist/maplibre-gl.css";
 
-import { BASEMAPS } from "@/app/components/basemaps";
+import { VerticalLegend } from "@/app/components/maps/VerticalLegend";
 import {
   RAMPS,
-  VerticalLegend,
   type RampKey,
-} from "@/app/components/colorRamps";
+} from "@/content/maps/color-ramps";
+import { BASEMAPS } from "@/content/maps/basemaps";
 import {
   getIndicatorGlossaryHref,
   getIndicatorMapLayer,
