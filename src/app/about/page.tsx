@@ -199,7 +199,7 @@ export default function About() {
                     Learn more about the Institute
                   </a>
                   <Link
-                    href="/team"
+                    href="/about/team"
                     className="inline-flex items-center justify-center rounded border px-6 py-3 font-semibold transition-colors border-[color:var(--border-strong)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface-overlay)]"
                   >
                     Meet the team

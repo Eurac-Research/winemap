@@ -53,7 +53,7 @@ export default function HomePage() {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
-                  href="/team"
+                  href="/about/team"
                   className="inline-flex items-center gap-2 rounded-sm border border-[color:var(--primary)] px-4 py-2 transition hover:bg-[color:var(--primary)]"
                 >
                   <span>Our Team</span>
@@ -234,7 +234,7 @@ export default function HomePage() {
                     digital experiences. The platform&apos;s concept and
                     technical development are handled by the Communication
                     Department. Learn more about{" "}
-                    <Link href="/team" className={styles.FAQLink}>
+                    <Link href="/about/team" className={styles.FAQLink}>
                       our team
                     </Link>
                     .

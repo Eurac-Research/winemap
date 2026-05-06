@@ -171,7 +171,7 @@ export const mainAreas: MainArea[] = [
       },
       {
         label: "The Team",
-        href: "/team",
+        href: "/about/team",
         description: "Get to know the people behind the Winemap.",
       },
       {
