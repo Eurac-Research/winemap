@@ -175,7 +175,7 @@ export function Navigation() {
         <div className="flex min-w-0 flex-1 items-center gap-2 py-1 lg:w-1/3 lg:flex-none">
           <Link
             href="/"
-            className="flex min-w-0 shrink items-center gap-1.5 whitespace-nowrap leading-none transition-opacity hover:opacity-90 sm:gap-2"
+            className="flex min-w-0 shrink items-center gap-1.5 whitespace-nowrap rounded border border-transparent px-1 py-1 leading-none transition-colors hover:border-[color:var(--secondary)] sm:gap-2"
           >
             <span className="text-sm font-medium tracking-wide text-[color:var(--text-strong)] sm:text-base">
               WINEMAP
@@ -195,7 +195,7 @@ export function Navigation() {
             href="https://www.alpine-space.eu/project/respond/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-8 shrink-0 items-center transition-opacity hover:opacity-90 sm:h-9 lg:h-10"
+            className="flex h-18 shrink-0 items-center border border-transparent transition-colors hover:border-[color:var(--secondary)]"
             aria-label="Visit the RESPOnD project website"
           >
             <RespondLogo className="h-18 w-auto" />
