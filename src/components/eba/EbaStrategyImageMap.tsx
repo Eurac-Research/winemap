@@ -108,29 +108,6 @@ export function EbaStrategyImageMap({
           );
         })}
       </div>
-
-      <div className="grid gap-3 sm:grid-cols-3">
-        {markers.map((marker) => (
-          <Link
-            key={marker.id}
-            href={marker.href}
-            className="group rounded-lg border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-4 transition hover:border-[color:var(--border-strong)] hover:bg-[color:var(--surface-panel-muted)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent-strong)]"
-          >
-            {marker.category ? (
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[color:var(--accent-strong)]">
-                {marker.category}
-              </p>
-            ) : null}
-            <p className="mt-1 flex items-center justify-between gap-3 text-base font-semibold text-[color:var(--text-strong)]">
-              {marker.title}
-              <ArrowRight
-                className="h-4 w-4 shrink-0 transition group-hover:translate-x-0.5"
-                aria-hidden="true"
-              />
-            </p>
-          </Link>
-        ))}
-      </div>
     </div>
   );
 }

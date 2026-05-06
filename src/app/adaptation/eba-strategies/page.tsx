@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ebaStrategies } from "@/content/eba/catalogue";
-import { Database, Leaf } from "lucide-react";
+import { ArrowRight, Database, Leaf } from "lucide-react";
 
 import { EbaStrategyImageMap } from "@/components/eba/EbaStrategyImageMap";
 import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
@@ -32,8 +32,8 @@ export default function EbaStrategiesPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-6xl px-4 py-28 sm:px-6 lg:py-32">
-        <header className="mb-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-3xl">
+        <header className="mb-8 flex flex-col gap-6">
+          <div>
             <p className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-strong)]">
               <Leaf className="h-4 w-4" aria-hidden="true" />
               Adaptation
@@ -50,18 +50,36 @@ export default function EbaStrategiesPage() {
               factsheets behind each intervention.
             </p>
           </div>
+        </header>
+
+        <aside className="mb-8 flex max-w-4xl flex-col gap-3 rounded-lg border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] px-4 py-3 text-sm text-[color:var(--text-muted)] shadow-sm sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex min-w-0 gap-3">
+            <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[color:var(--accent-soft)] text-[color:var(--accent-strong)]">
+              <Database className="h-4 w-4" aria-hidden="true" />
+            </span>
+            <div className="min-w-0">
+              <p className="font-medium text-[color:var(--text-strong)]">
+                Prefer a table view?
+              </p>
+              <p className="mt-1 leading-6">
+                There is also a technical catalogue with search, filters,
+                metadata and PDF links for all EbA strategies.
+              </p>
+            </div>
+          </div>
 
           <Button
             variant="outline"
+            size="sm"
             asChild
-            className="w-fit border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface-panel-muted)]"
+            className="w-fit shrink-0 border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface-panel-muted)]"
           >
             <Link href="/adaptation/eba-strategies/catalogue">
-              <Database className="mr-2 h-4 w-4" aria-hidden="true" />
-              Technical catalogue
+              Open catalogue
+              <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
             </Link>
           </Button>
-        </header>
+        </aside>
 
         <EbaStrategyImageMap
           imageSrc="/images/vineyard_landscape.jpg"
