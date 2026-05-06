@@ -77,8 +77,8 @@ export function EbaStrategyImageMap({
                 top: `${marker.position.y}%`,
               }}
             >
-              <span className="absolute h-12 w-12 rounded-full bg-[color:var(--accent-strong)]/35 opacity-80 transition group-hover:scale-125 group-hover:opacity-100 group-focus-visible:scale-125" />
-              <span className="relative h-6 w-6 rounded-full border-2 border-white bg-[color:var(--accent-strong)] shadow-[0_8px_18px_rgba(0,0,0,0.28)] ring-4 ring-white/35 transition group-hover:scale-110 group-focus-visible:scale-110" />
+              <span className="eba-marker-ring absolute h-9 w-9 rounded-full border-2 border-white shadow-[0_0_0_4px_rgba(255,255,255,0.18)]" />
+              <span className="relative h-6 w-6 rounded-full bg-[color:var(--accent-strong)] shadow-[0_8px_18px_rgba(0,0,0,0.28)]" />
 
               <span
                 id={tooltipId}

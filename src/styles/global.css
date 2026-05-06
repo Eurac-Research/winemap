@@ -223,3 +223,25 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 }
+
+@keyframes eba-marker-ring-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.25);
+  }
+}
+
+.eba-marker-ring {
+  transform-origin: center;
+  animation: eba-marker-ring-pulse 2.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eba-marker-ring {
+    animation: none;
+  }
+}
