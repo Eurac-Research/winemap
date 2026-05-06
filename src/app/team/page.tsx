@@ -14,7 +14,7 @@ export default function About() {
   return (
     <main className={styles.staticContentBox}>
 
-      <h1 className="mt-8">The Team</h1>
+      <h1 className="mt-32">The Team</h1>
 
       <p>
         <span className={styles.teamItem}>

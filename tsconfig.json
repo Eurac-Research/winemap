@@ -27,7 +27,7 @@
         "src/content/*"
       ],
       "@/components/*": [
-        "src/app/components/*"
+        "src/components/*"
       ],
       "@/assets/*": [
         "src/assets/*"
@@ -48,7 +48,7 @@
         "/src/pages/*"
       ],
       "@/data/*": [
-        "src/app/data*"
+        "src/data/*"
       ],
       "@/public/*": [
         "public/*"

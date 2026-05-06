@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { EbaStrategyPage } from "@/app/components/eba/EbaStrategyPage";
+import { EbaStrategyPage } from "@/components/eba/EbaStrategyPage";
 import {
   ebaStrategies,
   getEbaStrategyBySlug,

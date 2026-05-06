@@ -3,10 +3,10 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-static";
 export const revalidate = false;
 
-import allCountries from "@/app/data/countryCodesFromDataHub.io.json";
-import pdoData from "@/app/data/PDO_EU_id.json";
-import pdoPoints from "@/app/data/pdo-points.json";
-import vulnerability from "@/app/data/vulnerability.json";
+import allCountries from "@/data/countryCodesFromDataHub.io.json";
+import pdoData from "@/data/PDO_EU_id.json";
+import pdoPoints from "@/data/pdo-points.json";
+import vulnerability from "@/data/vulnerability.json";
 
 const datasets = {
   "country-codes": allCountries,

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Leaf, Scale, ThermometerSun, Map as MapIcon } from "lucide-react";
-import WinemapDescription from "@/app/components/WinemapDescription";
-import RespondLogo from "@/app/components/ui/RespondLogo";
+import WinemapDescription from "@/components/WinemapDescription";
+import RespondLogo from "@/components/ui/RespondLogo";
 
 import styles from "@/styles/Home.module.css";
 

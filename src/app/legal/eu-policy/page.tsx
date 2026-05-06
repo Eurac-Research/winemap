@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import styles from "@/styles/Home.module.css";
-import DatawrapperChart from "@/app/components/DatawrapperChart";
+import DatawrapperChart from "@/components/DatawrapperChart";
 
 export default function ClimateIndicatorsPage() {
   return (

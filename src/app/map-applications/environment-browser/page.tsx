@@ -27,7 +27,7 @@ import Map, {
 
 import "maplibre-gl/dist/maplibre-gl.css";
 
-import { VerticalLegend } from "@/app/components/maps/VerticalLegend";
+import { VerticalLegend } from "@/components/maps/VerticalLegend";
 import {
   RAMPS,
   type RampKey,
@@ -42,10 +42,10 @@ import {
   type IndicatorMapConfig,
   type IndicatorMapOption,
 } from "@/content/indicators";
-import MapPlaceSearch from "@/app/components/maps/MapPlaceSearch";
-import { PdoMapLayout } from "@/app/components/pdo-app/PdoMapLayout";
-import { PdoSidebarShell } from "@/app/components/pdo-app/PdoSidebarShell";
-import RespondLogo from "@/app/components/ui/RespondLogo";
+import MapPlaceSearch from "@/components/maps/MapPlaceSearch";
+import { PdoMapLayout } from "@/components/pdo-app/PdoMapLayout";
+import { PdoSidebarShell } from "@/components/pdo-app/PdoSidebarShell";
+import RespondLogo from "@/components/ui/RespondLogo";
 import styles from "@/styles/Home.module.css";
 
 const SOURCE_ID = "environment-raster-source";

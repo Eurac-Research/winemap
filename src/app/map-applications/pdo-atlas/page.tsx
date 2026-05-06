@@ -9,18 +9,18 @@ import { ChevronLeft } from "lucide-react";
 import styles from "@/styles/Home.module.css";
 
 {/* Import reusable map components */}
-import { DetailFieldList, type DetailField } from "@/app/components/pdo-app/DetailFieldList";
-import { PdoFilterPanel, type FilterFieldConfig } from "@/app/components/pdo-app/PdoFilterPanel";
-import { PdoMapHoverTooltip } from "@/app/components/pdo-app/PdoMapHoverTooltip";
-import { PdoMapLayout } from "@/app/components/pdo-app/PdoMapLayout";
-import { PdoResultsList } from "@/app/components/pdo-app/PdoResultsList";
-import { PdoSidebarShell } from "@/app/components/pdo-app/PdoSidebarShell";
+import { DetailFieldList, type DetailField } from "@/components/pdo-app/DetailFieldList";
+import { PdoFilterPanel, type FilterFieldConfig } from "@/components/pdo-app/PdoFilterPanel";
+import { PdoMapHoverTooltip } from "@/components/pdo-app/PdoMapHoverTooltip";
+import { PdoMapLayout } from "@/components/pdo-app/PdoMapLayout";
+import { PdoResultsList } from "@/components/pdo-app/PdoResultsList";
+import { PdoSidebarShell } from "@/components/pdo-app/PdoSidebarShell";
 import {
   usePdoData,
   type PDORecord,
-} from "@/app/components/pdo-app/usePdoData";
-import { usePdoMapHover } from "@/app/components/pdo-app/usePdoMapHover";
-import { usePdoMapFiltering } from "@/app/components/pdo-app/usePdoMapFiltering";
+} from "@/components/pdo-app/usePdoData";
+import { usePdoMapHover } from "@/components/pdo-app/usePdoMapHover";
+import { usePdoMapFiltering } from "@/components/pdo-app/usePdoMapFiltering";
 
 {/* Import Icons */}
 import amendmentIcon from "@/public/icons/Amendment-outline.svg";

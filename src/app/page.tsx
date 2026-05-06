@@ -7,10 +7,10 @@ import {
   ThermometerSun,
 } from "lucide-react";
 
-import BackgroundImageCarousel from "@/app/components/BackgroundImageCarousel";
-import ImageComparisonSlider from "@/app/components/ImageComparisonSlider";
-import RespondLogo from "@/app/components/ui/RespondLogo";
-import MainAreaCarousel from "@/app/components/winemap-sections/MainAreaCarousel";
+import BackgroundImageCarousel from "@/components/BackgroundImageCarousel";
+import ImageComparisonSlider from "@/components/ImageComparisonSlider";
+import RespondLogo from "@/components/ui/RespondLogo";
+import MainAreaCarousel from "@/components/winemap-sections/MainAreaCarousel";
 import { mainAreas } from "@/content/main-areas";
 import { mapApplications } from "@/content/map-applications";
 import styles from "@/styles/Home.module.css";

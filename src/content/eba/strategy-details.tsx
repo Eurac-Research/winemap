@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { GlossaryTermPopover } from "@/app/components/glossary/glossaryTerm"
+import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm"
 
 export type EbaFact = {
   label: string;

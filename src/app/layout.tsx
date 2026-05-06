@@ -4,9 +4,9 @@ import { Suspense } from "react";
 import { Metadata } from "next";
 import PlausibleProvider from "next-plausible";
 
-import CookieConsent from "./components/CookieConsent";
-import { ConditionalNavigation } from "./components/ConditionalNavigation";
-import { ConditionalFooter } from "./components/ConditionalFooter";
+import CookieConsent from "@/components/CookieConsent";
+import { ConditionalNavigation } from "@/components/ConditionalNavigation";
+import { ConditionalFooter } from "@/components/ConditionalFooter";
 
 export const metadata: Metadata = {
   title: "Winemap by Eurac Research",

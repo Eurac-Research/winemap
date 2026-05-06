@@ -15,17 +15,17 @@ import {
   X,
 } from "lucide-react"
 
-import { GlossaryTermPopover } from "@/app/components/glossary/glossaryTerm"
-import { Button } from "@/app/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/card"
-import { Input } from "@/app/components/ui/input"
+import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/app/components/ui/select"
+} from "@/components/ui/select"
 import { ebaStrategies, type EbaStrategy } from "@/content/eba/catalogue"
 
 export default function EbaStrategiesPage() {

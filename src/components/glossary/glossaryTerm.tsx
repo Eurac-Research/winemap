@@ -3,7 +3,7 @@
 import { useId, useState, type KeyboardEvent, type ReactNode } from "react";
 import { ExternalLink } from "lucide-react";
 
-import { cn } from "@/app/lib/utils";
+import { cn } from "@/lib/utils";
 import { glossaryTerms, type GlossaryTerm } from "@/content/glossary";
 
 type GlossaryTermPopoverProps = {

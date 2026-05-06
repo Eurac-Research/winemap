@@ -4,7 +4,7 @@ import * as React from "react"
 import { GripVertical } from "lucide-react"
 import * as ResizablePrimitive from "react-resizable-panels"
 
-import { cn } from "@/app/lib/utils"
+import { cn } from "@/lib/utils"
 
 const ResizableDirectionContext = React.createContext<"horizontal" | "vertical">(
   "horizontal"

@@ -21,8 +21,8 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import EuracLogo from "@/app/components/ui/EuracLogo";
-import RespondLogo from "@/app/components/ui/RespondLogo";
+import EuracLogo from "@/components/ui/EuracLogo";
+import RespondLogo from "@/components/ui/RespondLogo";
 import { mainAreas } from "@/content/main-areas"
 import { mapApplications } from "@/content/map-applications"
 

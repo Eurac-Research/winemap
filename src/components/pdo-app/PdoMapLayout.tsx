@@ -6,7 +6,7 @@ import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "@/app/components/ui/resizable";
+} from "@/components/ui/resizable";
 
 interface PdoMapLayoutProps {
   sidebar: ReactNode;

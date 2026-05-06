@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import MainAreaCard from "@/app/components/winemap-sections/MainAreaCard";
+import MainAreaCard from "@/components/winemap-sections/MainAreaCard";
 
 type CarouselItem = {
   href: string;
