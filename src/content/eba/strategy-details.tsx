@@ -74,9 +74,11 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
       "water-retention",
       "microclimate-regulation",
       "water-regulation",
-      "habitat-provision-biodiversity-conservation",
+      "habitat-provision",
+      "biodiversity-conservation",
       "cultural-heritage",
-      "landscape-aesthetic-recreation",
+      "landscape-aesthetic-value",
+      "outdoor-recreation",
     ],
     challenges: [
       {
@@ -114,10 +116,13 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
       "erosion-control",
       "water-retention",
       "microclimate-regulation",
-      "habitat-provision-biodiversity-conservation",
+      "habitat-provision",
+      "biodiversity-conservation",
       "natural-pest-control",
-      "production-economic-diversification",
-      "landscape-aesthetic-recreation",
+      "increased-production",
+      "economic-diversification",
+      "cultural-heritage",
+      "landscape-aesthetic-value",
     ],
     challenges: [
       {
@@ -195,14 +200,16 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
       </>
     ),
     ecosystemServices: [
-      "habitat-provision-biodiversity-conservation",
+      "habitat-provision",
+      "biodiversity-conservation",
       "microclimate-regulation",
       "water-regulation",
       "soil-health-improvement",
       "erosion-control",
       "water-retention",
       "natural-pest-control",
-      "landscape-aesthetic-recreation",
+      "cultural-heritage",
+      "landscape-aesthetic-value",
     ],
     challenges: [
       {

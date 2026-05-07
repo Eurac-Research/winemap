@@ -2,10 +2,13 @@ import type { GlossaryTerm } from "@/content/glossary";
 
 export type EbaServiceIcon =
   | "biodiversity"
+  | "economy"
+  | "habitat"
   | "heritage"
   | "landscape"
   | "pest-control"
   | "production"
+  | "recreation"
   | "soil"
   | "slope"
   | "temperature"
@@ -23,51 +26,79 @@ export const ebaEcosystemServices = [
     id: "erosion-control",
     label: "Erosion control",
     icon: "slope",
+    glossaryId: "erosion-control",
   },
   {
     id: "water-retention",
     label: "Water retention",
     icon: "water",
+    glossaryId: "water-retention",
   },
   {
     id: "microclimate-regulation",
     label: "Microclimate regulation",
     icon: "temperature",
+    glossaryId: "microclimate-regulation",
   },
   {
     id: "water-regulation",
     label: "Water regulation",
     icon: "water",
+    glossaryId: "water-regulation",
   },
   {
-    id: "habitat-provision-biodiversity-conservation",
-    label: "Habitat provision and biodiversity conservation",
+    id: "habitat-provision",
+    label: "Habitat provision",
+    icon: "habitat",
+    glossaryId: "habitat-provision",
+  },
+  {
+    id: "biodiversity-conservation",
+    label: "Biodiversity conservation",
     icon: "biodiversity",
+    glossaryId: "biodiversity-conservation",
   },
   {
     id: "cultural-heritage",
     label: "Cultural heritage",
     icon: "heritage",
+    glossaryId: "cultural-heritage",
   },
   {
-    id: "landscape-aesthetic-recreation",
-    label: "Landscape aesthetic and outdoor recreation",
+    id: "landscape-aesthetic-value",
+    label: "Landscape aesthetic value",
     icon: "landscape",
+    glossaryId: "landscape-aesthetic-value",
+  },
+  {
+    id: "outdoor-recreation",
+    label: "Outdoor recreation",
+    icon: "recreation",
+    glossaryId: "outdoor-recreation",
   },
   {
     id: "soil-health-improvement",
     label: "Soil health improvement",
     icon: "soil",
+    glossaryId: "soil-health-improvement",
   },
   {
     id: "natural-pest-control",
     label: "Natural pest control",
     icon: "pest-control",
+    glossaryId: "natural-pest-control",
   },
   {
-    id: "production-economic-diversification",
-    label: "Increased production and economic diversification",
+    id: "increased-production",
+    label: "Increased production",
     icon: "production",
+    glossaryId: "increased-production",
+  },
+  {
+    id: "economic-diversification",
+    label: "Economic diversification",
+    icon: "economy",
+    glossaryId: "economic-diversification",
   },
 ] as const satisfies readonly EbaEcosystemService[];
 

@@ -28,6 +28,12 @@ export const glossaryTerms: GlossaryTerm[] = [
       "Diagnostic indicators used to characterize aspects of the climate system and link them to biological responses, helping to monitor conditions such as drought, heat stress, or temperature accumulation that affect crop growth, yields, and phenological stages.",
   },
   {
+    id: "biodiversity-conservation",
+    term: "Biodiversity conservation",
+    definition:
+      "The protection, maintenance, or restoration of the diversity of species, habitats, genes, and ecological interactions within an ecosystem or landscape.",
+  },
+  {
     id: "protected-designation-of-origin",
     term: "Protected Designation of Origin",
     aliases: ["PDO", "Designation of Origin"],
@@ -60,6 +66,12 @@ export const glossaryTerms: GlossaryTerm[] = [
       "The removal and movement of soil and rock by natural forces such as water, wind, and ice.",
   },
   {
+    id: "erosion-control",
+    term: "Erosion control",
+    definition:
+      "The reduction of soil loss and slope instability by slowing runoff, stabilizing soil, protecting the soil surface, or reinforcing vulnerable terrain.",
+  },
+  {
     id: "exposure",
     term: "Exposure",
     definition:
@@ -79,6 +91,12 @@ export const glossaryTerms: GlossaryTerm[] = [
       "An area made up of different interacting ecosystems forming a repeated pattern.",
   },
   {
+    id: "habitat-provision",
+    term: "Habitat provision",
+    definition:
+      "The creation, maintenance, or connection of places where plants, animals, fungi, and microorganisms can live, feed, reproduce, shelter, and move through the landscape.",
+  },
+  {
     id: "latitude",
     term: "Latitude",
     definition:
@@ -96,6 +114,12 @@ export const glossaryTerms: GlossaryTerm[] = [
     term: "Naturalness",
     definition:
       "The degree to which an ecosystem remains natural, depending on how much it is influenced by humans, how much effort is needed to maintain it, and how many native species are present.",
+  },
+  {
+    id: "natural-pest-control",
+    term: "Natural pest control",
+    definition:
+      "The regulation of pest populations by natural enemies such as predatory insects, parasitoids, birds, bats, or other organisms supported by the surrounding ecosystem.",
   },
   {
     id: "net-primary-production",
@@ -131,6 +155,12 @@ export const glossaryTerms: GlossaryTerm[] = [
       "The ability of a system to absorb changes or shocks, maintain its internal relationships, and continue to function or recover after disturbance.",
   },
   {
+    id: "cultural-heritage",
+    term: "Cultural heritage",
+    definition:
+      "The material and immaterial legacy of past land use, knowledge, practices, structures, and landscape features that communities value and pass on over time.",
+  },
+  {
     id: "sensitivity",
     term: "Sensitivity",
     definition:
@@ -156,6 +186,42 @@ export const glossaryTerms: GlossaryTerm[] = [
       "Sound management of resources for agriculture to satisfy human needs while preserving or improving the quality of the environment and the conservation of natural resources.",
   },
   {
+    id: "economic-diversification",
+    term: "Economic diversification",
+    definition:
+      "The broadening of income sources, usable products, markets, or economic activities in a land-use system, reducing dependence on a single crop or revenue stream.",
+  },
+  {
+    id: "landscape-aesthetic-value",
+    term: "Landscape aesthetic value",
+    definition:
+      "The visual and experiential qualities of a landscape that support scenic character, sense of place, cultural identity, and enjoyment.",
+  },
+  {
+    id: "microclimate-regulation",
+    term: "Microclimate regulation",
+    definition:
+      "The moderation of local temperature, wind, humidity, radiation, or shade conditions through vegetation, soil cover, landscape structure, or other ecosystem features.",
+  },
+  {
+    id: "increased-production",
+    term: "Increased production",
+    definition:
+      "The improvement of agricultural output, product quality, or production stability through ecosystem functions, diversified vegetation, or better resource conditions.",
+  },
+  {
+    id: "outdoor-recreation",
+    term: "Outdoor recreation",
+    definition:
+      "Opportunities for leisure, tourism, learning, exercise, or enjoyment that are supported by access to attractive and functional outdoor landscapes.",
+  },
+  {
+    id: "soil-health-improvement",
+    term: "Soil health improvement",
+    definition:
+      "The enhancement of soil structure, organic matter, biological activity, nutrient cycling, and water-holding capacity so that soil can better support plant growth and ecosystem functions.",
+  },
+  {
     id: "vulnerability",
     term: "Vulnerability",
     definition:
@@ -168,9 +234,21 @@ export const glossaryTerms: GlossaryTerm[] = [
       "The balance between the water entering and leaving a system over a given period.",
   },
   {
+    id: "water-regulation",
+    term: "Water regulation",
+    definition:
+      "The influence of ecosystems on water movement, infiltration, storage, drainage, runoff, and water quality within a landscape.",
+  },
+  {
+    id: "water-retention",
+    term: "Water retention",
+    definition:
+      "The capacity of soil, vegetation, or landscape features to hold water temporarily and reduce rapid runoff after rainfall or irrigation.",
+  },
+  {
     id: "ecological-niche",
     term: "Ecological niche",
     definition:
-      "The specific roles and spaces that organisms occupy within an ecosystem, encompassing both their physical environment and the various interactions they engage in with other species and their surroundings."
-  }
+      "The specific roles and spaces that organisms occupy within an ecosystem, encompassing both their physical environment and the various interactions they engage in with other species and their surroundings.",
+  },
 ];
