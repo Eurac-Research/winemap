@@ -159,20 +159,10 @@ export const mainAreas: MainArea[] = [
     mainHref: "/about",
     categories: [
       {
-        label: "Research Projects",
-        href: "/about#projects",
+        label: "About the Winemap",
+        href: "/about",
         description:
-          "Learn more about the research projects behind the Winemap.",
-      },
-      {
-        label: "The Institute",
-        href: "/about#institute",
-        description: "Discover the scientific institute behind the Winemap.",
-      },
-      {
-        label: "The Team",
-        href: "/about/team",
-        description: "Get to know the people behind the Winemap.",
+          "Learn more about the research projects, the scientific institute and the team behind the Winemap.",
       },
       {
         label: "Scientific Literature",

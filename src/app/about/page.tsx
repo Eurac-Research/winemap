@@ -114,6 +114,19 @@ export default function About() {
           </section>
 
           <section id="institute" className="px-8 md:px-12">
+            <h2 className="text-2xl md:text-3xl">Our Institute</h2>
+            <p className="mt-3 text-[color:var(--muted-foreground)]">
+              The Winemap is developed by the{" "}
+              <a
+                href="https://www.eurac.edu/en/institutes-centers/institute-for-alpine-environment"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold transition-colors text-[color:var(--primary)]"
+              >
+                Institute for Alpine Environment 
+              </a>{" "}
+              at Eurac Research in Bolzano, Italy. 
+            </p>
             <div>
               <div className="rounded-xl border p-6 mt-4 border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)]">
                   <div className="flex items-start gap-3 mb-6">
@@ -134,8 +147,7 @@ export default function About() {
                     Institute for Alpine Environment
                   </h2>
                   <p className="mt-3 text-[color:var(--text-base)]">
-                    The Winemap is developed by the Institute for Alpine Environment at
-                    Eurac Research in Bolzano, Italy. Our interdisciplinary research
+                    Our interdisciplinary research
                     team specializes in climate adaptation, environmental science, and
                     sustainable agriculture, providing the scientific foundation for
                     this platform. The project is part of{" "}
@@ -154,7 +166,7 @@ export default function About() {
                   <h2 className="text-2xl md:text-3xl mt-3">
                     Our Mission
                   </h2>
-                  <p className="leading-relaxed mb-6 text-[color:var(--muted-foreground)]">
+                  <p className="mt-3 leading-relaxed mb-6 text-[color:var(--muted-foreground)]">
                     The global biodiversity crisis is one of the greatest challenges facing humanity today. Our research focuses on how biodiversity, ecosystem functions, and services are changing and adapting due to human activities and climate change, with particular emphasis on mountain areas and their unique vulnerabilities.
                   </p>
 
@@ -189,22 +201,6 @@ export default function About() {
                       </p>
                     </div>
                   </div>
-                <div className="mt-6 flex flex-col gap-4 sm:flex-row">
-                  <a
-                    href="https://www.eurac.edu/en/institutes-centers/institute-for-alpine-environment"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center rounded px-6 py-3 font-semibold transition-colors bg-[color:var(--surface)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-panel-muted)]"
-                  >
-                    Learn more about the Institute
-                  </a>
-                  <Link
-                    href="/about/team"
-                    className="inline-flex items-center justify-center rounded border px-6 py-3 font-semibold transition-colors border-[color:var(--border-strong)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-overlay)]"
-                  >
-                    Meet the team
-                  </Link>
-                </div>
               </div>
             </div>
           </section>
@@ -212,15 +208,15 @@ export default function About() {
           <section className="px-8 md:px-12">
             <div>
               <Link
-                href="/literature"
+                href="/about/team"
                 className="block rounded-xl border p-6 transition-colors border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] hover:border-[color:var(--border-strong)] hover:bg-[color:var(--surface-panel-muted)]"
               >
-                <h2 className="text-2xl md:text-3xl">Scientific literature</h2>
+                <h2 className="text-2xl md:text-3xl">Meet our Team</h2>
                 <p className="mt-3 text-[color:var(--muted-foreground)]">
-                  Explore the publications behind the Winemap project.
+                  Explore the team behind the Winemap project.
                 </p>
                 <span className="mt-4 inline-flex items-center gap-2 underline underline-offset-4">
-                  Go to literature &rarr;
+                  Go to team &rarr;
                 </span>
               </Link>
             </div>
