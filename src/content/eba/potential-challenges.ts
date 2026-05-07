@@ -48,5 +48,7 @@ export const ebaPotentialChallenges = [
 export type EbaPotentialChallengeId =
   (typeof ebaPotentialChallenges)[number]["id"];
 
-export const getEbaPotentialChallengeById = (id: EbaPotentialChallengeId) =>
+export const getEbaPotentialChallengeById = (
+  id: EbaPotentialChallengeId,
+): EbaPotentialChallenge | undefined =>
   ebaPotentialChallenges.find((challenge) => challenge.id === id);

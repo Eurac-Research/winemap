@@ -1,13 +1,42 @@
 import Link from "next/link";
-import { ArrowLeft, Download, ExternalLink } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
 import type { EbaStrategy } from "@/content/eba/catalogue";
+import {
+  getEbaEcosystemServiceById,
+  type EbaServiceIcon,
+} from "@/content/eba/ecosystem-services";
+import {
+  getEbaPotentialChallengeById,
+  type EbaChallengeIcon,
+} from "@/content/eba/potential-challenges";
 import type {
   EbaFact,
+  EbaStrategyChallenge,
   EbaStrategyDetailContent,
 } from "@/content/eba/strategy-details";
+import {
+  AlertTriangle,
+  ArrowLeft,
+  Bug,
+  CircleDollarSign,
+  Droplets,
+  ExternalLink,
+  FileText,
+  Flower2,
+  Grape,
+  Hammer,
+  Landmark,
+  Leaf,
+  Mountain,
+  ShieldCheck,
+  Sprout,
+  ThermometerSun,
+  Trees,
+  Waves,
+  type LucideIcon,
+} from "lucide-react";
 
+import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
+import { Button } from "@/components/ui/button";
 import { EbaFactList } from "./EbaFactList";
 import { EbaSection } from "./EbaSection";
 import { EbaVideoEmbed } from "./EbaVideoEmbed";
@@ -15,6 +44,30 @@ import { EbaVideoEmbed } from "./EbaVideoEmbed";
 type EbaStrategyPageProps = {
   strategy: EbaStrategy;
   content?: EbaStrategyDetailContent;
+};
+
+const serviceIconMap: Record<EbaServiceIcon, LucideIcon> = {
+  biodiversity: Flower2,
+  economy: CircleDollarSign,
+  habitat: Trees,
+  heritage: Landmark,
+  landscape: Mountain,
+  "pest-control": Bug,
+  production: Grape,
+  recreation: Sprout,
+  soil: Sprout,
+  slope: Mountain,
+  temperature: ThermometerSun,
+  water: Droplets,
+};
+
+const challengeIconMap: Record<EbaChallengeIcon, LucideIcon> = {
+  cost: CircleDollarSign,
+  degradation: AlertTriangle,
+  resources: Waves,
+  technical: Hammer,
+  viability: ShieldCheck,
+  water: Droplets,
 };
 
 function getDefaultFacts(strategy: EbaStrategy): EbaFact[] {
@@ -28,98 +81,285 @@ function getDefaultFacts(strategy: EbaStrategy): EbaFact[] {
   ];
 }
 
+function SectionHeading({
+  eyebrow,
+  title,
+  icon: Icon,
+}: {
+  eyebrow: string;
+  title: string;
+  icon: LucideIcon;
+}) {
+  return (
+    <div className="flex items-start gap-3">
+      <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-[color:var(--accent-strong)]/25 bg-[color:var(--primary)]/20 text-[color:var(--accent-strong)]">
+        <Icon className="h-5 w-5" aria-hidden="true" />
+      </span>
+      <div>
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-strong)]">
+          {eyebrow}
+        </p>
+        <h2 className="mt-1 text-2xl font-semibold leading-tight text-[color:var(--text-strong)] md:text-3xl">
+          {title}
+        </h2>
+      </div>
+    </div>
+  );
+}
+
+function EcosystemServicesGrid({
+  serviceIds,
+}: {
+  serviceIds: NonNullable<EbaStrategyDetailContent["ecosystemServices"]>;
+}) {
+  const services = serviceIds.flatMap((serviceId) => {
+    const service = getEbaEcosystemServiceById(serviceId);
+    return service ? [service] : [];
+  });
+
+  if (!services.length) return null;
+
+  return (
+    <section
+      id="ecosystem-services"
+      className="border-y border-[color:var(--border-soft)] bg-[color:var(--primary)]/10 py-12"
+    >
+      <div className="mx-auto max-w-6xl px-6">
+        <SectionHeading
+          eyebrow="Benefits"
+          title="Ecosystem services provided"
+          icon={Leaf}
+        />
+
+        <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {services.map((service) => {
+            const Icon = serviceIconMap[service.icon];
+
+            return (
+              <article
+                key={service.id}
+                className="group/service min-h-28 border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-4 transition-colors hover:border-[color:var(--accent-strong)]"
+              >
+                <div className="flex items-start gap-3">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-[color:var(--accent-soft)] text-[color:var(--accent-strong)]">
+                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <h3 className="pt-1 text-base font-semibold leading-6 text-[color:var(--text-strong)]">
+                    {service.glossaryId ? (
+                      <GlossaryTermPopover
+                        id={service.glossaryId}
+                        className="border-b-0 text-left hover:text-[color:var(--accent-strong)]"
+                      >
+                        {service.label}
+                      </GlossaryTermPopover>
+                    ) : (
+                      service.label
+                    )}
+                  </h3>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ChallengeList({ challenges }: { challenges: EbaStrategyChallenge[] }) {
+  const resolvedChallenges = challenges.flatMap((strategyChallenge) => {
+    const challenge = getEbaPotentialChallengeById(strategyChallenge.id);
+    return challenge ? [{ ...strategyChallenge, challenge }] : [];
+  });
+
+  if (!resolvedChallenges.length) return null;
+
+  return (
+    <section className="mx-auto max-w-6xl px-6 py-12">
+      <SectionHeading
+        eyebrow="Implementation"
+        title="Potential challenges"
+        icon={AlertTriangle}
+      />
+
+      <div className="mt-7 grid gap-4 md:grid-cols-2">
+        {resolvedChallenges.map(({ id, details, challenge }) => {
+          const Icon = challengeIconMap[challenge.icon];
+
+          return (
+            <article
+              key={id}
+              className="border-l-4 border-[color:var(--accent-strong)] bg-[color:var(--surface-overlay)] px-5 py-4 shadow-sm"
+            >
+              <div className="flex items-start gap-3">
+                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[color:var(--surface-panel-muted)] text-[color:var(--accent-strong)]">
+                  <Icon className="h-5 w-5" aria-hidden="true" />
+                </span>
+                <div>
+                  <h3 className="text-base font-semibold text-[color:var(--text-strong)]">
+                    {challenge.label}
+                  </h3>
+                  {details ? (
+                    <div className="mt-2 text-sm leading-7 text-[color:var(--text-base)]">
+                      {details}
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
   const facts = content?.facts?.length
     ? content.facts
     : getDefaultFacts(strategy);
   const hasCustomSections = Boolean(content?.sections?.length);
+  const hasAbout = Boolean(content?.about);
+  const hasEcosystemServices = Boolean(content?.ecosystemServices?.length);
+  const hasChallenges = Boolean(content?.challenges?.length);
   const pdfHref = `/factsheets/${strategy.filename}`;
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-6xl px-6 py-32">
-        <Link
-          href="/adaptation/eba-strategies"
-          className="inline-flex items-center gap-2 text-sm font-medium text-[color:var(--accent-strong)] underline-offset-4 hover:underline"
-        >
-          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-          Back to EbA strategies
-        </Link>
+      <section className="border-b border-[color:var(--border-soft)] bg-[color:var(--primary)]/10 pt-28">
+        <div className="mx-auto max-w-6xl px-6 pb-12">
+          <Link
+            href="/adaptation/eba-strategies"
+            className="inline-flex items-center gap-2 text-sm font-medium text-[color:var(--accent-strong)] underline-offset-4 hover:underline"
+          >
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+            Back to EbA strategies
+          </Link>
 
-        <header className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent-strong)]">
-              EbA Strategy
-            </p>
-            <h1 className="mt-3 text-4xl font-semibold leading-tight text-[color:var(--text-strong)] md:text-5xl">
-              {strategy.title}
-            </h1>
-            {strategy.summary ? (
-              <p className="mt-6 max-w-3xl text-lg leading-8 text-[color:var(--text-muted)] text-justify">
-                {strategy.summary}
+          <header className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start">
+            <div>
+              <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent-strong)]">
+                <Leaf className="h-4 w-4" aria-hidden="true" />
+                EbA Strategy Factsheet
               </p>
-            ) : null}
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button
-                variant="outline"
-                asChild
-                className="border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface-panel-muted)]"
-              >
-                <a href={pdfHref} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="mr-2 h-4 w-4" aria-hidden="true" />
-                  Open factsheet
-                </a>
-              </Button>
-            </div>
-          </div>
-
-          <aside className="rounded-lg border border-[color:var(--border-soft)] bg-[color:var(--surface-panel-muted)] p-5">
-            <h2 className="text-base font-semibold text-[color:var(--text-strong)]">
-              Key facts
-            </h2>
-            <div className="mt-4">
-              <EbaFactList facts={facts} />
-            </div>
-            {content?.aside ? (
-              <div className="mt-5 border-t border-[color:var(--border-soft)] pt-5 text-sm leading-6 text-[color:var(--text-base)]">
-                {content.aside}
-              </div>
-            ) : null}
-          </aside>
-        </header>
-
-        <div className="mt-12 text-justify">
-          <article>
-            {hasCustomSections ? (
-              content?.sections?.map((section) => (
-                <EbaSection
-                  key={section.id}
-                  id={section.id}
-                  title={section.title}
+              <h1 className="mt-3 text-4xl font-semibold leading-tight text-[color:var(--text-strong)] md:text-5xl">
+                {strategy.title}
+              </h1>
+              {strategy.summary ? (
+                <p className="mt-6 max-w-3xl text-lg leading-8 text-[color:var(--text-muted)]">
+                  {strategy.summary}
+                </p>
+              ) : null}
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button
+                  variant="outline"
+                  asChild
+                  className="border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface-overlay)]"
                 >
-                  {section.children}
-                </EbaSection>
-              ))
-            ) : null}
+                  <a href={pdfHref} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="mr-2 h-4 w-4" aria-hidden="true" />
+                    Open PDF factsheet
+                  </a>
+                </Button>
+              </div>
+            </div>
 
-            {content?.videos?.length ? (
-              <EbaSection id="videos" title="Videos">
-                <div className="grid gap-5">
-                  {content.videos.map((video) => (
-                    <EbaVideoEmbed
-                      key={video.id}
-                      title={video.title}
-                      youtubeId={video.youtubeId}
-                      caption={video.caption}
-                    />
+            <aside className="border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-5 shadow-sm">
+              <div className="flex items-center gap-2">
+                <span className="flex h-9 w-9 items-center justify-center rounded-md bg-[color:var(--accent-soft)] text-[color:var(--accent-strong)]">
+                  <FileText className="h-5 w-5" aria-hidden="true" />
+                </span>
+                <h2 className="text-base font-semibold text-[color:var(--text-strong)]">
+                  Key facts
+                </h2>
+              </div>
+              <div className="mt-5">
+                <EbaFactList facts={facts} />
+              </div>
+              {content?.aside ? (
+                <div className="mt-5 border-t border-[color:var(--border-soft)] pt-5 text-sm leading-6 text-[color:var(--text-base)]">
+                  {content.aside}
+                </div>
+              ) : null}
+            </aside>
+          </header>
+        </div>
+      </section>
+
+      {hasAbout || hasCustomSections ? (
+        <section className="mx-auto max-w-6xl px-6 py-12">
+          <article className="grid gap-10 lg:grid-cols-[18rem_minmax(0,1fr)]">
+            <div>
+              <SectionHeading
+                eyebrow="Overview"
+                title="About this strategy"
+                icon={Sprout}
+              />
+            </div>
+
+            <div className="min-w-0 space-y-8">
+              {hasAbout ? (
+                <div className="border-l border-[color:var(--border-soft)] pl-6 text-base leading-8 text-[color:var(--text-base)] [&>p+p]:mt-4">
+                  {content?.about}
+                </div>
+              ) : null}
+
+              {hasCustomSections ? (
+                <div>
+                  {content?.sections?.map((section) => (
+                    <EbaSection
+                      key={section.id}
+                      id={section.id}
+                      title={section.title}
+                    >
+                      {section.children}
+                    </EbaSection>
                   ))}
                 </div>
-              </EbaSection>
-            ) : null}
+              ) : null}
+            </div>
           </article>
+        </section>
+      ) : null}
 
-        </div>
-      </div>
+      {hasEcosystemServices && content?.ecosystemServices ? (
+        <EcosystemServicesGrid serviceIds={content.ecosystemServices} />
+      ) : null}
+
+      {hasChallenges && content?.challenges ? (
+        <ChallengeList challenges={content.challenges} />
+      ) : null}
+
+      {content?.videos?.length ? (
+        <section className="mx-auto max-w-6xl px-6 pb-16">
+          <EbaSection id="videos" title="Videos">
+            <div className="grid gap-5">
+              {content.videos.map((video) => (
+                <EbaVideoEmbed
+                  key={video.id}
+                  title={video.title}
+                  youtubeId={video.youtubeId}
+                  caption={video.caption}
+                />
+              ))}
+            </div>
+          </EbaSection>
+        </section>
+      ) : null}
+
+      {!hasAbout &&
+      !hasCustomSections &&
+      !hasEcosystemServices &&
+      !hasChallenges &&
+      !content?.videos?.length ? (
+        <section className="mx-auto max-w-6xl px-6 py-12">
+          <div className="border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-6">
+            <p className="text-sm leading-6 text-[color:var(--text-muted)]">
+              Detailed factsheet content for this strategy is not available yet.
+            </p>
+          </div>
+        </section>
+      ) : null}
     </main>
   );
 }

@@ -104,7 +104,9 @@ export const ebaEcosystemServices = [
 
 export type EbaEcosystemServiceId = (typeof ebaEcosystemServices)[number]["id"];
 
-export const getEbaEcosystemServiceById = (id: EbaEcosystemServiceId) =>
+export const getEbaEcosystemServiceById = (
+  id: EbaEcosystemServiceId,
+): EbaEcosystemService | undefined =>
   ebaEcosystemServices.find((service) => service.id === id);
 
 export const getEbaEcosystemServiceGlossaryHref = (
