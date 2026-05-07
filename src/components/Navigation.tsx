@@ -138,7 +138,7 @@ function DesktopNavigationEntry({ entry }: { entry: NavigationEntry }) {
       </NavigationMenuTrigger>
 
       <NavigationMenuContent className="border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)]">
-        <div className="grid w-[900px] grid-cols-[340px_1fr] gap-0">
+        <div className="grid w-[min(900px,calc(100vw-2rem))] grid-cols-[minmax(260px,340px)_1fr] gap-0">
           <div className="flex flex-col justify-center border-r border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-10">
             {overviewContent}
           </div>
