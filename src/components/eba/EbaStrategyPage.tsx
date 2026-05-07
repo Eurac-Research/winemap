@@ -296,7 +296,7 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
 
       {hasAbout || hasCustomSections ? (
         <section className="mx-auto max-w-6xl px-6 py-12">
-          <article className="grid gap-10 lg:grid-cols-[18rem_minmax(0,1fr)]">
+          <article className="lg:grid-cols-[18rem_minmax(0,1fr)]">
             <div>
               <SectionHeading
                 eyebrow="Overview"
@@ -307,7 +307,7 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
 
             <div className="min-w-0 space-y-8">
               {hasAbout ? (
-                <div className="border-l border-[color:var(--border-soft)] pl-6 text-base leading-8 text-[color:var(--text-base)] [&>p+p]:mt-4">
+                <div className="mt-8 text-base leading-8 text-[color:var(--text-base)] [&>p+p]:mt-4">
                   {content?.about}
                 </div>
               ) : null}
