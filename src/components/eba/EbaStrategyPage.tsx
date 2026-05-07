@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { EbaStrategy } from "@/content/eba/catalogue";
 import {
@@ -9,7 +10,6 @@ import {
   type EbaChallengeIcon,
 } from "@/content/eba/potential-challenges";
 import type {
-  EbaFact,
   EbaStrategyChallenge,
   EbaStrategyDetailContent,
 } from "@/content/eba/strategy-details";
@@ -20,7 +20,6 @@ import {
   CircleDollarSign,
   Droplets,
   ExternalLink,
-  FileText,
   Flower2,
   Grape,
   Hammer,
@@ -37,7 +36,6 @@ import {
 
 import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
 import { Button } from "@/components/ui/button";
-import { EbaFactList } from "./EbaFactList";
 import { EbaSection } from "./EbaSection";
 import { EbaVideoEmbed } from "./EbaVideoEmbed";
 
@@ -69,17 +67,6 @@ const challengeIconMap: Record<EbaChallengeIcon, LucideIcon> = {
   viability: ShieldCheck,
   water: Droplets,
 };
-
-function getDefaultFacts(strategy: EbaStrategy): EbaFact[] {
-  return [
-    { label: "Category", value: strategy.category },
-    { label: "Year", value: strategy.year },
-    { label: "Authors", value: strategy.authors.join(", ") },
-    ...(strategy.keywords?.length
-      ? [{ label: "Keywords", value: strategy.keywords.join(", ") }]
-      : []),
-  ];
-}
 
 function SectionHeading({
   eyebrow,
@@ -113,16 +100,15 @@ function EcosystemServicesGrid({
   serviceEntries: NonNullable<EbaStrategyDetailContent["ecosystemServices"]>;
 }) {
   const services = serviceEntries.flatMap((entry) => {
-    const service = getEbaEcosystemServiceById(entry['id']);
+    const service = getEbaEcosystemServiceById(entry.id);
     return service ? [{ service, note: entry.note }] : [];
   });
 
   if (!services.length) return null;
 
   return (
-    <section
-      id="ecosystem-services"    >
-      <div className="mx-auto max-w-6xl px-6 py-12 border-y border-[color:var(--border-soft)]">
+    <section id="ecosystem-services">
+      <div className="mx-auto max-w-6xl border-y border-[color:var(--border-soft)] px-6 py-12">
         <SectionHeading
           eyebrow="Benefits"
           title="Ecosystem services provided"
@@ -155,12 +141,12 @@ function EcosystemServicesGrid({
                         service.label
                       )}
                     </h3>
-                  
+
                     {note ? (
                       <div className="text-sm leading-7 text-[color:var(--text-base)]">
                         {note}
                       </div>
-                    ): null}
+                    ) : null}
                   </div>
                 </div>
               </article>
@@ -221,19 +207,37 @@ function ChallengeList({ challenges }: { challenges: EbaStrategyChallenge[] }) {
 }
 
 export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
-  const facts = content?.facts?.length
-    ? content.facts
-    : getDefaultFacts(strategy);
   const hasCustomSections = Boolean(content?.sections?.length);
   const hasAbout = Boolean(content?.about);
   const hasEcosystemServices = Boolean(content?.ecosystemServices?.length);
   const hasChallenges = Boolean(content?.challenges?.length);
   const pdfHref = `/factsheets/${strategy.filename}`;
+  const hasHeaderImage = Boolean(content?.imagePath);
+  const headerImageAlt =
+    content?.imageAlt ??
+    `${strategy.title} ecosystem-based adaptation strategy`;
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <section className="border-b border-[color:var(--border-soft)] bg-[color:var(--primary)]/10 pt-28">
-        <div className="mx-auto max-w-6xl px-6 pb-12">
+      <section className="relative overflow-hidden border-b border-[color:var(--border-soft)] bg-[color:var(--primary)]/10 pt-28">
+        {hasHeaderImage && content?.imagePath ? (
+          <div
+            className="absolute inset-y-0 right-0 hidden w-1/2 lg:block"
+            style={{ clipPath: "polygon(13% 0, 100% 0, 100% 100%, 0 100%)" }}
+          >
+            <Image
+              src={content.imagePath}
+              alt={headerImageAlt}
+              fill
+              priority
+              sizes="50vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-[color:var(--surface-inverse)]/10" />
+          </div>
+        ) : null}
+
+        <div className="relative mx-auto max-w-6xl px-6 pb-12">
           <Link
             href="/adaptation/eba-strategies"
             className="inline-flex items-center gap-2 text-sm font-medium text-[color:var(--accent-strong)] underline-offset-4 hover:underline"
@@ -242,8 +246,14 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
             Back to EbA strategies
           </Link>
 
-          <header className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start">
-            <div>
+          <header
+            className={
+              hasHeaderImage
+                ? "mt-8 grid gap-8 lg:grid-cols-[minmax(0,0.48fr)_minmax(0,0.52fr)] lg:items-stretch"
+                : "mt-8 max-w-3xl"
+            }
+          >
+            <div className={hasHeaderImage ? "pb-2 lg:pr-8" : undefined}>
               <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent-strong)]">
                 <Leaf className="h-4 w-4" aria-hidden="true" />
                 EbA Strategy Factsheet
@@ -270,24 +280,18 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
               </div>
             </div>
 
-            <aside className="border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-5 shadow-sm">
-              <div className="flex items-center gap-2">
-                <span className="flex h-9 w-9 items-center justify-center rounded-md bg-[color:var(--accent-soft)] text-[color:var(--accent-strong)]">
-                  <FileText className="h-5 w-5" aria-hidden="true" />
-                </span>
-                <h2 className="text-base font-semibold text-[color:var(--text-strong)]">
-                  Key facts
-                </h2>
+            {hasHeaderImage && content?.imagePath ? (
+              <div className="relative min-h-64 overflow-hidden border border-[color:var(--border-soft)] lg:hidden">
+                <Image
+                  src={content.imagePath}
+                  alt={headerImageAlt}
+                  fill
+                  priority
+                  sizes="100vw"
+                  className="object-cover"
+                />
               </div>
-              <div className="mt-5">
-                <EbaFactList facts={facts} />
-              </div>
-              {content?.aside ? (
-                <div className="mt-5 border-t border-[color:var(--border-soft)] pt-5 text-sm leading-6 text-[color:var(--text-base)]">
-                  {content.aside}
-                </div>
-              ) : null}
-            </aside>
+            ) : null}
           </header>
         </div>
       </section>
