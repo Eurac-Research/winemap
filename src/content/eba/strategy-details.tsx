@@ -27,11 +27,16 @@ export type EbaStrategyChallenge = {
   details?: ReactNode;
 };
 
+export type EbaEcosystemServiceEntry = {
+  id: EbaEcosystemServiceId;
+  note?: string;
+}
+
 export type EbaStrategyDetailContent = {
   slug: string;
   facts?: EbaFact[];
   about?: ReactNode;
-  ecosystemServices?: EbaEcosystemServiceId[];
+  ecosystemServices?: EbaEcosystemServiceEntry[];
   challenges?: EbaStrategyChallenge[];
   sections?: EbaSectionContent[];
   videos?: EbaVideoContent[];
@@ -70,15 +75,15 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
       </>
     ),
     ecosystemServices: [
-      "erosion-control",
-      "water-retention",
-      "microclimate-regulation",
-      "water-regulation",
-      "habitat-provision",
-      "biodiversity-conservation",
-      "cultural-heritage",
-      "landscape-aesthetic-value",
-      "outdoor-recreation",
+      {id: "erosion-control", note: "slope stabilisation"},
+      {id: "water-retention", note: "reduced surface runoff"},
+      {id: "microclimate-regulation", note: "reduced temperature extremes"},
+      {id: "water-regulation", note: "improved infiltration, retention, and reduced nutrient leaching"},
+      {id: "habitat-provision", note: "microhabitats for plants, invertebrates, reptiles, and small mammals"},
+      {id: "biodiversity-conservation"},
+      {id: "cultural-heritage", note: "preservation of traditional knowledge and historical land-use practices"},
+      {id: "landscape-aesthetic-value", note: "distinct landscape character"},
+      {id: "outdoor-recreation", note: "enhanced recreational value"},
     ],
     challenges: [
       {
@@ -112,17 +117,18 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
       </p>
     ),
     ecosystemServices: [
-      "soil-health-improvement",
-      "erosion-control",
-      "water-retention",
-      "microclimate-regulation",
-      "habitat-provision",
-      "biodiversity-conservation",
-      "natural-pest-control",
-      "increased-production",
-      "economic-diversification",
-      "cultural-heritage",
-      "landscape-aesthetic-value",
+      {id: "soil-health-improvement", note: "enhanced organic matter, nutrient cycling, and soil structure"},
+      {id: "erosion-control", note: "root stabilisation"},
+      {id: "water-retention", note: "reduced surface runoff"},
+      {id: "microclimate-regulation", note: "wind buffering, shading, and temperature moderation"},
+      {id: "habitat-provision", note: "refuge, food resources, and ecological connectivity"},
+      {id: "biodiversity-conservation"},
+      {id: "natural-pest-control", note: "support for beneficial insects and natural enemies"},
+      {id: "water-regulation", note: "improved infiltration and reduced nutrient leaching"},
+      {id: "increased-production", note: "multiple outputs such as crops, fodder, timber, or non-timber products"},
+      {id: "economic-diversification"},
+      {id: "cultural-heritage", note: "cultural identity, structural diversity "},
+      {id: "landscape-aesthetic-value", note: "visual character of agricultural landscapes"},
     ],
     challenges: [
       {
@@ -200,16 +206,16 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
       </>
     ),
     ecosystemServices: [
-      "habitat-provision",
-      "biodiversity-conservation",
-      "microclimate-regulation",
-      "water-regulation",
-      "soil-health-improvement",
-      "erosion-control",
-      "water-retention",
-      "natural-pest-control",
-      "cultural-heritage",
-      "landscape-aesthetic-value",
+      {id: "habitat-provision", note: "refuge, food resources, and ecological connectivity"},
+      {id: "biodiversity-conservation"},
+      {id: "microclimate-regulation", note: "wind buffering, shading, and temperature moderation"},
+      {id: "water-regulation", note: "improved infiltration, retention, and reduced nutrient leaching"},
+      {id: "soil-health-improvement", note: "enhanced organic matter, nutrient cycling, and soil structure"},
+      {id: "erosion-control", note: "root stabilisation"},
+      {id: "water-retention", note: "reduced surface runoff"},
+      {id: "natural-pest-control", note: "support for beneficial insects and natural enemies"},
+      {id: "cultural-heritage", note: "cultural identity"},
+      {id: "landscape-aesthetic-value", note: "structural diversity and visual character of agricultural landscapes"},
     ],
     challenges: [
       {

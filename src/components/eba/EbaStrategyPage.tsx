@@ -108,13 +108,13 @@ function SectionHeading({
 }
 
 function EcosystemServicesGrid({
-  serviceIds,
+  serviceEntries,
 }: {
-  serviceIds: NonNullable<EbaStrategyDetailContent["ecosystemServices"]>;
+  serviceEntries: NonNullable<EbaStrategyDetailContent["ecosystemServices"]>;
 }) {
-  const services = serviceIds.flatMap((serviceId) => {
-    const service = getEbaEcosystemServiceById(serviceId);
-    return service ? [service] : [];
+  const services = serviceEntries.flatMap((entry) => {
+    const service = getEbaEcosystemServiceById(entry['id']);
+    return service ? [{ service, note: entry.note }] : [];
   });
 
   if (!services.length) return null;
@@ -132,7 +132,7 @@ function EcosystemServicesGrid({
         />
 
         <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service) => {
+          {services.map(({ service, note }) => {
             const Icon = serviceIconMap[service.icon];
 
             return (
@@ -144,18 +144,26 @@ function EcosystemServicesGrid({
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-[color:var(--accent-soft)] text-[color:var(--accent-strong)]">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </span>
-                  <h3 className="pt-1 text-base font-semibold leading-6 text-[color:var(--text-strong)]">
-                    {service.glossaryId ? (
-                      <GlossaryTermPopover
-                        id={service.glossaryId}
-                        className="border-b-0 text-left hover:text-[color:var(--accent-strong)]"
-                      >
-                        {service.label}
-                      </GlossaryTermPopover>
-                    ) : (
-                      service.label
-                    )}
-                  </h3>
+                  <div className="flex flex-col">
+                    <h3 className="pt-1 text-base font-semibold leading-6 text-[color:var(--text-strong)]">
+                      {service.glossaryId ? (
+                        <GlossaryTermPopover
+                          id={service.glossaryId}
+                          className="border-b-0 text-left hover:text-[color:var(--accent-strong)]"
+                        >
+                          {service.label}
+                        </GlossaryTermPopover>
+                      ) : (
+                        service.label
+                      )}
+                    </h3>
+                  
+                    {note ? (
+                      <div className="text-sm leading-7 text-[color:var(--text-base)]">
+                        {note}
+                      </div>
+                    ): null}
+                  </div>
                 </div>
               </article>
             );
@@ -323,7 +331,7 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
       ) : null}
 
       {hasEcosystemServices && content?.ecosystemServices ? (
-        <EcosystemServicesGrid serviceIds={content.ecosystemServices} />
+        <EcosystemServicesGrid serviceEntries={content.ecosystemServices} />
       ) : null}
 
       {hasChallenges && content?.challenges ? (
