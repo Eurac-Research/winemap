@@ -121,10 +121,8 @@ function EcosystemServicesGrid({
 
   return (
     <section
-      id="ecosystem-services"
-      className="border-y border-[color:var(--border-soft)] bg-[color:var(--primary)]/10 py-12"
-    >
-      <div className="mx-auto max-w-6xl px-6">
+      id="ecosystem-services"    >
+      <div className="mx-auto max-w-6xl px-6 py-12 border-y border-[color:var(--border-soft)]">
         <SectionHeading
           eyebrow="Benefits"
           title="Ecosystem services provided"
