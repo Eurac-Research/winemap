@@ -67,7 +67,7 @@ export default function CoursesPage() {
 
               {/* Caption */}
               <div className="p-4">
-                <h3 className="text-sm font-semibold text-[color:var(--text-strong)]">{course.title}</h3>
+                <h3 className="text-sm font-semibold text-[color:var(--foreground)]">{course.title}</h3>
               </div>
             </Link>
           ))}

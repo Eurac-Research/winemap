@@ -99,7 +99,7 @@ export function PdoFilterPanel<TKey extends string>({
       </div>
 
       {loadError && (
-        <p className="mt-4 text-sm" style={{ color: "var(--text-muted)" }}>
+        <p className="mt-4 text-sm" style={{ color: "var(--muted-foreground)" }}>
           {loadError}
         </p>
       )}

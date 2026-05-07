@@ -79,7 +79,7 @@ const SliderContent = ({
       />
       {/* After Label */}
       <div
-        className={`absolute ${labelPosition === 'bottom' ? 'bottom-4 right-4' : 'top-4 right-4'} px-3 py-1 rounded text-sm font-medium bg-[color:var(--surface-panel-strong)] text-[color:var(--text-strong)]`}
+        className={`absolute ${labelPosition === 'bottom' ? 'bottom-4 right-4' : 'top-4 right-4'} px-3 py-1 rounded text-sm font-medium bg-[color:var(--surface-panel-strong)] text-[color:var(--foreground)]`}
         aria-label={`${afterLabel} image`}
       >
         {afterLabel}
@@ -100,7 +100,7 @@ const SliderContent = ({
       />
       {/* Before Label */}
       <div
-        className={`absolute ${labelPosition === 'bottom' ? 'bottom-4 left-4' : 'top-4 left-4'} px-3 py-1 rounded text-sm font-medium bg-[color:var(--surface-panel-strong)] text-[color:var(--text-strong)]`}
+        className={`absolute ${labelPosition === 'bottom' ? 'bottom-4 left-4' : 'top-4 left-4'} px-3 py-1 rounded text-sm font-medium bg-[color:var(--surface-panel-strong)] text-[color:var(--foreground)]`}
         aria-label={`${beforeLabel} image`}
       >
         {beforeLabel}
@@ -122,8 +122,8 @@ const SliderContent = ({
       {/* Slider Handle */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full shadow-lg flex items-center justify-center bg-[color:var(--surface)]">
         <div className="flex gap-1">
-          <div className="w-0.5 h-4 bg-[color:var(--text-muted)]"></div>
-          <div className="w-0.5 h-4 bg-[color:var(--text-muted)]"></div>
+          <div className="w-0.5 h-4 bg-[color:var(--muted-foreground)]"></div>
+          <div className="w-0.5 h-4 bg-[color:var(--muted-foreground)]"></div>
         </div>
       </div>
     </div>
@@ -275,7 +275,7 @@ export default function ImageComparisonSlider({
           {/* Fullscreen Button */}
           <button
             onClick={() => setIsFullscreen(true)}
-            className="absolute bottom-4 right-4 z-10 p-2 rounded-lg transition-colors bg-[color:var(--surface-panel-strong)] hover:bg-[color:var(--surface-panel-muted)] text-[color:var(--text-strong)]"
+            className="absolute bottom-4 right-4 z-10 p-2 rounded-lg transition-colors bg-[color:var(--surface-panel-strong)] hover:bg-[color:var(--surface-panel-muted)] text-[color:var(--foreground)]"
             aria-label="View image comparison in fullscreen mode"
             title="View in fullscreen"
           >
@@ -291,7 +291,7 @@ export default function ImageComparisonSlider({
         )}
 
         {/* Instructions */}
-        <p className="text-center text-sm mt-4 text-[color:var(--text-muted)]">
+        <p className="text-center text-sm mt-4 text-[color:var(--muted-foreground)]">
           Click or drag the slider to compare the images
         </p>
       </div>
@@ -307,7 +307,7 @@ export default function ImageComparisonSlider({
           {/* Close Button */}
           <button
             onClick={() => setIsFullscreen(false)}
-            className="absolute top-4 right-4 z-50 p-2 rounded-lg transition-colors bg-[color:var(--surface-overlay)] hover:bg-[color:var(--surface-panel-muted)] text-[color:var(--text-strong)]"
+            className="absolute top-4 right-4 z-50 p-2 rounded-lg transition-colors bg-[color:var(--surface-overlay)] hover:bg-[color:var(--surface-panel-muted)] text-[color:var(--foreground)]"
             aria-label="Close fullscreen view and return to page"
             title="Close fullscreen (ESC)"
           >
@@ -344,7 +344,7 @@ export default function ImageComparisonSlider({
             )}
 
             {/* Instructions in fullscreen */}
-            <p className="text-center text-sm mt-2 text-[color:var(--text-muted)]" role="status" aria-live="polite">
+            <p className="text-center text-sm mt-2 text-[color:var(--muted-foreground)]" role="status" aria-live="polite">
               Click or drag the slider to compare the images • Press ESC to close
             </p>
           </div>

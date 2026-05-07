@@ -798,7 +798,7 @@ export default function EnvironmentBrowserPage() {
                           event.stopPropagation();
                           setSelectedInfo(indicator);
                         }}
-                        className="self-center cursor-pointer transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--text-strong)]"
+                        className="self-center cursor-pointer transition-colors text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]"
                         aria-label={`More info about ${indicator.name}`}
                         role="button"
                         tabIndex={0}
@@ -871,7 +871,7 @@ export default function EnvironmentBrowserPage() {
             top: hoverInfo.y - 12,
             borderColor: "var(--border-soft)",
             background: "var(--surface-panel-strong)",
-            color: "var(--text-strong)",
+            color: "var(--foreground)",
           }}
         >
           <div className="font-medium">{selectedIndicator.name}</div>
@@ -879,7 +879,7 @@ export default function EnvironmentBrowserPage() {
             <>
               <div
                 className="mt-1 text-[11px]"
-                style={{ color: "var(--text-muted)" }}
+                style={{ color: "var(--muted-foreground)" }}
               >
                 Active layer: {activeLayerLabel}
               </div>
@@ -896,7 +896,7 @@ export default function EnvironmentBrowserPage() {
                       style={{
                         color: isActive
                           ? "var(--accent-strong)"
-                          : "var(--text-strong)",
+                          : "var(--foreground)",
                         fontWeight: isActive ? 600 : 400,
                       }}
                     >
@@ -914,7 +914,7 @@ export default function EnvironmentBrowserPage() {
               {mapConfig?.unit ? (
                 <div
                   className="mt-1 text-[11px]"
-                  style={{ color: "var(--text-muted)" }}
+                  style={{ color: "var(--muted-foreground)" }}
                 >
                   {formatUnit(mapConfig.unit)}
                 </div>
@@ -1029,7 +1029,7 @@ export default function EnvironmentBrowserPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedInfo(null)}
-                  className="rounded-full border px-4 py-2 text-sm font-semibold transition-colors border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface-panel-muted)]"
+                  className="rounded-full border px-4 py-2 text-sm font-semibold transition-colors border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-panel-muted)]"
                 >
                   Close
                 </button>

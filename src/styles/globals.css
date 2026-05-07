@@ -1,34 +1,9 @@
-:root {
-  /* Legacy aliases kept for the existing global utility classes below. */
-  --bg-9-dark: var(--surface-panel-strong);
-  --bg-light: var(--surface-panel-muted);
-  --bg-6-light: var(--surface-panel-muted);
-  --bg-8-light: var(--surface-overlay);
-  --bg-10-light: var(--surface-panel-strong);
-  --text-light: var(--text-muted);
-  --text-strong-light: var(--text-strong);
-  --text-dark: var(--text-base);
-  --tooltipBg: var(--surface);
-}
-
-.dark {
-  --bg-9-dark: var(--surface-panel-strong);
-  --bg-light: var(--surface-panel-muted);
-  --bg-6-light: var(--surface-panel-muted);
-  --bg-8-light: var(--surface-overlay);
-  --bg-10-light: var(--surface-panel-strong);
-  --text-light: var(--text-muted);
-  --text-strong-light: var(--text-strong);
-  --text-dark: var(--text-base);
-  --tooltipBg: var(--surface);
-}
-
 .tooltip {
   position: absolute;
   margin: 8px;
   padding: 2px 8px;
-  background: var(--bg-9-dark);
-  color: var(--text-dark);
+  background: var(--surface-panel-strong);
+  color: var(--text-base);
   max-width: 300px;
   font-size: 12px;
   z-index: 9;

@@ -48,12 +48,12 @@ function GlossaryEntry({ term }: { term: GlossaryTerm }) {
       id={term.id}
       className="scroll-mt-28 border-t border-[color:var(--border-soft)] py-5 first:border-t-0"
     >
-      <h3 className="text-xl font-semibold text-[color:var(--text-strong)]">
+      <h3 className="text-xl font-semibold text-[color:var(--foreground)]">
         {term.term}
       </h3>
 
       {term.aliases?.length ? (
-        <p className="mt-1 text-sm text-[color:var(--text-muted)]">
+        <p className="mt-1 text-sm text-[color:var(--muted-foreground)]">
           Also: {term.aliases.join(", ")}
         </p>
       ) : null}
@@ -63,7 +63,7 @@ function GlossaryEntry({ term }: { term: GlossaryTerm }) {
       </p>
 
       {references?.length ? (
-        <ul className="mt-3 space-y-2 text-sm text-[color:var(--text-muted)]">
+        <ul className="mt-3 space-y-2 text-sm text-[color:var(--muted-foreground)]">
           {references.map((reference) => {
             const typeLabel = getReferenceTypeLabel(reference.type);
 
@@ -83,7 +83,7 @@ function GlossaryEntry({ term }: { term: GlossaryTerm }) {
                     />
                   </a>
                 ) : (
-                  <span className="font-medium text-[color:var(--text-strong)]">
+                  <span className="font-medium text-[color:var(--foreground)]">
                     {typeLabel}
                   </span>
                 )}
@@ -108,10 +108,10 @@ export default function GlossaryPage() {
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent-strong)]">
             About Winemap
           </p>
-          <h1 className="mt-3 text-3xl font-semibold text-[color:var(--text-strong)] md:text-5xl">
+          <h1 className="mt-3 text-3xl font-semibold text-[color:var(--foreground)] md:text-5xl">
             Glossary
           </h1>
-          <p className="mt-4 max-w-3xl text-lg leading-8 text-[color:var(--text-muted)]">
+          <p className="mt-4 max-w-3xl text-lg leading-8 text-[color:var(--muted-foreground)]">
             Scientific and technical terms used across the Winemap application.
           </p>
         </header>
@@ -124,7 +124,7 @@ export default function GlossaryPage() {
             <a
               key={letter}
               href={`#${letter}`}
-              className="flex h-9 w-9 items-center justify-center rounded border border-[color:var(--border-soft)] text-sm font-semibold text-[color:var(--text-strong)] transition-colors hover:bg-[color:var(--primary)]"
+              className="flex h-9 w-9 items-center justify-center rounded border border-[color:var(--border-soft)] text-sm font-semibold text-[color:var(--foreground)] transition-colors hover:bg-[color:var(--primary)]"
             >
               {letter}
             </a>

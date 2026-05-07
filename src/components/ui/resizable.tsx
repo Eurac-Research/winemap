@@ -72,7 +72,7 @@ const ResizableHandle = ({
         >
           <GripVertical
             className={cn(
-              "text-[color:var(--text-muted)]",
+              "text-[color:var(--muted-foreground)]",
               direction === "horizontal" ? "h-3 w-3" : "h-3 w-3 rotate-90"
             )}
           />

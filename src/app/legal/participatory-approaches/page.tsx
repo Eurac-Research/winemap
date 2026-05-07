@@ -7,7 +7,7 @@ export default function VulnerabilityPage() {
       <div className="mx-auto max-w-6xl px-6 py-32">
         <article className="space-y-12">
           <section className="rounded-2xl border p-8 md:p-12 border-[color:var(--border-soft)] bg-gradient-to-br from-[color:var(--surface-panel-muted)] to-[color:var(--surface-overlay)]">
-            <span className="inline-flex rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] border-[color:var(--border-strong)] text-[color:var(--text-muted)]">
+            <span className="inline-flex rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] border-[color:var(--border-strong)] text-[color:var(--muted-foreground)]">
               Governance
             </span>
             <h1 className="mt-5 text-4xl font-bold leading-tight md:text-5xl">Participatory Approaches</h1>
@@ -37,7 +37,7 @@ export default function VulnerabilityPage() {
             <a
               href="/handbook-living-labs.pdf"
               download
-              className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition border-[color:var(--border-strong)] text-[color:var(--text-base)] hover:text-[color:var(--text-strong)] hover:border-[color:var(--accent-strong)]"
+              className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition border-[color:var(--border-strong)] text-[color:var(--text-base)] hover:text-[color:var(--foreground)] hover:border-[color:var(--accent-strong)]"
             >
               Download the Handbook (PDF)
             </a>
@@ -53,7 +53,7 @@ export default function VulnerabilityPage() {
                   sizes="(min-width: 1024px) 800px, 100vw"
                 />
               </div>
-              <figcaption className="mt-3 text-sm text-center text-[color:var(--text-muted)]">
+              <figcaption className="mt-3 text-sm text-center text-[color:var(--muted-foreground)]">
                 Infographic on the general structure and idea behind living labs in the context of viticulture
               </figcaption>
             </figure>

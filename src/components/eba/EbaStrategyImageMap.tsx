@@ -93,7 +93,7 @@ export function EbaStrategyImageMap({
                     {marker.category}
                   </span>
                 ) : null}
-                <span className="block text-base font-semibold leading-6 text-[color:var(--text-strong)]">
+                <span className="block text-base font-semibold leading-6 text-[color:var(--foreground)]">
                   {marker.title}
                 </span>
                 {summaryPreview ? (

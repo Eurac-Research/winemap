@@ -181,7 +181,7 @@
 
   .interactiveLink:hover & {
     font-weight: 700;
-    color: var(--text-strong);
+    color: var(--foreground);
   }
 }
 
@@ -378,15 +378,15 @@
 }
 
 .filterBar :global(.ant-select-selection-placeholder) {
-  color: var(--text-muted) !important;
+  color: var(--muted-foreground) !important;
 }
 
 .filterBar :global(.ant-select .ant-select-selection-placeholder) {
-  color: var(--text-muted) !important;
+  color: var(--muted-foreground) !important;
 }
 
 .filterBar :global(.ant-select-placeholder) {
-  color: var(--text-muted) !important;
+  color: var(--muted-foreground) !important;
 }
 
 .filterBar :global(.ant-select) {
@@ -427,7 +427,7 @@
 .filterBarToggle {
   border: 1px solid var(--border-strong);
   background: var(--surface-overlay);
-  color: var(--text-strong);
+  color: var(--foreground);
   transition:
     background-color 150ms ease,
     border-color 150ms ease;
@@ -499,7 +499,7 @@
   border: none;
   border-radius: 9999px;
   background: transparent;
-  color: var(--text-muted);
+  color: var(--muted-foreground);
   cursor: pointer;
   transition:
     background-color 160ms ease,
@@ -508,7 +508,7 @@
 
 .filterHelpButton:hover {
   background: var(--surface-overlay);
-  color: var(--text-strong);
+  color: var(--foreground);
 }
 
 .filterHelpButton:focus-visible {
@@ -521,14 +521,14 @@
   font-size: 24px;
   font-weight: 700;
   line-height: 1.05;
-  color: var(--text-strong);
+  color: var(--foreground);
 }
 
 .filterHelper {
   margin: 10px 0 0;
   font-size: 13px;
   line-height: 1.45;
-  color: var(--text-muted);
+  color: var(--muted-foreground);
 }
 
 .filterFields {
@@ -562,7 +562,7 @@
   border-radius: 2px;
   border: 1px solid var(--border-strong);
   background: var(--surface-overlay);
-  color: var(--text-strong);
+  color: var(--foreground);
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -597,8 +597,8 @@
   right: 14px;
   width: 8px;
   height: 8px;
-  border-right: 1.5px solid var(--text-muted);
-  border-bottom: 1.5px solid var(--text-muted);
+  border-right: 1.5px solid var(--muted-foreground);
+  border-bottom: 1.5px solid var(--muted-foreground);
   transform: translateY(-60%) rotate(45deg);
   pointer-events: none;
 }
@@ -610,7 +610,7 @@
   border-radius: 4px !important;
   border: 1px solid var(--border-strong) !important;
   background: var(--surface-overlay);
-  color: var(--text-strong);
+  color: var(--foreground);
   cursor: pointer;
   transition:
     background-color 160ms ease,
@@ -634,7 +634,7 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--muted-foreground);
 }
 
 .filterSelect {
@@ -661,17 +661,17 @@
 }
 
 .filterSelect :global(.ant-select-selection-placeholder) {
-  color: color-mix(in srgb, var(--text-muted) 70%, transparent) !important;
+  color: color-mix(in srgb, var(--muted-foreground) 70%, transparent) !important;
 }
 
 .filterSelect :global(.ant-select-selection-item) {
-  color: var(--text-strong) !important;
+  color: var(--foreground) !important;
   font-size: 14px;
 }
 
 .filterSelect :global(.ant-select-arrow),
 .filterSelect :global(.ant-select-clear) {
-  color: var(--text-muted) !important;
+  color: var(--muted-foreground) !important;
 }
 
 .filterDropdown {
@@ -706,11 +706,11 @@
 
 .filterDropdown :global(.ant-select-item-option-selected) {
   background: var(--accent-soft);
-  color: var(--text-strong);
+  color: var(--foreground);
 }
 
 .filterDropdown :global(.ant-empty-description) {
-  color: var(--text-muted);
+  color: var(--muted-foreground);
 }
 
 .filterHelpPopup :global(.ant-popover-arrow)::before {
@@ -752,7 +752,7 @@
 .filterResetButton:hover {
   background: var(--surface);
   border-color: var(--border);
-  color: var(--text-strong);
+  color: var(--foreground);
 }
 
 .sidebarBody {
@@ -781,7 +781,7 @@
   border: none;
   border-radius: 8px;
   background: transparent;
-  color: var(--text-strong);
+  color: var(--foreground);
   text-align: left;
   cursor: pointer;
 }
@@ -809,7 +809,7 @@
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--text-muted) 80%, transparent);
+  color: color-mix(in srgb, var(--muted-foreground) 80%, transparent);
 }
 
 .sidebarSectionTitle {
@@ -817,14 +817,14 @@
   font-size: 22px;
   font-weight: 700;
   line-height: 1.08;
-  color: var(--text-strong);
+  color: var(--foreground);
 }
 
 .sidebarSectionText {
   margin: 10px 0 0;
   font-size: 13px;
   line-height: 1.45;
-  color: var(--text-muted);
+  color: var(--muted-foreground);
 }
 
 .statsGrid {
@@ -846,14 +846,14 @@
   font-size: 28px;
   font-weight: 700;
   line-height: 1;
-  color: var(--text-strong);
+  color: var(--foreground);
 }
 
 .statLabel {
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--text-muted);
+  color: var(--muted-foreground);
 }
 
 .resultList {
@@ -870,7 +870,7 @@
   border: 1px solid var(--border-soft);
   border-radius: 8px;
   background: var(--surface-overlay);
-  color: var(--text-strong);
+  color: var(--foreground);
   cursor: pointer;
   transition:
     background-color 160ms ease,
@@ -887,7 +887,7 @@
   border: 1px solid var(--accent-strong);
   border-radius: 8px;
   background: var(--accent-soft);
-  color: var(--text-strong);
+  color: var(--foreground);
   cursor: pointer;
   transition:
     background-color 160ms ease,
@@ -909,7 +909,7 @@
 
 .resultItemMeta {
   font-size: 12px;
-  color: var(--text-muted);
+  color: var(--muted-foreground);
 }
 
 .detailHeader {
@@ -927,7 +927,7 @@
   border: 1px solid var(--border-soft);
   border-radius: 16px;
   background: var(--surface-panel-strong);
-  color: var(--text-strong);
+  color: var(--foreground);
   box-shadow: var(--shadow-strong);
   backdrop-filter: blur(12px);
 }
@@ -938,7 +938,7 @@
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--muted-foreground);
 }
 
 .mapLegendContent {
@@ -963,7 +963,7 @@
 .mapLegendScaleText {
   font-size: 11px;
   line-height: 1.1;
-  color: var(--text-muted);
+  color: var(--muted-foreground);
   text-align: right;
 }
 
@@ -1024,13 +1024,13 @@
 }
 
 .mapLegendLabel {
-  color: var(--text-muted);
+  color: var(--muted-foreground);
 }
 
 .mapLegendValue {
   margin-top: 4px;
   font-weight: 600;
-  color: var(--text-strong);
+  color: var(--foreground);
 }
 
 .modalDialog {
@@ -1075,7 +1075,7 @@
   font-size: 24px;
   font-weight: 700;
   line-height: 1.05;
-  color: var(--text-strong);
+  color: var(--foreground);
 }
 
 .detailDisclosure {
@@ -1088,7 +1088,7 @@
   justify-content: space-between;
   gap: 12px;
   padding: 14px 0;
-  color: var(--text-strong);
+  color: var(--foreground);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -1106,8 +1106,8 @@
   width: 8px;
   height: 8px;
   flex: 0 0 auto;
-  border-right: 1.5px solid var(--text-muted);
-  border-bottom: 1.5px solid var(--text-muted);
+  border-right: 1.5px solid var(--muted-foreground);
+  border-bottom: 1.5px solid var(--muted-foreground);
   transform: rotate(45deg) translateY(-2px);
   transition: transform 160ms ease;
 }
@@ -1151,14 +1151,14 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--muted-foreground);
 }
 
 .detailItem dd {
   margin: 0;
   font-size: 14px;
   line-height: 1.5;
-  color: var(--text-strong);
+  color: var(--foreground);
 }
 
 .detailIcon {
@@ -1189,7 +1189,7 @@
     transition: all 300ms ease-in-out;
 
     &:hover {
-      text-shadow: 0 0 10px var(--text-strong);
+      text-shadow: 0 0 10px var(--foreground);
     }
 
     /* color: #7a183c; */
@@ -1231,11 +1231,11 @@
       height: 1px;
       /* border-radius: 50%; */
       /* background-color: #de1355; */
-      background-color: var(--text-strong);
+      background-color: var(--foreground);
       background-image: linear-gradient(
         45deg,
-        var(--text-strong) 0%,
-        var(--page-bg) 100%
+        var(--foreground) 0%,
+        var(--background) 100%
       );
       display: block;
       margin-top: 8px;
@@ -1250,8 +1250,8 @@
         height: 1px;
         background-image: linear-gradient(
           45deg,
-          var(--text-strong) 100%,
-          var(--page-bg) 100%
+          var(--foreground) 100%,
+          var(--background) 100%
         );
       }
     }
@@ -1293,7 +1293,7 @@
   border-radius: 100%;
 
   svg {
-    fill: var(--text-strong);
+    fill: var(--foreground);
     width: 35px;
     height: 35px;
   }
@@ -1326,7 +1326,7 @@
   align-items: center;
   justify-content: center;
   font-size: 9px;
-  background-color: var(--page-bg);
+  background-color: var(--background);
   height: 40px;
 
   @media screen and (min-width: 768px) {
@@ -1470,7 +1470,7 @@
 }
 
 .municName {
-  background-color: color-mix(in srgb, var(--page-bg) 10%, transparent);
+  background-color: color-mix(in srgb, var(--background) 10%, transparent);
   margin-top: 10px;
   display: block;
   opacity: 0.5;
@@ -1507,7 +1507,7 @@
   cursor: pointer;
   list-style: none;
   text-align: left;
-  color: var(--text-strong);
+  color: var(--foreground);
   font-size: 1.25rem;
   font-weight: 600;
   outline: none;
@@ -1551,7 +1551,7 @@
 }
 
 .FAQAnswer {
-  color: var(--text-muted);
+  color: var(--muted-foreground);
   line-height: 1.625;
 }
 

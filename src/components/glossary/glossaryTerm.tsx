@@ -67,7 +67,7 @@ export function GlossaryTermPopover({
           isPinned && "block",
         )}
       >
-        <span className="block text-base font-semibold text-[color:var(--text-strong)]">
+        <span className="block text-base font-semibold text-[color:var(--foreground)]">
           {glossaryTerm.term}
         </span>
         <span className="mt-2 block">{glossaryTerm.definition}</span>
@@ -96,7 +96,7 @@ export function GlossaryTermPopover({
                       />
                     </a>
                   ) : (
-                    <span className="font-medium text-[color:var(--text-strong)]">
+                    <span className="font-medium text-[color:var(--foreground)]">
                       {typeLabel}
                     </span>
                   )}

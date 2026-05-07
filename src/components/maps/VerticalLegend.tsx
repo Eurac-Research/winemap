@@ -166,7 +166,7 @@ const defaultLegendShellStyle: CSSProperties = {
 const defaultLegendTitleStyle: CSSProperties = {
   fontSize: "0.8rem",
   fontWeight: 700,
-  color: "var(--text-strong)",
+  color: "var(--foreground)",
   maxWidth: "12rem",
   lineHeight: 1.25,
   overflowWrap: "anywhere",
@@ -174,7 +174,7 @@ const defaultLegendTitleStyle: CSSProperties = {
 
 const defaultLegendSubtitleStyle: CSSProperties = {
   fontSize: "0.6rem",
-  color: "var(--text-light)",
+  color: "var(--muted-foreground)",
   marginBottom: "0.75rem",
   maxWidth: "6rem",
   lineHeight: 1.3,
@@ -210,7 +210,7 @@ const defaultLegendScaleLabelSizerStyle: CSSProperties = {
 
 const defaultLegendScaleTextStyle: CSSProperties = {
   fontSize: "0.72rem",
-  color: "var(--text-muted)",
+  color: "var(--muted-foreground)",
   textAlign: "right",
   whiteSpace: "nowrap",
 };
@@ -271,11 +271,11 @@ const defaultLegendValueLabelStyle: CSSProperties = {
   fontWeight: 700,
   letterSpacing: "0.04em",
   textTransform: "uppercase",
-  color: "var(--text-muted)",
+  color: "var(--muted-foreground)",
 };
 
 const defaultLegendValueStyle: CSSProperties = {
   fontSize: "0.78rem",
   fontWeight: 700,
-  color: "var(--text-strong)",
+  color: "var(--foreground)",
 };

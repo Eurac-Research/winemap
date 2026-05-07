@@ -140,10 +140,10 @@ export default function EbaStrategiesPage() {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <BookOpen
-              className="w-8 h-8 text-[color:var(--text-strong)]"
+              className="w-8 h-8 text-[color:var(--foreground)]"
               aria-hidden="true"
             />
-            <h1 className="text-4xl font-bold text-[color:var(--text-strong)]">
+            <h1 className="text-4xl font-bold text-[color:var(--foreground)]">
               EbA Strategies Catalogue
             </h1>
           </div>
@@ -166,13 +166,13 @@ export default function EbaStrategiesPage() {
               placeholder="Search factsheets, authors or year ..."
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
-              className="pl-10 pr-10 h-12 transition-colors bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--text-strong)] placeholder:text-[color:var(--text-muted)] hover:bg-[color:var(--surface-panel-muted)] focus:bg-[color:var(--surface-panel-muted)]"
+              className="pl-10 pr-10 h-12 transition-colors bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] placeholder:text-[color:var(--muted-foreground)] hover:bg-[color:var(--surface-panel-muted)] focus:bg-[color:var(--surface-panel-muted)]"
               aria-label="Search factsheets"
             />
             {searchTerm ? (
               <button
                 onClick={() => setSearchTerm("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--text-strong)]"
+                className="absolute right-3 top-1/2 -translate-y-1/2 transition-colors text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]"
                 aria-label="Clear search"
               >
                 <X className="w-4 h-4" aria-hidden="true" />
@@ -180,13 +180,13 @@ export default function EbaStrategiesPage() {
             ) : null}
           </div>
 
-          <div className="flex gap-2 text-[color:var(--text-strong)]">
+          <div className="flex gap-2 text-[color:var(--foreground)]">
             <Select
               value={categoryFilter}
               onValueChange={(value: string) => setCategoryFilter(value)}
             >
               <SelectTrigger
-                className="w-48 h-12 bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface-panel-muted)]"
+                className="w-48 h-12 bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-panel-muted)]"
                 aria-label="Filter by category"
               >
                 <SelectValue />
@@ -194,7 +194,7 @@ export default function EbaStrategiesPage() {
               <SelectContent className="bg-[color:var(--surface-panel-strong)] border-[color:var(--border-soft)]">
                 <SelectItem
                   value="all"
-                  className="text-[color:var(--text-strong)]"
+                  className="text-[color:var(--foreground)]"
                 >
                   All Categories
                 </SelectItem>
@@ -202,7 +202,7 @@ export default function EbaStrategiesPage() {
                   <SelectItem
                     key={category}
                     value={category}
-                    className="text-[color:var(--text-strong)]"
+                    className="text-[color:var(--foreground)]"
                   >
                     {category}
                   </SelectItem>
@@ -215,7 +215,7 @@ export default function EbaStrategiesPage() {
               onValueChange={(value: "year" | "author") => setSortBy(value)}
             >
               <SelectTrigger
-                className="w-32 h-12 bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface-panel-muted)]"
+                className="w-32 h-12 bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-panel-muted)]"
                 aria-label="Sort by"
               >
                 <SelectValue />
@@ -223,7 +223,7 @@ export default function EbaStrategiesPage() {
               <SelectContent className="bg-[color:var(--surface-panel-strong)] border-[color:var(--border-soft)]">
                 <SelectItem
                   value="year"
-                  className="text-[color:var(--text-strong)]"
+                  className="text-[color:var(--foreground)]"
                 >
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" aria-hidden="true" />
@@ -232,7 +232,7 @@ export default function EbaStrategiesPage() {
                 </SelectItem>
                 <SelectItem
                   value="author"
-                  className="text-[color:var(--text-strong)]"
+                  className="text-[color:var(--foreground)]"
                 >
                   <div className="flex items-center gap-2">
                     <User className="w-4 h-4" aria-hidden="true" />
@@ -245,7 +245,7 @@ export default function EbaStrategiesPage() {
             <Button
               variant="outline"
               onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
-              className="h-12 px-3 bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface-panel-muted)] hover:text-[color:var(--text-strong)]"
+              className="h-12 px-3 bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-panel-muted)] hover:text-[color:var(--foreground)]"
               aria-label={`Sort ${sortOrder === "asc" ? "descending" : "ascending"}`}
             >
               {sortOrder === "desc" ? (
@@ -287,7 +287,7 @@ export default function EbaStrategiesPage() {
                 className="h-full cursor-pointer hover:shadow-lg transition-all duration-200 backdrop-blur-sm bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] hover:border-[color:var(--border-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent-strong)]"
               >
                 <CardHeader>
-                  <CardTitle className="text-xl mb-2 leading-tight text-[color:var(--text-strong)]">
+                  <CardTitle className="text-xl mb-2 leading-tight text-[color:var(--foreground)]">
                     {highlightText(factsheet.title, searchTerm)}
                   </CardTitle>
 
@@ -354,7 +354,7 @@ export default function EbaStrategiesPage() {
                       variant="outline"
                       size="sm"
                       asChild
-                      className="h-6 px-2 text-xs bg-[color:var(--surface-panel-muted)] border-[color:var(--border-strong)] hover:bg-[color:var(--surface-overlay)] hover:border-[color:var(--border)] text-[color:var(--text-strong)] hover:text-[color:var(--text-strong)]"
+                      className="h-6 px-2 text-xs bg-[color:var(--surface-panel-muted)] border-[color:var(--border-strong)] hover:bg-[color:var(--surface-overlay)] hover:border-[color:var(--border)] text-[color:var(--foreground)] hover:text-[color:var(--foreground)]"
                     >
                       <a
                         href={`/factsheets/${factsheet.filename}`}

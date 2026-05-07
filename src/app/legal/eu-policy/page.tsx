@@ -10,7 +10,7 @@ export default function ClimateIndicatorsPage() {
     <div className="mx-auto max-w-6xl px-6 py-32">
         <article className="space-y-12">
           <section className="rounded-2xl border p-8 md:p-12 border-[color:var(--border-soft)] bg-gradient-to-br from-[color:var(--surface-panel-muted)] to-[color:var(--surface-overlay)]">
-            <span className="inline-flex rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] border-[color:var(--border-strong)] text-[color:var(--text-muted)]">
+            <span className="inline-flex rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] border-[color:var(--border-strong)] text-[color:var(--muted-foreground)]">
               Governance
             </span>
             <h1 className="mt-5 text-4xl font-bold leading-tight md:text-5xl">Geographic Indications</h1>
@@ -44,7 +44,7 @@ export default function ClimateIndicatorsPage() {
                     height={212}
                     className="mx-auto"
                   />
-                  <figcaption className="text-sm text-[color:var(--text-muted)]">
+                  <figcaption className="text-sm text-[color:var(--muted-foreground)]">
                     Official PDO logo from the Eurpean Commission
                   </figcaption>
                 </figure>

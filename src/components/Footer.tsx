@@ -7,7 +7,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="border-t pt-2 text-[color:var(--text-strong)] bg-[color:var(--background)] border-[color:var(--border-soft)]">
+    <footer className="border-t pt-2 text-[color:var(--foreground)] bg-[color:var(--background)] border-[color:var(--border-soft)]">
       <div className="max-w-5xl mx-auto px-4 md:px-6 py-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-4 max-w-8xl mx-auto">
           {/* Column 1: Explore Maps */}
@@ -18,7 +18,7 @@ export default function Footer() {
             <ul className="space-y-1">
               {mainAreas.filter((area) => area.showOnLanding).map((area) => (
                 <li key={area.id}>
-                  <Link href={area.mainHref} className="text-sm transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--text-strong)]">
+                  <Link href={area.mainHref} className="text-sm transition-colors text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]">
                     {area.titleText}
                   </Link>
                 </li>
@@ -34,7 +34,7 @@ export default function Footer() {
             <ul className="space-y-1">
               {mapApplications.map((app) => (
                 <li key={app.title}>
-                  <Link href={app.href} className="text-sm transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--text-strong)]">
+                  <Link href={app.href} className="text-sm transition-colors text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]">
                   {app.title}
                   </Link>
                 </li>
@@ -52,7 +52,7 @@ export default function Footer() {
                 .find((area) => area.id === "about")
                 ?.categories.map((cat) => (
                   <li key={cat.label}>
-                    <Link href={cat.href} className="text-sm transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--text-strong)]">
+                    <Link href={cat.href} className="text-sm transition-colors text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]">
                       {cat.label.replace(" →", "")}
                     </Link>
                   </li>
@@ -67,7 +67,7 @@ export default function Footer() {
             </h3>
             <ul className="space-y-1">
               <li>
-                <Link href="/imprint-privacy" className="text-sm transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--text-strong)]">
+                <Link href="/imprint-privacy" className="text-sm transition-colors text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]">
                   Imprint / Privacy Policy
                 </Link>
               </li>
@@ -77,9 +77,9 @@ export default function Footer() {
       </div>
       {/* Bottom Bar */}
       <div className="border-t text-center border-[color:var(--border-soft)]">
-        <p className="text-sm py-3 text-[color:var(--text-muted)]">
+        <p className="text-sm py-3 text-[color:var(--muted-foreground)]">
           © {currentYear} Eurac Research •{" "}
-          <Link href="/imprint-privacy" className="transition-colors hover:text-[color:var(--text-strong)]">
+          <Link href="/imprint-privacy" className="transition-colors hover:text-[color:var(--foreground)]">
             Imprint / Privacy
           </Link>
         </p>

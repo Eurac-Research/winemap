@@ -86,7 +86,7 @@ function SectionHeading({
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-strong)]">
           {eyebrow}
         </p>
-        <h2 className="mt-1 text-2xl font-semibold leading-tight text-[color:var(--text-strong)] md:text-3xl">
+        <h2 className="mt-1 text-2xl font-semibold leading-tight text-[color:var(--foreground)] md:text-3xl">
           {title}
         </h2>
       </div>
@@ -129,7 +129,7 @@ function EcosystemServicesGrid({
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </span>
                   <div className="flex flex-col">
-                    <h3 className="pt-1 text-base font-semibold leading-6 text-[color:var(--text-strong)]">
+                    <h3 className="pt-1 text-base font-semibold leading-6 text-[color:var(--foreground)]">
                       {service.glossaryId ? (
                         <GlossaryTermPopover
                           id={service.glossaryId}
@@ -188,7 +188,7 @@ function ChallengeList({ challenges }: { challenges: EbaStrategyChallenge[] }) {
                   <Icon className="h-5 w-5" aria-hidden="true" />
                 </span>
                 <div>
-                  <h3 className="text-base font-semibold text-[color:var(--text-strong)]">
+                  <h3 className="text-base font-semibold text-[color:var(--foreground)]">
                     {challenge.label}
                   </h3>
                   {details ? (
@@ -258,11 +258,11 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
                 <Leaf className="h-4 w-4" aria-hidden="true" />
                 EbA Strategy Factsheet
               </p>
-              <h1 className="mt-3 text-4xl font-semibold leading-tight text-[color:var(--text-strong)] md:text-5xl">
+              <h1 className="mt-3 text-4xl font-semibold leading-tight text-[color:var(--foreground)] md:text-5xl">
                 {strategy.title}
               </h1>
               {strategy.summary ? (
-                <p className="mt-6 max-w-3xl text-lg leading-8 text-[color:var(--text-muted)]">
+                <p className="mt-6 max-w-3xl text-lg leading-8 text-[color:var(--muted-foreground)]">
                   {strategy.summary}
                 </p>
               ) : null}
@@ -270,7 +270,7 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
                 <Button
                   variant="outline"
                   asChild
-                  className="border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface-overlay)]"
+                  className="border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-overlay)]"
                 >
                   <a href={pdfHref} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="mr-2 h-4 w-4" aria-hidden="true" />
@@ -364,7 +364,7 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
       !content?.videos?.length ? (
         <section className="mx-auto max-w-6xl px-6 py-12">
           <div className="border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-6">
-            <p className="text-sm leading-6 text-[color:var(--text-muted)]">
+            <p className="text-sm leading-6 text-[color:var(--muted-foreground)]">
               Detailed factsheet content for this strategy is not available yet.
             </p>
           </div>

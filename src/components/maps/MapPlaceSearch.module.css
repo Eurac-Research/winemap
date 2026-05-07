@@ -21,7 +21,7 @@
 
 .icon {
   flex: 0 0 auto;
-  color: var(--text-muted);
+  color: var(--muted-foreground);
 }
 
 .searchInput {
@@ -29,21 +29,21 @@
   min-width: 0;
   border: none;
   background: transparent;
-  color: var(--text-strong);
+  color: var(--foreground);
   font-size: 14px;
   line-height: 1.2;
   outline: none;
 }
 
 .searchInput::placeholder {
-  color: var(--text-muted);
+  color: var(--muted-foreground);
 }
 
 .statusText {
   padding: 0 12px 10px;
   font-size: 12px;
   line-height: 1.4;
-  color: var(--text-muted);
+  color: var(--muted-foreground);
 }
 
 .statusError {
@@ -65,7 +65,7 @@
   border: none;
   border-radius: 10px;
   background: transparent;
-  color: var(--text-strong);
+  color: var(--foreground);
   text-align: left;
   cursor: pointer;
   transition:
@@ -90,5 +90,5 @@
   margin-top: 3px;
   font-size: 11px;
   line-height: 1.35;
-  color: var(--text-muted);
+  color: var(--muted-foreground);
 }

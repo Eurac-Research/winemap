@@ -39,7 +39,7 @@ export default function MainAreaCarousel({ items }: MainAreaCarouselProps) {
       <button
         type="button"
         onClick={() => scrollByAmount("prev")}
-        className="absolute left-0 top-1/2 z-10 hidden h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[color:var(--border-soft)] bg-white text-[color:var(--accent-strong)] shadow-[0_12px_24px_rgba(15,39,66,0.12)] transition hover:bg-[color:var(--page-bg)] lg:inline-flex"
+        className="absolute left-0 top-1/2 z-10 hidden h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[color:var(--border-soft)] bg-white text-[color:var(--accent-strong)] shadow-[0_12px_24px_rgba(15,39,66,0.12)] transition hover:bg-[color:var(--background)] lg:inline-flex"
         aria-label="Show previous adaptation page"
       >
         <ChevronLeft className="h-5 w-5" />
@@ -70,7 +70,7 @@ export default function MainAreaCarousel({ items }: MainAreaCarouselProps) {
       <button
         type="button"
         onClick={() => scrollByAmount("next")}
-        className="absolute right-0 top-1/2 z-10 hidden h-11 w-11 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[color:var(--border-soft)] bg-white text-[color:var(--accent-strong)] shadow-[0_12px_24px_rgba(15,39,66,0.12)] transition hover:bg-[color:var(--page-bg)] lg:inline-flex"
+        className="absolute right-0 top-1/2 z-10 hidden h-11 w-11 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[color:var(--border-soft)] bg-white text-[color:var(--accent-strong)] shadow-[0_12px_24px_rgba(15,39,66,0.12)] transition hover:bg-[color:var(--background)] lg:inline-flex"
         aria-label="Show next adaptation page"
       >
         <ChevronRight className="h-5 w-5" />

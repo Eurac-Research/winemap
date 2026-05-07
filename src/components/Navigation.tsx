@@ -96,10 +96,10 @@ const NavigationMenuEntries: NavigationEntry[] = [
 ];
 
 const triggerClassName =
-  "bg-transparent px-5 py-3 text-base uppercase text-[color:var(--text-strong)] hover:bg-[color:var(--surface-overlay)] hover:text-[color:var(--text-strong)] data-[state=open]:bg-[color:var(--surface-overlay)] data-[state=open]:text-[color:var(--text-strong)]";
+  "bg-transparent px-5 py-3 text-base uppercase text-[color:var(--foreground)] hover:bg-[color:var(--surface-overlay)] hover:text-[color:var(--foreground)] data-[state=open]:bg-[color:var(--surface-overlay)] data-[state=open]:text-[color:var(--foreground)]";
 
 const topLevelLinkClassName =
-  "inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-5 py-3 text-base font-medium uppercase text-[color:var(--text-strong)] transition-colors hover:bg-[color:var(--surface-overlay)] hover:text-[color:var(--text-strong)] focus:bg-[color:var(--surface-overlay)] focus:text-[color:var(--text-strong)] focus:outline-none";
+  "inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-5 py-3 text-base font-medium uppercase text-[color:var(--foreground)] transition-colors hover:bg-[color:var(--surface-overlay)] hover:text-[color:var(--foreground)] focus:bg-[color:var(--surface-overlay)] focus:text-[color:var(--foreground)] focus:outline-none";
 
 function DesktopNavigationEntry({ entry }: { entry: NavigationEntry }) {
   const Icon = entry.icon;
@@ -122,10 +122,10 @@ function DesktopNavigationEntry({ entry }: { entry: NavigationEntry }) {
         className="h-12 w-12 text-[color:var(--accent-strong)]"
         aria-hidden="true"
       />
-      <h3 className="mt-6 text-2xl font-semibold text-[color:var(--text-strong)]">
+      <h3 className="mt-6 text-2xl font-semibold text-[color:var(--foreground)]">
         {entry.title}
       </h3>
-      <p className="mt-3 text-base leading-relaxed text-[color:var(--text-muted)]">
+      <p className="mt-3 text-base leading-relaxed text-[color:var(--muted-foreground)]">
         {entry.description}
       </p>
     </>
@@ -150,10 +150,10 @@ function DesktopNavigationEntry({ entry }: { entry: NavigationEntry }) {
                   href={section.href}
                   className="group block border-b border-[color:var(--border-soft)] p-3 transition-colors hover:bg-[color:var(--surface-overlay)]"
                 >
-                  <div className="mb-1.5 text-base font-semibold text-[color:var(--text-strong)]">
+                  <div className="mb-1.5 text-base font-semibold text-[color:var(--foreground)]">
                     {section.label}
                   </div>
-                  <div className="text-sm leading-relaxed text-[color:var(--text-muted)] transition-colors group-hover:text-[color:var(--text-strong)]">
+                  <div className="text-sm leading-relaxed text-[color:var(--muted-foreground)] transition-colors group-hover:text-[color:var(--foreground)]">
                     {section.description}
                   </div>
                 </Link>
@@ -177,13 +177,13 @@ export function Navigation() {
             href="/"
             className="flex min-w-0 shrink items-center gap-1.5 whitespace-nowrap rounded border border-transparent px-1 py-1 leading-none transition-colors hover:border-[color:var(--secondary)] sm:gap-2"
           >
-            <span className="text-sm font-medium tracking-wide text-[color:var(--text-strong)] sm:text-base">
+            <span className="text-sm font-medium tracking-wide text-[color:var(--foreground)] sm:text-base">
               WINEMAP
             </span>
-            <span className="hidden text-xs text-[color:var(--text-muted)] min-[360px]:inline sm:text-sm">
+            <span className="hidden text-xs text-[color:var(--muted-foreground)] min-[360px]:inline sm:text-sm">
               by
             </span>
-            <EuracLogo className="h-2.5 shrink-0 text-[color:var(--text-strong)] sm:h-3" />
+            <EuracLogo className="h-2.5 shrink-0 text-[color:var(--foreground)] sm:h-3" />
           </Link>
 
           <div
@@ -204,7 +204,7 @@ export function Navigation() {
 
         <button
           onClick={() => setMobileMenuOpen((isOpen) => !isOpen)}
-          className="shrink-0 rounded p-2 text-[color:var(--text-strong)] transition-colors hover:bg-[color:var(--surface-overlay)] lg:hidden"
+          className="shrink-0 rounded p-2 text-[color:var(--foreground)] transition-colors hover:bg-[color:var(--surface-overlay)] lg:hidden"
           aria-label="Toggle mobile menu"
           aria-expanded={mobileMenuOpen}
         >
@@ -241,17 +241,17 @@ export function Navigation() {
                   {entry.href ? (
                     <Link
                       href={entry.href}
-                      className="block text-lg font-semibold text-[color:var(--text-strong)] transition-colors hover:text-[color:var(--accent-strong)]"
+                      className="block text-lg font-semibold text-[color:var(--foreground)] transition-colors hover:text-[color:var(--accent-strong)]"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       {entry.title}
                     </Link>
                   ) : (
-                    <p className="text-lg font-semibold text-[color:var(--text-strong)]">
+                    <p className="text-lg font-semibold text-[color:var(--foreground)]">
                       {entry.title}
                     </p>
                   )}
-                  <p className="mt-1 text-sm leading-relaxed text-[color:var(--text-muted)]">
+                  <p className="mt-1 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
                     {entry.description}
                   </p>
 
@@ -261,10 +261,10 @@ export function Navigation() {
                         <Link
                           key={section.href}
                           href={section.href}
-                          className="block rounded py-1 text-sm text-[color:var(--text-muted)] transition-colors hover:text-[color:var(--text-strong)]"
+                          className="block rounded py-1 text-sm text-[color:var(--muted-foreground)] transition-colors hover:text-[color:var(--foreground)]"
                           onClick={() => setMobileMenuOpen(false)}
                         >
-                          <span className="font-medium text-[color:var(--text-strong)]">
+                          <span className="font-medium text-[color:var(--foreground)]">
                             {section.label}
                           </span>
                           <span className="mt-0.5 block leading-relaxed">

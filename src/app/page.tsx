@@ -20,7 +20,7 @@ export default function HomePage() {
   const governanceArea = mainAreas.find((area) => area.id === "governance");
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[color:var(--page-bg)] text-[color:var(--text-strong)]">
+    <div className="relative min-h-screen overflow-x-hidden bg-[color:var(--background)] text-[color:var(--foreground)]">
       <section className="relative isolate overflow-hidden">
         <div
           className="absolute inset-0 z-0"
@@ -74,10 +74,10 @@ export default function HomePage() {
               </span>
               <span>Winemap Climate</span>
             </div>
-            <h2 className="max-w-lg text-4xl font-semibold leading-tight text-[color:var(--text-strong)] sm:text-5xl">
+            <h2 className="max-w-lg text-4xl font-semibold leading-tight text-[color:var(--foreground)] sm:text-5xl">
               Discover how climate pressure is reshaping European viticulture.
             </h2>
-            <p className="mt-6 max-w-md text-lg leading-8 text-[color:var(--text-strong)]">
+            <p className="mt-6 max-w-md text-lg leading-8 text-[color:var(--foreground)]">
               Explore indicators, spatial patterns, and vulnerability insights
               designed to support adaptation planning across wine-growing
               regions.
@@ -127,10 +127,10 @@ export default function HomePage() {
               </span>
               <span>Winemap Adaptation</span>
             </div>
-            <h2 className="max-w-lg text-4xl font-semibold leading-tight text-[color:var(--text-strong)] sm:text-5xl">
+            <h2 className="max-w-lg text-4xl font-semibold leading-tight text-[color:var(--foreground)] sm:text-5xl">
               Explore strategies to adapt vineyards to climate change.
             </h2>
-            <p className="mt-6 max-w-md text-lg leading-8 text-[color:var(--text-strong)]">
+            <p className="mt-6 max-w-md text-lg leading-8 text-[color:var(--foreground)]">
               Discover ecosystem-based adaptation approaches, pilot experiences,
               and practical measures that connect climate resilience with
               everyday vineyard management.
@@ -155,11 +155,11 @@ export default function HomePage() {
               </span>
               <span>Winemap Governance</span>
             </div>
-            <h2 className="max-w-lg text-4xl font-semibold leading-tight text-[color:var(--text-strong)] sm:text-5xl">
+            <h2 className="max-w-lg text-4xl font-semibold leading-tight text-[color:var(--foreground)] sm:text-5xl">
               Understand the rules, institutions, and decisions shaping wine
               regions.
             </h2>
-            <p className="mt-6 max-w-md text-lg leading-8 text-[color:var(--text-strong)]">
+            <p className="mt-6 max-w-md text-lg leading-8 text-[color:var(--foreground)]">
               Navigate the policy frameworks, participatory approaches, and
               educational resources that influence how viticulture responds to
               environmental and social change.
@@ -193,7 +193,7 @@ export default function HomePage() {
           {/* FAQ Section */}
           <section className="mx-auto max-w-5xl border-t border-[color:var(--border-soft)] px-4 py-20 sm:px-6 lg:px-8">
             <div>
-              <h2 className="text-3xl font-bold mb-12 text-center text-[color:var(--text-strong)]">
+              <h2 className="text-3xl font-bold mb-12 text-center text-[color:var(--foreground)]">
                 Frequently Asked Questions
               </h2>
               <div className={styles.FAQList}>

@@ -94,7 +94,7 @@ export default function PilotExperiencesPage() {
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <svg
-                    className="w-16 h-16 text-[color:var(--text-muted)] group-hover:text-[color:var(--text-strong)] transition-colors"
+                    className="w-16 h-16 text-[color:var(--muted-foreground)] group-hover:text-[color:var(--foreground)] transition-colors"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -108,8 +108,8 @@ export default function PilotExperiencesPage() {
               {/* Caption */}
               <div className="p-4">
                 {/* <div className="text-xs text-white/40 mb-1">Box 2.{index + 1}</div> */}
-                <h3 className="font-semibold mb-1 text-sm text-[color:var(--text-strong)]">{video.caption}</h3>
-                <p className="text-xs text-[color:var(--text-muted)]">{video.location}</p>
+                <h3 className="font-semibold mb-1 text-sm text-[color:var(--foreground)]">{video.caption}</h3>
+                <p className="text-xs text-[color:var(--muted-foreground)]">{video.location}</p>
               </div>
             </div>
           ))}
@@ -131,7 +131,7 @@ export default function PilotExperiencesPage() {
               onClick={() => setSelectedVideo(null)}
               className="absolute top-4 right-4 z-10 p-2 rounded-full transition-colors bg-[color:var(--surface-inverse)]/25 hover:bg-[color:var(--surface-inverse)]/40"
             >
-              <X className="w-6 h-6 text-[color:var(--text-strong)]" />
+              <X className="w-6 h-6 text-[color:var(--foreground)]" />
             </button>
 
             {/* Video Container */}
@@ -147,8 +147,8 @@ export default function PilotExperiencesPage() {
 
             {/* Video Info */}
             <div className="p-6 border-t border-[color:var(--border-soft)]">
-              <h3 className="text-xl font-semibold mb-2 text-[color:var(--text-strong)]">{selectedVideo.caption}</h3>
-              <p className="text-[color:var(--text-muted)]">{selectedVideo.location}</p>
+              <h3 className="text-xl font-semibold mb-2 text-[color:var(--foreground)]">{selectedVideo.caption}</h3>
+              <p className="text-[color:var(--muted-foreground)]">{selectedVideo.location}</p>
             </div>
           </div>
         </div>

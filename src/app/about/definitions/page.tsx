@@ -210,12 +210,12 @@ function ExpandableIndicatorSection({
   return (
     <details className="group mt-6 rounded-lg border border-[color:var(--border-soft)] bg-[color:var(--surface)]">
       <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 [&::-webkit-details-marker]:hidden">
-        <span className="flex items-center gap-2 text-base font-semibold text-[color:var(--text-strong)]">
+        <span className="flex items-center gap-2 text-base font-semibold text-[color:var(--foreground)]">
           {icon}
           {title}
         </span>
         <ChevronDown
-          className="h-4 w-4 shrink-0 text-[color:var(--text-muted)] transition-transform group-open:rotate-180"
+          className="h-4 w-4 shrink-0 text-[color:var(--muted-foreground)] transition-transform group-open:rotate-180"
           aria-hidden="true"
         />
       </summary>
@@ -247,18 +247,18 @@ function IndicatorArticle({ indicator }: { indicator: Indicator }) {
           <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-strong)]">
             {INDICATOR_CATEGORY_LABELS[indicator.category]}
           </p>
-          <h2 className="mt-2 text-2xl font-semibold text-[color:var(--text-strong)]">
+          <h2 className="mt-2 text-2xl font-semibold text-[color:var(--foreground)]">
             {indicator.name}
           </h2>
           {indicator.subtitle ? (
-            <p className="mt-2 max-w-3xl text-[color:var(--text-muted)]">
+            <p className="mt-2 max-w-3xl text-[color:var(--muted-foreground)]">
               {indicator.subtitle}
             </p>
           ) : null}
         </div>
 
         {indicator.map?.unit ? (
-          <div className="rounded border border-[color:var(--border-soft)] px-3 py-2 text-sm text-[color:var(--text-muted)]">
+          <div className="rounded border border-[color:var(--border-soft)] px-3 py-2 text-sm text-[color:var(--muted-foreground)]">
             Unit: {indicator.map.unit}
           </div>
         ) : null}
@@ -266,7 +266,7 @@ function IndicatorArticle({ indicator }: { indicator: Indicator }) {
 
       {descriptions.length ? (
         <section className="mt-6">
-          <h3 className="flex items-center gap-2 text-base font-semibold text-[color:var(--text-strong)]">
+          <h3 className="flex items-center gap-2 text-base font-semibold text-[color:var(--foreground)]">
             <BookOpen className="h-4 w-4" aria-hidden="true" />
             Definition
           </h3>
@@ -302,7 +302,7 @@ function IndicatorArticle({ indicator }: { indicator: Indicator }) {
 
       {apps.length ? (
         <section className="mt-6 border-t border-[color:var(--border-soft)] pt-4">
-          <h3 className="flex items-center gap-2 text-sm font-semibold text-[color:var(--text-strong)]">
+          <h3 className="flex items-center gap-2 text-sm font-semibold text-[color:var(--foreground)]">
             <Layers className="h-4 w-4" aria-hidden="true" />
             Available in
           </h3>
@@ -315,14 +315,14 @@ function IndicatorArticle({ indicator }: { indicator: Indicator }) {
                 <Link
                   key={app}
                   href={href}
-                  className="rounded border border-[color:var(--border-soft)] px-3 py-1 text-sm text-[color:var(--text-strong)] transition-colors hover:bg-[color:var(--primary)]"
+                  className="rounded border border-[color:var(--border-soft)] px-3 py-1 text-sm text-[color:var(--foreground)] transition-colors hover:bg-[color:var(--primary)]"
                 >
                   {label}
                 </Link>
               ) : (
                 <span
                   key={app}
-                  className="rounded border border-[color:var(--border-soft)] px-3 py-1 text-sm text-[color:var(--text-muted)]"
+                  className="rounded border border-[color:var(--border-soft)] px-3 py-1 text-sm text-[color:var(--muted-foreground)]"
                 >
                   {label}
                 </span>
@@ -350,10 +350,10 @@ export default function IndicatorDefinitionsPage() {
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent-strong)]">
             About Winemap
           </p>
-          <h1 className="mt-3 text-3xl font-semibold text-[color:var(--text-strong)] md:text-5xl">
+          <h1 className="mt-3 text-3xl font-semibold text-[color:var(--foreground)] md:text-5xl">
             Indicator Definitions
           </h1>
-          <p className="mt-4 max-w-3xl text-lg leading-8 text-[color:var(--text-muted)]">
+          <p className="mt-4 max-w-3xl text-lg leading-8 text-[color:var(--muted-foreground)]">
             A single reference page for the indicator definitions, methods, data
             sources, and references used across the Winemap map applications.
           </p>
@@ -368,7 +368,7 @@ export default function IndicatorDefinitionsPage() {
               <a
                 key={group.category}
                 href={`#${group.category}`}
-                className="rounded border border-[color:var(--border-soft)] px-3 py-2 text-sm font-medium text-[color:var(--text-strong)] transition-colors hover:bg-[color:var(--primary)]"
+                className="rounded border border-[color:var(--border-soft)] px-3 py-2 text-sm font-medium text-[color:var(--foreground)] transition-colors hover:bg-[color:var(--primary)]"
               >
                 {INDICATOR_CATEGORY_LABELS[group.category]}
               </a>
@@ -385,10 +385,10 @@ export default function IndicatorDefinitionsPage() {
             >
               <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                 <div>
-                  <h2 className="text-2xl font-semibold text-[color:var(--text-strong)] md:text-3xl">
+                  <h2 className="text-2xl font-semibold text-[color:var(--foreground)] md:text-3xl">
                     {INDICATOR_CATEGORY_LABELS[group.category]}
                   </h2>
-                  <p className="mt-2 text-[color:var(--text-muted)]">
+                  <p className="mt-2 text-[color:var(--muted-foreground)]">
                     {group.indicators.length} indicator
                     {group.indicators.length === 1 ? "" : "s"}
                   </p>

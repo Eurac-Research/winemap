@@ -188,8 +188,8 @@ export default function LiteraturePage() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <BookOpen className="w-8 h-8 text-[color:var(--text-strong)]" aria-hidden="true" />
-            <h1 className="text-4xl font-bold text-[color:var(--text-strong)]">Scientific Publications</h1>
+            <BookOpen className="w-8 h-8 text-[color:var(--foreground)]" aria-hidden="true" />
+            <h1 className="text-4xl font-bold text-[color:var(--foreground)]">Scientific Publications</h1>
           </div>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto">
             Explore our collection of peer-reviewed research papers and academic publications
@@ -204,45 +204,45 @@ export default function LiteraturePage() {
               placeholder="Search publications, authors, journals or year ..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-10 h-12 transition-colors bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--text-strong)] placeholder:text-[color:var(--text-muted)] hover:bg-[color:var(--surface-panel-muted)] focus:bg-[color:var(--surface-panel-muted)]"
+              className="pl-10 pr-10 h-12 transition-colors bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] placeholder:text-[color:var(--muted-foreground)] hover:bg-[color:var(--surface-panel-muted)] focus:bg-[color:var(--surface-panel-muted)]"
               aria-label="Search publications"
             />
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm("")}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--text-strong)]"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 transition-colors text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]"
                 aria-label="Clear search"
               >
                 <X className="w-4 h-4" aria-hidden="true" />
               </button>
             )}
           </div>
-          <div className="flex gap-2 text-[color:var(--text-strong)]">
+          <div className="flex gap-2 text-[color:var(--foreground)]">
             <Select value={categoryFilter} onValueChange={(value: string) => setCategoryFilter(value)}>
-              <SelectTrigger className="w-48 h-12 bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface-panel-muted)]" aria-label="Filter by category">
+              <SelectTrigger className="w-48 h-12 bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-panel-muted)]" aria-label="Filter by category">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-[color:var(--surface-panel-strong)] border-[color:var(--border-soft)]">
-                <SelectItem value="all" className="text-[color:var(--text-strong)]">All Categories</SelectItem>
+                <SelectItem value="all" className="text-[color:var(--foreground)]">All Categories</SelectItem>
                 {uniqueCategories.map((category) => (
-                  <SelectItem key={category} value={category} className="text-[color:var(--text-strong)]">
+                  <SelectItem key={category} value={category} className="text-[color:var(--foreground)]">
                     {category}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
             <Select value={sortBy} onValueChange={(value: "year" | "author") => setSortBy(value)}>
-              <SelectTrigger className="w-32 h-12 bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface-panel-muted)]" aria-label="Sort by">
+              <SelectTrigger className="w-32 h-12 bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-panel-muted)]" aria-label="Sort by">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-[color:var(--surface-panel-strong)] border-[color:var(--border-soft)]">
-                <SelectItem value="year" className="text-[color:var(--text-strong)]">
+                <SelectItem value="year" className="text-[color:var(--foreground)]">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" aria-hidden="true" />
                     Year
                   </div>
                 </SelectItem>
-                <SelectItem value="author" className="text-[color:var(--text-strong)]">
+                <SelectItem value="author" className="text-[color:var(--foreground)]">
                   <div className="flex items-center gap-2">
                     <User className="w-4 h-4" aria-hidden="true" />
                     Author
@@ -253,7 +253,7 @@ export default function LiteraturePage() {
             <Button
               variant="outline"
               onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
-              className="h-12 px-3 bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--text-strong)] hover:bg-[color:var(--surface-panel-muted)] hover:text-[color:var(--text-strong)]"
+              className="h-12 px-3 bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-panel-muted)] hover:text-[color:var(--foreground)]"
               aria-label={`Sort ${sortOrder === "asc" ? "descending" : "ascending"}`}
             >
               {sortOrder === "desc" ? "↓" : "↑"}
@@ -284,7 +284,7 @@ export default function LiteraturePage() {
                 <CardHeader>
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                      <CardTitle className="text-xl mb-2 leading-tight text-[color:var(--text-strong)]">
+                      <CardTitle className="text-xl mb-2 leading-tight text-[color:var(--foreground)]">
                         {highlightText(publication.title, searchTerm)}
                       </CardTitle>
                       <div className="flex flex-wrap items-center gap-2 text-sm text-gray-400 mb-3">
@@ -335,7 +335,7 @@ export default function LiteraturePage() {
                             {publication.category}
                           </span>
                         </div>
-                        <Button variant="outline" size="sm" asChild className="h-6 px-2 text-xs bg-[color:var(--surface-panel-muted)] border-[color:var(--border-strong)] hover:bg-[color:var(--surface-overlay)] hover:border-[color:var(--border)] text-[color:var(--text-strong)] hover:text-[color:var(--text-strong)]">
+                        <Button variant="outline" size="sm" asChild className="h-6 px-2 text-xs bg-[color:var(--surface-panel-muted)] border-[color:var(--border-strong)] hover:bg-[color:var(--surface-overlay)] hover:border-[color:var(--border)] text-[color:var(--foreground)] hover:text-[color:var(--foreground)]">
                           <a
                             href={`https://doi.org/${publication.doi}`}
                             target="_blank"
@@ -367,12 +367,12 @@ export default function LiteraturePage() {
                     </div>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="outline" size="sm" className="bg-[color:var(--surface-panel-muted)] border-[color:var(--border-strong)] hover:bg-[color:var(--surface-overlay)] hover:border-[color:var(--border)] text-[color:var(--text-strong)] hover:text-[color:var(--text-strong)]" aria-label="Citation options">
+                        <Button variant="outline" size="sm" className="bg-[color:var(--surface-panel-muted)] border-[color:var(--border-strong)] hover:bg-[color:var(--surface-overlay)] hover:border-[color:var(--border)] text-[color:var(--foreground)] hover:text-[color:var(--foreground)]" aria-label="Citation options">
                           <Download className="w-4 h-4 mr-2" aria-hidden="true" />
                           Cite
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="bg-[color:var(--surface-panel-strong)] border-[color:var(--border-strong)] text-[color:var(--text-strong)]">
+                      <DropdownMenuContent align="end" className="bg-[color:var(--surface-panel-strong)] border-[color:var(--border-strong)] text-[color:var(--foreground)]">
                         <DropdownMenuItem
                           onClick={() =>
                             downloadCitation(generateRIS(publication), `${publication.doi.replace(/[/.]/g, "_")}.ris`)
