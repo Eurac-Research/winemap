@@ -24,7 +24,7 @@ export const ebaStrategies: EbaStrategy[] = [
     year: 2026,
     category: "Agroforestry",
     summary:
-      "Agroforestry is an integrated agricultural practice that combines traditional farming techniques with forest management, integrating woody and perennial plants with herbaceous crops and/or animal husbandry. This approach aims to create land-use systems that are more productive, healthy, diversified, and sustainable. The integration of trees, shrubs, annual crops, and animals into vineyards is an ancient practice, particularly in the Mediterranean region.",
+      "Agroforestry integrates trees, shrubs, crops, or livestock into vineyard systems. It can diversify production while supporting soil health, biodiversity, and local climate regulation.",
     keywords: ["Agroforestry"],
     filename: "Agroforestry.pdf",
     mapPosition: { x: 39, y: 46, tooltipSide: "right" },
@@ -37,7 +37,7 @@ export const ebaStrategies: EbaStrategy[] = [
     year: 2026,
     category: "Dry-Stone Walls",
     summary:
-      'Dry-stone walls are traditional structures built without mortar, using locally sourced stones and a layering technique that ensures both stability and efficient drainage. Their design often adapts to the landscape, tapering towards the top and incorporating crushed stone backing to minimize water pressure. These walls play a crucial role in terraced and agricultural environments, providing ecological functions and serving as "living" structures that interact with both human activity and natural processes. Alongside hedgerows and stone heaps, dry-stone walls create valuable habitats and ecological niches, especially in areas dedicated to viticulture.',
+      "Dry-stone walls stabilize vineyard slopes while allowing water to drain through the structure. They also create microhabitats and preserve the cultural character of terraced landscapes.",
     keywords: ["Dry-Stone Walls"],
     filename: "Dry-stone_walls.pdf",
     mapPosition: { x: 12, y: 65, tooltipSide: "right" },
@@ -50,7 +50,7 @@ export const ebaStrategies: EbaStrategy[] = [
     year: 2026,
     category: "Landscape Elements",
     summary:
-      "Landscape elements like hedges, isolated trees, and shrubs are integrated into agricultural areas to enhance ecological functions and sustainability. These plant structures act as nature-based solutions, improving environmental, social, and economic outcomes. By increasing landscape diversity, woody plants foster habitat connectivity and support biodiversity, offering shelter and resources to numerous species. Their establishment and conservation are crucial for creating ecological niches and boosting the resilience of agricultural landscapes against environmental and climate challenges.",
+      "Landscape elements such as hedges, isolated trees, and shrubs add ecological structure to vineyard landscapes. They support biodiversity, habitat connectivity, microclimate regulation, and natural pest control.",
     keywords: ["Hedges", "Isolated trees", "Shrub planting"],
     filename: "Landscape_elements.pdf",
     mapPosition: { x: 42, y: 77, tooltipSide: "right" },
