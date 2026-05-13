@@ -13,6 +13,7 @@ import RespondLogo from "@/components/ui/RespondLogo";
 import MainAreaCarousel from "@/components/winemap-sections/MainAreaCarousel";
 import { mainAreas } from "@/content/main-areas";
 import { mapApplications } from "@/content/map-applications";
+import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
 import styles from "@/styles/Home.module.css";
 
 export default function HomePage() {
@@ -78,7 +79,7 @@ export default function HomePage() {
               Discover how climate pressure is reshaping European viticulture.
             </h2>
             <p className="mt-6 max-w-md text-lg leading-8 text-[color:var(--foreground)]">
-              Explore indicators, spatial patterns, and vulnerability insights
+              Explore indicators, spatial patterns, and <GlossaryTermPopover id="vulnerability">vulnerability</GlossaryTermPopover>{" "} insights
               designed to support adaptation planning across wine-growing
               regions.
             </p>
