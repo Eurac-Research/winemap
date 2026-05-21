@@ -65,7 +65,7 @@ export default function AdaptationPage() {
         </section>
 
         <section className="border-y border-[color:var(--border-soft)] px-6 py-16">
-          <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[8rem_minmax(0,1fr)]">
+          <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[10rem_minmax(0,1fr)]">
             <aside className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-strong)]">
               Climate pressure
             </aside>
@@ -89,7 +89,7 @@ export default function AdaptationPage() {
         </section>
 
         <section className="px-6 py-16">
-          <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[8rem_minmax(0,1fr)]">
+          <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[10rem_minmax(0,1fr)]">
             <aside className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-strong)]">
               From concepts to practice
             </aside>
@@ -155,7 +155,7 @@ export default function AdaptationPage() {
         </section>
 
         <section className="border-t border-[color:var(--border-soft)] px-6 py-16">
-          <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[8rem_minmax(0,1fr)]">
+          <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[10rem_minmax(0,1fr)]">
             <aside className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-strong)]">
               Multifunctional vineyards
             </aside>
@@ -196,7 +196,7 @@ export default function AdaptationPage() {
         </section>
 
         <section className="border-t border-[color:var(--border-soft)] px-6 py-16">
-          <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[8rem_minmax(0,1fr)]">
+          <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[10rem_minmax(0,1fr)]">
             <aside className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-strong)]">
               Bridging knowledge and action
             </aside>
