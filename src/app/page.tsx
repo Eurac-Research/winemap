@@ -151,7 +151,7 @@ export default function HomePage() {
               href="/adaptation"
               className="mt-8 inline-flex items-center gap-2 text-base font-medium text-[color:var(--accent-strong)] transition hover:gap-3"
             >
-              <span>Learn more about adaptation pathways</span>
+              <span>Learn more about Winemap Adaptation</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -183,7 +183,7 @@ export default function HomePage() {
               href="/legal/eu-policy"
               className="mt-8 inline-flex items-center gap-2 text-base font-medium text-[color:var(--accent-strong)] transition hover:gap-3"
             >
-              <span>Learn more about governance frameworks</span>
+              <span>Learn more about Winemap Governance</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
