@@ -41,8 +41,8 @@ export default function About() {
                 <p className="mt-6 max-w-3xl text-lg leading-8 text-[color:var(--text-base)]">
                   Its goal is to provide an accessible and integrated knowledge
                   base for understanding wine heritage, climate adaptation, and
-                  governance frameworks across Europe. By combining climate data,
-                  environmental indicators, information on ecosystem-based
+                  governance frameworks across Europe. By combining climate
+                  data, environmental indicators, information on ecosystem-based
                   adaptation strategies, and legal regulations with interactive
                   tools and map-based applications, WINEMAP supports more
                   sustainable and climate-smart viticulture.
@@ -127,12 +127,14 @@ export default function About() {
                 and harmonised from diverse sources.
               </p>
             </div>
-            <div className="mt-5">
-              Originally developed within the framework of the RESPOnD project
-              (Climate Resilient Alpine Wine Orchards), WINEMAP is co-financed
-              by the European Regional Development Fund through the Interreg
-              Alpine Space Programme 2021-2027.
-            </div>
+            <aside className="mt-8 max-w-4xl border border-[color:var(--border-soft)] border-l-[3px] border-l-[color:var(--accent-strong)] bg-[color:var(--surface-overlay)] p-5">
+              <p className="mt-3 text-sm leading-6 text-[color:var(--muted-foreground)]">
+                Originally developed within the framework of the RESPOnD project
+                (Climate Resilient Alpine Wine Orchards), WINEMAP is co-financed
+                by the European Regional Development Fund through the Interreg
+                Alpine Space Programme 2021-2027.
+              </p>
+            </aside>
           </section>
 
           <section id="projects" className="px-8 md:px-12">
