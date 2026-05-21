@@ -73,7 +73,7 @@ export default function HomePage() {
               <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--accent-strong)]/25 bg-[color:var(--primary)]/20 text-[color:var(--accent-strong)]">
                 <ThermometerSun className="h-4 w-4" />
               </span>
-              <span>Winemap Climate</span>
+              <span>Winemap Environment</span>
             </div>
             <h2 className="max-w-lg text-4xl font-semibold leading-tight text-[color:var(--foreground)] sm:text-5xl">
               Discover how climate pressure is reshaping European viticulture.

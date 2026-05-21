@@ -20,13 +20,13 @@ type MainArea = {
 export const mainAreas: MainArea[] = [
   {
     id: "climate-environment",
-    titleText: "Winemap Climate",
+    titleText: "Winemap Environment",
     showOnLanding: true,
     title: (
       <>
         Winemap
         <br />
-        Climate
+        Environment
       </>
     ),
     description:
@@ -162,18 +162,47 @@ export const mainAreas: MainArea[] = [
         label: "About the Winemap",
         href: "/about",
         description:
-          "Learn more about the research projects, the scientific institute and the team behind the Winemap.",
+          "Learn more about the research projects and the scientific institute behind the Winemap.",
+      },
+      {
+        label: "Our Team",
+        href: "/about/team",
+        description:
+          "Learn more about the team behind the Winemap.",
+      },
+      {
+        label: "Our Institute",
+        href: "/about#institute",
+        description:
+          "Learn more about the scientific institute behind the Winemap.",
+      },
+    ],
+  },
+  {
+    id: "resources",
+    titleText: "Resources",
+    showOnLanding: false,
+    title: "Resources",
+    description:
+      "Look at scientific articles related to the Winemap and the glossary.",
+    icon: (
+      <BookOpen
+        className="w-12 h-12 text-[color:var(--accent-strong)]"
+        aria-hidden="true"
+      />
+    ),
+    mainHref: "/",
+    categories: [
+      {
+        label: "Courses",
+        href: "/legal/courses",
+        description:
+          "Access learning material on viticulture, climate change, governance, and ecosystem-based adaptation.",
       },
       {
         label: "Scientific Literature",
         href: "/literature",
         description: "Explore the publications behind the Winemap.",
-      },
-      {
-        label: "Indicator Definitions",
-        href: "/about/definitions",
-        description:
-          "Browse the glossary of indicator definitions, methods, and references.",
       },
       {
         label: "Glossary",

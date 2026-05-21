@@ -40,8 +40,9 @@ type NavigationEntry = {
   sections?: NavigationSubsection[];
 };
 
-const TopicsSections = mainAreas.filter((area) => area.id !== 'about');
+const TopicsSections = mainAreas.filter((area) => area.id !== 'about' && area.id !== 'resources');
 const AboutSections = mainAreas.find((area) => area.id === 'about')?.categories ?? [];
+const ResourcesSections = mainAreas.find((area) => area.id === 'resources')?.categories ?? [];
 
 const NavigationMenuEntries: NavigationEntry[] = [
   {
@@ -72,19 +73,13 @@ const NavigationMenuEntries: NavigationEntry[] = [
     })
   },
   {
-    title: "Courses",
-    href: "/legal/courses",
+    title: "Resources",
+    href: "/",
     description:
-      "Access learning material on viticulture, climate change, governance, and ecosystem-based adaptation.",
-    icon: GraduationCap,
+      "Look at scientific articles related to the Winemap and the glossary.",
+    icon: BookOpen,
+    sections: ResourcesSections,
   },
-  // {
-  //   title: "Literature",
-  //   href: "/literature",
-  //   description:
-  //     "Explore scientific publications and references behind the Winemap platform.",
-  //   icon: Library,
-  // },
   {
     title: "About",
     href: "/about",
