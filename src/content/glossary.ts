@@ -66,6 +66,13 @@ export const glossaryTerms: GlossaryTerm[] = [
       "The use of biodiversity and ecosystem services to help people adapt to the adverse effects of climate change.",
   },
   {
+    id: "nature-based-solutions",
+    term: "Nature-based solutions",
+    aliases: ["Nbs"],
+    definition:
+      "Actions that protect, restore, or sustainably manage ecosystems while using nature and natural processes to address socio-environmental issues.",
+  },
+  {
     id: "erosion",
     term: "Erosion",
     definition:

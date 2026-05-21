@@ -72,23 +72,23 @@ export const mainAreas: MainArea[] = [
         aria-hidden="true"
       />
     ),
-    mainHref: "/#adaptation",
+    mainHref: "/adaptation",
     categoriesClassName: "space-y-1",
     categories: [
       {
-        label: "EbA Strategies Catalogue →",
+        label: "EbA Strategies Repository ->",
         href: "/adaptation/eba-strategies",
         description:
-          "The Catalogue of EbA strategies brings together approaches that harness biodiversity and ecosystem functions to mitigate risks.",
+          "A collection of EbA strategies brings together approaches that harness biodiversity and ecosystem functions to mitigate risks.",
       },
       {
-        label: "Pilot Experiences →",
+        label: "Pilot Experiences ->",
         href: "/adaptation/pilot-experiences",
         description:
           "Through short films from pilot regions, you can discover how winegrowers, researchers and communities are working with their landscapes to address climate challenges while preserving local traditions.",
       },
       {
-        label: "Spatial Analogues →",
+        label: "Spatial Analogues ->",
         href: "/adaptation",
         description:
           "This section includes an interactive tool to select and visualize spatial analogues for individual European wine regions.",
