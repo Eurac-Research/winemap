@@ -37,7 +37,7 @@ export const mainAreas: MainArea[] = [
         aria-hidden="true"
       />
     ),
-    mainHref: "/#climate-environment",
+    mainHref: "/climate-environment",
     categories: [
       {
         label: "Environment Browser ->",
@@ -50,12 +50,6 @@ export const mainAreas: MainArea[] = [
         href: "/map-applications/vulnerability-explorer",
         description:
           "Discover how vulnerable European wine regions are to climate change and investigate the dimensions that shape their vulnerability.",
-      },
-      {
-        label: "Indicator Definitions ->",
-        href: "/about/definitions",
-        description:
-          "Browse the definitions, methods, data sources, and references for all indicators used in the map applications.",
       },
     ],
   },
@@ -167,8 +161,7 @@ export const mainAreas: MainArea[] = [
       {
         label: "Our Team",
         href: "/about/team",
-        description:
-          "Learn more about the team behind the Winemap.",
+        description: "Learn more about the team behind the Winemap.",
       },
       {
         label: "Our Institute",

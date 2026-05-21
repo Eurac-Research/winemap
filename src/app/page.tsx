@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { mainAreas } from "@/content/main-areas";
+import { mapApplications } from "@/content/map-applications";
 import {
   ArrowRight,
   ChevronDown,
@@ -8,12 +10,10 @@ import {
 } from "lucide-react";
 
 import BackgroundImageCarousel from "@/components/BackgroundImageCarousel";
+import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
 import ImageComparisonSlider from "@/components/ImageComparisonSlider";
 import RespondLogo from "@/components/ui/RespondLogo";
 import MainAreaCarousel from "@/components/winemap-sections/MainAreaCarousel";
-import { mainAreas } from "@/content/main-areas";
-import { mapApplications } from "@/content/map-applications";
-import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
 import styles from "@/styles/Home.module.css";
 
 export default function HomePage() {
@@ -66,7 +66,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id = "climate-environment" className="border-y border-[color:var(--border-soft)] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,240,232,0.9))]">
+      <section
+        id="climate-environment"
+        className="border-y border-[color:var(--border-soft)] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,240,232,0.9))]"
+      >
         <div className="mx-auto grid max-w-7xl gap-12 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-20 lg:px-8 lg:py-12">
           <div className="max-w-xl">
             <div className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent-strong)]">
@@ -79,17 +82,22 @@ export default function HomePage() {
               Discover how climate pressure is reshaping European viticulture.
             </h2>
             <p className="mt-6 max-w-md text-lg leading-8 text-[color:var(--foreground)]">
-              Explore indicators, spatial patterns, and <GlossaryTermPopover id="vulnerability">vulnerability</GlossaryTermPopover>{" "} insights
-              designed to support adaptation planning across wine-growing
-              regions.
+              Explore indicators, spatial patterns, and{" "}
+              <GlossaryTermPopover id="vulnerability">
+                vulnerability
+              </GlossaryTermPopover>{" "}
+              insights designed to support adaptation planning across
+              wine-growing regions.
             </p>
-            <Link
-              href="/map-applications/environment-browser"
-              className="mt-8 inline-flex items-center gap-2 text-base font-medium text-[color:var(--accent-strong)] transition hover:gap-3"
-            >
-              <span>Open the environment browser</span>
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+            <div className="mt-8 flex flex-wrap gap-5">
+              <Link
+                href="/climate-environment"
+                className="inline-flex items-center gap-2 text-base font-medium text-[color:var(--accent-strong)] transition hover:gap-3"
+              >
+                <span>Learn more about Winemap Environment</span>
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
           </div>
 
           <div className="relative min-h-[24rem] lg:min-h-[34rem]">
@@ -113,7 +121,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id = 'adaptation' className="border-y border-[color:var(--border-soft)] bg-[color:var(--primary)]/10">
+      <section
+        id="adaptation"
+        className="border-y border-[color:var(--border-soft)] bg-[color:var(--primary)]/10"
+      >
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,0.85fr)] lg:items-center lg:gap-12 lg:px-8 lg:py-12">
           <div className="relative min-h-[24rem] lg:min-h-[34rem]">
             {adaptationArea ? (
@@ -147,7 +158,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id = 'governance' className="border-y border-[color:var(--border-soft)] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,240,232,0.9))]">
+      <section
+        id="governance"
+        className="border-y border-[color:var(--border-soft)] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,240,232,0.9))]"
+      >
         <div className="mx-auto grid max-w-7xl gap-12 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-20 lg:px-8 lg:py-12">
           <div className="max-w-xl">
             <div className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent-strong)]">
