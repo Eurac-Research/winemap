@@ -17,9 +17,9 @@ export default function About() {
         <article className="space-y-10">
           <section
             id="general"
-            className="border-y border-[color:var(--border-soft)] px-6 py-10 md:px-12 md:py-14"
+            className="border-b border-[color:var(--border-soft)] px-6 py-10 md:px-12 md:py-14"
           >
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start">
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start">
               <div>
                 <div className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent-strong)]">
                   <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--accent-strong)]/25 bg-[color:var(--primary)]/15 text-[color:var(--accent-strong)]">
@@ -29,8 +29,7 @@ export default function About() {
                 </div>
 
                 <h1 className="mt-4 max-w-3xl text-4xl font-semibold leading-tight text-[color:var(--foreground)] md:text-5xl">
-                  Winemap connects European wine landscapes, climate knowledge,
-                  and practical adaptation.
+                  Winemap
                 </h1>
 
                 <p className="mt-6 max-w-3xl text-lg leading-8 text-[color:var(--text-base)]">
@@ -39,61 +38,15 @@ export default function About() {
                   policymakers, researchers, and anyone interested in wine
                   landscapes and their future.
                 </p>
-
-                <div className="mt-8 grid gap-5 border-l-2 border-[color:var(--accent-strong)]/35 pl-5 text-[color:var(--muted-foreground)] md:pl-7">
-                  <p className="leading-7">
-                    Its goal is to provide an accessible and integrated
-                    knowledge base for understanding wine heritage, climate
-                    adaptation, and governance frameworks across Europe. By
-                    combining climate data, environmental indicators,
-                    information on ecosystem-based adaptation strategies, and
-                    legal regulations with interactive tools and map-based
-                    applications, WINEMAP supports more sustainable and
-                    climate-smart viticulture.
-                  </p>
-                  <p className="leading-7">
-                    Across Europe, winegrowers are increasingly facing the
-                    challenge of adapting to climate change while preserving the
-                    ecological, economic, and cultural value of vineyard
-                    landscapes. A key barrier to this transition is the lack of
-                    accessible, region-specific knowledge on ecological
-                    conditions and ecosystem services. Without clear and
-                    reliable information, the adoption of innovative and
-                    sustainable practices remains limited.
-                  </p>
-                  <p className="leading-7">
-                    In this context, WINEMAP acts as a bridge between science
-                    and practice. By integrating spatial data with practical
-                    insights, the platform provides science-based information
-                    that links vineyard management strategies to their
-                    ecological functions, benefits, and potential trade-offs.
-                    This enables users to better understand their local context,
-                    explore available options, and make informed decisions.
-                  </p>
-                  <p className="leading-7">
-                    By supporting the identification of adaptation pathways that
-                    are both effective and context-specific, WINEMAP helps close
-                    the gap between knowledge and action and fosters the
-                    transition towards more resilient, diversified, and
-                    multifunctional vineyard systems.
-                  </p>
-                  <p className="leading-7">
-                    The platform is developed by the Institute for Alpine
-                    Environment at Eurac Research (Bolzano, Italy), where an
-                    interdisciplinary team works at the interface of climate
-                    adaptation, environmental science, and sustainable
-                    agriculture. WINEMAP builds on a strong scientific
-                    foundation, drawing on data and insights generated through
-                    multiple research projects and harmonised from diverse
-                    sources.
-                  </p>
-                  <p className="leading-7">
-                    Originally developed within the framework of the RESPOnD
-                    project (Climate Resilient Alpine Wine Orchards), WINEMAP is
-                    co-financed by the European Regional Development Fund
-                    through the Interreg Alpine Space Programme 2021-2027.
-                  </p>
-                </div>
+                <p className="mt-6 max-w-3xl text-lg leading-8 text-[color:var(--text-base)]">
+                  Its goal is to provide an accessible and integrated knowledge
+                  base for understanding wine heritage, climate adaptation, and
+                  governance frameworks across Europe. By combining climate data,
+                  environmental indicators, information on ecosystem-based
+                  adaptation strategies, and legal regulations with interactive
+                  tools and map-based applications, WINEMAP supports more
+                  sustainable and climate-smart viticulture.
+                </p>
               </div>
 
               <aside
@@ -136,6 +89,49 @@ export default function About() {
                   </div>
                 </div>
               </aside>
+            </div>
+
+            <div className="mt-10 grid max-w-4xl gap-5 text-[color:var(--muted-foreground)]">
+              <p className="leading-7">
+                Across Europe, winegrowers are increasingly facing the challenge
+                of adapting to climate change while preserving the ecological,
+                economic, and cultural value of vineyard landscapes. A key
+                barrier to this transition is the lack of accessible,
+                region-specific knowledge on ecological conditions and ecosystem
+                services. Without clear and reliable information, the adoption
+                of innovative and sustainable practices remains limited.
+              </p>
+              <p className="leading-7">
+                In this context, WINEMAP acts as a bridge between science and
+                practice. By integrating spatial data with practical insights,
+                the platform provides science-based information that links
+                vineyard management strategies to their ecological functions,
+                benefits, and potential trade-offs. This enables users to better
+                understand their local context, explore available options, and
+                make informed decisions.
+              </p>
+              <p className="leading-7">
+                By supporting the identification of adaptation pathways that are
+                both effective and context-specific, WINEMAP helps close the gap
+                between knowledge and action and fosters the transition towards
+                more resilient, diversified, and multifunctional vineyard
+                systems.
+              </p>
+              <p className="leading-7">
+                The platform is developed by the Institute for Alpine
+                Environment at Eurac Research (Bolzano, Italy), where an
+                interdisciplinary team works at the interface of climate
+                adaptation, environmental science, and sustainable agriculture.
+                WINEMAP builds on a strong scientific foundation, drawing on
+                data and insights generated through multiple research projects
+                and harmonised from diverse sources.
+              </p>
+            </div>
+            <div className="mt-5">
+              Originally developed within the framework of the RESPOnD project
+              (Climate Resilient Alpine Wine Orchards), WINEMAP is co-financed
+              by the European Regional Development Fund through the Interreg
+              Alpine Space Programme 2021-2027.
             </div>
           </section>
 
