@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { mainAreas } from "@/content/main-areas";
 import {
   ArrowRight,
   Layers,
@@ -30,6 +31,21 @@ const landscapeValues = [
     icon: ShieldAlert,
   },
 ];
+
+const discoverMoreLinks =
+  mainAreas
+    .find((area) => area.id === "climate-environment")
+    ?.categories.filter((category) =>
+      [
+        "/map-applications/environment-browser",
+        "/map-applications/vulnerability-explorer",
+      ].includes(category.href),
+    ) ?? [];
+
+const discoverMoreIcons = {
+  "/map-applications/environment-browser": MapIcon,
+  "/map-applications/vulnerability-explorer": ShieldAlert,
+};
 
 export default function ClimateEnvironmentPage() {
   return (
@@ -195,23 +211,45 @@ export default function ClimateEnvironmentPage() {
                 that can preserve both the ecological integrity and cultural
                 heritage of European wine landscapes.
               </p>
+            </div>
+          </div>
+        </section>
 
-              <div className="mt-5 flex flex-wrap gap-4">
-                <Link
-                  href="/about/definitions"
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--accent-strong)] transition hover:gap-3"
-                >
-                  <span>Browse indicator definitions</span>
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="/#climate-environment"
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--accent-strong)] transition hover:gap-3"
-                >
-                  <span>Back to landing overview</span>
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
+        <section className="border-t border-[color:var(--border-soft)] bg-[color:var(--surface-panel-muted)] px-6 py-16">
+          <div className="mx-auto max-w-6xl">
+            <div className="max-w-2xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-strong)]">
+                Discover more
+              </p>
+            </div>
+
+            <div className="mt-8 grid gap-5 md:grid-cols-2">
+              {discoverMoreLinks.map((category) => {
+                const Icon =
+                  discoverMoreIcons[
+                    category.href as keyof typeof discoverMoreIcons
+                  ] ?? MapIcon;
+                const label = category.label.replace(/\s*[-–—]*>\s*$/, "");
+
+                return (
+                  <Link
+                    key={category.href}
+                    href={category.href}
+                    className="group border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-6 transition-colors hover:border-[color:var(--accent-strong)] hover:bg-[color:var(--surface-panel-strong)]"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <Icon className="h-6 w-6 text-[color:var(--accent-strong)]" />
+                      <ArrowRight className="h-5 w-5 text-[color:var(--accent-strong)] transition-transform group-hover:translate-x-1" />
+                    </div>
+                    <h3 className="mt-5 text-xl font-semibold text-[color:var(--foreground)]">
+                      {label}
+                    </h3>
+                    <p className="mt-3 text-sm leading-6 text-[color:var(--muted-foreground)]">
+                      {category.description}
+                    </p>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>
