@@ -53,6 +53,12 @@ export const glossaryTerms: GlossaryTerm[] = [
       "Benefits nature provides to humans, such as soil fertility, water regulation, or pest control in vineyards.",
   },
   {
+    id: "ecosystem-functions",
+    term: "Ecosystem functions",
+    definition:
+      "Ecosystem functions are the physical, chemical, and biological processes that occur within an ecosystem, such as energy flow, primary production, and nutrient cycling.",
+  },
+  {
     id: "ecosystem-based-adaptation",
     term: "Ecosystem-based adaptation",
     aliases: ["EbA", "ecosystem based adaptation"],
@@ -251,4 +257,22 @@ export const glossaryTerms: GlossaryTerm[] = [
     definition:
       "The specific roles and spaces that organisms occupy within an ecosystem, encompassing both their physical environment and the various interactions they engage in with other species and their surroundings.",
   },
+  {
+    id: "socio-ecological-system",
+    term: "Socio-ecological system",
+    definition:
+      "Socio-ecological systems are integrated systems in which humans are part of nature and where cultural, social, economic, and ecological components interact around the provision of ecosystem services"
+  },
+  {
+    id: "terroir",
+    term: "Terroir",
+    definition:
+      "The relationship between the characteristics of an agricultural product, such as quality, taste and style, and its geographic origin, including environmental and human factors, which might influence these characteristic"
+  },
+  {
+    id: "ecological-conditions",
+    term: "Ecological conditions",
+    definition:
+      "The overall state of ecological systems, which includes their physical, chemical, and biological characteristics and the processes and interactions that connect them."
+  }
 ];

@@ -8,29 +8,8 @@ import {
   ShieldAlert,
   ThermometerSun,
 } from "lucide-react";
-
+import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
 import ImageComparisonSlider from "@/components/ImageComparisonSlider";
-
-const landscapeValues = [
-  {
-    title: "Ecosystem services",
-    description:
-      "Vineyard landscapes support grape production, biodiversity, soil functions, water regulation, and natural pest control.",
-    icon: Leaf,
-  },
-  {
-    title: "Terroir and identity",
-    description:
-      "Climate, soil, landscape, and human knowledge shape the distinctive character and cultural identity of wines.",
-    icon: Layers,
-  },
-  {
-    title: "Climate-related risks",
-    description:
-      "Changing temperature and precipitation patterns affect vine growth, grape composition, and the suitability of wine-growing areas.",
-    icon: ShieldAlert,
-  },
-];
 
 const discoverMoreLinks =
   mainAreas
@@ -97,13 +76,15 @@ export default function ClimateEnvironmentPage() {
                 For centuries, vineyard landscapes across Europe have evolved
                 into complex systems that are deeply embedded in local
                 economies, environments, and cultural traditions. Far from being
-                mere production areas, these landscapes represent dynamic
-                socio-ecological systems shaped by long-standing interactions
+                mere production areas, these landscapes represent dynamic{" "}
+                <GlossaryTermPopover id='socio-ecological-system'>socio-ecological systems</GlossaryTermPopover>{" "}
+                shaped by long-standing interactions
                 between human activities and natural processes.
               </p>
 
               <p className="leading-7">
-                Vineyard landscapes provide a wide range of ecosystem services,
+                Vineyard landscapes provide a wide range of{" "}
+                <GlossaryTermPopover id='ecosystem-services'>ecosystem services</GlossaryTermPopover>{" "},
                 the benefits that nature offers to society. While their economic
                 importance is primarily linked to grape and wine production,
                 their value extends far beyond this. The mosaic of land uses
@@ -119,7 +100,9 @@ export default function ClimateEnvironmentPage() {
               <p className="leading-7">
                 This interplay between environmental conditions, agricultural
                 practices, and cultural heritage is at the heart of the concept
-                of terroir. Terroir reflects how the unique combination of
+                of terroir. {" "}
+                <GlossaryTermPopover id='terroir'>Terroir</GlossaryTermPopover>{" "}
+                reflects how the unique combination of
                 climate, soil, landscape, and human knowledge defines the
                 distinctive character of wines. In this sense, the quality and
                 identity of wine are not only rooted in the land, but also in
@@ -160,7 +143,8 @@ export default function ClimateEnvironmentPage() {
 
               <p className="leading-7">
                 At the same time, vineyard landscapes are undergoing significant
-                transformations driven by agricultural intensification. In
+                transformations driven by{" "}
+                <GlossaryTermPopover id='intensification'>agricultural intensification</GlossaryTermPopover>. In
                 response to increasing market competition and changing consumer
                 demands, many vineyards have shifted towards more intensive and
                 specialized production systems. This often involves simplifying
@@ -173,7 +157,8 @@ export default function ClimateEnvironmentPage() {
               <p className="leading-7">
                 The expansion of monocultures and the increased use of
                 fertilizers and pesticides have contributed to biodiversity loss
-                and the degradation of essential ecosystem functions. Services
+                and the degradation of essential{" "}
+                <GlossaryTermPopover id='ecosystem-functions'>ecosystem functions</GlossaryTermPopover>. Services
                 such as soil fertility, water regulation, and natural pest
                 control are increasingly compromised, making vineyard systems
                 more vulnerable to external disturbances. In parallel,
@@ -195,7 +180,9 @@ export default function ClimateEnvironmentPage() {
               <p className="leading-7">
                 Together, these pressures highlight the urgent need to better
                 understand and manage vineyard landscapes as multifunctional
-                vineyard systems. Assessing their ecological conditions, mapping
+                vineyard systems. Assessing their{" "}
+                <GlossaryTermPopover id='ecological-conditions'>ecological conditions</GlossaryTermPopover>{" "}
+                , mapping
                 ecosystem services, and identifying areas of vulnerability are
                 essential steps toward more sustainable and resilient
                 viticulture.
