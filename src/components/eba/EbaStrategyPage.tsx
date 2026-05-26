@@ -216,6 +216,11 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
   const headerImageAlt =
     content?.imageAlt ??
     `${strategy.title} ecosystem-based adaptation strategy`;
+  const strategyMetadata = [
+    { label: "Category", value: strategy.category },
+    { label: "Field of action", value: strategy.field_of_action },
+    { label: "Spatial scale", value: strategy.spatial_scale },
+  ];
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -266,6 +271,21 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
                   {strategy.summary}
                 </p>
               ) : null}
+              <dl className="mt-7 grid gap-3 sm:grid-cols-3">
+                {strategyMetadata.map((item) => (
+                  <div
+                    key={item.label}
+                    className="border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] px-4 py-3"
+                  >
+                    <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[color:var(--accent-strong)]">
+                      {item.label}
+                    </dt>
+                    <dd className="mt-1 text-sm font-medium leading-6 text-[color:var(--foreground)]">
+                      {item.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button
                   variant="outline"

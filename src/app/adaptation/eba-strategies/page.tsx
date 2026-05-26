@@ -21,6 +21,8 @@ const strategyMarkers = ebaStrategies.flatMap((strategy) =>
           title: strategy.title,
           href: `/adaptation/eba-strategies/${strategy.slug}`,
           category: strategy.category,
+          fieldOfAction: strategy.field_of_action,
+          spatialScale: strategy.spatial_scale,
           summary: strategy.summary,
           position: strategy.mapPosition,
         },
@@ -63,7 +65,7 @@ export default function EbaStrategiesPage() {
               </p>
               <p className="mt-1 leading-6">
                 There is also a technical catalogue with search, filters,
-                metadata and PDF links for all EbA strategies.
+                classification metadata and PDF links for all EbA strategies.
               </p>
             </div>
           </div>

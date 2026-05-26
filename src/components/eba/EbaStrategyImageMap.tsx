@@ -9,6 +9,8 @@ export type EbaStrategyImageMarker = {
   title: string;
   href: string;
   category?: string;
+  fieldOfAction?: string;
+  spatialScale?: string;
   summary?: string;
   position: {
     x: number;
@@ -96,6 +98,16 @@ export function EbaStrategyImageMap({
                 <span className="block text-base font-semibold leading-6 text-[color:var(--foreground)]">
                   {marker.title}
                 </span>
+                {marker.fieldOfAction || marker.spatialScale ? (
+                  <span className="mt-2 grid gap-1 text-xs text-[color:var(--muted-foreground)]">
+                    {marker.fieldOfAction ? (
+                      <span>Field of action: {marker.fieldOfAction}</span>
+                    ) : null}
+                    {marker.spatialScale ? (
+                      <span>Spatial scale: {marker.spatialScale}</span>
+                    ) : null}
+                  </span>
+                ) : null}
                 {summaryPreview ? (
                   <span className="mt-2 block">{summaryPreview}</span>
                 ) : null}

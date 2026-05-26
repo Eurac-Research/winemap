@@ -7,13 +7,14 @@ import {
   ArrowDown,
   ArrowUp,
   BookOpen,
-  Calendar,
   ChevronDown,
   ChevronUp,
   ExternalLink,
+  Layers,
   Search,
-  User,
   X,
+  Map,
+  Droplet
 } from "lucide-react";
 
 import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
@@ -32,12 +33,13 @@ export default function EbaStrategiesPage() {
   const router = useRouter();
   const [factsheets] = useState<EbaStrategy[]>(ebaStrategies);
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortBy, setSortBy] = useState<"year" | "author">("year");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [sortBy, setSortBy] = useState<
+    "title" | "category" | "field_of_action" | "spatial_scale"
+  >("title");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
-  const [expandedAuthors, setExpandedAuthors] = useState<Set<string>>(
-    new Set(),
-  );
+  const [fieldFilter, setFieldFilter] = useState<string>("all");
+  const [scaleFilter, setScaleFilter] = useState<string>("all");
   const [expandedAbstracts, setExpandedAbstracts] = useState<Set<string>>(
     new Set(),
   );
@@ -65,25 +67,33 @@ export default function EbaStrategiesPage() {
     );
   };
 
-  const uniqueCategories = useMemo(() => {
-    const categories = new Set<string>();
-    factsheets.forEach((factsheet) => {
-      if (factsheet.category) categories.add(factsheet.category);
-    });
-    return Array.from(categories).sort();
-  }, [factsheets]);
+  const uniqueCategories = useMemo(
+    () =>
+      Array.from(new Set(factsheets.map((factsheet) => factsheet.category)))
+        .filter(Boolean)
+        .sort(),
+    [factsheets],
+  );
 
-  const toggleAuthors = (id: string) => {
-    setExpandedAuthors((previous) => {
-      const next = new Set(previous);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
-      return next;
-    });
-  };
+  const uniqueFieldsOfAction = useMemo(
+    () =>
+      Array.from(
+        new Set(factsheets.map((factsheet) => factsheet.field_of_action)),
+      )
+        .filter(Boolean)
+        .sort(),
+    [factsheets],
+  );
+
+  const uniqueSpatialScales = useMemo(
+    () =>
+      Array.from(
+        new Set(factsheets.map((factsheet) => factsheet.spatial_scale)),
+      )
+        .filter(Boolean)
+        .sort(),
+    [factsheets],
+  );
 
   const toggleAbstract = (id: string) => {
     setExpandedAbstracts((previous) => {
@@ -102,10 +112,9 @@ export default function EbaStrategiesPage() {
     const filtered = factsheets.filter((factsheet) => {
       const matchesSearch =
         factsheet.title.toLowerCase().includes(search) ||
-        factsheet.authors.some((author) =>
-          author.toLowerCase().includes(search),
-        ) ||
-        factsheet.year.toString().includes(searchTerm) ||
+        factsheet.category.toLowerCase().includes(search) ||
+        factsheet.field_of_action.toLowerCase().includes(search) ||
+        factsheet.spatial_scale.toLowerCase().includes(search) ||
         factsheet.summary?.toLowerCase().includes(search) ||
         factsheet.keywords?.some((keyword) =>
           keyword.toLowerCase().includes(search),
@@ -113,26 +122,32 @@ export default function EbaStrategiesPage() {
 
       const matchesCategory =
         categoryFilter === "all" || factsheet.category === categoryFilter;
+      const matchesField =
+        fieldFilter === "all" || factsheet.field_of_action === fieldFilter;
+      const matchesScale =
+        scaleFilter === "all" || factsheet.spatial_scale === scaleFilter;
 
-      return matchesSearch && matchesCategory;
+      return matchesSearch && matchesCategory && matchesField && matchesScale;
     });
 
     filtered.sort((first, second) => {
-      if (sortBy === "year") {
-        return sortOrder === "desc"
-          ? second.year - first.year
-          : first.year - second.year;
-      }
-
-      const firstAuthor = first.authors[0]?.toLowerCase() || "";
-      const secondAuthor = second.authors[0]?.toLowerCase() || "";
+      const firstValue = first[sortBy].toLowerCase();
+      const secondValue = second[sortBy].toLowerCase();
       return sortOrder === "desc"
-        ? secondAuthor.localeCompare(firstAuthor)
-        : firstAuthor.localeCompare(secondAuthor);
+        ? secondValue.localeCompare(firstValue)
+        : firstValue.localeCompare(secondValue);
     });
 
     return filtered;
-  }, [factsheets, searchTerm, sortBy, sortOrder, categoryFilter]);
+  }, [
+    factsheets,
+    searchTerm,
+    sortBy,
+    sortOrder,
+    categoryFilter,
+    fieldFilter,
+    scaleFilter,
+  ]);
 
   return (
     <div className="min-h-screen bg-background pt-24 transition-colors duration-300">
@@ -156,14 +171,14 @@ export default function EbaStrategiesPage() {
           </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-4 mb-8">
+        <div className="flex flex-col gap-4 mb-8">
           <div className="relative flex-1">
             <Search
               className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4"
               aria-hidden="true"
             />
             <Input
-              placeholder="Search factsheets, authors or year ..."
+              placeholder="Search strategies, categories, fields of action or keywords ..."
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
               className="pl-10 pr-10 h-12 transition-colors bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] placeholder:text-[color:var(--muted-foreground)] hover:bg-[color:var(--surface-panel-muted)] focus:bg-[color:var(--surface-panel-muted)]"
@@ -180,13 +195,13 @@ export default function EbaStrategiesPage() {
             ) : null}
           </div>
 
-          <div className="flex gap-2 text-[color:var(--foreground)]">
+          <div className="grid gap-2 text-[color:var(--foreground)] sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_auto_auto]">
             <Select
               value={categoryFilter}
               onValueChange={(value: string) => setCategoryFilter(value)}
             >
               <SelectTrigger
-                className="w-48 h-12 bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-panel-muted)]"
+                className="h-12 w-full bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-panel-muted)]"
                 aria-label="Filter by category"
               >
                 <SelectValue />
@@ -211,32 +226,114 @@ export default function EbaStrategiesPage() {
             </Select>
 
             <Select
-              value={sortBy}
-              onValueChange={(value: "year" | "author") => setSortBy(value)}
+              value={fieldFilter}
+              onValueChange={(value: string) => setFieldFilter(value)}
             >
               <SelectTrigger
-                className="w-32 h-12 bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-panel-muted)]"
+                className="h-12 w-full bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-panel-muted)]"
+                aria-label="Filter by field of action"
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-[color:var(--surface-panel-strong)] border-[color:var(--border-soft)]">
+                <SelectItem
+                  value="all"
+                  className="text-[color:var(--foreground)]"
+                >
+                  All Fields of Action
+                </SelectItem>
+                {uniqueFieldsOfAction.map((fieldOfAction) => (
+                  <SelectItem
+                    key={fieldOfAction}
+                    value={fieldOfAction}
+                    className="text-[color:var(--foreground)]"
+                  >
+                    {fieldOfAction}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select
+              value={scaleFilter}
+              onValueChange={(value: string) => setScaleFilter(value)}
+            >
+              <SelectTrigger
+                className="h-12 w-full bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-panel-muted)]"
+                aria-label="Filter by spatial scale"
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-[color:var(--surface-panel-strong)] border-[color:var(--border-soft)]">
+                <SelectItem
+                  value="all"
+                  className="text-[color:var(--foreground)]"
+                >
+                  All Scales
+                </SelectItem>
+                {uniqueSpatialScales.map((spatialScale) => (
+                  <SelectItem
+                    key={spatialScale}
+                    value={spatialScale}
+                    className="text-[color:var(--foreground)]"
+                  >
+                    {spatialScale}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select
+              value={sortBy}
+              onValueChange={(
+                value:
+                  | "title"
+                  | "category"
+                  | "field_of_action"
+                  | "spatial_scale",
+              ) => setSortBy(value)}
+            >
+              <SelectTrigger
+                className="h-12 w-full lg:w-40 bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-panel-muted)]"
                 aria-label="Sort by"
               >
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-[color:var(--surface-panel-strong)] border-[color:var(--border-soft)]">
                 <SelectItem
-                  value="year"
+                  value="title"
                   className="text-[color:var(--foreground)]"
                 >
                   <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4" aria-hidden="true" />
-                    Year
+                    <BookOpen className="w-4 h-4" aria-hidden="true" />
+                    Title
                   </div>
                 </SelectItem>
                 <SelectItem
-                  value="author"
+                  value="category"
                   className="text-[color:var(--foreground)]"
                 >
                   <div className="flex items-center gap-2">
-                    <User className="w-4 h-4" aria-hidden="true" />
-                    Author
+                    <Layers className="w-4 h-4" aria-hidden="true" />
+                    Category
+                  </div>
+                </SelectItem>
+                <SelectItem
+                  value="field_of_action"
+                  className="text-[color:var(--foreground)]"
+                >
+                  <div className="flex items-center gap-2">
+                    <Droplet className="w-4 h-4" aria-hidden="true" />
+                    Field of Action
+                  </div>
+                </SelectItem>
+                <SelectItem
+                  value="spatial_scale"
+                  className="text-[color:var(--foreground)]"
+                >
+                  <div className="flex items-center gap-2">
+                    <Map className="w-4 h-4" aria-hidden="true" />
+                    Scale
                   </div>
                 </SelectItem>
               </SelectContent>
@@ -266,9 +363,7 @@ export default function EbaStrategiesPage() {
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filteredAndSortedFactsheets.map((factsheet) => {
-            const authorsExpanded = expandedAuthors.has(factsheet.id);
             const abstractExpanded = expandedAbstracts.has(factsheet.id);
-            const authorLimit = 10;
             const abstractLimit = 200;
             const strategyHref = `/adaptation/eba-strategies/${factsheet.slug}`;
 
@@ -291,70 +386,32 @@ export default function EbaStrategiesPage() {
                     {highlightText(factsheet.title, searchTerm)}
                   </CardTitle>
 
-                  <div className="flex flex-wrap items-center gap-2 text-sm text-gray-400 mb-3">
-                    <span className="font-medium">
-                      {(authorsExpanded
-                        ? factsheet.authors
-                        : factsheet.authors.slice(0, authorLimit)
-                      ).map((author, index, array) => (
-                        <span key={author}>
-                          {highlightText(author, searchTerm)}
-                          {index < array.length - 1 ? ", " : ""}
+                  <div className="flex grid grid-cols:2 mb-3 text-xs">
+                    {[
+                      ["Category", factsheet.category],
+                      ["Field of action", factsheet.field_of_action],
+                      ["Spatial scale", factsheet.spatial_scale],
+                    ].map(([label, value]) => (
+                      <div
+                        key={label}
+                        className="py-2"
+                      >
+                        <span className="block font-semibold uppercase tracking-[0.12em] text-[color:var(--accent-strong)]">
+                          {label}
                         </span>
-                      ))}
-                      {factsheet.authors.length > authorLimit &&
-                      !authorsExpanded ? (
-                        <button
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            toggleAuthors(factsheet.id);
-                          }}
-                          className="ml-1 text-[color:var(--accent-strong)] hover:underline inline-flex items-center"
-                          aria-label={`Show ${factsheet.authors.length - authorLimit} more authors`}
-                        >
-                          ... +{factsheet.authors.length - authorLimit} more
-                          <ChevronDown
-                            className="w-3 h-3 ml-1"
-                            aria-hidden="true"
-                          />
-                        </button>
-                      ) : null}
-                      {authorsExpanded &&
-                      factsheet.authors.length > authorLimit ? (
-                        <button
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            toggleAuthors(factsheet.id);
-                          }}
-                          className="ml-1 text-[color:var(--accent-strong)] hover:underline inline-flex items-center"
-                          aria-label="Show fewer authors"
-                        >
-                          <ChevronUp
-                            className="w-3 h-3 ml-1"
-                            aria-hidden="true"
-                          />
-                        </button>
-                      ) : null}
-                    </span>
-                    <span aria-hidden="true">&bull;</span>
-                    <span>{factsheet.year}</span>
+                        <span className="mt-1 block font-medium text-[color:var(--text-base)]">
+                          {highlightText(value, searchTerm)}
+                        </span>
+                      </div>
+                    ))}
                   </div>
 
-                  <div className="flex items-center gap-3 mb-3 flex-wrap">
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-xs font-semibold text-gray-500">
-                        Category:
-                      </span>
-                      <span className="text-xs font-medium px-2 py-0.5 rounded text-[color:var(--text-base)] bg-[color:var(--surface-panel-muted)]">
-                        {factsheet.category}
-                      </span>
-                    </div>
-
+                  {factsheet.filename ? (
                     <Button
                       variant="outline"
                       size="sm"
                       asChild
-                      className="h-6 px-2 text-xs bg-[color:var(--surface-panel-muted)] border-[color:var(--border-strong)] hover:bg-[color:var(--surface-overlay)] hover:border-[color:var(--border)] text-[color:var(--foreground)] hover:text-[color:var(--foreground)]"
+                      className="h-6 max-w-14 px-2 text-xs bg-[color:var(--surface-panel-muted)] border-[color:var(--border-strong)] hover:bg-[color:var(--surface-overlay)] hover:border-[color:var(--border)] text-[color:var(--foreground)] hover:text-[color:var(--foreground)]"
                     >
                       <a
                         href={`/factsheets/${factsheet.filename}`}
@@ -370,32 +427,8 @@ export default function EbaStrategiesPage() {
                         PDF
                       </a>
                     </Button>
-                  </div>
-
-                  {factsheet.keywords?.length ? (
-                    <div className="flex items-start gap-2 mb-3">
-                      <span className="text-xs font-semibold text-gray-500 mt-1.5">
-                        Keywords:
-                      </span>
-                      <div className="flex flex-wrap gap-2">
-                        {factsheet.keywords.map((keyword) => (
-                          <button
-                            key={keyword}
-                            onClick={(event) => {
-                              event.stopPropagation();
-                              setSearchTerm(
-                                searchTerm === keyword ? "" : keyword,
-                              );
-                            }}
-                            className="text-xs font-medium px-2.5 py-1 rounded-full transition-all cursor-pointer focus:outline-none focus:ring-2 bg-[color:var(--accent-soft)] text-[color:var(--accent-strong)] border border-[color:var(--accent-strong)] hover:brightness-105 focus:ring-[color:var(--accent-strong)] focus:ring-offset-1 focus:ring-offset-[color:var(--background)]"
-                            aria-label={`Search for ${keyword}`}
-                          >
-                            {highlightText(keyword, searchTerm)}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
                   ) : null}
+
                 </CardHeader>
 
                 {factsheet.summary ? (
@@ -460,7 +493,7 @@ export default function EbaStrategiesPage() {
               aria-hidden="true"
             />
             <h3 className="text-xl font-semibold text-gray-400 mb-2">
-              No publications found
+              No strategies found
             </h3>
             <p className="text-gray-500">
               Try adjusting your search terms or filters
