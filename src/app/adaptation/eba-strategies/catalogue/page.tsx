@@ -9,12 +9,12 @@ import {
   BookOpen,
   ChevronDown,
   ChevronUp,
+  Droplet,
   ExternalLink,
   Layers,
+  Map,
   Search,
   X,
-  Map,
-  Droplet
 } from "lucide-react";
 
 import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
@@ -115,10 +115,7 @@ export default function EbaStrategiesPage() {
         factsheet.category.toLowerCase().includes(search) ||
         factsheet.field_of_action.toLowerCase().includes(search) ||
         factsheet.spatial_scale.toLowerCase().includes(search) ||
-        factsheet.summary?.toLowerCase().includes(search) ||
-        factsheet.keywords?.some((keyword) =>
-          keyword.toLowerCase().includes(search),
-        );
+        factsheet.summary?.toLowerCase().includes(search);
 
       const matchesCategory =
         categoryFilter === "all" || factsheet.category === categoryFilter;
@@ -178,7 +175,7 @@ export default function EbaStrategiesPage() {
               aria-hidden="true"
             />
             <Input
-              placeholder="Search strategies, categories, fields of action or keywords ..."
+              placeholder="Search strategies, categories, fields of action or summaries ..."
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
               className="pl-10 pr-10 h-12 transition-colors bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] placeholder:text-[color:var(--muted-foreground)] hover:bg-[color:var(--surface-panel-muted)] focus:bg-[color:var(--surface-panel-muted)]"
@@ -386,16 +383,13 @@ export default function EbaStrategiesPage() {
                     {highlightText(factsheet.title, searchTerm)}
                   </CardTitle>
 
-                  <div className="flex grid grid-cols:2 mb-3 text-xs">
+                  <div className="mb-3 grid gap-3 text-xs sm:grid-cols-2">
                     {[
                       ["Category", factsheet.category],
                       ["Field of action", factsheet.field_of_action],
                       ["Spatial scale", factsheet.spatial_scale],
                     ].map(([label, value]) => (
-                      <div
-                        key={label}
-                        className="py-2"
-                      >
+                      <div key={label} className="py-2">
                         <span className="block font-semibold uppercase tracking-[0.12em] text-[color:var(--accent-strong)]">
                           {label}
                         </span>
@@ -428,7 +422,6 @@ export default function EbaStrategiesPage() {
                       </a>
                     </Button>
                   ) : null}
-
                 </CardHeader>
 
                 {factsheet.summary ? (

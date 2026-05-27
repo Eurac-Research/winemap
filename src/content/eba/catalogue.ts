@@ -1,4 +1,4 @@
-export type EbaCategory = 
+export type EbaCategory =
   | "Ground cover and intercropping"
   | "Ecosystem-based soil & vegetation management"
   | "Water regulation and retention measures"
@@ -8,21 +8,18 @@ export type EbaCategory =
   | "Landscape features"
   | "Wildlife support and refuge structures"
   | "Adapted farm management"
-  | "Land reorganisation"
+  | "Land reorganisation";
 
-export type FieldOfAction = 
+export type FieldOfAction =
   | "Soil"
   | "Water"
   | "Plant/Vines"
   | "Ecological connectivity & Biodiversity"
   | "Farm system"
   | "Vineyard stability"
-  | "Land use"
+  | "Land use";
 
-export type SpatialScale = 
-  | "Vineyard field"
-  | "Vineyard Landscape"
-  | "Farm"
+export type SpatialScale = "Vineyard field" | "Vineyard Landscape" | "Farm";
 
 export type EbaStrategy = {
   id: string;

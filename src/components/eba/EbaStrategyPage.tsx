@@ -1,6 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import {getEbaStrategiesByCategory, type EbaStrategy } from "@/content/eba/catalogue";
+import {
+  getEbaStrategiesByCategory,
+  type EbaStrategy,
+} from "@/content/eba/catalogue";
 import {
   getEbaEcosystemServiceById,
   type EbaServiceIcon,
@@ -17,6 +20,7 @@ import {
   AlertTriangle,
   ArrowLeft,
   ArrowRight,
+  BookOpenText,
   Bug,
   CircleDollarSign,
   Droplets,
@@ -32,7 +36,6 @@ import {
   ThermometerSun,
   Trees,
   Waves,
-  BookOpenText,
   type LucideIcon,
 } from "lucide-react";
 
@@ -213,7 +216,9 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
   const hasAbout = Boolean(content?.about);
   const hasEcosystemServices = Boolean(content?.ecosystemServices?.length);
   const hasChallenges = Boolean(content?.challenges?.length);
-  const pdfHref = `/factsheets/${strategy.filename}`;
+  const pdfHref = strategy.filename
+    ? `/factsheets/${strategy.filename}`
+    : undefined;
   const hasHeaderImage = Boolean(content?.imagePath);
   const headerImageAlt =
     content?.imageAlt ??
@@ -223,7 +228,9 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
     { label: "Field of action", value: strategy.field_of_action },
     { label: "Spatial scale", value: strategy.spatial_scale },
   ];
-  const similarStrategies = getEbaStrategiesByCategory(strategy.category).filter((eba) => eba.slug != strategy.slug)
+  const similarStrategies = getEbaStrategiesByCategory(
+    strategy.category,
+  ).filter((relatedStrategy) => relatedStrategy.slug !== strategy.slug);
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -289,18 +296,23 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
                   </div>
                 ))}
               </dl>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Button
-                  variant="outline"
-                  asChild
-                  className="border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-overlay)]"
-                >
-                  <a href={pdfHref} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="mr-2 h-4 w-4" aria-hidden="true" />
-                    Open PDF factsheet
-                  </a>
-                </Button>
-              </div>
+              {pdfHref ? (
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <Button
+                    variant="outline"
+                    asChild
+                    className="border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-overlay)]"
+                  >
+                    <a href={pdfHref} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink
+                        className="mr-2 h-4 w-4"
+                        aria-hidden="true"
+                      />
+                      Open PDF factsheet
+                    </a>
+                  </Button>
+                </div>
+              ) : null}
             </div>
 
             {hasHeaderImage && content?.imagePath ? (
@@ -394,42 +406,69 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
         </section>
       ) : null}
 
-      <section className="border-t border-[color:var(--border-soft)] bg-[color:var(--surface-panel-muted)] px-6 py-16">
+      <section
+        className="border-t border-[color:var(--border-soft)] bg-[color:var(--surface-panel-muted)] px-6 py-16"
+      >
         <div className="mx-auto max-w-6xl">
-          <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-strong)]">
-              Discover similar EbA strategies
-            </p>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-strong)]">
+                Discover similar EbA strategies
+              </p>
+            </div>
+
+            <Link
+              href="/adaptation/eba-strategies/catalogue"
+              className="inline-flex items-center gap-2 text-sm font-medium text-[color:var(--accent-strong)] underline-offset-4 hover:underline"
+            >
+              Browse full catalogue
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
           </div>
 
-          <div className="mt-8 grid gap-5 md:grid-cols-3">
-            {similarStrategies.map((strategy) => {
-              const hasSummary = Boolean(strategy.summary?.length)
+          {similarStrategies.length ? (
+            <div className="mt-8 flex gap-5 overflow-x-auto pb-2 [scrollbar-width:thin] lg:grid lg:grid-cols-3 lg:overflow-visible lg:pb-0">
+              {similarStrategies.map((relatedStrategy) => {
+                const hasSummary = Boolean(relatedStrategy.summary?.length);
 
-              return (
-                <Link
-                  key={strategy.slug}
-                  href={`/adaptation/eba-strategies/${strategy.slug}`}
-                  className="group border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-6 transition-colors hover:border-[color:var(--accent-strong)] hover:bg-[color:var(--surface-panel-strong)]"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <BookOpenText className="h-6 w-6 text-[color:var(--accent-strong)]" />
-                    <ArrowRight className="h-5 w-5 text-[color:var(--accent-strong)] transition-transform group-hover:translate-x-1" />
-                  </div>
-                  <h2 className="mt-5 text-xl font-semibold text-[color:var(--foreground)]">
-                    {strategy.title}
-                  </h2>
-                  {hasSummary ? (
-                  <p className="mt-3 text-sm leading-6 text-[color:var(--muted-foreground)]">
-                    {strategy.summary}
-                  </p> ) : null }
-                </Link>
-              );
-            })}
-          </div>
+                return (
+                  <Link
+                    key={relatedStrategy.slug}
+                    href={`/adaptation/eba-strategies/${relatedStrategy.slug}`}
+                    className="group min-w-[17rem] border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-6 transition-colors hover:border-[color:var(--accent-strong)] hover:bg-[color:var(--surface-panel-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent-strong)] sm:min-w-[20rem] lg:min-w-0"
+                    aria-label={`Open ${relatedStrategy.title} strategy`}
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <BookOpenText
+                        className="h-6 w-6 text-[color:var(--accent-strong)]"
+                        aria-hidden="true"
+                      />
+                      <ArrowRight
+                        className="h-5 w-5 text-[color:var(--accent-strong)] transition-transform group-hover:translate-x-1"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <h3 className="mt-5 text-xl font-semibold text-[color:var(--foreground)]">
+                      {relatedStrategy.title}
+                    </h3>
+                    {hasSummary ? (
+                      <p className="mt-3 text-sm leading-6 text-[color:var(--muted-foreground)]">
+                        {relatedStrategy.summary}
+                      </p>
+                    ) : null}
+                  </Link>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="mt-8 border border-dashed border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-6">
+              <p className="text-sm leading-6 text-[color:var(--muted-foreground)]">
+                No other EbA strategies are currently listed in this category.
+              </p>
+            </div>
+          )}
         </div>
       </section>
-
     </main>
   );
 }
