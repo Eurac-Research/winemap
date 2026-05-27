@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { EbaStrategy } from "@/content/eba/catalogue";
+import {getEbaStrategiesByCategory, type EbaStrategy } from "@/content/eba/catalogue";
 import {
   getEbaEcosystemServiceById,
   type EbaServiceIcon,
@@ -16,6 +16,7 @@ import type {
 import {
   AlertTriangle,
   ArrowLeft,
+  ArrowRight,
   Bug,
   CircleDollarSign,
   Droplets,
@@ -31,6 +32,7 @@ import {
   ThermometerSun,
   Trees,
   Waves,
+  BookOpenText,
   type LucideIcon,
 } from "lucide-react";
 
@@ -221,6 +223,7 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
     { label: "Field of action", value: strategy.field_of_action },
     { label: "Spatial scale", value: strategy.spatial_scale },
   ];
+  const similarStrategies = getEbaStrategiesByCategory(strategy.category).filter((eba) => eba.slug != strategy.slug)
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -390,6 +393,43 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
           </div>
         </section>
       ) : null}
+
+      <section className="border-t border-[color:var(--border-soft)] bg-[color:var(--surface-panel-muted)] px-6 py-16">
+        <div className="mx-auto max-w-6xl">
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-strong)]">
+              Discover similar EbA strategies
+            </p>
+          </div>
+
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
+            {similarStrategies.map((strategy) => {
+              const hasSummary = Boolean(strategy.summary?.length)
+
+              return (
+                <Link
+                  key={strategy.slug}
+                  href={`/adaptation/eba-strategies/${strategy.slug}`}
+                  className="group border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-6 transition-colors hover:border-[color:var(--accent-strong)] hover:bg-[color:var(--surface-panel-strong)]"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <BookOpenText className="h-6 w-6 text-[color:var(--accent-strong)]" />
+                    <ArrowRight className="h-5 w-5 text-[color:var(--accent-strong)] transition-transform group-hover:translate-x-1" />
+                  </div>
+                  <h2 className="mt-5 text-xl font-semibold text-[color:var(--foreground)]">
+                    {strategy.title}
+                  </h2>
+                  {hasSummary ? (
+                  <p className="mt-3 text-sm leading-6 text-[color:var(--muted-foreground)]">
+                    {strategy.summary}
+                  </p> ) : null }
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
     </main>
   );
 }

@@ -81,3 +81,6 @@ export const ebaStrategies: EbaStrategy[] = [
 
 export const getEbaStrategyBySlug = (slug: string) =>
   ebaStrategies.find((strategy) => strategy.slug === slug);
+
+export const getEbaStrategiesByCategory = (category: EbaCategory) =>
+  ebaStrategies.filter((strategy) => strategy.category === category);
