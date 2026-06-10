@@ -129,3 +129,6 @@ export const getEbaStrategyBySlug = (slug: string) =>
 
 export const getEbaStrategiesByCategory = (category: EbaCategory) =>
   ebaStrategies.filter((strategy) => strategy.category === category);
+
+export const getSimilarEbaStrategies = (activeStrategy: EbaStrategy) =>
+  ebaStrategies.filter((strategies) => (strategies.category === activeStrategy.category) || (strategies.field_of_action === activeStrategy.field_of_action));

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  getEbaStrategiesByCategory,
+  getSimilarEbaStrategies,
   type EbaStrategy,
 } from "@/content/eba/catalogue";
 import {
@@ -220,8 +220,8 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
     { label: "Field of action", value: strategy.field_of_action },
     { label: "Spatial scale", value: strategy.spatial_scale },
   ];
-  const similarStrategies = getEbaStrategiesByCategory(
-    strategy.category,
+  const similarStrategies = getSimilarEbaStrategies(
+    strategy,
   ).filter((relatedStrategy) => relatedStrategy.slug !== strategy.slug);
 
   return (

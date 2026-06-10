@@ -73,7 +73,7 @@ export function EbaStrategyImageMap({
               href={marker.href}
               aria-describedby={tooltipId}
               aria-label={`Open ${marker.title}`}
-              className="group absolute z-10 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--accent-strong)]"
+              className="group absolute z-10 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full hover:z-30 focus-visible:z-30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--accent-strong)]"
               style={{
                 left: `${marker.position.x}%`,
                 top: `${marker.position.y}%`,
