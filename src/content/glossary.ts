@@ -28,8 +28,8 @@ export const glossaryTerms: GlossaryTerm[] = [
       "Diagnostic indicators used to characterize aspects of the climate system and link them to biological responses, helping to monitor conditions such as drought, heat stress, or temperature accumulation that affect crop growth, yields, and phenological stages.",
   },
   {
-    id: "biodiversity-conservation",
-    term: "Biodiversity conservation",
+    id: "biodiversity-enhancement",
+    term: "Biodiversity enhancement",
     definition:
       "The protection, maintenance, or restoration of the diversity of species, habitats, genes, and ecological interactions within an ecosystem or landscape.",
   },
@@ -211,8 +211,8 @@ export const glossaryTerms: GlossaryTerm[] = [
       "The visual and experiential qualities of a landscape that support scenic character, sense of place, cultural identity, and enjoyment.",
   },
   {
-    id: "microclimate-regulation",
-    term: "Microclimate regulation",
+    id: "climate-regulation",
+    term: "Climate regulation",
     definition:
       "The moderation of local temperature, wind, humidity, radiation, or shade conditions through vegetation, soil cover, landscape structure, or other ecosystem features.",
   },
@@ -229,8 +229,8 @@ export const glossaryTerms: GlossaryTerm[] = [
       "Opportunities for leisure, tourism, learning, exercise, or enjoyment that are supported by access to attractive and functional outdoor landscapes.",
   },
   {
-    id: "soil-health-improvement",
-    term: "Soil health improvement",
+    id: "soil-health-and-fertility",
+    term: "Soil health and fertility",
     definition:
       "The enhancement of soil structure, organic matter, biological activity, nutrient cycling, and water-holding capacity so that soil can better support plant growth and ecosystem functions.",
   },

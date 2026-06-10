@@ -38,7 +38,7 @@ export const ebaEcosystemServices = [
     id: "climate-regulation",
     label: "Climate regulation",
     icon: "temperature",
-    glossaryId: "microclimate-regulation",
+    glossaryId: "climate-regulation",
   },
   {
     id: "water-regulation",
@@ -61,7 +61,7 @@ export const ebaEcosystemServices = [
     id: "biodiversity-enhancement",
     label: "Biodiversity enhancement",
     icon: "biodiversity",
-    glossaryId: "biodiversity-conservation",
+    glossaryId: "biodiversity-enhancement",
   },
   {
     id: "cultural-heritage",
@@ -85,7 +85,7 @@ export const ebaEcosystemServices = [
     id: "soil-health-fertility",
     label: "Soil health and fertility",
     icon: "soil",
-    glossaryId: "soil-health-improvement",
+    glossaryId: "soil-health-and-fertility",
   },
   {
     id: "weed-control",

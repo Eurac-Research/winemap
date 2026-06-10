@@ -90,7 +90,7 @@ export const ebaStrategies: EbaStrategy[] = [
     id: "5",
     slug: "vegetated-buffer-flower-strips",
     title: "Vegetated buffer and flower strips",
-    category: "Landscape features",
+    category: "Ground cover and intercropping",
     field_of_action: "Ecological connectivity & Biodiversity",
     spatial_scale: "Vineyard Landscape",
     summary:
