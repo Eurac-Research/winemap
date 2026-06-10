@@ -1,8 +1,6 @@
 import type { ReactNode } from "react";
 import type { EbaEcosystemServiceId } from "@/content/eba/ecosystem-services";
-import type { EbaPotentialChallengeId } from "@/content/eba/potential-challenges";
-
-import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
+import type { EbaChallengeIcon } from "@/content/eba/potential-challenges";
 
 export type EbaSectionContent = {
   id: string;
@@ -18,7 +16,8 @@ export type EbaVideoContent = {
 };
 
 export type EbaStrategyChallenge = {
-  id: EbaPotentialChallengeId;
+  title: string;
+  icon?: EbaChallengeIcon;
   details?: ReactNode;
 };
 
@@ -40,242 +39,381 @@ export type EbaStrategyDetailContent = {
 
 export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
   {
-    slug: "dry-stone-walls",
+    slug: "intercropping-herbs-plants",
     about: (
       <>
         <p>
-          Dry-stone walls are traditional masonry structures built without
-          binders such as mortar or cement, using locally sourced stones often
-          collected from cultivated land or nearby quarries. Their construction
-          relies on a foundation of large blocks, successive layers of coarser
-          material, and smaller stones filling the gaps to ensure stability,
-          with wall dimensions adapted to slope conditions and typically
-          tapering towards the top. The dry laying allows rainwater drainage and
-          is often combined with a crushed stone backing to reduce hydrostatic
-          pressure.
+          Cover crops are plants that are intentionally grown between the vine
+          rows. They are meant to enhance soil properties without the need to
+          use herbicides. Management involves various application methods, such
+          as planting in all or alternating rows of the most appropriate native
+          or locally adapted plant species.
         </p>
         <p>
-          Dry-stone walls are integral components of terraced and agricultural
-          landscapes, shaped over centuries through the interaction between
-          human management and natural processes. They are considered
-          &quot;living&quot; structures due to their ecological functions and
-          interactions within the environment. Along with other structural
-          elements such as hedgerows and stone heaps, dry-stone walls create
-          valuable{" "}
-          <GlossaryTermPopover id="ecological-niche">
-            ecological niches
-          </GlossaryTermPopover>{" "}
-          in agricultural landscapes, particularly in viticultural areas.
+          There is a wide selection of possible plant species that can be used
+          as cover crops. Common species include annuals like barley and oats,
+          legumes such as vetch and clover, and brassicas like daikon radish.
+          The selection of species to seed and the timing depend on the desired
+          effect and on the season.
+        </p>
+        <p>
+          For example, sowing in autumn can provide green manure to a vineyard
+          over the winter period, while mowing cover crops in summer creates a
+          mulch layer that reduces water evaporation from the soil during warm
+          summer periods. After the growing period, the crops can be ploughed
+          under and incorporated into the soil as green manure to improve soil
+          fertility.
         </p>
       </>
     ),
     imagePath: "/images/vineyard_sun.jpg",
     ecosystemServices: [
+      {
+        id: "soil-health-fertility",
+        note: "improved soil structure, nutrient cycling and organic matter content",
+      },
       { id: "erosion-control", note: "slope stabilisation" },
+      { id: "carbon-sequestration" },
       { id: "water-retention", note: "reduced surface runoff" },
-      { id: "microclimate-regulation", note: "reduced temperature extremes" },
       {
         id: "water-regulation",
         note: "improved infiltration, retention, and reduced nutrient leaching",
       },
+      { id: "biodiversity-enhancement" },
       {
-        id: "habitat-provision",
-        note: "microhabitats for plants, invertebrates, reptiles, and small mammals",
+        id: "natural-pest-control",
+        note: "support for beneficial insects and natural enemies",
       },
-      { id: "biodiversity-conservation" },
+      {
+        id: "climate-regulation",
+        note: "local microclimate regulation and reduced temperature extremes",
+      },
       {
         id: "cultural-heritage",
         note: "preservation of traditional knowledge and historical land-use practices",
       },
-      { id: "landscape-aesthetic-value", note: "distinct landscape character" },
-      { id: "outdoor-recreation", note: "enhanced recreational value" },
+      { id: "landscape-aesthetics", note: "distinct landscape character" },
     ],
     challenges: [
       {
-        id: "management-labour-costs",
+        title: "Resource interactions with vines",
+        icon: "resources",
         details:
-          "The construction and maintenance of dry-stone walls are labour-intensive and require skilled craftspeople, which can make them less economically viable compared to modern concrete alternatives.",
+          "Resource interactions between cover crops and grapevines should be considered when designing and managing intercropping systems, particularly in young vineyards or water-limited environments. The choice of species, sowing density, and management regime largely determines whether ecological benefits are achieved without adversely affecting vine performance.",
       },
       {
-        id: "technical-material-requirements",
+        title: "Management and labour requirements",
+        icon: "cost",
         details:
-          "Long-term stability depends on correct construction techniques and solid foundations, while sourcing suitable local stone can pose logistical challenges.",
+          "The establishment and maintenance of cover crops require planning and regular management, including the timing of sowing, mowing, and incorporation practices. Successful implementation depends on integrating these activities into existing vineyard operations and adapting them to local conditions.",
       },
       {
-        id: "abandonment-degradation",
+        title: "Site-specific performance",
+        icon: "technical",
         details:
-          "Agricultural intensification and land abandonment threaten traditional landscapes featuring dry-stone walls. The adoption of modern materials has led to the neglect of these structures, which are also vulnerable to damage from farming activities and collapse, leading to the degradation of terraced landscapes.",
+          "Cover crop performance varies according to climate, soil conditions, species selection, and seed quality. Tailoring mixtures and management practices to local conditions is often necessary to ensure reliable establishment, effective ground cover, and long-term ecosystem benefits.",
       },
     ],
   },
   {
-    slug: "agroforestry",
-    about: (
-      <p>
-        Agroforestry is an integrated agricultural practice that combines
-        traditional farming techniques with forest management, integrating woody
-        and perennial plants with herbaceous crops and/or animal husbandry. This
-        approach aims to create land-use systems that are more productive,
-        healthy, diversified, and sustainable. The integration of trees, shrubs,
-        annual crops, and animals into vineyards is an ancient practice,
-        particularly in the Mediterranean region.
-      </p>
-    ),
-    imagePath: "/images/vineyard_sun.jpg",
-    ecosystemServices: [
-      {
-        id: "soil-health-improvement",
-        note: "enhanced organic matter, nutrient cycling, and soil structure",
-      },
-      { id: "erosion-control", note: "root stabilisation" },
-      { id: "water-retention", note: "reduced surface runoff" },
-      {
-        id: "microclimate-regulation",
-        note: "wind buffering, shading, and temperature moderation",
-      },
-      {
-        id: "habitat-provision",
-        note: "refuge, food resources, and ecological connectivity",
-      },
-      { id: "biodiversity-conservation" },
-      {
-        id: "natural-pest-control",
-        note: "support for beneficial insects and natural enemies",
-      },
-      {
-        id: "water-regulation",
-        note: "improved infiltration and reduced nutrient leaching",
-      },
-      {
-        id: "increased-production",
-        note: "multiple outputs such as crops, fodder, timber, or non-timber products",
-      },
-      { id: "economic-diversification" },
-      {
-        id: "cultural-heritage",
-        note: "cultural identity, structural diversity ",
-      },
-      {
-        id: "landscape-aesthetic-value",
-        note: "visual character of agricultural landscapes",
-      },
-    ],
-    challenges: [
-      {
-        id: "management-labour-costs",
-        details:
-          "Agroforestry systems require more complex management, including additional training and careful machinery use, which can increase labour demands and costs compared to monocultures, especially during establishment.",
-      },
-      {
-        id: "yield-uncertainty-economic-viability",
-        details:
-          "The transition from conventional to nature-based agriculture may result in temporary yield reductions, particularly in the early years, while the full land-use and economic potential of by-product-producing species such as poplar or oak is not always ensured due to local management constraints.",
-      },
-      {
-        id: "resource-competition",
-        details:
-          "Even though trees can enhance water availability, there is a potential for competition for water and nutrients between trees and the vine, particularly in arid regions or during establishment.",
-      },
-    ],
-    sections: [
-      {
-        id: "types",
-        title: "The different types of agroforestry",
-        children: (
-          <>
-            <ul className="list-disc space-y-2 pl-6">
-              <li>
-                Silvo-arable systems involve growing tree species such as woody
-                plants or fruit trees alongside herbaceous crops.
-              </li>
-              <li>
-                Forestry and pastoral systems combine livestock with
-                arboriculture, either for wood or fruit production.
-              </li>
-              <li>
-                Cultivations in the forest primarily focus on non-wood products
-                like mushrooms and berries.
-              </li>
-            </ul>
-            <p>
-              Agroforestry emphasises long-term land-use practices and woodlot
-              management, meeting criteria of being intensive, interactive, and
-              integrated. It is a nature-based solution that supports the
-              development of multifunctional landscapes and contributes to
-              enhanced climate resilience.
-            </p>
-          </>
-        ),
-      },
-    ],
-  },
-  {
-    slug: "landscape-elements",
+    slug: "mulching-organic-soil-cover",
     about: (
       <>
         <p>
-          Landscape elements such as hedges, isolated trees, and shrubs are
-          forms of plant diversification integrated into agricultural landscapes
-          to enhance their ecological functions and promote sustainability. As
-          nature-based solutions, these elements leverage ecosystem processes to
-          provide environmental, social, and economic benefits.
+          Mulching is a vineyard management practice in which the soil surface
+          beneath or between vines is covered with a layer of organic material.
+          Common mulching materials include straw, hay, compost, leaves, bark,
+          and shredded vineyard residues such as pruning cuttings and wood
+          chips.
         </p>
         <p>
-          Woody plants increase the compositional and configurational diversity
-          of the cultural landscape, strengthening habitat connectivity and
-          supporting biodiversity. They provide shelter, food resources, and
-          breeding sites for a wide range of species, including pollinators and
-          natural enemies of pests.
+          By covering the soil surface, mulches help suppress weed growth,
+          reduce water evaporation, moderate soil temperatures, and protect the
+          soil from erosion. As organic mulches gradually decompose, they
+          contribute organic matter and nutrients to the soil, supporting soil
+          fertility and biological activity.
         </p>
         <p>
-          The establishment, maintenance, or conservation of landscape elements
-          plays a key role in creating valuable ecological niches and enhancing
-          the resilience of agricultural landscapes to environmental pressures
-          and climate variability.
+          Mulching can also improve soil structure, increase water-holding
+          capacity, and enhance vineyard resilience to drought and extreme
+          weather conditions. The choice of mulch material, application rate,
+          and timing should be adapted to local soil, climate, and vineyard
+          management objectives.
         </p>
       </>
     ),
     imagePath: "/images/vineyard_sun.jpg",
     ecosystemServices: [
       {
-        id: "habitat-provision",
-        note: "refuge, food resources, and ecological connectivity",
-      },
-      { id: "biodiversity-conservation" },
-      {
-        id: "microclimate-regulation",
-        note: "wind buffering, shading, and temperature moderation",
-      },
-      {
-        id: "water-regulation",
-        note: "improved infiltration, retention, and reduced nutrient leaching",
-      },
-      {
-        id: "soil-health-improvement",
-        note: "enhanced organic matter, nutrient cycling, and soil structure",
+        id: "soil-health-fertility",
+        note: "improved soil structure, nutrient cycling and organic matter content",
       },
       { id: "erosion-control", note: "root stabilisation" },
       { id: "water-retention", note: "reduced surface runoff" },
       {
-        id: "natural-pest-control",
-        note: "support for beneficial insects and natural enemies",
+        id: "water-regulation",
+        note: "improved infiltration and soil moisture conservation",
       },
-      { id: "cultural-heritage", note: "cultural identity" },
       {
-        id: "landscape-aesthetic-value",
-        note: "structural diversity and visual character of agricultural landscapes",
+        id: "climate-regulation",
+        note: "soil temperature control",
+      },
+      { id: "biodiversity-enhancement", note: "above- and below-ground" },
+      { id: "weed-control" },
+      {
+        id: "grape-production",
+        note: "improved vine growth and resilience under water-limited conditions",
       },
     ],
     challenges: [
       {
-        id: "water-competition",
+        title: "Pest, disease and phytosanitary management",
+        icon: "technical",
         details:
-          "While deep-rooted trees can enhance water availability through hydraulic lift, competition for water can still occur if not carefully managed.",
+          "The selection and management of mulching materials should consider local pest and disease pressures. Regular monitoring and the use of suitable organic materials can help maximise soil benefits while minimising the potential for pests or pathogens to establish within the mulch layer.",
       },
       {
-        id: "management-labour-costs",
+        title: "Management and labour requirements",
+        icon: "cost",
         details:
-          "Hedges require regular and professional maintenance to ensure their long-term ecological functions.",
+          "The application and maintenance of mulch require planning and regular management, particularly regarding material sourcing, application timing, and replenishment. Integrating mulching practices into existing vineyard operations can support their long-term effectiveness and facilitate adoption.",
+      },
+      {
+        title: "Technical requirements and site-specific performance",
+        icon: "technical",
+        details:
+          "The effectiveness of mulching depends on factors such as soil type, climate, mulch material, and application rate. Regular soil and vine monitoring, combined with site-specific adjustments, can help optimise soil moisture conservation, nutrient cycling, and erosion protection while maintaining healthy vine growth.",
+      },
+    ],
+  },
+  {
+    slug: "reduced-no-tillage",
+    about: (
+      <>
+        <p>
+          Reduced tillage and no-tillage are soil management practices that
+          minimise mechanical soil disturbance while maintaining continuous soil
+          cover. In vineyards, these practices are most commonly implemented in
+          the inter-rows and are often combined with permanent or semi-permanent
+          cover crops and mulching.
+        </p>
+        <p>
+          Reduced tillage limits the frequency, depth, and intensity of soil
+          cultivation, while no-tillage avoids soil disturbance altogether
+          except for essential planting or maintenance operations. By reducing
+          soil disturbance, these practices help preserve soil structure,
+          enhance biological activity, and promote the accumulation of organic
+          matter.
+        </p>
+        <p>
+          They can improve water infiltration, reduce soil erosion, increase
+          water retention, and support the long-term fertility and resilience of
+          vineyard soils. Successful implementation requires management
+          practices adapted to local soil, climate, and vineyard conditions.
+        </p>
+      </>
+    ),
+    imagePath: "/images/vineyard_sun.jpg",
+    ecosystemServices: [
+      {
+        id: "soil-health-fertility",
+        note: "improved soil structure, nutrient cycling and organic matter content",
+      },
+      { id: "erosion-control", note: "slope stabilisation" },
+      {
+        id: "water-retention",
+        note: "reduced surface runoff and moisture control",
+      },
+      {
+        id: "climate-regulation",
+        note: "local microclimate regulation and reduced temperature extremes",
+      },
+      { id: "carbon-sequestration" },
+      { id: "biodiversity-enhancement", note: "above- and below-ground" },
+      { id: "pollination-services" },
+      {
+        id: "natural-pest-control",
+        note: "support for beneficial insects and natural enemies",
+      },
+      { id: "landscape-aesthetics", note: "distinct landscape character" },
+    ],
+    challenges: [
+      {
+        title: "Transition of management practices",
+        icon: "technical",
+        details:
+          "The transition from conventional tillage to reduced or no-tillage systems often requires adjustments to vineyard operations. Changes in soil cover management, machinery use, and weed control strategies should be planned carefully to ensure a smooth transition while maintaining vineyard productivity.",
+      },
+      {
+        title: "Weed and vegetation management",
+        icon: "resources",
+        details:
+          "As soil disturbance is reduced, vegetation management becomes a central component of the system. The integration of cover crops, mulching, or other ecological approaches supports weed suppression while contributing to soil protection and biodiversity conservation.",
+      },
+      {
+        title: "Soil-specific suitability",
+        icon: "technical",
+        details:
+          "The benefits of reduced tillage and no-tillage are strongly influenced by soil characteristics, climatic conditions, and topography. Local adaptation of management practices, supported by regular field observations, is essential for maintaining soil structure and enhancing long-term soil resilience.",
+      },
+    ],
+  },
+  {
+    slug: "soil-amendments-compost-biochar",
+    about: (
+      <>
+        <p>
+          The application of organic soil amendments, such as compost and
+          biochar, is a widely used practice to improve soil health and support
+          long-term vineyard resilience. Unlike synthetic mineral fertilisers,
+          these amendments contribute organic matter to the soil, enhancing
+          nutrient cycling, biological activity, and soil structure.
+        </p>
+        <p>
+          They can also improve water retention, increase infiltration, and
+          support the accumulation of soil organic carbon. Composts, including
+          green waste compost, vermicompost, and composted manure, provide
+          nutrients and organic matter that support soil fertility and microbial
+          activity.
+        </p>
+        <p>
+          Biochar is a stable, carbon-rich material produced through the
+          pyrolysis of organic biomass under low-oxygen conditions. When
+          incorporated into soil, these amendments can improve soil structure,
+          increase water-holding capacity, and contribute to long-term carbon
+          storage.
+        </p>
+      </>
+    ),
+    imagePath: "/images/vineyard_sun.jpg",
+    ecosystemServices: [
+      {
+        id: "soil-health-fertility",
+        note: "improved soil structure, nutrient cycling and organic matter content",
+      },
+      { id: "erosion-control", note: "slope stabilisation" },
+      { id: "water-retention", note: "reduced surface runoff" },
+      { id: "water-quality" },
+      { id: "carbon-sequestration" },
+      { id: "biodiversity-enhancement", note: "above- and below-ground" },
+      {
+        id: "natural-pest-pathogen-control",
+        note: "support for beneficial insects and natural enemies",
+      },
+      {
+        id: "grape-production",
+        note: "improved vine growth and yield",
+      },
+    ],
+    challenges: [
+      {
+        title: "Amendment selection and application rates",
+        icon: "technical",
+        details:
+          "The effects of biochar and compost depend on their composition, quality, and application rate. Selecting appropriate materials and adapting application rates to soil conditions and vineyard objectives are important for achieving the desired improvements in soil fertility and water management.",
+      },
+      {
+        title: "Nutrient management and vine response",
+        icon: "resources",
+        details:
+          "Organic amendments influence nutrient availability and soil biological activity. Their use should be integrated into broader nutrient management strategies to maintain balanced vine growth and avoid excessive vegetative development or nutrient imbalances.",
+      },
+      {
+        title: "Monitoring of soil and vineyard performance",
+        icon: "technical",
+        details:
+          "The response of soils and vines to organic amendments varies according to soil type, climate, and management practices. Periodic assessment of soil properties, vine performance, and nutrient status provides a basis for adapting management practices and optimising long-term benefits.",
+      },
+    ],
+  },
+  {
+    slug: "vegetated-buffer-flower-strips",
+    about: (
+      <>
+        <p>
+          Vegetated buffer strips and flower strips involve the establishment
+          and management of permanent or semi-permanent vegetation within or
+          adjacent to vineyards to reduce environmental pressures and enhance
+          ecosystem functioning. They are typically located along vineyard
+          margins, terrace embankments, waterways, roadsides, and other
+          non-cultivated areas where they act as ecological buffers between
+          vineyards and surrounding landscapes.
+        </p>
+        <p>
+          These strips are composed of diverse plant communities, including
+          native grasses, herbs, and flowering species, which can be established
+          through sowing regional seed mixtures or by promoting the natural
+          development of spontaneous vegetation through extensive management.
+          Depending on their location and design, buffer strips can intercept
+          sediment, nutrients, and pesticide residues transported by surface
+          runoff, thereby reducing the risk of water contamination and soil
+          loss.
+        </p>
+        <p>
+          When implemented as hedgerows or other woody landscape elements, they
+          can also reduce wind erosion and pesticide drift, particularly when
+          positioned perpendicular to prevailing wind directions. In addition to
+          their protective functions, vegetated buffer and flower strips provide
+          habitat, food resources, and ecological corridors for pollinators,
+          natural enemies of pests, and other wildlife.
+        </p>
+        <p>
+          By increasing habitat connectivity and structural diversity within
+          agricultural landscapes, they contribute to biodiversity conservation
+          and support ecosystem resilience under changing environmental
+          conditions.
+        </p>
+      </>
+    ),
+    imagePath: "/images/vineyard_sun.jpg",
+    ecosystemServices: [
+      {
+        id: "soil-health-fertility",
+        note: "improved soil structure, nutrient cycling, and organic matter content",
+      },
+      {
+        id: "erosion-control",
+        note: "slope stabilisation and prevention of runoff",
+      },
+      { id: "carbon-sequestration" },
+      { id: "water-retention", note: "reduced surface runoff" },
+      {
+        id: "water-regulation",
+        note: "improved infiltration, retention, and reduced nutrient leaching",
+      },
+      { id: "biodiversity-enhancement", note: "above- and below-ground" },
+      {
+        id: "natural-pest-control",
+        note: "support for beneficial insects and natural enemies",
+      },
+      {
+        id: "climate-regulation",
+        note: "local microclimate regulation and reduced temperature extremes",
+      },
+      {
+        id: "pollination-services",
+        note: "food and habitat resources for pollinators",
+      },
+      { id: "landscape-aesthetics" },
+    ],
+    challenges: [
+      {
+        title: "Appropriate establishment and maintenance",
+        icon: "technical",
+        details:
+          "Successful buffer strips require careful establishment and ongoing management. Selecting suitable native or locally adapted species, ensuring good establishment, and carrying out periodic maintenance can help maximise biodiversity benefits while preventing the dominance of undesirable species.",
+      },
+      {
+        title: "Site-specific design",
+        icon: "technical",
+        details:
+          "The effectiveness of vegetated buffer strips depends on their width, vegetation composition, and placement within the landscape. Adapting their design to local conditions such as slope, soil type, climate, and runoff pathways can enhance their capacity to reduce erosion, retain pollutants, and support biodiversity.",
+      },
+      {
+        title: "Regular monitoring and adaptive management",
+        icon: "technical",
+        details:
+          "Regular monitoring helps ensure that buffer strips continue to deliver their intended benefits. Adaptive management, including adjustments to vegetation composition and maintenance practices, can help maintain ecological functioning, support beneficial organisms, and minimise potential pest or weed-related issues.",
       },
     ],
   },

@@ -35,8 +35,8 @@ export const ebaEcosystemServices = [
     glossaryId: "water-retention",
   },
   {
-    id: "microclimate-regulation",
-    label: "Microclimate regulation",
+    id: "climate-regulation",
+    label: "Climate regulation",
     icon: "temperature",
     glossaryId: "microclimate-regulation",
   },
@@ -53,8 +53,13 @@ export const ebaEcosystemServices = [
     glossaryId: "habitat-provision",
   },
   {
-    id: "biodiversity-conservation",
-    label: "Biodiversity conservation",
+    id: "carbon-sequestration",
+    label: "Carbon sequestration",
+    icon: "soil",
+  },
+  {
+    id: "biodiversity-enhancement",
+    label: "Biodiversity enhancement",
     icon: "biodiversity",
     glossaryId: "biodiversity-conservation",
   },
@@ -65,8 +70,8 @@ export const ebaEcosystemServices = [
     glossaryId: "cultural-heritage",
   },
   {
-    id: "landscape-aesthetic-value",
-    label: "Landscape aesthetic value",
+    id: "landscape-aesthetics",
+    label: "Landscape aesthetics",
     icon: "landscape",
     glossaryId: "landscape-aesthetic-value",
   },
@@ -77,10 +82,15 @@ export const ebaEcosystemServices = [
     glossaryId: "outdoor-recreation",
   },
   {
-    id: "soil-health-improvement",
-    label: "Soil health improvement",
+    id: "soil-health-fertility",
+    label: "Soil health and fertility",
     icon: "soil",
     glossaryId: "soil-health-improvement",
+  },
+  {
+    id: "weed-control",
+    label: "Weed control",
+    icon: "pest-control",
   },
   {
     id: "natural-pest-control",
@@ -89,10 +99,27 @@ export const ebaEcosystemServices = [
     glossaryId: "natural-pest-control",
   },
   {
-    id: "increased-production",
-    label: "Increased production",
+    id: "natural-pest-pathogen-control",
+    label: "Natural pest and pathogen control",
+    icon: "pest-control",
+    glossaryId: "natural-pest-control",
+  },
+  {
+    id: "grape-production",
+    label: "Grape production",
     icon: "production",
     glossaryId: "increased-production",
+  },
+  {
+    id: "pollination-services",
+    label: "Pollination services",
+    icon: "biodiversity",
+  },
+  {
+    id: "water-quality",
+    label: "Water quality",
+    icon: "water",
+    glossaryId: "water-regulation",
   },
   {
     id: "economic-diversification",

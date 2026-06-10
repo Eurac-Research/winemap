@@ -8,10 +8,7 @@ import {
   getEbaEcosystemServiceById,
   type EbaServiceIcon,
 } from "@/content/eba/ecosystem-services";
-import {
-  getEbaPotentialChallengeById,
-  type EbaChallengeIcon,
-} from "@/content/eba/potential-challenges";
+import type { EbaChallengeIcon } from "@/content/eba/potential-challenges";
 import type {
   EbaStrategyChallenge,
   EbaStrategyDetailContent,
@@ -164,28 +161,23 @@ function EcosystemServicesGrid({
 }
 
 function ChallengeList({ challenges }: { challenges: EbaStrategyChallenge[] }) {
-  const resolvedChallenges = challenges.flatMap((strategyChallenge) => {
-    const challenge = getEbaPotentialChallengeById(strategyChallenge.id);
-    return challenge ? [{ ...strategyChallenge, challenge }] : [];
-  });
-
-  if (!resolvedChallenges.length) return null;
+  if (!challenges.length) return null;
 
   return (
     <section className="mx-auto max-w-6xl px-6 py-12">
       <SectionHeading
         eyebrow="Implementation"
-        title="Potential challenges"
+        title="Considerations for successful implementation"
         icon={AlertTriangle}
       />
 
       <div className="mt-7 grid gap-4 md:grid-cols-2">
-        {resolvedChallenges.map(({ id, details, challenge }) => {
-          const Icon = challengeIconMap[challenge.icon];
+        {challenges.map(({ title, details, icon = "technical" }) => {
+          const Icon = challengeIconMap[icon];
 
           return (
             <article
-              key={id}
+              key={title}
               className="border-l-4 border-[color:var(--accent-strong)] bg-[color:var(--surface-overlay)] px-5 py-4 shadow-sm"
             >
               <div className="flex items-start gap-3">
@@ -194,7 +186,7 @@ function ChallengeList({ challenges }: { challenges: EbaStrategyChallenge[] }) {
                 </span>
                 <div>
                   <h3 className="text-base font-semibold text-[color:var(--foreground)]">
-                    {challenge.label}
+                    {title}
                   </h3>
                   {details ? (
                     <div className="mt-2 text-sm leading-7 text-[color:var(--text-base)]">
@@ -406,9 +398,7 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
         </section>
       ) : null}
 
-      <section
-        className="border-t border-[color:var(--border-soft)] bg-[color:var(--surface-panel-muted)] px-6 py-16"
-      >
+      <section className="border-t border-[color:var(--border-soft)] bg-[color:var(--surface-panel-muted)] px-6 py-16">
         <div className="mx-auto max-w-6xl">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-2xl">
