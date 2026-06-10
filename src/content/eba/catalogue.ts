@@ -19,7 +19,7 @@ export type FieldOfAction =
   | "Vineyard stability"
   | "Land use";
 
-export type SpatialScale = "Vineyard" | "Vineyard Landscape" | "Farm";
+export type SpatialScale = "Vineyard" | "Landscape" | "Farm";
 
 export type EbaStrategy = {
   id: string;
@@ -92,11 +92,35 @@ export const ebaStrategies: EbaStrategy[] = [
     title: "Vegetated buffer and flower strips",
     category: "Ground cover and intercropping",
     field_of_action: "Ecological connectivity & Biodiversity",
-    spatial_scale: "Vineyard Landscape",
+    spatial_scale: "Landscape",
     summary:
       "Vegetated buffer strips and flower strips establish permanent or semi-permanent vegetation within or adjacent to vineyards to reduce environmental pressures, intercept runoff, and strengthen biodiversity and habitat connectivity.",
     filename: "Vegetated buffer and Flower strips.pdf",
     mapPosition: { x: 74, y: 49, tooltipSide: "left" },
+  },
+  {
+    id: "6",
+    slug: "dry-stone-walls",
+    title: "Dry-stone walls",
+    category: "Landscape features",
+    field_of_action: "Vineyard stability",
+    spatial_scale: "Landscape",
+    summary:
+      "Dry-stone walls are traditional masonry structures built without mortar or cement, using locally sourced stones to stabilise slopes, support drainage, and create ecological niches in terraced vineyard landscapes.",
+    filename: "Dry-stone walls.pdf",
+    mapPosition: { x: 12, y: 65, tooltipSide: "right" },
+  },
+  {
+    id: "7",
+    slug: "terrace-restoration-management",
+    title: "Terrace restoration and management in steep-slope viticulture",
+    category: "Landscape features",
+    field_of_action: "Vineyard stability",
+    spatial_scale: "Landscape",
+    summary:
+      "Terrace restoration and management repair or create level platforms, retaining walls, drainage structures, and soil conservation measures that make steep-slope viticulture more stable, accessible, and resilient.",
+    filename: "Terrace Restoration and Management.pdf",
+    mapPosition: { x: 18, y: 58, tooltipSide: "right" },
   },
 ];
 

@@ -41,6 +41,12 @@ export const ebaEcosystemServices = [
     glossaryId: "climate-regulation",
   },
   {
+    id: "climate-resilience",
+    label: "Climate resilience",
+    icon: "temperature",
+    glossaryId: "climate-resilience",
+  },
+  {
     id: "water-regulation",
     label: "Water regulation",
     icon: "water",
@@ -56,6 +62,7 @@ export const ebaEcosystemServices = [
     id: "carbon-sequestration",
     label: "Carbon sequestration",
     icon: "soil",
+    glossaryId: "carbon-sequestration",
   },
   {
     id: "biodiversity-enhancement",
@@ -73,7 +80,7 @@ export const ebaEcosystemServices = [
     id: "landscape-aesthetics",
     label: "Landscape aesthetics",
     icon: "landscape",
-    glossaryId: "landscape-aesthetic-value",
+    glossaryId: "landscape-aesthetics",
   },
   {
     id: "outdoor-recreation",
@@ -91,6 +98,7 @@ export const ebaEcosystemServices = [
     id: "weed-control",
     label: "Weed control",
     icon: "pest-control",
+    glossaryId: "weed-control",
   },
   {
     id: "natural-pest-control",
@@ -102,24 +110,25 @@ export const ebaEcosystemServices = [
     id: "natural-pest-pathogen-control",
     label: "Natural pest and pathogen control",
     icon: "pest-control",
-    glossaryId: "natural-pest-control",
+    glossaryId: "natural-pest-pathogen-control",
   },
   {
     id: "grape-production",
     label: "Grape production",
     icon: "production",
-    glossaryId: "increased-production",
+    glossaryId: "grape-production",
   },
   {
     id: "pollination-services",
     label: "Pollination services",
     icon: "biodiversity",
+    glossaryId: "pollination-services",
   },
   {
     id: "water-quality",
     label: "Water quality",
     icon: "water",
-    glossaryId: "water-regulation",
+    glossaryId: "water-quality",
   },
   {
     id: "economic-diversification",

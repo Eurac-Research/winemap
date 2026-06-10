@@ -217,10 +217,40 @@ export const glossaryTerms: GlossaryTerm[] = [
       "The moderation of local temperature, wind, humidity, radiation, or shade conditions through vegetation, soil cover, landscape structure, or other ecosystem features.",
   },
   {
+    id: "climate-resilience",
+    term: "Climate resilience",
+    definition:
+      "The capacity of a vineyard, landscape, or management system to remain stable, functional, and productive under climate-related stresses such as heavy rainfall, drought, heat, or other extreme weather conditions.",
+  },
+  {
+    id: "carbon-sequestration",
+    term: "Carbon sequestration",
+    definition:
+      "The capture and storage of atmospheric carbon in soil organic matter, plant biomass, woody material, or stable amendments such as biochar, helping reduce greenhouse gas concentrations while supporting soil functions.",
+  },
+  {
     id: "increased-production",
     term: "Increased production",
     definition:
       "The improvement of agricultural output, product quality, or production stability through ecosystem functions, diversified vegetation, or better resource conditions.",
+  },
+  {
+    id: "grape-production",
+    term: "Grape production",
+    definition:
+      "The support of vine growth, grape yield, quality, or production stability through improved soil, water, microclimate, biodiversity, or other ecosystem conditions.",
+  },
+  {
+    id: "landscape-aesthetics",
+    term: "Landscape aesthetics",
+    definition:
+      "The scenic, cultural, and experiential qualities of a vineyard landscape that contribute to visual character, sense of place, recreation, and enjoyment.",
+  },
+  {
+    id: "natural-pest-pathogen-control",
+    term: "Natural pest and pathogen control",
+    definition:
+      "The reduction of pest or disease pressure through ecological processes, including beneficial insects, natural enemies, microbial activity, habitat diversity, and management practices that limit pathogen establishment.",
   },
   {
     id: "outdoor-recreation",
@@ -229,10 +259,22 @@ export const glossaryTerms: GlossaryTerm[] = [
       "Opportunities for leisure, tourism, learning, exercise, or enjoyment that are supported by access to attractive and functional outdoor landscapes.",
   },
   {
+    id: "pollination-services",
+    term: "Pollination services",
+    definition:
+      "The support of pollinator communities and pollination processes through food resources, nesting places, habitat connectivity, and diverse flowering vegetation.",
+  },
+  {
     id: "soil-health-and-fertility",
     term: "Soil health and fertility",
     definition:
       "The enhancement of soil structure, organic matter, biological activity, nutrient cycling, and water-holding capacity so that soil can better support plant growth and ecosystem functions.",
+  },
+  {
+    id: "weed-control",
+    term: "Weed control",
+    definition:
+      "The suppression or regulation of unwanted vegetation through soil cover, mulching, cover crops, competition, mowing, or other management practices that reduce reliance on herbicides.",
   },
   {
     id: "vulnerability",
@@ -253,6 +295,12 @@ export const glossaryTerms: GlossaryTerm[] = [
       "The influence of ecosystems on water movement, infiltration, storage, drainage, runoff, and water quality within a landscape.",
   },
   {
+    id: "water-quality",
+    term: "Water quality",
+    definition:
+      "The maintenance or improvement of water condition by reducing sediment, nutrient, pesticide, or pollutant transfer and supporting filtration, retention, and biological processing in soils and vegetation.",
+  },
+  {
     id: "water-retention",
     term: "Water retention",
     definition:
@@ -268,18 +316,18 @@ export const glossaryTerms: GlossaryTerm[] = [
     id: "socio-ecological-system",
     term: "Socio-ecological system",
     definition:
-      "Socio-ecological systems are integrated systems in which humans are part of nature and where cultural, social, economic, and ecological components interact around the provision of ecosystem services"
+      "Socio-ecological systems are integrated systems in which humans are part of nature and where cultural, social, economic, and ecological components interact around the provision of ecosystem services",
   },
   {
     id: "terroir",
     term: "Terroir",
     definition:
-      "The relationship between the characteristics of an agricultural product, such as quality, taste and style, and its geographic origin, including environmental and human factors, which might influence these characteristic"
+      "The relationship between the characteristics of an agricultural product, such as quality, taste and style, and its geographic origin, including environmental and human factors, which might influence these characteristic",
   },
   {
     id: "ecological-conditions",
     term: "Ecological conditions",
     definition:
-      "The overall state of ecological systems, which includes their physical, chemical, and biological characteristics and the processes and interactions that connect them."
-  }
+      "The overall state of ecological systems, which includes their physical, chemical, and biological characteristics and the processes and interactions that connect them.",
+  },
 ];

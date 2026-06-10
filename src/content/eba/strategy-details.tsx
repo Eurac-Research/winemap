@@ -417,6 +417,172 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
       },
     ],
   },
+  {
+    slug: "dry-stone-walls",
+    about: (
+      <>
+        <p>
+          Dry-stone walls are traditional masonry structures built without
+          binders such as mortar or cement, using locally sourced stones often
+          collected from cultivated land or nearby quarries. Their construction
+          relies on a foundation of large blocks, successive layers of coarser
+          material, and smaller stones filling the gaps to ensure stability,
+          with wall dimensions adapted to slope conditions and typically
+          tapering towards the top.
+        </p>
+        <p>
+          The dry laying allows rainwater drainage and is often combined with a
+          crushed stone backing to reduce hydrostatic pressure. Dry-stone walls
+          are integral components of terraced and agricultural landscapes,
+          shaped over centuries through the interaction between human management
+          and natural processes.
+        </p>
+        <p>
+          They are considered living structures due to their ecological
+          functions and interactions within the environment. Along with other
+          structural elements such as hedgerows and stone heaps, dry-stone walls
+          create valuable ecological niches in agricultural landscapes,
+          particularly in viticultural areas.
+        </p>
+      </>
+    ),
+    imagePath: "/images/vineyard_sun.jpg",
+    ecosystemServices: [
+      { id: "erosion-control", note: "slope stabilisation" },
+      { id: "water-retention", note: "reduced surface runoff" },
+      {
+        id: "climate-regulation",
+        note: "reduced temperature extremes",
+      },
+      {
+        id: "water-regulation",
+        note: "improved infiltration, retention, and reduced nutrient leaching",
+      },
+      {
+        id: "habitat-provision",
+        note: "microhabitats for plants, invertebrates, reptiles, and small mammals",
+      },
+      {
+        id: "biodiversity-enhancement",
+        note: "microhabitats for plants, invertebrates, reptiles, and small mammals",
+      },
+      {
+        id: "cultural-heritage",
+        note: "preservation of traditional knowledge and historical land-use practices",
+      },
+      {
+        id: "landscape-aesthetics",
+        note: "distinct landscape character and enhanced recreational value",
+      },
+    ],
+    challenges: [
+      {
+        title: "Construction and maintenance expertise",
+        icon: "technical",
+        details:
+          "The long-term stability and functionality of dry-stone walls depend on appropriate construction techniques and periodic maintenance. Preserving and transferring traditional craftsmanship plays an important role in ensuring the durability and ecological value of these structures.",
+      },
+      {
+        title: "Availability of skills and materials",
+        icon: "resources",
+        details:
+          "The restoration and maintenance of dry-stone walls depend on access to appropriate stone materials and specialised construction knowledge. In some regions, the availability of skilled craftspeople and suitable materials may influence the feasibility and long-term maintenance of these structures.",
+      },
+      {
+        title: "Long-term conservation and landscape management",
+        icon: "technical",
+        details:
+          "The ecological and cultural benefits of dry-stone walls are maintained through continued management and integration within broader landscape conservation efforts. Preventing abandonment and supporting the maintenance of traditional vineyard landscapes contribute to the preservation of biodiversity, cultural heritage, and ecosystem functions.",
+      },
+    ],
+  },
+  {
+    slug: "terrace-restoration-management",
+    about: (
+      <>
+        <p>
+          Terrace restoration and the creation of new terracing systems are land
+          management practices commonly used in steep mountain and hillside
+          viticulture. Terrace systems consist of a series of level or gently
+          sloping platforms supported by retaining walls or embankments,
+          enabling grape production on terrain that would otherwise be difficult
+          to cultivate.
+        </p>
+        <p>
+          Traditional dry-stone walls are a key component of these systems and
+          are often constructed using locally sourced stones with little or no
+          binding material. Terrace restoration typically involves repairing or
+          rebuilding collapsed or unstable walls, replacing displaced stones,
+          improving structural stability, and restoring drainage functions.
+        </p>
+        <p>
+          Soil conservation measures may include re-levelling terrace surfaces,
+          replacing eroded soil, incorporating organic matter, and establishing
+          vegetation cover to reduce erosion and improve slope stability.
+          Maintaining drainage channels and preventing water accumulation behind
+          retaining walls are also important for reducing the risk of structural
+          damage.
+        </p>
+        <p>
+          The design and orientation of vineyard rows play an important role in
+          the effectiveness of terraced systems. On sloping terrain,
+          contour-aligned rows can reduce surface runoff, limit soil erosion,
+          and improve water infiltration compared with downslope configurations.
+          Modern terracing systems often combine these principles with layouts
+          that improve accessibility and facilitate vineyard operations while
+          maintaining environmental benefits.
+        </p>
+      </>
+    ),
+    imagePath: "/images/vineyard_sun.jpg",
+    ecosystemServices: [
+      { id: "erosion-control", note: "slope stabilisation" },
+      {
+        id: "water-regulation",
+        note: "improved infiltration, retention, and reduced nutrient leaching",
+      },
+      {
+        id: "climate-resilience",
+        note: "enhanced stability of vineyard systems under extreme weather conditions",
+      },
+      {
+        id: "habitat-provision",
+        note: "microhabitats for plants, invertebrates, reptiles, and small mammals",
+      },
+      {
+        id: "biodiversity-enhancement",
+        note: "microhabitats for plants, invertebrates, reptiles, and small mammals",
+      },
+      {
+        id: "cultural-heritage",
+        note: "preservation of traditional knowledge and historical land-use practices",
+      },
+      {
+        id: "landscape-aesthetics",
+        note: "distinct landscape character and enhanced recreational value",
+      },
+    ],
+    challenges: [
+      {
+        title: "Structural maintenance and long-term planning",
+        icon: "technical",
+        details:
+          "The long-term performance of terrace systems depends on the regular maintenance of retaining walls, embankments, and drainage infrastructure. Restoration and construction projects require careful planning and sustained investment to ensure structural stability and preserve their environmental and cultural value.",
+      },
+      {
+        title: "Accessibility and operational requirements",
+        icon: "cost",
+        details:
+          "The design of terraced vineyards influences accessibility, labour requirements, and mechanisation opportunities. Modern terracing approaches increasingly seek to balance environmental objectives with operational efficiency, worker safety, and the economic viability of steep-slope viticulture.",
+      },
+      {
+        title: "Site-specific design and ecological integration",
+        icon: "technical",
+        details:
+          "Successful terrace systems are adapted to local topography, soil characteristics, climatic conditions, and hydrological processes. The integration of vegetation cover, biodiversity-enhancing features, and effective water management measures strengthens erosion control, supports habitat provision, and contributes to the long-term resilience of terraced landscapes.",
+      },
+    ],
+  },
 ];
 
 export const getEbaStrategyDetailBySlug = (slug: string) =>
