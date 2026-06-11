@@ -1,10 +1,11 @@
 "use client";
 
-import { Popover } from "antd";
 import type { ReactNode } from "react";
+import { Popover } from "antd";
+import { HelpCircle } from "lucide-react";
+
 import styles from "@/styles/Home.module.css";
 import { PdoFilterSelect, type FilterOption } from "./PdoFilterSelect";
-import { HelpCircle } from "lucide-react";
 
 export interface FilterFieldConfig<TKey extends string = string> {
   key: TKey;
@@ -47,16 +48,19 @@ export function PdoFilterPanel<TKey extends string>({
             {helpContent ? (
               <Popover
                 trigger="click"
-                content={<div className={styles.filterHelpContent}>{helpContent}</div>}
+                content={
+                  <div className={styles.filterHelpContent}>{helpContent}</div>
+                }
                 classNames={{ root: styles.filterHelpPopup }}
                 styles={{
                   container: {
                     maxWidth: 320,
                     padding: 0,
-                    border: "1px solid var(--border-soft)",
+                    border: "1px solid var(--border)",
                     borderRadius: 14,
-                    background: "var(--surface-panel-strong)",
-                    boxShadow: "var(--shadow-soft), inset 0 1px 0 var(--border-soft)",
+                    background: "var(--surface)",
+                    boxShadow:
+                      "var(--shadow-soft), inset 0 1px 0 var(--border)",
                     backdropFilter: "blur(14px)",
                   },
                 }}
@@ -74,7 +78,11 @@ export function PdoFilterPanel<TKey extends string>({
           <h2 className={styles.filterHeading}>{heading}</h2>
         </div>
         <div className={styles.filterResetWrap}>
-          <button type="button" className={styles.filterResetButton} onClick={onReset}>
+          <button
+            type="button"
+            className={styles.filterResetButton}
+            onClick={onReset}
+          >
             reset
           </button>
         </div>
@@ -87,7 +95,9 @@ export function PdoFilterPanel<TKey extends string>({
             label={field.label}
             placeholder={field.placeholder}
             loadingPlaceholder={
-              field.key === "pdoName" && isLoadingData ? "Loading PDOs..." : undefined
+              field.key === "pdoName" && isLoadingData
+                ? "Loading PDOs..."
+                : undefined
             }
             value={filters[field.key]}
             options={field.options}
@@ -99,7 +109,7 @@ export function PdoFilterPanel<TKey extends string>({
       </div>
 
       {loadError && (
-        <p className="mt-4 text-sm" style={{ color: "var(--muted-foreground)" }}>
+        <p className="mt-4 text-sm" style={{ color: "var(--text-muted)" }}>
           {loadError}
         </p>
       )}

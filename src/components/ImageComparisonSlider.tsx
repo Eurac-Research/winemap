@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React, { useState, useRef, useEffect, useMemo } from 'react';
-import Image from 'next/image';
-import { Maximize2, X } from 'lucide-react';
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
+import { Maximize2, X } from "lucide-react";
 
 interface ImageComparisonSliderProps {
   beforeImage: string;
@@ -12,7 +12,7 @@ interface ImageComparisonSliderProps {
   alt?: string;
   aspectRatio?: string; // Optional: e.g., "16/9", "4/3", "auto"
   caption?: string; // Optional caption to display below the image
-  labelPosition?: 'top' | 'bottom';
+  labelPosition?: "top" | "bottom";
 }
 
 interface SliderContentProps {
@@ -25,7 +25,7 @@ interface SliderContentProps {
   beforeLabel: string;
   afterLabel: string;
   alt: string;
-  labelPosition: 'top' | 'bottom';
+  labelPosition: "top" | "bottom";
   onMouseMove: (e: React.MouseEvent, useFullscreenRef?: boolean) => void;
   onMouseDown: () => void;
   onMouseUp: () => void;
@@ -57,7 +57,7 @@ const SliderContent = ({
   <div
     ref={containerRef}
     className="relative w-full h-full overflow-hidden rounded-lg select-none cursor-ew-resize"
-    style={useFullscreenRef ? { height: '100%' } : containerStyle}
+    style={useFullscreenRef ? { height: "100%" } : containerStyle}
     onMouseMove={(e) => onMouseMove(e, useFullscreenRef)}
     onMouseDown={onMouseDown}
     onMouseUp={onMouseUp}
@@ -79,7 +79,7 @@ const SliderContent = ({
       />
       {/* After Label */}
       <div
-        className={`absolute ${labelPosition === 'bottom' ? 'bottom-4 right-4' : 'top-4 right-4'} px-3 py-1 rounded text-sm font-medium bg-[color:var(--surface-panel-strong)] text-[color:var(--foreground)]`}
+        className={`absolute ${labelPosition === "bottom" ? "bottom-4 right-4" : "top-4 right-4"} px-3 py-1 rounded text-sm font-medium bg-[color:var(--surface)] text-[color:var(--foreground)]`}
         aria-label={`${afterLabel} image`}
       >
         {afterLabel}
@@ -100,7 +100,7 @@ const SliderContent = ({
       />
       {/* Before Label */}
       <div
-        className={`absolute ${labelPosition === 'bottom' ? 'bottom-4 left-4' : 'top-4 left-4'} px-3 py-1 rounded text-sm font-medium bg-[color:var(--surface-panel-strong)] text-[color:var(--foreground)]`}
+        className={`absolute ${labelPosition === "bottom" ? "bottom-4 left-4" : "top-4 left-4"} px-3 py-1 rounded text-sm font-medium bg-[color:var(--surface)] text-[color:var(--foreground)]`}
         aria-label={`${beforeLabel} image`}
       >
         {beforeLabel}
@@ -122,8 +122,8 @@ const SliderContent = ({
       {/* Slider Handle */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full shadow-lg flex items-center justify-center bg-[color:var(--surface)]">
         <div className="flex gap-1">
-          <div className="w-0.5 h-4 bg-[color:var(--muted-foreground)]"></div>
-          <div className="w-0.5 h-4 bg-[color:var(--muted-foreground)]"></div>
+          <div className="w-0.5 h-4 bg-[color:var(--text-muted)]"></div>
+          <div className="w-0.5 h-4 bg-[color:var(--text-muted)]"></div>
         </div>
       </div>
     </div>
@@ -133,22 +133,26 @@ const SliderContent = ({
 export default function ImageComparisonSlider({
   beforeImage,
   afterImage,
-  beforeLabel = 'Before',
-  afterLabel = 'After',
-  alt = 'Comparison',
-  aspectRatio = 'auto',
+  beforeLabel = "Before",
+  afterLabel = "After",
+  alt = "Comparison",
+  aspectRatio = "auto",
   caption,
-  labelPosition = 'top',
+  labelPosition = "top",
 }: ImageComparisonSliderProps) {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number } | null>(null);
+  const [imageDimensions, setImageDimensions] = useState<{
+    width: number;
+    height: number;
+  } | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const fullscreenContainerRef = useRef<HTMLDivElement>(null);
 
   const handleMove = (clientX: number, useFullscreenRef?: boolean) => {
-    const ref = useFullscreenRef && isFullscreen ? fullscreenContainerRef : containerRef;
+    const ref =
+      useFullscreenRef && isFullscreen ? fullscreenContainerRef : containerRef;
     if (!ref.current) return;
 
     const rect = ref.current.getBoundingClientRect();
@@ -179,10 +183,13 @@ export default function ImageComparisonSlider({
 
   // Load image dimensions for auto aspect ratio
   useEffect(() => {
-    if (aspectRatio === 'auto') {
-      const img = document.createElement('img');
+    if (aspectRatio === "auto") {
+      const img = document.createElement("img");
       img.onload = () => {
-        setImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
+        setImageDimensions({
+          width: img.naturalWidth,
+          height: img.naturalHeight,
+        });
       };
       img.src = beforeImage;
     }
@@ -204,48 +211,48 @@ export default function ImageComparisonSlider({
     };
 
     if (isDragging) {
-      document.addEventListener('mouseup', handleGlobalMouseUp);
-      document.addEventListener('mousemove', handleGlobalMouseMove);
+      document.addEventListener("mouseup", handleGlobalMouseUp);
+      document.addEventListener("mousemove", handleGlobalMouseMove);
     }
 
     return () => {
-      document.removeEventListener('mouseup', handleGlobalMouseUp);
-      document.removeEventListener('mousemove', handleGlobalMouseMove);
+      document.removeEventListener("mouseup", handleGlobalMouseUp);
+      document.removeEventListener("mousemove", handleGlobalMouseMove);
     };
   }, [isDragging, isFullscreen]);
 
   // Handle escape key to close fullscreen
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isFullscreen) {
+      if (e.key === "Escape" && isFullscreen) {
         setIsFullscreen(false);
       }
     };
 
     if (isFullscreen) {
-      document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden'; // Prevent background scroll
+      document.addEventListener("keydown", handleEscape);
+      document.body.style.overflow = "hidden"; // Prevent background scroll
     }
 
     return () => {
-      document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = ''; // Restore scroll
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = ""; // Restore scroll
     };
   }, [isFullscreen]);
 
   const containerStyle = useMemo((): React.CSSProperties => {
-    if (aspectRatio === 'auto' && imageDimensions) {
+    if (aspectRatio === "auto" && imageDimensions) {
       return {
         aspectRatio: `${imageDimensions.width} / ${imageDimensions.height}`,
       };
-    } else if (aspectRatio !== 'auto') {
+    } else if (aspectRatio !== "auto") {
       return {
         aspectRatio: aspectRatio,
       };
     }
     // Fallback while loading
     return {
-      minHeight: '400px',
+      minHeight: "400px",
     };
   }, [aspectRatio, imageDimensions]);
 
@@ -275,7 +282,7 @@ export default function ImageComparisonSlider({
           {/* Fullscreen Button */}
           <button
             onClick={() => setIsFullscreen(true)}
-            className="absolute bottom-4 right-4 z-10 p-2 rounded-lg transition-colors bg-[color:var(--surface-panel-strong)] hover:bg-[color:var(--surface-panel-muted)] text-[color:var(--foreground)]"
+            className="absolute bottom-4 right-4 z-10 p-2 rounded-lg transition-colors bg-[color:var(--surface)] hover:bg-[color:var(--surface-muted)] text-[color:var(--foreground)]"
             aria-label="View image comparison in fullscreen mode"
             title="View in fullscreen"
           >
@@ -285,13 +292,13 @@ export default function ImageComparisonSlider({
 
         {/* Caption */}
         {caption && (
-          <p className="text-center text-sm mt-3 mb-2 text-[color:var(--text-base)]">
+          <p className="text-center text-sm mt-3 mb-2 text-[color:var(--foreground)]">
             {caption}
           </p>
         )}
 
         {/* Instructions */}
-        <p className="text-center text-sm mt-4 text-[color:var(--muted-foreground)]">
+        <p className="text-center text-sm mt-4 text-[color:var(--text-muted)]">
           Click or drag the slider to compare the images
         </p>
       </div>
@@ -307,7 +314,7 @@ export default function ImageComparisonSlider({
           {/* Close Button */}
           <button
             onClick={() => setIsFullscreen(false)}
-            className="absolute top-4 right-4 z-50 p-2 rounded-lg transition-colors bg-[color:var(--surface-overlay)] hover:bg-[color:var(--surface-panel-muted)] text-[color:var(--foreground)]"
+            className="absolute top-4 right-4 z-50 p-2 rounded-lg transition-colors bg-[color:var(--surface-overlay)] hover:bg-[color:var(--surface-muted)] text-[color:var(--foreground)]"
             aria-label="Close fullscreen view and return to page"
             title="Close fullscreen (ESC)"
           >
@@ -338,14 +345,19 @@ export default function ImageComparisonSlider({
 
             {/* Caption in fullscreen */}
             {caption && (
-              <p className="text-center text-sm mt-4 text-[color:var(--text-base)]">
+              <p className="text-center text-sm mt-4 text-[color:var(--foreground)]">
                 {caption}
               </p>
             )}
 
             {/* Instructions in fullscreen */}
-            <p className="text-center text-sm mt-2 text-[color:var(--muted-foreground)]" role="status" aria-live="polite">
-              Click or drag the slider to compare the images • Press ESC to close
+            <p
+              className="text-center text-sm mt-2 text-[color:var(--text-muted)]"
+              role="status"
+              aria-live="polite"
+            >
+              Click or drag the slider to compare the images • Press ESC to
+              close
             </p>
           </div>
         </div>

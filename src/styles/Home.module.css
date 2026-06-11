@@ -10,13 +10,13 @@
   height: 40vh;
   position: fixed;
   font-size: 16px;
-  background-color: var(--surface-panel-strong);
+  background-color: var(--surface);
   overflow: visible;
   margin-bottom: 60px;
   padding-top: 20px;
   padding-right: 40px;
   padding-left: 20px;
-  border-top: 3px solid var(--accent-strong);
+  border-top: 3px solid var(--accent);
   backdrop-filter: blur(10px);
   resize: vertical;
   min-height: 100px;
@@ -31,7 +31,7 @@
     transform: translateX(-50%);
     width: 96px;
     height: 10px;
-    background: var(--surface-panel-muted);
+    background: var(--surface-muted);
     border: 1px solid var(--border-strong);
     border-radius: 9999px;
     box-shadow:
@@ -42,7 +42,7 @@
   }
 
   @media screen and (min-width: 768px) {
-    background-color: var(--surface-panel-strong);
+    background-color: var(--surface);
     width: 400px;
     height: calc(100vh - 40px);
     top: 40px;
@@ -50,7 +50,7 @@
     padding-right: 20px;
     padding-top: 20px;
     border-top: none;
-    border-right: 3px solid var(--accent-strong);
+    border-right: 3px solid var(--accent);
     resize: horizontal;
     min-width: 250px;
     max-width: 50vw;
@@ -117,7 +117,7 @@
   height: 100%;
   width: 100%;
   font-size: 16px;
-  background-color: var(--surface-panel-strong);
+  background-color: var(--surface);
   overflow-y: auto;
   overflow-x: hidden;
   padding: 0;
@@ -151,10 +151,10 @@
     background-color 300ms ease;
   overflow: hidden;
   border: 1px solid var(--border-strong);
-  background-color: var(--surface-panel-muted);
+  background-color: var(--surface-muted);
 
   &:hover {
-    border-color: var(--accent-strong);
+    border-color: var(--accent);
     transform: translateY(-0.375rem);
     box-shadow: var(--shadow-strong);
   }
@@ -174,7 +174,7 @@
 .interactiveLinkLabel {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--text-base);
+  color: var(--foreground);
   transition:
     color 300ms ease,
     font-weight 300ms ease;
@@ -190,7 +190,7 @@
   height: auto;
   min-height: 100vh;
   width: auto;
-  background-color: var(--surface-panel-muted);
+  background-color: var(--surface-muted);
   padding-bottom: 100px;
 
   @media screen and (min-width: 768px) {
@@ -210,7 +210,7 @@
     padding: 0 25px 6px 46px;
     margin-top: 10px;
     margin-bottom: 6px;
-    border-bottom: 1px solid var(--border-soft);
+    border-bottom: 1px solid var(--border);
     line-height: 1.3;
     position: relative;
 
@@ -256,7 +256,7 @@
   background-color: transparent;
   transition: all 300ms ease-in-out;
   cursor: pointer;
-  border-bottom: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border);
 
   h2 {
     font-size: 22px;
@@ -304,7 +304,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--surface-panel-strong);
+  background-color: var(--surface);
   cursor: pointer;
 
   &:hover {
@@ -319,7 +319,7 @@
 }
 
 .arrow {
-  border: solid var(--text-base);
+  border: solid var(--foreground);
   border-width: 0 2px 2px 0;
   display: inline-block;
   padding: 3px;
@@ -346,7 +346,7 @@
   position: absolute;
   top: 100px;
   left: 0px;
-  background-color: var(--surface-panel-strong);
+  background-color: var(--surface);
   border-radius: 0;
   padding: 15px 20px 20px 20px;
   width: 100%;
@@ -378,15 +378,15 @@
 }
 
 .filterBar :global(.ant-select-selection-placeholder) {
-  color: var(--muted-foreground) !important;
+  color: var(--text-muted) !important;
 }
 
 .filterBar :global(.ant-select .ant-select-selection-placeholder) {
-  color: var(--muted-foreground) !important;
+  color: var(--text-muted) !important;
 }
 
 .filterBar :global(.ant-select-placeholder) {
-  color: var(--muted-foreground) !important;
+  color: var(--text-muted) !important;
 }
 
 .filterBar :global(.ant-select) {
@@ -435,21 +435,21 @@
 }
 
 .filterBarToggle:hover {
-  background: var(--surface-panel-muted);
+  background: var(--surface-muted);
   border-color: var(--border-strong);
 }
 
 .filterBarContent {
   flex: 0 0 auto;
   padding: 20px 24px 20px;
-  border-bottom: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border);
   background:
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--surface-panel-muted) 45%, transparent),
+      color-mix(in srgb, var(--surface-muted) 45%, transparent),
       transparent
     ),
-    var(--surface-panel-muted);
+    var(--surface-muted);
   backdrop-filter: blur(12px);
 }
 
@@ -485,7 +485,7 @@
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--accent-strong);
+  color: var(--accent);
 }
 
 .filterHelpButton {
@@ -499,7 +499,7 @@
   border: none;
   border-radius: 9999px;
   background: transparent;
-  color: var(--muted-foreground);
+  color: var(--text-muted);
   cursor: pointer;
   transition:
     background-color 160ms ease,
@@ -512,7 +512,7 @@
 }
 
 .filterHelpButton:focus-visible {
-  outline: 2px solid var(--accent-strong);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -528,7 +528,7 @@
   margin: 10px 0 0;
   font-size: 13px;
   line-height: 1.45;
-  color: var(--muted-foreground);
+  color: var(--text-muted);
 }
 
 .filterFields {
@@ -576,7 +576,7 @@
 }
 
 .mapDropdown:hover {
-  border-color: var(--accent-strong) !important;
+  border-color: var(--accent) !important;
 }
 
 .mapDropdownWrap::before {
@@ -586,7 +586,7 @@
   bottom: 8px;
   right: 36px;
   width: 1px;
-  background: var(--border-soft);
+  background: var(--border);
   pointer-events: none;
 }
 
@@ -597,8 +597,8 @@
   right: 14px;
   width: 8px;
   height: 8px;
-  border-right: 1.5px solid var(--muted-foreground);
-  border-bottom: 1.5px solid var(--muted-foreground);
+  border-right: 1.5px solid var(--text-muted);
+  border-bottom: 1.5px solid var(--text-muted);
   transform: translateY(-60%) rotate(45deg);
   pointer-events: none;
 }
@@ -620,7 +620,7 @@
 }
 
 .clearButton:hover:not(:disabled) {
-  border-color: var(--accent-strong) !important;
+  border-color: var(--accent) !important;
 }
 
 .clearButton:disabled {
@@ -634,7 +634,7 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--muted-foreground);
+  color: var(--text-muted);
 }
 
 .filterSelect {
@@ -646,7 +646,7 @@
   border-radius: 14px !important;
   border: 1px solid var(--border-strong) !important;
   background: var(--surface-overlay) !important;
-  box-shadow: inset 0 1px 0 var(--border-soft);
+  box-shadow: inset 0 1px 0 var(--border);
   transition:
     border-color 180ms ease,
     background-color 180ms ease,
@@ -655,17 +655,13 @@
 
 .filterSelect:hover :global(.ant-select-selector),
 .filterSelect:global(.ant-select-focused) :global(.ant-select-selector) {
-  border-color: var(--accent-strong) !important;
-  background: var(--surface-panel-muted) !important;
+  border-color: var(--accent) !important;
+  background: var(--surface-muted) !important;
   box-shadow: 0 0 0 3px var(--accent-soft) !important;
 }
 
 .filterSelect :global(.ant-select-selection-placeholder) {
-  color: color-mix(
-    in srgb,
-    var(--muted-foreground) 70%,
-    transparent
-  ) !important;
+  color: color-mix(in srgb, var(--text-muted) 70%, transparent) !important;
 }
 
 .filterSelect :global(.ant-select-selection-item) {
@@ -675,23 +671,23 @@
 
 .filterSelect :global(.ant-select-arrow),
 .filterSelect :global(.ant-select-clear) {
-  color: var(--muted-foreground) !important;
+  color: var(--text-muted) !important;
 }
 
 .filterDropdown {
   padding: 6px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--border);
   border-radius: 16px;
-  background: var(--surface-panel-strong) !important;
+  background: var(--surface) !important;
   box-shadow:
     var(--shadow-soft),
-    inset 0 1px 0 var(--border-soft);
+    inset 0 1px 0 var(--border);
   backdrop-filter: blur(14px);
 }
 
 .filterDropdown :global(.ant-select-item) {
   border-radius: 10px;
-  color: var(--text-base);
+  color: var(--foreground);
   transition:
     background-color 140ms ease,
     color 140ms ease;
@@ -714,18 +710,18 @@
 }
 
 .filterDropdown :global(.ant-empty-description) {
-  color: var(--muted-foreground);
+  color: var(--text-muted);
 }
 
 .filterHelpPopup :global(.ant-popover-arrow)::before {
-  background: var(--surface-panel-strong) !important;
+  background: var(--surface) !important;
 }
 
 .filterHelpContent {
   padding: 12px 14px;
   font-size: 13px;
   line-height: 1.5;
-  color: var(--text-base);
+  color: var(--foreground);
 }
 
 .filterResetWrap {
@@ -741,7 +737,7 @@
   border-radius: 9999px;
   border: 1px solid var(--border-strong);
   background: transparent;
-  color: var(--text-base);
+  color: var(--foreground);
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -799,11 +795,11 @@
 }
 
 .sidebarSectionToggle:hover {
-  background: color-mix(in srgb, var(--surface-panel-muted) 55%, transparent);
+  background: color-mix(in srgb, var(--surface-muted) 55%, transparent);
 }
 
 .sidebarSectionToggle:focus-visible {
-  outline: 2px solid var(--accent-strong);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -813,7 +809,7 @@
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--muted-foreground) 80%, transparent);
+  color: color-mix(in srgb, var(--text-muted) 80%, transparent);
 }
 
 .sidebarSectionTitle {
@@ -828,7 +824,7 @@
   margin: 10px 0 0;
   font-size: 13px;
   line-height: 1.45;
-  color: var(--muted-foreground);
+  color: var(--text-muted);
 }
 
 .statsGrid {
@@ -841,7 +837,7 @@
   display: grid;
   gap: 6px;
   padding: 14px 16px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--border);
   border-radius: 16px;
   background: var(--surface-overlay);
 }
@@ -857,7 +853,7 @@
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--muted-foreground);
+  color: var(--text-muted);
 }
 
 .resultList {
@@ -871,7 +867,7 @@
   gap: 6px;
   padding: 7px 16px;
   text-align: left;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface-overlay);
   color: var(--foreground);
@@ -888,7 +884,7 @@
   gap: 6px;
   padding: 7px 16px;
   text-align: left;
-  border: 1px solid var(--accent-strong);
+  border: 1px solid var(--accent);
   border-radius: 8px;
   background: var(--accent-soft);
   color: var(--foreground);
@@ -900,8 +896,8 @@
 }
 
 .resultItem:hover {
-  background: var(--surface-panel-muted);
-  border-color: var(--accent-strong);
+  background: var(--surface-muted);
+  border-color: var(--accent);
   transform: translateY(-1px);
 }
 
@@ -913,7 +909,7 @@
 
 .resultItemMeta {
   font-size: 12px;
-  color: var(--muted-foreground);
+  color: var(--text-muted);
 }
 
 .detailHeader {
@@ -928,9 +924,9 @@
   z-index: 30;
   min-width: 0;
   padding: 16px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--border);
   border-radius: 16px;
-  background: var(--surface-panel-strong);
+  background: var(--surface);
   color: var(--foreground);
   box-shadow: var(--shadow-strong);
   backdrop-filter: blur(12px);
@@ -942,7 +938,7 @@
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--muted-foreground);
+  color: var(--text-muted);
 }
 
 .mapLegendContent {
@@ -967,14 +963,14 @@
 .mapLegendScaleText {
   font-size: 11px;
   line-height: 1.1;
-  color: var(--muted-foreground);
+  color: var(--text-muted);
   text-align: right;
 }
 
 .mapLegendScaleTextActive {
   font-size: 11px;
   line-height: 1.1;
-  color: var(--accent-strong);
+  color: var(--accent);
   text-align: right;
   font-weight: 700;
 }
@@ -984,9 +980,9 @@
   width: 16px;
   height: 160px;
   overflow: hidden;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--border);
   border-radius: 9999px;
-  background: var(--surface-panel-muted);
+  background: var(--surface-muted);
 }
 
 .mapLegendRampFill {
@@ -999,7 +995,7 @@
   left: -6px;
   right: -6px;
   height: 0;
-  border-top: 1px solid var(--text-base);
+  border-top: 1px solid var(--foreground);
 }
 
 .mapLegendBreakLine {
@@ -1007,7 +1003,7 @@
   left: -2px;
   right: -2px;
   height: 0;
-  border-top: 1px solid var(--text-base);
+  border-top: 1px solid var(--foreground);
 }
 
 .mapLegendBreakLineActive {
@@ -1015,7 +1011,7 @@
   left: -2px;
   right: -2px;
   height: 0;
-  border-top: 1px solid var(--text-base);
+  border-top: 1px solid var(--foreground);
 }
 
 .mapLegendValues {
@@ -1028,7 +1024,7 @@
 }
 
 .mapLegendLabel {
-  color: var(--muted-foreground);
+  color: var(--text-muted);
 }
 
 .mapLegendValue {
@@ -1052,9 +1048,9 @@
 }
 
 .modalSurface {
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--border);
   border-radius: 1.5rem;
-  background: var(--surface-panel-strong);
+  background: var(--surface);
   padding: 2rem;
 }
 
@@ -1066,7 +1062,7 @@
   padding: 0;
   border: none;
   background: transparent;
-  color: var(--accent-strong);
+  color: var(--accent);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -1110,8 +1106,8 @@
   width: 8px;
   height: 8px;
   flex: 0 0 auto;
-  border-right: 1.5px solid var(--muted-foreground);
-  border-bottom: 1.5px solid var(--muted-foreground);
+  border-right: 1.5px solid var(--text-muted);
+  border-bottom: 1.5px solid var(--text-muted);
   transform: rotate(45deg) translateY(-2px);
   transition: transform 160ms ease;
 }
@@ -1121,11 +1117,11 @@
 }
 
 .detailDisclosureSummary:hover {
-  color: var(--accent-strong);
+  color: var(--accent);
 }
 
 .detailDisclosureSummary:focus-visible {
-  outline: 2px solid var(--accent-strong);
+  outline: 2px solid var(--accent);
   outline-offset: 4px;
 }
 
@@ -1144,7 +1140,7 @@
   display: grid;
   gap: 6px;
   padding-top: 12px;
-  border-top: 1px solid var(--border-soft);
+  border-top: 1px solid var(--border);
 }
 
 .detailItem dt {
@@ -1155,7 +1151,7 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--muted-foreground);
+  color: var(--text-muted);
 }
 
 .detailItem dd {
@@ -1171,7 +1167,7 @@
 }
 
 .detailLink {
-  color: var(--accent-strong);
+  color: var(--accent);
   text-decoration: none;
 }
 
@@ -1370,7 +1366,7 @@
     padding-bottom: 10px;
     justify-content: flex-start;
     align-items: center;
-    border-bottom: 1px solid var(--border-soft);
+    border-bottom: 1px solid var(--border);
 
     &:hover {
       text-decoration: underline;
@@ -1498,9 +1494,9 @@
 }
 
 .FAQDetails[open] {
-  border: 1px solid var(--border-soft);
-  border-color: color-mix(in srgb, var(--accent-strong) 40%, transparent);
-  background-color: var(--surface-panel-muted);
+  border: 1px solid var(--border);
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  background-color: var(--surface-muted);
 }
 
 .FAQSummary {
@@ -1527,8 +1523,7 @@
 
   &:focus-visible {
     border-radius: 0.5rem;
-    box-shadow: 0 0 0 2px
-      color-mix(in srgb, var(--accent-strong) 40%, transparent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 40%, transparent);
   }
 }
 
@@ -1544,7 +1539,7 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  color: var(--accent-strong);
+  color: var(--accent);
   transition:
     transform 200ms ease,
     color 200ms ease;
@@ -1555,12 +1550,12 @@
 }
 
 .FAQAnswer {
-  color: var(--muted-foreground);
+  color: var(--text-muted);
   line-height: 1.625;
 }
 
 .FAQLink {
-  color: var(--accent-strong);
+  color: var(--accent);
 
   &:hover {
     text-decoration: underline;
@@ -1568,23 +1563,20 @@
 }
 
 .sectionThemeClimateEnvironment {
-  --landing-primary: var(--climate-environment-primary);
-  --landing-accent: var(--climate-environment-accent);
-  --landing-accent-soft: var(--climate-environment-accent-soft);
+  --landing-accent: var(--section-climate-environment-accent);
+  --landing-accent-soft: var(--section-climate-environment-accent-soft);
   --landing-aside-width: 8rem;
 }
 
 .sectionThemeAdaptation {
-  --landing-primary: var(--adaptation-primary);
-  --landing-accent: var(--adaptation-accent);
-  --landing-accent-soft: var(--adaptation-accent-soft);
+  --landing-accent: var(--section-adaptation-accent);
+  --landing-accent-soft: var(--section-adaptation-accent-soft);
   --landing-aside-width: 10rem;
 }
 
 .sectionThemeGovernance {
-  --landing-primary: var(--governance-primary);
-  --landing-accent: var(--governance-accent);
-  --landing-accent-soft: var(--governance-accent-soft);
+  --landing-accent: var(--section-governance-accent);
+  --landing-accent-soft: var(--section-governance-accent-soft);
   --landing-aside-width: 10rem;
 }
 
@@ -1596,7 +1588,7 @@
 
 .landingHero {
   margin-top: 3rem;
-  border-bottom: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border);
   padding: 6rem 1.5rem;
 }
 
@@ -1642,14 +1634,14 @@
 .landingIntro {
   margin-top: 1.5rem;
   max-width: 42rem;
-  color: var(--text-base);
+  color: var(--foreground);
   font-size: 1.125rem;
   line-height: 2rem;
 }
 
 .landingHeroPanel,
 .landingHeroFigure {
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--border);
   box-shadow: 0 24px 60px rgb(21 20 18 / 0.12);
 }
 
@@ -1669,9 +1661,9 @@
 }
 
 .landingHeroCaption {
-  border-top: 1px solid var(--border-soft);
+  border-top: 1px solid var(--border);
   padding: 1rem 1.25rem;
-  color: var(--muted-foreground);
+  color: var(--text-muted);
   font-size: 0.875rem;
   line-height: 1.5rem;
 }
@@ -1681,16 +1673,16 @@
 }
 
 .landingSectionBorderY {
-  border-block: 1px solid var(--border-soft);
+  border-block: 1px solid var(--border);
 }
 
 .landingSectionBorderTop {
-  border-top: 1px solid var(--border-soft);
+  border-top: 1px solid var(--border);
 }
 
 .landingSectionDiscover {
-  border-top: 1px solid var(--border-soft);
-  background: var(--surface-panel-muted);
+  border-top: 1px solid var(--border);
+  background: var(--surface-muted);
 }
 
 .landingSectionGrid {
@@ -1713,7 +1705,7 @@
   display: grid;
   max-width: 56rem;
   gap: 1.25rem;
-  color: var(--muted-foreground);
+  color: var(--text-muted);
 }
 
 .landingCopy p {
@@ -1721,7 +1713,7 @@
 }
 
 .landingCopyPrimary {
-  color: var(--text-base);
+  color: var(--foreground);
 }
 
 .landingDiscoverShell {
@@ -1747,7 +1739,7 @@
 
 .landingDiscoverCard {
   display: block;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--border);
   background: var(--surface-overlay);
   padding: 1.5rem;
   transition:
@@ -1757,7 +1749,7 @@
 
 .landingDiscoverCard:hover {
   border-color: var(--landing-accent);
-  background: var(--surface-panel-strong);
+  background: var(--surface);
 }
 
 .landingDiscoverIcons {
@@ -1794,7 +1786,7 @@
 
 .landingDiscoverDescription {
   margin-top: 0.75rem;
-  color: var(--muted-foreground);
+  color: var(--text-muted);
   font-size: 0.875rem;
   line-height: 1.5rem;
 }

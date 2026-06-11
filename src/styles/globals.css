@@ -2,8 +2,8 @@
   position: absolute;
   margin: 8px;
   padding: 2px 8px;
-  background: var(--surface-panel-strong);
-  color: var(--text-base);
+  background: var(--surface);
+  color: var(--foreground);
   max-width: 300px;
   font-size: 12px;
   z-index: 9;
@@ -26,15 +26,23 @@
 .mapboxgl-ctrl-geocoder {
   font-size: 18px;
   line-height: 24px;
-  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue",
-    Arial, Helvetica, sans-serif;
+  font-family:
+    "Open Sans",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Helvetica Neue",
+    Arial,
+    Helvetica,
+    sans-serif;
   position: relative;
   background-color: #fff;
   width: 100%;
   min-width: 240px;
   z-index: 1;
   border-radius: 4px;
-  transition: width 0.25s, min-width 0.25s;
+  transition:
+    width 0.25s,
+    min-width 0.25s;
 }
 
 .mapboxgl-ctrl-geocoder--input {
@@ -81,7 +89,9 @@
 .mapboxgl-ctrl-geocoder.mapboxgl-ctrl-geocoder--collapsed {
   width: 50px;
   min-width: 50px;
-  transition: width 0.25s, min-width 0.25s;
+  transition:
+    width 0.25s,
+    min-width 0.25s;
 }
 
 /* Suggestions */
@@ -334,7 +344,7 @@
 }
 
 .ant-radio-wrapper {
-  color: var(--text-base);
+  color: var(--foreground);
 }
 
 .ant-select-selection-placeholder {

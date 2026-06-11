@@ -4,9 +4,9 @@
 }
 
 .searchCard {
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--border);
   border-radius: 16px;
-  background: color-mix(in srgb, var(--surface-panel-strong) 88%, transparent);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
   box-shadow: var(--shadow-soft);
   backdrop-filter: blur(14px);
   overflow: hidden;
@@ -21,7 +21,7 @@
 
 .icon {
   flex: 0 0 auto;
-  color: var(--muted-foreground);
+  color: var(--text-muted);
 }
 
 .searchInput {
@@ -36,25 +36,25 @@
 }
 
 .searchInput::placeholder {
-  color: var(--muted-foreground);
+  color: var(--text-muted);
 }
 
 .statusText {
   padding: 0 12px 10px;
   font-size: 12px;
   line-height: 1.4;
-  color: var(--muted-foreground);
+  color: var(--text-muted);
 }
 
 .statusError {
-  color: var(--accent-strong);
+  color: var(--accent);
 }
 
 .resultsList {
   margin: 0;
   padding: 6px;
   list-style: none;
-  border-top: 1px solid var(--border-soft);
+  border-top: 1px solid var(--border);
   display: grid;
   gap: 4px;
 }
@@ -90,5 +90,5 @@
   margin-top: 3px;
   font-size: 11px;
   line-height: 1.35;
-  color: var(--muted-foreground);
+  color: var(--text-muted);
 }

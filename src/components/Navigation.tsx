@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { mainAreas } from "@/content/main-areas";
+import { mapApplications } from "@/content/map-applications";
 import {
   BookOpen,
   GraduationCap,
@@ -13,6 +15,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import EuracLogo from "@/components/ui/EuracLogo";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -21,10 +24,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import EuracLogo from "@/components/ui/EuracLogo";
 import RespondLogo from "@/components/ui/RespondLogo";
-import { mainAreas } from "@/content/main-areas"
-import { mapApplications } from "@/content/map-applications"
 
 type NavigationSubsection = {
   label: string;
@@ -40,9 +40,13 @@ type NavigationEntry = {
   sections?: NavigationSubsection[];
 };
 
-const TopicsSections = mainAreas.filter((area) => area.id !== 'about' && area.id !== 'resources');
-const AboutSections = mainAreas.find((area) => area.id === 'about')?.categories ?? [];
-const ResourcesSections = mainAreas.find((area) => area.id === 'resources')?.categories ?? [];
+const TopicsSections = mainAreas.filter(
+  (area) => area.id !== "about" && area.id !== "resources",
+);
+const AboutSections =
+  mainAreas.find((area) => area.id === "about")?.categories ?? [];
+const ResourcesSections =
+  mainAreas.find((area) => area.id === "resources")?.categories ?? [];
 
 const NavigationMenuEntries: NavigationEntry[] = [
   {
@@ -55,9 +59,9 @@ const NavigationMenuEntries: NavigationEntry[] = [
       return {
         label: topic_section.titleText,
         href: topic_section.mainHref,
-        description: topic_section.description
-      }
-    })
+        description: topic_section.description,
+      };
+    }),
   },
   {
     title: "Maps",
@@ -68,9 +72,9 @@ const NavigationMenuEntries: NavigationEntry[] = [
       return {
         label: map_app.title,
         href: map_app.href,
-        description: map_app.description
-      }
-    })
+        description: map_app.description,
+      };
+    }),
   },
   {
     title: "Resources",
@@ -114,13 +118,13 @@ function DesktopNavigationEntry({ entry }: { entry: NavigationEntry }) {
   const overviewContent = (
     <>
       <Icon
-        className="h-12 w-12 text-[color:var(--accent-strong)]"
+        className="h-12 w-12 text-[color:var(--accent)]"
         aria-hidden="true"
       />
       <h3 className="mt-6 text-2xl font-semibold text-[color:var(--foreground)]">
         {entry.title}
       </h3>
-      <p className="mt-3 text-base leading-relaxed text-[color:var(--muted-foreground)]">
+      <p className="mt-3 text-base leading-relaxed text-[color:var(--text-muted)]">
         {entry.description}
       </p>
     </>
@@ -132,9 +136,9 @@ function DesktopNavigationEntry({ entry }: { entry: NavigationEntry }) {
         {entry.title}
       </NavigationMenuTrigger>
 
-      <NavigationMenuContent className="border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)]">
+      <NavigationMenuContent className="border-[color:var(--border)] bg-[color:var(--surface)]">
         <div className="grid w-[min(900px,calc(100vw-2rem))] grid-cols-[minmax(260px,340px)_1fr] gap-0">
-          <div className="flex flex-col justify-center border-r border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-10">
+          <div className="flex flex-col justify-center border-r border-[color:var(--border)] bg-[color:var(--surface-overlay)] p-10">
             {overviewContent}
           </div>
 
@@ -143,12 +147,12 @@ function DesktopNavigationEntry({ entry }: { entry: NavigationEntry }) {
               <NavigationMenuLink key={section.href} asChild>
                 <Link
                   href={section.href}
-                  className="group block border-b border-[color:var(--border-soft)] p-3 transition-colors hover:bg-[color:var(--surface-overlay)]"
+                  className="group block border-b border-[color:var(--border)] p-3 transition-colors hover:bg-[color:var(--surface-overlay)]"
                 >
                   <div className="mb-1.5 text-base font-semibold text-[color:var(--foreground)]">
                     {section.label}
                   </div>
-                  <div className="text-sm leading-relaxed text-[color:var(--muted-foreground)] transition-colors group-hover:text-[color:var(--foreground)]">
+                  <div className="text-sm leading-relaxed text-[color:var(--text-muted)] transition-colors group-hover:text-[color:var(--foreground)]">
                     {section.description}
                   </div>
                 </Link>
@@ -165,24 +169,24 @@ export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="fixed left-0 top-0 z-[100] w-full border-b border-[color:var(--border-soft)] bg-[color:var(--background)]">
+    <div className="fixed left-0 top-0 z-[100] w-full border-b border-[color:var(--border)] bg-[color:var(--background)]">
       <div className="flex h-[var(--top-nav-height)] items-center justify-between gap-3 px-3 sm:px-6">
         <div className="flex min-w-0 flex-1 items-center gap-2 py-1 lg:w-1/3 lg:flex-none">
           <Link
             href="/"
-            className="flex min-w-0 shrink items-center gap-1.5 whitespace-nowrap rounded border border-transparent px-1 py-1 leading-none transition-colors hover:border-[color:var(--secondary)] sm:gap-2"
+            className="flex min-w-0 shrink items-center gap-1.5 whitespace-nowrap rounded border border-transparent px-1 py-1 leading-none transition-colors hover:border-[color:var(--border)] sm:gap-2"
           >
             <span className="text-sm font-medium tracking-wide text-[color:var(--foreground)] sm:text-base">
               WINEMAP
             </span>
-            <span className="hidden text-xs text-[color:var(--muted-foreground)] min-[360px]:inline sm:text-sm">
+            <span className="hidden text-xs text-[color:var(--text-muted)] min-[360px]:inline sm:text-sm">
               by
             </span>
             <EuracLogo className="h-2.5 shrink-0 text-[color:var(--foreground)] sm:h-3" />
           </Link>
 
           <div
-            className="h-7 w-px shrink-0 bg-[color:var(--border-soft)]"
+            className="h-7 w-px shrink-0 bg-[color:var(--border)]"
             aria-hidden="true"
           />
 
@@ -190,7 +194,7 @@ export function Navigation() {
             href="https://www.alpine-space.eu/project/respond/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-18 shrink-0 items-center border border-transparent transition-colors hover:border-[color:var(--secondary)]"
+            className="flex h-18 shrink-0 items-center border border-transparent transition-colors hover:border-[color:var(--border)]"
             aria-label="Visit the RESPOnD project website"
           >
             <RespondLogo className="h-18 w-auto" />
@@ -229,14 +233,14 @@ export function Navigation() {
             aria-hidden="true"
           />
 
-          <div className="fixed inset-x-0 top-[var(--top-nav-height)] z-[100] max-h-[calc(100vh-var(--top-nav-height))] overflow-y-auto border-t border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)] lg:hidden">
+          <div className="fixed inset-x-0 top-[var(--top-nav-height)] z-[100] max-h-[calc(100vh-var(--top-nav-height))] overflow-y-auto border-t border-[color:var(--border)] bg-[color:var(--surface)] lg:hidden">
             <div className="space-y-6 px-6 py-5">
               {NavigationMenuEntries.map((entry) => (
                 <div key={entry.title}>
                   {entry.href ? (
                     <Link
                       href={entry.href}
-                      className="block text-lg font-semibold text-[color:var(--foreground)] transition-colors hover:text-[color:var(--accent-strong)]"
+                      className="block text-lg font-semibold text-[color:var(--foreground)] transition-colors hover:text-[color:var(--accent)]"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       {entry.title}
@@ -246,17 +250,17 @@ export function Navigation() {
                       {entry.title}
                     </p>
                   )}
-                  <p className="mt-1 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
+                  <p className="mt-1 text-sm leading-relaxed text-[color:var(--text-muted)]">
                     {entry.description}
                   </p>
 
                   {entry.sections?.length ? (
-                    <div className="mt-3 space-y-2 border-l border-[color:var(--border-soft)] pl-4">
+                    <div className="mt-3 space-y-2 border-l border-[color:var(--border)] pl-4">
                       {entry.sections.map((section) => (
                         <Link
                           key={section.href}
                           href={section.href}
-                          className="block rounded py-1 text-sm text-[color:var(--muted-foreground)] transition-colors hover:text-[color:var(--foreground)]"
+                          className="block rounded py-1 text-sm text-[color:var(--text-muted)] transition-colors hover:text-[color:var(--foreground)]"
                           onClick={() => setMobileMenuOpen(false)}
                         >
                           <span className="font-medium text-[color:var(--foreground)]">

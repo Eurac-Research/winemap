@@ -81,11 +81,11 @@ function SectionHeading({
 }) {
   return (
     <div className="flex items-start gap-3">
-      <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-[color:var(--accent-strong)]/25 bg-[color:var(--primary)]/20 text-[color:var(--accent-strong)]">
+      <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-[color:var(--accent)]/25 bg-[color:var(--accent)]/20 text-[color:var(--accent)]">
         <Icon className="h-5 w-5" aria-hidden="true" />
       </span>
       <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-strong)]">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--accent)]">
           {eyebrow}
         </p>
         <h2 className="mt-1 text-2xl font-semibold leading-tight text-[color:var(--foreground)] md:text-3xl">
@@ -110,7 +110,7 @@ function EcosystemServicesGrid({
 
   return (
     <section id="ecosystem-services">
-      <div className="mx-auto max-w-6xl border-y border-[color:var(--border-soft)] px-6 py-12">
+      <div className="mx-auto max-w-6xl border-y border-[color:var(--border)] px-6 py-12">
         <SectionHeading
           eyebrow="Benefits"
           title="Ecosystem services provided"
@@ -124,10 +124,10 @@ function EcosystemServicesGrid({
             return (
               <article
                 key={service.id}
-                className="group/service min-h-28 border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-4 transition-colors hover:border-[color:var(--accent-strong)]"
+                className="group/service min-h-28 border border-[color:var(--border)] bg-[color:var(--surface-overlay)] p-4 transition-colors hover:border-[color:var(--accent)]"
               >
                 <div className="flex items-start gap-3">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-[color:var(--accent-soft)] text-[color:var(--accent-strong)]">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-[color:var(--accent-soft)] text-[color:var(--accent)]">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </span>
                   <div className="flex flex-col">
@@ -135,7 +135,7 @@ function EcosystemServicesGrid({
                       {service.glossaryId ? (
                         <GlossaryTermPopover
                           id={service.glossaryId}
-                          className="border-b-0 text-left hover:text-[color:var(--accent-strong)]"
+                          className="border-b-0 text-left hover:text-[color:var(--accent)]"
                         >
                           {service.label}
                         </GlossaryTermPopover>
@@ -145,7 +145,7 @@ function EcosystemServicesGrid({
                     </h3>
 
                     {note ? (
-                      <div className="text-sm leading-7 text-[color:var(--text-base)]">
+                      <div className="text-sm leading-7 text-[color:var(--foreground)]">
                         {note}
                       </div>
                     ) : null}
@@ -178,10 +178,10 @@ function ChallengeList({ challenges }: { challenges: EbaStrategyChallenge[] }) {
           return (
             <article
               key={title}
-              className="border-l-4 border-[color:var(--accent-strong)] bg-[color:var(--surface-overlay)] px-5 py-4 shadow-sm"
+              className="border-l-4 border-[color:var(--accent)] bg-[color:var(--surface-overlay)] px-5 py-4 shadow-sm"
             >
               <div className="flex items-start gap-3">
-                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[color:var(--surface-panel-muted)] text-[color:var(--accent-strong)]">
+                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[color:var(--surface-muted)] text-[color:var(--accent)]">
                   <Icon className="h-5 w-5" aria-hidden="true" />
                 </span>
                 <div>
@@ -189,7 +189,7 @@ function ChallengeList({ challenges }: { challenges: EbaStrategyChallenge[] }) {
                     {title}
                   </h3>
                   {details ? (
-                    <div className="mt-2 text-sm leading-7 text-[color:var(--text-base)]">
+                    <div className="mt-2 text-sm leading-7 text-[color:var(--foreground)]">
                       {details}
                     </div>
                   ) : null}
@@ -220,13 +220,13 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
     { label: "Field of action", value: strategy.field_of_action },
     { label: "Spatial scale", value: strategy.spatial_scale },
   ];
-  const similarStrategies = getSimilarEbaStrategies(
-    strategy,
-  ).filter((relatedStrategy) => relatedStrategy.slug !== strategy.slug);
+  const similarStrategies = getSimilarEbaStrategies(strategy).filter(
+    (relatedStrategy) => relatedStrategy.slug !== strategy.slug,
+  );
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <section className="relative overflow-hidden border-b border-[color:var(--border-soft)] bg-[color:var(--primary)]/10 pt-28">
+      <section className="relative overflow-hidden border-b border-[color:var(--border)] bg-[color:var(--accent)]/10 pt-28">
         {hasHeaderImage && content?.imagePath ? (
           <div
             className="absolute inset-y-0 right-0 hidden w-1/2 lg:block"
@@ -247,7 +247,7 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
         <div className="relative mx-auto max-w-6xl px-6 pb-12">
           <Link
             href="/adaptation/eba-strategies"
-            className="inline-flex items-center gap-2 text-sm font-medium text-[color:var(--accent-strong)] underline-offset-4 hover:underline"
+            className="inline-flex items-center gap-2 text-sm font-medium text-[color:var(--accent)] underline-offset-4 hover:underline"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Back to EbA strategies
@@ -261,7 +261,7 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
             }
           >
             <div className={hasHeaderImage ? "pb-2 lg:pr-8" : undefined}>
-              <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent-strong)]">
+              <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent)]">
                 <Leaf className="h-4 w-4" aria-hidden="true" />
                 EbA Strategy Factsheet
               </p>
@@ -269,7 +269,7 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
                 {strategy.title}
               </h1>
               {strategy.summary ? (
-                <p className="mt-6 max-w-3xl text-lg leading-8 text-[color:var(--muted-foreground)]">
+                <p className="mt-6 max-w-3xl text-lg leading-8 text-[color:var(--text-muted)]">
                   {strategy.summary}
                 </p>
               ) : null}
@@ -277,9 +277,9 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
                 {strategyMetadata.map((item) => (
                   <div
                     key={item.label}
-                    className="border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] px-4 py-3"
+                    className="border border-[color:var(--border)] bg-[color:var(--surface-overlay)] px-4 py-3"
                   >
-                    <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[color:var(--accent-strong)]">
+                    <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[color:var(--accent)]">
                       {item.label}
                     </dt>
                     <dd className="mt-1 text-sm font-medium leading-6 text-[color:var(--foreground)]">
@@ -293,7 +293,7 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
                   <Button
                     variant="outline"
                     asChild
-                    className="border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-overlay)]"
+                    className="border-[color:var(--border)] bg-[color:var(--surface)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-overlay)]"
                   >
                     <a href={pdfHref} target="_blank" rel="noopener noreferrer">
                       <ExternalLink
@@ -308,7 +308,7 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
             </div>
 
             {hasHeaderImage && content?.imagePath ? (
-              <div className="relative min-h-64 overflow-hidden border border-[color:var(--border-soft)] lg:hidden">
+              <div className="relative min-h-64 overflow-hidden border border-[color:var(--border)] lg:hidden">
                 <Image
                   src={content.imagePath}
                   alt={headerImageAlt}
@@ -336,7 +336,7 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
 
             <div className="min-w-0 space-y-8">
               {hasAbout ? (
-                <div className="mt-8 text-base leading-8 text-[color:var(--text-base)] [&>p+p]:mt-4">
+                <div className="mt-8 text-base leading-8 text-[color:var(--foreground)] [&>p+p]:mt-4">
                   {content?.about}
                 </div>
               ) : null}
@@ -390,26 +390,26 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
       !hasChallenges &&
       !content?.videos?.length ? (
         <section className="mx-auto max-w-6xl px-6 py-12">
-          <div className="border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-6">
-            <p className="text-sm leading-6 text-[color:var(--muted-foreground)]">
+          <div className="border border-[color:var(--border)] bg-[color:var(--surface-overlay)] p-6">
+            <p className="text-sm leading-6 text-[color:var(--text-muted)]">
               Detailed factsheet content for this strategy is not available yet.
             </p>
           </div>
         </section>
       ) : null}
 
-      <section className="border-t border-[color:var(--border-soft)] bg-[color:var(--surface-panel-muted)] px-6 py-16">
+      <section className="border-t border-[color:var(--border)] bg-[color:var(--surface-muted)] px-6 py-16">
         <div className="mx-auto max-w-6xl">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-2xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-strong)]">
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent)]">
                 Discover similar EbA strategies
               </p>
             </div>
 
             <Link
               href="/adaptation/eba-strategies/catalogue"
-              className="inline-flex items-center gap-2 text-sm font-medium text-[color:var(--accent-strong)] underline-offset-4 hover:underline"
+              className="inline-flex items-center gap-2 text-sm font-medium text-[color:var(--accent)] underline-offset-4 hover:underline"
             >
               Browse full catalogue
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -425,16 +425,16 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
                   <Link
                     key={relatedStrategy.slug}
                     href={`/adaptation/eba-strategies/${relatedStrategy.slug}`}
-                    className="group min-w-[17rem] border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-6 transition-colors hover:border-[color:var(--accent-strong)] hover:bg-[color:var(--surface-panel-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent-strong)] sm:min-w-[20rem] lg:min-w-0"
+                    className="group min-w-[17rem] border border-[color:var(--border)] bg-[color:var(--surface-overlay)] p-6 transition-colors hover:border-[color:var(--accent)] hover:bg-[color:var(--surface)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)] sm:min-w-[20rem] lg:min-w-0"
                     aria-label={`Open ${relatedStrategy.title} strategy`}
                   >
                     <div className="flex items-start justify-between gap-4">
                       <BookOpenText
-                        className="h-6 w-6 text-[color:var(--accent-strong)]"
+                        className="h-6 w-6 text-[color:var(--accent)]"
                         aria-hidden="true"
                       />
                       <ArrowRight
-                        className="h-5 w-5 text-[color:var(--accent-strong)] transition-transform group-hover:translate-x-1"
+                        className="h-5 w-5 text-[color:var(--accent)] transition-transform group-hover:translate-x-1"
                         aria-hidden="true"
                       />
                     </div>
@@ -442,7 +442,7 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
                       {relatedStrategy.title}
                     </h3>
                     {hasSummary ? (
-                      <p className="mt-3 text-sm leading-6 text-[color:var(--muted-foreground)]">
+                      <p className="mt-3 text-sm leading-6 text-[color:var(--text-muted)]">
                         {relatedStrategy.summary}
                       </p>
                     ) : null}
@@ -451,8 +451,8 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
               })}
             </div>
           ) : (
-            <div className="mt-8 border border-dashed border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-6">
-              <p className="text-sm leading-6 text-[color:var(--muted-foreground)]">
+            <div className="mt-8 border border-dashed border-[color:var(--border)] bg-[color:var(--surface-overlay)] p-6">
+              <p className="text-sm leading-6 text-[color:var(--text-muted)]">
                 No other EbA strategies are currently listed in this category.
               </p>
             </div>

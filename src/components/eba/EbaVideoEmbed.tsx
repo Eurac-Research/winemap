@@ -13,8 +13,8 @@ export function EbaVideoEmbed({
   caption,
 }: EbaVideoEmbedProps) {
   return (
-    <figure className="overflow-hidden rounded-lg border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)]">
-      <div className="aspect-video bg-[color:var(--surface-panel-strong)]">
+    <figure className="overflow-hidden rounded-lg border border-[color:var(--border)] bg-[color:var(--surface-overlay)]">
+      <div className="aspect-video bg-[color:var(--surface)]">
         <iframe
           src={getEmbedUrl(youtubeId)}
           title={title}
@@ -24,7 +24,7 @@ export function EbaVideoEmbed({
         />
       </div>
       {caption ? (
-        <figcaption className="border-t border-[color:var(--border-soft)] px-4 py-3 text-sm text-[color:var(--muted-foreground)]">
+        <figcaption className="border-t border-[color:var(--border)] px-4 py-3 text-sm text-[color:var(--text-muted)]">
           {caption}
         </figcaption>
       ) : null}

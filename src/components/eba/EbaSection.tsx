@@ -17,12 +17,12 @@ export function EbaSection({ id, title, children }: EbaSectionProps) {
   return (
     <section
       id={sectionId}
-      className="scroll-mt-28 border-t border-[color:var(--border-soft)] py-8 first:border-t-0 first:pt-0"
+      className="scroll-mt-28 border-t border-[color:var(--border)] py-8 first:border-t-0 first:pt-0"
     >
       <h2 className="text-2xl font-semibold text-[color:var(--foreground)]">
         {title}
       </h2>
-      <div className="mt-4 space-y-4 text-base leading-8 text-[color:var(--text-base)]">
+      <div className="mt-4 space-y-4 text-base leading-8 text-[color:var(--foreground)]">
         {children}
       </div>
     </section>

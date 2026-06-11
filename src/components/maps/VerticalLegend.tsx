@@ -1,9 +1,5 @@
 import type { CSSProperties } from "react";
-
-import {
-  getRampGradient,
-  type RampKey,
-} from "@/content/maps/color-ramps";
+import { getRampGradient, type RampKey } from "@/content/maps/color-ramps";
 
 type LegendBreak = {
   label: string;
@@ -58,7 +54,9 @@ export function VerticalLegend({
       >
         {title}
       </div>
-      {subtitle ? <div style={defaultLegendSubtitleStyle}>{subtitle}</div> : null}
+      {subtitle ? (
+        <div style={defaultLegendSubtitleStyle}>{subtitle}</div>
+      ) : null}
       <div
         style={{
           ...defaultLegendContentStyle,
@@ -156,8 +154,8 @@ const defaultLegendShellStyle: CSSProperties = {
   minWidth: "auto",
   maxWidth: "min(18rem, calc(100vw - 2rem))",
   borderRadius: "1rem",
-  border: "1px solid var(--border-soft)",
-  background: "var(--surface-panel-strong)",
+  border: "1px solid var(--border)",
+  background: "var(--surface)",
   backdropFilter: "blur(16px)",
   boxShadow: "0 10px 30px rgb(15 23 42 / 0.18)",
   padding: "0.85rem",
@@ -174,7 +172,7 @@ const defaultLegendTitleStyle: CSSProperties = {
 
 const defaultLegendSubtitleStyle: CSSProperties = {
   fontSize: "0.6rem",
-  color: "var(--muted-foreground)",
+  color: "var(--text-muted)",
   marginBottom: "0.75rem",
   maxWidth: "6rem",
   lineHeight: 1.3,
@@ -210,14 +208,14 @@ const defaultLegendScaleLabelSizerStyle: CSSProperties = {
 
 const defaultLegendScaleTextStyle: CSSProperties = {
   fontSize: "0.72rem",
-  color: "var(--muted-foreground)",
+  color: "var(--text-muted)",
   textAlign: "right",
   whiteSpace: "nowrap",
 };
 
 const defaultLegendScaleTextActiveStyle: CSSProperties = {
   ...defaultLegendScaleTextStyle,
-  color: "var(--accent-strong)",
+  color: "var(--accent)",
   fontWeight: 700,
 };
 
@@ -256,7 +254,7 @@ const defaultLegendBreakLineStyle: CSSProperties = {
 const defaultLegendBreakLineActiveStyle: CSSProperties = {
   ...defaultLegendBreakLineStyle,
   height: "2px",
-  background: "var(--accent-strong)",
+  background: "var(--accent)",
 };
 
 const defaultLegendValuesStyle: CSSProperties = {
@@ -271,7 +269,7 @@ const defaultLegendValueLabelStyle: CSSProperties = {
   fontWeight: 700,
   letterSpacing: "0.04em",
   textTransform: "uppercase",
-  color: "var(--muted-foreground)",
+  color: "var(--text-muted)",
 };
 
 const defaultLegendValueStyle: CSSProperties = {

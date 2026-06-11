@@ -27,12 +27,6 @@ import Map, {
 
 import "maplibre-gl/dist/maplibre-gl.css";
 
-import { VerticalLegend } from "@/components/maps/VerticalLegend";
-import {
-  RAMPS,
-  type RampKey,
-} from "@/content/maps/color-ramps";
-import { BASEMAPS } from "@/content/maps/basemaps";
 import {
   getIndicatorGlossaryHref,
   getIndicatorMapLayer,
@@ -42,7 +36,11 @@ import {
   type IndicatorMapConfig,
   type IndicatorMapOption,
 } from "@/content/indicators";
+import { BASEMAPS } from "@/content/maps/basemaps";
+import { RAMPS, type RampKey } from "@/content/maps/color-ramps";
+
 import MapPlaceSearch from "@/components/maps/MapPlaceSearch";
+import { VerticalLegend } from "@/components/maps/VerticalLegend";
 import { PdoMapLayout } from "@/components/pdo-app/PdoMapLayout";
 import { PdoSidebarShell } from "@/components/pdo-app/PdoSidebarShell";
 import RespondLogo from "@/components/ui/RespondLogo";
@@ -798,7 +796,7 @@ export default function EnvironmentBrowserPage() {
                           event.stopPropagation();
                           setSelectedInfo(indicator);
                         }}
-                        className="self-center cursor-pointer transition-colors text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]"
+                        className="self-center cursor-pointer transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--foreground)]"
                         aria-label={`More info about ${indicator.name}`}
                         role="button"
                         tabIndex={0}
@@ -869,8 +867,8 @@ export default function EnvironmentBrowserPage() {
           style={{
             left: hoverInfo.x + 12,
             top: hoverInfo.y - 12,
-            borderColor: "var(--border-soft)",
-            background: "var(--surface-panel-strong)",
+            borderColor: "var(--border)",
+            background: "var(--surface)",
             color: "var(--foreground)",
           }}
         >
@@ -879,7 +877,7 @@ export default function EnvironmentBrowserPage() {
             <>
               <div
                 className="mt-1 text-[11px]"
-                style={{ color: "var(--muted-foreground)" }}
+                style={{ color: "var(--text-muted)" }}
               >
                 Active layer: {activeLayerLabel}
               </div>
@@ -894,9 +892,7 @@ export default function EnvironmentBrowserPage() {
                       key={`${sample.scenarioId ?? "none"}-${sample.periodId ?? "none"}`}
                       className="flex items-start justify-between gap-3"
                       style={{
-                        color: isActive
-                          ? "var(--accent-strong)"
-                          : "var(--foreground)",
+                        color: isActive ? "var(--accent)" : "var(--foreground)",
                         fontWeight: isActive ? 600 : 400,
                       }}
                     >
@@ -914,7 +910,7 @@ export default function EnvironmentBrowserPage() {
               {mapConfig?.unit ? (
                 <div
                   className="mt-1 text-[11px]"
-                  style={{ color: "var(--muted-foreground)" }}
+                  style={{ color: "var(--text-muted)" }}
                 >
                   {formatUnit(mapConfig.unit)}
                 </div>
@@ -1022,14 +1018,14 @@ export default function EnvironmentBrowserPage() {
                     selectIndicator(selectedInfo.id);
                     setSelectedInfo(null);
                   }}
-                  className="rounded-full px-4 py-2 text-sm font-semibold transition-colors bg-[color:var(--accent-strong)] text-[color:var(--text-inverse)] hover:brightness-110"
+                  className="rounded-full px-4 py-2 text-sm font-semibold transition-colors bg-[color:var(--accent)] text-[color:var(--accent-foreground)] hover:brightness-110"
                 >
                   Show layer
                 </button>
                 <button
                   type="button"
                   onClick={() => setSelectedInfo(null)}
-                  className="rounded-full border px-4 py-2 text-sm font-semibold transition-colors border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-panel-muted)]"
+                  className="rounded-full border px-4 py-2 text-sm font-semibold transition-colors border-[color:var(--border)] bg-[color:var(--surface-overlay)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-muted)]"
                 >
                   Close
                 </button>

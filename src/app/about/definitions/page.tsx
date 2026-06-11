@@ -1,14 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import {
-  BookOpen,
-  ChevronDown,
-  ExternalLink,
-  Layers,
-  ListTree,
-} from "lucide-react";
-
-import {
   INDICATOR_CATEGORY_LABELS,
   Indicators,
   type AppId,
@@ -18,6 +10,13 @@ import {
   type RichTextContent,
   type RichTextSegment,
 } from "@/content/indicators";
+import {
+  BookOpen,
+  ChevronDown,
+  ExternalLink,
+  Layers,
+  ListTree,
+} from "lucide-react";
 
 const CATEGORY_ORDER: IndicatorCategory[] = [
   "climate",
@@ -124,7 +123,7 @@ function renderMethodology(methodology: RichTextContent[] | undefined) {
     nodes.push(
       <ul
         key={`methodology-list-${nodes.length}`}
-        className="mt-3 list-disc space-y-1 pl-5 text-[color:var(--text-base)]"
+        className="mt-3 list-disc space-y-1 pl-5 text-[color:var(--foreground)]"
       >
         {bulletItems}
       </ul>,
@@ -154,7 +153,7 @@ function renderMethodology(methodology: RichTextContent[] | undefined) {
     nodes.push(
       <p
         key={`methodology-${index}`}
-        className="mt-1 text-[color:var(--text-base)]"
+        className="mt-1 text-[color:var(--foreground)]"
       >
         {renderRichText(entry)}
       </p>,
@@ -208,18 +207,18 @@ function ExpandableIndicatorSection({
   children: ReactNode;
 }) {
   return (
-    <details className="group mt-6 rounded-lg border border-[color:var(--border-soft)] bg-[color:var(--surface)]">
+    <details className="group mt-6 rounded-lg border border-[color:var(--border)] bg-[color:var(--surface)]">
       <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 [&::-webkit-details-marker]:hidden">
         <span className="flex items-center gap-2 text-base font-semibold text-[color:var(--foreground)]">
           {icon}
           {title}
         </span>
         <ChevronDown
-          className="h-4 w-4 shrink-0 text-[color:var(--muted-foreground)] transition-transform group-open:rotate-180"
+          className="h-4 w-4 shrink-0 text-[color:var(--text-muted)] transition-transform group-open:rotate-180"
           aria-hidden="true"
         />
       </summary>
-      <div className="border-t border-[color:var(--border-soft)] px-4 pb-4 pt-2">
+      <div className="border-t border-[color:var(--border)] px-4 pb-4 pt-2">
         {children}
       </div>
     </details>
@@ -240,25 +239,25 @@ function IndicatorArticle({ indicator }: { indicator: Indicator }) {
   return (
     <article
       id={indicator.id}
-      className="scroll-mt-28 rounded-lg border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-6"
+      className="scroll-mt-28 rounded-lg border border-[color:var(--border)] bg-[color:var(--surface-overlay)] p-6"
     >
       <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-strong)]">
+          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent)]">
             {INDICATOR_CATEGORY_LABELS[indicator.category]}
           </p>
           <h2 className="mt-2 text-2xl font-semibold text-[color:var(--foreground)]">
             {indicator.name}
           </h2>
           {indicator.subtitle ? (
-            <p className="mt-2 max-w-3xl text-[color:var(--muted-foreground)]">
+            <p className="mt-2 max-w-3xl text-[color:var(--text-muted)]">
               {indicator.subtitle}
             </p>
           ) : null}
         </div>
 
         {indicator.map?.unit ? (
-          <div className="rounded border border-[color:var(--border-soft)] px-3 py-2 text-sm text-[color:var(--muted-foreground)]">
+          <div className="rounded border border-[color:var(--border)] px-3 py-2 text-sm text-[color:var(--text-muted)]">
             Unit: {indicator.map.unit}
           </div>
         ) : null}
@@ -272,7 +271,7 @@ function IndicatorArticle({ indicator }: { indicator: Indicator }) {
           </h3>
           <div className="mt-1 space-y-3">
             {descriptions.map((paragraph) => (
-              <p key={paragraph} className="text-[color:var(--text-base)]">
+              <p key={paragraph} className="text-[color:var(--foreground)]">
                 {renderLinkedText(paragraph)}
               </p>
             ))}
@@ -294,14 +293,14 @@ function IndicatorArticle({ indicator }: { indicator: Indicator }) {
           title="References"
           icon={<ExternalLink className="h-4 w-4" aria-hidden="true" />}
         >
-          <ul className="mt-1 list-disc space-y-2 pl-5 text-[color:var(--text-base)]">
+          <ul className="mt-1 list-disc space-y-2 pl-5 text-[color:var(--foreground)]">
             {references.map(renderReference)}
           </ul>
         </ExpandableIndicatorSection>
       ) : null}
 
       {apps.length ? (
-        <section className="mt-6 border-t border-[color:var(--border-soft)] pt-4">
+        <section className="mt-6 border-t border-[color:var(--border)] pt-4">
           <h3 className="flex items-center gap-2 text-sm font-semibold text-[color:var(--foreground)]">
             <Layers className="h-4 w-4" aria-hidden="true" />
             Available in
@@ -315,14 +314,14 @@ function IndicatorArticle({ indicator }: { indicator: Indicator }) {
                 <Link
                   key={app}
                   href={href}
-                  className="rounded border border-[color:var(--border-soft)] px-3 py-1 text-sm text-[color:var(--foreground)] transition-colors hover:bg-[color:var(--primary)]"
+                  className="rounded border border-[color:var(--border)] px-3 py-1 text-sm text-[color:var(--foreground)] transition-colors hover:bg-[color:var(--accent)]"
                 >
                   {label}
                 </Link>
               ) : (
                 <span
                   key={app}
-                  className="rounded border border-[color:var(--border-soft)] px-3 py-1 text-sm text-[color:var(--muted-foreground)]"
+                  className="rounded border border-[color:var(--border)] px-3 py-1 text-sm text-[color:var(--text-muted)]"
                 >
                   {label}
                 </span>
@@ -347,13 +346,13 @@ export default function IndicatorDefinitionsPage() {
     <main id="top" className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-6xl px-6 py-32">
         <header className="px-2 md:px-0">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent-strong)]">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent)]">
             About Winemap
           </p>
           <h1 className="mt-3 text-3xl font-semibold text-[color:var(--foreground)] md:text-5xl">
             Indicator Definitions
           </h1>
-          <p className="mt-4 max-w-3xl text-lg leading-8 text-[color:var(--muted-foreground)]">
+          <p className="mt-4 max-w-3xl text-lg leading-8 text-[color:var(--text-muted)]">
             A single reference page for the indicator definitions, methods, data
             sources, and references used across the Winemap map applications.
           </p>
@@ -361,14 +360,14 @@ export default function IndicatorDefinitionsPage() {
 
         <nav
           aria-label="Indicator categories"
-          className="mt-6 rounded-lg border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-4"
+          className="mt-6 rounded-lg border border-[color:var(--border)] bg-[color:var(--surface-overlay)] p-4"
         >
           <div className="flex flex-wrap gap-2">
             {groupedIndicators.map((group) => (
               <a
                 key={group.category}
                 href={`#${group.category}`}
-                className="rounded border border-[color:var(--border-soft)] px-3 py-2 text-sm font-medium text-[color:var(--foreground)] transition-colors hover:bg-[color:var(--primary)]"
+                className="rounded border border-[color:var(--border)] px-3 py-2 text-sm font-medium text-[color:var(--foreground)] transition-colors hover:bg-[color:var(--accent)]"
               >
                 {INDICATOR_CATEGORY_LABELS[group.category]}
               </a>
@@ -388,14 +387,14 @@ export default function IndicatorDefinitionsPage() {
                   <h2 className="text-2xl font-semibold text-[color:var(--foreground)] md:text-3xl">
                     {INDICATOR_CATEGORY_LABELS[group.category]}
                   </h2>
-                  <p className="mt-2 text-[color:var(--muted-foreground)]">
+                  <p className="mt-2 text-[color:var(--text-muted)]">
                     {group.indicators.length} indicator
                     {group.indicators.length === 1 ? "" : "s"}
                   </p>
                 </div>
                 <a
                   href="#top"
-                  className="text-sm font-medium text-[color:var(--accent-strong)] underline underline-offset-4"
+                  className="text-sm font-medium text-[color:var(--accent)] underline underline-offset-4"
                 >
                   Back to top
                 </a>

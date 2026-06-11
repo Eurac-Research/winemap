@@ -51,7 +51,7 @@ export function EbaStrategyImageMap({
 }: EbaStrategyImageMapProps) {
   return (
     <div className={cn("grid gap-6", className)}>
-      <div className="relative aspect-[16/10] overflow-hidden rounded-lg border border-[color:var(--border-soft)] bg-[color:var(--surface-panel-muted)] shadow-[var(--shadow-soft)]">
+      <div className="relative aspect-[16/10] overflow-hidden rounded-lg border border-[color:var(--border)] bg-[color:var(--surface-muted)] shadow-[var(--shadow-soft)]">
         <Image
           src={imageSrc}
           alt={imageAlt}
@@ -73,25 +73,25 @@ export function EbaStrategyImageMap({
               href={marker.href}
               aria-describedby={tooltipId}
               aria-label={`Open ${marker.title}`}
-              className="group absolute z-10 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full hover:z-30 focus-visible:z-30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--accent-strong)]"
+              className="group absolute z-10 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full hover:z-30 focus-visible:z-30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--accent)]"
               style={{
                 left: `${marker.position.x}%`,
                 top: `${marker.position.y}%`,
               }}
             >
               <span className="eba-marker-ring absolute h-9 w-9 rounded-full border-2 border-white shadow-[0_0_0_4px_rgba(255,255,255,0.18)]" />
-              <span className="relative h-6 w-6 rounded-full bg-[color:var(--accent-strong)] shadow-[0_8px_18px_rgba(0,0,0,0.28)]" />
+              <span className="relative h-6 w-6 rounded-full bg-[color:var(--accent)] shadow-[0_8px_18px_rgba(0,0,0,0.28)]" />
 
               <span
                 id={tooltipId}
                 role="tooltip"
                 className={cn(
-                  "pointer-events-auto absolute z-20 hidden w-72 rounded-lg border border-[color:var(--border-soft)] bg-[color:var(--surface-panel-strong)] p-4 text-left text-sm leading-6 text-[color:var(--text-base)] shadow-[var(--shadow-strong)] backdrop-blur-md group-hover:block group-focus-visible:block",
+                  "pointer-events-auto absolute z-20 hidden w-72 rounded-lg border border-[color:var(--border)] bg-[color:var(--surface)] p-4 text-left text-sm leading-6 text-[color:var(--foreground)] shadow-[var(--shadow-strong)] backdrop-blur-md group-hover:block group-focus-visible:block",
                   tooltipSideClasses[tooltipSide],
                 )}
               >
                 {marker.category ? (
-                  <span className="mb-1 block text-xs font-semibold uppercase tracking-[0.14em] text-[color:var(--accent-strong)]">
+                  <span className="mb-1 block text-xs font-semibold uppercase tracking-[0.14em] text-[color:var(--accent)]">
                     {marker.category}
                   </span>
                 ) : null}
@@ -99,7 +99,7 @@ export function EbaStrategyImageMap({
                   {marker.title}
                 </span>
                 {marker.fieldOfAction || marker.spatialScale ? (
-                  <span className="mt-2 grid gap-1 text-xs text-[color:var(--muted-foreground)]">
+                  <span className="mt-2 grid gap-1 text-xs text-[color:var(--text-muted)]">
                     {marker.fieldOfAction ? (
                       <span>Field of action: {marker.fieldOfAction}</span>
                     ) : null}
@@ -111,7 +111,7 @@ export function EbaStrategyImageMap({
                 {summaryPreview ? (
                   <span className="mt-2 block">{summaryPreview}</span>
                 ) : null}
-                <span className="mt-3 inline-flex items-center gap-1 font-semibold text-[color:var(--accent-strong)]">
+                <span className="mt-3 inline-flex items-center gap-1 font-semibold text-[color:var(--accent)]">
                   Open strategy
                   <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </span>

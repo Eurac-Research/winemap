@@ -1,9 +1,5 @@
+import { glossaryTerms, type GlossaryTerm } from "@/content/glossary";
 import { ExternalLink } from "lucide-react";
-
-import {
-  glossaryTerms,
-  type GlossaryTerm,
-} from "@/content/glossary";
 
 export const metadata = {
   title: "Glossary | Winemap",
@@ -46,24 +42,24 @@ function GlossaryEntry({ term }: { term: GlossaryTerm }) {
   return (
     <article
       id={term.id}
-      className="scroll-mt-28 border-t border-[color:var(--border-soft)] py-5 first:border-t-0"
+      className="scroll-mt-28 border-t border-[color:var(--border)] py-5 first:border-t-0"
     >
       <h3 className="text-xl font-semibold text-[color:var(--foreground)]">
         {term.term}
       </h3>
 
       {term.aliases?.length ? (
-        <p className="mt-1 text-sm text-[color:var(--muted-foreground)]">
+        <p className="mt-1 text-sm text-[color:var(--text-muted)]">
           Also: {term.aliases.join(", ")}
         </p>
       ) : null}
 
-      <p className="mt-3 max-w-3xl leading-7 text-[color:var(--text-base)]">
+      <p className="mt-3 max-w-3xl leading-7 text-[color:var(--foreground)]">
         {term.definition}
       </p>
 
       {references?.length ? (
-        <ul className="mt-3 space-y-2 text-sm text-[color:var(--muted-foreground)]">
+        <ul className="mt-3 space-y-2 text-sm text-[color:var(--text-muted)]">
           {references.map((reference) => {
             const typeLabel = getReferenceTypeLabel(reference.type);
 
@@ -74,7 +70,7 @@ function GlossaryEntry({ term }: { term: GlossaryTerm }) {
                     href={reference.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-baseline gap-1 text-[color:var(--accent-strong)] underline underline-offset-4"
+                    className="inline-flex items-baseline gap-1 text-[color:var(--accent)] underline underline-offset-4"
                   >
                     <span>{typeLabel}</span>
                     <ExternalLink
@@ -105,26 +101,26 @@ export default function GlossaryPage() {
     <main id="top" className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-5xl px-6 py-32">
         <header>
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent-strong)]">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent)]">
             About Winemap
           </p>
           <h1 className="mt-3 text-3xl font-semibold text-[color:var(--foreground)] md:text-5xl">
             Glossary
           </h1>
-          <p className="mt-4 max-w-3xl text-lg leading-8 text-[color:var(--muted-foreground)]">
+          <p className="mt-4 max-w-3xl text-lg leading-8 text-[color:var(--text-muted)]">
             Scientific and technical terms used across the Winemap application.
           </p>
         </header>
 
         <nav
           aria-label="Glossary letter groups"
-          className="mt-8 flex flex-wrap gap-2 border-y border-[color:var(--border-soft)] py-4"
+          className="mt-8 flex flex-wrap gap-2 border-y border-[color:var(--border)] py-4"
         >
           {groups.map(([letter]) => (
             <a
               key={letter}
               href={`#${letter}`}
-              className="flex h-9 w-9 items-center justify-center rounded border border-[color:var(--border-soft)] text-sm font-semibold text-[color:var(--foreground)] transition-colors hover:bg-[color:var(--primary)]"
+              className="flex h-9 w-9 items-center justify-center rounded border border-[color:var(--border)] text-sm font-semibold text-[color:var(--foreground)] transition-colors hover:bg-[color:var(--accent)]"
             >
               {letter}
             </a>
@@ -134,13 +130,13 @@ export default function GlossaryPage() {
         <div className="mt-10 space-y-12">
           {groups.map(([letter, terms]) => (
             <section key={letter} id={letter} className="scroll-mt-28">
-              <div className="mb-2 flex items-end justify-between gap-4 border-b border-[color:var(--border-soft)] pb-3">
-                <h2 className="text-4xl font-semibold text-[color:var(--accent-strong)]">
+              <div className="mb-2 flex items-end justify-between gap-4 border-b border-[color:var(--border)] pb-3">
+                <h2 className="text-4xl font-semibold text-[color:var(--accent)]">
                   {letter}
                 </h2>
                 <a
                   href="#top"
-                  className="text-sm font-medium text-[color:var(--accent-strong)] underline underline-offset-4"
+                  className="text-sm font-medium text-[color:var(--accent)] underline underline-offset-4"
                 >
                   Back to top
                 </a>

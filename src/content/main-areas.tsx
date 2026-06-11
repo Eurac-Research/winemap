@@ -33,7 +33,7 @@ export const mainAreas: MainArea[] = [
       "Explore climate data, vulnerability assessments, and environmental indicators for wine regions across Europe.",
     icon: (
       <ThermometerSun
-        className="w-12 h-12 text-[color:var(--accent-strong)]"
+        className="w-12 h-12 text-[color:var(--accent)]"
         aria-hidden="true"
       />
     ),
@@ -68,7 +68,7 @@ export const mainAreas: MainArea[] = [
       "Discover ecosystem-based adaptation strategies and pilot implementation experiences for viticulture.",
     icon: (
       <Leaf
-        className="w-12 h-12 text-[color:var(--accent-strong)]"
+        className="w-12 h-12 text-[color:var(--accent)]"
         aria-hidden="true"
       />
     ),
@@ -110,7 +110,7 @@ export const mainAreas: MainArea[] = [
       "Navigate legal frameworks, regulations, and geographic indications for wine production in Europe.",
     icon: (
       <Scale
-        className="w-12 h-12 text-[color:var(--accent-strong)]"
+        className="w-12 h-12 text-[color:var(--accent)]"
         aria-hidden="true"
       />
     ),
@@ -146,7 +146,7 @@ export const mainAreas: MainArea[] = [
       "Learn about the data and the research projects behind Winemap.",
     icon: (
       <BookOpen
-        className="w-12 h-12 text-[color:var(--accent-strong)]"
+        className="w-12 h-12 text-[color:var(--accent)]"
         aria-hidden="true"
       />
     ),
@@ -180,7 +180,7 @@ export const mainAreas: MainArea[] = [
       "Look at scientific articles related to the Winemap and the glossary.",
     icon: (
       <BookOpen
-        className="w-12 h-12 text-[color:var(--accent-strong)]"
+        className="w-12 h-12 text-[color:var(--accent)]"
         aria-hidden="true"
       />
     ),

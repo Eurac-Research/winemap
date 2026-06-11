@@ -1,10 +1,10 @@
 "use client";
 
 import { useId, useState, type KeyboardEvent, type ReactNode } from "react";
+import { glossaryTerms, type GlossaryTerm } from "@/content/glossary";
 import { ExternalLink } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { glossaryTerms, type GlossaryTerm } from "@/content/glossary";
 
 type GlossaryTermPopoverProps = {
   id: GlossaryTerm["id"];
@@ -52,7 +52,7 @@ export function GlossaryTermPopover({
         aria-expanded={isPinned}
         onClick={() => setIsPinned((current) => !current)}
         className={cn(
-          "cursor-help border-0 border-b border-dotted border-[color:var(--accent-strong)] bg-transparent p-0 text-inherit decoration-transparent underline-offset-4 transition-colors hover:text-[color:var(--accent-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent-strong)]",
+          "cursor-help border-0 border-b border-dotted border-[color:var(--accent)] bg-transparent p-0 text-inherit decoration-transparent underline-offset-4 transition-colors hover:text-[color:var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]",
           className,
         )}
       >
@@ -63,7 +63,7 @@ export function GlossaryTermPopover({
         id={popoverId}
         role="tooltip"
         className={cn(
-          "pointer-events-none absolute bottom-full left-0 z-50 mb-2 hidden w-[min(22rem,calc(100vw-2rem))] rounded-lg border border-[color:var(--border-soft)] bg-[color:var(--surface)] p-4 text-left text-sm leading-relaxed text-[color:var(--text-base)] shadow-[0_18px_45px_rgba(15,23,42,0.18)] group-hover/glossary:block group-focus-within/glossary:block",
+          "pointer-events-none absolute bottom-full left-0 z-50 mb-2 hidden w-[min(22rem,calc(100vw-2rem))] rounded-lg border border-[color:var(--border)] bg-[color:var(--surface)] p-4 text-left text-sm leading-relaxed text-[color:var(--foreground)] shadow-[0_18px_45px_rgba(15,23,42,0.18)] group-hover/glossary:block group-focus-within/glossary:block",
           isPinned && "block",
         )}
       >
@@ -73,7 +73,7 @@ export function GlossaryTermPopover({
         <span className="mt-2 block">{glossaryTerm.definition}</span>
 
         {references?.length ? (
-          <span className="mt-3 block border-t border-[color:var(--border-soft)] pt-3">
+          <span className="mt-3 block border-t border-[color:var(--border)] pt-3">
             {references.map((reference) => {
               const typeLabel = getReferenceTypeLabel(reference.type);
 
@@ -87,7 +87,7 @@ export function GlossaryTermPopover({
                       href={reference.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="pointer-events-auto inline-flex items-baseline gap-1 font-medium text-[color:var(--accent-strong)] underline underline-offset-4"
+                      className="pointer-events-auto inline-flex items-baseline gap-1 font-medium text-[color:var(--accent)] underline underline-offset-4"
                     >
                       <span>{typeLabel}</span>
                       <ExternalLink

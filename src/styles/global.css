@@ -7,59 +7,41 @@
     --top-nav-height: 5rem;
     --scroll-offset: calc(var(--top-nav-height) + 2rem);
 
-    /* Core app tokens */
+    /* Base */
     --background: rgb(255 255 255);
-    --foreground: oklch(0.24 0.02 255);
-    --surface: oklch(0.99 0.004 95);
-    --surface-elevated: oklch(0.965 0.008 95);
+    --foreground: rgb(54 63 77 / 0.94);
+    --text-muted: rgb(82 94 112 / 0.78);
+
+    /* Surfaces */
+    --surface: rgb(255 255 255);
+    --surface-muted: oklch(97% 0.00011 271.152);
     --surface-overlay: rgb(255 255 255 / 0.78);
-    --card: var(--surface);
-    --card-foreground: var(--foreground);
-    --popover: var(--surface);
-    --popover-foreground: var(--foreground);
-
-    /* Semantic UI tokens */
-    --primary: oklch(0.53 0.19 14);
-    --primary-foreground: oklch(0.99 0.004 95);
-    --secondary: oklch(0.92 0.01 95);
-    --secondary-foreground: oklch(0.3 0.02 255);
-    --muted: oklch(0.94 0.008 95);
-    --muted-foreground: oklch(0.5 0.02 255);
-    --accent: oklch(0.92 0.03 12);
-    --accent-foreground: oklch(0.3 0.02 255);
-    --destructive: oklch(0.58 0.22 27);
-    --destructive-foreground: oklch(0.99 0.004 95);
-    --border: oklch(0.86 0.01 95);
-    --input: oklch(0.9 0.01 95);
-    --ring: oklch(59.45% 0.23779 25.031);
-
-    /* App-specific tokens */
-    --surface-panel-strong: rgb(255 255 255 / 0.96);
-    --surface-panel-muted: oklch(97% 0.00011 271.152);
     --surface-inverse: rgb(24 28 36 / 0.9);
-    --text-base: rgb(54 63 77 / 0.92);
-    --text-inverse: oklch(0.985 0 0);
-    --border-soft: rgb(102 118 138 / 0.18);
+
+    /* Lines */
+    --border: rgb(102 118 138 / 0.18);
     --border-strong: rgb(102 118 138 / 0.3);
+
+    /* Accent */
+    --accent: rgba(151, 4, 41, 0.9);
     --accent-soft: rgb(207 47 88 / 0.12);
-    --accent-strong: rgba(151, 4, 41, 0.9);
+    --accent-foreground: rgb(255 255 255);
+
+    /* Effects */
     --shadow-soft: 0 16px 40px rgb(71 85 105 / 0.14);
     --shadow-strong: 0 24px 48px rgb(15 23 42 / 0.16);
 
     /* Section landing palettes */
-    --climate-environment-primary: var(--primary);
-    --climate-environment-accent: var(--accent-strong);
-    --climate-environment-accent-soft: var(--accent-soft);
-    --adaptation-primary: var(--primary);
-    --adaptation-accent: var(--accent-strong);
-    --adaptation-accent-soft: var(--accent-soft);
-    --governance-primary: var(--primary);
-    --governance-accent: var(--accent-strong);
-    --governance-accent-soft: var(--accent-soft);
+    --section-climate-environment-accent: var(--accent);
+    --section-climate-environment-accent-soft: var(--accent-soft);
+    --section-adaptation-accent: var(--accent);
+    --section-adaptation-accent-soft: var(--accent-soft);
+    --section-governance-accent: var(--accent);
+    --section-governance-accent-soft: var(--accent-soft);
 
     --vulnerability-chart-text: var(--foreground);
     --vulnerability-chart-trail: rgb(51 65 85 / 0.14);
-    --vulnerability-chart-tooltip-bg: var(--surface-panel-strong);
+    --vulnerability-chart-tooltip-bg: var(--surface);
     --vulnerability-chart-low-text: #4f7b2d;
     --vulnerability-chart-moderate-text: #8a6500;
     --vulnerability-chart-high-text: #a43c36;
@@ -74,44 +56,23 @@
   .dark {
     color-scheme: dark;
 
-    --background: oklch(0.18 0.01 255);
-    --foreground: oklch(0.96 0.003 95);
-    --surface: oklch(0.22 0.01 255);
-    --surface-elevated: oklch(0.26 0.012 255);
+    --background: rgb(16 18 24);
+    --foreground: rgb(232 236 241 / 0.94);
+    --text-muted: rgb(190 199 211 / 0.72);
+    --surface: rgb(10 12 18 / 0.94);
+    --surface-muted: rgb(17 20 27 / 0.62);
     --surface-overlay: rgb(16 18 24 / 0.78);
-    --card: var(--surface);
-    --card-foreground: var(--foreground);
-    --popover: var(--surface-elevated);
-    --popover-foreground: var(--foreground);
-
-    --primary: oklch(0.64 0.2 14);
-    --primary-foreground: oklch(0.18 0.01 255);
-    --secondary: oklch(0.28 0.008 255);
-    --secondary-foreground: var(--foreground);
-    --muted: oklch(0.28 0.008 255);
-    --muted-foreground: oklch(0.74 0.01 255);
-    --accent: oklch(0.3 0.03 12);
-    --accent-foreground: var(--foreground);
-    --destructive: oklch(0.56 0.21 27);
-    --destructive-foreground: var(--foreground);
-    --border: oklch(0.34 0.008 255);
-    --input: oklch(0.34 0.008 255);
-    --ring: oklch(0.58 0.11 12);
-
-    --surface-panel-strong: rgb(10 12 18 / 0.94);
-    --surface-panel-muted: rgb(17 20 27 / 0.62);
     --surface-inverse: rgb(255 255 255 / 0.9);
-    --text-base: rgb(232 236 241 / 0.92);
-    --text-inverse: oklch(0.2 0.01 255);
-    --border-soft: rgb(255 255 255 / 0.12);
+    --border: rgb(255 255 255 / 0.12);
     --border-strong: rgb(255 255 255 / 0.22);
+    --accent: rgb(233 30 99 / 0.92);
     --accent-soft: rgb(233 30 99 / 0.16);
-    --accent-strong: rgb(233 30 99 / 0.92);
+    --accent-foreground: rgb(16 18 24);
     --shadow-soft: 0 16px 40px rgb(0 0 0 / 0.45);
     --shadow-strong: 0 24px 48px rgb(0 0 0 / 0.35);
     --vulnerability-chart-text: var(--foreground);
     --vulnerability-chart-trail: rgb(255 255 255 / 0.12);
-    --vulnerability-chart-tooltip-bg: var(--surface-elevated);
+    --vulnerability-chart-tooltip-bg: var(--surface);
     --vulnerability-chart-low-text: #97be6c;
     --vulnerability-chart-moderate-text: #e8c360;
     --vulnerability-chart-high-text: #dd7c75;
@@ -155,23 +116,7 @@
   --font-mono: var(--font-geist-mono);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);

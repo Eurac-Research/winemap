@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { NotebookPen } from 'lucide-react';
+import { NotebookPen } from "lucide-react";
 
 interface Course {
   id: string;
@@ -48,16 +48,17 @@ export default function CoursesPage() {
               href={course.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden rounded-lg border transition-all duration-300 border-[color:var(--border-soft)] bg-gradient-to-br from-[color:var(--surface-panel-muted)] to-[color:var(--surface-overlay)] hover:border-[color:var(--border-strong)]"
+              className="group relative overflow-hidden rounded-lg border transition-all duration-300 border-[color:var(--border)] bg-gradient-to-br from-[color:var(--surface-muted)] to-[color:var(--surface-overlay)] hover:border-[color:var(--border-strong)]"
             >
               {/* Course Thumbnail */}
-              <div className="relative aspect-video bg-[color:var(--surface-panel-strong)]">
+              <div className="relative aspect-video bg-[color:var(--surface)]">
                 {course.thumbnail ? (
                   <img
                     src={course.thumbnail}
                     alt={course.title}
                     className="absolute inset-0 h-full w-full object-cover"
-                  />) : ( 
+                  />
+                ) : (
                   <div className="absolute inset-0 flex items-center justify-center">
                     <NotebookPen className="h-10 w-10" />
                   </div>
@@ -67,7 +68,9 @@ export default function CoursesPage() {
 
               {/* Caption */}
               <div className="p-4">
-                <h3 className="text-sm font-semibold text-[color:var(--foreground)]">{course.title}</h3>
+                <h3 className="text-sm font-semibold text-[color:var(--foreground)]">
+                  {course.title}
+                </h3>
               </div>
             </Link>
           ))}

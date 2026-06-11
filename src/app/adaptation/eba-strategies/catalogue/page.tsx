@@ -57,7 +57,7 @@ export default function EbaStrategiesPage() {
       index % 2 === 1 ? (
         <mark
           key={`${part}-${index}`}
-          className="px-1 rounded bg-[color:var(--accent-strong)] text-[color:var(--text-inverse)]"
+          className="px-1 rounded bg-[color:var(--accent)] text-[color:var(--accent-foreground)]"
         >
           {part}
         </mark>
@@ -178,13 +178,13 @@ export default function EbaStrategiesPage() {
               placeholder="Search strategies, categories, fields of action or summaries ..."
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
-              className="pl-10 pr-10 h-12 transition-colors bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] placeholder:text-[color:var(--muted-foreground)] hover:bg-[color:var(--surface-panel-muted)] focus:bg-[color:var(--surface-panel-muted)]"
+              className="pl-10 pr-10 h-12 transition-colors bg-[color:var(--surface-overlay)] border-[color:var(--border)] text-[color:var(--foreground)] placeholder:text-[color:var(--text-muted)] hover:bg-[color:var(--surface-muted)] focus:bg-[color:var(--surface-muted)]"
               aria-label="Search factsheets"
             />
             {searchTerm ? (
               <button
                 onClick={() => setSearchTerm("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 transition-colors text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]"
+                className="absolute right-3 top-1/2 -translate-y-1/2 transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--foreground)]"
                 aria-label="Clear search"
               >
                 <X className="w-4 h-4" aria-hidden="true" />
@@ -198,12 +198,12 @@ export default function EbaStrategiesPage() {
               onValueChange={(value: string) => setCategoryFilter(value)}
             >
               <SelectTrigger
-                className="h-12 w-full bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-panel-muted)]"
+                className="h-12 w-full bg-[color:var(--surface-overlay)] border-[color:var(--border)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-muted)]"
                 aria-label="Filter by category"
               >
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="bg-[color:var(--surface-panel-strong)] border-[color:var(--border-soft)]">
+              <SelectContent className="bg-[color:var(--surface)] border-[color:var(--border)]">
                 <SelectItem
                   value="all"
                   className="text-[color:var(--foreground)]"
@@ -227,12 +227,12 @@ export default function EbaStrategiesPage() {
               onValueChange={(value: string) => setFieldFilter(value)}
             >
               <SelectTrigger
-                className="h-12 w-full bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-panel-muted)]"
+                className="h-12 w-full bg-[color:var(--surface-overlay)] border-[color:var(--border)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-muted)]"
                 aria-label="Filter by field of action"
               >
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="bg-[color:var(--surface-panel-strong)] border-[color:var(--border-soft)]">
+              <SelectContent className="bg-[color:var(--surface)] border-[color:var(--border)]">
                 <SelectItem
                   value="all"
                   className="text-[color:var(--foreground)]"
@@ -256,12 +256,12 @@ export default function EbaStrategiesPage() {
               onValueChange={(value: string) => setScaleFilter(value)}
             >
               <SelectTrigger
-                className="h-12 w-full bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-panel-muted)]"
+                className="h-12 w-full bg-[color:var(--surface-overlay)] border-[color:var(--border)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-muted)]"
                 aria-label="Filter by spatial scale"
               >
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="bg-[color:var(--surface-panel-strong)] border-[color:var(--border-soft)]">
+              <SelectContent className="bg-[color:var(--surface)] border-[color:var(--border)]">
                 <SelectItem
                   value="all"
                   className="text-[color:var(--foreground)]"
@@ -291,12 +291,12 @@ export default function EbaStrategiesPage() {
               ) => setSortBy(value)}
             >
               <SelectTrigger
-                className="h-12 w-full lg:w-40 bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-panel-muted)]"
+                className="h-12 w-full lg:w-40 bg-[color:var(--surface-overlay)] border-[color:var(--border)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-muted)]"
                 aria-label="Sort by"
               >
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="bg-[color:var(--surface-panel-strong)] border-[color:var(--border-soft)]">
+              <SelectContent className="bg-[color:var(--surface)] border-[color:var(--border)]">
                 <SelectItem
                   value="title"
                   className="text-[color:var(--foreground)]"
@@ -339,7 +339,7 @@ export default function EbaStrategiesPage() {
             <Button
               variant="outline"
               onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
-              className="h-12 px-3 bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-panel-muted)] hover:text-[color:var(--foreground)]"
+              className="h-12 px-3 bg-[color:var(--surface-overlay)] border-[color:var(--border)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-muted)] hover:text-[color:var(--foreground)]"
               aria-label={`Sort ${sortOrder === "asc" ? "descending" : "ascending"}`}
             >
               {sortOrder === "desc" ? (
@@ -376,7 +376,7 @@ export default function EbaStrategiesPage() {
                     router.push(strategyHref);
                   }
                 }}
-                className="h-full cursor-pointer hover:shadow-lg transition-all duration-200 backdrop-blur-sm bg-[color:var(--surface-overlay)] border-[color:var(--border-soft)] hover:border-[color:var(--border-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent-strong)]"
+                className="h-full cursor-pointer hover:shadow-lg transition-all duration-200 backdrop-blur-sm bg-[color:var(--surface-overlay)] border-[color:var(--border)] hover:border-[color:var(--border-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
               >
                 <CardHeader>
                   <CardTitle className="text-xl mb-2 leading-tight text-[color:var(--foreground)]">
@@ -390,10 +390,10 @@ export default function EbaStrategiesPage() {
                       ["Spatial scale", factsheet.spatial_scale],
                     ].map(([label, value]) => (
                       <div key={label} className="py-2">
-                        <span className="block font-semibold uppercase tracking-[0.12em] text-[color:var(--accent-strong)]">
+                        <span className="block font-semibold uppercase tracking-[0.12em] text-[color:var(--accent)]">
                           {label}
                         </span>
-                        <span className="mt-1 block font-medium text-[color:var(--text-base)]">
+                        <span className="mt-1 block font-medium text-[color:var(--foreground)]">
                           {highlightText(value, searchTerm)}
                         </span>
                       </div>
@@ -405,7 +405,7 @@ export default function EbaStrategiesPage() {
                       variant="outline"
                       size="sm"
                       asChild
-                      className="h-6 max-w-14 px-2 text-xs bg-[color:var(--surface-panel-muted)] border-[color:var(--border-strong)] hover:bg-[color:var(--surface-overlay)] hover:border-[color:var(--border)] text-[color:var(--foreground)] hover:text-[color:var(--foreground)]"
+                      className="h-6 max-w-14 px-2 text-xs bg-[color:var(--surface-muted)] border-[color:var(--border-strong)] hover:bg-[color:var(--surface-overlay)] hover:border-[color:var(--border)] text-[color:var(--foreground)] hover:text-[color:var(--foreground)]"
                     >
                       <a
                         href={`/factsheets/${factsheet.filename}`}
@@ -444,7 +444,7 @@ export default function EbaStrategiesPage() {
                               event.stopPropagation();
                               toggleAbstract(factsheet.id);
                             }}
-                            className="ml-2 text-[color:var(--accent-strong)] hover:underline inline-flex items-center"
+                            className="ml-2 text-[color:var(--accent)] hover:underline inline-flex items-center"
                             aria-label={
                               abstractExpanded
                                 ? "Show less of abstract"
