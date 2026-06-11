@@ -52,10 +52,10 @@
     /* Section landing palettes */
     --section-climate-environment-accent: var(--accent);
     --section-climate-environment-accent-soft: var(--accent-soft);
-    --section-adaptation-accent: var(--accent);
-    --section-adaptation-accent-soft: var(--accent-soft);
-    --section-governance-accent: var(--accent);
-    --section-governance-accent-soft: var(--accent-soft);
+    --section-adaptation-accent:  rgba(138, 153, 119, 1);
+    --section-adaptation-accent-soft: rgba(206, 226, 181, 0.9);
+    --section-governance-accent: rgba(0, 51, 153, 0.9);
+    --section-governance-accent-soft: rgba(54, 111, 225, 0.9);
 
     --vulnerability-chart-text: var(--foreground);
     --vulnerability-chart-trail: rgb(51 65 85 / 0.14);
