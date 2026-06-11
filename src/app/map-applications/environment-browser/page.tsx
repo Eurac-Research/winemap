@@ -36,9 +36,14 @@ import {
   type IndicatorMapConfig,
   type IndicatorMapOption,
 } from "@/content/indicators";
+import { getMapApplicationByHref } from "@/content/map-applications";
 import { BASEMAPS } from "@/content/maps/basemaps";
 import { RAMPS, type RampKey } from "@/content/maps/color-ramps";
 
+import {
+  MapApplicationHelp,
+  MapApplicationHelpButton,
+} from "@/components/maps/MapApplicationHelp";
 import MapPlaceSearch from "@/components/maps/MapPlaceSearch";
 import { VerticalLegend } from "@/components/maps/VerticalLegend";
 import { PdoMapLayout } from "@/components/pdo-app/PdoMapLayout";
@@ -54,6 +59,9 @@ const INITIAL_VIEW_STATE = {
   latitude: 46.611715,
   zoom: 5.2,
 };
+const mapApplication = getMapApplicationByHref(
+  "/map-applications/environment-browser",
+);
 
 const environmentIndicators = getIndicatorsWithMapByApp("environment-browser");
 const categories = Array.from(
@@ -636,15 +644,10 @@ export default function EnvironmentBrowserPage() {
         <div className={styles.filterIntro}>
           <div className={styles.filterEyebrowRow}>
             <p className={styles.filterEyebrow}>Environment Browser</p>
-            {selectedIndicator ? (
-              <button
-                type="button"
-                className={styles.filterHelpButton}
-                onClick={() => setSelectedInfo(selectedIndicator)}
-                aria-label={`More info about ${selectedIndicator.name}`}
-              >
-                <HelpCircle className="h-4 w-4" />
-              </button>
+            {mapApplication?.help ? (
+              <MapApplicationHelpButton ariaLabel="Open help for Environment Browser">
+                <MapApplicationHelp help={mapApplication.help} />
+              </MapApplicationHelpButton>
             ) : null}
           </div>
         </div>

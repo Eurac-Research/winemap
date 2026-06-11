@@ -1,9 +1,8 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { Popover } from "antd";
-import { HelpCircle } from "lucide-react";
 
+import { MapApplicationHelpButton } from "@/components/maps/MapApplicationHelp";
 import styles from "@/styles/Home.module.css";
 import { PdoFilterSelect, type FilterOption } from "./PdoFilterSelect";
 
@@ -46,33 +45,9 @@ export function PdoFilterPanel<TKey extends string>({
           <div className={styles.filterEyebrowRow}>
             <p className={styles.filterEyebrow}>{eyebrow}</p>
             {helpContent ? (
-              <Popover
-                trigger="click"
-                content={
-                  <div className={styles.filterHelpContent}>{helpContent}</div>
-                }
-                classNames={{ root: styles.filterHelpPopup }}
-                styles={{
-                  container: {
-                    maxWidth: 320,
-                    padding: 0,
-                    border: "1px solid var(--border)",
-                    borderRadius: 14,
-                    background: "var(--surface)",
-                    boxShadow:
-                      "var(--shadow-soft), inset 0 1px 0 var(--border)",
-                    backdropFilter: "blur(14px)",
-                  },
-                }}
-              >
-                <button
-                  type="button"
-                  className={styles.filterHelpButton}
-                  aria-label={`Open help for ${heading}`}
-                >
-                  <HelpCircle className="h-4 w-4" />
-                </button>
-              </Popover>
+              <MapApplicationHelpButton ariaLabel={`Open help for ${heading}`}>
+                {helpContent}
+              </MapApplicationHelpButton>
             ) : null}
           </div>
           <h2 className={styles.filterHeading}>{heading}</h2>

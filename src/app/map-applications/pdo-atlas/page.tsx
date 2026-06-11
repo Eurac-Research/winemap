@@ -2,35 +2,42 @@
 
 import { Suspense, useCallback, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { NavigationControl, Map as ReactMap, ScaleControl, type MapRef } from "react-map-gl/mapbox";
+import { getMapApplicationByHref } from "@/content/map-applications";
+import { ChevronLeft } from "lucide-react";
 import type { MapMouseEvent } from "mapbox-gl";
 import { isMobile } from "react-device-detect";
-import { ChevronLeft } from "lucide-react";
-import styles from "@/styles/Home.module.css";
+import {
+  NavigationControl,
+  Map as ReactMap,
+  ScaleControl,
+  type MapRef,
+} from "react-map-gl/mapbox";
 
-{/* Import reusable map components */}
-import { DetailFieldList, type DetailField } from "@/components/pdo-app/DetailFieldList";
-import { PdoFilterPanel, type FilterFieldConfig } from "@/components/pdo-app/PdoFilterPanel";
+import { MapApplicationHelp } from "@/components/maps/MapApplicationHelp";
+import {
+  DetailFieldList,
+  type DetailField,
+} from "@/components/pdo-app/DetailFieldList";
+import {
+  PdoFilterPanel,
+  type FilterFieldConfig,
+} from "@/components/pdo-app/PdoFilterPanel";
 import { PdoMapHoverTooltip } from "@/components/pdo-app/PdoMapHoverTooltip";
 import { PdoMapLayout } from "@/components/pdo-app/PdoMapLayout";
 import { PdoResultsList } from "@/components/pdo-app/PdoResultsList";
 import { PdoSidebarShell } from "@/components/pdo-app/PdoSidebarShell";
-import {
-  usePdoData,
-  type PDORecord,
-} from "@/components/pdo-app/usePdoData";
-import { usePdoMapHover } from "@/components/pdo-app/usePdoMapHover";
+import { usePdoData, type PDORecord } from "@/components/pdo-app/usePdoData";
 import { usePdoMapFiltering } from "@/components/pdo-app/usePdoMapFiltering";
-
-{/* Import Icons */}
+import { usePdoMapHover } from "@/components/pdo-app/usePdoMapHover";
+import styles from "@/styles/Home.module.css";
 import amendmentIcon from "@/public/icons/Amendment-outline.svg";
 import categoryIcon from "@/public/icons/Category.svg";
 import countryIcon from "@/public/icons/CountryName-outline.svg";
-import densityIcon from "@/public/icons/Planting-density-2-outline.svg";
 import infoIcon from "@/public/icons/Information-outline.svg";
 import irrigationIcon from "@/public/icons/Irrigation-outline.svg";
 import municIcon from "@/public/icons/Municipalities-outline.svg";
 import pdoIcon from "@/public/icons/PDOid.svg";
+import densityIcon from "@/public/icons/Planting-density-2-outline.svg";
 import registrationIcon from "@/public/icons/Registration-outline.svg";
 import varietiesOIVIcon from "@/public/icons/Varieties-OIV-outline.svg";
 import varietiesOtherIcon from "@/public/icons/Varieties-others-outline.svg";
@@ -58,6 +65,7 @@ const INITIAL_VIEW_STATE = {
   pitch: 0,
 };
 const DEFAULT_PADDING = { top: 100, bottom: 25, left: 0, right: 5 };
+const mapApplication = getMapApplicationByHref("/map-applications/pdo-atlas");
 
 export default function PdoExplorerPage() {
   const mapRef = useRef<MapRef>(null);
@@ -75,7 +83,8 @@ export default function PdoExplorerPage() {
     countryOptions,
     pointFeatureByPdoId,
   } = usePdoData();
-  const { hoverInfo, getPdoNameById, onHover, clearHover } = usePdoMapHover(pdoData);
+  const { hoverInfo, getPdoNameById, onHover, clearHover } =
+    usePdoMapHover(pdoData);
 
   const filterSummary = useMemo(() => {
     if (filters.pdoName) return `PDO: ${filters.pdoName}`;
@@ -93,29 +102,39 @@ export default function PdoExplorerPage() {
       [...items].sort((a, b) => a.pdoname.localeCompare(b.pdoname));
 
     if (filters.pdoName) {
-      return sortByName(pdoData.filter((item) => item.pdoname === filters.pdoName));
+      return sortByName(
+        pdoData.filter((item) => item.pdoname === filters.pdoName),
+      );
     }
     if (filters.country) {
-      return sortByName(pdoData.filter((item) => item.country === filters.country));
+      return sortByName(
+        pdoData.filter((item) => item.country === filters.country),
+      );
     }
     if (filters.municipality) {
       return sortByName(
         pdoData.filter((item) =>
-          item.munic.split("/").some((entry) => entry.trim() === filters.municipality),
+          item.munic
+            .split("/")
+            .some((entry) => entry.trim() === filters.municipality),
         ),
       );
     }
     if (filters.category) {
       return sortByName(
         pdoData.filter((item) =>
-          item.category.split("/").some((entry) => entry.trim() === filters.category),
+          item.category
+            .split("/")
+            .some((entry) => entry.trim() === filters.category),
         ),
       );
     }
     if (filters.variety) {
       return sortByName(
         pdoData.filter((item) =>
-          (item.varietiesOiv ?? "").split("/").some((entry) => entry.trim() === filters.variety),
+          (item.varietiesOiv ?? "")
+            .split("/")
+            .some((entry) => entry.trim() === filters.variety),
         ),
       );
     }
@@ -132,8 +151,10 @@ export default function PdoExplorerPage() {
     [mapSelectedPdoIds, pdoData],
   );
 
-  const sidebarListPdos = mapSelectedPdos.length > 0 ? mapSelectedPdos : filteredPdos;
-  const listSummary = filterSummary ?? (mapSelectedPdos.length > 0 ? "Selected from map" : null);
+  const sidebarListPdos =
+    mapSelectedPdos.length > 0 ? mapSelectedPdos : filteredPdos;
+  const listSummary =
+    filterSummary ?? (mapSelectedPdos.length > 0 ? "Selected from map" : null);
 
   const sidebarView = useMemo<SidebarView>(() => {
     if (selectedPdo) return "detail";
@@ -142,12 +163,24 @@ export default function PdoExplorerPage() {
   }, [selectedPdo, sidebarListPdos.length]);
 
   const overviewStats = useMemo(() => {
-    const countryCount = new Set(pdoData.map((item) => item.country).filter(Boolean)).size;
+    const countryCount = new Set(
+      pdoData.map((item) => item.country).filter(Boolean),
+    ).size;
     const categoryCount = new Set(
-      pdoData.flatMap((item) => item.category.split("/").map((entry) => entry.trim()).filter(Boolean)),
+      pdoData.flatMap((item) =>
+        item.category
+          .split("/")
+          .map((entry) => entry.trim())
+          .filter(Boolean),
+      ),
     ).size;
     const varietyCount = new Set(
-      pdoData.flatMap((item) => (item.varietiesOiv ?? "").split("/").map((entry) => entry.trim()).filter(Boolean)),
+      pdoData.flatMap((item) =>
+        (item.varietiesOiv ?? "")
+          .split("/")
+          .map((entry) => entry.trim())
+          .filter(Boolean),
+      ),
     ).size;
 
     return [
@@ -164,25 +197,36 @@ export default function PdoExplorerPage() {
     defaultPadding: DEFAULT_PADDING,
   });
 
-  const updateSidebarUrl = useCallback((nextFilters: FilterState, detailPdoId?: string | null) => {
-    const params = new URLSearchParams();
+  const updateSidebarUrl = useCallback(
+    (nextFilters: FilterState, detailPdoId?: string | null) => {
+      const params = new URLSearchParams();
 
-    if (detailPdoId) params.set("pdo", detailPdoId);
-    else if (nextFilters.pdoName) params.set("pdoname", nextFilters.pdoName);
-    else if (nextFilters.country) params.set("country", nextFilters.country);
-    else if (nextFilters.municipality) params.set("munic", nextFilters.municipality);
-    else if (nextFilters.category) params.set("cat", nextFilters.category);
-    else if (nextFilters.variety) params.set("variety", nextFilters.variety);
+      if (detailPdoId) params.set("pdo", detailPdoId);
+      else if (nextFilters.pdoName) params.set("pdoname", nextFilters.pdoName);
+      else if (nextFilters.country) params.set("country", nextFilters.country);
+      else if (nextFilters.municipality)
+        params.set("munic", nextFilters.municipality);
+      else if (nextFilters.category) params.set("cat", nextFilters.category);
+      else if (nextFilters.variety) params.set("variety", nextFilters.variety);
 
-    const query = params.toString();
-    history.replaceState({}, "", query ? `?${query}` : window.location.pathname);
-  }, []);
+      const query = params.toString();
+      history.replaceState(
+        {},
+        "",
+        query ? `?${query}` : window.location.pathname,
+      );
+    },
+    [],
+  );
 
   const clearSelectionInPlace = useCallback(() => {
     setFilters({});
     setSelectedPdoId(null);
     setMapSelectedPdoIds([]);
-    mapRef.current?.getMap().setFilter("pdo-area", null).setFilter("pdo-pins", null);
+    mapRef.current
+      ?.getMap()
+      .setFilter("pdo-area", null)
+      .setFilter("pdo-pins", null);
     history.replaceState({}, "", window.location.pathname);
   }, []);
 
@@ -271,7 +315,9 @@ export default function PdoExplorerPage() {
       }
 
       const matchingPdos = pdoData.filter((item) =>
-        (item.varietiesOiv ?? "").split("/").some((entry) => entry.trim() === value),
+        (item.varietiesOiv ?? "")
+          .split("/")
+          .some((entry) => entry.trim() === value),
       );
       applyFilter({ variety: value }, matchingPdos);
     },
@@ -303,7 +349,13 @@ export default function PdoExplorerPage() {
     }
 
     updateSidebarUrl({}, null);
-  }, [filteredPdos, filters, mapSelectedPdoIds, showPdoIdsOnMap, updateSidebarUrl]);
+  }, [
+    filteredPdos,
+    filters,
+    mapSelectedPdoIds,
+    showPdoIdsOnMap,
+    updateSidebarUrl,
+  ]);
 
   const handleMapClick = useCallback(
     (event: MapMouseEvent) => {
@@ -391,7 +443,11 @@ export default function PdoExplorerPage() {
         { label: "Country", value: selectedPdo.country, icon: countryIcon },
         { label: "PDO ID", value: selectedPdo.pdoid, icon: pdoIcon },
         { label: "PDO name", value: selectedPdo.pdoname, icon: pdoIcon },
-        { label: "Registration", value: selectedPdo.registration, icon: registrationIcon },
+        {
+          label: "Registration",
+          value: selectedPdo.registration,
+          icon: registrationIcon,
+        },
         { label: "Category", value: selectedPdo.category, icon: categoryIcon },
         {
           label: "Varieties OIV",
@@ -427,14 +483,26 @@ export default function PdoExplorerPage() {
               : null,
           icon: densityIcon,
         },
-        { label: "Irrigation", value: selectedPdo.irrigation, icon: irrigationIcon },
-        { label: "Amendment", value: selectedPdo.amendment, icon: amendmentIcon },
+        {
+          label: "Irrigation",
+          value: selectedPdo.irrigation,
+          icon: irrigationIcon,
+        },
+        {
+          label: "Amendment",
+          value: selectedPdo.amendment,
+          icon: amendmentIcon,
+        },
         {
           label: "Municipalities",
           value: selectedPdo.munic.replaceAll("/", ", "),
           icon: municIcon,
         },
-        { label: "Begin LIFES", value: selectedPdo["begin-lifes"], icon: infoIcon },
+        {
+          label: "Begin LIFES",
+          value: selectedPdo["begin-lifes"],
+          icon: infoIcon,
+        },
       ]
     : [];
 
@@ -442,7 +510,11 @@ export default function PdoExplorerPage() {
     <PdoFilterPanel
       eyebrow="European PDO Atlas"
       heading="Filter wine regions"
-      helpContent="Short explanatory text for this application."
+      helpContent={
+        mapApplication?.help ? (
+          <MapApplicationHelp help={mapApplication.help} />
+        ) : undefined
+      }
       filterFields={filterFields}
       filters={filters}
       isLoadingData={isLoadingData}
