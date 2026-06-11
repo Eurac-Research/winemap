@@ -219,15 +219,12 @@ export default function LiteraturePage() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <BookOpen
-              className="w-8 h-8 text-[color:var(--foreground)]"
-              aria-hidden="true"
-            />
-            <h1 className="text-4xl font-bold text-[color:var(--foreground)]">
+            <BookOpen className="w-8 h-8 app-text-color" aria-hidden="true" />
+            <h1 className="app-page-title font-bold">
               Scientific Publications
             </h1>
           </div>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+          <p className="app-lead app-muted max-w-2xl mx-auto">
             Explore our collection of peer-reviewed research papers and academic
             publications
           </p>
@@ -237,49 +234,46 @@ export default function LiteraturePage() {
         <div className="flex flex-col lg:flex-row gap-4 mb-8">
           <div className="relative flex-1">
             <Search
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-4 h-4"
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 app-muted w-4 h-4"
               aria-hidden="true"
             />
             <Input
               placeholder="Search publications, authors, journals or year ..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-10 h-12 transition-colors bg-[color:var(--surface-overlay)] border-[color:var(--border)] text-[color:var(--foreground)] placeholder:text-[color:var(--text-muted)] hover:bg-[color:var(--surface-muted)] focus:bg-[color:var(--surface-muted)]"
+              className="pl-10 pr-10 h-12 transition-colors bg-[color:var(--surface-overlay)] border-[color:var(--border)] app-text-color placeholder:text-[color:var(--app-muted-color)] hover:bg-[color:var(--surface-muted)] focus:bg-[color:var(--surface-muted)]"
               aria-label="Search publications"
             />
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm("")}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--foreground)]"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 transition-colors app-muted hover:text-[color:var(--app-text-color)]"
                 aria-label="Clear search"
               >
                 <X className="w-4 h-4" aria-hidden="true" />
               </button>
             )}
           </div>
-          <div className="flex gap-2 text-[color:var(--foreground)]">
+          <div className="flex gap-2 app-text-color">
             <Select
               value={categoryFilter}
               onValueChange={(value: string) => setCategoryFilter(value)}
             >
               <SelectTrigger
-                className="w-48 h-12 bg-[color:var(--surface-overlay)] border-[color:var(--border)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-muted)]"
+                className="w-48 h-12 bg-[color:var(--surface-overlay)] border-[color:var(--border)] app-text-color hover:bg-[color:var(--surface-muted)]"
                 aria-label="Filter by category"
               >
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-[color:var(--surface)] border-[color:var(--border)]">
-                <SelectItem
-                  value="all"
-                  className="text-[color:var(--foreground)]"
-                >
+                <SelectItem value="all" className="app-text-color">
                   All Categories
                 </SelectItem>
                 {uniqueCategories.map((category) => (
                   <SelectItem
                     key={category}
                     value={category}
-                    className="text-[color:var(--foreground)]"
+                    className="app-text-color"
                   >
                     {category}
                   </SelectItem>
@@ -291,25 +285,19 @@ export default function LiteraturePage() {
               onValueChange={(value: "year" | "author") => setSortBy(value)}
             >
               <SelectTrigger
-                className="w-32 h-12 bg-[color:var(--surface-overlay)] border-[color:var(--border)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-muted)]"
+                className="w-32 h-12 bg-[color:var(--surface-overlay)] border-[color:var(--border)] app-text-color hover:bg-[color:var(--surface-muted)]"
                 aria-label="Sort by"
               >
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-[color:var(--surface)] border-[color:var(--border)]">
-                <SelectItem
-                  value="year"
-                  className="text-[color:var(--foreground)]"
-                >
+                <SelectItem value="year" className="app-text-color">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" aria-hidden="true" />
                     Year
                   </div>
                 </SelectItem>
-                <SelectItem
-                  value="author"
-                  className="text-[color:var(--foreground)]"
-                >
+                <SelectItem value="author" className="app-text-color">
                   <div className="flex items-center gap-2">
                     <User className="w-4 h-4" aria-hidden="true" />
                     Author
@@ -320,7 +308,7 @@ export default function LiteraturePage() {
             <Button
               variant="outline"
               onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
-              className="h-12 px-3 bg-[color:var(--surface-overlay)] border-[color:var(--border)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-muted)] hover:text-[color:var(--foreground)]"
+              className="h-12 px-3 bg-[color:var(--surface-overlay)] border-[color:var(--border)] app-text-color hover:bg-[color:var(--surface-muted)] hover:text-[color:var(--app-text-color)]"
               aria-label={`Sort ${sortOrder === "asc" ? "descending" : "ascending"}`}
             >
               {sortOrder === "desc" ? "↓" : "↑"}
@@ -330,7 +318,7 @@ export default function LiteraturePage() {
 
         {/* Results Count */}
         <div className="mb-6">
-          <p className="text-gray-400">
+          <p className="app-muted">
             Showing {filteredAndSortedPublications.length} of{" "}
             {publications.length} publications
           </p>
@@ -352,10 +340,10 @@ export default function LiteraturePage() {
                 <CardHeader>
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                      <CardTitle className="text-xl mb-2 leading-tight text-[color:var(--foreground)]">
+                      <CardTitle className="text-xl mb-2 leading-tight app-text-color">
                         {highlightText(publication.title, searchTerm)}
                       </CardTitle>
-                      <div className="flex flex-wrap items-center gap-2 text-sm text-gray-400 mb-3">
+                      <div className="flex flex-wrap items-center gap-2 app-caption mb-3">
                         <span className="font-medium">
                           {(authorsExpanded
                             ? publication.authors
@@ -370,7 +358,7 @@ export default function LiteraturePage() {
                             !authorsExpanded && (
                               <button
                                 onClick={() => toggleAuthors(publication.id)}
-                                className="ml-1 text-[color:var(--accent)] hover:underline inline-flex items-center"
+                                className="ml-1 app-accent-text hover:underline inline-flex items-center"
                                 aria-label={`Show ${publication.authors.length - AUTHOR_LIMIT} more authors`}
                               >
                                 ... +{publication.authors.length - AUTHOR_LIMIT}{" "}
@@ -385,7 +373,7 @@ export default function LiteraturePage() {
                             publication.authors.length > AUTHOR_LIMIT && (
                               <button
                                 onClick={() => toggleAuthors(publication.id)}
-                                className="ml-1 text-[color:var(--accent)] hover:underline inline-flex items-center"
+                                className="ml-1 app-accent-text hover:underline inline-flex items-center"
                                 aria-label="Show fewer authors"
                               >
                                 <ChevronUp
@@ -410,10 +398,10 @@ export default function LiteraturePage() {
                       </div>
                       <div className="flex items-center gap-3 mb-3 flex-wrap">
                         <div className="flex items-center gap-1.5">
-                          <span className="text-xs font-semibold text-gray-500">
+                          <span className="text-xs font-semibold app-muted">
                             Category:
                           </span>
-                          <span className="text-xs font-medium px-2 py-0.5 rounded text-[color:var(--foreground)] bg-[color:var(--surface-muted)]">
+                          <span className="text-xs font-medium px-2 py-0.5 rounded app-text-color bg-[color:var(--surface-muted)]">
                             {publication.category}
                           </span>
                         </div>
@@ -421,7 +409,7 @@ export default function LiteraturePage() {
                           variant="outline"
                           size="sm"
                           asChild
-                          className="h-6 px-2 text-xs bg-[color:var(--surface-muted)] border-[color:var(--border-strong)] hover:bg-[color:var(--surface-overlay)] hover:border-[color:var(--border)] text-[color:var(--foreground)] hover:text-[color:var(--foreground)]"
+                          className="h-6 px-2 text-xs bg-[color:var(--surface-muted)] border-[color:var(--border-strong)] hover:bg-[color:var(--surface-overlay)] hover:border-[color:var(--border)] app-text-color hover:text-[color:var(--app-text-color)]"
                         >
                           <a
                             href={`https://doi.org/${publication.doi}`}
@@ -440,7 +428,7 @@ export default function LiteraturePage() {
                       {publication.keywords &&
                         publication.keywords.length > 0 && (
                           <div className="flex items-start gap-2 mb-3">
-                            <span className="text-xs font-semibold text-gray-500 mt-1.5">
+                            <span className="text-xs font-semibold app-muted mt-1.5">
                               Keywords:
                             </span>
                             <div className="flex flex-wrap gap-2">
@@ -452,7 +440,7 @@ export default function LiteraturePage() {
                                       searchTerm === keyword ? "" : keyword,
                                     )
                                   }
-                                  className="text-xs font-medium px-2.5 py-1 rounded-full transition-all cursor-pointer focus:outline-none focus:ring-2 bg-[color:var(--accent-soft)] text-[color:var(--accent)] border border-[color:var(--accent)] hover:brightness-105 focus:ring-[color:var(--accent)] focus:ring-offset-1 focus:ring-offset-[color:var(--background)]"
+                                  className="text-xs font-medium px-2.5 py-1 rounded-full transition-all cursor-pointer focus:outline-none focus:ring-2 bg-[color:var(--accent-soft)] app-accent-text border border-[color:var(--accent)] hover:brightness-105 focus:ring-[color:var(--accent)] focus:ring-offset-1 focus:ring-offset-[color:var(--background)]"
                                   aria-label={`Search for ${keyword}`}
                                 >
                                   {highlightText(keyword, searchTerm)}
@@ -467,7 +455,7 @@ export default function LiteraturePage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="bg-[color:var(--surface-muted)] border-[color:var(--border-strong)] hover:bg-[color:var(--surface-overlay)] hover:border-[color:var(--border)] text-[color:var(--foreground)] hover:text-[color:var(--foreground)]"
+                          className="bg-[color:var(--surface-muted)] border-[color:var(--border-strong)] hover:bg-[color:var(--surface-overlay)] hover:border-[color:var(--border)] app-text-color hover:text-[color:var(--app-text-color)]"
                           aria-label="Citation options"
                         >
                           <Download
@@ -479,7 +467,7 @@ export default function LiteraturePage() {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent
                         align="end"
-                        className="bg-[color:var(--surface)] border-[color:var(--border-strong)] text-[color:var(--foreground)]"
+                        className="bg-[color:var(--surface)] border-[color:var(--border-strong)] app-text-color"
                       >
                         <DropdownMenuItem
                           onClick={() =>
@@ -527,10 +515,10 @@ export default function LiteraturePage() {
                 {publication.abstract && (
                   <CardContent>
                     <div className="mb-4">
-                      <h4 className="font-semibold text-sm text-gray-300 mb-2">
+                      <h4 className="font-semibold text-sm app-text-color mb-2">
                         Abstract
                       </h4>
-                      <p className="text-gray-400 text-sm leading-relaxed">
+                      <p className="app-caption">
                         {highlightText(
                           abstractExpanded ||
                             publication.abstract.length <= ABSTRACT_LIMIT
@@ -542,7 +530,7 @@ export default function LiteraturePage() {
                         {publication.abstract.length > ABSTRACT_LIMIT && (
                           <button
                             onClick={() => toggleAbstract(publication.id)}
-                            className="ml-2 text-[color:var(--accent)] hover:underline inline-flex items-center"
+                            className="ml-2 app-accent-text hover:underline inline-flex items-center"
                             aria-label={
                               abstractExpanded
                                 ? "Show less of abstract"
@@ -580,13 +568,13 @@ export default function LiteraturePage() {
         {filteredAndSortedPublications.length === 0 && (
           <div className="text-center py-12">
             <BookOpen
-              className="w-16 h-16 text-gray-600 mx-auto mb-4"
+              className="w-16 h-16 app-muted mx-auto mb-4"
               aria-hidden="true"
             />
-            <h3 className="text-xl font-semibold text-gray-400 mb-2">
+            <h3 className="text-xl font-semibold app-muted mb-2">
               No publications found
             </h3>
-            <p className="text-gray-500">
+            <p className="app-muted">
               Try adjusting your search terms or filters
             </p>
           </div>

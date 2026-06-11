@@ -72,7 +72,7 @@ export default function AdaptationPage() {
             <aside className={styles.landingAside}>Climate pressure</aside>
 
             <div className={styles.landingCopy}>
-              <p className={styles.landingCopyPrimary}>
+              <p>
                 Across Europe, especially in the Alpine regions, winegrowers are
                 already witnessing the tangible effects of climate change.
                 Rising temperatures, shifting precipitation patterns, and more

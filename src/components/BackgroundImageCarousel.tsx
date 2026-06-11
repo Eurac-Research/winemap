@@ -85,7 +85,7 @@ export default function BackgroundImageCarousel({
             <button
               type="button"
               onClick={showNext}
-              className="mt-5 inline-flex h-9 w-9 flex-none items-center justify-center text-[color:var(--accent)] transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+              className="mt-5 inline-flex h-9 w-9 flex-none items-center justify-center app-accent-text transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
               aria-label="Show next carousel slide"
             >
               <ArrowDown className="h-6 w-6" />
@@ -126,7 +126,7 @@ export default function BackgroundImageCarousel({
 
               <Link
                 href={activeItem.href}
-                className="inline-flex items-center gap-2 text-base font-semibold text-[color:var(--accent)] transition hover:gap-3 hover:text-white"
+                className="inline-flex items-center gap-2 text-base font-semibold app-accent-text transition hover:gap-3 hover:text-white"
               >
                 <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-current">
                   <ArrowRight className="h-4 w-4" />

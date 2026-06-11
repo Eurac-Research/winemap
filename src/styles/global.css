@@ -12,6 +12,24 @@
     --foreground: rgb(54 63 77 / 0.94);
     --text-muted: rgb(82 94 112 / 0.78);
 
+    /* Typography */
+    --app-text-color: var(--foreground);
+    --app-muted-color: var(--text-muted);
+    --app-heading-color: var(--foreground);
+    --app-accent-text-color: var(--accent);
+    --app-text-size: 1rem;
+    --app-text-line-height: 1.75rem;
+    --app-lead-size: 1.125rem;
+    --app-lead-line-height: 2rem;
+    --app-caption-size: 0.875rem;
+    --app-caption-line-height: 1.5rem;
+    --app-label-size: 0.75rem;
+    --app-label-line-height: 1rem;
+    --app-page-title-size: 2.25rem;
+    --app-page-title-line-height: 1.1;
+    --app-section-title-size: 1.875rem;
+    --app-section-title-line-height: 1.15;
+
     /* Surfaces */
     --surface: rgb(255 255 255);
     --surface-muted: oklch(97% 0.00011 271.152);
@@ -59,6 +77,10 @@
     --background: rgb(16 18 24);
     --foreground: rgb(232 236 241 / 0.94);
     --text-muted: rgb(190 199 211 / 0.72);
+    --app-text-color: var(--foreground);
+    --app-muted-color: var(--text-muted);
+    --app-heading-color: var(--foreground);
+    --app-accent-text-color: var(--accent);
     --surface: rgb(10 12 18 / 0.94);
     --surface-muted: rgb(17 20 27 / 0.62);
     --surface-overlay: rgb(16 18 24 / 0.78);
@@ -93,6 +115,8 @@
     font-family:
       -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
       Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: var(--app-text-size);
+    line-height: var(--app-text-line-height);
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -121,6 +145,74 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer components {
+  .app-text {
+    color: var(--app-text-color);
+    font-size: var(--app-text-size);
+    line-height: var(--app-text-line-height);
+  }
+
+  .app-text-color {
+    color: var(--app-text-color);
+  }
+
+  .app-lead {
+    color: var(--app-text-color);
+    font-size: var(--app-lead-size);
+    line-height: var(--app-lead-line-height);
+  }
+
+  .app-muted {
+    color: var(--app-muted-color);
+  }
+
+  .app-accent-text {
+    color: var(--app-accent-text-color);
+  }
+
+  .app-caption {
+    color: var(--app-muted-color);
+    font-size: var(--app-caption-size);
+    line-height: var(--app-caption-line-height);
+  }
+
+  .app-label {
+    color: var(--app-muted-color);
+    font-size: var(--app-label-size);
+    font-weight: 600;
+    line-height: var(--app-label-line-height);
+  }
+
+  .app-eyebrow {
+    color: var(--app-accent-text-color);
+    font-size: var(--app-caption-size);
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    line-height: 1.25rem;
+    text-transform: uppercase;
+  }
+
+  .app-page-title {
+    color: var(--app-heading-color);
+    font-size: var(--app-page-title-size);
+    font-weight: 600;
+    line-height: var(--app-page-title-line-height);
+  }
+
+  .app-section-title {
+    color: var(--app-heading-color);
+    font-size: var(--app-section-title-size);
+    font-weight: 600;
+    line-height: var(--app-section-title-line-height);
+  }
+
+  @media (min-width: 768px) {
+    .app-page-title {
+      --app-page-title-size: 3rem;
+    }
+  }
 }
 
 @keyframes eba-marker-ring-pulse {

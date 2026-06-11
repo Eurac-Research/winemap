@@ -10,14 +10,14 @@ export default function ClimateIndicatorsPage() {
       <div className="mx-auto max-w-6xl px-6 py-32">
         <article className="space-y-12">
           <section className="rounded-2xl border p-8 md:p-12 border-[color:var(--border)] bg-gradient-to-br from-[color:var(--surface-muted)] to-[color:var(--surface-overlay)]">
-            <span className="inline-flex rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] border-[color:var(--border-strong)] text-[color:var(--text-muted)]">
+            <span className="inline-flex rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] border-[color:var(--border-strong)] app-muted">
               Governance
             </span>
-            <h1 className="mt-5 text-4xl font-bold leading-tight md:text-5xl">
+            <h1 className="mt-5 app-page-title font-bold">
               Geographic Indications
             </h1>
 
-            <p className="mt-6 max-w-4xl text-lg leading-relaxed text-[color:var(--foreground)]">
+            <p className="mt-6 max-w-4xl app-lead">
               Europe is home to some of the world’s most prestigious wine
               regions. In order to maintain the integrity and quality of these
               wines, the European Union has established a quality scheme called
@@ -47,14 +47,14 @@ export default function ClimateIndicatorsPage() {
                     height={212}
                     className="mx-auto"
                   />
-                  <figcaption className="text-sm text-[color:var(--text-muted)]">
+                  <figcaption className="app-caption">
                     Official PDO logo from the Eurpean Commission
                   </figcaption>
                 </figure>
               </a>
             </div>
 
-            <p className="mt-6 max-w-4xl text-lg leading-relaxed text-[color:var(--foreground)]">
+            <p className="mt-6 max-w-4xl app-lead">
               The PDO system is extensive and complex, covering thousands of
               wine types from various regions in Europe. Until recently, wine
               enthusiasts and industry professionals had to consult various

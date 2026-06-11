@@ -74,7 +74,7 @@ export default function ClimateEnvironmentPage() {
             <aside className={styles.landingAside}>Vineyard landscapes</aside>
 
             <div className={styles.landingCopy}>
-              <p className={styles.landingCopyPrimary}>
+              <p>
                 For centuries, vineyard landscapes across Europe have evolved
                 into complex systems that are deeply embedded in local
                 economies, environments, and cultural traditions. Far from being

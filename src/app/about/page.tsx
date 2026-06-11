@@ -21,24 +21,22 @@ export default function About() {
           >
             <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start">
               <div>
-                <div className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent)]">
-                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--accent)]/25 bg-[color:var(--accent)]/15 text-[color:var(--accent)]">
+                <div className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] app-accent-text">
+                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--accent)]/25 bg-[color:var(--accent)]/15 app-accent-text">
                     <MapIcon className="h-4 w-4" />
                   </span>
                   <span>About the platform</span>
                 </div>
 
-                <h1 className="mt-4 max-w-3xl text-4xl font-semibold leading-tight text-[color:var(--foreground)] md:text-5xl">
-                  Winemap
-                </h1>
+                <h1 className="mt-4 max-w-3xl app-page-title">Winemap</h1>
 
-                <p className="mt-6 max-w-3xl text-lg leading-8 text-[color:var(--foreground)]">
+                <p className="mt-6 max-w-3xl app-lead">
                   WINEMAP is a comprehensive digital resource on European
                   viticulture, designed to support winegrowers, advisors,
                   policymakers, researchers, and anyone interested in wine
                   landscapes and their future.
                 </p>
-                <p className="mt-6 max-w-3xl text-lg leading-8 text-[color:var(--foreground)]">
+                <p className="mt-6 max-w-3xl app-lead">
                   Its goal is to provide an accessible and integrated knowledge
                   base for understanding wine heritage, climate adaptation, and
                   governance frameworks across Europe. By combining climate
@@ -53,36 +51,36 @@ export default function About() {
                 aria-label="Winemap focus areas"
                 className="border border-[color:var(--border)] bg-[color:var(--surface-overlay)] p-5"
               >
-                <h2 className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent)]">
+                <h2 className="text-sm font-semibold uppercase tracking-[0.16em] app-accent-text">
                   What WINEMAP brings together
                 </h2>
                 <div className="mt-5 grid gap-4">
                   <div className="border-t border-[color:var(--border)] pt-4">
-                    <BookOpenText className="h-5 w-5 text-[color:var(--accent)]" />
-                    <h3 className="mt-3 font-semibold text-[color:var(--foreground)]">
+                    <BookOpenText className="h-5 w-5 app-accent-text" />
+                    <h3 className="mt-3 font-semibold app-text-color">
                       Knowledge base
                     </h3>
-                    <p className="mt-1 text-sm leading-6 text-[color:var(--text-muted)]">
+                    <p className="mt-1 app-caption">
                       Wine heritage, environmental indicators, and governance
                       frameworks in one place.
                     </p>
                   </div>
                   <div className="border-t border-[color:var(--border)] pt-4">
-                    <Sprout className="h-5 w-5 text-[color:var(--accent)]" />
-                    <h3 className="mt-3 font-semibold text-[color:var(--foreground)]">
+                    <Sprout className="h-5 w-5 app-accent-text" />
+                    <h3 className="mt-3 font-semibold app-text-color">
                       Adaptation pathways
                     </h3>
-                    <p className="mt-1 text-sm leading-6 text-[color:var(--text-muted)]">
+                    <p className="mt-1 app-caption">
                       Practical strategies linked to ecological functions,
                       benefits, and trade-offs.
                     </p>
                   </div>
                   <div className="border-t border-[color:var(--border)] pt-4">
-                    <MapIcon className="h-5 w-5 text-[color:var(--accent)]" />
-                    <h3 className="mt-3 font-semibold text-[color:var(--foreground)]">
+                    <MapIcon className="h-5 w-5 app-accent-text" />
+                    <h3 className="mt-3 font-semibold app-text-color">
                       Map-based tools
                     </h3>
-                    <p className="mt-1 text-sm leading-6 text-[color:var(--text-muted)]">
+                    <p className="mt-1 app-caption">
                       Spatial data and interactive applications for local
                       context and decision-making.
                     </p>
@@ -91,7 +89,7 @@ export default function About() {
               </aside>
             </div>
 
-            <div className="mt-10 grid max-w-4xl gap-5 text-[color:var(--text-muted)]">
+            <div className="mt-10 grid max-w-4xl gap-5 app-text">
               <p className="leading-7">
                 Across Europe, winegrowers are increasingly facing the challenge
                 of adapting to climate change while preserving the ecological,
@@ -128,7 +126,7 @@ export default function About() {
               </p>
             </div>
             <aside className="mt-8 max-w-4xl border border-[color:var(--border)] border-l-[3px] border-l-[color:var(--accent)] bg-[color:var(--surface-overlay)] p-5">
-              <p className="mt-3 text-sm leading-6 text-[color:var(--text-muted)]">
+              <p className="mt-3 app-caption">
                 Originally developed within the framework of the RESPOnD project
                 (Climate Resilient Alpine Wine Orchards), WINEMAP is co-financed
                 by the European Regional Development Fund through the Interreg
@@ -139,8 +137,8 @@ export default function About() {
 
           <section id="projects" className="px-8 md:px-12">
             <div>
-              <h2 className="text-2xl md:text-3xl">Projects behind Winemap</h2>
-              <p className="mt-3 text-[color:var(--text-muted)]">
+              <h2 className="app-section-title md:text-3xl">Projects behind Winemap</h2>
+              <p className="mt-3 app-text">
                 These initiatives provide the research foundation and datasets
                 that feed into the Winemap platform.
               </p>
@@ -155,7 +153,7 @@ export default function About() {
                     <h3 className="text-lg font-semibold">RESPOnD Project</h3>
 
                     <div className="flex items-start justify-between gap-6">
-                      <p className="mt-2 text-[color:var(--text-muted)]">
+                      <p className="mt-2 app-muted">
                         The RESPOnD project aims to co-design ecosystem-based
                         adaptation solutions with wine practitioners and
                         decision-makers to increase the climate resilience of
@@ -176,7 +174,7 @@ export default function About() {
                   className="block rounded-xl border p-6 transition-colors border-[color:var(--border)] bg-[color:var(--surface-overlay)] hover:border-[color:var(--border-strong)] hover:bg-[color:var(--surface-muted)]"
                 >
                   <h3 className="text-lg font-semibold">AGATA Project</h3>
-                  <p className="mt-2 text-[color:var(--text-muted)]">
+                  <p className="mt-2 app-muted">
                     The AGATA (Accessible ecoloGicAl daTA for resilient
                     Viticulture) project aims to develop spatially explicit
                     indicators that describe key ecological conditions and
@@ -193,7 +191,7 @@ export default function About() {
                     className="block rounded-xl border p-6 transition-colors border-[color:var(--border)] bg-[color:var(--surface-overlay)] hover:border-[color:var(--border-strong)] hover:bg-[color:var(--surface-muted)]"
                   >
                     <h3 className="text-lg font-semibold">KULTIVAS Project</h3>
-                    <p className="mt-2 text-[color:var(--text-muted)]">
+                    <p className="mt-2 app-muted">
                       KULTIVAS is a modern big-data application that uses high
                       resolution climatic and remote sensing data combined with
                       machine learning to enable data-based decision making in
@@ -212,7 +210,7 @@ export default function About() {
                     className="block rounded-xl border p-6 transition-colors border-[color:var(--border)] bg-[color:var(--surface-overlay)] hover:border-[color:var(--border-strong)] hover:bg-[color:var(--surface-muted)]"
                   >
                     <h3 className="text-lg font-semibold">REBECKA Project</h3>
-                    <p className="mt-2 text-[color:var(--text-muted)]">
+                    <p className="mt-2 app-muted">
                       The REBECKA project aims to develop a land-suitability
                       model for viticulture based on historical harvest data,
                       grape quality assessments and climatic models.
@@ -230,7 +228,7 @@ export default function About() {
                     className="block rounded-xl border p-6 transition-colors border-[color:var(--border)] bg-[color:var(--surface-overlay)] hover:border-[color:var(--border-strong)] hover:bg-[color:var(--surface-muted)]"
                   >
                     <h3 className="text-lg font-semibold">ClimSmart Project</h3>
-                    <p className="mt-2 text-[color:var(--text-muted)]">
+                    <p className="mt-2 app-muted">
                       The ClimSmart Project combines high-resolution climate
                       data and modern analytical methods to identify targeted
                       adaptation strategies for mountain agriculture.
@@ -245,14 +243,14 @@ export default function About() {
           </section>
 
           <section id="institute" className="px-8 md:px-12">
-            <h2 className="text-2xl md:text-3xl">Our Institute</h2>
-            <p className="mt-3 text-[color:var(--text-muted)]">
+            <h2 className="app-section-title md:text-3xl">Our Institute</h2>
+            <p className="mt-3 app-text">
               The Winemap is developed by the{" "}
               <a
                 href="https://www.eurac.edu/en/institutes-centers/institute-for-alpine-environment"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-semibold transition-colors text-[color:var(--accent)]"
+                className="font-semibold transition-colors app-accent-text"
               >
                 Institute for Alpine Environment
               </a>{" "}
@@ -277,7 +275,7 @@ export default function About() {
                 <h2 className="text-2xl md:text-3xl">
                   Institute for Alpine Environment
                 </h2>
-                <p className="mt-3 text-[color:var(--foreground)]">
+                <p className="mt-3 app-text-color">
                   Our interdisciplinary research team specializes in climate
                   adaptation, environmental science, and sustainable
                   agriculture, providing the scientific foundation for this
@@ -296,7 +294,7 @@ export default function About() {
                 </p>
 
                 <h2 className="text-2xl md:text-3xl mt-3">Our Mission</h2>
-                <p className="mt-3 leading-relaxed mb-6 text-[color:var(--text-muted)]">
+                <p className="mt-3 leading-relaxed mb-6 app-muted">
                   The global biodiversity crisis is one of the greatest
                   challenges facing humanity today. Our research focuses on how
                   biodiversity, ecosystem functions, and services are changing
@@ -308,12 +306,12 @@ export default function About() {
                 <div className="grid md:grid-cols-3 gap-6 mb-8">
                   <div className="rounded-lg p-6 border border-[color:var(--border)] bg-[color:var(--surface-overlay)]">
                     <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-[color:var(--accent-soft)]">
-                      <Leaf className="w-6 h-6 text-[color:var(--accent)]" />
+                      <Leaf className="w-6 h-6 app-accent-text" />
                     </div>
-                    <h3 className="text-lg font-semibold mb-2 text-[color:var(--foreground)]">
+                    <h3 className="text-lg font-semibold mb-2 app-text-color">
                       Biodiversity & Ecosystems
                     </h3>
-                    <p className="text-sm leading-relaxed text-[color:var(--text-muted)]">
+                    <p className="app-caption">
                       Monitoring and understanding biodiversity changes across
                       alpine environments, from soil organisms to birds,
                       ensuring the preservation of mountain ecosystems.
@@ -322,12 +320,12 @@ export default function About() {
 
                   <div className="rounded-lg p-6 border border-[color:var(--border)] bg-[color:var(--surface-overlay)]">
                     <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-[color:var(--accent-soft)]">
-                      <ThermometerSun className="w-6 h-6 text-[color:var(--accent)]" />
+                      <ThermometerSun className="w-6 h-6 app-accent-text" />
                     </div>
-                    <h3 className="text-lg font-semibold mb-2 text-[color:var(--foreground)]">
+                    <h3 className="text-lg font-semibold mb-2 app-text-color">
                       Climate Change Research
                     </h3>
-                    <p className="text-sm leading-relaxed text-[color:var(--text-muted)]">
+                    <p className="app-caption">
                       Investigating climate impacts on alpine regions through
                       long-term monitoring, from snowfall patterns to ecosystem
                       shifts at high altitudes.
@@ -336,12 +334,12 @@ export default function About() {
 
                   <div className="rounded-lg p-6 border border-[color:var(--border)] bg-[color:var(--surface-overlay)]">
                     <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-[color:var(--accent-soft)]">
-                      <Scale className="w-6 h-6 text-[color:var(--accent)]" />
+                      <Scale className="w-6 h-6 app-accent-text" />
                     </div>
-                    <h3 className="text-lg font-semibold mb-2 text-[color:var(--foreground)]">
+                    <h3 className="text-lg font-semibold mb-2 app-text-color">
                       Sustainable Mountain Development
                     </h3>
-                    <p className="text-sm leading-relaxed text-[color:var(--text-muted)]">
+                    <p className="app-caption">
                       Developing integrated landscape management approaches for
                       resilient mountain forests and agriculture under global
                       change.
@@ -358,8 +356,8 @@ export default function About() {
                 href="/about/team"
                 className="block rounded-xl border p-6 transition-colors border-[color:var(--border)] bg-[color:var(--surface-overlay)] hover:border-[color:var(--border-strong)] hover:bg-[color:var(--surface-muted)]"
               >
-                <h2 className="text-2xl md:text-3xl">Meet our Team</h2>
-                <p className="mt-3 text-[color:var(--text-muted)]">
+                <h2 className="app-section-title md:text-3xl">Meet our Team</h2>
+                <p className="mt-3 app-muted">
                   Explore the team behind the Winemap project.
                 </p>
                 <span className="mt-4 inline-flex items-center gap-2 underline underline-offset-4">
@@ -370,7 +368,7 @@ export default function About() {
           </section>
 
           <section className="px-8 md:px-12">
-            <div className="max-w-2xl text-[color:var(--text-muted)]">
+            <div className="max-w-2xl app-muted">
               <p>
                 Winemap is part of the Eurac Research{" "}
                 <a

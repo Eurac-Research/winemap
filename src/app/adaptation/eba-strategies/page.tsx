@@ -36,14 +36,12 @@ export default function EbaStrategiesPage() {
       <div className="mx-auto max-w-6xl px-4 py-28 sm:px-6 lg:py-32">
         <header className="mb-8 flex flex-col gap-6">
           <div>
-            <p className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent)]">
+            <p className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] app-accent-text">
               <Leaf className="h-4 w-4" aria-hidden="true" />
               Adaptation
             </p>
-            <h1 className="mt-4 text-4xl font-semibold leading-tight text-[color:var(--foreground)] md:text-5xl">
-              EbA Strategies
-            </h1>
-            <p className="mt-5 text-lg leading-8 text-[color:var(--text-muted)]">
+            <h1 className="mt-4 app-page-title">EbA Strategies</h1>
+            <p className="mt-5 app-lead app-muted">
               Explore{" "}
               <GlossaryTermPopover id="ecosystem-based-adaptation">
                 ecosystem-based adaptation
@@ -54,15 +52,13 @@ export default function EbaStrategiesPage() {
           </div>
         </header>
 
-        <aside className="mb-8 flex max-w-4xl flex-col gap-3 rounded-lg border border-[color:var(--border)] bg-[color:var(--surface-overlay)] px-4 py-3 text-sm text-[color:var(--text-muted)] shadow-sm sm:flex-row sm:items-center sm:justify-between">
+        <aside className="mb-8 flex max-w-4xl flex-col gap-3 rounded-lg border border-[color:var(--border)] bg-[color:var(--surface-overlay)] px-4 py-3 app-caption shadow-sm sm:flex-row sm:items-center sm:justify-between">
           <div className="flex min-w-0 gap-3">
-            <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[color:var(--accent-soft)] text-[color:var(--accent)]">
+            <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[color:var(--accent-soft)] app-accent-text">
               <Database className="h-4 w-4" aria-hidden="true" />
             </span>
             <div className="min-w-0">
-              <p className="font-medium text-[color:var(--foreground)]">
-                Prefer a table view?
-              </p>
+              <p className="font-medium app-text-color">Prefer a table view?</p>
               <p className="mt-1 leading-6">
                 There is also a technical catalogue with search, filters,
                 classification metadata and PDF links for all EbA strategies.
@@ -74,7 +70,7 @@ export default function EbaStrategiesPage() {
             variant="outline"
             size="sm"
             asChild
-            className="w-fit shrink-0 border-[color:var(--border)] bg-[color:var(--surface)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-muted)]"
+            className="w-fit shrink-0 border-[color:var(--border)] bg-[color:var(--surface)] app-text-color hover:bg-[color:var(--surface-muted)]"
           >
             <Link href="/adaptation/eba-strategies/catalogue">
               Open catalogue

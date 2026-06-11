@@ -73,7 +73,7 @@ export function EbaStrategyImageMap({
               href={marker.href}
               aria-describedby={tooltipId}
               aria-label={`Open ${marker.title}`}
-              className="group absolute z-10 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full hover:z-30 focus-visible:z-30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--accent)]"
+              className="group absolute z-10 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full hover:z-30 focus-visible:z-30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--app-accent-text-color)]"
               style={{
                 left: `${marker.position.x}%`,
                 top: `${marker.position.y}%`,
@@ -86,20 +86,20 @@ export function EbaStrategyImageMap({
                 id={tooltipId}
                 role="tooltip"
                 className={cn(
-                  "pointer-events-auto absolute z-20 hidden w-72 rounded-lg border border-[color:var(--border)] bg-[color:var(--surface)] p-4 text-left text-sm leading-6 text-[color:var(--foreground)] shadow-[var(--shadow-strong)] backdrop-blur-md group-hover:block group-focus-visible:block",
+                  "pointer-events-auto absolute z-20 hidden w-72 rounded-lg border border-[color:var(--border)] bg-[color:var(--surface)] p-4 text-left text-sm leading-6 app-text-color shadow-[var(--shadow-strong)] backdrop-blur-md group-hover:block group-focus-visible:block",
                   tooltipSideClasses[tooltipSide],
                 )}
               >
                 {marker.category ? (
-                  <span className="mb-1 block text-xs font-semibold uppercase tracking-[0.14em] text-[color:var(--accent)]">
+                  <span className="mb-1 block text-xs font-semibold uppercase tracking-[0.14em] app-accent-text">
                     {marker.category}
                   </span>
                 ) : null}
-                <span className="block text-base font-semibold leading-6 text-[color:var(--foreground)]">
+                <span className="block text-base font-semibold leading-6 app-text-color">
                   {marker.title}
                 </span>
                 {marker.fieldOfAction || marker.spatialScale ? (
-                  <span className="mt-2 grid gap-1 text-xs text-[color:var(--text-muted)]">
+                  <span className="mt-2 grid gap-1 text-xs app-muted">
                     {marker.fieldOfAction ? (
                       <span>Field of action: {marker.fieldOfAction}</span>
                     ) : null}
@@ -111,7 +111,7 @@ export function EbaStrategyImageMap({
                 {summaryPreview ? (
                   <span className="mt-2 block">{summaryPreview}</span>
                 ) : null}
-                <span className="mt-3 inline-flex items-center gap-1 font-semibold text-[color:var(--accent)]">
+                <span className="mt-3 inline-flex items-center gap-1 font-semibold app-accent-text">
                   Open strategy
                   <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </span>

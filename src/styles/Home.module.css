@@ -1565,18 +1565,21 @@
 .sectionThemeClimateEnvironment {
   --landing-accent: var(--section-climate-environment-accent);
   --landing-accent-soft: var(--section-climate-environment-accent-soft);
+  --app-accent-text-color: var(--landing-accent);
   --landing-aside-width: 8rem;
 }
 
 .sectionThemeAdaptation {
   --landing-accent: var(--section-adaptation-accent);
   --landing-accent-soft: var(--section-adaptation-accent-soft);
+  --app-accent-text-color: var(--landing-accent);
   --landing-aside-width: 10rem;
 }
 
 .sectionThemeGovernance {
   --landing-accent: var(--section-governance-accent);
   --landing-accent-soft: var(--section-governance-accent-soft);
+  --app-accent-text-color: var(--landing-accent);
   --landing-aside-width: 10rem;
 }
 
@@ -1603,8 +1606,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--landing-accent);
-  font-size: 0.875rem;
+  color: var(--app-accent-text-color);
+  font-size: var(--app-caption-size);
   font-weight: 600;
   letter-spacing: 0.18em;
   line-height: 1.25rem;
@@ -1626,17 +1629,18 @@
 .landingTitle {
   margin-top: 1.25rem;
   max-width: 48rem;
-  font-size: 2.25rem;
+  color: var(--app-heading-color);
+  font-size: var(--app-page-title-size);
   font-weight: 600;
-  line-height: 1.1;
+  line-height: var(--app-page-title-line-height);
 }
 
 .landingIntro {
   margin-top: 1.5rem;
   max-width: 42rem;
-  color: var(--foreground);
-  font-size: 1.125rem;
-  line-height: 2rem;
+  color: var(--app-text-color);
+  font-size: var(--app-lead-size);
+  line-height: var(--app-lead-line-height);
 }
 
 .landingHeroPanel,
@@ -1663,9 +1667,9 @@
 .landingHeroCaption {
   border-top: 1px solid var(--border);
   padding: 1rem 1.25rem;
-  color: var(--text-muted);
-  font-size: 0.875rem;
-  line-height: 1.5rem;
+  color: var(--app-muted-color);
+  font-size: var(--app-caption-size);
+  line-height: var(--app-caption-line-height);
 }
 
 .landingSection {
@@ -1693,8 +1697,8 @@
 }
 
 .landingAside {
-  color: var(--landing-accent);
-  font-size: 0.875rem;
+  color: var(--app-accent-text-color);
+  font-size: var(--app-caption-size);
   font-weight: 600;
   letter-spacing: 0.16em;
   line-height: 1.75rem;
@@ -1705,15 +1709,16 @@
   display: grid;
   max-width: 56rem;
   gap: 1.25rem;
-  color: var(--text-muted);
+  color: var(--app-muted-color);
 }
 
 .landingCopy p {
-  line-height: 1.75rem;
+  font-size: var(--app-text-size);
+  line-height: var(--app-text-line-height);
 }
 
 .landingCopyPrimary {
-  color: var(--foreground);
+  color: var(--app-text-color);
 }
 
 .landingDiscoverShell {
@@ -1723,8 +1728,8 @@
 
 .landingDiscoverHeading {
   max-width: 42rem;
-  color: var(--landing-accent);
-  font-size: 0.875rem;
+  color: var(--app-accent-text-color);
+  font-size: var(--app-caption-size);
   font-weight: 600;
   letter-spacing: 0.16em;
   line-height: 1.25rem;
@@ -1778,7 +1783,7 @@
 
 .landingDiscoverTitle {
   margin-top: 1.25rem;
-  color: var(--foreground);
+  color: var(--app-heading-color);
   font-size: 1.25rem;
   font-weight: 600;
   line-height: 1.75rem;
@@ -1786,9 +1791,9 @@
 
 .landingDiscoverDescription {
   margin-top: 0.75rem;
-  color: var(--text-muted);
-  font-size: 0.875rem;
-  line-height: 1.5rem;
+  color: var(--app-muted-color);
+  font-size: var(--app-caption-size);
+  line-height: var(--app-caption-line-height);
 }
 
 @media (min-width: 768px) {
@@ -1801,7 +1806,7 @@
   }
 
   .landingTitle {
-    font-size: 3rem;
+    font-size: var(--app-page-title-size);
   }
 }
 

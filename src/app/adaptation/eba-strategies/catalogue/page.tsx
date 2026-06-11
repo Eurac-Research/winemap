@@ -151,15 +151,12 @@ export default function EbaStrategiesPage() {
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <BookOpen
-              className="w-8 h-8 text-[color:var(--foreground)]"
-              aria-hidden="true"
-            />
-            <h1 className="text-4xl font-bold text-[color:var(--foreground)]">
+            <BookOpen className="w-8 h-8 app-text-color" aria-hidden="true" />
+            <h1 className="app-page-title font-bold">
               EbA Strategies Catalogue
             </h1>
           </div>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+          <p className="app-lead app-muted max-w-2xl mx-auto">
             Explore our collection of factsheets describing{" "}
             <GlossaryTermPopover id="ecosystem-based-adaptation">
               Ecosystem Based Adaptation (EbA) strategies
@@ -171,20 +168,20 @@ export default function EbaStrategiesPage() {
         <div className="flex flex-col gap-4 mb-8">
           <div className="relative flex-1">
             <Search
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4"
+              className="absolute left-3 top-1/2 -translate-y-1/2 app-muted w-4 h-4"
               aria-hidden="true"
             />
             <Input
               placeholder="Search strategies, categories, fields of action or summaries ..."
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
-              className="pl-10 pr-10 h-12 transition-colors bg-[color:var(--surface-overlay)] border-[color:var(--border)] text-[color:var(--foreground)] placeholder:text-[color:var(--text-muted)] hover:bg-[color:var(--surface-muted)] focus:bg-[color:var(--surface-muted)]"
+              className="pl-10 pr-10 h-12 transition-colors bg-[color:var(--surface-overlay)] border-[color:var(--border)] app-text-color placeholder:text-[color:var(--app-muted-color)] hover:bg-[color:var(--surface-muted)] focus:bg-[color:var(--surface-muted)]"
               aria-label="Search factsheets"
             />
             {searchTerm ? (
               <button
                 onClick={() => setSearchTerm("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--foreground)]"
+                className="absolute right-3 top-1/2 -translate-y-1/2 transition-colors app-muted hover:text-[color:var(--app-text-color)]"
                 aria-label="Clear search"
               >
                 <X className="w-4 h-4" aria-hidden="true" />
@@ -192,29 +189,26 @@ export default function EbaStrategiesPage() {
             ) : null}
           </div>
 
-          <div className="grid gap-2 text-[color:var(--foreground)] sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_auto_auto]">
+          <div className="grid gap-2 app-text-color sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_auto_auto]">
             <Select
               value={categoryFilter}
               onValueChange={(value: string) => setCategoryFilter(value)}
             >
               <SelectTrigger
-                className="h-12 w-full bg-[color:var(--surface-overlay)] border-[color:var(--border)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-muted)]"
+                className="h-12 w-full bg-[color:var(--surface-overlay)] border-[color:var(--border)] app-text-color hover:bg-[color:var(--surface-muted)]"
                 aria-label="Filter by category"
               >
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-[color:var(--surface)] border-[color:var(--border)]">
-                <SelectItem
-                  value="all"
-                  className="text-[color:var(--foreground)]"
-                >
+                <SelectItem value="all" className="app-text-color">
                   All Categories
                 </SelectItem>
                 {uniqueCategories.map((category) => (
                   <SelectItem
                     key={category}
                     value={category}
-                    className="text-[color:var(--foreground)]"
+                    className="app-text-color"
                   >
                     {category}
                   </SelectItem>
@@ -227,23 +221,20 @@ export default function EbaStrategiesPage() {
               onValueChange={(value: string) => setFieldFilter(value)}
             >
               <SelectTrigger
-                className="h-12 w-full bg-[color:var(--surface-overlay)] border-[color:var(--border)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-muted)]"
+                className="h-12 w-full bg-[color:var(--surface-overlay)] border-[color:var(--border)] app-text-color hover:bg-[color:var(--surface-muted)]"
                 aria-label="Filter by field of action"
               >
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-[color:var(--surface)] border-[color:var(--border)]">
-                <SelectItem
-                  value="all"
-                  className="text-[color:var(--foreground)]"
-                >
+                <SelectItem value="all" className="app-text-color">
                   All Fields of Action
                 </SelectItem>
                 {uniqueFieldsOfAction.map((fieldOfAction) => (
                   <SelectItem
                     key={fieldOfAction}
                     value={fieldOfAction}
-                    className="text-[color:var(--foreground)]"
+                    className="app-text-color"
                   >
                     {fieldOfAction}
                   </SelectItem>
@@ -256,23 +247,20 @@ export default function EbaStrategiesPage() {
               onValueChange={(value: string) => setScaleFilter(value)}
             >
               <SelectTrigger
-                className="h-12 w-full bg-[color:var(--surface-overlay)] border-[color:var(--border)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-muted)]"
+                className="h-12 w-full bg-[color:var(--surface-overlay)] border-[color:var(--border)] app-text-color hover:bg-[color:var(--surface-muted)]"
                 aria-label="Filter by spatial scale"
               >
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-[color:var(--surface)] border-[color:var(--border)]">
-                <SelectItem
-                  value="all"
-                  className="text-[color:var(--foreground)]"
-                >
+                <SelectItem value="all" className="app-text-color">
                   All Scales
                 </SelectItem>
                 {uniqueSpatialScales.map((spatialScale) => (
                   <SelectItem
                     key={spatialScale}
                     value={spatialScale}
-                    className="text-[color:var(--foreground)]"
+                    className="app-text-color"
                   >
                     {spatialScale}
                   </SelectItem>
@@ -291,43 +279,31 @@ export default function EbaStrategiesPage() {
               ) => setSortBy(value)}
             >
               <SelectTrigger
-                className="h-12 w-full lg:w-40 bg-[color:var(--surface-overlay)] border-[color:var(--border)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-muted)]"
+                className="h-12 w-full lg:w-40 bg-[color:var(--surface-overlay)] border-[color:var(--border)] app-text-color hover:bg-[color:var(--surface-muted)]"
                 aria-label="Sort by"
               >
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-[color:var(--surface)] border-[color:var(--border)]">
-                <SelectItem
-                  value="title"
-                  className="text-[color:var(--foreground)]"
-                >
+                <SelectItem value="title" className="app-text-color">
                   <div className="flex items-center gap-2">
                     <BookOpen className="w-4 h-4" aria-hidden="true" />
                     Title
                   </div>
                 </SelectItem>
-                <SelectItem
-                  value="category"
-                  className="text-[color:var(--foreground)]"
-                >
+                <SelectItem value="category" className="app-text-color">
                   <div className="flex items-center gap-2">
                     <Layers className="w-4 h-4" aria-hidden="true" />
                     Category
                   </div>
                 </SelectItem>
-                <SelectItem
-                  value="field_of_action"
-                  className="text-[color:var(--foreground)]"
-                >
+                <SelectItem value="field_of_action" className="app-text-color">
                   <div className="flex items-center gap-2">
                     <Droplet className="w-4 h-4" aria-hidden="true" />
                     Field of Action
                   </div>
                 </SelectItem>
-                <SelectItem
-                  value="spatial_scale"
-                  className="text-[color:var(--foreground)]"
-                >
+                <SelectItem value="spatial_scale" className="app-text-color">
                   <div className="flex items-center gap-2">
                     <Map className="w-4 h-4" aria-hidden="true" />
                     Scale
@@ -339,7 +315,7 @@ export default function EbaStrategiesPage() {
             <Button
               variant="outline"
               onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
-              className="h-12 px-3 bg-[color:var(--surface-overlay)] border-[color:var(--border)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-muted)] hover:text-[color:var(--foreground)]"
+              className="h-12 px-3 bg-[color:var(--surface-overlay)] border-[color:var(--border)] app-text-color hover:bg-[color:var(--surface-muted)] hover:text-[color:var(--app-text-color)]"
               aria-label={`Sort ${sortOrder === "asc" ? "descending" : "ascending"}`}
             >
               {sortOrder === "desc" ? (
@@ -352,7 +328,7 @@ export default function EbaStrategiesPage() {
         </div>
 
         <div className="mb-6">
-          <p className="text-gray-400">
+          <p className="app-muted">
             Showing {filteredAndSortedFactsheets.length} of {factsheets.length}{" "}
             factsheets
           </p>
@@ -376,10 +352,10 @@ export default function EbaStrategiesPage() {
                     router.push(strategyHref);
                   }
                 }}
-                className="h-full cursor-pointer hover:shadow-lg transition-all duration-200 backdrop-blur-sm bg-[color:var(--surface-overlay)] border-[color:var(--border)] hover:border-[color:var(--border-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
+                className="h-full cursor-pointer hover:shadow-lg transition-all duration-200 backdrop-blur-sm bg-[color:var(--surface-overlay)] border-[color:var(--border)] hover:border-[color:var(--border-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--app-accent-text-color)]"
               >
                 <CardHeader>
-                  <CardTitle className="text-xl mb-2 leading-tight text-[color:var(--foreground)]">
+                  <CardTitle className="text-xl mb-2 leading-tight app-text-color">
                     {highlightText(factsheet.title, searchTerm)}
                   </CardTitle>
 
@@ -390,10 +366,10 @@ export default function EbaStrategiesPage() {
                       ["Spatial scale", factsheet.spatial_scale],
                     ].map(([label, value]) => (
                       <div key={label} className="py-2">
-                        <span className="block font-semibold uppercase tracking-[0.12em] text-[color:var(--accent)]">
+                        <span className="block font-semibold uppercase tracking-[0.12em] app-accent-text">
                           {label}
                         </span>
-                        <span className="mt-1 block font-medium text-[color:var(--foreground)]">
+                        <span className="mt-1 block font-medium app-text-color">
                           {highlightText(value, searchTerm)}
                         </span>
                       </div>
@@ -405,7 +381,7 @@ export default function EbaStrategiesPage() {
                       variant="outline"
                       size="sm"
                       asChild
-                      className="h-6 max-w-14 px-2 text-xs bg-[color:var(--surface-muted)] border-[color:var(--border-strong)] hover:bg-[color:var(--surface-overlay)] hover:border-[color:var(--border)] text-[color:var(--foreground)] hover:text-[color:var(--foreground)]"
+                      className="h-6 max-w-14 px-2 text-xs bg-[color:var(--surface-muted)] border-[color:var(--border-strong)] hover:bg-[color:var(--surface-overlay)] hover:border-[color:var(--border)] app-text-color hover:text-[color:var(--app-text-color)]"
                     >
                       <a
                         href={`/factsheets/${factsheet.filename}`}
@@ -427,10 +403,10 @@ export default function EbaStrategiesPage() {
                 {factsheet.summary ? (
                   <CardContent>
                     <div className="mb-4">
-                      <h4 className="font-semibold text-sm text-gray-300 mb-2">
+                      <h4 className="font-semibold text-sm app-text-color mb-2">
                         Summary
                       </h4>
-                      <p className="text-gray-400 text-sm leading-relaxed">
+                      <p className="app-caption">
                         {highlightText(
                           abstractExpanded ||
                             factsheet.summary.length <= abstractLimit
@@ -444,7 +420,7 @@ export default function EbaStrategiesPage() {
                               event.stopPropagation();
                               toggleAbstract(factsheet.id);
                             }}
-                            className="ml-2 text-[color:var(--accent)] hover:underline inline-flex items-center"
+                            className="ml-2 app-accent-text hover:underline inline-flex items-center"
                             aria-label={
                               abstractExpanded
                                 ? "Show less of abstract"
@@ -482,13 +458,13 @@ export default function EbaStrategiesPage() {
         {filteredAndSortedFactsheets.length === 0 ? (
           <div className="text-center py-12">
             <BookOpen
-              className="w-16 h-16 text-gray-600 mx-auto mb-4"
+              className="w-16 h-16 app-muted mx-auto mb-4"
               aria-hidden="true"
             />
-            <h3 className="text-xl font-semibold text-gray-400 mb-2">
+            <h3 className="text-xl font-semibold app-muted mb-2">
               No strategies found
             </h3>
-            <p className="text-gray-500">
+            <p className="app-muted">
               Try adjusting your search terms or filters
             </p>
           </div>

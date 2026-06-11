@@ -24,7 +24,7 @@ export function EbaVideoEmbed({
         />
       </div>
       {caption ? (
-        <figcaption className="border-t border-[color:var(--border)] px-4 py-3 text-sm text-[color:var(--text-muted)]">
+        <figcaption className="border-t border-[color:var(--border)] px-4 py-3 app-caption">
           {caption}
         </figcaption>
       ) : null}

@@ -64,7 +64,7 @@ export default function GovernancePage() {
             <aside className={styles.landingAside}>Part 1</aside>
 
             <div className={styles.landingCopy}>
-              <p className={styles.landingCopyPrimary}>Text in part 1</p>
+              <p>Text in part 1</p>
             </div>
           </div>
         </section>

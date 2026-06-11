@@ -71,14 +71,14 @@ const CookieConsent = () => {
     <>
       <div className="CookieBg fixed left-0 top-0 z-10 h-full w-full bg-black/70 blur-lg"></div>
       <section className="CookieConsent fixed bottom-0 left-0 z-20 w-full py-2 opacity-100 blur-0 md:py-4">
-        <div className="flex flex-col items-start space-y-2 bg-gray-200 px-8 py-8 md:flex-row md:items-stretch md:space-x-2 md:space-y-0">
-          <div className="flex flex-grow items-center text-gray-900">
-            <p className="max-w-2xl text-sm font-medium">
+        <div className="flex flex-col items-start space-y-2 bg-[color:var(--surface-muted)] px-8 py-8 md:flex-row md:items-stretch md:space-x-2 md:space-y-0">
+          <div className="flex flex-grow items-center app-text-color">
+            <p className="max-w-2xl app-caption font-medium">
               In order to give you a better service this site uses cookies.
               Additionally third party cookies are used. By continuing to browse
               the site you are agreeing to our use of cookies.{" "}
               <a
-                className="hover:text-lightAccent text-sm underline"
+                className="app-accent-text underline hover:brightness-110"
                 href="https://privacy.eurac.edu"
               >
                 Privacy policy
@@ -87,7 +87,7 @@ const CookieConsent = () => {
           </div>
           <div className="flex items-center">
             <button
-              className="whitespace-nowrap bg-green-600 px-6 py-3 text-sm font-bold uppercase text-white hover:bg-green-500"
+              className="whitespace-nowrap bg-[color:var(--accent)] px-6 py-3 text-sm font-bold uppercase text-[color:var(--accent-foreground)] hover:brightness-110"
               onClick={onClick}
             >
               OK

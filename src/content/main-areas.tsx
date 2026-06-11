@@ -33,7 +33,7 @@ export const mainAreas: MainArea[] = [
       "Explore climate data, vulnerability assessments, and environmental indicators for wine regions across Europe.",
     icon: (
       <ThermometerSun
-        className="w-12 h-12 text-[color:var(--accent)]"
+        className="w-12 h-12 app-accent-text"
         aria-hidden="true"
       />
     ),
@@ -66,12 +66,7 @@ export const mainAreas: MainArea[] = [
     ),
     description:
       "Discover ecosystem-based adaptation strategies and pilot implementation experiences for viticulture.",
-    icon: (
-      <Leaf
-        className="w-12 h-12 text-[color:var(--accent)]"
-        aria-hidden="true"
-      />
-    ),
+    icon: <Leaf className="w-12 h-12 app-accent-text" aria-hidden="true" />,
     mainHref: "/adaptation",
     categoriesClassName: "space-y-1",
     categories: [
@@ -108,12 +103,7 @@ export const mainAreas: MainArea[] = [
     ),
     description:
       "Navigate legal frameworks, regulations, and geographic indications for wine production in Europe.",
-    icon: (
-      <Scale
-        className="w-12 h-12 text-[color:var(--accent)]"
-        aria-hidden="true"
-      />
-    ),
+    icon: <Scale className="w-12 h-12 app-accent-text" aria-hidden="true" />,
     mainHref: "/governance",
     categoriesClassName: "space-y-1",
     categories: [
@@ -144,12 +134,7 @@ export const mainAreas: MainArea[] = [
     title: "About Winemap",
     description:
       "Learn about the data and the research projects behind Winemap.",
-    icon: (
-      <BookOpen
-        className="w-12 h-12 text-[color:var(--accent)]"
-        aria-hidden="true"
-      />
-    ),
+    icon: <BookOpen className="w-12 h-12 app-accent-text" aria-hidden="true" />,
     mainHref: "/about",
     categories: [
       {
@@ -178,12 +163,7 @@ export const mainAreas: MainArea[] = [
     title: "Resources",
     description:
       "Look at scientific articles related to the Winemap and the glossary.",
-    icon: (
-      <BookOpen
-        className="w-12 h-12 text-[color:var(--accent)]"
-        aria-hidden="true"
-      />
-    ),
+    icon: <BookOpen className="w-12 h-12 app-accent-text" aria-hidden="true" />,
     mainHref: "/",
     categories: [
       {

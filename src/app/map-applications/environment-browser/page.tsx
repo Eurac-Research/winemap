@@ -796,7 +796,7 @@ export default function EnvironmentBrowserPage() {
                           event.stopPropagation();
                           setSelectedInfo(indicator);
                         }}
-                        className="self-center cursor-pointer transition-colors text-[color:var(--text-muted)] hover:text-[color:var(--foreground)]"
+                        className="self-center cursor-pointer transition-colors app-muted hover:text-[color:var(--app-text-color)]"
                         aria-label={`More info about ${indicator.name}`}
                         role="button"
                         tabIndex={0}
@@ -1025,7 +1025,7 @@ export default function EnvironmentBrowserPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedInfo(null)}
-                  className="rounded-full border px-4 py-2 text-sm font-semibold transition-colors border-[color:var(--border)] bg-[color:var(--surface-overlay)] text-[color:var(--foreground)] hover:bg-[color:var(--surface-muted)]"
+                  className="rounded-full border px-4 py-2 text-sm font-semibold transition-colors border-[color:var(--border)] bg-[color:var(--surface-overlay)] app-text-color hover:bg-[color:var(--surface-muted)]"
                 >
                   Close
                 </button>

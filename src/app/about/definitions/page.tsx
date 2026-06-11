@@ -123,7 +123,7 @@ function renderMethodology(methodology: RichTextContent[] | undefined) {
     nodes.push(
       <ul
         key={`methodology-list-${nodes.length}`}
-        className="mt-3 list-disc space-y-1 pl-5 text-[color:var(--foreground)]"
+        className="mt-3 list-disc space-y-1 pl-5 app-text-color"
       >
         {bulletItems}
       </ul>,
@@ -151,10 +151,7 @@ function renderMethodology(methodology: RichTextContent[] | undefined) {
 
     flushBullets();
     nodes.push(
-      <p
-        key={`methodology-${index}`}
-        className="mt-1 text-[color:var(--foreground)]"
-      >
+      <p key={`methodology-${index}`} className="mt-1 app-text-color">
         {renderRichText(entry)}
       </p>,
     );
@@ -209,12 +206,12 @@ function ExpandableIndicatorSection({
   return (
     <details className="group mt-6 rounded-lg border border-[color:var(--border)] bg-[color:var(--surface)]">
       <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 [&::-webkit-details-marker]:hidden">
-        <span className="flex items-center gap-2 text-base font-semibold text-[color:var(--foreground)]">
+        <span className="flex items-center gap-2 text-base font-semibold app-text-color">
           {icon}
           {title}
         </span>
         <ChevronDown
-          className="h-4 w-4 shrink-0 text-[color:var(--text-muted)] transition-transform group-open:rotate-180"
+          className="h-4 w-4 shrink-0 app-muted transition-transform group-open:rotate-180"
           aria-hidden="true"
         />
       </summary>
@@ -243,21 +240,17 @@ function IndicatorArticle({ indicator }: { indicator: Indicator }) {
     >
       <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent)]">
+          <p className="text-sm font-semibold uppercase tracking-[0.16em] app-accent-text">
             {INDICATOR_CATEGORY_LABELS[indicator.category]}
           </p>
-          <h2 className="mt-2 text-2xl font-semibold text-[color:var(--foreground)]">
-            {indicator.name}
-          </h2>
+          <h2 className="mt-2 app-section-title">{indicator.name}</h2>
           {indicator.subtitle ? (
-            <p className="mt-2 max-w-3xl text-[color:var(--text-muted)]">
-              {indicator.subtitle}
-            </p>
+            <p className="mt-2 max-w-3xl app-muted">{indicator.subtitle}</p>
           ) : null}
         </div>
 
         {indicator.map?.unit ? (
-          <div className="rounded border border-[color:var(--border)] px-3 py-2 text-sm text-[color:var(--text-muted)]">
+          <div className="rounded border border-[color:var(--border)] px-3 py-2 app-caption">
             Unit: {indicator.map.unit}
           </div>
         ) : null}
@@ -265,13 +258,13 @@ function IndicatorArticle({ indicator }: { indicator: Indicator }) {
 
       {descriptions.length ? (
         <section className="mt-6">
-          <h3 className="flex items-center gap-2 text-base font-semibold text-[color:var(--foreground)]">
+          <h3 className="flex items-center gap-2 text-base font-semibold app-text-color">
             <BookOpen className="h-4 w-4" aria-hidden="true" />
             Definition
           </h3>
           <div className="mt-1 space-y-3">
             {descriptions.map((paragraph) => (
-              <p key={paragraph} className="text-[color:var(--foreground)]">
+              <p key={paragraph} className="app-text-color">
                 {renderLinkedText(paragraph)}
               </p>
             ))}
@@ -293,7 +286,7 @@ function IndicatorArticle({ indicator }: { indicator: Indicator }) {
           title="References"
           icon={<ExternalLink className="h-4 w-4" aria-hidden="true" />}
         >
-          <ul className="mt-1 list-disc space-y-2 pl-5 text-[color:var(--foreground)]">
+          <ul className="mt-1 list-disc space-y-2 pl-5 app-text-color">
             {references.map(renderReference)}
           </ul>
         </ExpandableIndicatorSection>
@@ -301,7 +294,7 @@ function IndicatorArticle({ indicator }: { indicator: Indicator }) {
 
       {apps.length ? (
         <section className="mt-6 border-t border-[color:var(--border)] pt-4">
-          <h3 className="flex items-center gap-2 text-sm font-semibold text-[color:var(--foreground)]">
+          <h3 className="flex items-center gap-2 text-sm font-semibold app-text-color">
             <Layers className="h-4 w-4" aria-hidden="true" />
             Available in
           </h3>
@@ -314,14 +307,14 @@ function IndicatorArticle({ indicator }: { indicator: Indicator }) {
                 <Link
                   key={app}
                   href={href}
-                  className="rounded border border-[color:var(--border)] px-3 py-1 text-sm text-[color:var(--foreground)] transition-colors hover:bg-[color:var(--accent)]"
+                  className="rounded border border-[color:var(--border)] px-3 py-1 text-sm app-text-color transition-colors hover:bg-[color:var(--accent)]"
                 >
                   {label}
                 </Link>
               ) : (
                 <span
                   key={app}
-                  className="rounded border border-[color:var(--border)] px-3 py-1 text-sm text-[color:var(--text-muted)]"
+                  className="rounded border border-[color:var(--border)] px-3 py-1 app-caption"
                 >
                   {label}
                 </span>
@@ -346,13 +339,11 @@ export default function IndicatorDefinitionsPage() {
     <main id="top" className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-6xl px-6 py-32">
         <header className="px-2 md:px-0">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent)]">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] app-accent-text">
             About Winemap
           </p>
-          <h1 className="mt-3 text-3xl font-semibold text-[color:var(--foreground)] md:text-5xl">
-            Indicator Definitions
-          </h1>
-          <p className="mt-4 max-w-3xl text-lg leading-8 text-[color:var(--text-muted)]">
+          <h1 className="mt-3 app-page-title">Indicator Definitions</h1>
+          <p className="mt-4 max-w-3xl app-lead app-muted">
             A single reference page for the indicator definitions, methods, data
             sources, and references used across the Winemap map applications.
           </p>
@@ -367,7 +358,7 @@ export default function IndicatorDefinitionsPage() {
               <a
                 key={group.category}
                 href={`#${group.category}`}
-                className="rounded border border-[color:var(--border)] px-3 py-2 text-sm font-medium text-[color:var(--foreground)] transition-colors hover:bg-[color:var(--accent)]"
+                className="rounded border border-[color:var(--border)] px-3 py-2 text-sm font-medium app-text-color transition-colors hover:bg-[color:var(--accent)]"
               >
                 {INDICATOR_CATEGORY_LABELS[group.category]}
               </a>
@@ -384,17 +375,17 @@ export default function IndicatorDefinitionsPage() {
             >
               <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                 <div>
-                  <h2 className="text-2xl font-semibold text-[color:var(--foreground)] md:text-3xl">
+                  <h2 className="app-section-title">
                     {INDICATOR_CATEGORY_LABELS[group.category]}
                   </h2>
-                  <p className="mt-2 text-[color:var(--text-muted)]">
+                  <p className="mt-2 app-muted">
                     {group.indicators.length} indicator
                     {group.indicators.length === 1 ? "" : "s"}
                   </p>
                 </div>
                 <a
                   href="#top"
-                  className="text-sm font-medium text-[color:var(--accent)] underline underline-offset-4"
+                  className="text-sm font-medium app-accent-text underline underline-offset-4"
                 >
                   Back to top
                 </a>

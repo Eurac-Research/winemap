@@ -21,7 +21,7 @@ export default function HomePage() {
   const governanceArea = mainAreas.find((area) => area.id === "governance");
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[color:var(--background)] text-[color:var(--foreground)]">
+    <div className="relative min-h-screen overflow-x-hidden bg-[color:var(--background)] app-text-color">
       <section className="relative isolate overflow-hidden">
         <div
           className="absolute inset-0 z-0"
@@ -72,16 +72,16 @@ export default function HomePage() {
       >
         <div className="mx-auto grid max-w-7xl gap-12 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-20 lg:px-8 lg:py-12">
           <div className="max-w-xl">
-            <div className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent)]">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--accent)]/25 bg-[color:var(--accent)]/20 text-[color:var(--accent)]">
+            <div className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] app-accent-text">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--accent)]/25 bg-[color:var(--accent)]/20 app-accent-text">
                 <ThermometerSun className="h-4 w-4" />
               </span>
               <span>Winemap Environment</span>
             </div>
-            <h2 className="max-w-lg text-4xl font-semibold leading-tight text-[color:var(--foreground)] sm:text-5xl">
+            <h2 className="max-w-lg text-4xl font-semibold leading-tight app-text-color sm:text-5xl">
               Discover how climate pressure is reshaping European viticulture.
             </h2>
-            <p className="mt-6 max-w-md text-lg leading-8 text-[color:var(--foreground)]">
+            <p className="mt-6 max-w-md app-lead">
               Explore indicators, spatial patterns, and{" "}
               <GlossaryTermPopover id="vulnerability">
                 vulnerability
@@ -92,7 +92,7 @@ export default function HomePage() {
             <div className="mt-8 flex flex-wrap gap-5">
               <Link
                 href="/climate-environment"
-                className="inline-flex items-center gap-2 text-base font-medium text-[color:var(--accent)] transition hover:gap-3"
+                className="inline-flex items-center gap-2 text-base font-medium app-accent-text transition hover:gap-3"
               >
                 <span>Learn more about Winemap Environment</span>
                 <ArrowRight className="h-4 w-4" />
@@ -133,23 +133,23 @@ export default function HomePage() {
           </div>
 
           <div className="max-w-lg lg:justify-self-end">
-            <div className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent)]">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--accent)]/25 bg-[color:var(--accent)]/20 text-[color:var(--accent)]">
+            <div className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] app-accent-text">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--accent)]/25 bg-[color:var(--accent)]/20 app-accent-text">
                 <Leaf className="h-4 w-4" />
               </span>
               <span>Winemap Adaptation</span>
             </div>
-            <h2 className="max-w-lg text-4xl font-semibold leading-tight text-[color:var(--foreground)] sm:text-5xl">
+            <h2 className="max-w-lg text-4xl font-semibold leading-tight app-text-color sm:text-5xl">
               Explore strategies to adapt vineyards to climate change.
             </h2>
-            <p className="mt-6 max-w-md text-lg leading-8 text-[color:var(--foreground)]">
+            <p className="mt-6 max-w-md app-lead">
               Discover ecosystem-based adaptation approaches, pilot experiences,
               and practical measures that connect climate resilience with
               everyday vineyard management.
             </p>
             <Link
               href="/adaptation"
-              className="mt-8 inline-flex items-center gap-2 text-base font-medium text-[color:var(--accent)] transition hover:gap-3"
+              className="mt-8 inline-flex items-center gap-2 text-base font-medium app-accent-text transition hover:gap-3"
             >
               <span>Learn more about Winemap Adaptation</span>
               <ArrowRight className="h-4 w-4" />
@@ -164,24 +164,24 @@ export default function HomePage() {
       >
         <div className="mx-auto grid max-w-7xl gap-12 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-20 lg:px-8 lg:py-12">
           <div className="max-w-xl">
-            <div className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent)]">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--accent)]/25 bg-[color:var(--accent)]/20 text-[color:var(--accent)]">
+            <div className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] app-accent-text">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--accent)]/25 bg-[color:var(--accent)]/20 app-accent-text">
                 <Scale className="h-4 w-4" />
               </span>
               <span>Winemap Governance</span>
             </div>
-            <h2 className="max-w-lg text-4xl font-semibold leading-tight text-[color:var(--foreground)] sm:text-5xl">
+            <h2 className="max-w-lg text-4xl font-semibold leading-tight app-text-color sm:text-5xl">
               Understand the rules, institutions, and decisions shaping wine
               regions.
             </h2>
-            <p className="mt-6 max-w-md text-lg leading-8 text-[color:var(--foreground)]">
+            <p className="mt-6 max-w-md app-lead">
               Navigate the policy frameworks, participatory approaches, and
               educational resources that influence how viticulture responds to
               environmental and social change.
             </p>
             <Link
               href="/governance"
-              className="mt-8 inline-flex items-center gap-2 text-base font-medium text-[color:var(--accent)] transition hover:gap-3"
+              className="mt-8 inline-flex items-center gap-2 text-base font-medium app-accent-text transition hover:gap-3"
             >
               <span>Learn more about Winemap Governance</span>
               <ArrowRight className="h-4 w-4" />
@@ -208,7 +208,7 @@ export default function HomePage() {
           {/* FAQ Section */}
           <section className="mx-auto max-w-5xl border-t border-[color:var(--border)] px-4 py-20 sm:px-6 lg:px-8">
             <div>
-              <h2 className="text-3xl font-bold mb-12 text-center text-[color:var(--foreground)]">
+              <h2 className="app-section-title mb-12 text-center font-bold">
                 Frequently Asked Questions
               </h2>
               <div className={styles.FAQList}>
