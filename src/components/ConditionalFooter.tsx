@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 import Footer from "./Footer"
 
 const MAP_ROUTE_PREFIXES = [
-  "/legal",
+  "/governance",
   "/adaptation",
   "/climate-environment",
   "/map-applications",

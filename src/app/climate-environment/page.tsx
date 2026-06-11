@@ -2,8 +2,6 @@ import Link from "next/link";
 import { mainAreas } from "@/content/main-areas";
 import {
   ArrowRight,
-  Layers,
-  Leaf,
   Map as MapIcon,
   ShieldAlert,
   ThermometerSun,

@@ -180,7 +180,7 @@ export default function HomePage() {
               environmental and social change.
             </p>
             <Link
-              href="/legal/eu-policy"
+              href="/governance"
               className="mt-8 inline-flex items-center gap-2 text-base font-medium text-[color:var(--accent-strong)] transition hover:gap-3"
             >
               <span>Learn more about Winemap Governance</span>

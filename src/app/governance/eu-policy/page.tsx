@@ -57,7 +57,7 @@ export default function ClimateIndicatorsPage() {
               and industry professionals had to consult various sources to
               understand these classifications.
               Now, Eurac Research has produced the first-ever comprehensive{" "}
-              <Link href="/legal" style={{ textDecoration: "underline" }}>
+              <Link href="/map-applications/pdo-atlas" style={{ textDecoration: "underline" }}>
                 map of Europe’s wine regions classified under the PDO system
               </Link>
               .
