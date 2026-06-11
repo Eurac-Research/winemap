@@ -661,7 +661,11 @@
 }
 
 .filterSelect :global(.ant-select-selection-placeholder) {
-  color: color-mix(in srgb, var(--muted-foreground) 70%, transparent) !important;
+  color: color-mix(
+    in srgb,
+    var(--muted-foreground) 70%,
+    transparent
+  ) !important;
 }
 
 .filterSelect :global(.ant-select-selection-item) {
@@ -1560,5 +1564,268 @@
 
   &:hover {
     text-decoration: underline;
+  }
+}
+
+.sectionThemeClimateEnvironment {
+  --landing-primary: var(--climate-environment-primary);
+  --landing-accent: var(--climate-environment-accent);
+  --landing-accent-soft: var(--climate-environment-accent-soft);
+  --landing-aside-width: 8rem;
+}
+
+.sectionThemeAdaptation {
+  --landing-primary: var(--adaptation-primary);
+  --landing-accent: var(--adaptation-accent);
+  --landing-accent-soft: var(--adaptation-accent-soft);
+  --landing-aside-width: 10rem;
+}
+
+.sectionThemeGovernance {
+  --landing-primary: var(--governance-primary);
+  --landing-accent: var(--governance-accent);
+  --landing-accent-soft: var(--governance-accent-soft);
+  --landing-aside-width: 10rem;
+}
+
+.landingPage {
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.landingHero {
+  margin-top: 3rem;
+  border-bottom: 1px solid var(--border-soft);
+  padding: 6rem 1.5rem;
+}
+
+.landingHeroGrid {
+  margin-inline: auto;
+  display: grid;
+  max-width: 72rem;
+  gap: 3rem;
+}
+
+.landingEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--landing-accent);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  line-height: 1.25rem;
+  text-transform: uppercase;
+}
+
+.landingEyebrowIcon {
+  display: inline-flex;
+  height: 1.75rem;
+  width: 1.75rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid color-mix(in srgb, var(--landing-accent) 25%, transparent);
+  border-radius: 9999px;
+  background: var(--landing-accent-soft);
+  color: var(--landing-accent);
+}
+
+.landingTitle {
+  margin-top: 1.25rem;
+  max-width: 48rem;
+  font-size: 2.25rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.landingIntro {
+  margin-top: 1.5rem;
+  max-width: 42rem;
+  color: var(--text-base);
+  font-size: 1.125rem;
+  line-height: 2rem;
+}
+
+.landingHeroPanel,
+.landingHeroFigure {
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 24px 60px rgb(21 20 18 / 0.12);
+}
+
+.landingHeroPanel {
+  background: white;
+  padding: 1rem 1.25rem;
+}
+
+.landingHeroFigure {
+  overflow: hidden;
+  background: var(--surface-overlay);
+}
+
+.landingHeroImage {
+  position: relative;
+  aspect-ratio: 4 / 3;
+}
+
+.landingHeroCaption {
+  border-top: 1px solid var(--border-soft);
+  padding: 1rem 1.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+}
+
+.landingSection {
+  padding: 4rem 1.5rem;
+}
+
+.landingSectionBorderY {
+  border-block: 1px solid var(--border-soft);
+}
+
+.landingSectionBorderTop {
+  border-top: 1px solid var(--border-soft);
+}
+
+.landingSectionDiscover {
+  border-top: 1px solid var(--border-soft);
+  background: var(--surface-panel-muted);
+}
+
+.landingSectionGrid {
+  margin-inline: auto;
+  display: grid;
+  max-width: 72rem;
+  gap: 1.5rem;
+}
+
+.landingAside {
+  color: var(--landing-accent);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.75rem;
+  text-transform: uppercase;
+}
+
+.landingCopy {
+  display: grid;
+  max-width: 56rem;
+  gap: 1.25rem;
+  color: var(--muted-foreground);
+}
+
+.landingCopy p {
+  line-height: 1.75rem;
+}
+
+.landingCopyPrimary {
+  color: var(--text-base);
+}
+
+.landingDiscoverShell {
+  margin-inline: auto;
+  max-width: 72rem;
+}
+
+.landingDiscoverHeading {
+  max-width: 42rem;
+  color: var(--landing-accent);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.25rem;
+  text-transform: uppercase;
+}
+
+.landingDiscoverGrid {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.landingDiscoverCard {
+  display: block;
+  border: 1px solid var(--border-soft);
+  background: var(--surface-overlay);
+  padding: 1.5rem;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease;
+}
+
+.landingDiscoverCard:hover {
+  border-color: var(--landing-accent);
+  background: var(--surface-panel-strong);
+}
+
+.landingDiscoverIcons {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.landingDiscoverIcon {
+  height: 1.5rem;
+  width: 1.5rem;
+  color: var(--landing-accent);
+}
+
+.landingDiscoverArrow {
+  height: 1.25rem;
+  width: 1.25rem;
+  color: var(--landing-accent);
+  transition: transform 150ms ease;
+}
+
+.landingDiscoverCard:hover .landingDiscoverArrow {
+  transform: translateX(0.25rem);
+}
+
+.landingDiscoverTitle {
+  margin-top: 1.25rem;
+  color: var(--foreground);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.75rem;
+}
+
+.landingDiscoverDescription {
+  margin-top: 0.75rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .landingDiscoverGrid2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .landingDiscoverGrid3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .landingTitle {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .landingHeroGrid {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    align-items: center;
+  }
+
+  .landingSectionGrid {
+    grid-template-columns: var(--landing-aside-width) minmax(0, 1fr);
+  }
+
+  .landingAside {
+    position: sticky;
+    top: calc(var(--top-nav-height) + 1.5rem);
+    align-self: start;
   }
 }

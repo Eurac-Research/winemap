@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 
 import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
+import styles from "@/styles/Home.module.css";
 
 const discoverMoreLinks =
   mainAreas.find((area) => area.id === "adaptation")?.categories ?? [];
@@ -22,23 +23,23 @@ const discoverMoreIcons = {
 
 export default function AdaptationPage() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className={`${styles.landingPage} ${styles.sectionThemeAdaptation}`}>
       <article>
-        <section className="mt-12 border-b border-[color:var(--border-soft)] px-6 py-24">
-          <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center">
+        <section className={styles.landingHero}>
+          <div className={styles.landingHeroGrid}>
             <div>
-              <div className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[color:var(--accent-strong)]">
-                <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--accent-strong)]/25 bg-[color:var(--primary)]/15 text-[color:var(--accent-strong)]">
+              <div className={styles.landingEyebrow}>
+                <span className={styles.landingEyebrowIcon}>
                   <Leaf className="h-4 w-4" />
                 </span>
                 <span>Winemap Adaptation</span>
               </div>
 
-              <h1 className="mt-5 max-w-3xl text-4xl font-semibold leading-tight md:text-5xl">
+              <h1 className={styles.landingTitle}>
                 Working with nature in vineyard landscapes
               </h1>
 
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-[color:var(--text-base)]">
+              <p className={styles.landingIntro}>
                 Across Europe, winegrowers are already witnessing the tangible
                 effects of climate change. WINEMAP Adaptation explores how
                 vineyard management can become more resilient, multifunctional,
@@ -46,8 +47,8 @@ export default function AdaptationPage() {
               </p>
             </div>
 
-            <figure className="overflow-hidden border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] shadow-[0_24px_60px_rgba(21,20,18,0.12)]">
-              <div className="relative aspect-[4/3]">
+            <figure className={styles.landingHeroFigure}>
+              <div className={styles.landingHeroImage}>
                 <Image
                   src="/images/vineyard_sun.jpg"
                   alt="Sunlit vineyard landscape"
@@ -56,7 +57,7 @@ export default function AdaptationPage() {
                   className="object-cover"
                 />
               </div>
-              <figcaption className="border-t border-[color:var(--border-soft)] px-5 py-4 text-sm leading-6 text-[color:var(--muted-foreground)]">
+              <figcaption className={styles.landingHeroCaption}>
                 Adaptation in viticulture starts from the vineyard landscape:
                 soil, biodiversity, water, management, and local knowledge.
               </figcaption>
@@ -64,14 +65,14 @@ export default function AdaptationPage() {
           </div>
         </section>
 
-        <section className="border-y border-[color:var(--border-soft)] px-6 py-16">
-          <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[10rem_minmax(0,1fr)]">
-            <aside className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-strong)]">
-              Climate pressure
-            </aside>
+        <section
+          className={`${styles.landingSection} ${styles.landingSectionBorderY}`}
+        >
+          <div className={styles.landingSectionGrid}>
+            <aside className={styles.landingAside}>Climate pressure</aside>
 
-            <div className="grid max-w-4xl gap-5 text-[color:var(--muted-foreground)]">
-              <p className="leading-7 text-[color:var(--text-base)]">
+            <div className={styles.landingCopy}>
+              <p className={styles.landingCopyPrimary}>
                 Across Europe, especially in the Alpine regions, winegrowers are
                 already witnessing the tangible effects of climate change.
                 Rising temperatures, shifting precipitation patterns, and more
@@ -79,7 +80,7 @@ export default function AdaptationPage() {
                 grapes are grown.
               </p>
 
-              <p className="leading-7">
+              <p>
                 While these changes pose significant challenges, they also open
                 new opportunities to rethink how vineyards are managed and how
                 they can become more resilient and sustainable in the future.
@@ -88,14 +89,14 @@ export default function AdaptationPage() {
           </div>
         </section>
 
-        <section className="px-6 py-16">
-          <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[10rem_minmax(0,1fr)]">
-            <aside className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-strong)]">
+        <section className={styles.landingSection}>
+          <div className={styles.landingSectionGrid}>
+            <aside className={styles.landingAside}>
               From concepts to practice
             </aside>
 
-            <div className="grid max-w-4xl gap-5 text-[color:var(--muted-foreground)]">
-              <p className="leading-7">
+            <div className={styles.landingCopy}>
+              <p>
                 Over the past decade, several approaches have emerged to guide
                 the transition towards more resilient agricultural systems.
                 Among these,{" "}
@@ -110,13 +111,13 @@ export default function AdaptationPage() {
                 on the broader concept of{" "}
                 <GlossaryTermPopover id="nature-based-solutions">
                   Nature-based Solutions (NbS)
-                  </GlossaryTermPopover>,
-                approaches that harness natural processes to address
+                </GlossaryTermPopover>
+                , approaches that harness natural processes to address
                 environmental and societal challenges, while placing a stronger
                 emphasis on climate adaptation.
               </p>
 
-              <p className="leading-7">
+              <p>
                 In vineyard systems, this means managing ecosystems in ways that
                 strengthen their capacity to buffer climate impacts while
                 maintaining productivity and environmental health. Importantly,
@@ -126,7 +127,7 @@ export default function AdaptationPage() {
                 feedback from the system.
               </p>
 
-              <p className="leading-7">
+              <p>
                 This approach encourages winegrowers to view vineyard landscapes
                 as dynamic systems, where management evolves over time in
                 response to changing environmental conditions. In this context,
@@ -136,7 +137,7 @@ export default function AdaptationPage() {
                 long-term ecosystem functioning.
               </p>
 
-              <p className="leading-7">
+              <p>
                 Together, these approaches highlight a fundamental principle:
                 diversity and ecological complexity are key to{" "}
                 <GlossaryTermPopover id="resilience">
@@ -154,14 +155,16 @@ export default function AdaptationPage() {
           </div>
         </section>
 
-        <section className="border-t border-[color:var(--border-soft)] px-6 py-16">
-          <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[10rem_minmax(0,1fr)]">
-            <aside className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-strong)]">
+        <section
+          className={`${styles.landingSection} ${styles.landingSectionBorderTop}`}
+        >
+          <div className={styles.landingSectionGrid}>
+            <aside className={styles.landingAside}>
               Multifunctional vineyards
             </aside>
 
-            <div className="grid max-w-4xl gap-5 text-[color:var(--muted-foreground)]">
-              <p className="leading-7">
+            <div className={styles.landingCopy}>
+              <p>
                 Translating Ecosystem-based Adaptation into practice means
                 managing vineyards as multifunctional systems, capable of
                 delivering multiple benefits simultaneously. Beyond grape
@@ -173,7 +176,7 @@ export default function AdaptationPage() {
                 regulation, and climate mitigation.
               </p>
 
-              <p className="leading-7">
+              <p>
                 The concept of ecosystem multifunctionality reflects a shift
                 from focusing on single outputs towards recognising vineyards as
                 complex systems where ecological, economic, and social functions
@@ -182,7 +185,7 @@ export default function AdaptationPage() {
                 conservation.
               </p>
 
-              <p className="leading-7">
+              <p>
                 Rather than separating these objectives, vineyard systems can be
                 designed to integrate them, creating win-win solutions where
                 productivity, environmental sustainability, and cultural values
@@ -195,14 +198,16 @@ export default function AdaptationPage() {
           </div>
         </section>
 
-        <section className="border-t border-[color:var(--border-soft)] px-6 py-16">
-          <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[10rem_minmax(0,1fr)]">
-            <aside className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-strong)]">
+        <section
+          className={`${styles.landingSection} ${styles.landingSectionBorderTop}`}
+        >
+          <div className={styles.landingSectionGrid}>
+            <aside className={styles.landingAside}>
               Bridging knowledge and action
             </aside>
 
-            <div className="grid max-w-4xl gap-5 text-[color:var(--muted-foreground)]">
-              <p className="leading-7">
+            <div className={styles.landingCopy}>
+              <p>
                 Based on these principles, WINEMAP Adaptation aims to empower
                 winegrowers, advisors, and policymakers to move towards more
                 resilient, multifunctional vineyard systems, where production,
@@ -213,7 +218,7 @@ export default function AdaptationPage() {
                 can coexist and thrive under changing climatic conditions.
               </p>
 
-              <p className="leading-7">
+              <p>
                 To this end, it provides a structured overview of
                 Ecosystem-based Adaptation strategies tailored to viticulture,
                 translating concepts into concrete and actionable practices. At
@@ -224,7 +229,7 @@ export default function AdaptationPage() {
                 and outcomes.
               </p>
 
-              <p className="leading-7">
+              <p>
                 Recognising this complexity, WINEMAP Adaptation offers users
                 accessible, science-based information that links practices to
                 their ecological conditions, functions, and benefits.
@@ -233,15 +238,17 @@ export default function AdaptationPage() {
           </div>
         </section>
 
-        <section className="border-t border-[color:var(--border-soft)] bg-[color:var(--surface-panel-muted)] px-6 py-16">
-          <div className="mx-auto max-w-6xl">
-            <div className="max-w-2xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[color:var(--accent-strong)]">
-                Discover more
-              </p>
+        <section
+          className={`${styles.landingSection} ${styles.landingSectionDiscover}`}
+        >
+          <div className={styles.landingDiscoverShell}>
+            <div>
+              <p className={styles.landingDiscoverHeading}>Discover more</p>
             </div>
 
-            <div className="mt-8 grid gap-5 md:grid-cols-3">
+            <div
+              className={`${styles.landingDiscoverGrid} ${styles.landingDiscoverGrid3}`}
+            >
               {discoverMoreLinks.map((category) => {
                 const Icon =
                   discoverMoreIcons[
@@ -253,16 +260,14 @@ export default function AdaptationPage() {
                   <Link
                     key={category.href}
                     href={category.href}
-                    className="group border border-[color:var(--border-soft)] bg-[color:var(--surface-overlay)] p-6 transition-colors hover:border-[color:var(--accent-strong)] hover:bg-[color:var(--surface-panel-strong)]"
+                    className={styles.landingDiscoverCard}
                   >
-                    <div className="flex items-start justify-between gap-4">
-                      <Icon className="h-6 w-6 text-[color:var(--accent-strong)]" />
-                      <ArrowRight className="h-5 w-5 text-[color:var(--accent-strong)] transition-transform group-hover:translate-x-1" />
+                    <div className={styles.landingDiscoverIcons}>
+                      <Icon className={styles.landingDiscoverIcon} />
+                      <ArrowRight className={styles.landingDiscoverArrow} />
                     </div>
-                    <h2 className="mt-5 text-xl font-semibold text-[color:var(--foreground)]">
-                      {label}
-                    </h2>
-                    <p className="mt-3 text-sm leading-6 text-[color:var(--muted-foreground)]">
+                    <h2 className={styles.landingDiscoverTitle}>{label}</h2>
+                    <p className={styles.landingDiscoverDescription}>
                       {category.description}
                     </p>
                   </Link>

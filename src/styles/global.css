@@ -45,6 +45,18 @@
     --accent-strong: rgba(151, 4, 41, 0.9);
     --shadow-soft: 0 16px 40px rgb(71 85 105 / 0.14);
     --shadow-strong: 0 24px 48px rgb(15 23 42 / 0.16);
+
+    /* Section landing palettes */
+    --climate-environment-primary: var(--primary);
+    --climate-environment-accent: var(--accent-strong);
+    --climate-environment-accent-soft: var(--accent-soft);
+    --adaptation-primary: var(--primary);
+    --adaptation-accent: var(--accent-strong);
+    --adaptation-accent-soft: var(--accent-soft);
+    --governance-primary: var(--primary);
+    --governance-accent: var(--accent-strong);
+    --governance-accent-soft: var(--accent-soft);
+
     --vulnerability-chart-text: var(--foreground);
     --vulnerability-chart-trail: rgb(51 65 85 / 0.14);
     --vulnerability-chart-tooltip-bg: var(--surface-panel-strong);
