@@ -18,14 +18,14 @@ export const glossaryTerms: GlossaryTerm[] = [
     term: "Adaptive capacity",
     aliases: ["adaptation capacity", "capacity for adaptation"],
     definition:
-      "The ability to cope with changes, reduce damage, and respond to new conditions or opportunities.",
+      "The ability of a system to cope with changes, reduce damage, and respond to new conditions or opportunities.",
   },
   {
     id: "bioclimatic-indicator",
     term: "Bioclimatic indicator",
     aliases: ["bioclimatic indicators"],
     definition:
-      "Diagnostic indicators used to characterize aspects of the climate system and link them to biological responses, helping to monitor conditions such as drought, heat stress, or temperature accumulation that affect crop growth, yields, and phenological stages.",
+      "Indicators calculated based on climatic variables which describe various aspects of the climate and links them to biological responses. They can help to monitor or evaluation conditions such as drought, heat stress, or temperature accumulation that affect crop growth, yields, and phenological stages.",
   },
   {
     id: "biodiversity-enhancement",
@@ -63,14 +63,14 @@ export const glossaryTerms: GlossaryTerm[] = [
     term: "Ecosystem-based adaptation",
     aliases: ["EbA", "ecosystem based adaptation"],
     definition:
-      "The use of biodiversity and ecosystem services to help people adapt to the adverse effects of climate change.",
+      "Special type of a nature-based solution that uses biodiversity, ecosystem services and natural processes for adaptation to the adverse effects of climate change.",
   },
   {
     id: "nature-based-solutions",
     term: "Nature-based solutions",
     aliases: ["Nbs"],
     definition:
-      "Actions that protect, restore, or sustainably manage ecosystems while using nature and natural processes to address socio-environmental issues.",
+      "Actions that protect, sustainably manage, and restore ecosystems while simultaneously also adress societal challenges, such as climate change or food security.",
   },
   {
     id: "erosion",
@@ -120,13 +120,13 @@ export const glossaryTerms: GlossaryTerm[] = [
     term: "Living Lab",
     aliases: ["living labs"],
     definition:
-      "A way of creating and testing solutions with users in real-life situations.",
+      "A special type of participatory approach where researchers and stakeholders together co-produce knowledge and solutions to complex challenges, for instance through activities like workshops and field trips.",
   },
   {
     id: "naturalness",
     term: "Naturalness",
     definition:
-      "The degree to which an ecosystem remains natural, depending on how much it is influenced by humans, how much effort is needed to maintain it, and how many native species are present.",
+      "The degree to which an ecosystem aligns with its natural state. This depends, for instance, on how much it is influenced by humans, how much effort is needed to maintain its natural state, or how many native species are present.",
   },
   {
     id: "natural-pest-control",
@@ -177,32 +177,32 @@ export const glossaryTerms: GlossaryTerm[] = [
     id: "sensitivity",
     term: "Sensitivity",
     definition:
-      "The degree to which a system or species is affected by climate change or variability, either directly or indirectly.",
+      "The degree to which a system or species is affected by climate change or environmental variability, either directly or indirectly.",
   },
   {
     id: "semi-natural-habitats",
     term: "Semi-natural habitats",
     aliases: ["semi-natural habitat", "seminatural habitats"],
     definition:
-      "An ecosystem that still retains most of its functions and biodiversity but has been partly modified by human activity.",
+      "An ecosystem that still retains most of its natural functions and biodiversity but has been partly modified by human activity.",
   },
   {
     id: "sustainability",
     term: "Sustainability",
     definition:
-      "A concept combining long-term continuity and supportability, based on balancing environmental, social, and economic dimensions.",
+      "Balancing environmental protection, social equity, and economic growth so that present needs can be fulfilled without compromising the ability of future generations to meet their own needs.",
   },
   {
     id: "sustainable-agriculture",
     term: "Sustainable agriculture",
     definition:
-      "Sound management of resources for agriculture to satisfy human needs while preserving or improving the quality of the environment and the conservation of natural resources.",
+      "Management of agricultural resources to satisfy human needs while preserving or improving the quality of the environment and the conservation of natural resources.",
   },
   {
     id: "economic-diversification",
     term: "Economic diversification",
     definition:
-      "The broadening of income sources, usable products, markets, or economic activities in a land-use system, reducing dependence on a single crop or revenue stream.",
+      "The broadening of income sources, usable products, markets, or economic activities, reducing dependence on a single crop or revenue stream.",
   },
   {
     id: "landscape-aesthetic-value",
@@ -220,7 +220,7 @@ export const glossaryTerms: GlossaryTerm[] = [
     id: "climate-resilience",
     term: "Climate resilience",
     definition:
-      "The capacity of a vineyard, landscape, or management system to remain stable, functional, and productive under climate-related stresses such as heavy rainfall, drought, heat, or other extreme weather conditions.",
+      "The capacity of a system to remain stable, functional, and productive under climate-related stresses such as heavy rainfall, drought, heat, or other extreme weather conditions.",
   },
   {
     id: "carbon-sequestration",
@@ -280,7 +280,7 @@ export const glossaryTerms: GlossaryTerm[] = [
     id: "vulnerability",
     term: "Vulnerability",
     definition:
-      "How likely a system is to be harmed by climate change, depending on its exposure, sensitivity, and ability to adapt, for example a vineyard exposed to drought but with low irrigation capacity.",
+      "How likely a system is to be harmed by climate change, depending on its exposure, sensitivity, and ability to adapt.",
   },
   {
     id: "water-balance",
@@ -298,7 +298,7 @@ export const glossaryTerms: GlossaryTerm[] = [
     id: "water-quality",
     term: "Water quality",
     definition:
-      "The maintenance or improvement of water condition by reducing sediment, nutrient, pesticide, or pollutant transfer and supporting filtration, retention, and biological processing in soils and vegetation.",
+      "The maintenance or improvement of water conditions by reducing sediment, nutrient, pesticide, or pollutant transfer and supporting filtration, retention, and biological processing in soils and vegetation.",
   },
   {
     id: "water-retention",
@@ -328,6 +328,6 @@ export const glossaryTerms: GlossaryTerm[] = [
     id: "ecological-conditions",
     term: "Ecological conditions",
     definition:
-      "The overall state of ecological systems, which includes their physical, chemical, and biological characteristics and the processes and interactions that connect them.",
+      "The overall state of an ecological system, which includes their physical, chemical, and biological characteristics and the processes and interactions that connect them.",
   },
 ];
