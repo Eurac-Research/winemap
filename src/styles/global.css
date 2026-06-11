@@ -52,8 +52,8 @@
     /* Section landing palettes */
     --section-climate-environment-accent: var(--accent);
     --section-climate-environment-accent-soft: var(--accent-soft);
-    --section-adaptation-accent:  rgba(138, 153, 119, 1);
-    --section-adaptation-accent-soft: rgba(206, 226, 181, 0.9);
+    --section-adaptation-accent: rgba(122, 151, 66, 0.9);
+    --section-adaptation-accent-soft: rgba(139, 170, 118, 0.1);
     --section-governance-accent: rgba(0, 51, 153, 0.9);
     --section-governance-accent-soft: rgba(54, 111, 225, 0.9);
 
@@ -206,6 +206,134 @@
     font-size: var(--app-section-title-size);
     font-weight: 600;
     line-height: var(--app-section-title-line-height);
+  }
+
+  .section-climate-environment {
+    --accent: var(--section-climate-environment-accent);
+    --accent-soft: var(--section-climate-environment-accent-soft);
+    --app-accent-text-color: var(--section-climate-environment-accent);
+  }
+
+  .section-adaptation {
+    --accent: var(--section-adaptation-accent);
+    --accent-soft: var(--section-adaptation-accent-soft);
+    --app-accent-text-color: var(--section-adaptation-accent);
+  }
+
+  .section-governance {
+    --accent: var(--section-governance-accent);
+    --accent-soft: var(--section-governance-accent-soft);
+    --app-accent-text-color: var(--section-governance-accent);
+  }
+
+  .section-icon {
+    display: inline-flex;
+    height: 2rem;
+    width: 2rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    color: var(--app-accent-text-color);
+  }
+
+  .article-page {
+    min-height: 100vh;
+    background: var(--background);
+    color: var(--app-text-color);
+  }
+
+  .article-shell {
+    margin-inline: auto;
+    max-width: 72rem;
+    padding: 8rem 1.5rem 4rem;
+  }
+
+  .article-header {
+    margin-bottom: 3rem;
+    max-width: 56rem;
+  }
+
+  .article-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--app-accent-text-color);
+    font-size: var(--app-caption-size);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    line-height: 1.25rem;
+    text-transform: uppercase;
+  }
+
+  .article-title {
+    margin-top: 1.25rem;
+    color: var(--app-heading-color);
+    font-size: var(--app-page-title-size);
+    font-weight: 700;
+    line-height: var(--app-page-title-line-height);
+  }
+
+  .article-lead {
+    margin-top: 1.5rem;
+    max-width: 56rem;
+    color: var(--app-text-color);
+    font-size: var(--app-lead-size);
+    line-height: var(--app-lead-line-height);
+  }
+
+  .article-body {
+    max-width: 56rem;
+  }
+
+  .article-body > * + * {
+    margin-top: 1.5rem;
+  }
+
+  .article-body p {
+    color: var(--app-text-color);
+    font-size: var(--app-text-size);
+    line-height: var(--app-text-line-height);
+  }
+
+  .article-body a:not(.article-action-link):not(.article-media-link) {
+    color: var(--app-accent-text-color);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+    text-underline-offset: 0.18em;
+  }
+
+  .article-body a:not(.article-action-link):not(.article-media-link):hover {
+    text-decoration-color: var(--accent);
+  }
+
+  .article-action-link,
+  .article-media-link {
+    text-decoration: none;
+  }
+
+  .article-section-title {
+    margin-top: 3rem;
+    color: var(--app-heading-color);
+    font-size: var(--app-section-title-size);
+    font-weight: 600;
+    line-height: var(--app-section-title-line-height);
+  }
+
+  .article-figure {
+    margin-inline: auto;
+    max-width: 56rem;
+  }
+
+  .article-caption {
+    margin-top: 0.75rem;
+    color: var(--app-muted-color);
+    font-size: var(--app-caption-size);
+    line-height: var(--app-caption-line-height);
+    text-align: center;
   }
 
   @media (min-width: 768px) {

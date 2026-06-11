@@ -1565,6 +1565,8 @@
 .sectionThemeClimateEnvironment {
   --landing-accent: var(--section-climate-environment-accent);
   --landing-accent-soft: var(--section-climate-environment-accent-soft);
+  --accent: var(--landing-accent);
+  --accent-soft: var(--landing-accent-soft);
   --app-accent-text-color: var(--landing-accent);
   --landing-aside-width: 8rem;
 }
@@ -1572,6 +1574,8 @@
 .sectionThemeAdaptation {
   --landing-accent: var(--section-adaptation-accent);
   --landing-accent-soft: var(--section-adaptation-accent-soft);
+  --accent: var(--landing-accent);
+  --accent-soft: var(--landing-accent-soft);
   --app-accent-text-color: var(--landing-accent);
   --landing-aside-width: 10rem;
 }
@@ -1579,6 +1583,8 @@
 .sectionThemeGovernance {
   --landing-accent: var(--section-governance-accent);
   --landing-accent-soft: var(--section-governance-accent-soft);
+  --accent: var(--landing-accent);
+  --accent-soft: var(--landing-accent-soft);
   --app-accent-text-color: var(--landing-accent);
   --landing-aside-width: 10rem;
 }
@@ -1612,18 +1618,6 @@
   letter-spacing: 0.18em;
   line-height: 1.25rem;
   text-transform: uppercase;
-}
-
-.landingEyebrowIcon {
-  display: inline-flex;
-  height: 1.75rem;
-  width: 1.75rem;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid color-mix(in srgb, var(--landing-accent) 25%, transparent);
-  border-radius: 9999px;
-  background: var(--landing-accent-soft);
-  color: var(--landing-accent);
 }
 
 .landingTitle {

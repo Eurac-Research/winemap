@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ebaStrategies } from "@/content/eba/catalogue";
-import { ArrowRight, Database, Leaf } from "lucide-react";
+import { ArrowRight, Database, Table } from "lucide-react";
 
 import { EbaStrategyImageMap } from "@/components/eba/EbaStrategyImageMap";
 import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
@@ -32,13 +32,15 @@ const strategyMarkers = ebaStrategies.flatMap((strategy) =>
 
 export default function EbaStrategiesPage() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="section-adaptation min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-6xl px-4 py-28 sm:px-6 lg:py-32">
         <header className="mb-8 flex flex-col gap-6">
           <div>
             <p className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] app-accent-text">
-              <Leaf className="h-4 w-4" aria-hidden="true" />
-              Adaptation
+              <span className="section-icon">
+                <Database className="h-4 w-4" aria-hidden="true" />
+              </span>
+              Winemap Adaptation
             </p>
             <h1 className="mt-4 app-page-title">EbA Strategies</h1>
             <p className="mt-5 app-lead app-muted">
@@ -55,7 +57,7 @@ export default function EbaStrategiesPage() {
         <aside className="mb-8 flex max-w-4xl flex-col gap-3 rounded-lg border border-[color:var(--border)] bg-[color:var(--surface-overlay)] px-4 py-3 app-caption shadow-sm sm:flex-row sm:items-center sm:justify-between">
           <div className="flex min-w-0 gap-3">
             <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[color:var(--accent-soft)] app-accent-text">
-              <Database className="h-4 w-4" aria-hidden="true" />
+              <Table className="h-4 w-4" aria-hidden="true" />
             </span>
             <div className="min-w-0">
               <p className="font-medium app-text-color">Prefer a table view?</p>

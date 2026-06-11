@@ -36,7 +36,7 @@ export default function ClimateEnvironmentPage() {
           <div className={styles.landingHeroGrid}>
             <div>
               <div className={styles.landingEyebrow}>
-                <span className={styles.landingEyebrowIcon}>
+                <span className="section-icon">
                   <ThermometerSun className="h-4 w-4" />
                 </span>
                 <span>Winemap Environment</span>

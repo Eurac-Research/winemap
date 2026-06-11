@@ -225,7 +225,7 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
   );
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="section-adaptation min-h-screen bg-background text-foreground">
       <section className="relative overflow-hidden border-b border-[color:var(--border)] bg-[color:var(--accent)]/10 pt-28">
         {hasHeaderImage && content?.imagePath ? (
           <div
@@ -262,8 +262,10 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
           >
             <div className={hasHeaderImage ? "pb-2 lg:pr-8" : undefined}>
               <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] app-accent-text">
-                <Leaf className="h-4 w-4" aria-hidden="true" />
-                EbA Strategy Factsheet
+                <span className="section-icon">
+                  <Leaf className="h-4 w-4" aria-hidden="true" />
+                </span>
+                Winemap Adaptation
               </p>
               <h1 className="mt-3 app-page-title">{strategy.title}</h1>
               {strategy.summary ? (

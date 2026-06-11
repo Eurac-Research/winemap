@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { X } from "lucide-react";
+import { Film, Leaf, X } from "lucide-react";
 
 interface Video {
   id: string;
@@ -56,15 +56,17 @@ export default function PilotExperiencesPage() {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="container mx-auto px-6 py-32 max-w-6xl">
-        {/* Page Content */}
-        <article className="prose prose-invert prose-lg max-w-none mb-16">
-          <h1 className="app-page-title mb-8 font-bold">
-            Pilot implementation experiences
-          </h1>
-
-          <p className="app-lead mb-12">
+    <div className="section-adaptation article-page">
+      <div className="article-shell">
+        <header className="article-header">
+          <p className="article-eyebrow">
+            <span className="section-icon">
+              <Film className="h-4 w-4" aria-hidden="true" />
+            </span>
+            Winemap Adaptation
+          </p>
+          <h1 className="article-title">Pilot implementation experiences</h1>
+          <p className="article-lead">
             How do adaptation measures look in practice? This section gathers
             stories from vineyards where new and traditional approaches are
             being tested side by side. Through short films from pilot regions of
@@ -73,9 +75,9 @@ export default function PilotExperiencesPage() {
             landscapes to address climate challenges while preserving local
             traditions.
           </p>
+        </header>
 
-          <h2 className="app-section-title mt-12 mb-8">Video case studies</h2>
-        </article>
+        <h2 className="article-section-title mb-8">Video case studies</h2>
 
         {/* Video Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
@@ -83,7 +85,7 @@ export default function PilotExperiencesPage() {
             <div
               key={video.id}
               onClick={() => setSelectedVideo(video)}
-              className="group relative rounded-lg overflow-hidden transition-all duration-300 cursor-pointer border border-[color:var(--border)] bg-gradient-to-br from-[color:var(--surface-muted)] to-[color:var(--surface-overlay)] hover:border-[color:var(--border-strong)]"
+              className="group relative overflow-hidden transition-all duration-300 cursor-pointer border border-[color:var(--border)] bg-[color:var(--surface-overlay)] hover:border-[color:var(--accent)]"
             >
               {/* Video Thumbnail */}
               <div className="relative aspect-video bg-[color:var(--surface)] flex items-center justify-center">
@@ -98,13 +100,9 @@ export default function PilotExperiencesPage() {
                   }}
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <svg
-                    className="w-16 h-16 app-muted group-hover:text-[color:var(--app-text-color)] transition-colors"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
+                  <span className="flex h-16 w-16 items-center justify-center rounded-full bg-[color:var(--accent-soft)] app-accent-text transition-transform group-hover:scale-105">
+                    <Film className="h-7 w-7" aria-hidden="true" />
+                  </span>
                 </div>
                 {/* Overlay on hover */}
                 <div className="absolute inset-0 bg-[color:var(--surface-inverse)]/10 group-hover:bg-[color:var(--surface-inverse)]/20 transition-all duration-300" />
@@ -116,7 +114,7 @@ export default function PilotExperiencesPage() {
                 <h3 className="font-semibold mb-1 text-sm app-text-color">
                   {video.caption}
                 </h3>
-                <p className="text-xs app-muted">{video.location}</p>
+                <p className="app-label">{video.location}</p>
               </div>
             </div>
           ))}

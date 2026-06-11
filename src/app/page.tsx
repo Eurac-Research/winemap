@@ -68,12 +68,12 @@ export default function HomePage() {
 
       <section
         id="climate-environment"
-        className="border-y border-[color:var(--border)] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,240,232,0.9))]"
+        className="section-climate-environment border-y border-[color:var(--border)] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,240,232,0.9))]"
       >
         <div className="mx-auto grid max-w-7xl gap-12 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-20 lg:px-8 lg:py-12">
           <div className="max-w-xl">
             <div className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] app-accent-text">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--accent)]/25 bg-[color:var(--accent)]/20 app-accent-text">
+              <span className="section-icon">
                 <ThermometerSun className="h-4 w-4" />
               </span>
               <span>Winemap Environment</span>
@@ -123,7 +123,7 @@ export default function HomePage() {
 
       <section
         id="adaptation"
-        className="border-y border-[color:var(--border)] bg-[color:var(--accent)]/10"
+        className="section-adaptation border-y border-[color:var(--border)] bg-[color:var(--accent)]/10"
       >
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,0.85fr)] lg:items-center lg:gap-12 lg:px-8 lg:py-12">
           <div className="relative min-h-[24rem] lg:min-h-[34rem]">
@@ -134,7 +134,7 @@ export default function HomePage() {
 
           <div className="max-w-lg lg:justify-self-end">
             <div className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] app-accent-text">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--accent)]/25 bg-[color:var(--accent)]/20 app-accent-text">
+              <span className="section-icon">
                 <Leaf className="h-4 w-4" />
               </span>
               <span>Winemap Adaptation</span>
@@ -160,12 +160,12 @@ export default function HomePage() {
 
       <section
         id="governance"
-        className="border-y border-[color:var(--border)] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,240,232,0.9))]"
+        className="section-governance border-y border-[color:var(--border)] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,240,232,0.9))]"
       >
         <div className="mx-auto grid max-w-7xl gap-12 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-20 lg:px-8 lg:py-12">
           <div className="max-w-xl">
             <div className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] app-accent-text">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--accent)]/25 bg-[color:var(--accent)]/20 app-accent-text">
+              <span className="section-icon">
                 <Scale className="h-4 w-4" />
               </span>
               <span>Winemap Governance</span>

@@ -6,6 +6,7 @@ import {
   BookOpenText,
   Film,
   Leaf,
+  Database,
   Map as MapIcon,
 } from "lucide-react";
 
@@ -16,7 +17,7 @@ const discoverMoreLinks =
   mainAreas.find((area) => area.id === "adaptation")?.categories ?? [];
 
 const discoverMoreIcons = {
-  "/adaptation/eba-strategies": Leaf,
+  "/adaptation/eba-strategies": Database,
   "/adaptation/pilot-experiences": Film,
   "/adaptation": MapIcon,
 };
@@ -29,7 +30,7 @@ export default function AdaptationPage() {
           <div className={styles.landingHeroGrid}>
             <div>
               <div className={styles.landingEyebrow}>
-                <span className={styles.landingEyebrowIcon}>
+                <span className="section-icon">
                   <Leaf className="h-4 w-4" />
                 </span>
                 <span>Winemap Adaptation</span>

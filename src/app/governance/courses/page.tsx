@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { NotebookPen } from "lucide-react";
+import { GraduationCap } from "lucide-react";
 
 interface Course {
   id: string;
@@ -33,40 +34,51 @@ const courses: Course[] = [
 
 export default function CoursesPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="container mx-auto px-6 py-32 max-w-6xl">
-        {/* Page Content */}
-        <article className="prose prose-invert prose-lg max-w-none mb-16">
-          <h1 className="text-4xl font-bold mb-8">Courses</h1>
-        </article>
+    <div className="section-governance article-page">
+      <div className="article-shell">
+        <header className="article-header">
+          <p className="article-eyebrow">
+            <span className="section-icon">
+              <GraduationCap className="h-4 w-4" aria-hidden="true" />
+            </span>
+            Winemap Governance
+          </p>
+          <h1 className="article-title">Courses</h1>
+          <p className="article-lead">
+            Learning resources and training materials related to sustainable
+            landscape management, green infrastructure, and biodiversity.
+          </p>
+        </header>
 
-        {/* Course Grid */}
-        <div className="grid grid-cols-1 gap-6 mb-16 md:grid-cols-2 lg:grid-cols-3">
+        <section
+          aria-label="Courses"
+          className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+        >
           {courses.map((course) => (
             <Link
               key={course.id}
               href={course.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden rounded-lg border transition-all duration-300 border-[color:var(--border)] bg-gradient-to-br from-[color:var(--surface-muted)] to-[color:var(--surface-overlay)] hover:border-[color:var(--border-strong)]"
+              className="group relative overflow-hidden rounded-lg border transition-all duration-300 border-[color:var(--border)] bg-[color:var(--surface-overlay)] hover:border-[color:var(--accent)] hover:shadow-[var(--shadow-soft)]"
             >
-              {/* Course Thumbnail */}
-              <div className="relative aspect-video bg-[color:var(--surface)]">
+              <div className="relative aspect-video bg-[color:var(--accent-soft)]">
                 {course.thumbnail ? (
-                  <img
+                  <Image
                     src={course.thumbnail}
                     alt={course.title}
-                    className="absolute inset-0 h-full w-full object-cover"
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                   />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <NotebookPen className="h-10 w-10" />
+                    <GraduationCap className="h-10 w-10 app-accent-text" />
                   </div>
                 )}
-                <div className="absolute inset-0 bg-[color:var(--surface-inverse)]/10 transition-all duration-300 group-hover:bg-[color:var(--surface-inverse)]/20" />
+                <div className="absolute inset-0 bg-[color:var(--accent)]/5 transition-all duration-300 group-hover:bg-[color:var(--accent)]/15" />
               </div>
 
-              {/* Caption */}
               <div className="p-4">
                 <h3 className="text-sm font-semibold app-text-color">
                   {course.title}
@@ -74,7 +86,7 @@ export default function CoursesPage() {
               </div>
             </Link>
           ))}
-        </div>
+        </section>
       </div>
     </div>
   );

@@ -1,24 +1,25 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Scale } from "lucide-react";
 
 import DatawrapperChart from "@/components/DatawrapperChart";
-import styles from "@/styles/Home.module.css";
 
 export default function ClimateIndicatorsPage() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-6xl px-6 py-32">
-        <article className="space-y-12">
-          <section className="rounded-2xl border p-8 md:p-12 border-[color:var(--border)] bg-gradient-to-br from-[color:var(--surface-muted)] to-[color:var(--surface-overlay)]">
-            <span className="inline-flex rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] border-[color:var(--border-strong)] app-muted">
-              Governance
-            </span>
-            <h1 className="mt-5 app-page-title font-bold">
-              Geographic Indications
-            </h1>
+    <main className="section-governance article-page">
+      <div className="article-shell">
+        <article>
+          <header className="article-header">
+            <p className="article-eyebrow">
+              <span className="section-icon">
+                <Scale className="h-4 w-4" aria-hidden="true" />
+              </span>
+              Winemap Governance
+            </p>
+            <h1 className="article-title">Geographic Indications</h1>
 
-            <p className="mt-6 max-w-4xl app-lead">
-              Europe is home to some of the world’s most prestigious wine
+            <p className="article-lead">
+              Europe is home to some of the world&apos;s most prestigious wine
               regions. In order to maintain the integrity and quality of these
               wines, the European Union has established a quality scheme called
               Protected Designation of Origin (PDO). This system sets rules and
@@ -31,97 +32,97 @@ export default function ClimateIndicatorsPage() {
               meet specific production criteria are allowed to carry the PDO
               label.
             </p>
+          </header>
 
-            <div className="text-lg leading-relaxed mb-6">
-              <a
-                className={styles.contentImageBox}
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://agriculture.ec.europa.eu/farming/geographical-indications-and-quality-schemes/geographical-indications-and-quality-schemes-explained_en#pdo"
-              >
-                <figure className="mx-auto flex max-w-4xl flex-col items-center px-4 text-center">
-                  <Image
-                    src="/icons/pdo-label.svg"
-                    alt="PDO logo"
-                    width={212}
-                    height={212}
-                    className="mx-auto"
-                  />
-                  <figcaption className="app-caption">
-                    Official PDO logo from the Eurpean Commission
-                  </figcaption>
-                </figure>
-              </a>
-            </div>
+          <div className="article-body">
+            <a
+              className="article-media-link block"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://agriculture.ec.europa.eu/farming/geographical-indications-and-quality-schemes/geographical-indications-and-quality-schemes-explained_en#pdo"
+            >
+              <figure className="article-figure flex flex-col items-center px-4 text-center">
+                <Image
+                  src="/icons/pdo-label.svg"
+                  alt="PDO logo"
+                  width={212}
+                  height={212}
+                  className="mx-auto"
+                />
+                <figcaption className="article-caption">
+                  Official PDO logo from the European Commission
+                </figcaption>
+              </figure>
+            </a>
 
-            <p className="mt-6 max-w-4xl app-lead">
+            <p>
               The PDO system is extensive and complex, covering thousands of
               wine types from various regions in Europe. Until recently, wine
               enthusiasts and industry professionals had to consult various
               sources to understand these classifications. Now, Eurac Research
               has produced the first-ever comprehensive{" "}
-              <Link
-                href="/map-applications/pdo-atlas"
-                style={{ textDecoration: "underline" }}
-              >
-                map of Europe’s wine regions classified under the PDO system
+              <Link href="/map-applications/pdo-atlas">
+                map of Europe&apos;s wine regions classified under the PDO
+                system
               </Link>
               .
             </p>
-          </section>
+          </div>
 
-          <div className="rounded-2xl border p-8 md:p-12 border-[color:var(--border)] bg-gradient-to-br from-[color:var(--surface-muted)] to-[color:var(--surface-overlay)]">
+          <section className="mt-12 max-w-4xl">
             <DatawrapperChart
               chartId="DEUDJ/6?dark=true"
               title="Nr. of registered PDOs"
               ariaLabel="Line chart showing the number of registered PDOs over time"
               height={378}
             />
-          </div>
+          </section>
 
-          <h2 className="mt-8">Map of the Protected Designations of Origin</h2>
-          <p>
-            The Winemap provides a comprehensive overview of the 1,174 European
-            wine regions which fall under the{" "}
-            <strong>Protected Designation of Origin (PDO)</strong>
-            label. It is an essential resource for anyone interested in wine or
-            who works in the wine industry and can be used to increase knowledge
-            as well as appreciation of regional wines and as an instrument for
-            wine sector decision making. The map is based on a collection of
-            legal information, including grape varieties, geospatial boundaries,
-            and production details, and is the first representation of European
-            PDO regions in one comprehensive resource.
-          </p>
-          <p>
-            The Winemap is intended to help protect the unique cultural,
-            socio-economic, and environmental heritage of European wine regions
-            by providing easily accessible information from different sources.
-            It can be used to identify the location of specific PDO regions,
-            learn about the grape varieties grown in each region, and to
-            discover the unique production methods used to make each wine. It
-            also helps to highlight some of the lesser-known PDO regions in
-            Europe. Moreover, the Winemap reveals fascinating insights into the
-            various wine classifications of Europe’s major wine-producing
-            countries. For example, the map highlights the vast number of
-            Italian and French wines that fall under the PDO system: 400 and 300
-            PDOs, respectively. In contrast, Spain has only 103, Germany 30,
-            Austria 16, and Portugal 15.
-          </p>
-          <p>
-            The European wine map is also intended to help address future
-            challenges the European wine sector will undergo and provide updated
-            data that contributes to translating information into policy
-            decisions and actions. European PDO wine regions are facing
-            increasing threats from intensive management practices and climate
-            change, the latter is especially concerning as it will lead to
-            declines in wine quality and yield, posing a threat to the
-            excellence of the European wine sector. Professionals in the wine
-            industry urgently need new knowledge and tools to build the
-            ecological resilience and adaptive capacity of their vineyards and
-            successfully face these challenges.
-          </p>
-
-          <section>
+          <section className="article-body mt-12">
+            <h2 className="article-section-title !mt-0">
+              Map of the Protected Designations of Origin
+            </h2>
+            <p>
+              The Winemap provides a comprehensive overview of the 1,174
+              European wine regions which fall under the{" "}
+              <strong>Protected Designation of Origin (PDO)</strong>
+              label. It is an essential resource for anyone interested in wine
+              or who works in the wine industry and can be used to increase
+              knowledge as well as appreciation of regional wines and as an
+              instrument for wine sector decision making. The map is based on a
+              collection of legal information, including grape varieties,
+              geospatial boundaries, and production details, and is the first
+              representation of European PDO regions in one comprehensive
+              resource.
+            </p>
+            <p>
+              The Winemap is intended to help protect the unique cultural,
+              socio-economic, and environmental heritage of European wine
+              regions by providing easily accessible information from different
+              sources. It can be used to identify the location of specific PDO
+              regions, learn about the grape varieties grown in each region, and
+              to discover the unique production methods used to make each wine.
+              It also helps to highlight some of the lesser-known PDO regions in
+              Europe. Moreover, the Winemap reveals fascinating insights into
+              the various wine classifications of Europe&apos;s major
+              wine-producing countries. For example, the map highlights the vast
+              number of Italian and French wines that fall under the PDO system:
+              400 and 300 PDOs, respectively. In contrast, Spain has only 103,
+              Germany 30, Austria 16, and Portugal 15.
+            </p>
+            <p>
+              The European wine map is also intended to help address future
+              challenges the European wine sector will undergo and provide
+              updated data that contributes to translating information into
+              policy decisions and actions. European PDO wine regions are facing
+              increasing threats from intensive management practices and climate
+              change, the latter is especially concerning as it will lead to
+              declines in wine quality and yield, posing a threat to the
+              excellence of the European wine sector. Professionals in the wine
+              industry urgently need new knowledge and tools to build the
+              ecological resilience and adaptive capacity of their vineyards and
+              successfully face these challenges.
+            </p>
             <p>
               The Winemap is based on a collection and harmonization of data
               from different sources. Information on the individual PDO regions
@@ -130,7 +131,6 @@ export default function ClimateIndicatorsPage() {
               <a
                 target="_blank"
                 rel="noreferrer"
-                style={{ textDecoration: "underline" }}
                 href="https://ec.europa.eu/info/food-farming-fisheries/food-safety-and-quality/certification/quality-labels/geographical-indications-register/"
               >
                 eAmbrosia database
@@ -151,7 +151,6 @@ export default function ClimateIndicatorsPage() {
                 target="_blank"
                 rel="noreferrer"
                 href="https://doi.org/10.1038/s41597-022-01513-0"
-                style={{ textDecoration: "underline" }}
               >
                 https://doi.org/10.1038/s41597-022-01513-0
               </a>
@@ -165,7 +164,6 @@ export default function ClimateIndicatorsPage() {
                 target="_blank"
                 rel="noreferrer"
                 href="https://land.copernicus.eu/pan-european/corine-land-cover"
-                style={{ textDecoration: "underline" }}
               >
                 Corine Land Cover
               </a>{" "}
@@ -174,7 +172,6 @@ export default function ClimateIndicatorsPage() {
                 target="_blank"
                 rel="noreferrer"
                 href="https://download.geofabrik.de/"
-                style={{ textDecoration: "underline" }}
               >
                 OpenStreetMap data
               </a>

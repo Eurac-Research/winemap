@@ -147,11 +147,13 @@ export default function EbaStrategiesPage() {
   ]);
 
   return (
-    <div className="min-h-screen bg-background pt-24 transition-colors duration-300">
+    <div className="section-adaptation min-h-screen bg-background pt-24 transition-colors duration-300">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <BookOpen className="w-8 h-8 app-text-color" aria-hidden="true" />
+            <span className="section-icon">
+              <BookOpen className="h-4 w-4" aria-hidden="true" />
+            </span>
             <h1 className="app-page-title font-bold">
               EbA Strategies Catalogue
             </h1>
