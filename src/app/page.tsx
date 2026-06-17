@@ -26,7 +26,7 @@ export default function HomePage() {
         <div
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: "url(/images/landscape.jpg)",
+            backgroundImage: "url(/images/vineyards/grapes_nova_gorica.jpg)",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",

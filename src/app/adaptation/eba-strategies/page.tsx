@@ -82,7 +82,7 @@ export default function EbaStrategiesPage() {
         </aside>
 
         <EbaStrategyImageMap
-          imageSrc="/images/vineyard_landscape.jpg"
+          imageSrc="/images/vineyards/vineyard_landscape_mountains.jpg"
           imageAlt="Terraced vineyard landscape with vines, trees, shrubs and dry-stone structures"
           markers={strategyMarkers}
         />

@@ -66,7 +66,7 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
         </p>
       </>
     ),
-    imagePath: "/images/vineyard_sun.jpg",
+    imagePath: "/images/eba/interrow_greening.jpeg",
     ecosystemServices: [
       {
         id: "soil-health-fertility",
@@ -446,7 +446,7 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
         </p>
       </>
     ),
-    imagePath: "/images/vineyard_sun.jpg",
+    imagePath: "/images/eba/dry_stone_walls.JPG",
     ecosystemServices: [
       { id: "erosion-control", note: "slope stabilisation" },
       { id: "water-retention", note: "reduced surface runoff" },
@@ -534,7 +534,7 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
         </p>
       </>
     ),
-    imagePath: "/images/vineyard_sun.jpg",
+    imagePath: "/images/eba/terraces.jpg",
     ecosystemServices: [
       { id: "erosion-control", note: "slope stabilisation" },
       {
