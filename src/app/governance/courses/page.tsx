@@ -14,21 +14,21 @@ interface Course {
 const courses: Course[] = [
   {
     id: "1",
-    title: "Green Infrastructure",
-    url: "https://e-learning.eurac.edu/en/green-infrastructure/#/",
-    thumbnail: "/course-thumbnails/green-infrastructure.png",
+    title: "Ecosystem based adaptation in Viticulture",
+    url: "",
+    thumbnail: "",
   },
   {
     id: "2",
-    title: "Biodiversität Südtirol",
-    url: "https://e-learning.eurac.edu/de/biodiversitaet/#/",
-    thumbnail: "/course-thumbnails/biodiversitaet-suedtirol.png",
+    title: "Vitiforestry",
+    url: "",
+    thumbnail: "",
   },
   {
     id: "3",
-    title: "Green Infrastructure in the Alps",
-    url: "https://prezi.com/view/9IeDAfcov1EuoZk9yYhe/",
-    thumbnail: "/course-thumbnails/green-infrastructure-alps.png",
+    title: "Nature based Solutions in Vineyards",
+    url: "",
+    thumbnail: "",
   },
 ];
 
