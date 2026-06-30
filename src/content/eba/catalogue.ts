@@ -48,7 +48,7 @@ export const ebaStrategies: EbaStrategy[] = [
     summary:
       "Cover crops are intentionally grown between vine rows to improve soil properties, reduce reliance on herbicides, protect the soil surface, and provide green manure or mulch depending on seasonal management.",
     filename: "Use of aromatic plants and flowers.pdf",
-    mapPosition: { x: 39, y: 46, tooltipSide: "right" },
+    mapPosition: { x: 45, y: 92, tooltipSide: "right" },
   },
   {
     id: "2",
@@ -60,7 +60,7 @@ export const ebaStrategies: EbaStrategy[] = [
     summary:
       "Mulching covers the soil beneath or between vines with organic materials such as straw, compost, bark, leaves, pruning residues, or wood chips to suppress weeds, conserve moisture, moderate soil temperature, and protect against erosion.",
     filename: "Mulching _Soil cover with organic material.pdf",
-    mapPosition: { x: 33, y: 58, tooltipSide: "right" },
+    mapPosition: { x: 40, y: 58, tooltipSide: "right" },
   },
   {
     id: "3",
@@ -72,7 +72,7 @@ export const ebaStrategies: EbaStrategy[] = [
     summary:
       "Reduced tillage and no-tillage minimise mechanical soil disturbance, usually in vineyard inter-rows, while maintaining continuous soil cover through practices such as cover crops and mulching.",
     filename: "No and reduced tillage.pdf",
-    mapPosition: { x: 50, y: 55, tooltipSide: "left" },
+    mapPosition: { x: 30, y: 35, tooltipSide: "left" },
   },
   {
     id: "4",
@@ -84,7 +84,7 @@ export const ebaStrategies: EbaStrategy[] = [
     summary:
       "Organic soil amendments such as compost and biochar improve soil health by adding organic matter, supporting nutrient cycling and biological activity, improving soil structure, and increasing water-holding capacity.",
     filename: "Soil amendments biochar and compost.pdf",
-    mapPosition: { x: 59, y: 63, tooltipSide: "left" },
+    mapPosition: { x: 78, y: 70, tooltipSide: "left" },
   },
   {
     id: "5",
@@ -108,7 +108,7 @@ export const ebaStrategies: EbaStrategy[] = [
     summary:
       "Dry-stone walls are traditional masonry structures built without mortar or cement, using locally sourced stones to stabilise slopes, support drainage, and create ecological niches in terraced vineyard landscapes.",
     filename: "Dry-stone walls.pdf",
-    mapPosition: { x: 12, y: 65, tooltipSide: "right" },
+    mapPosition: { x: 88, y: 65, tooltipSide: "right" },
   },
   {
     id: "7",
@@ -120,7 +120,7 @@ export const ebaStrategies: EbaStrategy[] = [
     summary:
       "Terrace restoration and management repair or create level platforms, retaining walls, drainage structures, and soil conservation measures that make steep-slope viticulture more stable, accessible, and resilient.",
     filename: "Terrace Restoration and Management.pdf",
-    mapPosition: { x: 18, y: 58, tooltipSide: "right" },
+    mapPosition: { x: 10, y: 40, tooltipSide: "right" },
   },
 ];
 

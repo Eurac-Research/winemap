@@ -36,6 +36,18 @@ const tooltipSideClasses: Record<
   left: "right-full top-1/2 mr-2 -translate-y-1/2",
 };
 
+const tooltipHoverBridgeClasses: Record<
+  NonNullable<EbaStrategyImageMarker["position"]["tooltipSide"]>,
+  string
+> = {
+  top: "before:absolute before:left-0 before:top-full before:h-2 before:w-full before:content-['']",
+  right:
+    "before:absolute before:right-full before:top-0 before:h-full before:w-2 before:content-['']",
+  bottom:
+    "before:absolute before:bottom-full before:left-0 before:h-2 before:w-full before:content-['']",
+  left: "before:absolute before:left-full before:top-0 before:h-full before:w-2 before:content-['']",
+};
+
 function getSummaryPreview(summary?: string) {
   if (!summary) return undefined;
   if (summary.length <= 180) return summary;
@@ -51,16 +63,18 @@ export function EbaStrategyImageMap({
 }: EbaStrategyImageMapProps) {
   return (
     <div className={cn("grid gap-6", className)}>
-      <div className="relative aspect-[16/10] overflow-hidden rounded-lg border border-[color:var(--border)] bg-[color:var(--surface-muted)] shadow-[var(--shadow-soft)]">
-        <Image
-          src={imageSrc}
-          alt={imageAlt}
-          fill
-          priority
-          sizes="(min-width: 1280px) 1120px, calc(100vw - 32px)"
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-black/10" />
+      <div className="relative aspect-[16/10] overflow-visible">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-lg border border-[color:var(--border)] bg-[color:var(--surface-muted)] shadow-[var(--shadow-soft)]">
+          <Image
+            src={imageSrc}
+            alt={imageAlt}
+            fill
+            priority
+            sizes="(min-width: 1280px) 1120px, calc(100vw - 32px)"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-black/10" />
+        </div>
 
         {markers.map((marker) => {
           const tooltipId = `eba-strategy-marker-${marker.id}`;
@@ -88,6 +102,7 @@ export function EbaStrategyImageMap({
                 className={cn(
                   "pointer-events-auto absolute z-20 hidden w-72 rounded-lg border border-[color:var(--border)] bg-[color:var(--surface)] p-4 text-left text-sm leading-6 app-text-color shadow-[var(--shadow-strong)] backdrop-blur-md group-hover:block group-focus-visible:block",
                   tooltipSideClasses[tooltipSide],
+                  tooltipHoverBridgeClasses[tooltipSide],
                 )}
               >
                 {marker.category ? (
