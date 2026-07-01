@@ -30,6 +30,18 @@ const courses: Course[] = [
     url: "",
     thumbnail: "",
   },
+  {
+    id: "4",
+    title: "Green Infrastructure",
+    url: "https://e-learning.eurac.edu/en/green-infrastructure/#/",
+    thumbnail: "/course-thumbnails/green-infrastructure.png",
+  },
+  {
+    id: "5",
+    title: "Biodiversität Südtirol",
+    url: "https://e-learning.eurac.edu/de/biodiversitaet/#/",
+    thumbnail: "/course-thumbnails/biodiversitaet-suedtirol.png",
+  }
 ];
 
 export default function CoursesPage() {
