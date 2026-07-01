@@ -45,7 +45,7 @@ export default function HomePage() {
                 on understanding wine heritage, climate adaptation, and
                 governance frameworks.
               </p>
-              <div className="mt-8 flex flex-wrap justify-end gap-4">
+              {/* <div className="mt-8 flex flex-wrap justify-end gap-4">
                 <Link
                   href="/about"
                   className="inline-flex items-center gap-2 rounded-sm border border-[color:var(--accent)] px-4 py-2 transition hover:bg-[color:var(--accent)]"
@@ -60,7 +60,7 @@ export default function HomePage() {
                   <span>Our Team</span>
                   <ArrowRight className="h-4 w-4" />
                 </Link>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
