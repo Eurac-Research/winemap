@@ -41,9 +41,10 @@ export default function HomePage() {
                 Winemap
               </p>
               <p className="mt-3 max-w-2xl text-base leading-relaxed text-white/90 sm:ml-auto sm:text-lg">
-                An essential resource for stakeholders, farmers, and researchers
-                on understanding wine heritage, climate adaptation, and
-                governance frameworks.
+                An interactive platform that bridges science and practice 
+                by providing accessible information, interactive maps, and 
+                practical insights to support sustainable and climate-resilient 
+                viticulture across Europe.
               </p>
               {/* <div className="mt-8 flex flex-wrap justify-end gap-4">
                 <Link
