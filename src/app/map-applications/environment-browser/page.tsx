@@ -262,7 +262,7 @@ export default function EnvironmentBrowserPage() {
 
   const [selectedIndicatorId, setSelectedIndicatorId] = useState("");
   const [selectedInfo, setSelectedInfo] = useState<Indicator | null>(null);
-  const [selectedBasemapId, setSelectedBasemapId] = useState("terrain");
+  const [selectedBasemapId, setSelectedBasemapId] = useState("light");
   const [selectedScenarioId, setSelectedScenarioId] = useState("");
   const [selectedPeriodId, setSelectedPeriodId] = useState("");
   const [viewState, setViewState] = useState(INITIAL_VIEW_STATE);
