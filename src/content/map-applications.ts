@@ -208,7 +208,7 @@ export const mapApplications: MapApplication[] = [
     title: "Spatial Analogues Tool",
     description:
       "Explore how climatic conditions move in space under different climate scenarios.",
-    href: "/",
+    href: "",
     backgroundImage: "/images/map_applications/vulnerability_explorer.png",
     backgroundAlt:
       "Sunlit vineyard rows used as a background for the Spatial Analogues Tool.",

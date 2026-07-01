@@ -84,7 +84,7 @@ export const mainAreas: MainArea[] = [
       },
       {
         label: "Spatial Analogues ->",
-        href: "/adaptation",
+        href: "",
         description:
           "This section includes an interactive tool to select and visualize spatial analogues for individual European wine regions.",
       },
