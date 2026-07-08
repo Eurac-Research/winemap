@@ -78,7 +78,7 @@ export default function HomePage() {
                 <ThermometerSun className="h-4 w-4" />
               </span>
               <span>
-                Winemap <em>Climate-Environment</em>
+                Winemap <em>Environment</em>
               </span>
             </div>
             <h2 className="max-w-lg text-4xl font-semibold leading-tight app-text-color sm:text-5xl">
