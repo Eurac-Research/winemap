@@ -66,7 +66,7 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
         </p>
       </>
     ),
-    imagePath: "/images/eba/interrow_greening.jpeg",
+    imagePath: "/images/eba/interrow_greening2.jpeg",
     ecosystemServices: [
       {
         id: "soil-health-fertility",
@@ -365,7 +365,7 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
         </p>
       </>
     ),
-    imagePath: "/images/vineyard_sun.jpg",
+    imagePath: "/images/eba/flower_strips.jpeg",
     ecosystemServices: [
       {
         id: "soil-health-fertility",
