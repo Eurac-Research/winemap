@@ -100,7 +100,7 @@ export default function HomePage() {
                 className="inline-flex items-center gap-2 text-base font-medium app-accent-text transition hover:gap-3"
               >
                 <span>
-                  Learn more about WINEMAP <em>Environment</em>
+                  Discover WINEMAP <em>Environment</em>
                 </span>
                 <ArrowRight className="h-4 w-4" />
               </Link>
@@ -161,7 +161,7 @@ export default function HomePage() {
               className="mt-8 inline-flex items-center gap-2 text-base font-medium app-accent-text transition hover:gap-3"
             >
               <span>
-                Learn more about WINEMAP <em>Adaptation</em>
+                Discover WINEMAP <em>Adaptation</em>
               </span>
               <ArrowRight className="h-4 w-4" />
             </Link>
@@ -197,7 +197,7 @@ export default function HomePage() {
               className="mt-8 inline-flex items-center gap-2 text-base font-medium app-accent-text transition hover:gap-3"
             >
               <span>
-                Learn more about WINEMAP <em>Governance</em>
+                Discover WINEMAP <em>Governance</em>
               </span>
               <ArrowRight className="h-4 w-4" />
             </Link>
