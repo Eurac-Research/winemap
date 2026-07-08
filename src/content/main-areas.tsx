@@ -108,6 +108,12 @@ export const mainAreas: MainArea[] = [
     categoriesClassName: "space-y-1",
     categories: [
       {
+        label: "European PDO Atlas ->",
+        href: "/map-applications/pdo-atlas",
+        description:
+          "Discover detailed geospatial and regulatory information about European Wine PDO regions in the form of an interactive map.",
+      },
+      {
         label: "Participatory Approaches",
         href: "/governance/participatory-approaches",
         description:
