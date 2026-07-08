@@ -26,7 +26,7 @@ export const mainAreas: MainArea[] = [
       <>
         Winemap
         <br />
-        Environment
+        <em>Climate-Environment</em>
       </>
     ),
     description:
@@ -61,7 +61,7 @@ export const mainAreas: MainArea[] = [
       <>
         Winemap
         <br />
-        Adaptation
+        <em>Adaptation</em>
       </>
     ),
     description:
@@ -98,7 +98,7 @@ export const mainAreas: MainArea[] = [
       <>
         Winemap
         <br />
-        Governance
+        <em>Governance</em>
       </>
     ),
     description:

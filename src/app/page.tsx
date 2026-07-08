@@ -26,7 +26,7 @@ export default function HomePage() {
         <div
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: "url(/images/vineyards/grapes_nova_gorica.jpg)",
+            backgroundImage: "url(/images/landscape_digital.png)",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
@@ -77,7 +77,9 @@ export default function HomePage() {
               <span className="section-icon">
                 <ThermometerSun className="h-4 w-4" />
               </span>
-              <span>Winemap Environment</span>
+              <span>
+                Winemap <em>Climate-Environment</em>
+              </span>
             </div>
             <h2 className="max-w-lg text-4xl font-semibold leading-tight app-text-color sm:text-5xl">
               Discover how climate pressure is reshaping European viticulture.
@@ -95,7 +97,9 @@ export default function HomePage() {
                 href="/climate-environment"
                 className="inline-flex items-center gap-2 text-base font-medium app-accent-text transition hover:gap-3"
               >
-                <span>Learn more about Winemap Environment</span>
+                <span>
+                  Learn more about Winemap <em>Climate-Environment</em>
+                </span>
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -138,7 +142,9 @@ export default function HomePage() {
               <span className="section-icon">
                 <Leaf className="h-4 w-4" />
               </span>
-              <span>Winemap Adaptation</span>
+              <span>
+                Winemap <em>Adaptation</em>
+              </span>
             </div>
             <h2 className="max-w-lg text-4xl font-semibold leading-tight app-text-color sm:text-5xl">
               Explore strategies to adapt vineyards to climate change.
@@ -152,7 +158,9 @@ export default function HomePage() {
               href="/adaptation"
               className="mt-8 inline-flex items-center gap-2 text-base font-medium app-accent-text transition hover:gap-3"
             >
-              <span>Learn more about Winemap Adaptation</span>
+              <span>
+                Learn more about Winemap <em>Adaptation</em>
+              </span>
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -169,7 +177,9 @@ export default function HomePage() {
               <span className="section-icon">
                 <Scale className="h-4 w-4" />
               </span>
-              <span>Winemap Governance</span>
+              <span>
+                Winemap <em>Governance</em>
+              </span>
             </div>
             <h2 className="max-w-lg text-4xl font-semibold leading-tight app-text-color sm:text-5xl">
               Understand the rules, institutions, and decisions shaping wine
@@ -184,7 +194,9 @@ export default function HomePage() {
               href="/governance"
               className="mt-8 inline-flex items-center gap-2 text-base font-medium app-accent-text transition hover:gap-3"
             >
-              <span>Learn more about Winemap Governance</span>
+              <span>
+                Learn more about Winemap <em>Governance</em>
+              </span>
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
