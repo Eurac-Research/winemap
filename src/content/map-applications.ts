@@ -199,7 +199,7 @@ export const mapApplications: MapApplication[] = [
     ],
     href: "/map-applications/vulnerability-explorer",
     backgroundImage: "/images/map_applications/vulnerability_explorer.png",
-    backgroundAlt: "A vulnerability map background for European wine regions.",
+    backgroundAlt: "A vulnerability map for European wine regions.",
     backgroundPosition: "center",
     eyebrow: "Map applications",
     ctaLabel: "Go to Map",
