@@ -74,7 +74,7 @@ export const mainAreas: MainArea[] = [
         label: "EbA Strategies Repository ->",
         href: "/adaptation/eba-strategies",
         description:
-          "A collection of EbA strategies brings together approaches that harness biodiversity and ecosystem functions to mitigate risks.",
+          "A collection of EbA strategies that brings together approaches that harness biodiversity and ecosystem functions to mitigate risks.",
       },
       {
         label: "Pilot Experiences ->",
