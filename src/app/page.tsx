@@ -98,7 +98,7 @@ export default function HomePage() {
                 className="inline-flex items-center gap-2 text-base font-medium app-accent-text transition hover:gap-3"
               >
                 <span>
-                  Learn more about WINEMAP <em>Climate-Environment</em>
+                  Learn more about WINEMAP <em>Environment</em>
                 </span>
                 <ArrowRight className="h-4 w-4" />
               </Link>
