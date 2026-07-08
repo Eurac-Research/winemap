@@ -108,12 +108,6 @@ export const mainAreas: MainArea[] = [
     categoriesClassName: "space-y-1",
     categories: [
       {
-        label: "EU Policy",
-        href: "/governance/eu-policy",
-        description:
-          "Discover the legal system behind high-quality European wine regions and how these regulations influence their climate resilience.",
-      },
-      {
         label: "Participatory Approaches",
         href: "/governance/participatory-approaches",
         description:
