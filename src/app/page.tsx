@@ -84,7 +84,7 @@ export default function HomePage() {
               </span>
             </div>
             <h2 className="max-w-lg text-4xl font-semibold leading-tight app-text-color sm:text-5xl">
-              Discover how climate pressure is reshaping European viticulture.
+              Discover how climate is reshaping European viticulture.
             </h2>
             <p className="mt-6 max-w-md app-lead">
               Explore indicators, spatial patterns, and{" "}
