@@ -20,11 +20,11 @@ type MainArea = {
 export const mainAreas: MainArea[] = [
   {
     id: "climate-environment",
-    titleText: "Winemap Environment",
+    titleText: "WINEMAP Environment",
     showOnLanding: true,
     title: (
       <>
-        Winemap
+        WINEMAP
         <br />
         <em>Environment</em>
       </>
@@ -55,11 +55,11 @@ export const mainAreas: MainArea[] = [
   },
   {
     id: "adaptation",
-    titleText: "Winemap Adaptation",
+    titleText: "WINEMAP Adaptation",
     showOnLanding: true,
     title: (
       <>
-        Winemap
+        WINEMAP
         <br />
         <em>Adaptation</em>
       </>
@@ -92,11 +92,11 @@ export const mainAreas: MainArea[] = [
   },
   {
     id: "governance",
-    titleText: "Winemap Governance",
+    titleText: "WINEMAP Governance",
     showOnLanding: true,
     title: (
       <>
-        Winemap
+        WINEMAP
         <br />
         <em>Governance</em>
       </>
@@ -131,28 +131,28 @@ export const mainAreas: MainArea[] = [
     id: "about",
     titleText: "About",
     showOnLanding: false,
-    title: "About Winemap",
+    title: "About WINEMAP",
     description:
-      "Learn about the data and the research projects behind Winemap.",
+      "Learn about the data and the research projects behind WINEMAP.",
     icon: <BookOpen className="w-12 h-12 app-accent-text" aria-hidden="true" />,
     mainHref: "/about",
     categories: [
       {
-        label: "About the Winemap",
+        label: "About the WINEMAP",
         href: "/about",
         description:
-          "Learn more about the research projects and the scientific institute behind the Winemap.",
+          "Learn more about the research projects and the scientific institute behind the WINEMAP.",
       },
       {
         label: "Our Team",
         href: "/about/team",
-        description: "Learn more about the team behind the Winemap.",
+        description: "Learn more about the team behind the WINEMAP.",
       },
       {
         label: "Our Institute",
         href: "/about#institute",
         description:
-          "Learn more about the scientific institute behind the Winemap.",
+          "Learn more about the scientific institute behind the WINEMAP.",
       },
     ],
   },
@@ -162,7 +162,7 @@ export const mainAreas: MainArea[] = [
     showOnLanding: false,
     title: "Resources",
     description:
-      "Look at scientific articles related to the Winemap and the glossary.",
+      "Look at scientific articles related to the WINEMAP and the glossary.",
     icon: <BookOpen className="w-12 h-12 app-accent-text" aria-hidden="true" />,
     mainHref: "/",
     categories: [
@@ -175,7 +175,7 @@ export const mainAreas: MainArea[] = [
       {
         label: "Scientific Literature",
         href: "/literature",
-        description: "Explore the publications behind the Winemap.",
+        description: "Explore the publications behind the WINEMAP.",
       },
       {
         label: "Glossary",

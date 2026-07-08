@@ -63,7 +63,7 @@ export default function PilotExperiencesPage() {
             <span className="section-icon">
               <Film className="h-4 w-4" aria-hidden="true" />
             </span>
-            Winemap Adaptation
+            WINEMAP Adaptation
           </p>
           <h1 className="article-title">Pilot implementation experiences</h1>
           <p className="article-lead">

@@ -39,9 +39,9 @@ const APP_HREFS: Partial<Record<AppId, string>> = {
 const URL_PATTERN = /(https?:\/\/[^\s]+)/g;
 
 export const metadata = {
-  title: "Indicator definitions | Winemap",
+  title: "Indicator definitions | WINEMAP",
   description:
-    "Definitions, methodology notes, and references for climate, environmental, ecosystem service, topographic, and vulnerability indicators in Winemap.",
+    "Definitions, methodology notes, and references for climate, environmental, ecosystem service, topographic, and vulnerability indicators in WINEMAP.",
 };
 
 function extractHref(text: string) {
@@ -340,12 +340,12 @@ export default function IndicatorDefinitionsPage() {
       <div className="mx-auto max-w-6xl px-6 py-32">
         <header className="px-2 md:px-0">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] app-accent-text">
-            About Winemap
+            About WINEMAP
           </p>
           <h1 className="mt-3 app-page-title">Indicator Definitions</h1>
           <p className="mt-4 max-w-3xl app-lead app-muted">
             A single reference page for the indicator definitions, methods, data
-            sources, and references used across the Winemap map applications.
+            sources, and references used across the WINEMAP map applications.
           </p>
         </header>
 

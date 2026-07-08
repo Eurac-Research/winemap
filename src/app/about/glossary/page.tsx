@@ -2,9 +2,9 @@ import { glossaryTerms, type GlossaryTerm } from "@/content/glossary";
 import { ExternalLink } from "lucide-react";
 
 export const metadata = {
-  title: "Glossary | Winemap",
+  title: "Glossary | WINEMAP",
   description:
-    "Scientific and technical terms used across the Winemap application.",
+    "Scientific and technical terms used across the WINEMAP application.",
 };
 
 function getGroupLetter(term: string) {
@@ -98,11 +98,11 @@ export default function GlossaryPage() {
       <div className="mx-auto max-w-5xl px-6 py-32">
         <header>
           <p className="text-sm font-semibold uppercase tracking-[0.18em] app-accent-text">
-            About Winemap
+            About WINEMAP
           </p>
           <h1 className="mt-3 app-page-title">Glossary</h1>
           <p className="mt-4 max-w-3xl app-lead app-muted">
-            Scientific and technical terms used across the Winemap application.
+            Scientific and technical terms used across the WINEMAP application.
           </p>
         </header>
 

@@ -32,7 +32,7 @@ export default function GovernancePage() {
                 <span className="section-icon">
                   <Scale className="h-4 w-4" />
                 </span>
-                <span>Winemap Governance</span>
+                <span>WINEMAP Governance</span>
               </div>
 
               <h1 className={styles.landingTitle}>Navigating vineyards’ legal frameworks </h1>

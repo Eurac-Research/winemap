@@ -26,12 +26,12 @@ export async function generateMetadata({
 
   if (!strategy) {
     return {
-      title: "EbA Strategy | Winemap",
+      title: "EbA Strategy | WINEMAP",
     };
   }
 
   return {
-    title: `${strategy.title} | EbA Strategies | Winemap`,
+    title: `${strategy.title} | EbA Strategies | WINEMAP`,
     description: strategy.summary,
   };
 }

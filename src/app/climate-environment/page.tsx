@@ -39,7 +39,7 @@ export default function ClimateEnvironmentPage() {
                 <span className="section-icon">
                   <ThermometerSun className="h-4 w-4" />
                 </span>
-                <span>Winemap Environment</span>
+                <span>WINEMAP Environment</span>
               </div>
 
               <h1 className={styles.landingTitle}>

@@ -38,7 +38,7 @@ export default function HomePage() {
           <div className="absolute bottom-10 left-4 right-4 z-20 max-w-3xl sm:left-auto sm:right-5">
             <div className="w-fit max-w-full rounded-2xl border border-white/20 bg-black/35 px-6 py-6 text-right text-white">
               <p className="text-5xl font-semibold uppercase tracking-[0.18em] sm:text-6xl lg:text-7xl">
-                Winemap
+                WINEMAP
               </p>
               <p className="mt-3 max-w-2xl text-base leading-relaxed text-white/90 sm:ml-auto sm:text-lg">
                 An interactive platform that bridges science and practice 
@@ -78,7 +78,7 @@ export default function HomePage() {
                 <ThermometerSun className="h-4 w-4" />
               </span>
               <span>
-                Winemap <em>Environment</em>
+                WINEMAP <em>Environment</em>
               </span>
             </div>
             <h2 className="max-w-lg text-4xl font-semibold leading-tight app-text-color sm:text-5xl">
@@ -98,7 +98,7 @@ export default function HomePage() {
                 className="inline-flex items-center gap-2 text-base font-medium app-accent-text transition hover:gap-3"
               >
                 <span>
-                  Learn more about Winemap <em>Climate-Environment</em>
+                  Learn more about WINEMAP <em>Climate-Environment</em>
                 </span>
                 <ArrowRight className="h-4 w-4" />
               </Link>
@@ -143,7 +143,7 @@ export default function HomePage() {
                 <Leaf className="h-4 w-4" />
               </span>
               <span>
-                Winemap <em>Adaptation</em>
+                WINEMAP <em>Adaptation</em>
               </span>
             </div>
             <h2 className="max-w-lg text-4xl font-semibold leading-tight app-text-color sm:text-5xl">
@@ -159,7 +159,7 @@ export default function HomePage() {
               className="mt-8 inline-flex items-center gap-2 text-base font-medium app-accent-text transition hover:gap-3"
             >
               <span>
-                Learn more about Winemap <em>Adaptation</em>
+                Learn more about WINEMAP <em>Adaptation</em>
               </span>
               <ArrowRight className="h-4 w-4" />
             </Link>
@@ -178,7 +178,7 @@ export default function HomePage() {
                 <Scale className="h-4 w-4" />
               </span>
               <span>
-                Winemap <em>Governance</em>
+                WINEMAP <em>Governance</em>
               </span>
             </div>
             <h2 className="max-w-lg text-4xl font-semibold leading-tight app-text-color sm:text-5xl">
@@ -195,7 +195,7 @@ export default function HomePage() {
               className="mt-8 inline-flex items-center gap-2 text-base font-medium app-accent-text transition hover:gap-3"
             >
               <span>
-                Learn more about Winemap <em>Governance</em>
+                Learn more about WINEMAP <em>Governance</em>
               </span>
               <ArrowRight className="h-4 w-4" />
             </Link>
@@ -272,7 +272,7 @@ export default function HomePage() {
                 <details className={styles.FAQDetails}>
                   <summary className={styles.FAQSummary}>
                     <span className={styles.FAQQuestion}>
-                      What is the research behind the Winemap?
+                      What is the research behind the WINEMAP?
                     </span>
                     <span className={styles.FAQChevron}>
                       <ChevronDown className="h-4 w-4" />
@@ -280,7 +280,7 @@ export default function HomePage() {
                   </summary>
                   <p className={styles.FAQAnswer}>
                     The different datasets and map-applications show in the
-                    Winemap were created in the framework of several projects
+                    WINEMAP were created in the framework of several projects
                     and publications. You can find out more about the projects{" "}
                     <Link href="/about#projects" className={styles.FAQLink}>
                       here{" "}

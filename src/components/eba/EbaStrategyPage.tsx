@@ -265,7 +265,7 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
                 <span className="section-icon">
                   <Leaf className="h-4 w-4" aria-hidden="true" />
                 </span>
-                Winemap Adaptation
+                WINEMAP Adaptation
               </p>
               <h1 className="mt-3 app-page-title">{strategy.title}</h1>
               {strategy.summary ? (

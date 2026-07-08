@@ -33,7 +33,7 @@ export default function AdaptationPage() {
                 <span className="section-icon">
                   <Leaf className="h-4 w-4" />
                 </span>
-                <span>Winemap Adaptation</span>
+                <span>WINEMAP Adaptation</span>
               </div>
 
               <h1 className={styles.landingTitle}>

@@ -28,7 +28,7 @@ export default function About() {
                   <span>About the platform</span>
                 </div>
 
-                <h1 className="mt-4 max-w-3xl app-page-title">Winemap</h1>
+                <h1 className="mt-4 max-w-3xl app-page-title">WINEMAP</h1>
 
                 <p className="mt-6 max-w-3xl app-lead">
                   WINEMAP is a comprehensive digital resource on European
@@ -48,7 +48,7 @@ export default function About() {
               </div>
 
               <aside
-                aria-label="Winemap focus areas"
+                aria-label="WINEMAP focus areas"
                 className="border border-[color:var(--border)] bg-[color:var(--surface-overlay)] p-5"
               >
                 <h2 className="text-sm font-semibold uppercase tracking-[0.16em] app-accent-text">
@@ -137,10 +137,10 @@ export default function About() {
 
           <section id="projects" className="px-8 md:px-12">
             <div>
-              <h2 className="app-section-title md:text-3xl">Projects behind Winemap</h2>
+              <h2 className="app-section-title md:text-3xl">Projects behind WINEMAP</h2>
               <p className="mt-3 app-text">
                 These initiatives provide the research foundation and datasets
-                that feed into the Winemap platform.
+                that feed into the WINEMAP platform.
               </p>
               <div className="mt-6 grid gap-4">
                 <section id="respond">
@@ -245,7 +245,7 @@ export default function About() {
           <section id="institute" className="px-8 md:px-12">
             <h2 className="app-section-title md:text-3xl">Our Institute</h2>
             <p className="mt-3 app-text">
-              The Winemap is developed by the{" "}
+              The WINEMAP is developed by the{" "}
               <a
                 href="https://www.eurac.edu/en/institutes-centers/institute-for-alpine-environment"
                 target="_blank"
@@ -358,7 +358,7 @@ export default function About() {
               >
                 <h2 className="app-section-title md:text-3xl">Meet our Team</h2>
                 <p className="mt-3 app-muted">
-                  Explore the team behind the Winemap project.
+                  Explore the team behind the WINEMAP project.
                 </p>
                 <span className="mt-4 inline-flex items-center gap-2 underline underline-offset-4">
                   Go to team &rarr;
@@ -370,7 +370,7 @@ export default function About() {
           <section className="px-8 md:px-12">
             <div className="max-w-2xl app-muted">
               <p>
-                Winemap is part of the Eurac Research{" "}
+                WINEMAP is part of the Eurac Research{" "}
                 <a
                   href="https://www.eurac.edu/en/data-in-action"
                   target="_blank"

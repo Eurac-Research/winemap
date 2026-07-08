@@ -8,7 +8,7 @@ import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-  title: "EbA Strategies | Winemap",
+  title: "EbA Strategies | WINEMAP",
   description:
     "Explore ecosystem-based adaptation strategies for vineyards through an interactive visual catalogue.",
 };
@@ -40,7 +40,7 @@ export default function EbaStrategiesPage() {
               <span className="section-icon">
                 <Database className="h-4 w-4" aria-hidden="true" />
               </span>
-              Winemap Adaptation
+              WINEMAP Adaptation
             </p>
             <h1 className="mt-4 app-page-title">EbA Strategies</h1>
             <p className="mt-5 app-lead app-muted">

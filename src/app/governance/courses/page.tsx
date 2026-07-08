@@ -53,7 +53,7 @@ export default function CoursesPage() {
             <span className="section-icon">
               <GraduationCap className="h-4 w-4" aria-hidden="true" />
             </span>
-            Winemap Governance
+            WINEMAP Governance
           </p>
           <h1 className="article-title">Courses</h1>
           <p className="article-lead">

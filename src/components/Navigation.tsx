@@ -53,7 +53,7 @@ const NavigationMenuEntries: NavigationEntry[] = [
     title: "Topics",
     href: "/",
     description:
-      "Explore the main thematic areas of Winemap: climate, adaptation, and governance for European wine regions.",
+      "Explore the main thematic areas of WINEMAP: climate, adaptation, and governance for European wine regions.",
     icon: Network,
     sections: TopicsSections.map((topic_section) => {
       return {
@@ -66,7 +66,7 @@ const NavigationMenuEntries: NavigationEntry[] = [
   {
     title: "Maps",
     description:
-      "Open the interactive map applications and spatial tools available in Winemap.",
+      "Open the interactive map applications and spatial tools available in WINEMAP.",
     icon: Map,
     sections: mapApplications.map((map_app) => {
       return {
@@ -80,7 +80,7 @@ const NavigationMenuEntries: NavigationEntry[] = [
     title: "Resources",
     href: "/",
     description:
-      "Look at scientific articles related to the Winemap and the glossary.",
+      "Look at scientific articles related to the WINEMAP and the glossary.",
     icon: BookOpen,
     sections: ResourcesSections,
   },
@@ -88,7 +88,7 @@ const NavigationMenuEntries: NavigationEntry[] = [
     title: "About",
     href: "/about",
     description:
-      "Learn about Winemap, the scientific team, core definitions, and the research foundation behind the platform.",
+      "Learn about WINEMAP, the scientific team, core definitions, and the research foundation behind the platform.",
     icon: BookOpen,
     sections: AboutSections,
   },
