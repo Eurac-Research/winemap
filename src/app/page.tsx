@@ -40,11 +40,13 @@ export default function HomePage() {
               <p className="text-5xl font-semibold uppercase tracking-[0.18em] sm:text-6xl lg:text-7xl">
                 WINEMAP
               </p>
-              <p className="mt-3 max-w-2xl text-base leading-relaxed text-white/90 sm:ml-auto sm:text-lg">
-                An interactive platform that bridges science and practice 
-                by providing accessible information, interactive maps, and 
-                practical insights to support sustainable and climate-resilient 
-                viticulture across Europe.
+              <h1 className="mt-5 max-w-3xl text-3xl font-semibold leading-tight text-white sm:ml-auto">
+                An Interactive Platform for Climate Adaptation and Resilient
+                Viticulture
+              </h1>
+              <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/85 sm:ml-auto sm:text-xl">
+                Explore Europe&apos;s wine regions through interactive maps,
+                legal frameworks, training resources, and practical experiences.
               </p>
               {/* <div className="mt-8 flex flex-wrap justify-end gap-4">
                 <Link
