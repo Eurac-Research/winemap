@@ -14,6 +14,9 @@ export default function VulnerabilityPage() {
               Winemap Governance
             </p>
             <h1 className="article-title">Participatory Approaches</h1>
+          </header>
+
+          <div className="article-body">
             <p className="article-lead">
               In <b>participatory approaches</b>, researchers and individuals
               from different backgrounds - such as growers, consultants, and
@@ -24,9 +27,6 @@ export default function VulnerabilityPage() {
               practical and based on the direct needs and experiences of the
               local community.
             </p>
-          </header>
-
-          <div className="article-body">
             <p>
               A key example of this methodology is the <b>Living Lab</b>, which
               acts as an <b>innovation hub</b> situated in a real-life setting.
