@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowDown, ArrowRight, ChevronRight } from "lucide-react";
 
 export type BackgroundCarouselItem = {
   title: string;
@@ -32,24 +32,33 @@ export default function BackgroundImageCarousel({
   viewAllLabel = "View all",
 }: BackgroundImageCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const activeItem = items[activeIndex];
+
+  const showNext = useCallback(() => {
+    setActiveIndex((current) => (current + 1) % items.length);
+  }, [items.length]);
+
+  useEffect(() => {
+    if (isPaused || items.length <= 1) return;
+
+    const intervalId = window.setInterval(showNext, 6000);
+
+    return () => window.clearInterval(intervalId);
+  }, [isPaused, items.length, showNext]);
 
   if (!activeItem) {
     return null;
   }
 
-  const showPrevious = () => {
-    setActiveIndex((current) => (current - 1 + items.length) % items.length);
-  };
-
-  const showNext = () => {
-    setActiveIndex((current) => (current + 1) % items.length);
-  };
-
   return (
     <section
       className={`relative isolate min-h-[34rem] overflow-hidden border-y border-[color:var(--border)] text-white sm:min-h-[39rem] lg:min-h-[44rem] ${className}`}
       aria-label={ariaLabel}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onFocus={() => setIsPaused(true)}
+      onBlur={() => setIsPaused(false)}
     >
       {items.map((item, index) => (
         <Image
@@ -68,6 +77,17 @@ export default function BackgroundImageCarousel({
       ))}
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,17,27,0.78)_0%,rgba(8,17,27,0.54)_36%,rgba(8,17,27,0.2)_72%,rgba(8,17,27,0.08)_100%)]" />
       <div className="absolute inset-0 bg-black/15" />
+
+      {items.length > 1 ? (
+        <button
+          type="button"
+          onClick={showNext}
+          className="absolute right-4 top-1/2 z-20 inline-flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border border-white/70 bg-black/35 text-white shadow-[0_18px_45px_rgba(0,0,0,0.25)] backdrop-blur-sm transition hover:border-white hover:bg-[color:var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:right-8 sm:h-16 sm:w-16 lg:right-12 lg:h-20 lg:w-20"
+          aria-label="Show next map application"
+        >
+          <ChevronRight className="h-9 w-9 sm:h-10 sm:w-10 lg:h-12 lg:w-12" />
+        </button>
+      ) : null}
 
       {viewAllHref ? (
         <Link
