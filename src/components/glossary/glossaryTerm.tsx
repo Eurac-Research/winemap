@@ -63,49 +63,51 @@ export function GlossaryTermPopover({
         id={popoverId}
         role="tooltip"
         className={cn(
-          "pointer-events-none absolute bottom-full left-0 z-50 mb-2 hidden w-[min(22rem,calc(100vw-2rem))] rounded-lg border border-[color:var(--border)] bg-[color:var(--surface)] p-4 text-left text-sm leading-relaxed app-text-color shadow-[0_18px_45px_rgba(15,23,42,0.18)] group-hover/glossary:block group-focus-within/glossary:block",
+          "absolute bottom-full left-0 z-50 hidden w-[min(22rem,calc(100vw-2rem))] pb-2 text-left text-sm leading-relaxed group-hover/glossary:block group-focus-within/glossary:block",
           isPinned && "block",
         )}
       >
-        <span className="block text-base font-semibold app-text-color">
-          {glossaryTerm.term}
-        </span>
-        <span className="mt-2 block">{glossaryTerm.definition}</span>
-
-        {references?.length ? (
-          <span className="mt-3 block border-t border-[color:var(--border)] pt-3">
-            {references.map((reference) => {
-              const typeLabel = getReferenceTypeLabel(reference.type);
-
-              return (
-                <span
-                  key={`${reference.label}-${reference.href ?? ""}`}
-                  className="mt-2 block first:mt-0"
-                >
-                  {reference.href ? (
-                    <a
-                      href={reference.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="pointer-events-auto inline-flex items-baseline gap-1 font-medium app-accent-text underline underline-offset-4"
-                    >
-                      <span>{typeLabel}</span>
-                      <ExternalLink
-                        className="h-3.5 w-3.5 shrink-0"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  ) : (
-                    <span className="font-medium app-text-color">
-                      {typeLabel}
-                    </span>
-                  )}
-                  <span className="ml-2">{reference.label}</span>
-                </span>
-              );
-            })}
+        <span className="block rounded-lg border border-[color:var(--border)] bg-[color:var(--surface)] p-4 app-text-color shadow-[0_18px_45px_rgba(15,23,42,0.18)]">
+          <span className="block text-base font-semibold app-text-color">
+            {glossaryTerm.term}
           </span>
-        ) : null}
+          <span className="mt-2 block">{glossaryTerm.definition}</span>
+
+          {references?.length ? (
+            <span className="mt-3 block border-t border-[color:var(--border)] pt-3">
+              {references.map((reference) => {
+                const typeLabel = getReferenceTypeLabel(reference.type);
+
+                return (
+                  <span
+                    key={`${reference.label}-${reference.href ?? ""}`}
+                    className="mt-2 block first:mt-0"
+                  >
+                    {reference.href ? (
+                      <a
+                        href={reference.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-baseline gap-1 font-medium app-accent-text underline underline-offset-4"
+                      >
+                        <span>{typeLabel}</span>
+                        <ExternalLink
+                          className="h-3.5 w-3.5 shrink-0"
+                          aria-hidden="true"
+                        />
+                      </a>
+                    ) : (
+                      <span className="font-medium app-text-color">
+                        {typeLabel}
+                      </span>
+                    )}
+                    <span className="ml-2">{reference.label}</span>
+                  </span>
+                );
+              })}
+            </span>
+          ) : null}
+        </span>
       </span>
     </span>
   );

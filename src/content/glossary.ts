@@ -34,11 +34,46 @@ export const glossaryTerms: GlossaryTerm[] = [
       "The protection, maintenance, or restoration of the diversity of species, habitats, genes, and ecological interactions within an ecosystem or landscape.",
   },
   {
+    id: "geographic-indications",
+    term: "Geographic Indications",
+    aliases: ["GI"],
+    definition:
+      "An EU quality and intellectual property scheme that protects the names of food, wine, agricultural products, and spirit drinks whose qualities, reputation, or other characteristics are linked to a specific geographic area.",
+    references: [
+      {
+        label: "European Commission: geographical indications and quality schemes explained",
+        href: "https://agriculture.ec.europa.eu/farming/geographical-indications-and-quality-schemes/geographical-indications-and-quality-schemes-explained_en",
+        type: "website",
+      },
+    ],
+  },
+  {
     id: "protected-designation-of-origin",
     term: "Protected Designation of Origin",
     aliases: ["PDO", "Designation of Origin"],
     definition:
       "A label that protects the name of a product from a specific region, where all ingredients and production steps come from that area and follow specific production methods.",
+    references: [
+      {
+        label: "European Commission: Protected Designations of Origin",
+        href: "https://agriculture.ec.europa.eu/farming/geographical-indications-and-quality-schemes/geographical-indications-and-quality-schemes-explained_en#pdo",
+        type: "website",
+      },
+    ],
+  },
+  {
+    id: "common-agricultural-policy",
+    term: "Common Agricultural Policy",
+    aliases: ["CAP"],
+    definition:
+      "The EU policy framework for agriculture and rural development. It supports farmers, food security, rural areas, agricultural markets, and the sustainable management of natural resources through EU-level rules, funding, and national strategic plans.",
+    references: [
+      {
+        label: "European Commission: the common agricultural policy at a glance",
+        href: "https://agriculture.ec.europa.eu/common-agricultural-policy/cap-overview/cap-glance_en",
+        type: "website",
+      },
+    ],
   },
   {
     id: "dry-stone-construction",

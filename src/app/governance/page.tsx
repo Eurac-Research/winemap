@@ -9,8 +9,9 @@ import {
   Users,
 } from "lucide-react";
 
+import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
 import styles from "@/styles/Home.module.css";
-import DatawrapperChart from "@/components/DatawrapperChart";
+// import DatawrapperChart from "@/components/DatawrapperChart";
 
 const discoverMoreLinks =
   mainAreas.find((area) => area.id === "governance")?.categories ?? [];
@@ -37,7 +38,9 @@ export default function GovernancePage() {
               <h1 className={styles.landingTitle}>Navigating vineyards’ legal frameworks </h1>
 
               <p className={styles.landingIntro}>
-                Europe’s diverse vineyard landscapes and wine traditions are framed by a complex set of regional, national, and EU regulations. WINEMAP Governance gathers information about these legal frameworks and geographic indications for wine production in Europe.
+                Europe’s diverse vineyard landscapes and wine traditions are framed by a complex set of regional, national, and EU regulations. WINEMAP Governance gathers information about these legal frameworks and{" "}
+                <GlossaryTermPopover id="geographic-indications">geographic indications</GlossaryTermPopover>{" "}
+                for wine production in Europe.
               </p>
             </div>
 
@@ -67,10 +70,16 @@ export default function GovernancePage() {
 
             <div className={styles.landingCopy}>
               <p>
-                Across Europe, wine production and vineyard management are governed by a dense, complex network of regulations. The recent EU framework covers a wide range of topics, such as the organization of the markets in agricultural products and their financing, through the Common Agricultural Policy (CAP). On a technical level, the EU also covers planting and plant health regulations, targeting physical and chemical characteristics of grapevine products and the authorizations for vine plantings and certifications.
+                Across Europe, wine production and vineyard management are governed by a dense, complex network of regulations. The recent EU framework covers a wide range of topics, such as the organization of the markets in agricultural products and their financing, through the{" "}
+                <GlossaryTermPopover id="common-agricultural-policy">
+                  Common Agricultural Policy (CAP)
+                </GlossaryTermPopover>
+                . On a technical level, the EU also covers planting and plant health regulations, targeting physical and chemical characteristics of grapevine products and the authorizations for vine plantings and certifications.
               </p>
               <p>
-                Besides EU legal frameworks, local participatory approaches also contribute to developing innovative solutions and ideas for the management and protection of vineyards and wine-regions identities and quality of wines. Making this knowledge accessible allows winemakers and researchers to share knowledge and ensure a sustainable future for wine regions.               </p>
+                Besides EU legal frameworks, local participatory approaches, such as{" "}
+                <GlossaryTermPopover id="living-lab">living-labs </GlossaryTermPopover>{" "},
+                also contribute to developing innovative solutions and ideas for the management and protection of vineyards and wine-regions identities and quality of wines. Making this knowledge accessible allows winemakers and researchers to share knowledge and ensure a sustainable future for wine regions.               </p>
             </div>
           </div>
         </section>
@@ -81,7 +90,9 @@ export default function GovernancePage() {
 
             <div className={styles.landingCopy}>
               <p>
-                As Europe is home to some of the world’s most prestigious wine regions, the European Union has established a quality scheme called Protected Designation of Origin (PDO) in order to maintain the integrity and quality of these wines. This system sets rules and regulations for the production, labelling, and promotion of wines within specific regions of Europe. This classification ensures that wines produced within those regions follow strict standards of quality and tradition, protecting the reputation and authenticity of each wine. The PDO designation is granted by the EU, and only wines that are produced within a certain region and meet specific production criteria are allowed to carry the PDO label.
+                As Europe is home to some of the world’s most prestigious wine regions, the European Union has established a quality scheme called{" "}
+                <GlossaryTermPopover id="protected-designation-of-origin">Protected Designation of Origin (PDO)</GlossaryTermPopover>{" "}
+                in order to maintain the integrity and quality of these wines. This system sets rules and regulations for the production, labelling, and promotion of wines within specific regions of Europe. This classification ensures that wines produced within those regions follow strict standards of quality and tradition, protecting the reputation and authenticity of each wine. The PDO designation is granted by the EU, and only wines that are produced within a certain region and meet specific production criteria are allowed to carry the PDO label.
               </p>
               <a
                 className="article-media-link block"
@@ -116,14 +127,22 @@ export default function GovernancePage() {
 
             <div className={styles.landingCopy}>
               <p>
-                This complex system is now easier to navigate, as Eurac Research has produced the first-ever comprehensive map of Europe’s wine regions classified under the PDO system. Across the WINEMAP Governance, you can find accessible information on PDOs and other EU legislation about vineyards and wine products to link environmental and climatic components to specific PDO regions. The aim of the WINEMAP is to ensure wine-related stakeholders can learn and better understand, through specific courses or map applications, the global picture associated to vineyards’ management and protection, ensuring the cultural continuity of Europe’s wine-growing regions.
+                This complex system is now easier to navigate, as Eurac Research has published the {" "}
+                  <Link
+                    key="pdo-atlas"
+                    href="map-applications/pdo-atlas"
+                    className="font-semibold app-accent-text underline underline-offset-4 transition-colors hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--app-accent-text-color)]"
+                  >
+                   European PDO-Atlas
+                  </Link>
+                , the first-ever comprehensive map of Europe’s wine regions classified under the PDO system. Additionally, across the WINEMAP Governance you can find accessible information on PDOs and other EU legislation regarding vineyards and wine products. The aim of the WINEMAP Governance is to ensure wine-related stakeholders can learn and better understand the legal management and protection of European vineyards, by offering specific courses and map applications and thereby ensuring the cultural continuity of European wine-growing regions.
               </p>
-              <DatawrapperChart
+              {/* <DatawrapperChart
                 chartId="DEUDJ/6?dark=true"
                 title="Nr. of registered PDOs"
                 ariaLabel="Line chart showing the number of registered PDOs over time"
                 height={378}
-              />
+              /> */}
             </div>
           </div>
         </section>
