@@ -8,8 +8,12 @@ import {
   Leaf,
   Database,
   Map as MapIcon,
+  Table,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
+import { ebaStrategies } from "@/content/eba/catalogue";
+import { EbaStrategyImageMap } from "@/components/eba/EbaStrategyImageMap";
 import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
 import styles from "@/styles/Home.module.css";
 
@@ -21,6 +25,23 @@ const discoverMoreIcons = {
   "/adaptation/pilot-experiences": Film,
   "/adaptation": MapIcon,
 };
+
+const strategyMarkers = ebaStrategies.flatMap((strategy) =>
+  strategy.mapPosition
+    ? [
+        {
+          id: strategy.id,
+          title: strategy.title,
+          href: `/adaptation/eba-strategies/${strategy.slug}`,
+          category: strategy.category,
+          fieldOfAction: strategy.field_of_action,
+          spatialScale: strategy.spatial_scale,
+          summary: strategy.summary,
+          position: strategy.mapPosition,
+        },
+      ]
+    : [],
+);
 
 export default function AdaptationPage() {
   return (
@@ -93,7 +114,7 @@ export default function AdaptationPage() {
         <section className={styles.landingSection}>
           <div className={styles.landingSectionGrid}>
             <aside className={styles.landingAside}>
-              From concepts to practice
+              Ecosystem-based Adaptation
             </aside>
 
             <div className={styles.landingCopy}>
@@ -111,9 +132,9 @@ export default function AdaptationPage() {
                 to help agricultural systems adapt to climate change. EbA builds
                 on the broader concept of{" "}
                 <GlossaryTermPopover id="nature-based-solutions">
-                  Nature-based Solutions (NbS)
-                </GlossaryTermPopover>
-                , approaches that harness natural processes to address
+                  Nature-based Solutions
+                </GlossaryTermPopover>{" "}
+                 (NbS), which harness natural processes to address
                 environmental and societal challenges, while placing a stronger
                 emphasis on climate adaptation.
               </p>
@@ -122,24 +143,56 @@ export default function AdaptationPage() {
                 In vineyard systems, this means managing ecosystems in ways that
                 strengthen their capacity to buffer climate impacts while
                 maintaining productivity and environmental health. Importantly,
-                EbA is not implemented through fixed solutions, but through
+                EbA strategies are implemented through
                 adaptive management, an iterative process in which practices are
                 continuously adjusted based on observation, learning, and
-                feedback from the system.
-              </p>
-
-              <p>
-                This approach encourages winegrowers to view vineyard landscapes
+                feedback from the system. This approach encourages winegrowers to view vineyard landscapes
                 as dynamic systems, where management evolves over time in
-                response to changing environmental conditions. In this context,
-                the concept of vinecology further supports the integration of
-                ecological and agronomic principles, promoting vineyard systems
-                that simultaneously sustain production, biodiversity, and
-                long-term ecosystem functioning.
+                response to changing environmental conditions.
               </p>
 
               <p>
-                Together, these approaches highlight a fundamental principle:
+                WINEMAP Adaptation contains descriptions and practical implementation examples for several 
+                of the most common EbA strategies. Each dot on the vineyard landscape below corresponds
+                to a different EbA strategy. By hovering over each dot and clicking on it, more details
+                about each strategy can be discovered.
+              </p>
+
+              <EbaStrategyImageMap
+                imageSrc="/images/vineyards/vineyard_landscape_mountains.jpg"
+                imageAlt="Terraced vineyard landscape with vines, trees, shrubs and dry-stone structures"
+                markers={strategyMarkers}
+              />
+
+              <aside className="flex max-w-4xl flex-col gap-3 rounded-lg border border-[color:var(--border)] bg-[color:var(--surface-overlay)] px-4 py-3 app-caption shadow-sm sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex min-w-0 gap-3">
+                  <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[color:var(--accent-soft)] app-accent-text">
+                    <Table className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="font-medium app-text-color">Prefer a table view?</p>
+                    <p className="mt-1 leading-6">
+                      There is also a technical catalogue with search, filters,
+                      classification metadata and PDF links for all EbA strategies.
+                    </p>
+                  </div>
+                </div>
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  asChild
+                  className="w-fit shrink-0 border-[color:var(--border)] bg-[color:var(--surface)] app-text-color hover:bg-[color:var(--surface-muted)]"
+                >
+                  <Link href="/adaptation/eba-strategies/catalogue">
+                    Open catalogue
+                    <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                  </Link>
+                </Button>
+              </aside>
+
+              <p>
+                Together, EbA approaches highlight a fundamental principle:
                 diversity and ecological complexity are key to{" "}
                 <GlossaryTermPopover id="resilience">
                   resilience
