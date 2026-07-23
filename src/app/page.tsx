@@ -24,7 +24,7 @@ const overviewItems = [
     title: "WINEMAP Adaptation",
     Icon: Leaf,
     accent: "var(--section-adaptation-accent)",
-    arcOffset: "lg:-translate-x-5",
+    arcOffset: "md:-translate-x-5",
     summary:
       "A practice-oriented entry point for vineyard managers, advisors, researchers, and local actors who want to understand how wine regions can respond to climate stress. This section brings together ecosystem-based adaptation strategies, pilot experiences, and implementation examples so users can move from general adaptation needs to concrete measures in the vineyard and surrounding landscape.",
   },
@@ -33,7 +33,7 @@ const overviewItems = [
     title: "Climate-Environment",
     Icon: ThermometerSun,
     accent: "var(--section-climate-environment-accent)",
-    arcOffset: "lg:translate-x-2",
+    arcOffset: "md:translate-x-2",
     summary:
       "The scientific and spatial evidence base of WINEMAP. This section is for users who need to explore climate indicators, environmental conditions, and vulnerability patterns across European wine regions. It helps researchers, planners, educators, and practitioners understand where pressures are emerging, how they differ by region, and which environmental factors matter for adaptation planning.",
   },
@@ -42,7 +42,7 @@ const overviewItems = [
     title: "WINEMAP Governance",
     Icon: Scale,
     accent: "var(--section-governance-accent)",
-    arcOffset: "lg:translate-x-2",
+    arcOffset: "md:translate-x-2",
     summary:
       "A guide to the policy, institutional, and participatory side of climate adaptation in viticulture. This section is useful for decision-makers, public administrations, regional organizations, educators, and project teams who need to understand legal frameworks, protected designations, stakeholder processes, and learning resources that shape how wine regions can act.",
   },
@@ -51,7 +51,7 @@ const overviewItems = [
     title: "Map Applications",
     Icon: Map,
     accent: "var(--accent)",
-    arcOffset: "lg:-translate-x-5",
+    arcOffset: "md:-translate-x-5",
     summary:
       "A dedicated collection of interactive tools for exploring WINEMAP data directly on maps. This area is for users who want to browse spatial layers, compare regions, inspect PDO information, investigate vulnerability, or work with specific geospatial applications without first reading through the thematic sections. It is the fastest route from a question about place to an interactive map view.",
   },
@@ -114,21 +114,21 @@ export default function HomePage() {
         id="winemap-overview"
         className="section-winemap-overview relative isolate overflow-hidden border-y border-[color:var(--border)] bg-[radial-gradient(circle_at_18%_18%,rgba(151,4,41,0.08),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,240,232,0.92))]"
       >
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <p className="app-eyebrow">Website structure</p>
-            <h2 className="mt-4 text-4xl font-semibold leading-tight app-text-color sm:text-5xl">
+            <h2 className="text-4xl font-semibold leading-tight app-text-color sm:text-5xl">
                 Four entry points into climate-resilient viticulture.
             </h2>
-            <p className="mt-6 app-lead">
+            <p className="mt-3 app-lead">
               WINEMAP is organized around three thematic pillars and one
               dedicated collection of map applications. Each entry point leads
               to a different way of working with the platform.
             </p>
           </div>
 
-          <div className="mx-auto mt-10 w-full max-w-6xl lg:mt-12 lg:grid lg:grid-cols-[minmax(0,1fr)_10rem] lg:items-center lg:gap-2">
-            <div className="relative mx-auto aspect-square w-full max-w-2xl sm:max-w-3xl lg:mx-0 lg:max-w-[42rem]">
+          <div className="mx-auto mt-4 w-full max-w-[28rem] md:grid md:max-w-[44rem] md:grid-cols-[minmax(0,1fr)_9rem] md:items-center md:gap-0 xl:max-w-[54rem] xl:grid-cols-[minmax(0,1fr)_10rem]">
+            <div className="relative mx-auto aspect-square min-h-72 w-full max-w-[22rem] sm:min-h-96 sm:max-w-[28rem] md:mx-0 md:min-h-0 md:max-w-[30rem] xl:max-w-[42rem]">
               <Image
                 src="/winemap_illustration.png"
                 alt="Illustration of the WINEMAP platform structure"
@@ -141,14 +141,14 @@ export default function HomePage() {
 
             <nav
               aria-label="WINEMAP structure overview"
-              className="mt-8 grid grid-cols-2 items-start justify-items-center gap-x-3 gap-y-8 sm:mt-10 sm:grid-cols-4 sm:gap-x-5 lg:mt-0 lg:h-[34rem] lg:grid-cols-1 lg:grid-rows-4 lg:content-center lg:justify-items-start lg:gap-0"
+              className="mt-8 grid grid-cols-2 items-start justify-items-center gap-x-3 gap-y-8 sm:mt-10 sm:grid-cols-4 sm:gap-x-5 md:mt-0 md:h-[30rem] md:grid-cols-1 md:grid-rows-4 md:content-center md:justify-items-start md:gap-0 xl:h-[34rem]"
             >
               {overviewItems.map(
                 ({ id, title, Icon, accent, arcOffset, summary }) => (
                   <Link
                     key={id}
                     href={`#${id}`}
-                    className={`group relative flex w-full max-w-36 flex-col items-center gap-3 text-center transition hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--overview-accent)] lg:max-w-none lg:justify-self-start ${arcOffset}`}
+                    className={`group relative flex w-full max-w-36 flex-col items-center gap-3 text-center transition hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--overview-accent)] md:max-w-none md:justify-self-start ${arcOffset}`}
                     style={
                       {
                         "--overview-accent": accent,
@@ -161,7 +161,7 @@ export default function HomePage() {
                     <span className="text-sm font-semibold leading-snug app-text-color">
                       {title}
                     </span>
-                    <span className="pointer-events-none absolute z-30 hidden w-[22rem] border border-[color:var(--border)] bg-[color:var(--surface)] p-5 text-left text-sm leading-6 text-[color:var(--app-text-color)] opacity-0 shadow-[0_24px_60px_rgba(15,23,42,0.2)] transition group-hover:opacity-100 group-focus-visible:opacity-100 lg:right-[calc(100%+1.25rem)] lg:top-1/2 lg:-translate-y-1/2 lg:block">
+                    <span className="pointer-events-none absolute z-30 hidden w-[22rem] border border-[color:var(--border)] bg-[color:var(--surface)] p-5 text-left text-sm leading-6 text-[color:var(--app-text-color)] opacity-0 shadow-[0_24px_60px_rgba(15,23,42,0.2)] transition group-hover:opacity-100 group-focus-visible:opacity-100 md:right-[calc(100%+1.25rem)] md:top-1/2 md:-translate-y-1/2 md:block">
                       <span className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-[color:var(--overview-accent)]">
                         {title}
                       </span>
