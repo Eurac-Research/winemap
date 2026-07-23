@@ -1,10 +1,13 @@
 import Link from "next/link";
+import Image from "next/image";
+import type { CSSProperties } from "react";
 import { mainAreas } from "@/content/main-areas";
 import { mapApplications } from "@/content/map-applications";
 import {
   ArrowRight,
   ChevronDown,
   Leaf,
+  Map,
   Scale,
   ThermometerSun,
 } from "lucide-react";
@@ -12,9 +15,43 @@ import {
 import BackgroundImageCarousel from "@/components/BackgroundImageCarousel";
 import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
 import ImageComparisonSlider from "@/components/ImageComparisonSlider";
-import RespondLogo from "@/components/ui/RespondLogo";
 import MainAreaCarousel from "@/components/winemap-sections/MainAreaCarousel";
 import styles from "@/styles/Home.module.css";
+
+const overviewItems = [
+  {
+    id: "adaptation",
+    title: "WINEMAP Adaptation",
+    Icon: Leaf,
+    accent: "var(--section-adaptation-accent)",
+    summary:
+      "A practice-oriented entry point for vineyard managers, advisors, researchers, and local actors who want to understand how wine regions can respond to climate stress. This section brings together ecosystem-based adaptation strategies, pilot experiences, and implementation examples so users can move from general adaptation needs to concrete measures in the vineyard and surrounding landscape.",
+  },
+  {
+    id: "climate-environment",
+    title: "Climate-Environment",
+    Icon: ThermometerSun,
+    accent: "var(--section-climate-environment-accent)",
+    summary:
+      "The scientific and spatial evidence base of WINEMAP. This section is for users who need to explore climate indicators, environmental conditions, and vulnerability patterns across European wine regions. It helps researchers, planners, educators, and practitioners understand where pressures are emerging, how they differ by region, and which environmental factors matter for adaptation planning.",
+  },
+  {
+    id: "governance",
+    title: "WINEMAP Governance",
+    Icon: Scale,
+    accent: "var(--section-governance-accent)",
+    summary:
+      "A guide to the policy, institutional, and participatory side of climate adaptation in viticulture. This section is useful for decision-makers, public administrations, regional organizations, educators, and project teams who need to understand legal frameworks, protected designations, stakeholder processes, and learning resources that shape how wine regions can act.",
+  },
+  {
+    id: "map-applications",
+    title: "Map Applications",
+    Icon: Map,
+    accent: "var(--accent)",
+    summary:
+      "A dedicated collection of interactive tools for exploring WINEMAP data directly on maps. This area is for users who want to browse spatial layers, compare regions, inspect PDO information, investigate vulnerability, or work with specific geospatial applications without first reading through the thematic sections. It is the fastest route from a question about place to an interactive map view.",
+  },
+];
 
 export default function HomePage() {
   const adaptationArea = mainAreas.find((area) => area.id === "adaptation");
@@ -66,6 +103,73 @@ export default function HomePage() {
               </div> */}
             </div>
           </div>
+        </div>
+      </section>
+
+      <section
+        id="winemap-overview"
+        className="section-winemap-overview relative isolate overflow-hidden border-y border-[color:var(--border)] bg-[radial-gradient(circle_at_18%_18%,rgba(151,4,41,0.08),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,240,232,0.92))]"
+      >
+        <div className="mx-auto grid min-h-[clamp(36rem,82vh,50rem)] max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,0.72fr)_minmax(22rem,0.28fr)] lg:items-center lg:gap-12 lg:px-8">
+          <div className="grid gap-10 lg:grid-cols-[minmax(18rem,0.78fr)_minmax(0,1fr)] lg:items-center">
+            <div className="max-w-xl">
+              <p className="app-eyebrow">Website structure</p>
+              <h2 className="mt-4 max-w-lg text-4xl font-semibold leading-tight app-text-color sm:text-5xl">
+                Four entry points into climate-resilient viticulture.
+              </h2>
+              <p className="mt-6 max-w-md app-lead">
+                WINEMAP is organized around three thematic pillars and one
+                dedicated collection of map applications. Each entry point leads
+                to a different way of working with the platform.
+              </p>
+            </div>
+
+            <div className="relative mx-auto w-full max-w-xl">
+              <div className="absolute -left-6 top-8 hidden h-24 w-24 border-l border-t border-[color:var(--accent)]/30 lg:block" />
+              <div className="absolute -bottom-5 right-6 hidden h-px w-40 bg-[color:var(--border)] lg:block" />
+              <div className="relative aspect-square overflow-hidden">
+                <Image
+                  src="/winemap_illustration.png"
+                  alt="Illustration of the WINEMAP platform structure"
+                  fill
+                  sizes="(min-width: 1024px) 38vw, 90vw"
+                  className="object-contain"
+                  priority
+                />
+              </div>
+            </div>
+          </div>
+
+          <nav
+            aria-label="WINEMAP structure overview"
+            className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-1 lg:gap-5"
+          >
+            {overviewItems.map(({ id, title, Icon, accent, summary }) => (
+              <Link
+                key={id}
+                href={`#${id}`}
+                className="group relative flex min-h-36 flex-col items-center justify-center gap-3 border border-[color:var(--border)] bg-white/78 px-3 py-5 text-center shadow-[0_18px_50px_rgba(21,20,18,0.08)] backdrop-blur-sm transition hover:-translate-y-1 hover:border-[color:var(--overview-accent)] hover:bg-white hover:shadow-[0_24px_58px_rgba(21,20,18,0.14)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--overview-accent)]"
+                style={
+                  {
+                    "--overview-accent": accent,
+                  } as CSSProperties
+                }
+              >
+                <span className="inline-flex h-16 w-16 items-center justify-center rounded-full border border-[color:var(--overview-accent)]/30 bg-[color:var(--overview-accent)]/10 text-[color:var(--overview-accent)] transition group-hover:scale-105">
+                  <Icon className="h-8 w-8" aria-hidden="true" />
+                </span>
+                <span className="max-w-32 text-sm font-semibold leading-snug app-text-color">
+                  {title}
+                </span>
+                <span className="pointer-events-none absolute z-30 hidden w-[min(22rem,calc(100vw-2rem))] border border-[color:var(--border)] bg-[color:var(--surface)] p-5 text-left text-sm leading-6 text-[color:var(--app-text-color)] opacity-0 shadow-[0_24px_60px_rgba(15,23,42,0.2)] transition group-hover:opacity-100 group-focus-visible:opacity-100 sm:block lg:right-[calc(100%+1rem)] lg:top-1/2 lg:-translate-y-1/2">
+                  <span className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-[color:var(--overview-accent)]">
+                    {title}
+                  </span>
+                  {summary}
+                </span>
+              </Link>
+            ))}
+          </nav>
         </div>
       </section>
 
