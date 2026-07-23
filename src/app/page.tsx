@@ -29,10 +29,10 @@ const overviewItems = [
       "A practice-oriented entry point for vineyard managers, advisors, researchers, and local actors who want to understand how wine regions can respond to climate stress. This section brings together ecosystem-based adaptation strategies, pilot experiences, and implementation examples so users can move from general adaptation needs to concrete measures in the vineyard and surrounding landscape.",
   },
   {
-    id: "climate-environment",
-    title: "Climate-Environment",
+    id: "environment",
+    title: "WINEMAP Environment",
     Icon: ThermometerSun,
-    accent: "var(--section-climate-environment-accent)",
+    accent: "var(--section-environment-accent)",
     arcOffset: "md:translate-x-2",
     summary:
       "The scientific and spatial evidence base of WINEMAP. This section is for users who need to explore climate indicators, environmental conditions, and vulnerability patterns across European wine regions. It helps researchers, planners, educators, and practitioners understand where pressures are emerging, how they differ by region, and which environmental factors matter for adaptation planning.",
@@ -114,10 +114,10 @@ export default function HomePage() {
         id="winemap-overview"
         className="section-winemap-overview relative isolate overflow-hidden border-y border-[color:var(--border)] bg-[radial-gradient(circle_at_18%_18%,rgba(151,4,41,0.08),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,240,232,0.92))]"
       >
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <p className="app-eyebrow">Website structure</p>
-            <h2 className="text-4xl font-semibold leading-tight app-text-color sm:text-5xl">
+            <h2 className="text-4xl mt-4 font-semibold leading-tight app-text-color sm:text-5xl">
                 Four entry points into climate-resilient viticulture.
             </h2>
             <p className="mt-3 app-lead">
@@ -176,8 +176,8 @@ export default function HomePage() {
       </section>
 
       <section
-        id="climate-environment"
-        className="section-climate-environment border-y border-[color:var(--border)] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,240,232,0.9))]"
+        id="environment"
+        className="section-environment border-y border-[color:var(--border)] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,240,232,0.9))]"
       >
         <div className="mx-auto grid max-w-7xl gap-12 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-20 lg:px-8 lg:py-12">
           <div className="max-w-xl">
@@ -202,7 +202,7 @@ export default function HomePage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-5">
               <Link
-                href="/climate-environment"
+                href="/environment"
                 className="inline-flex items-center gap-2 text-base font-medium app-accent-text transition hover:gap-3"
               >
                 <span>

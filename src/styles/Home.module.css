@@ -1563,8 +1563,8 @@
 }
 
 .sectionThemeClimateEnvironment {
-  --landing-accent: var(--section-climate-environment-accent);
-  --landing-accent-soft: var(--section-climate-environment-accent-soft);
+  --landing-accent: var(--section-environment-accent);
+  --landing-accent-soft: var(--section-environment-accent-soft);
   --accent: var(--landing-accent);
   --accent-soft: var(--landing-accent-soft);
   --app-accent-text-color: var(--landing-accent);

@@ -7,7 +7,7 @@ import Footer from "./Footer"
 const MAP_ROUTE_PREFIXES = [
   "/governance",
   "/adaptation",
-  "/climate-environment",
+  "/environment",
   "/map-applications",
 ]
 

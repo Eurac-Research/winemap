@@ -50,8 +50,8 @@
     --shadow-strong: 0 24px 48px rgb(15 23 42 / 0.16);
 
     /* Section landing palettes */
-    --section-climate-environment-accent: var(--accent);
-    --section-climate-environment-accent-soft: var(--accent-soft);
+    --section-environment-accent: var(--accent);
+    --section-environment-accent-soft: var(--accent-soft);
     --section-adaptation-accent: rgba(122, 151, 66, 0.9);
     --section-adaptation-accent-soft: rgba(139, 170, 118, 0.1);
     --section-governance-accent: rgba(0, 51, 153, 0.9);
@@ -208,10 +208,10 @@
     line-height: var(--app-section-title-line-height);
   }
 
-  .section-climate-environment {
-    --accent: var(--section-climate-environment-accent);
-    --accent-soft: var(--section-climate-environment-accent-soft);
-    --app-accent-text-color: var(--section-climate-environment-accent);
+  .section-environment {
+    --accent: var(--section-environment-accent);
+    --accent-soft: var(--section-environment-accent-soft);
+    --app-accent-text-color: var(--section-environment-accent);
   }
 
   .section-adaptation {

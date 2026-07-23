@@ -26,7 +26,7 @@ Data files in `src/app/data/` contain pre-processed regulatory information and c
 - **Server Components**: Static pages (`about/`, `vulnerability/`, `team/`)
 - **Client Components**: Interactive map pages marked with `"use client"` directive
   - Main map: `src/app/page.tsx` (2000+ lines - complex state management)
-  - Climate map: `src/app/climate-environment/page.tsx`
+  - Climate map: `src/app/environment/page.tsx`
   - Map container: `src/app/components/MapContainer.tsx` (1800+ lines)
 
 ### Map Component Architecture

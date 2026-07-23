@@ -13,7 +13,7 @@ import styles from "@/styles/Home.module.css";
 
 const discoverMoreLinks =
   mainAreas
-    .find((area) => area.id === "climate-environment")
+    .find((area) => area.id === "environment")
     ?.categories.filter((category) =>
       [
         "/map-applications/environment-browser",

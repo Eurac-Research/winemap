@@ -19,7 +19,7 @@ type MainArea = {
 
 export const mainAreas: MainArea[] = [
   {
-    id: "climate-environment",
+    id: "environment",
     titleText: "WINEMAP Environment",
     showOnLanding: true,
     title: (
@@ -37,7 +37,7 @@ export const mainAreas: MainArea[] = [
         aria-hidden="true"
       />
     ),
-    mainHref: "/climate-environment",
+    mainHref: "/environment",
     categories: [
       {
         label: "Environment Browser ->",
