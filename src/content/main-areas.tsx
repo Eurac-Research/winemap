@@ -71,10 +71,10 @@ export const mainAreas: MainArea[] = [
     categoriesClassName: "space-y-1",
     categories: [
       {
-        label: "EbA Strategies Repository ->",
+        label: "EbA Strategies Catalogue ->",
         href: "/adaptation/eba-strategies",
         description:
-          "A collection of EbA strategies that brings together approaches that harness biodiversity and ecosystem functions to mitigate risks.",
+          "A catalogue of EbA strategies with the ability to search and filter based on metadata for each EbA strategy.",
       },
       {
         label: "Pilot Experiences ->",
