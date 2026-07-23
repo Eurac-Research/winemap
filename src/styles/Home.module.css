@@ -1709,6 +1709,8 @@
 .landingCopy p {
   font-size: var(--app-text-size);
   line-height: var(--app-text-line-height);
+  hyphens: auto;
+  text-align: justify;
 }
 
 .landingCopyPrimary {
