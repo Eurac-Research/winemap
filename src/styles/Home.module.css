@@ -1792,12 +1792,123 @@
   line-height: var(--app-caption-line-height);
 }
 
+.topicDirectoryGrid {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.topicDirectoryCard {
+  display: block;
+  border: 1px solid var(--border);
+  background: var(--surface-overlay);
+  padding: 1.25rem;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease;
+}
+
+.topicDirectoryCard:hover {
+  border-color: var(--landing-accent);
+  background: var(--surface);
+}
+
+.topicDirectoryCardActive {
+  border-color: var(--landing-accent);
+  box-shadow: inset 3px 0 0 var(--landing-accent);
+}
+
+.topicDirectoryCardTopline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--app-accent-text-color);
+  font-size: var(--app-caption-size);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1.25rem;
+  text-transform: uppercase;
+}
+
+.topicDirectoryArrow {
+  height: 1.125rem;
+  width: 1.125rem;
+  transition: transform 150ms ease;
+}
+
+.topicDirectoryCard:hover .topicDirectoryArrow {
+  transform: translateX(0.25rem);
+}
+
+.topicDirectoryTitle {
+  margin-top: 0.75rem;
+  color: var(--app-heading-color);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+}
+
+.topicDirectoryDescription,
+.topicPanelDescription {
+  margin-top: 0.5rem;
+  color: var(--app-muted-color);
+  font-size: var(--app-caption-size);
+  line-height: var(--app-caption-line-height);
+}
+
+.topicPanel {
+  margin-top: 2rem;
+  border: 1px solid var(--border);
+  background: var(--surface-overlay);
+}
+
+.topicPanelHeader {
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+}
+
+.topicPanelEyebrow {
+  color: var(--app-accent-text-color);
+  font-size: var(--app-caption-size);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.25rem;
+  text-transform: uppercase;
+}
+
+.topicPanelTitle {
+  margin-top: 0.5rem;
+  color: var(--app-heading-color);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 2rem;
+}
+
+.topicPanelContent {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  color: var(--app-muted-color);
+}
+
+.topicPanelContent > p {
+  font-size: var(--app-text-size);
+  line-height: var(--app-text-line-height);
+  hyphens: auto;
+  text-align: justify;
+}
+
 @media (min-width: 768px) {
   .landingDiscoverGrid2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .landingDiscoverGrid3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .topicDirectoryGrid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
