@@ -4,10 +4,7 @@ import type { ComponentType } from "react";
 import Topic0, {
   metadata as metadata0,
 } from "./topics/ecosystem-based-adaptation";
-import Topic1, {
-  metadata as metadata1,
-} from "./topics/multifunctional-vineyards";
-import Topic2, { metadata as metadata2 } from "./topics/pilot-experiences";
+import Topic1, { metadata as metadata1 } from "./topics/pilot-experiences";
 
 export type AdaptationTopicMetadata = {
   slug: string;
@@ -23,7 +20,6 @@ export type AdaptationTopic = AdaptationTopicMetadata & {
 export const adaptationTopics = [
   { ...metadata0, Component: Topic0 } satisfies AdaptationTopic,
   { ...metadata1, Component: Topic1 } satisfies AdaptationTopic,
-  { ...metadata2, Component: Topic2 } satisfies AdaptationTopic,
 ].sort(
   (left, right) =>
     left.order - right.order || left.title.localeCompare(right.title),
