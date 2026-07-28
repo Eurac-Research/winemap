@@ -36,30 +36,42 @@ export default function EcosystemBasedAdaptationTopic() {
   return (
     <>
       <p>
-        Ecosystem-based Adaptation (EbA) promotes the use of biodiversity and{" "}
-        <GlossaryTermPopover id="ecosystem-functions">
-          ecosystem functions
-        </GlossaryTermPopover>{" "}
-        to help agricultural systems adapt to climate change. It is part of the
-        broader family of{" "}
+        Over the past decade, several approaches have emerged to guide
+        the transition towards more resilient agricultural systems.{" "}
         <GlossaryTermPopover id="nature-based-solutions">
           Nature-based Solutions
         </GlossaryTermPopover>{" "}
-        that work with natural processes to address environmental and societal
-        challenges.
+        (NbS) harness natural processes to address
+        environmental and societal challenges.{" "}
+        <GlossaryTermPopover id="ecosystem-based-adaptation">
+          Ecosystem-based Adaptation
+        </GlossaryTermPopover>{" "}
+        (EbA) is part of the broader family of NbS, but places a stronger
+        emphasis on climate adaptation and promotes the use of biodiversity and{" "}
+        <GlossaryTermPopover id="ecosystem-functions">
+          ecosystem functions
+        </GlossaryTermPopover>{" "}
+        to help agricultural systems adapt to climate change.
       </p>
 
       <p>
-        In viticulture, EbA means managing vineyards to buffer climate impacts
-        while maintaining productivity and environmental health. Increasing
-        biodiversity at field, farm, and landscape scales can reduce external
-        inputs and support more diverse, self-regulating, resilient
-        agroecosystems.
+        EbA strategies aim to manage vineyards in ways that
+        strengthen their capacity to buffer climate impacts while
+        maintaining productivity and environmental health. 
+        By enhancing biodiversity at field, farm, and landscape
+        scales, vineyards can better withstand climate variability,
+        reduce external inputs, and maintain multiple ecosystem
+        functions. EbA encourages winegrowers to view vineyard landscapes
+        as dynamic systems, moving from
+        simplified, input-dependent systems towards more diverse,
+        self-regulating, and resilient agroecosystems.
       </p>
 
       <p>
-        Explore practical EbA strategies on the vineyard landscape. Select a
-        marker to open its detailed strategy page.
+        WINEMAP Adaptation contains descriptions and practical implementation examples for several 
+        of the most common EbA strategies. Each dot on the vineyard landscape below corresponds
+        to a different EbA strategy. By hovering over each dot and clicking on it, more details
+        about each strategy can be discovered.
       </p>
 
       <EbaStrategyImageMap
@@ -68,7 +80,7 @@ export default function EcosystemBasedAdaptationTopic() {
         markers={strategyMarkers}
       />
 
-      <aside className="flex max-w-4xl flex-col gap-3 rounded-lg border border-[color:var(--border)] bg-[color:var(--surface-overlay)] px-4 py-3 app-caption shadow-sm sm:flex-row sm:items-center sm:justify-between">
+      <aside className="flex flex-col gap-3 rounded-lg border border-[color:var(--border)] bg-[color:var(--surface-overlay)] px-4 py-3 app-caption shadow-sm sm:flex-row sm:items-center sm:justify-between">
         <div className="flex min-w-0 gap-3">
           <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[color:var(--accent-soft)] app-accent-text">
             <Table className="h-4 w-4" aria-hidden="true" />
@@ -76,7 +88,8 @@ export default function EcosystemBasedAdaptationTopic() {
           <div className="min-w-0">
             <p className="font-medium app-text-color">Prefer a table view?</p>
             <p className="mt-1 leading-6">
-              Search and filter all EbA strategies in the technical catalogue.
+              There is also a technical catalogue with search, filters,
+              classification metadata and PDF links for all EbA strategies.
             </p>
           </div>
         </div>
@@ -93,6 +106,7 @@ export default function EcosystemBasedAdaptationTopic() {
           </Link>
         </Button>
       </aside>
+
     </>
   );
 }

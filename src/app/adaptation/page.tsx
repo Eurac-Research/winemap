@@ -41,9 +41,20 @@ export default async function AdaptationPage({
               </h1>
 
               <p className={styles.landingIntro}>
-                WINEMAP Adaptation explores how vineyard management can become
-                more resilient, multifunctional, and sustainable as climate
-                conditions change.
+                Across Europe, winegrowers are already witnessing the tangible
+                effects of climate change. Rising temperatures, shifting precipitation patterns, and more
+                frequent extreme events are reshaping the conditions under which
+                grapes are grown.                 
+              </p>
+              <p className={styles.landingIntro}>
+                While these changes pose significant challenges, they also open
+                new opportunities to rethink how vineyards are managed and how
+                they can become more resilient and sustainable in the future.
+              </p>
+              <p className={styles.landingIntro}>
+                WINEMAP Adaptation explores how
+                vineyard management can become more resilient, multifunctional,
+                and sustainable.
               </p>
             </div>
 
