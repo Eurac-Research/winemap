@@ -1,23 +1,36 @@
-import Link from "next/link";
+"use client";
+
+import { createContext, useContext, useState, type ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
 
-import type { AdaptationTopic } from "@/app/adaptation/topics.generated";
 import styles from "@/styles/Home.module.css";
 
+export type TopicDirectoryItem = {
+  slug: string;
+  title: string;
+  description: string;
+};
+
 type TopicDirectoryProps = {
-  topics: AdaptationTopic[];
+  topics: TopicDirectoryItem[];
+  initialActiveSlug: string;
+  children: ReactNode;
+};
+
+type TopicDirectoryContextValue = {
   activeSlug: string;
 };
 
-export function TopicDirectory({ topics, activeSlug }: TopicDirectoryProps) {
-  const activeTopic =
-    topics.find((topic) => topic.slug === activeSlug) ?? topics[0];
+const TopicDirectoryContext = createContext<TopicDirectoryContextValue | null>(
+  null,
+);
 
-  if (!activeTopic) {
-    return null;
-  }
-
-  const ActiveTopic = activeTopic.Component;
+export function TopicDirectory({
+  topics,
+  initialActiveSlug,
+  children,
+}: TopicDirectoryProps) {
+  const [activeSlug, setActiveSlug] = useState(initialActiveSlug);
 
   return (
     <section
@@ -33,51 +46,79 @@ export function TopicDirectory({ topics, activeSlug }: TopicDirectoryProps) {
           className={styles.topicDirectoryGrid}
         >
           {topics.map((topic) => {
-            const isActive = topic.slug === activeTopic.slug;
+            const isActive = topic.slug === activeSlug;
 
             return (
-              <Link
+              <button
                 key={topic.slug}
-                href={`/adaptation?topic=${encodeURIComponent(topic.slug)}`}
-                aria-current={isActive ? "page" : undefined}
+                type="button"
+                aria-pressed={isActive}
+                onClick={() => setActiveSlug(topic.slug)}
                 className={`${styles.topicDirectoryCard} ${
                   isActive ? styles.topicDirectoryCardActive : ""
                 }`}
               >
-                <div className={styles.topicDirectoryCardTopline}>
+                <span className={styles.topicDirectoryCardTopline}>
                   <span>{isActive ? "Viewing" : "Explore"}</span>
                   <ArrowRight
                     className={styles.topicDirectoryArrow}
                     aria-hidden="true"
                   />
-                </div>
-                <h2 className={styles.topicDirectoryTitle}>{topic.title}</h2>
-                <p className={styles.topicDirectoryDescription}>
+                </span>
+                <span className={styles.topicDirectoryTitle}>
+                  {topic.title}
+                </span>
+                <span className={styles.topicDirectoryDescription}>
                   {topic.description}
-                </p>
-              </Link>
+                </span>
+              </button>
             );
           })}
         </nav>
 
-        <section
-          className={styles.topicPanel}
-          aria-labelledby="active-topic-title"
-        >
-          <header className={styles.topicPanelHeader}>
-            <p className={styles.topicPanelEyebrow}>WINEMAP Adaptation</p>
-            <h2 id="active-topic-title" className={styles.topicPanelTitle}>
-              {activeTopic.title}
-            </h2>
-            <p className={styles.topicPanelDescription}>
-              {activeTopic.description}
-            </p>
-          </header>
-          <div className={styles.topicPanelContent}>
-            <ActiveTopic />
-          </div>
-        </section>
+        <TopicDirectoryContext.Provider value={{ activeSlug }}>
+          {children}
+        </TopicDirectoryContext.Provider>
       </div>
+    </section>
+  );
+}
+
+type TopicPanelProps = {
+  slug: string;
+  title: string;
+  description: string;
+  children: ReactNode;
+};
+
+export function TopicPanel({
+  slug,
+  title,
+  description,
+  children,
+}: TopicPanelProps) {
+  const context = useContext(TopicDirectoryContext);
+
+  if (!context) {
+    throw new Error("TopicPanel must be rendered inside TopicDirectory.");
+  }
+
+  const isActive = context.activeSlug === slug;
+
+  return (
+    <section
+      hidden={!isActive}
+      className={styles.topicPanel}
+      aria-labelledby={`${slug}-topic-title`}
+    >
+      <header className={styles.topicPanelHeader}>
+        <p className={styles.topicPanelEyebrow}>WINEMAP Adaptation</p>
+        <h2 id={`${slug}-topic-title`} className={styles.topicPanelTitle}>
+          {title}
+        </h2>
+        <p className={styles.topicPanelDescription}>{description}</p>
+      </header>
+      <div className={styles.topicPanelContent}>{children}</div>
     </section>
   );
 }

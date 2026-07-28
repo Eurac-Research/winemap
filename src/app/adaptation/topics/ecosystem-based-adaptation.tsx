@@ -100,7 +100,7 @@ export default function EcosystemBasedAdaptationTopic() {
           asChild
           className="w-fit shrink-0 border-[color:var(--border)] bg-[color:var(--surface)] app-text-color hover:bg-[color:var(--surface-muted)]"
         >
-          <Link href="/adaptation/eba-strategies/catalogue">
+          <Link href="/adaptation/eba-strategies">
             Open catalogue
             <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
           </Link>

@@ -1800,9 +1800,12 @@
 
 .topicDirectoryCard {
   display: block;
+  width: 100%;
   border: 1px solid var(--border);
   background: var(--surface-overlay);
   padding: 1.25rem;
+  text-align: left;
+  cursor: pointer;
   transition:
     background-color 150ms ease,
     border-color 150ms ease;
@@ -1842,6 +1845,7 @@
 }
 
 .topicDirectoryTitle {
+  display: block;
   margin-top: 0.75rem;
   color: var(--app-heading-color);
   font-size: 1.125rem;
@@ -1851,6 +1855,7 @@
 
 .topicDirectoryDescription,
 .topicPanelDescription {
+  display: block;
   margin-top: 0.5rem;
   color: var(--app-muted-color);
   font-size: var(--app-caption-size);
