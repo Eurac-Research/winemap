@@ -8,7 +8,8 @@ import { ArrowRight, Leaf, Map, Scale, ThermometerSun } from "lucide-react";
 const overviewItems = [
   {
     id: "adaptation",
-    title: "WINEMAP Adaptation",
+    title: "WINEMAP",
+    subtitle: "Adaptation",
     Icon: Leaf,
     accent: "var(--section-adaptation-accent)",
     href: "/adaptation",
@@ -19,7 +20,8 @@ const overviewItems = [
   },
   {
     id: "environment",
-    title: "WINEMAP Environment",
+    title: "WINEMAP",
+    subtitle: "Environment",
     Icon: ThermometerSun,
     accent: "var(--section-environment-accent)",
     href: "/environment",
@@ -30,7 +32,8 @@ const overviewItems = [
   },
   {
     id: "governance",
-    title: "WINEMAP Governance",
+    title: "WINEMAP",
+    subtitle: "Governance",
     Icon: Scale,
     accent: "var(--section-governance-accent)",
     href: "/governance",
@@ -41,7 +44,8 @@ const overviewItems = [
   },
   {
     id: "map-applications",
-    title: "Map Applications",
+    title: "WINEMAP",
+    subtitle: "Maps",
     Icon: Map,
     accent: "var(--accent)",
     href: "#map-applications",
@@ -83,10 +87,10 @@ export default function OverviewNavigation() {
   return (
     <nav
       aria-label="WINEMAP structure overview"
-      className="mx-auto mt-8 grid max-w-5xl gap-4 sm:mt-10 sm:gap-6 md:grid-cols-2"
+      className="mx-auto mt-8 grid max-w-4xl gap-2 sm:mt-10 md:grid-cols-2"
     >
       {overviewItems.map(
-        ({ id, title, Icon, accent, href, description, summary }, index) => (
+        ({ id, title, subtitle, Icon, accent, href, description, summary }, index) => (
           <article
             key={id}
             ref={(element) => {
@@ -97,24 +101,24 @@ export default function OverviewNavigation() {
               }
             }}
             data-overview-id={id}
-            className={`relative flex flex-col border border-[color:var(--border)] bg-white/75 p-6 shadow-[0_14px_38px_rgba(21,20,18,0.07)] transition-all duration-500 ease-out hover:-translate-y-1 hover:border-[color:var(--overview-accent)]/60 hover:shadow-[0_22px_48px_rgba(21,20,18,0.13)] focus-within:border-[color:var(--overview-accent)]/60 motion-reduce:transform-none motion-reduce:transition-none sm:p-7 ${visibleItems.includes(id) ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
+            className={`relative flex flex-col border border-[color:var(--border)] bg-white/75 transition-all duration-500 ease-out focus-within:border-[color:var(--overview-accent)]/60 motion-reduce:transform-none motion-reduce:transition-none sm:p-7 ${visibleItems.includes(id) ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
             style={
               {
                 "--overview-accent": accent,
                 transitionDelay: visibleItems.includes(id)
-                  ? `${index * 160}ms`
+                  ? `${index * 50}ms`
                   : "0ms",
               } as CSSProperties
             }
           >
             <div className="flex items-start justify-between gap-5">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-[color:var(--overview-accent)]">
-                  Explore
-                </p>
                 <h3 className="mt-2 text-2xl font-semibold leading-tight app-text-color">
                   {title}
                 </h3>
+                <h2 className="mt-1 text-1xl font-semibold leading-tight text-[color:var(--overview-accent)]">
+                  {subtitle}
+                </h2>
               </div>
 
               <span
@@ -137,13 +141,13 @@ export default function OverviewNavigation() {
               </span>
             </div>
 
-            <p className="mt-6 max-w-md text-base leading-relaxed app-muted">
+            <p className="mt-2 max-w-md text-base leading-relaxed app-muted">
               {description}
             </p>
 
             <Link
               href={href}
-              className="mt-auto inline-flex w-fit items-center gap-2 pt-7 text-base font-medium text-[color:var(--overview-accent)] transition hover:gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--overview-accent)]"
+              className="mt-auto inline-flex w-fit items-center gap-2 pt-2 text-base font-medium text-[color:var(--overview-accent)] transition hover:gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--overview-accent)]"
             >
               <span>Discover more</span>
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
