@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { mainAreas } from "@/content/main-areas";
 import { mapApplications } from "@/content/map-applications";
@@ -88,20 +87,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="mx-auto mt-4 w-full max-w-[28rem] md:grid md:max-w-[44rem] md:grid-cols-[minmax(0,1fr)_9rem] md:items-center md:gap-0 xl:max-w-[54rem] xl:grid-cols-[minmax(0,1fr)_10rem]">
-            <div className="relative mx-auto aspect-square min-h-72 w-full max-w-[22rem] sm:min-h-96 sm:max-w-[28rem] md:mx-0 md:min-h-0 md:max-w-[30rem] xl:max-w-[42rem]">
-              <Image
-                src="/winemap_illustration.png"
-                alt="Illustration of the WINEMAP platform structure"
-                fill
-                sizes="(min-width: 1024px) 672px, (min-width: 640px) 48rem, 100vw"
-                className="object-contain"
-                priority
-              />
-            </div>
-
-            <OverviewNavigation />
-          </div>
+          <OverviewNavigation />
         </div>
       </section>
 
