@@ -47,7 +47,7 @@ const overviewItems = [
     title: "WINEMAP",
     subtitle: "Maps",
     Icon: Map,
-    accent: "var(--accent)",
+    accent: "var(--section-maps-accent)",
     href: "#map-applications",
     description:
       "Work directly with WINEMAP's interactive tools to explore spatial layers, regions, and vulnerability patterns.",
@@ -134,7 +134,7 @@ export default function OverviewNavigation() {
                   className="pointer-events-none absolute right-0 top-[calc(100%+1rem)] z-50 hidden w-[min(22rem,calc(100vw-3rem))] border border-[color:var(--border)] bg-[color:var(--surface)] p-5 text-left text-sm leading-6 text-[color:var(--app-text-color)] opacity-0 shadow-[0_24px_60px_rgba(15,23,42,0.2)] transition group-hover/icon:block group-hover/icon:opacity-100 group-focus/icon:block group-focus/icon:opacity-100"
                 >
                   <span className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-[color:var(--overview-accent)]">
-                    {title}
+                    {title} {subtitle}
                   </span>
                   {summary}
                 </span>

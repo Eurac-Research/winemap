@@ -56,6 +56,8 @@
     --section-adaptation-accent-soft: rgba(139, 170, 118, 0.1);
     --section-governance-accent: rgba(0, 51, 153, 0.9);
     --section-governance-accent-soft: rgba(54, 111, 225, 0.9);
+    --section-maps-accent: rgba(20, 116, 135, 0.9);
+    --section-maps-accent-soft: rgba(20, 116, 135, 0.1);
 
     --vulnerability-chart-text: var(--foreground);
     --vulnerability-chart-trail: rgb(51 65 85 / 0.14);
@@ -224,6 +226,12 @@
     --accent: var(--section-governance-accent);
     --accent-soft: var(--section-governance-accent-soft);
     --app-accent-text-color: var(--section-governance-accent);
+  }
+
+  .section-maps {
+    --accent: var(--section-maps-accent);
+    --accent-soft: var(--section-maps-accent-soft);
+    --app-accent-text-color: var(--section-maps-accent);
   }
 
   .section-icon {
