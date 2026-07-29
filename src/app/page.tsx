@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 
 import BackgroundImageCarousel from "@/components/BackgroundImageCarousel";
-import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
 import ImageComparisonSlider from "@/components/ImageComparisonSlider";
 import MainAreaCarousel from "@/components/winemap-sections/MainAreaCarousel";
 import OverviewNavigation from "@/components/winemap-sections/OverviewNavigation";
@@ -76,9 +75,8 @@ export default function HomePage() {
       >
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
-            <p className="app-eyebrow">Website structure</p>
             <h2 className="text-4xl mt-4 font-semibold leading-tight app-text-color sm:text-5xl">
-              Four entry points into climate-resilient viticulture.
+              How WINEMAP supports climate-resilient winegrowing
             </h2>
             <p className="mt-3 app-lead">
               WINEMAP is organized around three thematic pillars and one
@@ -109,10 +107,7 @@ export default function HomePage() {
               Discover how climate is reshaping European viticulture.
             </h2>
             <p className="mt-6 max-w-md app-lead">
-              Explore indicators, spatial patterns, and{" "}
-              <GlossaryTermPopover id="vulnerability">
-                vulnerability
-              </GlossaryTermPopover>{" "}
+              Explore indicators, spatial patterns, and vulnerability
               insights designed to support adaptation planning across
               wine-growing regions.
             </p>

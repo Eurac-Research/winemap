@@ -14,7 +14,7 @@ const overviewItems = [
     accent: "var(--section-adaptation-accent)",
     href: "/adaptation",
     description:
-      "Discover ecosystem-based adaptation strategies and pilot implementation experiences for viticulture.",
+      "Discover ecosystem-based adaptation approaches and pilot implementation experiences that connect climate resilience with everyday vineyard management.",
     summary:
       "A practice-oriented entry point for vineyard managers, advisors, researchers, and local actors who want to understand how wine regions can respond to climate stress. This section brings together ecosystem-based adaptation strategies, pilot experiences, and implementation examples so users can move from general adaptation needs to concrete measures in the vineyard and surrounding landscape.",
   },
@@ -38,7 +38,7 @@ const overviewItems = [
     accent: "var(--section-governance-accent)",
     href: "/governance",
     description:
-      "Navigate legal frameworks, regulations, and geographic indications for wine production in Europe.",
+      "Navigate policy frameworks, participatory approaches, and educational resources to learn how viticulture can respond to environmental and social change.",
     summary:
       "A guide to the policy, institutional, and participatory side of climate adaptation in viticulture. This section is useful for decision-makers, public administrations, regional organizations, educators, and project teams who need to understand legal frameworks, protected designations, stakeholder processes, and learning resources that shape how wine regions can act.",
   },
