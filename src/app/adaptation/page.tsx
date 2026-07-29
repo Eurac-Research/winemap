@@ -1,15 +1,12 @@
 import Image from "next/image";
 import { Leaf } from "lucide-react";
 
-import {
-  TopicDirectory,
-  TopicPanel,
-} from "@/components/adaptation/TopicDirectory";
-import { adaptationTopics } from "@/app/adaptation/topics.generated";
+import { TopicDirectory, TopicPanel } from "@/components/topics/TopicDirectory";
+import { topics } from "@/app/adaptation/topics.generated";
 import styles from "@/styles/Home.module.css";
 
 export default function AdaptationPage() {
-  const activeSlug = adaptationTopics[0]?.slug;
+  const activeSlug = topics[0]?.slug;
 
   if (!activeSlug) {
     throw new Error("WINEMAP Adaptation requires at least one topic module.");
@@ -68,14 +65,16 @@ export default function AdaptationPage() {
         </section>
 
         <TopicDirectory
-          topics={adaptationTopics.map(({ slug, title, description }) => ({
+          sectionLabel="WINEMAP Adaptation"
+          heading="Explore Adaptation topics"
+          topics={topics.map(({ slug, title, description }) => ({
             slug,
             title,
             description,
           }))}
           initialActiveSlug={activeSlug}
         >
-          {adaptationTopics.map((topic) => {
+          {topics.map((topic) => {
             const Topic = topic.Component;
 
             return (

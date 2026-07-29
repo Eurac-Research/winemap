@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/generate-adaptation-topics.cjs",
+    "predev": "node scripts/generate-topic-registries.cjs",
     "dev": "next dev",
-    "prebuild": "node scripts/generate-adaptation-topics.cjs",
+    "prebuild": "node scripts/generate-topic-registries.cjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint src --cache --cache-strategy content",

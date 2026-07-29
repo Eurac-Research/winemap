@@ -4,8 +4,8 @@ import { ArrowRight, Table } from "lucide-react";
 
 import { EbaStrategyImageMap } from "@/components/eba/EbaStrategyImageMap";
 import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
+import type { TopicMetadata } from "@/components/topics/types";
 import { Button } from "@/components/ui/button";
-import type { AdaptationTopicMetadata } from "../topics.generated";
 
 export const metadata = {
   slug: "ecosystem-based-adaptation",
@@ -13,7 +13,7 @@ export const metadata = {
   description:
     "Discover how biodiversity and ecosystem functions can strengthen vineyard resilience.",
   order: 1,
-} satisfies AdaptationTopicMetadata;
+} satisfies TopicMetadata;
 
 const strategyMarkers = ebaStrategies.flatMap((strategy) =>
   strategy.mapPosition
@@ -36,13 +36,13 @@ export default function EcosystemBasedAdaptationTopic() {
   return (
     <>
       <p>
-        Over the past decade, several approaches have emerged to guide
-        the transition towards more resilient agricultural systems.{" "}
+        Over the past decade, several approaches have emerged to guide the
+        transition towards more resilient agricultural systems.{" "}
         <GlossaryTermPopover id="nature-based-solutions">
           Nature-based Solutions
         </GlossaryTermPopover>{" "}
-        (NbS) harness natural processes to address
-        environmental and societal challenges.{" "}
+        (NbS) harness natural processes to address environmental and societal
+        challenges.{" "}
         <GlossaryTermPopover id="ecosystem-based-adaptation">
           Ecosystem-based Adaptation
         </GlossaryTermPopover>{" "}
@@ -55,23 +55,22 @@ export default function EcosystemBasedAdaptationTopic() {
       </p>
 
       <p>
-        EbA strategies aim to manage vineyards in ways that
-        strengthen their capacity to buffer climate impacts while
-        maintaining productivity and environmental health. 
-        By enhancing biodiversity at field, farm, and landscape
-        scales, vineyards can better withstand climate variability,
-        reduce external inputs, and maintain multiple ecosystem
-        functions. EbA encourages winegrowers to view vineyard landscapes
-        as dynamic systems, moving from
-        simplified, input-dependent systems towards more diverse,
+        EbA strategies aim to manage vineyards in ways that strengthen their
+        capacity to buffer climate impacts while maintaining productivity and
+        environmental health. By enhancing biodiversity at field, farm, and
+        landscape scales, vineyards can better withstand climate variability,
+        reduce external inputs, and maintain multiple ecosystem functions. EbA
+        encourages winegrowers to view vineyard landscapes as dynamic systems,
+        moving from simplified, input-dependent systems towards more diverse,
         self-regulating, and resilient agroecosystems.
       </p>
 
       <p>
-        WINEMAP Adaptation contains descriptions and practical implementation examples for several 
-        of the most common EbA strategies. Each dot on the vineyard landscape below corresponds
-        to a different EbA strategy. By hovering over each dot and clicking on it, more details
-        about each strategy can be discovered.
+        WINEMAP Adaptation contains descriptions and practical implementation
+        examples for several of the most common EbA strategies. Each dot on the
+        vineyard landscape below corresponds to a different EbA strategy. By
+        hovering over each dot and clicking on it, more details about each
+        strategy can be discovered.
       </p>
 
       <EbaStrategyImageMap
@@ -106,7 +105,6 @@ export default function EcosystemBasedAdaptationTopic() {
           </Link>
         </Button>
       </aside>
-
     </>
   );
 }

@@ -12,6 +12,8 @@ export type TopicDirectoryItem = {
 };
 
 type TopicDirectoryProps = {
+  sectionLabel: string;
+  heading: string;
   topics: TopicDirectoryItem[];
   initialActiveSlug: string;
   children: ReactNode;
@@ -19,6 +21,7 @@ type TopicDirectoryProps = {
 
 type TopicDirectoryContextValue = {
   activeSlug: string;
+  sectionLabel: string;
 };
 
 const TopicDirectoryContext = createContext<TopicDirectoryContextValue | null>(
@@ -26,6 +29,8 @@ const TopicDirectoryContext = createContext<TopicDirectoryContextValue | null>(
 );
 
 export function TopicDirectory({
+  sectionLabel,
+  heading,
   topics,
   initialActiveSlug,
   children,
@@ -37,22 +42,22 @@ export function TopicDirectory({
       className={`${styles.landingSection} ${styles.landingSectionBorderY}`}
     >
       <div className={styles.landingDiscoverShell}>
-        <p className={styles.landingDiscoverHeading}>
-          Explore Adaptation topics
-        </p>
+        <p className={styles.landingDiscoverHeading}>{heading}</p>
 
         <nav
-          aria-label="Adaptation topics"
+          aria-label={`${sectionLabel} topics`}
           className={styles.topicDirectoryGrid}
         >
           {topics.map((topic) => {
             const isActive = topic.slug === activeSlug;
+            const panelId = `${topic.slug}-topic-panel`;
 
             return (
               <button
                 key={topic.slug}
                 type="button"
                 aria-pressed={isActive}
+                aria-controls={panelId}
                 onClick={() => setActiveSlug(topic.slug)}
                 className={`${styles.topicDirectoryCard} ${
                   isActive ? styles.topicDirectoryCardActive : ""
@@ -76,7 +81,7 @@ export function TopicDirectory({
           })}
         </nav>
 
-        <TopicDirectoryContext.Provider value={{ activeSlug }}>
+        <TopicDirectoryContext.Provider value={{ activeSlug, sectionLabel }}>
           {children}
         </TopicDirectoryContext.Provider>
       </div>
@@ -104,16 +109,18 @@ export function TopicPanel({
   }
 
   const isActive = context.activeSlug === slug;
+  const titleId = `${slug}-topic-title`;
 
   return (
     <section
+      id={`${slug}-topic-panel`}
       hidden={!isActive}
       className={styles.topicPanel}
-      aria-labelledby={`${slug}-topic-title`}
+      aria-labelledby={titleId}
     >
       <header className={styles.topicPanelHeader}>
-        <p className={styles.topicPanelEyebrow}>WINEMAP Adaptation</p>
-        <h2 id={`${slug}-topic-title`} className={styles.topicPanelTitle}>
+        <p className={styles.topicPanelEyebrow}>{context.sectionLabel}</p>
+        <h2 id={titleId} className={styles.topicPanelTitle}>
           {title}
         </h2>
         <p className={styles.topicPanelDescription}>{description}</p>

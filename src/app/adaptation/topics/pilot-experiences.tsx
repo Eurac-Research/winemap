@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { ArrowRight, Film } from "lucide-react";
 
+import type { TopicMetadata } from "@/components/topics/types";
 import { Button } from "@/components/ui/button";
-import type { AdaptationTopicMetadata } from "../topics.generated";
 
 export const metadata = {
   slug: "pilot-experiences",
@@ -10,7 +10,7 @@ export const metadata = {
   description:
     "Watch short films about adaptation in vineyards and wine-growing communities.",
   order: 3,
-} satisfies AdaptationTopicMetadata;
+} satisfies TopicMetadata;
 
 export default function PilotExperiencesTopic() {
   return (
