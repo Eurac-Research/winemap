@@ -101,7 +101,7 @@ export default function OverviewNavigation() {
               }
             }}
             data-overview-id={id}
-            className={`relative flex flex-col border border-[color:var(--border)] bg-white/75 transition-all duration-500 ease-out focus-within:border-[color:var(--overview-accent)]/60 motion-reduce:transform-none motion-reduce:transition-none sm:p-7 ${visibleItems.includes(id) ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
+            className={`relative flex flex-col border border-[color:var(--border)] bg-white/75 transition-all duration-500 ease-out hover:z-10 focus-within:z-10 focus-within:border-[color:var(--overview-accent)]/60 motion-reduce:transform-none motion-reduce:transition-none sm:p-7 ${visibleItems.includes(id) ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
             style={
               {
                 "--overview-accent": accent,
@@ -131,7 +131,7 @@ export default function OverviewNavigation() {
                 <span
                   id={`overview-tooltip-${id}`}
                   role="tooltip"
-                  className="pointer-events-none absolute right-0 top-[calc(100%+1rem)] z-30 hidden w-[min(22rem,calc(100vw-3rem))] border border-[color:var(--border)] bg-[color:var(--surface)] p-5 text-left text-sm leading-6 text-[color:var(--app-text-color)] opacity-0 shadow-[0_24px_60px_rgba(15,23,42,0.2)] transition group-hover/icon:block group-hover/icon:opacity-100 group-focus/icon:block group-focus/icon:opacity-100"
+                  className="pointer-events-none absolute right-0 top-[calc(100%+1rem)] z-50 hidden w-[min(22rem,calc(100vw-3rem))] border border-[color:var(--border)] bg-[color:var(--surface)] p-5 text-left text-sm leading-6 text-[color:var(--app-text-color)] opacity-0 shadow-[0_24px_60px_rgba(15,23,42,0.2)] transition group-hover/icon:block group-hover/icon:opacity-100 group-focus/icon:block group-focus/icon:opacity-100"
                 >
                   <span className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-[color:var(--overview-accent)]">
                     {title}

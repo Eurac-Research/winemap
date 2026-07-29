@@ -72,7 +72,7 @@ export default function HomePage() {
 
       <section
         id="winemap-overview"
-        className="section-winemap-overview relative isolate overflow-hidden border-y border-[color:var(--border)] bg-[radial-gradient(circle_at_18%_18%,rgba(151,4,41,0.08),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,240,232,0.92))]"
+        className="section-winemap-overview relative isolate z-20 overflow-visible border-y border-[color:var(--border)] bg-[radial-gradient(circle_at_18%_18%,rgba(151,4,41,0.08),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,240,232,0.92))]"
       >
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
