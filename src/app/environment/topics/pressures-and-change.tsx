@@ -1,3 +1,7 @@
+import Link from "next/link";
+import { ArrowRight, Map as MapIcon, ShieldAlert } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
 import type { TopicMetadata } from "@/components/topics/types";
 
@@ -5,8 +9,8 @@ export const metadata = {
   slug: "pressures-and-change",
   title: "Pressures and Change",
   description:
-    "Explore the climate and land-use pressures transforming European vineyard landscapes.",
-  order: 2,
+    "Explore the climate change vulnerability of European Wine Regions.",
+  order: 1,
 } satisfies TopicMetadata;
 
 export default function PressuresAndChangeTopic() {
@@ -126,6 +130,16 @@ export default function PressuresAndChangeTopic() {
         that can preserve both the ecological integrity and cultural
         heritage of European wine landscapes.
       </p>
+
+      <div className="flex flex-wrap gap-3">
+        <Button variant="outline" asChild className="w-fit">
+          <Link href="/map-applications/vulnerability-explorer">
+            <ShieldAlert className="mr-2 h-4 w-4" aria-hidden="true" />
+            Open Vulnerability Explorer
+            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+          </Link>
+        </Button>
+      </div>
     </>
   );
 }
