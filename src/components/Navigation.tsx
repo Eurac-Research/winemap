@@ -43,26 +43,26 @@ export function Navigation() {
 
   return (
     <header className="w-full border-b border-[color:var(--border)] bg-[color:var(--background)]">
-      <div className="flex h-[var(--top-nav-height)] items-center gap-2 px-3 py-1 sm:px-6">
+      <div className="flex h-[var(--top-nav-height)] items-center py-1">
         <button
           ref={menuButtonRef}
           type="button"
           onClick={() => setMenuOpen((isOpen) => !isOpen)}
-          className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[color:var(--border)] app-text-color transition-colors hover:bg-[color:var(--surface-overlay)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
+          className="inline-flex h-full w-16 shrink-0 cursor-pointer items-center justify-center border-r border-[color:var(--border)] app-text-color transition-colors hover:bg-[color:var(--surface-overlay)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-[color:var(--accent)] sm:w-20"
           aria-label={menuOpen ? "Close navigation" : "Open navigation"}
           aria-expanded={menuOpen}
           aria-controls="site-navigation-drawer"
         >
           {menuOpen ? (
-            <X className="h-5 w-5" aria-hidden="true" />
+            <X className="h-7 w-7" aria-hidden="true" />
           ) : (
-            <Menu className="h-5 w-5" aria-hidden="true" />
+            <Menu className="h-7 w-7" aria-hidden="true" />
           )}
         </button>
 
         <Link
           href="/"
-          className="flex min-w-0 shrink items-center gap-1.5 whitespace-nowrap rounded border border-transparent px-1 py-1 leading-none transition-colors hover:border-[color:var(--border)] sm:gap-2"
+          className="ml-3 flex min-w-0 shrink items-center gap-1.5 whitespace-nowrap rounded border border-transparent px-1 py-1 leading-none transition-colors hover:border-[color:var(--border)] sm:ml-6 sm:gap-2"
         >
           <span className="text-sm font-medium tracking-wide app-text-color sm:text-base">
             WINEMAP
@@ -82,7 +82,7 @@ export function Navigation() {
           href="https://www.alpine-space.eu/project/respond/"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex h-[4.5rem] shrink-0 items-center border border-transparent transition-colors hover:border-[color:var(--border)]"
+          className="mr-3 flex h-[4.5rem] shrink-0 items-center border border-transparent transition-colors hover:border-[color:var(--border)] sm:mr-6"
           aria-label="Visit the RESPOnD project website"
         >
           <RespondLogo className="h-[4.5rem] w-auto" />
@@ -132,7 +132,7 @@ export function Navigation() {
                       key={id}
                       href={href}
                       onClick={closeMenu}
-                      className="group flex items-center gap-4 rounded-lg px-4 py-4 font-semibold app-text-color transition-colors hover:bg-[color:var(--surface-overlay)] focus-visible:bg-[color:var(--surface-overlay)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
+                      className="group flex items-center gap-4 rounded-lg px-4 py-4 font-semibold app-text-color transition-colors hover:bg-[color:var(--surface-muted)] focus-visible:bg-[color:var(--surface-muted)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
                     >
                       <Icon
                         className="h-6 w-6 shrink-0"
@@ -153,7 +153,7 @@ export function Navigation() {
                     key={href}
                     href={href}
                     onClick={closeMenu}
-                    className="block rounded-lg px-4 py-3 app-text-color transition-colors hover:bg-[color:var(--surface-overlay)] focus-visible:bg-[color:var(--surface-overlay)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
+                    className="block rounded-lg px-4 py-3 app-text-color transition-colors hover:bg-[color:var(--surface-muted)] focus-visible:bg-[color:var(--surface-muted)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
                   >
                     {label}
                   </Link>
