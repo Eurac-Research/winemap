@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { projects } from "@/content/projects";
 import {
   BookOpenText,
   Leaf,
@@ -8,7 +9,7 @@ import {
   ThermometerSun,
 } from "lucide-react";
 
-import RespondLogo from "@/components/ui/RespondLogo";
+import { ProjectDetailCard } from "@/components/ProjectCard";
 
 export default function About() {
   return (
@@ -137,107 +138,17 @@ export default function About() {
 
           <section id="projects" className="px-8 md:px-12">
             <div>
-              <h2 className="app-section-title md:text-3xl">Projects behind WINEMAP</h2>
+              <h2 className="app-section-title md:text-3xl">
+                Projects behind WINEMAP
+              </h2>
               <p className="mt-3 app-text">
                 These initiatives provide the research foundation and datasets
                 that feed into the WINEMAP platform.
               </p>
               <div className="mt-6 grid gap-4">
-                <section id="respond">
-                  <a
-                    href="https://www.alpine-space.eu/project/respond/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block rounded-xl border p-6 transition-colors border-[color:var(--border)] bg-[color:var(--surface-overlay)] hover:border-[color:var(--border-strong)] hover:bg-[color:var(--surface-muted)]"
-                  >
-                    <h3 className="text-lg font-semibold">RESPOnD Project</h3>
-
-                    <div className="flex items-start justify-between gap-6">
-                      <p className="mt-2 app-muted">
-                        The RESPOnD project aims to co-design ecosystem-based
-                        adaptation solutions with wine practitioners and
-                        decision-makers to increase the climate resilience of
-                        alpine wine orchards
-                      </p>
-                      <div className="border border-[color:var(--border)]">
-                        <RespondLogo width={200} />
-                      </div>
-                    </div>
-                    <span className="mt-4 inline-flex items-center gap-2 underline underline-offset-4">
-                      Visit RESPOnD project page &rarr;
-                    </span>
-                  </a>
-                </section>
-
-                <section
-                  id="agata"
-                  className="block rounded-xl border p-6 transition-colors border-[color:var(--border)] bg-[color:var(--surface-overlay)] hover:border-[color:var(--border-strong)] hover:bg-[color:var(--surface-muted)]"
-                >
-                  <h3 className="text-lg font-semibold">AGATA Project</h3>
-                  <p className="mt-2 app-muted">
-                    The AGATA (Accessible ecoloGicAl daTA for resilient
-                    Viticulture) project aims to develop spatially explicit
-                    indicators that describe key ecological conditions and
-                    ecosystem services provided by vineyard landscapes across
-                    the Alpine region, with the goal of strengthening their
-                    ecological resilience and long-term sustainability.
-                  </p>
-                </section>
-                <section id="kultivas">
-                  <a
-                    href="https://kultivas.eu/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block rounded-xl border p-6 transition-colors border-[color:var(--border)] bg-[color:var(--surface-overlay)] hover:border-[color:var(--border-strong)] hover:bg-[color:var(--surface-muted)]"
-                  >
-                    <h3 className="text-lg font-semibold">KULTIVAS Project</h3>
-                    <p className="mt-2 app-muted">
-                      KULTIVAS is a modern big-data application that uses high
-                      resolution climatic and remote sensing data combined with
-                      machine learning to enable data-based decision making in
-                      agriculture and forestry.
-                    </p>
-                    <span className="mt-4 inline-flex items-center gap-2 underline underline-offset-4">
-                      Visit KULTIVAS project page &rarr;
-                    </span>
-                  </a>
-                </section>
-                <section id="rebecka">
-                  <a
-                    href="https://www.eurac.edu/en/projects/rebecka"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block rounded-xl border p-6 transition-colors border-[color:var(--border)] bg-[color:var(--surface-overlay)] hover:border-[color:var(--border-strong)] hover:bg-[color:var(--surface-muted)]"
-                  >
-                    <h3 className="text-lg font-semibold">REBECKA Project</h3>
-                    <p className="mt-2 app-muted">
-                      The REBECKA project aims to develop a land-suitability
-                      model for viticulture based on historical harvest data,
-                      grape quality assessments and climatic models.
-                    </p>
-                    <span className="mt-4 inline-flex items-center gap-2 underline underline-offset-4">
-                      Visit REBECKA project page &rarr;
-                    </span>
-                  </a>
-                </section>
-                <section id="clim-smart">
-                  <a
-                    href="https://fusiongrant.info/de/fusion-grant/archiv/climsmart-climate-smart-agriculture-entscheidungshilfen-fuer-die-suedtiroler-landwirtschaft-zur-anpassung-an-den-klimawandel"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block rounded-xl border p-6 transition-colors border-[color:var(--border)] bg-[color:var(--surface-overlay)] hover:border-[color:var(--border-strong)] hover:bg-[color:var(--surface-muted)]"
-                  >
-                    <h3 className="text-lg font-semibold">ClimSmart Project</h3>
-                    <p className="mt-2 app-muted">
-                      The ClimSmart Project combines high-resolution climate
-                      data and modern analytical methods to identify targeted
-                      adaptation strategies for mountain agriculture.
-                    </p>
-                    <span className="mt-4 inline-flex items-center gap-2 underline underline-offset-4">
-                      Visit ClimSmart project page &rarr;
-                    </span>
-                  </a>
-                </section>
+                {projects.map((project) => (
+                  <ProjectDetailCard key={project.slug} {...project} />
+                ))}
               </div>
             </div>
           </section>
