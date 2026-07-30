@@ -3,15 +3,17 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { primaryNavigationSections } from "@/content/primary-navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Home } from "lucide-react";
 
 import EuracLogo from "@/components/ui/EuracLogo";
 import RespondLogo from "@/components/ui/RespondLogo";
 
 const secondaryNavigationSections = [
   { label: "About", href: "/about" },
+  { label: 'The Team', href: "/about/team"},
   { label: "Scientific Literature", href: "/literature" },
   { label: "Glossary", href: "/about/glossary" },
+  { label: 'Imprint', href: "/imprint-privacy" }
 ];
 
 export function Navigation() {
@@ -117,7 +119,7 @@ export function Navigation() {
               <button
                 type="button"
                 onClick={closeMenu}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--border)] app-text-color transition-colors hover:bg-[color:var(--surface-overlay)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
+                className="inline-flex h-10 w-10 cursor-pointer items-center justify-center app-text-color transition-colors hover:bg-[color:var(--surface-muted)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
                 aria-label="Close navigation"
               >
                 <X className="h-5 w-5" aria-hidden="true" />
@@ -126,13 +128,26 @@ export function Navigation() {
 
             <nav aria-label="Main navigation" className="px-3 py-5 sm:px-5">
               <div className="space-y-1">
+                <Link
+                  key='home-link'
+                  href="/"
+                  onClick={closeMenu}
+                  className="group flex items-center gap-4 rounded-lg px-4 py-1 font-semibold app-text-color transition-colors hover:bg-[color:var(--surface-muted)] focus-visible:bg-[color:var(--surface-muted)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
+                >
+                  <Home
+                    className="h-6 w-6 shrink-0"
+                    style={{ color: 'black' }}
+                    aria-hidden="true"
+                  />
+                  <span>Home</span>
+                </Link>
                 {primaryNavigationSections.map(
                   ({ id, label, href, Icon, accent }) => (
                     <Link
                       key={id}
                       href={href}
                       onClick={closeMenu}
-                      className="group flex items-center gap-4 rounded-lg px-4 py-4 font-semibold app-text-color transition-colors hover:bg-[color:var(--surface-muted)] focus-visible:bg-[color:var(--surface-muted)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
+                      className="group flex items-center gap-4 rounded-lg px-4 py-2 font-semibold app-text-color transition-colors hover:bg-[color:var(--surface-muted)] focus-visible:bg-[color:var(--surface-muted)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
                     >
                       <Icon
                         className="h-6 w-6 shrink-0"
@@ -147,13 +162,13 @@ export function Navigation() {
 
               <div className="my-5 border-t border-[color:var(--border)]" />
 
-              <div className="space-y-1">
+              <div>
                 {secondaryNavigationSections.map(({ label, href }) => (
                   <Link
                     key={href}
                     href={href}
                     onClick={closeMenu}
-                    className="block rounded-lg px-4 py-3 app-text-color transition-colors hover:bg-[color:var(--surface-muted)] focus-visible:bg-[color:var(--surface-muted)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
+                    className="block rounded-lg px-4 py-1 app-text-color transition-colors hover:bg-[color:var(--surface-muted)] focus-visible:bg-[color:var(--surface-muted)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
                   >
                     {label}
                   </Link>
