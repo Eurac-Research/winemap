@@ -3,17 +3,16 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { primaryNavigationSections } from "@/content/primary-navigation";
-import { Menu, X, Home } from "lucide-react";
+import { Home, Menu, X } from "lucide-react";
 
 import EuracLogo from "@/components/ui/EuracLogo";
-import RespondLogo from "@/components/ui/RespondLogo";
 
 const secondaryNavigationSections = [
   { label: "About", href: "/about" },
-  { label: 'The Team', href: "/about/team"},
+  { label: "The Team", href: "/about/team" },
   { label: "Scientific Literature", href: "/literature" },
   { label: "Glossary", href: "/about/glossary" },
-  { label: 'Imprint', href: "/imprint-privacy" }
+  { label: "Imprint", href: "/imprint-privacy" },
 ];
 
 export function Navigation() {
@@ -44,13 +43,13 @@ export function Navigation() {
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header className="w-full border-b border-[color:var(--border)] bg-[color:var(--background)]">
+    <header className="fixed left-0 top-0 z-[100] w-full border-b border-[color:var(--border)] bg-[color:var(--background)]">
       <div className="flex h-[var(--top-nav-height)] items-center py-1">
         <button
           ref={menuButtonRef}
           type="button"
           onClick={() => setMenuOpen((isOpen) => !isOpen)}
-          className="inline-flex h-full w-16 shrink-0 cursor-pointer items-center justify-center border-r border-[color:var(--border)] app-text-color transition-colors hover:bg-[color:var(--surface-overlay)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-[color:var(--accent)] sm:w-20"
+          className="inline-flex h-full w-14 shrink-0 cursor-pointer items-center justify-center border-r border-[color:var(--border)] app-text-color transition-colors hover:bg-[color:var(--surface-overlay)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-[color:var(--accent)]"
           aria-label={menuOpen ? "Close navigation" : "Open navigation"}
           aria-expanded={menuOpen}
           aria-controls="site-navigation-drawer"
@@ -58,7 +57,7 @@ export function Navigation() {
           {menuOpen ? (
             <X className="h-7 w-7" aria-hidden="true" />
           ) : (
-            <Menu className="h-7 w-7" aria-hidden="true" />
+            <Menu className="h-5 w-5" aria-hidden="true" />
           )}
         </button>
 
@@ -74,21 +73,6 @@ export function Navigation() {
           </span>
           <EuracLogo className="h-2.5 shrink-0 app-text-color sm:h-3" />
         </Link>
-
-        <div
-          className="h-7 w-px shrink-0 bg-[color:var(--border)]"
-          aria-hidden="true"
-        />
-
-        <a
-          href="https://www.alpine-space.eu/project/respond/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mr-3 flex h-[4.5rem] shrink-0 items-center border border-transparent transition-colors hover:border-[color:var(--border)] sm:mr-6"
-          aria-label="Visit the RESPOnD project website"
-        >
-          <RespondLogo className="h-[4.5rem] w-auto" />
-        </a>
       </div>
 
       {menuOpen ? (
@@ -129,14 +113,14 @@ export function Navigation() {
             <nav aria-label="Main navigation" className="px-3 py-5 sm:px-5">
               <div className="space-y-1">
                 <Link
-                  key='home-link'
+                  key="home-link"
                   href="/"
                   onClick={closeMenu}
                   className="group flex items-center gap-4 rounded-lg px-4 py-1 font-semibold app-text-color transition-colors hover:bg-[color:var(--surface-muted)] focus-visible:bg-[color:var(--surface-muted)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
                 >
                   <Home
                     className="h-6 w-6 shrink-0"
-                    style={{ color: 'black' }}
+                    style={{ color: "black" }}
                     aria-hidden="true"
                   />
                   <span>Home</span>

@@ -1,19 +1,15 @@
 import Link from "next/link";
-import { mainAreas } from "@/content/main-areas";
 import { mapApplications } from "@/content/map-applications";
-import {
-  ChevronDown,
-} from "lucide-react";
+import { projects } from "@/content/projects";
+import { ChevronDown } from "lucide-react";
 
 import BackgroundImageCarousel from "@/components/BackgroundImageCarousel";
-import OverviewNavigation from "@/components/winemap-sections/OverviewNavigation";
 import ProjectCarousel from "@/components/ProjectCarousel";
-import { projects } from "@/content/projects"
+import RespondLogo from "@/components/ui/RespondLogo";
+import OverviewNavigation from "@/components/winemap-sections/OverviewNavigation";
 import styles from "@/styles/Home.module.css";
 
 export default function HomePage() {
-  const adaptationArea = mainAreas.find((area) => area.id === "adaptation");
-  const governanceArea = mainAreas.find((area) => area.id === "governance");
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[color:var(--background)] app-text-color">
@@ -30,6 +26,16 @@ export default function HomePage() {
         />
 
         <div className="relative z-20 mx-auto min-h-[clamp(34rem,72vh,54rem)] max-w-7xl">
+          <a
+            href="https://www.alpine-space.eu/project/respond/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute right-4 top-[calc(var(--top-nav-height)+1rem)] flex items-center bg-black/15 rounded-2xl text-white transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:right-6 lg:right-8"
+            aria-label="Visit the RESPOnD project website"
+          >
+            <RespondLogo className="h-16 w-auto sm:h-20" />
+          </a>
+
           <div className="absolute bottom-10 left-4 right-4 z-20 max-w-3xl sm:left-auto sm:right-5">
             <div className="w-fit max-w-full rounded-2xl border border-white/20 bg-black/35 px-6 py-6 text-right text-white">
               <p className="text-5xl font-semibold uppercase tracking-[0.18em] sm:text-6xl lg:text-7xl">
@@ -84,20 +90,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section 
-        id="projects" 
+      <section
+        id="projects"
         className="section-projects mx-auto max-w-7xl py-4 text-center"
       >
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-4xl mt-4 font-semibold leading-tight app-text-color sm:text-5xl">
-              Projects behind WINEMAP
-            </h2>
-            <p className="mt-3 app-lead">
-              Several partners and projects provide the research foundation and datasets
-              that feed into the WINEMAP platform.
-            </p>
-          </div>
-          <ProjectCarousel projects={projects} />
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-4xl mt-4 font-semibold leading-tight app-text-color sm:text-5xl">
+            Projects behind WINEMAP
+          </h2>
+          <p className="mt-3 app-lead">
+            Several partners and projects provide the research foundation and
+            datasets that feed into the WINEMAP platform.
+          </p>
+        </div>
+        <ProjectCarousel projects={projects} />
       </section>
 
       <div className="relative z-20 w-full">
