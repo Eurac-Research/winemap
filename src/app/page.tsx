@@ -14,7 +14,7 @@ import BackgroundImageCarousel from "@/components/BackgroundImageCarousel";
 import ImageComparisonSlider from "@/components/ImageComparisonSlider";
 import MainAreaCarousel from "@/components/winemap-sections/MainAreaCarousel";
 import OverviewNavigation from "@/components/winemap-sections/OverviewNavigation";
-import ProjectSmallCard from "@/components/ProjectCard"
+import ProjectCarousel from "@/components/ProjectCarousel";
 import { projects } from "@/content/projects"
 import styles from "@/styles/Home.module.css";
 
@@ -91,13 +91,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section
-        id='projects'
-        className="mx-auto flex flex-grid gap-4 max-w-4xl overflow-y-hidden py-4"
-      >
-        {projects.map(project => (
-          <ProjectSmallCard key={project.slug} {... project} />
-        ))}
+      <section id="projects" className="mx-auto max-w-7xl py-4">
+        <ProjectCarousel projects={projects} />
       </section>
 
       <section
