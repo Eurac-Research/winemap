@@ -17,7 +17,7 @@ export const projects: Project[] = [
     name: "RESPoND",
     slug: "respond",
     link: "https://www.alpine-space.eu/project/respond/",
-    logo: <RespondLogo width={200} />,
+    logo: <RespondLogo width={150} />,
     description:
       "The RESPOnD project aims to co-design ecosystem-based adaptation solutions with wine practitioners and decision-makers to increase the climate resilience of alpine wine orchards",
   },

@@ -12,11 +12,11 @@ export default function ProjectSmallCard({
     "block rounded-xl border border-[color:var(--border)] bg-[color:var(--surface-overlay)] p-6 transition-colors hover:border-[color:var(--border-strong)] hover:bg-[color:var(--surface-muted)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2";
 
   const content = logo ? (
-    <div className="flex h-24 items-center justify-center p-3">
+    <div className="flex h-16 items-center justify-center p-3">
       {logo}
     </div>
   ) : logoImage ? (
-    <div className="flex h-24 items-center justify-center p-3">
+    <div className="flex h-16 items-center justify-center p-3">
       <Image
         src={logoImage}
         alt={`${name} logo`}
@@ -26,7 +26,7 @@ export default function ProjectSmallCard({
       />
     </div>
   ) : (
-    <h3 className="flex h-24 items-center justify-center text-center text-2xl font-semibold leading-tight">
+    <h3 className="flex h-16 items-center justify-center text-center text-2xl font-semibold leading-tight">
       {name}
     </h3>
   );

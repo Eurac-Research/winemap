@@ -91,8 +91,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="projects" className="mx-auto max-w-7xl py-4">
-        <ProjectCarousel projects={projects} />
+      <section 
+        id="projects" 
+        className="section-projects mx-auto max-w-7xl py-4 text-center"
+      >
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-4xl mt-4 font-semibold leading-tight app-text-color sm:text-5xl">
+              Projects behind WINEMAP
+            </h2>
+            <p className="mt-3 app-lead">
+              Several partners and projects provide the research foundation and datasets
+              that feed into the WINEMAP platform.
+            </p>
+          </div>
+          <ProjectCarousel projects={projects} />
       </section>
 
       <section
