@@ -2,17 +2,10 @@ import Link from "next/link";
 import { mainAreas } from "@/content/main-areas";
 import { mapApplications } from "@/content/map-applications";
 import {
-  ArrowRight,
   ChevronDown,
-  Leaf,
-  Map,
-  Scale,
-  ThermometerSun,
 } from "lucide-react";
 
 import BackgroundImageCarousel from "@/components/BackgroundImageCarousel";
-import ImageComparisonSlider from "@/components/ImageComparisonSlider";
-import MainAreaCarousel from "@/components/winemap-sections/MainAreaCarousel";
 import OverviewNavigation from "@/components/winemap-sections/OverviewNavigation";
 import ProjectCarousel from "@/components/ProjectCarousel";
 import { projects } from "@/content/projects"
