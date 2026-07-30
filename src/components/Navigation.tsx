@@ -1,277 +1,168 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { mainAreas } from "@/content/main-areas";
-import { mapApplications } from "@/content/map-applications";
-import {
-  BookOpen,
-  GraduationCap,
-  Library,
-  Map,
-  Menu,
-  Network,
-  X,
-  type LucideIcon,
-} from "lucide-react";
+import { primaryNavigationSections } from "@/content/primary-navigation";
+import { Menu, X } from "lucide-react";
 
 import EuracLogo from "@/components/ui/EuracLogo";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
 import RespondLogo from "@/components/ui/RespondLogo";
 
-type NavigationSubsection = {
-  label: string;
-  href: string;
-  description: string;
-};
-
-type NavigationEntry = {
-  title: string;
-  href?: string;
-  description: string;
-  icon: LucideIcon;
-  sections?: NavigationSubsection[];
-};
-
-const TopicsSections = mainAreas.filter(
-  (area) => area.id !== "about" && area.id !== "resources",
-);
-const AboutSections =
-  mainAreas.find((area) => area.id === "about")?.categories ?? [];
-const ResourcesSections =
-  mainAreas.find((area) => area.id === "resources")?.categories ?? [];
-
-const NavigationMenuEntries: NavigationEntry[] = [
-  {
-    title: "Topics",
-    href: "/",
-    description:
-      "Explore the main thematic areas of WINEMAP: climate, adaptation, and governance for European wine regions.",
-    icon: Network,
-    sections: TopicsSections.map((topic_section) => {
-      return {
-        label: topic_section.titleText,
-        href: topic_section.mainHref,
-        description: topic_section.description,
-      };
-    }),
-  },
-  {
-    title: "Maps",
-    description:
-      "Open the interactive map applications and spatial tools available in WINEMAP.",
-    icon: Map,
-    sections: mapApplications.map((map_app) => {
-      return {
-        label: map_app.title,
-        href: map_app.href,
-        description: map_app.description,
-      };
-    }),
-  },
-  {
-    title: "Resources",
-    href: "/",
-    description:
-      "Look at scientific articles related to the WINEMAP and the glossary.",
-    icon: BookOpen,
-    sections: ResourcesSections,
-  },
-  {
-    title: "About",
-    href: "/about",
-    description:
-      "Learn about WINEMAP, the scientific team, core definitions, and the research foundation behind the platform.",
-    icon: BookOpen,
-    sections: AboutSections,
-  },
+const secondaryNavigationSections = [
+  { label: "About", href: "/about" },
+  { label: "Scientific Literature", href: "/literature" },
+  { label: "Glossary", href: "/about/glossary" },
 ];
 
-const triggerClassName =
-  "bg-transparent px-5 py-3 text-base uppercase app-text-color hover:bg-[color:var(--surface-overlay)] hover:text-[color:var(--app-text-color)] data-[state=open]:bg-[color:var(--surface-overlay)] data-[state=open]:text-[color:var(--app-text-color)]";
-
-const topLevelLinkClassName =
-  "inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-5 py-3 text-base font-medium uppercase app-text-color transition-colors hover:bg-[color:var(--surface-overlay)] hover:text-[color:var(--app-text-color)] focus:bg-[color:var(--surface-overlay)] focus:text-[color:var(--app-text-color)] focus:outline-none";
-
-function DesktopNavigationEntry({ entry }: { entry: NavigationEntry }) {
-  const Icon = entry.icon;
-
-  if (!entry.sections?.length) {
-    return (
-      <NavigationMenuItem>
-        <NavigationMenuLink asChild>
-          <Link href={entry.href ?? "/"} className={topLevelLinkClassName}>
-            {entry.title}
-          </Link>
-        </NavigationMenuLink>
-      </NavigationMenuItem>
-    );
-  }
-
-  const overviewContent = (
-    <>
-      <Icon className="h-12 w-12 app-accent-text" aria-hidden="true" />
-      <h3 className="mt-6 app-section-title">{entry.title}</h3>
-      <p className="mt-3 text-base leading-relaxed app-muted">
-        {entry.description}
-      </p>
-    </>
-  );
-
-  return (
-    <NavigationMenuItem>
-      <NavigationMenuTrigger className={triggerClassName}>
-        {entry.title}
-      </NavigationMenuTrigger>
-
-      <NavigationMenuContent className="border-[color:var(--border)] bg-[color:var(--surface)]">
-        <div className="grid w-[min(900px,calc(100vw-2rem))] grid-cols-[minmax(260px,340px)_1fr] gap-0">
-          <div className="flex flex-col justify-center border-r border-[color:var(--border)] bg-[color:var(--surface-overlay)] p-10">
-            {overviewContent}
-          </div>
-
-          <div className="grid gap-1">
-            {entry.sections.map((section) => (
-              <NavigationMenuLink key={section.href} asChild>
-                <Link
-                  href={section.href}
-                  className="group block border-b border-[color:var(--border)] p-3 transition-colors hover:bg-[color:var(--surface-overlay)]"
-                >
-                  <div className="mb-1.5 text-base font-semibold app-text-color">
-                    {section.label}
-                  </div>
-                  <div className="app-caption transition-colors group-hover:text-[color:var(--app-text-color)]">
-                    {section.description}
-                  </div>
-                </Link>
-              </NavigationMenuLink>
-            ))}
-          </div>
-        </div>
-      </NavigationMenuContent>
-    </NavigationMenuItem>
-  );
-}
-
 export function Navigation() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const menuButton = menuButtonRef.current;
+    document.body.style.overflow = "hidden";
+    drawerRef.current?.focus();
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+      menuButton?.focus();
+    };
+  }, [menuOpen]);
+
+  const closeMenu = () => setMenuOpen(false);
 
   return (
-    <div className="fixed left-0 top-0 z-[100] w-full border-b border-[color:var(--border)] bg-[color:var(--background)]">
-      <div className="flex h-[var(--top-nav-height)] items-center justify-between gap-3 px-3 sm:px-6">
-        <div className="flex min-w-0 flex-1 items-center gap-2 py-1 lg:w-1/3 lg:flex-none">
-          <Link
-            href="/"
-            className="flex min-w-0 shrink items-center gap-1.5 whitespace-nowrap rounded border border-transparent px-1 py-1 leading-none transition-colors hover:border-[color:var(--border)] sm:gap-2"
-          >
-            <span className="text-sm font-medium tracking-wide app-text-color sm:text-base">
-              WINEMAP
-            </span>
-            <span className="hidden text-xs app-muted min-[360px]:inline sm:text-sm">
-              by
-            </span>
-            <EuracLogo className="h-2.5 shrink-0 app-text-color sm:h-3" />
-          </Link>
-
-          <div
-            className="h-7 w-px shrink-0 bg-[color:var(--border)]"
-            aria-hidden="true"
-          />
-
-          <a
-            href="https://www.alpine-space.eu/project/respond/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex h-18 shrink-0 items-center border border-transparent transition-colors hover:border-[color:var(--border)]"
-            aria-label="Visit the RESPOnD project website"
-          >
-            <RespondLogo className="h-18 w-auto" />
-          </a>
-        </div>
-
+    <header className="w-full border-b border-[color:var(--border)] bg-[color:var(--background)]">
+      <div className="flex h-[var(--top-nav-height)] items-center gap-2 px-3 py-1 sm:px-6">
         <button
-          onClick={() => setMobileMenuOpen((isOpen) => !isOpen)}
-          className="shrink-0 rounded p-2 app-text-color transition-colors hover:bg-[color:var(--surface-overlay)] lg:hidden"
-          aria-label="Toggle mobile menu"
-          aria-expanded={mobileMenuOpen}
+          ref={menuButtonRef}
+          type="button"
+          onClick={() => setMenuOpen((isOpen) => !isOpen)}
+          className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[color:var(--border)] app-text-color transition-colors hover:bg-[color:var(--surface-overlay)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
+          aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+          aria-expanded={menuOpen}
+          aria-controls="site-navigation-drawer"
         >
-          {mobileMenuOpen ? (
-            <X className="h-6 w-6" />
+          {menuOpen ? (
+            <X className="h-5 w-5" aria-hidden="true" />
           ) : (
-            <Menu className="h-6 w-6" />
+            <Menu className="h-5 w-5" aria-hidden="true" />
           )}
         </button>
 
-        <NavigationMenu className="hidden w-full justify-center py-1 lg:flex">
-          <NavigationMenuList>
-            {NavigationMenuEntries.map((entry) => (
-              <DesktopNavigationEntry key={entry.title} entry={entry} />
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
+        <Link
+          href="/"
+          className="flex min-w-0 shrink items-center gap-1.5 whitespace-nowrap rounded border border-transparent px-1 py-1 leading-none transition-colors hover:border-[color:var(--border)] sm:gap-2"
+        >
+          <span className="text-sm font-medium tracking-wide app-text-color sm:text-base">
+            WINEMAP
+          </span>
+          <span className="hidden text-xs app-muted min-[360px]:inline sm:text-sm">
+            by
+          </span>
+          <EuracLogo className="h-2.5 shrink-0 app-text-color sm:h-3" />
+        </Link>
 
-        <div className="hidden lg:block lg:w-1/3" />
+        <div
+          className="h-7 w-px shrink-0 bg-[color:var(--border)]"
+          aria-hidden="true"
+        />
+
+        <a
+          href="https://www.alpine-space.eu/project/respond/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex h-[4.5rem] shrink-0 items-center border border-transparent transition-colors hover:border-[color:var(--border)]"
+          aria-label="Visit the RESPOnD project website"
+        >
+          <RespondLogo className="h-[4.5rem] w-auto" />
+        </a>
       </div>
 
-      {mobileMenuOpen ? (
-        <>
-          <div
-            className="fixed inset-x-0 bottom-0 top-[var(--top-nav-height)] z-[99] bg-[color:var(--surface-inverse)]/20 lg:hidden"
-            onClick={() => setMobileMenuOpen(false)}
-            aria-hidden="true"
+      {menuOpen ? (
+        <div className="fixed inset-0 z-[200]">
+          <button
+            type="button"
+            className="absolute inset-0 cursor-default bg-[color:var(--surface-inverse)]/20"
+            onClick={closeMenu}
+            aria-label="Close navigation"
           />
 
-          <div className="fixed inset-x-0 top-[var(--top-nav-height)] z-[100] max-h-[calc(100vh-var(--top-nav-height))] overflow-y-auto border-t border-[color:var(--border)] bg-[color:var(--surface)] lg:hidden">
-            <div className="space-y-6 px-6 py-5">
-              {NavigationMenuEntries.map((entry) => (
-                <div key={entry.title}>
-                  {entry.href ? (
-                    <Link
-                      href={entry.href}
-                      className="block text-lg font-semibold app-text-color transition-colors hover:text-[color:var(--app-accent-text-color)]"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {entry.title}
-                    </Link>
-                  ) : (
-                    <p className="text-lg font-semibold app-text-color">
-                      {entry.title}
-                    </p>
-                  )}
-                  <p className="mt-1 app-caption">{entry.description}</p>
-
-                  {entry.sections?.length ? (
-                    <div className="mt-3 space-y-2 border-l border-[color:var(--border)] pl-4">
-                      {entry.sections.map((section) => (
-                        <Link
-                          key={section.href}
-                          href={section.href}
-                          className="block rounded py-1 app-caption transition-colors hover:text-[color:var(--app-text-color)]"
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          <span className="font-medium app-text-color">
-                            {section.label}
-                          </span>
-                          <span className="mt-0.5 block leading-relaxed">
-                            {section.description}
-                          </span>
-                        </Link>
-                      ))}
-                    </div>
-                  ) : null}
-                </div>
-              ))}
+          <div
+            ref={drawerRef}
+            id="site-navigation-drawer"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="site-navigation-title"
+            tabIndex={-1}
+            className="relative flex h-full w-[min(31rem,100vw)] flex-col overflow-y-auto border-r border-[color:var(--border)] bg-[color:var(--surface)] shadow-[var(--shadow-strong)] outline-none"
+          >
+            <div className="flex items-center justify-between border-b border-[color:var(--border)] px-5 py-5 sm:px-7">
+              <h2
+                id="site-navigation-title"
+                className="text-lg font-semibold app-text-color"
+              >
+                Navigation
+              </h2>
+              <button
+                type="button"
+                onClick={closeMenu}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--border)] app-text-color transition-colors hover:bg-[color:var(--surface-overlay)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
+                aria-label="Close navigation"
+              >
+                <X className="h-5 w-5" aria-hidden="true" />
+              </button>
             </div>
+
+            <nav aria-label="Main navigation" className="px-3 py-5 sm:px-5">
+              <div className="space-y-1">
+                {primaryNavigationSections.map(
+                  ({ id, label, href, Icon, accent }) => (
+                    <Link
+                      key={id}
+                      href={href}
+                      onClick={closeMenu}
+                      className="group flex items-center gap-4 rounded-lg px-4 py-4 font-semibold app-text-color transition-colors hover:bg-[color:var(--surface-overlay)] focus-visible:bg-[color:var(--surface-overlay)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
+                    >
+                      <Icon
+                        className="h-6 w-6 shrink-0"
+                        style={{ color: accent }}
+                        aria-hidden="true"
+                      />
+                      <span>{label}</span>
+                    </Link>
+                  ),
+                )}
+              </div>
+
+              <div className="my-5 border-t border-[color:var(--border)]" />
+
+              <div className="space-y-1">
+                {secondaryNavigationSections.map(({ label, href }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    onClick={closeMenu}
+                    className="block rounded-lg px-4 py-3 app-text-color transition-colors hover:bg-[color:var(--surface-overlay)] focus-visible:bg-[color:var(--surface-overlay)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
+                  >
+                    {label}
+                  </Link>
+                ))}
+              </div>
+            </nav>
           </div>
-        </>
+        </div>
       ) : null}
-    </div>
+    </header>
   );
 }
