@@ -74,23 +74,8 @@ export default function OverviewNavigation() {
                 </h2>
               </div>
 
-              <span
-                tabIndex={0}
-                aria-describedby={`overview-tooltip-${id}`}
-                aria-label={`More information about ${title}`}
-                className="group/icon relative inline-flex h-16 w-16 shrink-0 cursor-help items-center justify-center rounded-full border border-[color:var(--overview-accent)]/35 bg-white/90 text-[color:var(--overview-accent)] shadow-[0_10px_28px_rgba(21,20,18,0.1)] transition duration-200 hover:scale-110 hover:border-[color:var(--overview-accent)] hover:bg-[color:var(--overview-accent)]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--overview-accent)]"
-              >
+              <span className="inline-flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-[color:var(--overview-accent)]/35 bg-white/90 text-[color:var(--overview-accent)]">
                 <Icon className="h-8 w-8" aria-hidden="true" />
-                <span
-                  id={`overview-tooltip-${id}`}
-                  role="tooltip"
-                  className="pointer-events-none absolute right-0 top-[calc(100%+1rem)] z-50 hidden w-[min(22rem,calc(100vw-3rem))] border border-[color:var(--border)] bg-[color:var(--surface)] p-5 text-left text-sm leading-6 text-[color:var(--app-text-color)] opacity-0 shadow-[0_24px_60px_rgba(15,23,42,0.2)] transition group-hover/icon:block group-hover/icon:opacity-100 group-focus/icon:block group-focus/icon:opacity-100"
-                >
-                  <span className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-[color:var(--overview-accent)]">
-                    {title} {subtitle}
-                  </span>
-                  {summary}
-                </span>
               </span>
             </div>
 
@@ -100,10 +85,21 @@ export default function OverviewNavigation() {
 
             <Link
               href={href}
-              className="mt-auto inline-flex w-fit items-center gap-2 pt-2 text-base font-medium text-[color:var(--overview-accent)] transition hover:gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--overview-accent)]"
+              aria-describedby={`overview-tooltip-${id}`}
+              className="group/link relative mt-auto inline-flex w-fit items-center gap-2 pt-2 text-base font-medium text-[color:var(--overview-accent)] transition hover:gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--overview-accent)]"
             >
-              <span>Discover more</span>
+              <span>Explore</span>
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              <span
+                id={`overview-tooltip-${id}`}
+                role="tooltip"
+                className="absolute right-0 top-[calc(100%+1rem)] z-50 hidden w-[min(22rem,calc(100vw-3rem))] border border-[color:var(--border)] bg-[color:var(--surface)] p-5 text-left text-sm font-normal leading-6 app-muted opacity-0 shadow-[0_24px_60px_rgba(15,23,42,0.2)] transition group-hover/link:block group-hover/link:opacity-100 group-focus/link:block group-focus/link:opacity-100"
+              >
+                <span className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-[color:var(--overview-accent)]">
+                  {title} {subtitle}
+                </span>
+                {summary}
+              </span>
             </Link>
           </article>
         ),
