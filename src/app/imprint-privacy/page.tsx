@@ -1,17 +1,10 @@
-import Link from "next/link";
-
 import styles from "@/styles/Home.module.css";
 
 export default function Imprint() {
-  const year = new Date().getFullYear();
   return (
     <main className={styles.staticContentBox}>
-      <Link href="/" className={styles.backLink}>
-        <span className={`${styles.arrow} ${styles.left}`}></span>
-        back to map
-      </Link>
 
-      <h1>Imprint / Privacy</h1>
+      <h1 className="mt-12">Imprint / Privacy</h1>
       <p className={styles.imprintContent}>
         <strong>Eurac Research</strong>
         <br />
