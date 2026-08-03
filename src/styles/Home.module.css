@@ -1620,6 +1620,34 @@
   text-transform: uppercase;
 }
 
+.landingBackLink {
+  margin-bottom: 1.25rem;
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.375rem;
+  border: 1px solid color-mix(in srgb, var(--landing-accent) 45%, var(--border));
+  border-radius: 9999px;
+  padding: 0.5rem 0.875rem;
+  color: var(--app-accent-text-color);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease;
+
+  &:hover {
+    border-color: var(--landing-accent);
+    background-color: var(--landing-accent-soft);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--landing-accent);
+    outline-offset: 3px;
+  }
+}
+
 .landingTitle {
   margin-top: 1.25rem;
   max-width: 48rem;

@@ -1,7 +1,8 @@
 "use client";
 
 import { createContext, useContext, useState, type ReactNode } from "react";
-import { ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import styles from "@/styles/Home.module.css";
 
@@ -42,6 +43,10 @@ export function TopicDirectory({
       className={`${styles.landingSection} ${styles.landingSectionBorderY}`}
     >
       <div className={styles.landingDiscoverShell}>
+        <Link href="/#winemap-overview" className={styles.landingBackLink}>
+          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+          Back to WINEMAP home
+        </Link>
         <p className={styles.landingDiscoverHeading}>{heading}</p>
 
         <nav
