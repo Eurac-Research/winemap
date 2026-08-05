@@ -149,7 +149,7 @@ export default function Footer() {
                 className="inline-flex rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
               >
                 <RespondLogo
-                  className="h-18 w-auto"
+                  className="h-20 w-auto"
                   color="#ffffff"
                   aria-hidden="true"
                 />
@@ -161,7 +161,7 @@ export default function Footer() {
                 aria-label="Visit Eurac Research's Institute for Alpine Environment (opens in a new tab)"
                 className="inline-flex rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
               >
-                <EuracLogo className="h-12 w-auto" alt="" sizes="156px" />
+                <EuracLogo className="h-13 w-auto" alt="" sizes="156px" />
               </a>
             </div>
           </div>
