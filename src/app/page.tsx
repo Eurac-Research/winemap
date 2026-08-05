@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { mapApplications } from "@/content/map-applications";
 import { projects } from "@/content/projects";
-import { ChevronDown } from "lucide-react";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
 
 import BackgroundImageCarousel from "@/components/BackgroundImageCarousel";
 import ProjectCarousel from "@/components/ProjectCarousel";
@@ -10,10 +10,9 @@ import OverviewNavigation from "@/components/winemap-sections/OverviewNavigation
 import styles from "@/styles/Home.module.css";
 
 export default function HomePage() {
-
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[color:var(--background)] app-text-color">
-      <section className="relative isolate overflow-hidden">
+      <section className="relative isolate z-30 overflow-visible">
         <div
           className="absolute inset-0 z-0"
           style={{
@@ -26,17 +25,7 @@ export default function HomePage() {
         />
 
         <div className="relative z-20 mx-auto min-h-[clamp(34rem,72vh,54rem)] max-w-7xl">
-          <a
-            href="https://www.alpine-space.eu/project/respond/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute right-4 top-[calc(var(--top-nav-height)+1rem)] flex items-center bg-black/15 rounded-2xl text-white transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:right-6 lg:right-8"
-            aria-label="Visit the RESPOnD project website"
-          >
-            <RespondLogo className="h-16 w-auto sm:h-20" />
-          </a>
-
-          <div className="absolute bottom-10 left-4 right-4 z-20 max-w-3xl sm:left-auto sm:right-5">
+          <div className="absolute bottom-36 left-4 right-4 z-20 max-w-3xl sm:bottom-10 sm:left-auto sm:right-5">
             <div className="w-fit max-w-full rounded-2xl border border-white/20 bg-black/35 px-6 py-6 text-right text-white">
               <p className="text-5xl font-semibold uppercase tracking-[0.18em] sm:text-6xl lg:text-7xl">
                 WINEMAP
@@ -67,6 +56,19 @@ export default function HomePage() {
               </div> */}
             </div>
           </div>
+
+          <a
+            href="https://www.alpine-space.eu/project/respond/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit the RESPOnD project website (opens in a new tab)"
+            className="absolute bottom-0 flex left-4 z-30 max-w-70 translate-y-1/2 items-center border border-[color:var(--border)] bg-[color:var(--surface)] px-2 py-2 shadow-[var(--shadow-strong)] transition-colors hover:bg-[color:var(--surface-muted)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--accent)] sm:left-6 lg:left-8"
+          >
+            <span className="mb-1 block text-xs font-semibold leading-5 app-text-color">
+              Developed within the RESPOnD project
+            </span>
+            <RespondLogo className="h-20 w-auto shrink-0" aria-hidden="true" />
+          </a>
         </div>
       </section>
 
@@ -74,7 +76,7 @@ export default function HomePage() {
         id="winemap-overview"
         className="section-winemap-overview relative isolate z-20 overflow-visible border-y border-[color:var(--border)] bg-[radial-gradient(circle_at_18%_18%,rgba(151,4,41,0.08),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,240,232,0.92))]"
       >
-        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 pb-10 pt-24 sm:px-6 sm:pt-28 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-4xl mt-4 font-semibold leading-tight app-text-color sm:text-5xl">
               How WINEMAP supports climate-resilient winegrowing
