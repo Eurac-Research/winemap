@@ -1476,40 +1476,62 @@
   opacity: 0.5;
 }
 
+.FAQSection {
+  margin-inline: auto;
+  display: grid;
+  max-width: 80rem;
+  gap: 2.5rem;
+  border-top: 1px solid var(--border);
+  padding: 5rem 1rem;
+}
+
+.FAQIntro {
+  align-self: start;
+  max-width: 25rem;
+
+  h2 {
+    margin-top: 1rem;
+    font-size: clamp(2.25rem, 4vw, 3.5rem);
+  }
+
+  p:last-child {
+    margin-top: 1.25rem;
+  }
+}
+
 .FAQList {
-  margin: 0 auto;
-  max-width: 56rem;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
 }
 
 .FAQDetails {
-  padding: 3px 24px;
+  border-bottom: 1px solid var(--border);
   transition:
-    transform 200ms ease,
-    box-shadow 200ms ease,
     border-color 200ms ease,
-    background-color 200ms ease;
+    color 200ms ease;
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--accent) 38%, var(--border));
+  }
 }
 
 .FAQDetails[open] {
-  border: 1px solid var(--border);
-  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
-  background-color: var(--surface-muted);
+  border-color: var(--border);
 }
 
 .FAQSummary {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
   gap: 1rem;
   cursor: pointer;
   list-style: none;
+  padding: 1.35rem 0;
   text-align: left;
   color: var(--foreground);
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.45;
   outline: none;
 
   &::-webkit-details-marker {
@@ -1522,24 +1544,27 @@
   }
 
   &:focus-visible {
-    border-radius: 0.5rem;
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 40%, transparent);
+    outline: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
+    outline-offset: -4px;
   }
 }
 
+.FAQDetails[open] .FAQSummary {
+  padding-bottom: 1rem;
+}
+
 .FAQQuestion {
-  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .FAQChevron {
-  margin-top: 0.25rem;
   display: inline-flex;
-  height: 2.25rem;
-  width: 2.25rem;
+  height: 1.5rem;
+  width: 1.5rem;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  color: var(--accent);
+  color: var(--foreground);
   transition:
     transform 200ms ease,
     color 200ms ease;
@@ -1547,18 +1572,58 @@
 
 .FAQDetails[open] .FAQChevron {
   transform: rotate(180deg);
+  color: var(--foreground);
 }
 
 .FAQAnswer {
+  padding: 0 2.5rem 1.5rem 0;
   color: var(--text-muted);
-  line-height: 1.625;
+  line-height: 1.75;
+
+  p {
+    margin: 0;
+    max-width: 44rem;
+  }
 }
 
 .FAQLink {
   color: var(--accent);
+  font-weight: 650;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  text-underline-offset: 0.18em;
 
   &:hover {
-    text-decoration: underline;
+    text-decoration-color: var(--accent);
+  }
+
+  &:focus-visible {
+    border-radius: 0.125rem;
+    outline: 2px solid color-mix(in srgb, var(--accent) 50%, transparent);
+    outline-offset: 0.1875rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .FAQSection {
+    padding: 6rem 1.5rem;
+  }
+
+  .FAQSummary {
+    padding: 1.5rem 0;
+  }
+
+  .FAQAnswer {
+    padding: 0 4rem 1.75rem 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .FAQSection {
+    grid-template-columns: minmax(15rem, 0.7fr) minmax(0, 1.3fr);
+    gap: clamp(3rem, 7vw, 7rem);
+    padding-block: 7rem;
+    padding-inline: 2rem;
   }
 }
 

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { mapApplications } from "@/content/map-applications";
 import { projects } from "@/content/projects";
-import { ArrowUpRight, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 import BackgroundImageCarousel from "@/components/BackgroundImageCarousel";
 import ProjectCarousel from "@/components/ProjectCarousel";
@@ -117,121 +117,205 @@ export default function HomePage() {
             />
           </div>
 
-          {/* FAQ Section */}
-          <section className="mx-auto max-w-5xl border-t border-[color:var(--border)] px-4 py-20 sm:px-6 lg:px-8">
-            <div>
-              <h2 className="app-section-title mb-12 text-center font-bold">
-                Frequently Asked Questions
+          <section aria-labelledby="faq-title" className={styles.FAQSection}>
+            <div className={styles.FAQIntro}>
+              <p className="app-eyebrow">Start exploring</p>
+              <h2 id="faq-title" className="app-section-title">
+                Questions about WINEMAP?
               </h2>
-              <div className={styles.FAQList}>
-                <details className={styles.FAQDetails}>
-                  <summary className={styles.FAQSummary}>
-                    <span className={styles.FAQQuestion}>
-                      Who is behind this project?
-                    </span>
-                    <span className={styles.FAQChevron}>
-                      <ChevronDown className="h-4 w-4" />
-                    </span>
-                  </summary>
-                  <p className={styles.FAQAnswer}>
-                    WINEMAP is developed by the{" "}
-                    <a
-                      href="https://www.eurac.edu/en/institutes-centers/institute-for-alpine-environment"
-                      target="_blank"
-                      rel="noopener noreferrer"
+              <p className="app-lead">
+                Find the right starting point, understand what the maps show,
+                and discover where to find more detail.
+              </p>
+            </div>
+
+            <div className={styles.FAQList}>
+              <details className={styles.FAQDetails}>
+                <summary className={styles.FAQSummary}>
+                  <span className={styles.FAQQuestion}>What is WINEMAP?</span>
+                  <span className={styles.FAQChevron} aria-hidden="true">
+                    <ChevronDown className="h-4 w-4" />
+                  </span>
+                </summary>
+                <div className={styles.FAQAnswer}>
+                  <p>
+                    WINEMAP is a digital knowledge platform for
+                    climate-resilient European viticulture. It brings together
+                    environmental evidence, adaptation approaches, governance
+                    knowledge, and interactive maps for winegrowers, advisors,
+                    policymakers, researchers, and anyone interested in the
+                    future of wine landscapes.
+                  </p>
+                </div>
+              </details>
+
+              <details className={styles.FAQDetails}>
+                <summary className={styles.FAQSummary}>
+                  <span className={styles.FAQQuestion}>
+                    Where should I start?
+                  </span>
+                  <span className={styles.FAQChevron} aria-hidden="true">
+                    <ChevronDown className="h-4 w-4" />
+                  </span>
+                </summary>
+                <div className={styles.FAQAnswer}>
+                  <p>
+                    Start with the area that best matches your question:{" "}
+                    <Link href="/adaptation" className={styles.FAQLink}>
+                      Adaptation
+                    </Link>{" "}
+                    for practical nature-based measures,{" "}
+                    <Link href="/environment" className={styles.FAQLink}>
+                      Environment
+                    </Link>{" "}
+                    for climate and landscape context,{" "}
+                    <Link href="/governance" className={styles.FAQLink}>
+                      Governance
+                    </Link>{" "}
+                    for legal and participatory frameworks, or{" "}
+                    <a href="#map-applications" className={styles.FAQLink}>
+                      Maps
+                    </a>{" "}
+                    to explore regional information directly.
+                  </p>
+                </div>
+              </details>
+
+              <details className={styles.FAQDetails}>
+                <summary className={styles.FAQSummary}>
+                  <span className={styles.FAQQuestion}>
+                    How is WINEMAP organized and how do I navigate it?
+                  </span>
+                  <span className={styles.FAQChevron} aria-hidden="true">
+                    <ChevronDown className="h-4 w-4" />
+                  </span>
+                </summary>
+                <div className={styles.FAQAnswer}>
+                  <p>
+                    WINEMAP is organized around three thematic areas—{" "}
+                    <Link href="/environment" className={styles.FAQLink}>
+                      Environment
+                    </Link>
+                    ,{" "}
+                    <Link href="/adaptation" className={styles.FAQLink}>
+                      Adaptation
+                    </Link>
+                    , and{" "}
+                    <Link href="/governance" className={styles.FAQLink}>
+                      Governance
+                    </Link>
+                    —plus a collection of{" "}
+                    <a href="#map-applications" className={styles.FAQLink}>
+                      interactive map applications
+                    </a>
+                    . Use the main navigation to move between these areas. Each
+                    thematic area opens with an introduction and a topic guide;
+                    select a topic to explore its content, then use the map
+                    applications when you want to investigate a specific place
+                    or dataset directly.
+                  </p>
+                </div>
+              </details>
+
+              <details className={styles.FAQDetails}>
+                <summary className={styles.FAQSummary}>
+                  <span className={styles.FAQQuestion}>
+                    How do I explore a wine region on the maps?
+                  </span>
+                  <span className={styles.FAQChevron} aria-hidden="true">
+                    <ChevronDown className="h-4 w-4" />
+                  </span>
+                </summary>
+                <div className={styles.FAQAnswer}>
+                  <p>
+                    Open a map application, then zoom to a place or use the
+                    filters and search controls where available. Select a region
+                    or layer to inspect details. Each application includes an
+                    in-context help control explaining its map interactions and
+                    data.
+                  </p>
+                </div>
+              </details>
+
+              <details className={styles.FAQDetails}>
+                <summary className={styles.FAQSummary}>
+                  <span className={styles.FAQQuestion}>
+                    What does “vulnerability” mean in WINEMAP?
+                  </span>
+                  <span className={styles.FAQChevron} aria-hidden="true">
+                    <ChevronDown className="h-4 w-4" />
+                  </span>
+                </summary>
+                <div className={styles.FAQAnswer}>
+                  <p>
+                    Vulnerability describes how a PDO wine region may be
+                    affected by climate change. It combines exposure,
+                    sensitivity, and adaptive capacity. It is a regional,
+                    science-based assessment to support understanding and
+                    comparison—not a site-specific forecast or a prescription
+                    for individual vineyards. Read the{" "}
+                    <Link
+                      href="/about/definitions#vulnerability"
                       className={styles.FAQLink}
                     >
-                      Institute for Alpine Environment{" "}
-                    </a>
-                    at Eurac Research in Bolzano, Italy. Our interdisciplinary
-                    research team specializes in climate adaptation,
-                    environmental science, and sustainable agriculture,
-                    providing the scientific foundation for this platform. The
-                    project is part of{" "}
-                    <a
-                      href="https://www.eurac.edu/en/data-in-action"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.FAQLink}
-                    >
-                      Data in Action
-                    </a>
-                    , an initiative by Eurac Research&apos;s Communication
-                    Department that transforms research data into accessible
-                    digital experiences. The platform&apos;s concept and
-                    technical development are handled by the Communication
-                    Department. Learn more about{" "}
-                    <Link href="/about/team" className={styles.FAQLink}>
-                      our team
+                      methodology and indicator definitions
                     </Link>
                     .
                   </p>
-                </details>
+                </div>
+              </details>
 
-                <details className={styles.FAQDetails}>
-                  <summary className={styles.FAQSummary}>
-                    <span className={styles.FAQQuestion}>
-                      What is the research behind the WINEMAP?
-                    </span>
-                    <span className={styles.FAQChevron}>
-                      <ChevronDown className="h-4 w-4" />
-                    </span>
-                  </summary>
-                  <p className={styles.FAQAnswer}>
-                    The different datasets and map-applications show in the
-                    WINEMAP were created in the framework of several projects
-                    and publications. You can find out more about the projects{" "}
-                    <Link href="/about#projects" className={styles.FAQLink}>
-                      here{" "}
-                    </Link>
-                    and browse through related publications{" "}
+              <details className={styles.FAQDetails}>
+                <summary className={styles.FAQSummary}>
+                  <span className={styles.FAQQuestion}>
+                    Where do the data and methods come from?
+                  </span>
+                  <span className={styles.FAQChevron} aria-hidden="true">
+                    <ChevronDown className="h-4 w-4" />
+                  </span>
+                </summary>
+                <div className={styles.FAQAnswer}>
+                  <p>
+                    WINEMAP combines harmonised datasets and research outputs
+                    from several projects and publications.{" "}
+                    <Link href="/about/definitions" className={styles.FAQLink}>
+                      Indicator definitions, methodology notes, references, and
+                      sources
+                    </Link>{" "}
+                    are available in the Definitions section; related{" "}
                     <Link href="/literature" className={styles.FAQLink}>
-                      here
-                    </Link>
-                    .
+                      publications
+                    </Link>{" "}
+                    are collected in the Scientific Literature library.
                   </p>
-                </details>
+                </div>
+              </details>
 
-                <details className={styles.FAQDetails}>
-                  <summary className={styles.FAQSummary}>
-                    <span className={styles.FAQQuestion}>
-                      What is the timeline of the project?
-                    </span>
-                    <span className={styles.FAQChevron}>
-                      <ChevronDown className="h-4 w-4" />
-                    </span>
-                  </summary>
-                  <p className={styles.FAQAnswer}>
-                    The project began with the collection and digitization of
-                    PDO wine region data in 2020-2021. Climate and environmental
-                    data integration followed in 2022-2023, with ongoing updates
-                    to adaptation strategies and pilot implementation
-                    experiences. The platform continues to evolve with new data
-                    and features.
-                  </p>
-                </details>
-
-                <details className={styles.FAQDetails}>
-                  <summary className={styles.FAQSummary}>
-                    <span className={styles.FAQQuestion}>
-                      How can I use this data?
-                    </span>
-                    <span className={styles.FAQChevron}>
-                      <ChevronDown className="h-4 w-4" />
-                    </span>
-                  </summary>
-                  <p className={styles.FAQAnswer}>
-                    The WINEMAP data is available for research, educational, and
-                    policy-making purposes. For specific data access,
-                    collaboration opportunities, or questions about data usage,
-                    please{" "}
+              <details className={styles.FAQDetails}>
+                <summary className={styles.FAQSummary}>
+                  <span className={styles.FAQQuestion}>
+                    Can I reuse the data or get in touch?
+                  </span>
+                  <span className={styles.FAQChevron} aria-hidden="true">
+                    <ChevronDown className="h-4 w-4" />
+                  </span>
+                </summary>
+                <div className={styles.FAQAnswer}>
+                  <p>
+                    WINEMAP is available to explore online. For questions about
+                    data access, reuse, collaboration, or the platform,{" "}
                     <Link href="/imprint-privacy" className={styles.FAQLink}>
-                      contact us
+                      contact the Institute for Alpine Environment at Eurac
+                      Research
+                    </Link>
+                    . Learn more{" "}
+                    <Link href="/about" className={styles.FAQLink}>
+                      about WINEMAP
                     </Link>
                     .
                   </p>
-                </details>
-              </div>
+                </div>
+              </details>
             </div>
           </section>
         </div>
