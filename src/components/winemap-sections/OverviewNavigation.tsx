@@ -54,7 +54,7 @@ export default function OverviewNavigation() {
               }
             }}
             data-overview-id={id}
-            className={`relative flex flex-col border border-[color:var(--border)] bg-white/75 transition-all duration-500 ease-out hover:z-10 focus-within:z-10 focus-within:border-[color:var(--overview-accent)]/60 motion-reduce:transform-none motion-reduce:transition-none sm:p-7 ${visibleItems.includes(id) ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
+            className={`relative flex flex-col border border-[color:var(--border)] bg-white/75 p-5 transition-all duration-500 ease-out hover:z-10 focus-within:z-10 focus-within:border-[color:var(--overview-accent)]/60 motion-reduce:transform-none motion-reduce:transition-none sm:p-7 ${visibleItems.includes(id) ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
             style={
               {
                 "--overview-accent": accent,
@@ -64,29 +64,29 @@ export default function OverviewNavigation() {
               } as CSSProperties
             }
           >
-            <div className="flex items-start justify-between gap-5">
+            <div className="flex items-start justify-between gap-4 sm:gap-5">
               <div>
-                <h3 className="mt-2 text-2xl font-semibold leading-tight app-text-color">
+                <h3 className="text-xl font-semibold leading-tight app-text-color sm:text-2xl">
                   {title}
                 </h3>
-                <h2 className="mt-1 text-1xl font-semibold leading-tight text-[color:var(--overview-accent)]">
+                <h2 className="mt-1 text-lg font-semibold leading-tight text-[color:var(--overview-accent)] sm:text-xl">
                   {subtitle}
                 </h2>
               </div>
 
-              <span className="inline-flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-[color:var(--overview-accent)]/35 bg-white/90 text-[color:var(--overview-accent)]">
-                <Icon className="h-8 w-8" aria-hidden="true" />
+              <span className="mt-0.5 inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[color:var(--overview-accent)]/35 bg-white/90 text-[color:var(--overview-accent)] sm:mt-0 sm:h-16 sm:w-16">
+                <Icon className="h-6 w-6 sm:h-8 sm:w-8" aria-hidden="true" />
               </span>
             </div>
 
-            <p className="mt-2 max-w-md text-base leading-relaxed app-muted">
+            <p className="mt-3 max-w-md text-base leading-relaxed app-muted sm:mt-2">
               {description}
             </p>
 
             <Link
               href={href}
               aria-describedby={`overview-tooltip-${id}`}
-              className="group/link relative mt-auto inline-flex w-fit items-center gap-2 pt-2 text-base font-medium text-[color:var(--overview-accent)] transition hover:gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--overview-accent)]"
+              className="group/link relative mt-auto inline-flex w-fit items-center gap-2 pt-4 text-base font-medium text-[color:var(--overview-accent)] transition hover:gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--overview-accent)] sm:pt-2"
             >
               <span>Explore</span>
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
