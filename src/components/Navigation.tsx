@@ -66,7 +66,11 @@ export function Navigation() {
           <span className="hidden text-xs app-muted min-[360px]:inline sm:text-sm">
             by
           </span>
-          <EuracLogo className="h-2.5 shrink-0 app-text-color sm:h-3" />
+          <EuracLogo
+            variant="special"
+            className="h-2.5 w-auto shrink-0 sm:h-3"
+            sizes="(min-width: 640px) 104px, 87px"
+          />
         </Link>
       </div>
 
