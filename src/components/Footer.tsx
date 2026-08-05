@@ -1,105 +1,189 @@
 import Link from "next/link";
-import { mainAreas } from "@/content/main-areas";
-import { mapApplications } from "@/content/map-applications";
+import {
+  primaryNavigationSections,
+  secondaryNavigationSections,
+} from "@/content/primary-navigation";
 import { ExternalLink } from "lucide-react";
+
+import EuracLogo from "@/components/ui/EuracLogo";
+import RespondLogo from "@/components/ui/RespondLogo";
+
+const footerLinkClassName =
+  "inline-flex rounded-sm text-sm leading-6 text-slate-300 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white";
+
+const aboutNavigation = secondaryNavigationSections.filter(({ href }) =>
+  ["/about", "/about/team"].includes(href),
+);
+
+const resourceNavigation = secondaryNavigationSections.filter(({ href }) =>
+  ["/literature", "/about/glossary"].includes(href),
+);
+
+const legalNavigation = secondaryNavigationSections.filter(
+  ({ href }) => href === "/imprint-privacy",
+);
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t pt-2 app-text-color bg-[color:var(--background)] border-[color:var(--border)]">
-      <div className="max-w-5xl mx-auto px-4 md:px-6 py-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-4 max-w-8xl mx-auto">
-          {/* Column 1: Explore Maps */}
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wide app-accent-text">
-              Explore
-            </h3>
-            <ul className="space-y-1">
-              {mainAreas
-                .filter((area) => area.showOnLanding)
-                .map((area) => (
-                  <li key={area.id}>
-                    <Link
-                      href={area.mainHref}
-                      className="text-sm transition-colors app-muted hover:text-[color:var(--app-text-color)]"
-                    >
-                      {area.titleText}
-                    </Link>
-                  </li>
-                ))}
-            </ul>
+    <footer
+      className="border-t border-white/15 bg-[rgb(24_28_36)] text-white"
+      aria-labelledby="footer-title"
+    >
+      <div className="mx-auto max-w-6xl px-6 py-14 sm:px-8 sm:py-16">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
+          <div className="max-w-sm lg:col-span-4">
+            <Link
+              href="/"
+              className="inline-flex rounded-sm text-xl font-semibold tracking-wide transition-colors hover:text-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+            >
+              WINEMAP
+            </Link>
+            <h2 id="footer-title" className="mt-4 text-base font-medium">
+              Knowledge for resilient European wine landscapes
+            </h2>
+            <p className="mt-4 text-sm leading-6 text-slate-300">
+              WINEMAP brings together environmental evidence, adaptation
+              approaches, governance knowledge, and interactive maps for
+              climate-smart viticulture.
+            </p>
           </div>
 
-          {/* Column 2: Applications */}
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wide app-accent-text">
-              Map Applications
-            </h3>
-            <ul className="space-y-1">
-              {mapApplications.map((app) => (
-                <li key={app.title}>
-                  <Link
-                    href={app.href}
-                    className="text-sm transition-colors app-muted hover:text-[color:var(--app-text-color)]"
-                  >
-                    {app.title}
+          <nav
+            aria-label="Footer navigation"
+            className="grid gap-9 sm:grid-cols-2 lg:col-span-8 lg:grid-cols-4 lg:gap-8"
+          >
+            <section>
+              <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-white">
+                Explore
+              </h2>
+              <ul className="mt-4 space-y-1">
+                <li>
+                  <Link href="/" className={footerLinkClassName}>
+                    Home
                   </Link>
                 </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* About */}
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wide app-accent-text">
-              About
-            </h3>
-            <ul className="space-y-1">
-              {mainAreas
-                .find((area) => area.id === "about")
-                ?.categories.map((cat) => (
-                  <li key={cat.label}>
-                    <Link
-                      href={cat.href}
-                      className="text-sm transition-colors app-muted hover:text-[color:var(--app-text-color)]"
-                    >
-                      {cat.label.replace(" →", "")}
+                {primaryNavigationSections.map(({ id, label, href }) => (
+                  <li key={id}>
+                    <Link href={href} className={footerLinkClassName}>
+                      {label}
                     </Link>
                   </li>
                 ))}
-            </ul>
-          </div>
+              </ul>
+            </section>
 
-          {/* Column 4: Legal */}
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wide app-accent-text">
-              Legal
-            </h3>
-            <ul className="space-y-1">
-              <li>
-                <Link
-                  href="/imprint-privacy"
-                  className="text-sm transition-colors app-muted hover:text-[color:var(--app-text-color)]"
-                >
-                  Imprint / Privacy Policy
-                </Link>
-              </li>
-            </ul>
-          </div>
+            <section>
+              <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-white">
+                About
+              </h2>
+              <ul className="mt-4 space-y-1">
+                {aboutNavigation.map(({ label, href }) => (
+                  <li key={href}>
+                    <Link href={href} className={footerLinkClassName}>
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-white">
+                Resources
+              </h2>
+              <ul className="mt-4 space-y-1">
+                {resourceNavigation.map(({ label, href }) => (
+                  <li key={href}>
+                    <Link href={href} className={footerLinkClassName}>
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-white">
+                Legal
+              </h2>
+              <ul className="mt-4 space-y-1">
+                {legalNavigation.map(({ label, href }) => (
+                  <li key={href}>
+                    <Link href={href} className={footerLinkClassName}>
+                      {label} / Privacy Policy
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </nav>
         </div>
-      </div>
-      {/* Bottom Bar */}
-      <div className="border-t text-center border-[color:var(--border)]">
-        <p className="text-sm py-3 app-muted">
-          © {currentYear} Eurac Research •{" "}
-          <Link
-            href="/imprint-privacy"
-            className="transition-colors hover:text-[color:var(--app-text-color)]"
+
+        <section
+          aria-labelledby="footer-partners-title"
+          className="mt-14 border-y border-white/15 py-8 sm:mt-16 sm:py-10"
+        >
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+            <div className="max-w-2xl">
+              <h2
+                id="footer-partners-title"
+                className="text-xs font-semibold uppercase tracking-[0.16em] text-white"
+              >
+                Partners and funding
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-slate-300">
+                WINEMAP was developed at Eurac Research within the RESPOnD
+                project, co-financed by the European Regional Development Fund
+                through the Interreg Alpine Space Programme 2021–2027.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-x-10 gap-y-7 sm:gap-x-12">
+              <a
+                href="https://www.alpine-space.eu/project/respond/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit the RESPOnD project website (opens in a new tab)"
+                className="inline-flex rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+              >
+                <RespondLogo
+                  className="h-14 w-auto"
+                  color="#ffffff"
+                  aria-hidden="true"
+                />
+              </a>
+              <a
+                href="https://www.eurac.edu/en/institutes-centers/institute-for-alpine-environment"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit Eurac Research's Institute for Alpine Environment (opens in a new tab)"
+                className="inline-flex rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+              >
+                <EuracLogo
+                  className="h-7 w-auto"
+                  color="#ffffff"
+                  aria-hidden="true"
+                />
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <div className="flex flex-col gap-3 pt-6 text-sm text-slate-300 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {currentYear} Eurac Research</p>
+          <a
+            href="https://www.eurac.edu/en"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex w-fit items-center gap-1 rounded-sm transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
           >
-            Imprint / Privacy
-          </Link>
-        </p>
+            Eurac Research
+            <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+            <span className="sr-only">(opens in a new tab)</span>
+          </a>
+        </div>
       </div>
     </footer>
   );

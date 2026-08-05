@@ -2,18 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { primaryNavigationSections } from "@/content/primary-navigation";
+import {
+  primaryNavigationSections,
+  secondaryNavigationSections,
+} from "@/content/primary-navigation";
 import { Home, Menu, X } from "lucide-react";
 
 import EuracLogo from "@/components/ui/EuracLogo";
-
-const secondaryNavigationSections = [
-  { label: "About", href: "/about" },
-  { label: "The Team", href: "/about/team" },
-  { label: "Scientific Literature", href: "/literature" },
-  { label: "Glossary", href: "/about/glossary" },
-  { label: "Imprint", href: "/imprint-privacy" },
-];
 
 export function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
