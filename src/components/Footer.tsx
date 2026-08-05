@@ -33,7 +33,7 @@ export default function Footer() {
     >
       <div className="mx-auto max-w-6xl px-6 py-14 sm:px-8 sm:py-16">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
-          <div className="max-w-sm lg:col-span-4">
+          <div className="max-w-sm lg:col-span-4 border-r border-white/15">
             <Link
               href="/"
               className="inline-flex rounded-sm text-xl font-semibold tracking-wide transition-colors hover:text-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
