@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { mapApplications } from "@/content/map-applications";
-import { projects } from "@/content/projects";
 import { ChevronDown } from "lucide-react";
 
 import BackgroundImageCarousel from "@/components/BackgroundImageCarousel";
-import ProjectCarousel from "@/components/ProjectCarousel";
+import CourseCarousel from "@/components/CourseCarousel";
 // import RespondLogo from "@/components/ui/RespondLogo";
 import OverviewNavigation from "@/components/winemap-sections/OverviewNavigation";
 import styles from "@/styles/Home.module.css";
@@ -92,21 +91,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section
-        id="projects"
-        className="section-projects mx-auto max-w-7xl py-4 text-center"
-      >
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-4xl mt-4 font-semibold leading-tight app-text-color sm:text-5xl">
-            Projects behind WINEMAP
-          </h2>
-          <p className="mt-3 app-lead">
-            Several partners and projects provide the research foundation and
-            datasets that feed into the WINEMAP platform.
-          </p>
-        </div>
-        <ProjectCarousel projects={projects} />
-      </section>
+      <CourseCarousel />
 
       <div className="relative z-20 w-full">
         <div className="relative z-20 w-full">
