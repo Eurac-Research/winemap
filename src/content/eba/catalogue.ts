@@ -1,23 +1,9 @@
 export type EbaCategory =
-  | "Ground cover and intercropping"
-  | "Ecosystem-based soil & vegetation management"
-  | "Water regulation and retention measures"
-  | "Canopy management"
-  | "Harvest"
-  | "Grape varieties"
-  | "Landscape features"
-  | "Wildlife support and refuge structures"
-  | "Adapted farm management"
-  | "Land reorganisation";
+  | "Soil and ground cover management"
+  | "Water management"
+  | "Vineyard design and management"
+  | "Landscape elements";
 
-export type FieldOfAction =
-  | "Soil"
-  | "Water"
-  | "Plant/Vines"
-  | "Ecological connectivity & Biodiversity"
-  | "Farm system"
-  | "Vineyard stability"
-  | "Land use";
 
 export type SpatialScale = "Vineyard" | "Landscape" | "Farm";
 
@@ -26,7 +12,6 @@ export type EbaStrategy = {
   slug: string;
   title: string;
   category: EbaCategory;
-  field_of_action: FieldOfAction;
   spatial_scale: SpatialScale;
   summary?: string;
   filename?: string;
@@ -42,8 +27,7 @@ export const ebaStrategies: EbaStrategy[] = [
     id: "1",
     slug: "intercropping-herbs-plants",
     title: "Intercropping with perennial herbs and flowering plants",
-    category: "Ground cover and intercropping",
-    field_of_action: "Soil",
+    category: "Soil and ground cover management",
     spatial_scale: "Vineyard",
     summary:
       "Cover crops are intentionally grown between vine rows to improve soil properties, reduce reliance on herbicides, protect the soil surface, and provide green manure or mulch depending on seasonal management.",
@@ -54,20 +38,18 @@ export const ebaStrategies: EbaStrategy[] = [
     id: "2",
     slug: "mulching-organic-soil-cover",
     title: "Mulching: soil cover with organic material",
-    category: "Ecosystem-based soil & vegetation management",
-    field_of_action: "Soil",
+    category: "Soil and ground cover management",
     spatial_scale: "Vineyard",
     summary:
       "Mulching covers the soil beneath or between vines with organic materials such as straw, compost, bark, leaves, pruning residues, or wood chips to suppress weeds, conserve moisture, moderate soil temperature, and protect against erosion.",
-    filename: "Mulching _Soil cover with organic material.pdf",
+    filename: "Mulching.pdf",
     mapPosition: { x: 40, y: 58, tooltipSide: "right" },
   },
   {
     id: "3",
     slug: "reduced-no-tillage",
     title: "Reduced tillage and no-tillage",
-    category: "Ecosystem-based soil & vegetation management",
-    field_of_action: "Soil",
+    category: "Soil and ground cover management",
     spatial_scale: "Vineyard",
     summary:
       "Reduced tillage and no-tillage minimise mechanical soil disturbance, usually in vineyard inter-rows, while maintaining continuous soil cover through practices such as cover crops and mulching.",
@@ -78,8 +60,7 @@ export const ebaStrategies: EbaStrategy[] = [
     id: "4",
     slug: "soil-amendments-compost-biochar",
     title: "Soil amendments: compost and biochar",
-    category: "Ecosystem-based soil & vegetation management",
-    field_of_action: "Soil",
+    category: "Soil and ground cover management",
     spatial_scale: "Vineyard",
     summary:
       "Organic soil amendments such as compost and biochar improve soil health by adding organic matter, supporting nutrient cycling and biological activity, improving soil structure, and increasing water-holding capacity.",
@@ -88,10 +69,41 @@ export const ebaStrategies: EbaStrategy[] = [
   },
   {
     id: "5",
+    slug: "agroforestry",
+    title: "Agroforestry",
+    category: "Vineyard design and management",
+    spatial_scale: "Farm",
+    filename: "Agroforestry.pdf",
+  },
+  {
+    id: "6",
+    slug: "canopy-pruning-management",
+    title: "Canopy and pruning management",
+    category: "Vineyard design and management",
+    spatial_scale: "Vineyard",
+    filename: "Canopy management.pdf",
+  },
+  {
+    id: "7",
+    slug: "grapevine-diversity",
+    title: "Climate-resilient grapevine diversity",
+    category: "Vineyard design and management",
+    spatial_scale: "Vineyard",
+    filename: "Grapevine diversity.pdf",
+  },
+  {
+    id: "8",
+    slug: "livestock-grazing",
+    title: "Integrated livestock grazing",
+    category: "Vineyard design and management",
+    spatial_scale: "Farm",
+    filename: "Livestock grazing.pdf",
+  },
+  {
+    id: "9",
     slug: "vegetated-buffer-flower-strips",
     title: "Vegetated buffer and flower strips",
-    category: "Ground cover and intercropping",
-    field_of_action: "Ecological connectivity & Biodiversity",
+    category: "Landscape elements",
     spatial_scale: "Landscape",
     summary:
       "Vegetated buffer strips and flower strips establish permanent or semi-permanent vegetation within or adjacent to vineyards to reduce environmental pressures, intercept runoff, and strengthen biodiversity and habitat connectivity.",
@@ -99,11 +111,37 @@ export const ebaStrategies: EbaStrategy[] = [
     mapPosition: { x: 74, y: 49, tooltipSide: "left" },
   },
   {
-    id: "6",
+    id: "10",
+    slug: "woody-landscape-elements",
+    title: "Enhancing woody landscape elements",
+    category: "Landscape elements",
+    spatial_scale: "Landscape",
+    filename: "Woody landscape elements.pdf",
+  },
+  {
+    id: "11",
+    slug: "habitats-for-beneficial-species",
+    title: "Creating habitats for beneficial species",
+    category: "Landscape elements",
+    spatial_scale: "Landscape",
+    filename: "Habitats for beneficial species.pdf",
+  },
+  {
+    id: "12",
+    slug: "terrace-restoration-management",
+    title: "Terrace restoration and management in steep-slope viticulture",
+    category: "Landscape elements",
+    spatial_scale: "Landscape",
+    summary:
+      "Terrace restoration and management repair or create level platforms, retaining walls, drainage structures, and soil conservation measures that make steep-slope viticulture more stable, accessible, and resilient.",
+    filename: "Terrace Restoration and Management.pdf",
+    mapPosition: { x: 10, y: 40, tooltipSide: "right" },
+  },
+  {
+    id: "13",
     slug: "dry-stone-walls",
     title: "Dry-stone walls",
-    category: "Landscape features",
-    field_of_action: "Vineyard stability",
+    category: "Landscape elements",
     spatial_scale: "Landscape",
     summary:
       "Dry-stone walls are traditional masonry structures built without mortar or cement, using locally sourced stones to stabilise slopes, support drainage, and create ecological niches in terraced vineyard landscapes.",
@@ -111,16 +149,20 @@ export const ebaStrategies: EbaStrategy[] = [
     mapPosition: { x: 88, y: 65, tooltipSide: "right" },
   },
   {
-    id: "7",
-    slug: "terrace-restoration-management",
-    title: "Terrace restoration and management in steep-slope viticulture",
-    category: "Landscape features",
-    field_of_action: "Vineyard stability",
+    id: "14",
+    slug: "rainwater-infiltration-soil-water-retention",
+    title: "Rainwater infiltration and soil water retention",
+    category: "Water management",
+    spatial_scale: "Vineyard",
+    filename: "Rainwater infiltration.pdf",
+  },
+  {
+    id: "15",
+    slug: "restoration-of-waterways-and-drainage-networks",
+    title: "Restoration of waterways and natural drainage networks",
+    category: "Water management",
     spatial_scale: "Landscape",
-    summary:
-      "Terrace restoration and management repair or create level platforms, retaining walls, drainage structures, and soil conservation measures that make steep-slope viticulture more stable, accessible, and resilient.",
-    filename: "Terrace Restoration and Management.pdf",
-    mapPosition: { x: 10, y: 40, tooltipSide: "right" },
+    filename: "Restoration of Waterways and drainage networks.pdf",
   },
 ];
 
@@ -131,4 +173,4 @@ export const getEbaStrategiesByCategory = (category: EbaCategory) =>
   ebaStrategies.filter((strategy) => strategy.category === category);
 
 export const getSimilarEbaStrategies = (activeStrategy: EbaStrategy) =>
-  ebaStrategies.filter((strategies) => (strategies.category === activeStrategy.category) || (strategies.field_of_action === activeStrategy.field_of_action));
+  ebaStrategies.filter((strategies) => (strategies.category === activeStrategy.category) || (strategies.spatial_scale === activeStrategy.spatial_scale));
