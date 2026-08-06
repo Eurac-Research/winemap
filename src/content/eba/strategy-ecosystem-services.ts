@@ -25,7 +25,7 @@ export const ebaStrategyEcosystemServices = {
       note: "support for beneficial insects and natural enemies",
     },
     {
-      id: "climate-regulation",
+      id: "microclimate-regulation",
       note: "local microclimate regulation and reduced temperature extremes",
     },
     {
@@ -45,7 +45,7 @@ export const ebaStrategyEcosystemServices = {
       id: "water-regulation",
       note: "improved infiltration and soil moisture conservation",
     },
-    { id: "climate-regulation", note: "soil temperature control" },
+    { id: "microclimate-regulation", note: "soil temperature control" },
     { id: "biodiversity-enhancement", note: "above- and below-ground" },
     { id: "weed-control" },
     {
@@ -64,7 +64,7 @@ export const ebaStrategyEcosystemServices = {
       note: "reduced surface runoff and moisture control",
     },
     {
-      id: "climate-regulation",
+      id: "microclimate-regulation",
       note: "local microclimate regulation and reduced temperature extremes",
     },
     { id: "carbon-sequestration" },
@@ -87,7 +87,7 @@ export const ebaStrategyEcosystemServices = {
     { id: "carbon-sequestration" },
     { id: "biodiversity-enhancement", note: "above- and below-ground" },
     {
-      id: "natural-pest-pathogen-control",
+      id: "natural-pest-control",
       note: "support for beneficial insects and natural enemies",
     },
     { id: "grape-production", note: "improved vine growth and yield" },
@@ -132,7 +132,10 @@ export const ebaStrategyEcosystemServices = {
       id: "water-regulation",
       note: "reduced plant water stress through balanced canopy development",
     },
-    { id: "improved-grape-quality-and-production-stability" },
+    {
+      id: "grape-production",
+      note: "improved grape quality and production stability",
+    },
     {
       id: "biodiversity-enhancement",
       note: "support for beneficial organisms through reduced pesticide requirements",
@@ -144,7 +147,7 @@ export const ebaStrategyEcosystemServices = {
       note: "maintenance and use of grapevine genetic diversity",
     },
     {
-      id: "sustainable-grape-production",
+      id: "grape-production",
       note: "greater production stability under climate variability",
     },
     { id: "reduced-plant-protection-requirements" },
@@ -158,7 +161,7 @@ export const ebaStrategyEcosystemServices = {
       id: "soil-health-fertility",
       note: "enhanced nutrient cycling, soil biological activity, and organic matter inputs",
     },
-    { id: "natural-weed-and-vegetation-control" },
+    { id: "weed-control", note: "natural weed and vegetation control" },
     {
       id: "natural-pest-control",
       note: "support for beneficial insects and natural enemies",
@@ -189,7 +192,7 @@ export const ebaStrategyEcosystemServices = {
     },
     { id: "biodiversity-enhancement", note: "above- and below-ground" },
     {
-      id: "micro-climate-regulation",
+      id: "microclimate-regulation",
       note: "greater resilience to drought and extreme rainfall",
     },
   ],
@@ -202,8 +205,11 @@ export const ebaStrategyEcosystemServices = {
       id: "water-regulation",
       note: "enhanced infiltration, groundwater recharge and natural flow regulation",
     },
-    { id: "water-quality-improvement" },
-    { id: "drought-mitigation-through-increased-landscape-water-retention" },
+    { id: "water-quality", note: "improvement" },
+    {
+      id: "water-retention",
+      note: "drought mitigation through increased landscape water retention",
+    },
     {
       id: "biodiversity-enhancement",
       note: "above- and below-ground habitats and ecological connectivity",
@@ -231,7 +237,7 @@ export const ebaStrategyEcosystemServices = {
       note: "improved infiltration, retention, and reduced nutrient leaching",
     },
     {
-      id: "soil-health-improvement",
+      id: "soil-health-fertility",
       note: "enhanced organic matter, nutrient cycling, and soil structure",
     },
     { id: "erosion-control", note: "root stabilisation" },
@@ -241,7 +247,7 @@ export const ebaStrategyEcosystemServices = {
       note: "support for beneficial insects and natural enemies",
     },
     {
-      id: "cultural-and-landscape-aesthetic-value",
+      id: "cultural-heritage-and-landscape-aesthetics",
       note: "cultural identity, structural diversity and visual character of agricultural landscapes",
     },
   ],
@@ -251,13 +257,13 @@ export const ebaStrategyEcosystemServices = {
       id: "natural-pest-control",
       note: "support for beneficial insects and natural enemies",
     },
-    { id: "pollination" },
+    { id: "pollination-services" },
     { id: "microclimate-regulation", note: "reduced temperature extremes" },
     {
       id: "cultural-heritage",
       note: "preservation of traditional knowledge and historical land-use practices",
     },
-    { id: "landscape-aesthetic", note: "distinct landscape character" },
+    { id: "landscape-aesthetics", note: "distinct landscape character" },
   ],
   "vegetated-buffer-flower-strips": [
     {
@@ -280,7 +286,7 @@ export const ebaStrategyEcosystemServices = {
       note: "support for beneficial insects and natural enemies",
     },
     {
-      id: "climate-regulation",
+      id: "microclimate-regulation",
       note: "local microclimate regulation and reduced temperature extremes",
     },
     {
@@ -292,7 +298,7 @@ export const ebaStrategyEcosystemServices = {
   "dry-stone-walls": [
     { id: "erosion-control", note: "slope stabilisation" },
     { id: "water-retention", note: "reduced surface runoff" },
-    { id: "climate-regulation", note: "reduced temperature extremes" },
+    { id: "microclimate-regulation", note: "reduced temperature extremes" },
     {
       id: "water-regulation",
       note: "improved infiltration, retention, and reduced nutrient leaching",
