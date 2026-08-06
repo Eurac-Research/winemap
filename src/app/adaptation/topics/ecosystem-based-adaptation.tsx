@@ -23,7 +23,6 @@ const strategyMarkers = ebaStrategies.flatMap((strategy) =>
           title: strategy.title,
           href: `/adaptation/eba-strategies/${strategy.slug}`,
           category: strategy.category,
-          fieldOfAction: strategy.field_of_action,
           spatialScale: strategy.spatial_scale,
           summary: strategy.summary,
           position: strategy.mapPosition,

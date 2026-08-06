@@ -217,7 +217,6 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
     `${strategy.title} ecosystem-based adaptation strategy`;
   const strategyMetadata = [
     { label: "Category", value: strategy.category },
-    { label: "Field of action", value: strategy.field_of_action },
     { label: "Spatial scale", value: strategy.spatial_scale },
   ];
   const similarStrategies = getSimilarEbaStrategies(strategy).filter(

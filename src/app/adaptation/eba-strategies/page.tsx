@@ -9,7 +9,6 @@ import {
   BookOpen,
   ChevronDown,
   ChevronUp,
-  Droplet,
   ExternalLink,
   Layers,
   Map,
@@ -33,12 +32,11 @@ export default function EbaStrategiesPage() {
   const router = useRouter();
   const [factsheets] = useState<EbaStrategy[]>(ebaStrategies);
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortBy, setSortBy] = useState<
-    "title" | "category" | "field_of_action" | "spatial_scale"
-  >("title");
+  const [sortBy, setSortBy] = useState<"title" | "category" | "spatial_scale">(
+    "title",
+  );
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
-  const [fieldFilter, setFieldFilter] = useState<string>("all");
   const [scaleFilter, setScaleFilter] = useState<string>("all");
   const [expandedAbstracts, setExpandedAbstracts] = useState<Set<string>>(
     new Set(),
@@ -75,16 +73,6 @@ export default function EbaStrategiesPage() {
     [factsheets],
   );
 
-  const uniqueFieldsOfAction = useMemo(
-    () =>
-      Array.from(
-        new Set(factsheets.map((factsheet) => factsheet.field_of_action)),
-      )
-        .filter(Boolean)
-        .sort(),
-    [factsheets],
-  );
-
   const uniqueSpatialScales = useMemo(
     () =>
       Array.from(
@@ -113,18 +101,15 @@ export default function EbaStrategiesPage() {
       const matchesSearch =
         factsheet.title.toLowerCase().includes(search) ||
         factsheet.category.toLowerCase().includes(search) ||
-        factsheet.field_of_action.toLowerCase().includes(search) ||
         factsheet.spatial_scale.toLowerCase().includes(search) ||
         factsheet.summary?.toLowerCase().includes(search);
 
       const matchesCategory =
         categoryFilter === "all" || factsheet.category === categoryFilter;
-      const matchesField =
-        fieldFilter === "all" || factsheet.field_of_action === fieldFilter;
       const matchesScale =
         scaleFilter === "all" || factsheet.spatial_scale === scaleFilter;
 
-      return matchesSearch && matchesCategory && matchesField && matchesScale;
+      return matchesSearch && matchesCategory && matchesScale;
     });
 
     filtered.sort((first, second) => {
@@ -136,15 +121,7 @@ export default function EbaStrategiesPage() {
     });
 
     return filtered;
-  }, [
-    factsheets,
-    searchTerm,
-    sortBy,
-    sortOrder,
-    categoryFilter,
-    fieldFilter,
-    scaleFilter,
-  ]);
+  }, [factsheets, searchTerm, sortBy, sortOrder, categoryFilter, scaleFilter]);
 
   return (
     <div className="section-adaptation min-h-screen bg-background pt-24 transition-colors duration-300">
@@ -174,7 +151,7 @@ export default function EbaStrategiesPage() {
               aria-hidden="true"
             />
             <Input
-              placeholder="Search strategies, categories, fields of action or summaries ..."
+              placeholder="Search strategies, categories, spatial scales or summaries ..."
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
               className="pl-10 pr-10 h-12 transition-colors bg-[color:var(--surface-overlay)] border-[color:var(--border)] app-text-color placeholder:text-[color:var(--app-muted-color)] hover:bg-[color:var(--surface-muted)] focus:bg-[color:var(--surface-muted)]"
@@ -191,7 +168,7 @@ export default function EbaStrategiesPage() {
             ) : null}
           </div>
 
-          <div className="grid gap-2 app-text-color sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_auto_auto]">
+          <div className="grid gap-2 app-text-color sm:grid-cols-2 lg:grid-cols-[1fr_1fr_auto_auto]">
             <Select
               value={categoryFilter}
               onValueChange={(value: string) => setCategoryFilter(value)}
@@ -213,32 +190,6 @@ export default function EbaStrategiesPage() {
                     className="app-text-color"
                   >
                     {category}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            <Select
-              value={fieldFilter}
-              onValueChange={(value: string) => setFieldFilter(value)}
-            >
-              <SelectTrigger
-                className="h-12 w-full bg-[color:var(--surface-overlay)] border-[color:var(--border)] app-text-color hover:bg-[color:var(--surface-muted)]"
-                aria-label="Filter by field of action"
-              >
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-[color:var(--surface)] border-[color:var(--border)]">
-                <SelectItem value="all" className="app-text-color">
-                  All Fields of Action
-                </SelectItem>
-                {uniqueFieldsOfAction.map((fieldOfAction) => (
-                  <SelectItem
-                    key={fieldOfAction}
-                    value={fieldOfAction}
-                    className="app-text-color"
-                  >
-                    {fieldOfAction}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -272,13 +223,9 @@ export default function EbaStrategiesPage() {
 
             <Select
               value={sortBy}
-              onValueChange={(
-                value:
-                  | "title"
-                  | "category"
-                  | "field_of_action"
-                  | "spatial_scale",
-              ) => setSortBy(value)}
+              onValueChange={(value: "title" | "category" | "spatial_scale") =>
+                setSortBy(value)
+              }
             >
               <SelectTrigger
                 className="h-12 w-full lg:w-40 bg-[color:var(--surface-overlay)] border-[color:var(--border)] app-text-color hover:bg-[color:var(--surface-muted)]"
@@ -297,12 +244,6 @@ export default function EbaStrategiesPage() {
                   <div className="flex items-center gap-2">
                     <Layers className="w-4 h-4" aria-hidden="true" />
                     Category
-                  </div>
-                </SelectItem>
-                <SelectItem value="field_of_action" className="app-text-color">
-                  <div className="flex items-center gap-2">
-                    <Droplet className="w-4 h-4" aria-hidden="true" />
-                    Field of Action
                   </div>
                 </SelectItem>
                 <SelectItem value="spatial_scale" className="app-text-color">
@@ -364,7 +305,6 @@ export default function EbaStrategiesPage() {
                   <div className="mb-3 grid gap-3 text-xs sm:grid-cols-2">
                     {[
                       ["Category", factsheet.category],
-                      ["Field of action", factsheet.field_of_action],
                       ["Spatial scale", factsheet.spatial_scale],
                     ].map(([label, value]) => (
                       <div key={label} className="py-2">

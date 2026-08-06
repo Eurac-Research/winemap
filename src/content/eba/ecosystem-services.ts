@@ -136,6 +136,86 @@ export const ebaEcosystemServices = [
     icon: "economy",
     glossaryId: "economic-diversification",
   },
+  {
+    id: "microclimate-regulation",
+    label: "Microclimate regulation",
+    icon: "temperature",
+  },
+  {
+    id: "micro-climate-regulation",
+    label: "Micro-climate regulation",
+    icon: "temperature",
+  },
+  {
+    id: "habitat-provision-and-biodiversity-conservation",
+    label: "Habitat provision and biodiversity conservation",
+    icon: "habitat",
+  },
+  {
+    id: "cultural-heritage-and-landscape-aesthetics",
+    label: "Cultural heritage and landscape aesthetics",
+    icon: "heritage",
+  },
+  {
+    id: "improved-grape-quality-and-production-stability",
+    label: "Improved grape quality and production stability",
+    icon: "production",
+  },
+  {
+    id: "natural-weed-and-vegetation-control",
+    label: "Natural weed and vegetation control",
+    icon: "pest-control",
+  },
+  {
+    id: "flood-and-erosion-control",
+    label: "Flood and erosion control",
+    icon: "slope",
+  },
+  {
+    id: "water-quality-improvement",
+    label: "Water quality improvement",
+    icon: "water",
+  },
+  {
+    id: "drought-mitigation-through-increased-landscape-water-retention",
+    label: "Drought mitigation through increased landscape water retention",
+    icon: "water",
+  },
+  {
+    id: "agrobiodiversity-conservation",
+    label: "Agrobiodiversity conservation",
+    icon: "biodiversity",
+  },
+  {
+    id: "sustainable-grape-production",
+    label: "Sustainable grape production",
+    icon: "production",
+  },
+  {
+    id: "reduced-plant-protection-requirements",
+    label: "Reduced plant protection requirements",
+    icon: "pest-control",
+  },
+  {
+    id: "pollination",
+    label: "Pollination",
+    icon: "biodiversity",
+  },
+  {
+    id: "landscape-aesthetic",
+    label: "Landscape aesthetic",
+    icon: "landscape",
+  },
+  {
+    id: "soil-health-improvement",
+    label: "Soil health improvement",
+    icon: "soil",
+  },
+  {
+    id: "cultural-and-landscape-aesthetic-value",
+    label: "Cultural and landscape aesthetic value",
+    icon: "heritage",
+  },
 ] as const satisfies readonly EbaEcosystemService[];
 
 export type EbaEcosystemServiceId = (typeof ebaEcosystemServices)[number]["id"];

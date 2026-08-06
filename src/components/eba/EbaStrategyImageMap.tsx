@@ -114,7 +114,7 @@ export function EbaStrategyImageMap({
                   {marker.title}
                 </span>
                 {marker.fieldOfAction || marker.spatialScale ? (
-                  <span className="mt-2 grid gap-1 text-xs app-muted">
+                  <span className="grid gap-1 text-xs app-muted">
                     {marker.fieldOfAction ? (
                       <span>Field of action: {marker.fieldOfAction}</span>
                     ) : null}

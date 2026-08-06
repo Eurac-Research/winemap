@@ -4,8 +4,10 @@ export type EbaCategory =
   | "Vineyard design and management"
   | "Landscape elements";
 
-
-export type SpatialScale = "Vineyard" | "Landscape" | "Farm";
+export type SpatialScale =
+  | "Vineyard"
+  | "Landscape"
+  | "Farm"
 
 export type EbaStrategy = {
   id: string;
@@ -73,6 +75,8 @@ export const ebaStrategies: EbaStrategy[] = [
     title: "Agroforestry",
     category: "Vineyard design and management",
     spatial_scale: "Farm",
+    summary:
+      "Agroforestry combines grape production with trees and shrubs to create diverse, multifunctional farming systems that strengthen ecosystem functions while providing environmental and economic benefits.",
     filename: "Agroforestry.pdf",
   },
   {
@@ -81,6 +85,8 @@ export const ebaStrategies: EbaStrategy[] = [
     title: "Canopy and pruning management",
     category: "Vineyard design and management",
     spatial_scale: "Vineyard",
+    summary:
+      "Canopy and pruning management maintain a balanced vine structure that supports healthy grape production and improves resilience to changing climatic conditions by regulating canopy density, shoot growth, and fruit exposure.",
     filename: "Canopy management.pdf",
   },
   {
@@ -89,6 +95,8 @@ export const ebaStrategies: EbaStrategy[] = [
     title: "Climate-resilient grapevine diversity",
     category: "Vineyard design and management",
     spatial_scale: "Vineyard",
+    summary:
+      "Managing grapevine diversity strengthens vineyard resilience by matching grape varieties and rootstocks with local environmental conditions and production objectives.",
     filename: "Grapevine diversity.pdf",
   },
   {
@@ -97,6 +105,8 @@ export const ebaStrategies: EbaStrategy[] = [
     title: "Integrated livestock grazing",
     category: "Vineyard design and management",
     spatial_scale: "Farm",
+    summary:
+      "Integrating livestock into vineyard management controls vegetation through a nature-based approach while supporting ecological processes and reducing the need for mechanical or chemical interventions.",
     filename: "Livestock grazing.pdf",
   },
   {
@@ -116,6 +126,8 @@ export const ebaStrategies: EbaStrategy[] = [
     title: "Enhancing woody landscape elements",
     category: "Landscape elements",
     spatial_scale: "Landscape",
+    summary:
+      "Woody landscape elements such as hedges, tree lines, isolated trees, shrubs, and small woodland patches add structure and diversity to vineyard landscapes while strengthening resilience to environmental pressures.",
     filename: "Woody landscape elements.pdf",
   },
   {
@@ -124,6 +136,8 @@ export const ebaStrategies: EbaStrategy[] = [
     title: "Creating habitats for beneficial species",
     category: "Landscape elements",
     spatial_scale: "Landscape",
+    summary:
+      "Creating ecological niches within and around vineyards restores food, nesting, shelter, and overwintering resources for beneficial organisms and supports a wider range of species throughout the year.",
     filename: "Habitats for beneficial species.pdf",
   },
   {
@@ -154,6 +168,8 @@ export const ebaStrategies: EbaStrategy[] = [
     title: "Rainwater infiltration and soil water retention",
     category: "Water management",
     spatial_scale: "Vineyard",
+    summary:
+      "Rainwater infiltration and soil water retention slow runoff and allow water to infiltrate into the soil, storing moisture within the vineyard for vines to access during dry periods.",
     filename: "Rainwater infiltration.pdf",
   },
   {
@@ -162,6 +178,8 @@ export const ebaStrategies: EbaStrategy[] = [
     title: "Restoration of waterways and natural drainage networks",
     category: "Water management",
     spatial_scale: "Landscape",
+    summary:
+      "Ecological waterways and vegetated runoff management restore natural drainage features so that water is slowed, filtered, and gradually absorbed instead of rapidly leaving the catchment.",
     filename: "Restoration of Waterways and drainage networks.pdf",
   },
 ];
@@ -173,4 +191,8 @@ export const getEbaStrategiesByCategory = (category: EbaCategory) =>
   ebaStrategies.filter((strategy) => strategy.category === category);
 
 export const getSimilarEbaStrategies = (activeStrategy: EbaStrategy) =>
-  ebaStrategies.filter((strategies) => (strategies.category === activeStrategy.category) || (strategies.spatial_scale === activeStrategy.spatial_scale));
+  ebaStrategies.filter(
+    (strategies) =>
+      strategies.category === activeStrategy.category ||
+      strategies.spatial_scale === activeStrategy.spatial_scale,
+  );
