@@ -5,7 +5,7 @@ import { ChevronDown } from "lucide-react";
 
 import BackgroundImageCarousel from "@/components/BackgroundImageCarousel";
 import ProjectCarousel from "@/components/ProjectCarousel";
-import RespondLogo from "@/components/ui/RespondLogo";
+// import RespondLogo from "@/components/ui/RespondLogo";
 import OverviewNavigation from "@/components/winemap-sections/OverviewNavigation";
 import styles from "@/styles/Home.module.css";
 
@@ -57,7 +57,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <a
+          {/* <a
             href="https://www.alpine-space.eu/project/respond/"
             target="_blank"
             rel="noopener noreferrer"
@@ -68,7 +68,7 @@ export default function HomePage() {
               Developed within the RESPOnD project
             </span>
             <RespondLogo className="h-20 w-auto shrink-0" aria-hidden="true" />
-          </a>
+          </a> */}
         </div>
       </section>
 

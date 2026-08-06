@@ -8,7 +8,8 @@ import {
 } from "@/content/primary-navigation";
 import { Home, Menu, X } from "lucide-react";
 
-import EuracLogo from "@/components/ui/EuracLogo";
+import RespondLogo from "@/components/ui/RespondLogo";
+// import EuracLogo from "@/components/ui/EuracLogo";
 
 export function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -55,23 +56,33 @@ export function Navigation() {
             <Menu className="h-5 w-5" aria-hidden="true" />
           )}
         </button>
-
-        <Link
-          href="/"
-          className="ml-3 flex min-w-0 shrink items-center gap-1.5 whitespace-nowrap rounded border border-transparent px-1 py-1 leading-none transition-colors hover:border-[color:var(--border)] sm:ml-6 sm:gap-2"
-        >
-          <span className="text-sm font-medium tracking-wide app-text-color sm:text-base">
-            WINEMAP
-          </span>
-          <span className="hidden text-xs app-muted min-[360px]:inline sm:text-sm">
-            by
-          </span>
-          <EuracLogo
-            variant="special"
-            className="h-2.5 w-auto shrink-0 sm:h-3"
-            sizes="(min-width: 640px) 104px, 87px"
-          />
-        </Link>
+        <div className="w-full h-full flow-root flex py-1">
+          <Link
+            href="/"
+            className="float-left ml-3 flex min-w-0 shrink items-center gap-1.5 whitespace-nowrap rounded border border-transparent leading-none transition-colors hover:border-[color:var(--border)]"
+          >
+            <span className="text-sm font-medium tracking-wide app-text-color sm:text-base">
+              WINEMAP
+            </span>
+            <span className="hidden text-xs app-muted min-[360px]:inline sm:text-sm">
+              by
+            </span>
+            <span className="text-sm font-medium tracking-wide app-text-color sm:text-base">
+              eurac research
+            </span>
+            {/* <EuracLogo
+              variant="special"
+              className="h-2.5 w-auto shrink-0 sm:h-3"
+              sizes="(min-width: 640px) 104px, 87px"
+            /> */}
+          </Link>
+          <Link
+            href="/"
+            className="float-right flex min-w-0 shrink items-center whitespace-nowrap rounded border border-transparent leading-none transition-colors hover:border-[color:var(--border)]"
+          >
+            <RespondLogo variant="landscape" color="standard" className="h-10 w-auto" />
+          </Link>
+        </div>
       </div>
 
       {menuOpen ? (

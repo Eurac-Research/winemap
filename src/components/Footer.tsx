@@ -149,19 +149,10 @@ export default function Footer() {
                 className="inline-flex rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
               >
                 <RespondLogo
-                  className="h-20 w-auto"
-                  color="#ffffff"
+                  className="h-24 pr-8 w-auto"
+                  color="standard"
                   aria-hidden="true"
                 />
-              </a>
-              <a
-                href="https://www.eurac.edu/en/institutes-centers/institute-for-alpine-environment"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Visit Eurac Research's Institute for Alpine Environment (opens in a new tab)"
-                className="inline-flex rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-              >
-                <EuracLogo className="h-13 w-auto" alt="" sizes="156px" />
               </a>
             </div>
           </div>
