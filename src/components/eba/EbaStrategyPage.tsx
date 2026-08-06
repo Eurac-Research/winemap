@@ -131,13 +131,13 @@ function EcosystemServicesGrid({
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </span>
                   <div className="flex flex-col">
-                    <h3 className="pt-1 text-base font-semibold leading-6 app-text-color">
+                    <h3 className="pt-1 text-base leading-6">
                       {service.glossaryId ? (
                         <GlossaryTermPopover
                           id={service.glossaryId}
                           className="border-b-0 text-left hover:text-[color:var(--app-accent-text-color)]"
                         >
-                          {service.label}
+                          <span className = "font-semibold">{service.label}</span>
                         </GlossaryTermPopover>
                       ) : (
                         service.label
@@ -407,7 +407,7 @@ export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
             </div>
 
             <Link
-              href="/adaptation/eba-strategies/catalogue"
+              href="/adaptation/eba-strategies"
               className="inline-flex items-center gap-2 text-sm font-medium app-accent-text underline-offset-4 hover:underline"
             >
               Browse full catalogue

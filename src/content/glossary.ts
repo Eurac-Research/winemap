@@ -41,7 +41,8 @@ export const glossaryTerms: GlossaryTerm[] = [
       "An EU quality and intellectual property scheme that protects the names of food, wine, agricultural products, and spirit drinks whose qualities, reputation, or other characteristics are linked to a specific geographic area.",
     references: [
       {
-        label: "European Commission: geographical indications and quality schemes explained",
+        label:
+          "European Commission: geographical indications and quality schemes explained",
         href: "https://agriculture.ec.europa.eu/farming/geographical-indications-and-quality-schemes/geographical-indications-and-quality-schemes-explained_en",
         type: "website",
       },
@@ -69,7 +70,8 @@ export const glossaryTerms: GlossaryTerm[] = [
       "The EU policy framework for agriculture and rural development. It supports farmers, food security, rural areas, agricultural markets, and the sustainable management of natural resources through EU-level rules, funding, and national strategic plans.",
     references: [
       {
-        label: "European Commission: the common agricultural policy at a glance",
+        label:
+          "European Commission: the common agricultural policy at a glance",
         href: "https://agriculture.ec.europa.eu/common-agricultural-policy/cap-overview/cap-glance_en",
         type: "website",
       },
@@ -364,5 +366,96 @@ export const glossaryTerms: GlossaryTerm[] = [
     term: "Ecological conditions",
     definition:
       "The overall state of an ecological system, which includes their physical, chemical, and biological characteristics and the processes and interactions that connect them.",
+  },
+  {
+    id: "microclimate-regulation",
+    term: "Microclimate regulation",
+    aliases: ["micro-climate regulation"],
+    definition:
+      "The moderation of local wind, temperature, solar radiation, and humidity conditions by vegetation, soil cover, or landscape features.",
+  },
+  {
+    id: "habitat-provision-and-biodiversity-conservation",
+    term: "Habitat provision and biodiversity conservation",
+    definition:
+      "The creation, maintenance, and connection of habitats that provide food, shelter, nesting, breeding, and movement opportunities for a diverse range of species.",
+  },
+  {
+    id: "cultural-heritage-and-landscape-aesthetics",
+    term: "Cultural heritage and landscape aesthetics",
+    definition:
+      "The preservation of traditional land-use features and knowledge while maintaining the visual character, sense of place, and enjoyment of a landscape.",
+  },
+  {
+    id: "improved-grape-quality-and-production-stability",
+    term: "Improved grape quality and production stability",
+    definition:
+      "The support of consistent grape yield and quality through ecosystem conditions that reduce stress, improve vine health, and buffer climatic variability.",
+  },
+  {
+    id: "natural-weed-and-vegetation-control",
+    term: "Natural weed and vegetation control",
+    definition:
+      "The management of unwanted or excessive vegetation through ecological processes and practices such as grazing, ground cover, competition, or mulching, reducing reliance on herbicides or intensive mechanical control.",
+  },
+  {
+    id: "flood-and-erosion-control",
+    term: "Flood and erosion control",
+    definition:
+      "The reduction of damaging runoff, flooding, sediment transport, and soil loss by slowing water movement, increasing infiltration, and stabilising soil.",
+  },
+  {
+    id: "water-quality-improvement",
+    term: "Water quality improvement",
+    definition:
+      "The reduction of sediment, nutrients, pesticides, and other pollutants reaching water bodies through filtration, retention, infiltration, and natural biological processes.",
+  },
+  {
+    id: "drought-mitigation-through-increased-landscape-water-retention",
+    term: "Drought mitigation through increased landscape water retention",
+    definition:
+      "The storage of rainfall in soils, vegetation, and landscape features so that water remains available to plants and ecosystems during dry periods.",
+  },
+  {
+    id: "agrobiodiversity-conservation",
+    term: "Agrobiodiversity conservation",
+    definition:
+      "The maintenance and use of the diversity of crops, varieties, rootstocks, livestock, associated species, and genetic resources that support agricultural systems.",
+  },
+  {
+    id: "sustainable-grape-production",
+    term: "Sustainable grape production",
+    definition:
+      "Grape production that maintains yield and quality over time while conserving resources, supporting ecosystem functions, and adapting to environmental change.",
+  },
+  {
+    id: "reduced-plant-protection-requirements",
+    term: "Reduced plant protection requirements",
+    definition:
+      "A reduced need for chemical plant protection products because resilient varieties, balanced vineyard conditions, and ecological pest regulation lower pest and disease pressure.",
+  },
+  {
+    id: "pollination",
+    term: "Pollination",
+    definition:
+      "The transfer of pollen that enables plant reproduction, supported by diverse and healthy pollinator communities and suitable food and nesting resources.",
+  },
+  {
+    id: "landscape-aesthetic",
+    term: "Landscape aesthetic",
+    definition:
+      "The visual and experiential qualities of a landscape that contribute to its distinct character, sense of place, and enjoyment.",
+  },
+  {
+    id: "soil-health-improvement",
+    term: "Soil health improvement",
+    definition:
+      "The strengthening of soil structure, organic matter, nutrient cycling, biological activity, and water-holding capacity so that soil can better support plants and ecosystem functions.",
+  },
+  {
+    id: "cultural-and-landscape-aesthetic-value",
+    term: "Cultural and landscape aesthetic value",
+    definition:
+      "The cultural identity, structural diversity, visual character, and sense of place provided by valued landscape features and traditional land-use patterns.",
   },
 ];

@@ -140,81 +140,98 @@ export const ebaEcosystemServices = [
     id: "microclimate-regulation",
     label: "Microclimate regulation",
     icon: "temperature",
+    glossaryId: "microclimate-regulation",
   },
   {
     id: "micro-climate-regulation",
     label: "Micro-climate regulation",
     icon: "temperature",
+    glossaryId: "microclimate-regulation",
   },
   {
     id: "habitat-provision-and-biodiversity-conservation",
     label: "Habitat provision and biodiversity conservation",
     icon: "habitat",
+    glossaryId: "habitat-provision-and-biodiversity-conservation",
   },
   {
     id: "cultural-heritage-and-landscape-aesthetics",
     label: "Cultural heritage and landscape aesthetics",
     icon: "heritage",
+    glossaryId: "cultural-heritage-and-landscape-aesthetics",
   },
   {
     id: "improved-grape-quality-and-production-stability",
     label: "Improved grape quality and production stability",
     icon: "production",
+    glossaryId: "improved-grape-quality-and-production-stability",
   },
   {
     id: "natural-weed-and-vegetation-control",
     label: "Natural weed and vegetation control",
     icon: "pest-control",
+    glossaryId: "natural-weed-and-vegetation-control",
   },
   {
     id: "flood-and-erosion-control",
     label: "Flood and erosion control",
     icon: "slope",
+    glossaryId: "flood-and-erosion-control",
   },
   {
     id: "water-quality-improvement",
     label: "Water quality improvement",
     icon: "water",
+    glossaryId: "water-quality-improvement",
   },
   {
     id: "drought-mitigation-through-increased-landscape-water-retention",
     label: "Drought mitigation through increased landscape water retention",
     icon: "water",
+    glossaryId:
+      "drought-mitigation-through-increased-landscape-water-retention",
   },
   {
     id: "agrobiodiversity-conservation",
     label: "Agrobiodiversity conservation",
     icon: "biodiversity",
+    glossaryId: "agrobiodiversity-conservation",
   },
   {
     id: "sustainable-grape-production",
     label: "Sustainable grape production",
     icon: "production",
+    glossaryId: "sustainable-grape-production",
   },
   {
     id: "reduced-plant-protection-requirements",
     label: "Reduced plant protection requirements",
     icon: "pest-control",
+    glossaryId: "reduced-plant-protection-requirements",
   },
   {
     id: "pollination",
     label: "Pollination",
     icon: "biodiversity",
+    glossaryId: "pollination",
   },
   {
     id: "landscape-aesthetic",
     label: "Landscape aesthetic",
     icon: "landscape",
+    glossaryId: "landscape-aesthetic",
   },
   {
     id: "soil-health-improvement",
     label: "Soil health improvement",
     icon: "soil",
+    glossaryId: "soil-health-improvement",
   },
   {
     id: "cultural-and-landscape-aesthetic-value",
     label: "Cultural and landscape aesthetic value",
     icon: "heritage",
+    glossaryId: "cultural-and-landscape-aesthetic-value",
   },
 ] as const satisfies readonly EbaEcosystemService[];
 
