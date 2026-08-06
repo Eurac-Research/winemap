@@ -1,6 +1,10 @@
 import type { ReactNode } from "react";
-import type { EbaEcosystemServiceId } from "@/content/eba/ecosystem-services";
 import type { EbaChallengeIcon } from "@/content/eba/potential-challenges";
+
+import {
+  getEbaStrategyEcosystemServices,
+  type EbaStrategyEcosystemServiceEntry,
+} from "./strategy-ecosystem-services";
 
 export type EbaSectionContent = {
   id: string;
@@ -21,17 +25,14 @@ export type EbaStrategyChallenge = {
   details?: ReactNode;
 };
 
-export type EbaEcosystemServiceEntry = {
-  id: EbaEcosystemServiceId;
-  note?: string;
-};
+export type EbaEcosystemServiceEntry = EbaStrategyEcosystemServiceEntry;
 
 export type EbaStrategyDetailContent = {
   slug: string;
   imagePath?: string;
   imageAlt?: string;
   about?: ReactNode;
-  ecosystemServices?: EbaEcosystemServiceEntry[];
+  ecosystemServices?: readonly EbaEcosystemServiceEntry[];
   challenges?: EbaStrategyChallenge[];
   sections?: EbaSectionContent[];
   videos?: EbaVideoContent[];
@@ -67,33 +68,9 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
       </>
     ),
     imagePath: "/images/eba/interrow_greening2.jpeg",
-    ecosystemServices: [
-      {
-        id: "soil-health-fertility",
-        note: "improved soil structure, nutrient cycling and organic matter content",
-      },
-      { id: "erosion-control", note: "slope stabilisation" },
-      { id: "carbon-sequestration" },
-      { id: "water-retention", note: "reduced surface runoff" },
-      {
-        id: "water-regulation",
-        note: "improved infiltration, retention, and reduced nutrient leaching",
-      },
-      { id: "biodiversity-enhancement" },
-      {
-        id: "natural-pest-control",
-        note: "support for beneficial insects and natural enemies",
-      },
-      {
-        id: "climate-regulation",
-        note: "local microclimate regulation and reduced temperature extremes",
-      },
-      {
-        id: "cultural-heritage",
-        note: "preservation of traditional knowledge and historical land-use practices",
-      },
-      { id: "landscape-aesthetics", note: "distinct landscape character" },
-    ],
+    ecosystemServices: getEbaStrategyEcosystemServices(
+      "intercropping-herbs-plants",
+    ),
     challenges: [
       {
         title: "Resource interactions with vines",
@@ -143,28 +120,9 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
       </>
     ),
     imagePath: "/images/vineyard_sun.jpg",
-    ecosystemServices: [
-      {
-        id: "soil-health-fertility",
-        note: "improved soil structure, nutrient cycling and organic matter content",
-      },
-      { id: "erosion-control", note: "root stabilisation" },
-      { id: "water-retention", note: "reduced surface runoff" },
-      {
-        id: "water-regulation",
-        note: "improved infiltration and soil moisture conservation",
-      },
-      {
-        id: "climate-regulation",
-        note: "soil temperature control",
-      },
-      { id: "biodiversity-enhancement", note: "above- and below-ground" },
-      { id: "weed-control" },
-      {
-        id: "grape-production",
-        note: "improved vine growth and resilience under water-limited conditions",
-      },
-    ],
+    ecosystemServices: getEbaStrategyEcosystemServices(
+      "mulching-organic-soil-cover",
+    ),
     challenges: [
       {
         title: "Pest, disease and phytosanitary management",
@@ -214,29 +172,7 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
       </>
     ),
     imagePath: "/images/vineyard_sun.jpg",
-    ecosystemServices: [
-      {
-        id: "soil-health-fertility",
-        note: "improved soil structure, nutrient cycling and organic matter content",
-      },
-      { id: "erosion-control", note: "slope stabilisation" },
-      {
-        id: "water-retention",
-        note: "reduced surface runoff and moisture control",
-      },
-      {
-        id: "climate-regulation",
-        note: "local microclimate regulation and reduced temperature extremes",
-      },
-      { id: "carbon-sequestration" },
-      { id: "biodiversity-enhancement", note: "above- and below-ground" },
-      { id: "pollination-services" },
-      {
-        id: "natural-pest-control",
-        note: "support for beneficial insects and natural enemies",
-      },
-      { id: "landscape-aesthetics", note: "distinct landscape character" },
-    ],
+    ecosystemServices: getEbaStrategyEcosystemServices("reduced-no-tillage"),
     challenges: [
       {
         title: "Transition of management practices",
@@ -286,25 +222,9 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
       </>
     ),
     imagePath: "/images/vineyard_sun.jpg",
-    ecosystemServices: [
-      {
-        id: "soil-health-fertility",
-        note: "improved soil structure, nutrient cycling and organic matter content",
-      },
-      { id: "erosion-control", note: "slope stabilisation" },
-      { id: "water-retention", note: "reduced surface runoff" },
-      { id: "water-quality" },
-      { id: "carbon-sequestration" },
-      { id: "biodiversity-enhancement", note: "above- and below-ground" },
-      {
-        id: "natural-pest-pathogen-control",
-        note: "support for beneficial insects and natural enemies",
-      },
-      {
-        id: "grape-production",
-        note: "improved vine growth and yield",
-      },
-    ],
+    ecosystemServices: getEbaStrategyEcosystemServices(
+      "soil-amendments-compost-biochar",
+    ),
     challenges: [
       {
         title: "Amendment selection and application rates",
@@ -356,36 +276,7 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
         </p>
       </>
     ),
-    ecosystemServices: [
-      {
-        id: "soil-health-fertility",
-        note: "improved soil structure, nutrient cycling, and organic matter accumulation",
-      },
-      {
-        id: "water-regulation",
-        note: "enhanced infiltration, reduced runoff, and improved water retention",
-      },
-      {
-        id: "erosion-control",
-        note: "soil stabilisation through root systems",
-      },
-      {
-        id: "microclimate-regulation",
-        note: "wind buffering, shading, and temperature moderation",
-      },
-      {
-        id: "habitat-provision-and-biodiversity-conservation",
-        note: "food resources, shelter, and ecological connectivity",
-      },
-      {
-        id: "natural-pest-control",
-        note: "support for beneficial insects, birds, and other natural enemies",
-      },
-      {
-        id: "cultural-heritage-and-landscape-aesthetics",
-        note: "maintenance of traditional multifunctional landscapes",
-      },
-    ],
+    ecosystemServices: getEbaStrategyEcosystemServices("agroforestry"),
     challenges: [
       {
         title: "Spatial design and vineyard operations",
@@ -440,25 +331,9 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
         </p>
       </>
     ),
-    ecosystemServices: [
-      {
-        id: "microclimate-regulation",
-        note: "improved vineyard microclimate and reduced heat stress",
-      },
-      {
-        id: "natural-pest-control",
-        note: "better air circulation and lower disease pressure",
-      },
-      {
-        id: "water-regulation",
-        note: "reduced plant water stress through balanced canopy development",
-      },
-      { id: "improved-grape-quality-and-production-stability" },
-      {
-        id: "biodiversity-enhancement",
-        note: "support for beneficial organisms through reduced pesticide requirements",
-      },
-    ],
+    ecosystemServices: getEbaStrategyEcosystemServices(
+      "canopy-pruning-management",
+    ),
     challenges: [
       {
         title: "Careful timing of operations",
@@ -513,21 +388,7 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
         </p>
       </>
     ),
-    ecosystemServices: [
-      {
-        id: "agrobiodiversity-conservation",
-        note: "maintenance and use of grapevine genetic diversity",
-      },
-      {
-        id: "sustainable-grape-production",
-        note: "greater production stability under climate variability",
-      },
-      { id: "reduced-plant-protection-requirements" },
-      {
-        id: "cultural-heritage",
-        note: "conservation of traditional and locally adapted grape varieties",
-      },
-    ],
+    ecosystemServices: getEbaStrategyEcosystemServices("grapevine-diversity"),
     challenges: [
       {
         title: "Selection according to local site conditions",
@@ -578,29 +439,7 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
         </p>
       </>
     ),
-    ecosystemServices: [
-      {
-        id: "soil-health-fertility",
-        note: "enhanced nutrient cycling, soil biological activity, and organic matter inputs",
-      },
-      { id: "natural-weed-and-vegetation-control" },
-      {
-        id: "natural-pest-control",
-        note: "support for beneficial insects and natural enemies",
-      },
-      {
-        id: "habitat-provision-and-biodiversity-conservation",
-        note: "more diverse ground vegetation and associated wildlife",
-      },
-      {
-        id: "erosion-control",
-        note: "maintenance of permanent vegetation cover and improved soil stability",
-      },
-      {
-        id: "cultural-heritage",
-        note: "preservation of traditional knowledge and historical land-use practices",
-      },
-    ],
+    ecosystemServices: getEbaStrategyEcosystemServices("livestock-grazing"),
     challenges: [
       {
         title: "Protection of vines during grazing",
@@ -657,23 +496,9 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
         </p>
       </>
     ),
-    ecosystemServices: [
-      { id: "water-retention", note: "reduced surface runoff" },
-      {
-        id: "water-regulation",
-        note: "enhanced infiltration and groundwater recharge",
-      },
-      { id: "flood-and-erosion-control" },
-      {
-        id: "soil-health-fertility",
-        note: "improved soil structure, organic matter and nutrient cycling",
-      },
-      { id: "biodiversity-enhancement", note: "above- and below-ground" },
-      {
-        id: "micro-climate-regulation",
-        note: "greater resilience to drought and extreme rainfall",
-      },
-    ],
+    ecosystemServices: getEbaStrategyEcosystemServices(
+      "rainwater-infiltration-soil-water-retention",
+    ),
     challenges: [
       {
         title: "Adapting the design to site conditions",
@@ -731,32 +556,9 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
         </p>
       </>
     ),
-    ecosystemServices: [
-      {
-        id: "flood-and-erosion-control",
-        note: "reduced runoff and sediment transport",
-      },
-      {
-        id: "water-regulation",
-        note: "enhanced infiltration, groundwater recharge and natural flow regulation",
-      },
-      { id: "water-quality-improvement" },
-      {
-        id: "drought-mitigation-through-increased-landscape-water-retention",
-      },
-      {
-        id: "biodiversity-enhancement",
-        note: "above- and below-ground habitats and ecological connectivity",
-      },
-      {
-        id: "cultural-heritage",
-        note: "maintenance of traditional landscape features",
-      },
-      {
-        id: "landscape-aesthetics",
-        note: "enhanced visual quality and landscape character",
-      },
-    ],
+    ecosystemServices: getEbaStrategyEcosystemServices(
+      "restoration-of-waterways-and-drainage-networks",
+    ),
     challenges: [
       {
         title: "Alignment with natural drainage patterns",
@@ -816,34 +618,9 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
         </p>
       </>
     ),
-    ecosystemServices: [
-      {
-        id: "habitat-provision-and-biodiversity-conservation",
-        note: "refuge, food resources, and ecological connectivity",
-      },
-      {
-        id: "microclimate-regulation",
-        note: "wind buffering, shading, and temperature moderation",
-      },
-      {
-        id: "water-regulation",
-        note: "improved infiltration, retention, and reduced nutrient leaching",
-      },
-      {
-        id: "soil-health-improvement",
-        note: "enhanced organic matter, nutrient cycling, and soil structure",
-      },
-      { id: "erosion-control", note: "root stabilisation" },
-      { id: "water-retention", note: "reduced surface runoff" },
-      {
-        id: "natural-pest-control",
-        note: "support for beneficial insects and natural enemies",
-      },
-      {
-        id: "cultural-and-landscape-aesthetic-value",
-        note: "cultural identity, structural diversity and visual character of agricultural landscapes",
-      },
-    ],
+    ecosystemServices: getEbaStrategyEcosystemServices(
+      "woody-landscape-elements",
+    ),
     challenges: [
       {
         title: "Selection of suitable plant species",
@@ -902,20 +679,9 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
         </p>
       </>
     ),
-    ecosystemServices: [
-      { id: "habitat-provision-and-biodiversity-conservation" },
-      {
-        id: "natural-pest-control",
-        note: "support for beneficial insects and natural enemies",
-      },
-      { id: "pollination" },
-      { id: "microclimate-regulation", note: "reduced temperature extremes" },
-      {
-        id: "cultural-heritage",
-        note: "preservation of traditional knowledge and historical land-use practices",
-      },
-      { id: "landscape-aesthetic", note: "distinct landscape character" },
-    ],
+    ecosystemServices: getEbaStrategyEcosystemServices(
+      "habitats-for-beneficial-species",
+    ),
     challenges: [
       {
         title: "Placement within the vineyard landscape",
@@ -977,36 +743,9 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
       </>
     ),
     imagePath: "/images/eba/flower_strips.jpeg",
-    ecosystemServices: [
-      {
-        id: "soil-health-fertility",
-        note: "improved soil structure, nutrient cycling, and organic matter content",
-      },
-      {
-        id: "erosion-control",
-        note: "slope stabilisation and prevention of runoff",
-      },
-      { id: "carbon-sequestration" },
-      { id: "water-retention", note: "reduced surface runoff" },
-      {
-        id: "water-regulation",
-        note: "improved infiltration, retention, and reduced nutrient leaching",
-      },
-      { id: "biodiversity-enhancement", note: "above- and below-ground" },
-      {
-        id: "natural-pest-control",
-        note: "support for beneficial insects and natural enemies",
-      },
-      {
-        id: "climate-regulation",
-        note: "local microclimate regulation and reduced temperature extremes",
-      },
-      {
-        id: "pollination-services",
-        note: "food and habitat resources for pollinators",
-      },
-      { id: "landscape-aesthetics" },
-    ],
+    ecosystemServices: getEbaStrategyEcosystemServices(
+      "vegetated-buffer-flower-strips",
+    ),
     challenges: [
       {
         title: "Appropriate establishment and maintenance",
@@ -1058,34 +797,7 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
       </>
     ),
     imagePath: "/images/eba/dry_stone_walls.JPG",
-    ecosystemServices: [
-      { id: "erosion-control", note: "slope stabilisation" },
-      { id: "water-retention", note: "reduced surface runoff" },
-      {
-        id: "climate-regulation",
-        note: "reduced temperature extremes",
-      },
-      {
-        id: "water-regulation",
-        note: "improved infiltration, retention, and reduced nutrient leaching",
-      },
-      {
-        id: "habitat-provision",
-        note: "microhabitats for plants, invertebrates, reptiles, and small mammals",
-      },
-      {
-        id: "biodiversity-enhancement",
-        note: "microhabitats for plants, invertebrates, reptiles, and small mammals",
-      },
-      {
-        id: "cultural-heritage",
-        note: "preservation of traditional knowledge and historical land-use practices",
-      },
-      {
-        id: "landscape-aesthetics",
-        note: "distinct landscape character and enhanced recreational value",
-      },
-    ],
+    ecosystemServices: getEbaStrategyEcosystemServices("dry-stone-walls"),
     challenges: [
       {
         title: "Construction and maintenance expertise",
@@ -1146,33 +858,9 @@ export const ebaStrategyDetails: EbaStrategyDetailContent[] = [
       </>
     ),
     imagePath: "/images/eba/terraces.jpg",
-    ecosystemServices: [
-      { id: "erosion-control", note: "slope stabilisation" },
-      {
-        id: "water-regulation",
-        note: "improved infiltration, retention, and reduced nutrient leaching",
-      },
-      {
-        id: "climate-resilience",
-        note: "enhanced stability of vineyard systems under extreme weather conditions",
-      },
-      {
-        id: "habitat-provision",
-        note: "microhabitats for plants, invertebrates, reptiles, and small mammals",
-      },
-      {
-        id: "biodiversity-enhancement",
-        note: "microhabitats for plants, invertebrates, reptiles, and small mammals",
-      },
-      {
-        id: "cultural-heritage",
-        note: "preservation of traditional knowledge and historical land-use practices",
-      },
-      {
-        id: "landscape-aesthetics",
-        note: "distinct landscape character and enhanced recreational value",
-      },
-    ],
+    ecosystemServices: getEbaStrategyEcosystemServices(
+      "terrace-restoration-management",
+    ),
     challenges: [
       {
         title: "Structural maintenance and long-term planning",

@@ -27,6 +27,7 @@ import {
   Hammer,
   Landmark,
   Leaf,
+  ListFilter,
   Mountain,
   ShieldCheck,
   Sprout,
@@ -137,7 +138,7 @@ function EcosystemServicesGrid({
                           id={service.glossaryId}
                           className="border-b-0 text-left hover:text-[color:var(--app-accent-text-color)]"
                         >
-                          <span className = "font-semibold">{service.label}</span>
+                          <span className="font-semibold">{service.label}</span>
                         </GlossaryTermPopover>
                       ) : (
                         service.label
@@ -149,6 +150,22 @@ function EcosystemServicesGrid({
                         {note}
                       </div>
                     ) : null}
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      asChild
+                      className="mt-3 h-auto justify-start self-start px-0 py-0 text-sm app-accent-text hover:bg-transparent hover:text-[color:var(--app-accent-text-color)]"
+                    >
+                      <Link
+                        href={`/adaptation/eba-strategies?ecosystemService=${service.id}`}
+                      >
+                        <ListFilter
+                          className="mr-1.5 h-3.5 w-3.5"
+                          aria-hidden="true"
+                        />
+                        View matching strategies
+                      </Link>
+                    </Button>
                   </div>
                 </div>
               </article>

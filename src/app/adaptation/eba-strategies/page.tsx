@@ -1,8 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ebaStrategies, type EbaStrategy } from "@/content/eba/catalogue";
+import { ebaEcosystemServices } from "@/content/eba/ecosystem-services";
+import { getEbaStrategySlugsByEcosystemService } from "@/content/eba/strategy-ecosystem-services";
 import {
   ArrowDown,
   ArrowUp,
@@ -28,8 +30,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export default function EbaStrategiesPage() {
+function EbaStrategiesCatalogue() {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [factsheets] = useState<EbaStrategy[]>(ebaStrategies);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState<"title" | "category" | "spatial_scale">(
@@ -41,6 +45,13 @@ export default function EbaStrategiesPage() {
   const [expandedAbstracts, setExpandedAbstracts] = useState<Set<string>>(
     new Set(),
   );
+  const ecosystemServiceFilter = useMemo(() => {
+    const serviceId = searchParams.get("ecosystemService");
+    return (
+      ebaEcosystemServices.find((service) => service.id === serviceId)?.id ??
+      "all"
+    );
+  }, [searchParams]);
 
   const highlightText = (text: string, term: string) => {
     if (!term.trim()) return text;
@@ -83,6 +94,28 @@ export default function EbaStrategiesPage() {
     [factsheets],
   );
 
+  const ecosystemServiceOptions = useMemo(
+    () => [...ebaEcosystemServices].sort((first, second) =>
+      first.label.localeCompare(second.label),
+    ),
+    [],
+  );
+
+  const setEcosystemServiceFilter = (serviceId: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (serviceId === "all") {
+      params.delete("ecosystemService");
+    } else {
+      params.set("ecosystemService", serviceId);
+    }
+
+    const query = params.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname, {
+      scroll: false,
+    });
+  };
+
   const toggleAbstract = (id: string) => {
     setExpandedAbstracts((previous) => {
       const next = new Set(previous);
@@ -97,6 +130,12 @@ export default function EbaStrategiesPage() {
 
   const filteredAndSortedFactsheets = useMemo(() => {
     const search = searchTerm.toLowerCase();
+    const matchingStrategySlugs =
+      ecosystemServiceFilter === "all"
+        ? null
+        : new Set(
+            getEbaStrategySlugsByEcosystemService(ecosystemServiceFilter),
+          );
     const filtered = factsheets.filter((factsheet) => {
       const matchesSearch =
         factsheet.title.toLowerCase().includes(search) ||
@@ -108,8 +147,15 @@ export default function EbaStrategiesPage() {
         categoryFilter === "all" || factsheet.category === categoryFilter;
       const matchesScale =
         scaleFilter === "all" || factsheet.spatial_scale === scaleFilter;
+      const matchesEcosystemService =
+        !matchingStrategySlugs || matchingStrategySlugs.has(factsheet.slug);
 
-      return matchesSearch && matchesCategory && matchesScale;
+      return (
+        matchesSearch &&
+        matchesCategory &&
+        matchesScale &&
+        matchesEcosystemService
+      );
     });
 
     filtered.sort((first, second) => {
@@ -121,7 +167,15 @@ export default function EbaStrategiesPage() {
     });
 
     return filtered;
-  }, [factsheets, searchTerm, sortBy, sortOrder, categoryFilter, scaleFilter]);
+  }, [
+    factsheets,
+    searchTerm,
+    sortBy,
+    sortOrder,
+    categoryFilter,
+    scaleFilter,
+    ecosystemServiceFilter,
+  ]);
 
   return (
     <div className="section-adaptation min-h-screen bg-background pt-24 transition-colors duration-300">
@@ -168,7 +222,7 @@ export default function EbaStrategiesPage() {
             ) : null}
           </div>
 
-          <div className="grid gap-2 app-text-color sm:grid-cols-2 lg:grid-cols-[1fr_1fr_auto_auto]">
+          <div className="grid gap-2 app-text-color sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_auto_auto]">
             <Select
               value={categoryFilter}
               onValueChange={(value: string) => setCategoryFilter(value)}
@@ -190,6 +244,32 @@ export default function EbaStrategiesPage() {
                     className="app-text-color"
                   >
                     {category}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select
+              value={ecosystemServiceFilter}
+              onValueChange={setEcosystemServiceFilter}
+            >
+              <SelectTrigger
+                className="h-12 w-full bg-[color:var(--surface-overlay)] border-[color:var(--border)] app-text-color hover:bg-[color:var(--surface-muted)]"
+                aria-label="Filter by ecosystem service"
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-[color:var(--surface)] border-[color:var(--border)]">
+                <SelectItem value="all" className="app-text-color">
+                  All Ecosystem Services
+                </SelectItem>
+                {ecosystemServiceOptions.map((service) => (
+                  <SelectItem
+                    key={service.id}
+                    value={service.id}
+                    className="app-text-color"
+                  >
+                    {service.label}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -413,5 +493,13 @@ export default function EbaStrategiesPage() {
         ) : null}
       </div>
     </div>
+  );
+}
+
+export default function EbaStrategiesPage() {
+  return (
+    <Suspense fallback={null}>
+      <EbaStrategiesCatalogue />
+    </Suspense>
   );
 }
