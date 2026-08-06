@@ -9,6 +9,7 @@ import {
 import { Home, Menu, X } from "lucide-react";
 
 import RespondLogo from "@/components/ui/RespondLogo";
+
 // import EuracLogo from "@/components/ui/EuracLogo";
 
 export function Navigation() {
@@ -40,7 +41,7 @@ export function Navigation() {
 
   return (
     <header className="fixed left-0 top-0 z-[100] w-full border-b border-[color:var(--border)] bg-[color:var(--background)]">
-      <div className="flex h-[var(--top-nav-height)] items-center py-1">
+      <div className="flex h-[var(--top-nav-height)] items-center">
         <button
           ref={menuButtonRef}
           type="button"
@@ -56,10 +57,10 @@ export function Navigation() {
             <Menu className="h-5 w-5" aria-hidden="true" />
           )}
         </button>
-        <div className="w-full h-full flow-root flex py-1">
+        <div className="flex h-full min-w-0 flex-1 items-center justify-between">
           <Link
             href="/"
-            className="float-left ml-3 flex min-w-0 shrink items-center gap-1.5 whitespace-nowrap rounded border border-transparent leading-none transition-colors hover:border-[color:var(--border)]"
+            className="ml-3 flex min-w-0 shrink items-center gap-1.5 whitespace-nowrap rounded border border-transparent leading-none transition-colors hover:border-[color:var(--border)]"
           >
             <span className="text-sm font-medium tracking-wide app-text-color sm:text-base">
               WINEMAP
@@ -78,9 +79,13 @@ export function Navigation() {
           </Link>
           <Link
             href="/"
-            className="float-right flex min-w-0 shrink items-center whitespace-nowrap rounded border border-transparent leading-none transition-colors hover:border-[color:var(--border)]"
+            className="flex shrink-0 items-center whitespace-nowrap rounded border border-transparent leading-none transition-colors hover:border-[color:var(--border)]"
           >
-            <RespondLogo variant="landscape" color="standard" className="h-10 w-auto" />
+            <RespondLogo
+              variant="landscape"
+              color="standard"
+              className="h-10 w-auto"
+            />
           </Link>
         </div>
       </div>
