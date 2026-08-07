@@ -7,18 +7,6 @@ export type Course = {
 
 export const courses: Course[] = [
   {
-    id: "ecosystem-based-adaptation-in-viticulture",
-    title: "Ecosystem based adaptation in Viticulture",
-  },
-  {
-    id: "vitiforestry",
-    title: "Vitiforestry",
-  },
-  {
-    id: "nature-based-solutions-in-vineyards",
-    title: "Nature based Solutions in Vineyards",
-  },
-  {
     id: "green-infrastructure",
     title: "Green Infrastructure",
     url: "https://e-learning.eurac.edu/en/green-infrastructure/#/",
@@ -29,5 +17,17 @@ export const courses: Course[] = [
     title: "Biodiversität Südtirol",
     url: "https://e-learning.eurac.edu/de/biodiversitaet/#/",
     thumbnail: "/course-thumbnails/biodiversitaet-suedtirol.png",
+  },
+  {
+    id: "ecosystem-based-adaptation-in-viticulture",
+    title: "Ecosystem based adaptation in Viticulture",
+  },
+  {
+    id: "vitiforestry",
+    title: "Vitiforestry",
+  },
+  {
+    id: "nature-based-solutions-in-vineyards",
+    title: "Nature based Solutions in Vineyards",
   },
 ];
