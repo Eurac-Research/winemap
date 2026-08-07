@@ -132,7 +132,7 @@ function EcosystemServicesGrid({
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-[color:var(--accent-soft)] app-accent-text">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </span>
-                  <div className="flex flex-col w-full h-full">
+                  <div className="flex flex-col w-full">
                     <h3 className="pt-1 text-base leading-6">
                       {service.glossaryId ? (
                         <GlossaryTermPopover
@@ -153,14 +153,14 @@ function EcosystemServicesGrid({
                     ) : <div className='h-full'></div>}
                   </div>
                   <Link
-                    className = "mt-1 h-min w-min hover:text-[color:var(--app-accent-text-color)]"
+                    className = "group/tooltip relative mt-1 h-min w-min hover:text-[color:var(--app-accent-text-color)]"
                     href={`/adaptation/eba-strategies?ecosystemService=${service.id}`}
                   >
                     <FolderSearch className = "h-4 w-4"/>
+                    <div id={`tooltip-${service.id}`} role="tooltip" className="absolute right-0 top-full mt-2 z-50 w-max max-w-52 whitespace-normal break-words rounded-md px-2 py-1 text-xs leading-snug border bg-white shadow-xs app-muted opacity-0 pointer-events-none transition group-hover/tooltip:opacity-100">
+                      Find other strategies with this service
+                    </div>
                   </Link>
-                  <div id={`tooltip-${service.id}`} role="tooltip" className="absolute right-0 top-[calc(100%+1rem)] z-50 w-[min(22rem,calc(100vw-3rem))] border border-[color:var(--border)] bg-[color:var(--surface)] p-5 text-left text-sm font-normal leading-6 app-muted opacity-0 shadow-[0_24px_60px_rgba(15,23,42,0.2)] transition hover:block hover:opacity-100 focus:block focus:opacity-100">
-                    Tooltip Content
-                  </div>
                 </div>
               </article>
             );
