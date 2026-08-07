@@ -18,18 +18,17 @@ export default function OverviewNavigation() {
         entries.forEach((entry) => {
           const id = entry.target.getAttribute("data-overview-id");
           if (!id) return;
+          if (!entry.isIntersecting) return;
 
           setVisibleItems((currentItems) => {
-            const isVisible = currentItems.includes(id);
-            if (isVisible === entry.isIntersecting) return currentItems;
-
-            return entry.isIntersecting
-              ? [...currentItems, id]
-              : currentItems.filter((itemId) => itemId !== id);
+            if (currentItems.includes(id)) return currentItems;
+            return [...currentItems, id];
           });
+
+          observer.unobserve(entry.target);
         });
       },
-      { threshold: 0.6 },
+      { threshold: 0.15 },
     );
 
     itemRefs.current.forEach((item) => observer.observe(item));
@@ -89,14 +88,14 @@ export default function OverviewNavigation() {
               <Link
                 href={href}
                 aria-describedby={`overview-tooltip-${id}`}
-                className="group/link relative mt-auto inline-flex w-fit items-center border bg-[color:var(--overview-accent)] rounded-xl gap-2 py-1 px-2 text-base font-medium text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--overview-accent)]"
+                className="group/link relative z-10 mt-auto inline-flex w-fit items-center gap-2 rounded-xl border border-white/20 bg-[color:var(--overview-accent)] px-2 py-1 text-base font-medium text-white transition-[transform,box-shadow,filter] duration-200 hover:-translate-y-0.5 hover:brightness-110 hover:shadow-md active:translate-y-0 active:brightness-100 active:shadow-sm focus-visible:-translate-y-0.5 focus-visible:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--overview-accent)]"
               >
                 <span>Discover more</span>
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 <span
                   id={`overview-tooltip-${id}`}
                   role="tooltip"
-                  className="pointer-events-none absolute right-0 top-[calc(100%+1rem)] z-50 w-[min(22rem,calc(100vw-3rem))] border border-[color:var(--border)] bg-[color:var(--surface)] p-5 text-left text-sm font-normal leading-6 app-muted opacity-0 shadow-[0_24px_60px_rgba(15,23,42,0.2)] transition-opacity duration-150 group-hover/link:opacity-100 group-focus/link:opacity-100"
+                  className="pointer-events-none absolute right-0 top-[calc(100%+1rem)] z-50 w-[min(22rem,calc(100vw-3rem))] border border-[color:var(--border)] bg-[color:var(--background)] p-5 text-left text-sm font-normal leading-6 app-muted opacity-0 shadow-[0_24px_60px_rgba(15,23,42,0.2)] transition-opacity duration-150 group-hover/link:opacity-100 group-focus/link:opacity-100"
                 >
                   <span className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-[color:var(--overview-accent)]">
                     {title} {subtitle}
@@ -115,7 +114,7 @@ export default function OverviewNavigation() {
                 className="object-cover object-center [clip-path:polygon(0_30%,100%_0,100%_100%,0_100%)]"
               />
             </figure> */}
-            <figure className="relative h-26 overflow-hidden rounded-b-[22px]">
+            <figure className="relative z-0 h-26 overflow-hidden rounded-b-[22px]">
               <Image
                 src="/images/vineyard_sun.jpg"
                 alt="Vineyard at sunset"
