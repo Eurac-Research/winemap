@@ -37,7 +37,7 @@ export default function OverviewNavigation() {
   return (
     <nav
       aria-label="WINEMAP structure overview"
-      className="mx-auto mt-8 grid max-w-4xl gap-2 sm:mt-10 md:grid-cols-2"
+      className="mx-auto mt-8 grid max-w-4xl gap-4 sm:mt-10 md:grid-cols-2"
     >
       {primaryNavigationSections.map(
         (
@@ -54,7 +54,7 @@ export default function OverviewNavigation() {
               }
             }}
             data-overview-id={id}
-            className={`relative flex flex-col border border-[color:var(--border)] bg-white/75 p-5 transition-all duration-500 ease-out hover:z-10 focus-within:z-10 focus-within:border-[color:var(--overview-accent)]/60 motion-reduce:transform-none motion-reduce:transition-none sm:p-7 ${visibleItems.includes(id) ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
+            className={`relative flex flex-col border border-black rounded-xl bg-white/75 p-5 transition-all duration-500 ease-out hover:z-10 focus-within:z-10 focus-within:border-[color:var(--overview-accent)]/60 motion-reduce:transform-none motion-reduce:transition-none sm:p-7 ${visibleItems.includes(id) ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
             style={
               {
                 "--overview-accent": accent,
@@ -74,21 +74,21 @@ export default function OverviewNavigation() {
                 </h2>
               </div>
 
-              <span className="mt-0.5 inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[color:var(--overview-accent)]/35 bg-white/90 text-[color:var(--overview-accent)] sm:mt-0 sm:h-16 sm:w-16">
+              <span className="mt-0.5 inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[color:var(--overview-accent)]/35 bg-white/90 shadow-md text-[color:var(--overview-accent)] sm:mt-0 sm:h-16 sm:w-16">
                 <Icon className="h-6 w-6 sm:h-8 sm:w-8" aria-hidden="true" />
               </span>
             </div>
 
-            <p className="mt-3 max-w-md text-base leading-relaxed app-muted sm:mt-2">
+            <p className="mt-1 mb-3 max-w-md text-base leading-relaxed app-muted sm:mt-2">
               {description}
             </p>
 
             <Link
               href={href}
               aria-describedby={`overview-tooltip-${id}`}
-              className="group/link relative mt-auto inline-flex w-fit items-center gap-2 pt-4 text-base font-medium text-[color:var(--overview-accent)] transition hover:gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--overview-accent)] sm:pt-2"
+              className="group/link relative mt-auto inline-flex w-fit items-center border bg-[color:var(--overview-accent)] rounded-xl gap-2 py-1 px-2 text-base font-medium text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--overview-accent)]"
             >
-              <span>Explore</span>
+              <span>Discover more</span>
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
               <span
                 id={`overview-tooltip-${id}`}
