@@ -34,6 +34,7 @@ import {
   ThermometerSun,
   Trees,
   Waves,
+  FolderSearch,
   type LucideIcon,
 } from "lucide-react";
 
@@ -127,11 +128,11 @@ function EcosystemServicesGrid({
                 key={service.id}
                 className="group/service min-h-28 border border-[color:var(--border)] bg-[color:var(--surface-overlay)] p-4 transition-colors hover:border-[color:var(--accent)]"
               >
-                <div className="flex items-start gap-3">
+                <div className="flex justify-stretch gap-3 h-full w-full">
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-[color:var(--accent-soft)] app-accent-text">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </span>
-                  <div className="flex flex-col">
+                  <div className="flex flex-col w-full h-full">
                     <h3 className="pt-1 text-base leading-6">
                       {service.glossaryId ? (
                         <GlossaryTermPopover
@@ -146,26 +147,19 @@ function EcosystemServicesGrid({
                     </h3>
 
                     {note ? (
-                      <div className="text-sm leading-7 app-text-color">
+                      <div className="h-full text-sm leading-7 app-text-color">
                         {note}
                       </div>
-                    ) : null}
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      asChild
-                      className="mt-3 h-auto justify-start self-start px-0 py-0 text-sm app-accent-text hover:bg-transparent hover:text-[color:var(--app-accent-text-color)]"
-                    >
-                      <Link
-                        href={`/adaptation/eba-strategies?ecosystemService=${service.id}`}
-                      >
-                        <ListFilter
-                          className="mr-1.5 h-3.5 w-3.5"
-                          aria-hidden="true"
-                        />
-                        View matching strategies
-                      </Link>
-                    </Button>
+                    ) : <div className='h-full'></div>}
+                  </div>
+                  <Link
+                    className = "mt-1 h-min w-min hover:text-[color:var(--app-accent-text-color)]"
+                    href={`/adaptation/eba-strategies?ecosystemService=${service.id}`}
+                  >
+                    <FolderSearch className = "h-4 w-4"/>
+                  </Link>
+                  <div id={`tooltip-${service.id}`} role="tooltip" className="absolute right-0 top-[calc(100%+1rem)] z-50 w-[min(22rem,calc(100vw-3rem))] border border-[color:var(--border)] bg-[color:var(--surface)] p-5 text-left text-sm font-normal leading-6 app-muted opacity-0 shadow-[0_24px_60px_rgba(15,23,42,0.2)] transition hover:block hover:opacity-100 focus:block focus:opacity-100">
+                    Tooltip Content
                   </div>
                 </div>
               </article>
