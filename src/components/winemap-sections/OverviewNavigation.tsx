@@ -42,7 +42,7 @@ export default function OverviewNavigation() {
     >
       {primaryNavigationSections.map(
         (
-          { id, title, subtitle, Icon, accent, href, description, summary },
+          { id, title, subtitle, Icon, accent, href, description, summary, image },
           index,
         ) => (
           <article
@@ -116,11 +116,12 @@ export default function OverviewNavigation() {
             </figure> */}
             <figure className="relative z-0 h-26 overflow-hidden rounded-b-[22px]">
               <Image
-                src="/images/vineyard_sun.jpg"
-                alt="Vineyard at sunset"
+                src={image.src}
+                alt={image.alt}
                 fill
                 sizes="(min-width: 768px) 32rem, 100vw"
                 className="object-cover"
+                style={{ objectPosition: image.position ?? "50% 50%", transform: `scale(${image.zoom ?? 1})` }}
               />
               <svg
                 aria-hidden="true"
