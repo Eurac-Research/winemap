@@ -18,17 +18,25 @@ export default function GeographicIndicationsTopic() {
   return (
     <>
       <p>
-        Geographic indications connect a product to the place where it is made.
-        In European winegrowing, they help protect the names, traditions, and
-        characteristics that make each wine region distinctive. They also give
-        consumers a clear way to recognise a wine&apos;s origin.
+        A geographic indication (GI) is a name used for a product whose
+        qualities, reputation, or character are connected to a particular place.
+        It helps consumers understand where a product comes from and helps
+        producers protect its name from imitation or misuse. For wine, this
+        connection can reflect local climate, soils, grape varieties, and the
+        knowledge and traditions that have developed in a region over time.
       </p>
 
       <p>
-        The{" "}<GlossaryTermPopover id="protected-designation-of-origin">Protected Designation of Origin (PDO)</GlossaryTermPopover>{" "} 
-        label is the strongest link between a wine and its place of origin. The PDO designation is granted by the EU, and only wines that 
-        are produced within a certain region and meet very strict and specific production criteria are allowed to carry the PDO label.
-        Many of the most prestigious wine regions in Europe therefore produce wines with the PDO label. 
+        The{" "}
+        <GlossaryTermPopover id="protected-designation-of-origin">
+          Protected Designation of Origin (PDO)
+        </GlossaryTermPopover>{" "}
+        label is the strongest link between a wine and its place of origin. The
+        PDO designation is granted by the EU, and only wines that are produced
+        within a certain region and meet very strict and specific production
+        criteria are allowed to carry the PDO label. Many of the most
+        prestigious wine regions in Europe therefore produce wines with the PDO
+        label.
       </p>
 
       <a
@@ -63,9 +71,9 @@ export default function GeographicIndicationsTopic() {
       <p>
         The European PDO Atlas makes this information easy to explore. Use the
         interactive map to find PDO regions across Europe, view their borders,
-        and inspect the regulatory characteristics that shape each region. You can
-        also search and filter regions to compare the diversity of European wine
-        traditions.
+        and inspect the regulatory characteristics that shape each region. You
+        can also search and filter regions to compare the diversity of European
+        wine traditions.
       </p>
 
       <div className="flex flex-wrap gap-3">
