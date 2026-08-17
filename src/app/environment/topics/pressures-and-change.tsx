@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { ArrowRight, Map as MapIcon, ShieldAlert } from "lucide-react";
+import { ArrowRight, ShieldAlert } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
 import type { TopicMetadata } from "@/components/topics/types";
+import { Button } from "@/components/ui/button";
 
 export const metadata = {
   slug: "pressures-and-change",
@@ -17,118 +17,59 @@ export default function PressuresAndChangeTopic() {
   return (
     <>
       <p>
-        For centuries, vineyard landscapes across Europe have evolved
-        into complex systems that are deeply embedded in local
-        economies, environments, and cultural traditions. Far from being
-        mere production areas, these landscapes represent dynamic{" "}
-        <GlossaryTermPopover id="socio-ecological-system">
-          socio-ecological systems
+        Climate is one of the foundations of winegrowing. It influences when
+        vines grow and ripen, the water they need, and the quality and style of
+        the grapes. As Europe warms, changing temperatures, rainfall patterns,
+        droughts, and heat extremes are already reshaping the conditions in
+        which wine is made.
+      </p>
+
+      <p>
+        The effects are not the same everywhere. A warmer season may bring new
+        possibilities in some cooler places, but it can also create more water
+        stress, earlier ripening, and changes in grape composition. Wine regions
+        differ in their climates, grape varieties, landscapes, and the rules
+        that regulate the production of their wines. These differences shape how
+        strongly a region is affected by changing environmental conditions
+        and the options it has for responding.
+      </p>
+
+      <p>
+        Climate-change{" "}
+        <GlossaryTermPopover id="vulnerability">
+          vulnerability
         </GlossaryTermPopover>{" "}
-        shaped by long-standing interactions between human activities
-        and natural processes.
+        brings three dimensions together. <strong>Exposure</strong> describes how much
+        the climate is expected to change in a region.{" "}
+        <strong>Sensitivity</strong> is related to how strongly its vines and wines may
+        be affected by those changes. <strong>Adaptive capacity</strong> identifies
+        what resources and opportunities the region has to adapt, such as
+        knowledge, labour, finance, infrastructure, water, and suitable land.
       </p>
 
       <p>
-        Vineyard landscapes provide a wide range of{" "}
-        <GlossaryTermPopover id="ecosystem-services">
-          ecosystem services
-        </GlossaryTermPopover>{" "}
-        , the benefits that nature offers to society. While their
-        economic importance is primarily linked to grape and wine
-        production, their value extends far beyond this. The mosaic of
-        land uses surrounding vineyards, including forests, croplands,
-        and riparian areas, supports biodiversity and ensures the proper
-        functioning of ecosystems. At the same time, these landscapes
-        embody strong cultural and historical identities, offering
-        intangible benefits that shape local traditions, attract
-        tourism, and reinforce the connection between communities and
-        their environment.
+        Looking at all three dimensions together is important. A region that
+        faces major climate change may be better able to respond if it has
+        major resources for adaptation. Conversely, even a smaller change can
+        be difficult where varieties are already close to their climatic limits
+        or where support for change is limited.
       </p>
 
       <p>
-        This interplay between environmental conditions, agricultural
-        practices, and cultural heritage is at the heart of the concept
-        of terroir.{" "}
-        <GlossaryTermPopover id="terroir">Terroir</GlossaryTermPopover>{" "}
-        reflects how the unique combination of climate, soil, landscape,
-        and human knowledge defines the distinctive character of wines.
-        In this sense, the quality and identity of wine are not only
-        rooted in the land, but also in the cultural practices and
-        traditions that have developed over generations.
-      </p>
-
-      <p>
-        However, the ecological balance that underpins these systems is
-        increasingly under pressure. Vineyard landscapes are highly
-        sensitive to both environmental and human-induced changes, which
-        can disrupt the provision of key ecosystem services.
-      </p>
-
-      <p>
-        One of the most pressing challenges is climate change. Shifts in
-        temperature and precipitation patterns are already affecting
-        vine growth cycles, grape composition, and the suitability of
-        traditional wine-growing areas. These changes may alter not only
-        productivity, but also the identity and quality of wines,
-        potentially redefining the geographical areas where certain
-        varieties can thrive. As climatic conditions continue to evolve,
-        winegrowers are being forced to reconsider established practices
-        and explore new approaches, including changes in cultivation
-        techniques, grape varieties, or even the relocation of
-        vineyards.
-      </p>
-
-      <p>
-        At the same time, vineyard landscapes are undergoing significant
-        transformations driven by{" "}
-        <GlossaryTermPopover id="intensification">
-          agricultural intensification
-        </GlossaryTermPopover>
-        . In response to increasing market competition and changing
-        consumer demands, many vineyards have shifted towards more
-        intensive and specialized production systems. This often
-        involves simplifying landscape structures, reducing diversity,
-        and focusing on maximizing grape yields. While these approaches
-        can enhance short-term productivity, they frequently come at the
-        cost of environmental sustainability.
-      </p>
-
-      <p>
-        The expansion of monocultures and the increased use of
-        fertilizers and pesticides have contributed to biodiversity loss
-        and the degradation of essential{" "}
-        <GlossaryTermPopover id="ecosystem-functions">
-          ecosystem functions
-        </GlossaryTermPopover>
-        . Services such as soil fertility, water regulation, and natural
-        pest control are increasingly compromised, making vineyard
-        systems more vulnerable to external disturbances. In parallel,
-        traditional, smaller-scale vineyards are often abandoned due to
-        lower economic competitiveness, leading to further landscape
-        homogenization or conversion to other land uses.
-      </p>
-
-      <p>
-        Together, these pressures highlight the urgent need to better
-        understand and manage vineyard landscapes as multifunctional
-        vineyard systems. Assessing their{" "}
-        <GlossaryTermPopover id="ecological-conditions">
-          ecological conditions
-        </GlossaryTermPopover>{" "}
-        , mapping ecosystem services, and identifying areas of
-        vulnerability are essential steps toward more sustainable and
-        resilient viticulture.
-      </p>
-
-      <p>
-        In this context, the WINEMAP Environment provides spatially
-        explicit, accessible information on environmental conditions,
-        ecosystem services, and climate-related risks, supporting
-        winegrowers, researchers, and policymakers in making informed
-        decisions. Ultimately, this knowledge base helps guide the
-        transition toward more sustainable vineyard management practices
-        that can preserve both the ecological integrity and cultural
-        heritage of European wine landscapes.
+        The Vulnerability Explorer turns this information into an interactive
+        map of European Protected Designation of Origin (PDO) wine regions. It
+        is based on a {" "}
+        <Link
+          href="https://www.nature.com/articles/s41467-024-50549-w"
+          className="text-cyan-700 hover:text-cyan-500"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          scientific study
+        </Link>{" "}
+        of 1,085 wine regions and helps you compare their exposure, sensitivity, adaptive
+        capacity and overall vulnerability. This information helps to identify regions most at risk, 
+        to guide efforts to enhance resilience and to reduce negative impacts of climate change.
       </p>
 
       <div className="flex flex-wrap gap-3">

@@ -28,13 +28,27 @@ export default function EnvironmentPage() {
               </div>
 
               <h1 className={styles.landingTitle}>
-                Understanding the foundations of vineyard landscapes
+                Understanding environmental change in vineyards
               </h1>
 
               <p className={styles.landingIntro}>
-                Vineyard landscapes across Europe are dynamic socio-ecological
-                systems shaped by the interaction between agricultural
-                practices, environmental conditions, and cultural heritage.
+                Winegrowing is closely tied to its environment. Climate,
+                water, soils, vegetation, and the wider landscape all
+                shape how vines grow and the character of the wines they
+                produce.
+              </p>
+              <p className={styles.landingIntro}>
+                These conditions are changing across Europe. Rising
+                temperatures, changing rainfall patterns, droughts, and other
+                extremes are already affecting vineyards and their ecological
+                conditions.
+              </p>
+              <p className={styles.landingIntro}>
+                By bringing together climate
+                information and scenarios with data on ecosystem services 
+                and ecological conditions, WINEMAP Environment 
+                helps you explore the environmental factors
+                that matter for winegrowing and potentially shape its future.
               </p>
             </div>
 
