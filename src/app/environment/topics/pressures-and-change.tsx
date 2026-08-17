@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, ShieldAlert } from "lucide-react";
+import { ArrowRight, Scale, ShieldAlert } from "lucide-react";
 
 import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
 import type { TopicMetadata } from "@/components/topics/types";
@@ -30,8 +30,8 @@ export default function PressuresAndChangeTopic() {
         stress, earlier ripening, and changes in grape composition. Wine regions
         differ in their climates, grape varieties, landscapes, and the rules
         that regulate the production of their wines. These differences shape how
-        strongly a region is affected by changing environmental conditions
-        and the options it has for responding.
+        strongly a region is affected by changing environmental conditions and
+        the options it has for responding.
       </p>
 
       <p>
@@ -39,26 +39,27 @@ export default function PressuresAndChangeTopic() {
         <GlossaryTermPopover id="vulnerability">
           vulnerability
         </GlossaryTermPopover>{" "}
-        brings three dimensions together. <strong>Exposure</strong> describes how much
-        the climate is expected to change in a region.{" "}
-        <strong>Sensitivity</strong> is related to how strongly its vines and wines may
-        be affected by those changes. <strong>Adaptive capacity</strong> identifies
-        what resources and opportunities the region has to adapt, such as
-        knowledge, labour, finance, infrastructure, water, and suitable land.
+        brings three dimensions together. <strong>Exposure</strong> describes
+        how much the climate is expected to change in a region.{" "}
+        <strong>Sensitivity</strong> is related to how strongly its vines and
+        wines may be affected by those changes.{" "}
+        <strong>Adaptive capacity</strong> identifies what resources and
+        opportunities the region has to adapt, such as knowledge, labour,
+        finance, infrastructure, water, and suitable land.
       </p>
 
       <p>
         Looking at all three dimensions together is important. A region that
-        faces major climate change may be better able to respond if it has
-        major resources for adaptation. Conversely, even a smaller change can
-        pose a major challenge where varieties are already close to their climatic limits
-        or where support for change is limited.
+        faces major climate change may be better able to respond if it has major
+        resources for adaptation. Conversely, even a smaller change can pose a
+        major challenge where varieties are already close to their climatic
+        limits or where support for change is limited.
       </p>
 
       <p>
         The Vulnerability Explorer turns this information into an interactive
         map of European Protected Designation of Origin (PDO) wine regions. It
-        is based on a {" "}
+        is based on a{" "}
         <Link
           href="https://www.nature.com/articles/s41467-024-50549-w"
           className="text-cyan-700 hover:text-cyan-500"
@@ -67,9 +68,10 @@ export default function PressuresAndChangeTopic() {
         >
           scientific study
         </Link>{" "}
-        of 1,085 wine regions and helps you compare their exposure, sensitivity, adaptive
-        capacity and overall vulnerability. This information helps to identify regions most at risk, 
-        to guide efforts to enhance resilience and to reduce negative impacts of climate change.
+        of 1,085 wine regions and helps you compare their exposure, sensitivity,
+        adaptive capacity and overall vulnerability. This information helps to
+        identify regions most at risk, to guide efforts to enhance resilience
+        and to reduce negative impacts of climate change.
       </p>
 
       <div className="flex flex-wrap gap-3">
@@ -81,6 +83,35 @@ export default function PressuresAndChangeTopic() {
           </Link>
         </Button>
       </div>
+
+      <aside className="mt-8 flex flex-col gap-3 rounded-lg border border-[color:var(--border)] bg-[color:var(--surface-overlay)] px-4 py-3 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex min-w-0 gap-3">
+          <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[color:var(--accent-soft)] app-accent-text">
+            <Scale className="h-4 w-4" aria-hidden="true" />
+          </span>
+          <div className="min-w-0">
+            <p className="font-medium app-text-color">
+              Interested in PDO regulations?
+            </p>
+            <p className="mt-1 app-caption">
+              Learn how European wine regions and their production rules are
+              defined in WINEMAP Governance.
+            </p>
+          </div>
+        </div>
+
+        <Button
+          variant="outline"
+          size="sm"
+          asChild
+          className="w-fit shrink-0 border-[color:var(--border)] bg-[color:var(--surface)] app-text-color hover:bg-[color:var(--surface-muted)]"
+        >
+          <Link href="/governance">
+            Explore Governance
+            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+          </Link>
+        </Button>
+      </aside>
     </>
   );
 }
