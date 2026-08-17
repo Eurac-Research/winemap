@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Film, Leaf, X } from "lucide-react";
+import { Film, Play, X } from "lucide-react";
 
 interface Video {
   id: string;
@@ -100,8 +100,8 @@ export default function PilotExperiencesPage() {
                   }}
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="flex h-16 w-16 items-center justify-center rounded-full bg-[color:var(--accent-soft)] app-accent-text transition-transform group-hover:scale-105">
-                    <Film className="h-7 w-7" aria-hidden="true" />
+                  <span className="flex items-center justify-center rounded-full p-1.5 bg-white/70 transition-transform group-hover:scale-105">
+                    <Play className="h-7 w-7" aria-hidden="true" />
                   </span>
                 </div>
                 {/* Overlay on hover */}
