@@ -337,7 +337,6 @@
   }
 
   .article-caption {
-    margin-top: 0.75rem;
     color: var(--app-muted-color);
     font-size: var(--app-caption-size);
     line-height: var(--app-caption-line-height);

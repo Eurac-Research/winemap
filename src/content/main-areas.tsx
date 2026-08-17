@@ -113,18 +113,6 @@ export const mainAreas: MainArea[] = [
         description:
           "Discover detailed geospatial and regulatory information about European Wine PDO regions in the form of an interactive map.",
       },
-      {
-        label: "Participatory Approaches",
-        href: "/governance/participatory-approaches",
-        description:
-          "Get information about participatory approaches in scientific research and how they can be used to generate innovative solutions for the future sustainability of viticulture.",
-      },
-      {
-        label: "Courses",
-        href: "/governance/courses",
-        description:
-          "Improve your knowledge on viticulture, climate change and ecosystem-based adaptation in a series of interactive courses.",
-      },
     ],
   },
   {
