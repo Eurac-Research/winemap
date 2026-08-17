@@ -18,12 +18,16 @@ export default function GeographicIndicationsTopic() {
   return (
     <>
       <p>
-        A geographic indication (GI) is a name used for a product whose
-        qualities, reputation, or character are connected to a particular place.
-        It helps consumers understand where a product comes from and helps
-        producers protect its name from imitation or misuse. For wine, this
-        connection can reflect local climate, soils, grape varieties, and the
-        knowledge and traditions that have developed in a region over time.
+        A{" "}
+        <GlossaryTermPopover id="geographic-indications">
+          geographic indication (GI)
+        </GlossaryTermPopover>{" "}
+        is a name used for a product whose qualities, reputation, or character
+        are connected to a particular place. It helps consumers understand where
+        a product comes from and helps producers protect its name from imitation
+        or misuse. For wine, this connection can reflect local climate, soils,
+        grape varieties, and the knowledge and traditions that have developed in
+        a region over time.
       </p>
 
       <p>

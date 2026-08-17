@@ -110,6 +110,12 @@ export const glossaryTerms: GlossaryTerm[] = [
       "Actions that protect, sustainably manage, and restore ecosystems while simultaneously also adress societal challenges, such as climate change or food security.",
   },
   {
+    id: "nature-based-adaptation",
+    term: "Nature-based adaptation",
+    definition:
+      "The use of ecosystems, biodiversity, and natural processes to help people and landscapes adapt to the effects of climate change.",
+  },
+  {
     id: "erosion",
     term: "Erosion",
     definition:
@@ -190,6 +196,12 @@ export const glossaryTerms: GlossaryTerm[] = [
     aliases: ["pesticide"],
     definition:
       "Substances used to control or eliminate pests, including insects, weeds, and fungi.",
+  },
+  {
+    id: "participatory-approaches",
+    term: "Participatory approaches",
+    definition:
+      "Ways of working that involve people affected by a decision or challenge in developing knowledge, plans, and solutions together.",
   },
   {
     id: "polyphenol",

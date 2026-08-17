@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
 import PilotVideoCarousel from "@/components/PilotVideoCarousel";
 import type { TopicMetadata } from "@/components/topics/types";
 
@@ -19,7 +20,11 @@ export default function PilotExperiencesTopic() {
         experiences from different regions where winegrowers, researchers, and
         communities are testing new and traditional approaches side by side are
         therefore an invaluable tool to facilitate implementation and planning
-        of nature-based adaptation in vineyards.
+        of{" "}
+        <GlossaryTermPopover id="nature-based-adaptation">
+          nature-based adaptation
+        </GlossaryTermPopover>{" "}
+        in vineyards.
       </p>
 
       <p>

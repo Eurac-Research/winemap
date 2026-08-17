@@ -39,13 +39,22 @@ export default function PressuresAndChangeTopic() {
         <GlossaryTermPopover id="vulnerability">
           vulnerability
         </GlossaryTermPopover>{" "}
-        brings three dimensions together. <strong>Exposure</strong> describes
-        how much the climate is expected to change in a region.{" "}
-        <strong>Sensitivity</strong> is related to how strongly its vines and
-        wines may be affected by those changes.{" "}
-        <strong>Adaptive capacity</strong> identifies what resources and
-        opportunities the region has to adapt, such as knowledge, labour,
-        finance, infrastructure, water, and suitable land.
+        brings three dimensions together.{" "}
+        <GlossaryTermPopover id="exposure">
+          <strong>Exposure</strong>
+        </GlossaryTermPopover>{" "}
+        describes how much the climate is expected to change in a region.{" "}
+        <GlossaryTermPopover id="sensitivity">
+          <strong>Sensitivity</strong>
+        </GlossaryTermPopover>{" "}
+        is related to how strongly its vines and wines may be affected by those
+        changes.{" "}
+        <GlossaryTermPopover id="adaptive-capacity">
+          <strong>Adaptive capacity</strong>
+        </GlossaryTermPopover>{" "}
+        identifies what resources and opportunities the region has to adapt,
+        such as knowledge, labour, finance, infrastructure, water, and suitable
+        land.
       </p>
 
       <p>
