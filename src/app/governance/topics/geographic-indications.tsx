@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { ArrowRight, Map as MapIcon } from "lucide-react";
 
 import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
 import type { TopicMetadata } from "@/components/topics/types";
+import { Button } from "@/components/ui/button";
 
 export const metadata = {
   slug: "geographic-indications",
@@ -18,22 +18,19 @@ export default function GeographicIndicationsTopic() {
   return (
     <>
       <p>
-        Across Europe, wine production and vineyard management are governed by a dense, complex network of regulations. The recent EU framework covers a wide range of topics, such as the organization of the markets in agricultural products and their financing, through the{" "}
-        <GlossaryTermPopover id="common-agricultural-policy">
-          Common Agricultural Policy (CAP)
-        </GlossaryTermPopover>
-        . On a technical level, the EU also covers planting and plant health regulations, targeting physical and chemical characteristics of grapevine products and the authorizations for vine plantings and certifications.
+        Geographic indications connect a product to the place where it is made.
+        In European winegrowing, they help protect the names, traditions, and
+        characteristics that make each wine region distinctive. They also give
+        consumers a clear way to recognise a wine&apos;s origin.
       </p>
+
       <p>
-        Besides EU legal frameworks, local participatory approaches, such as{" "}
-        <GlossaryTermPopover id="living-lab">living-labs </GlossaryTermPopover>{" "},
-        also contribute to developing innovative solutions and ideas for the management and protection of vineyards and wine-regions identities and quality of wines. Making this knowledge accessible allows winemakers and researchers to share knowledge and ensure a sustainable future for wine regions.
+        The{" "}<GlossaryTermPopover id="protected-designation-of-origin">Protected Designation of Origin (PDO)</GlossaryTermPopover>{" "} 
+        label is the strongest link between a wine and its place of origin. The PDO designation is granted by the EU, and only wines that 
+        are produced within a certain region and meet very strict and specific production criteria are allowed to carry the PDO label.
+        Many of the most prestigious wine regions in Europe therefore produce wines with the PDO label. 
       </p>
-      <p>
-        As Europe is home to some of the world’s most prestigious wine regions, the European Union has established a quality scheme called{" "}
-        <GlossaryTermPopover id="protected-designation-of-origin">Protected Designation of Origin (PDO)</GlossaryTermPopover>{" "}
-        in order to maintain the integrity and quality of these wines. This system sets rules and regulations for the production, labelling, and promotion of wines within specific regions of Europe. This classification ensures that wines produced within those regions follow strict standards of quality and tradition, protecting the reputation and authenticity of each wine. The PDO designation is granted by the EU, and only wines that are produced within a certain region and meet specific production criteria are allowed to carry the PDO label.
-      </p>
+
       <a
         className="article-media-link block"
         target="_blank"
@@ -53,26 +50,24 @@ export default function GeographicIndicationsTopic() {
           </figcaption>
         </figure>
       </a>
+
       <p>
-        The PDO system is extensive and complex, covering thousands of wine types from various regions in Europe. Until recently, wine enthusiasts and industry professionals had to consult various sources to understand these classifications.
+        Each product specification sets out the area covered by the PDO and the
+        rules that help define its wine. These can include permitted grape
+        varieties, blend ratios, yields, vineyard practices, and winemaking
+        methods. In this way, PDOs protect a shared regional identity while
+        providing a common framework for growers, producers, and public
+        authorities.
       </p>
+
       <p>
-        This complex system is now easier to navigate, as Eurac Research has published the {" "}
-          <Link
-            key="pdo-atlas"
-            href="map-applications/pdo-atlas"
-            className="font-semibold app-accent-text underline underline-offset-4 transition-colors hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--app-accent-text-color)]"
-          >
-            European PDO-Atlas
-          </Link>
-        , the first-ever comprehensive map of Europe’s wine regions classified under the PDO system. Additionally, across the WINEMAP Governance you can find accessible information on PDOs and other EU legislation regarding vineyards and wine products. The aim of the WINEMAP Governance is to ensure wine-related stakeholders can learn and better understand the legal management and protection of European vineyards, by offering specific courses and map applications and thereby ensuring the cultural continuity of European wine-growing regions.
+        The European PDO Atlas makes this information easy to explore. Use the
+        interactive map to find PDO regions across Europe, view their borders,
+        and inspect the regulatory characteristics that shape each region. You can
+        also search and filter regions to compare the diversity of European wine
+        traditions.
       </p>
-      {/* <DatawrapperChart
-        chartId="DEUDJ/6?dark=true"
-        title="Nr. of registered PDOs"
-        ariaLabel="Line chart showing the number of registered PDOs over time"
-        height={378}
-      /> */}   
+
       <div className="flex flex-wrap gap-3">
         <Button variant="outline" asChild className="w-fit">
           <Link href="/map-applications/pdo-atlas">
