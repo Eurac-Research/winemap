@@ -13,6 +13,10 @@ const nextConfig = {
         // port: '',
         // pathname: '/account123/**',
       },
+      {
+        protocol: "https",
+        hostname: "img.youtube.com",
+      },
     ],
   },
   async redirects() {

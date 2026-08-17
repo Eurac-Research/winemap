@@ -78,7 +78,7 @@ export const mainAreas: MainArea[] = [
       },
       {
         label: "Pilot Experiences ->",
-        href: "/adaptation/pilot-experiences",
+        href: "/adaptation",
         description:
           "Through short films from pilot regions, you can discover how winegrowers, researchers and communities are working with their landscapes to address climate challenges while preserving local traditions.",
       },

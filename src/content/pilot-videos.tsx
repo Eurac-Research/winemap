@@ -1,12 +1,10 @@
-
-
 export type PilotVideo = {
-    id: string;
-    title: string;
-    caption: string;
-    location: string;
-    youtubeId: string;
-}
+  id: string;
+  title: string;
+  caption: string;
+  location: string;
+  youtubeId: string;
+};
 
 const getEmbedUrl = (youtubeId: string) =>
   `https://www.youtube.com/embed/${youtubeId}`;
