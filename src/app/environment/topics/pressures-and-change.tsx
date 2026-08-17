@@ -51,7 +51,7 @@ export default function PressuresAndChangeTopic() {
         Looking at all three dimensions together is important. A region that
         faces major climate change may be better able to respond if it has
         major resources for adaptation. Conversely, even a smaller change can
-        be difficult where varieties are already close to their climatic limits
+        pose a major challenge where varieties are already close to their climatic limits
         or where support for change is limited.
       </p>
 
