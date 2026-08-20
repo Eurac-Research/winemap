@@ -78,9 +78,9 @@ export const primaryNavigationSections: PrimaryNavigationSection[] = [
     summary:
       "A guide to the policy, institutional, and participatory side of climate adaptation in viticulture. This section is useful for decision-makers, public administrations, regional organizations, educators, and project teams who need to understand legal frameworks, protected designations, stakeholder processes, and learning resources that shape how wine regions can act.",
     image: {
-      src: "/images/governance_hammer.jpg",
+      src: "/images/vineyard_sun.jpg",
       alt: "Vineyard at sunset",
-      position: "30% 85%",
+      position: "50% 30%",
     },
   },
   {

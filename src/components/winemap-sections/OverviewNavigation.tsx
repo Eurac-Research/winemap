@@ -68,10 +68,10 @@ export default function OverviewNavigation() {
             <div className="flex flex-1 flex-col px-5 pt-5 sm:px-7 sm:pt-5">
               <div className="flex items-start justify-between gap-4 sm:gap-5">
                 <div>
-                  <h3 className="text-xl font-semibold leading-tight app-text-color sm:text-2xl">
+                  <h3 className="mt-1 text-sm font-semibold leading-tight app-muted sm:text-md">
                     {title}
                   </h3>
-                  <h2 className="mt-1 text-lg font-semibold leading-tight text-[color:var(--overview-accent)] sm:text-xl">
+                  <h2 className="text-2xl font-semibold leading-tight text-[color:var(--overview-accent)] sm:text-3xl">
                     {subtitle}
                   </h2>
                 </div>
