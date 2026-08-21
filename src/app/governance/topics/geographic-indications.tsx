@@ -4,7 +4,7 @@ import { ArrowRight, Map as MapIcon } from "lucide-react";
 
 import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
 import type { TopicMetadata } from "@/components/topics/types";
-import { Button } from "@/components/ui/button";
+import styles from "@/styles/Home.module.css";
 
 export const metadata = {
   slug: "geographic-indications",
@@ -43,26 +43,6 @@ export default function GeographicIndicationsTopic() {
         label.
       </p>
 
-      <a
-        className="article-media-link block"
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://agriculture.ec.europa.eu/farming/geographical-indications-and-quality-schemes/geographical-indications-and-quality-schemes-explained_en#pdo"
-      >
-        <figure className="article-figure flex flex-col items-center px-4 text-center">
-          <Image
-            src="/icons/pdo-label.svg"
-            alt="PDO logo"
-            width={212}
-            height={212}
-            className="mx-auto"
-          />
-          <figcaption className="article-caption">
-            Official PDO logo from the European Commission
-          </figcaption>
-        </figure>
-      </a>
-
       <p>
         Each product specification sets out the area covered by the PDO and the
         rules that help define its wine. These can include permitted grape
@@ -73,22 +53,58 @@ export default function GeographicIndicationsTopic() {
       </p>
 
       <p>
-        The European PDO Atlas makes this information easy to explore. Use the
+        The European PDO Atlas makes all this information easy to explore. Use the
         interactive map to find PDO regions across Europe, view their borders,
         and inspect the regulatory characteristics that shape each region. You
-        can also search and filter regions to compare the diversity of European
-        wine traditions.
+        can also search and filter regions to get detailed information on
+        the diversity of European wine traditions.
       </p>
 
-      <div className="flex flex-wrap gap-3">
-        <Button variant="outline" asChild className="w-fit">
-          <Link href="/map-applications/pdo-atlas">
-            <MapIcon className="mr-2 h-4 w-4" aria-hidden="true" />
-            Open European PDO Atlas
-            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-          </Link>
-        </Button>
-      </div>
+      <section
+        className={styles.pdoAtlasTeaser}
+        aria-labelledby="pdo-atlas-title"
+      >
+        <Image
+          src="/images/map_applications/pdo_atlas.jpg"
+          alt="Map of European wine Protected Designations of Origin"
+          fill
+          sizes="(min-width: 1024px) 680px, (min-width: 768px) 75vw, 100vw"
+          className={styles.pdoAtlasTeaserImage}
+        />
+        <div className={styles.pdoAtlasTeaserOverlay} />
+
+        <div className={styles.pdoAtlasTeaserContent}>
+          <div className={styles.pdoAtlasTeaserIcon}>
+            <MapIcon aria-hidden="true" />
+          </div>
+          <p className={styles.pdoAtlasTeaserEyebrow}>Interactive map</p>
+          <h3 id="pdo-atlas-title" className={styles.pdoAtlasTeaserTitle}>
+            Explore European wine PDOs
+          </h3>
+          <p className={styles.pdoAtlasTeaserDescription}>
+            Search a region, inspect its boundary, and compare the production
+            rules that shape its wine.
+          </p>
+          <ul
+            className={styles.pdoAtlasTeaserFeatures}
+            aria-label="PDO Atlas features"
+          >
+            <li>Search regions</li>
+            <li>View boundaries</li>
+            <li>Explore regulations</li>
+          </ul>
+          <span className={styles.pdoAtlasTeaserCta}>
+            Open the interactive PDO Atlas
+            <ArrowRight aria-hidden="true" />
+          </span>
+        </div>
+
+        <Link
+          href="/map-applications/pdo-atlas"
+          className={styles.pdoAtlasTeaserLink}
+          aria-label="Open the interactive European PDO Atlas"
+        />
+      </section>
     </>
   );
 }

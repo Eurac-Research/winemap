@@ -1,9 +1,11 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Scale, ShieldAlert } from "lucide-react";
 
 import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
 import type { TopicMetadata } from "@/components/topics/types";
 import { Button } from "@/components/ui/button";
+import styles from "@/styles/Home.module.css";
 
 export const metadata = {
   slug: "pressures-and-change",
@@ -35,11 +37,29 @@ export default function PressuresAndChangeTopic() {
       </p>
 
       <p>
-        Climate-change{" "}
+        The Vulnerability Explorer turns this information into an interactive
+        map of European {" "}
+        <GlossaryTermPopover id="protected-designation-of-origin">
+          Protected Designation of Origin (PDO)
+        </GlossaryTermPopover>{" "} wine regions. It
+        is based on a{" "}
+        <Link
+          href="https://www.nature.com/articles/s41467-024-50549-w"
+          className="text-cyan-700 hover:text-cyan-500"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          scientific study
+        </Link>{" "}
+        of 1,085 wine regions and helps you assess and compare how they are affected
+        by climate change. This information helps to
+        identify regions most at risk, to guide efforts to enhance resilience
+        and to reduce negative impacts of climate change. 
+        The Vulnerability Explorer includes information on three
+        dimensions for each region, which together determine the climate-change{" "}
         <GlossaryTermPopover id="vulnerability">
           vulnerability
-        </GlossaryTermPopover>{" "}
-        brings three dimensions together.{" "}
+        </GlossaryTermPopover>.{" "}
         <GlossaryTermPopover id="exposure">
           <strong>Exposure</strong>
         </GlossaryTermPopover>{" "}
@@ -65,33 +85,54 @@ export default function PressuresAndChangeTopic() {
         limits or where support for change is limited.
       </p>
 
-      <p>
-        The Vulnerability Explorer turns this information into an interactive
-        map of European Protected Designation of Origin (PDO) wine regions. It
-        is based on a{" "}
-        <Link
-          href="https://www.nature.com/articles/s41467-024-50549-w"
-          className="text-cyan-700 hover:text-cyan-500"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          scientific study
-        </Link>{" "}
-        of 1,085 wine regions and helps you compare their exposure, sensitivity,
-        adaptive capacity and overall vulnerability. This information helps to
-        identify regions most at risk, to guide efforts to enhance resilience
-        and to reduce negative impacts of climate change.
-      </p>
+      <section
+        className={styles.pdoAtlasTeaser}
+        aria-labelledby="vulnerability-explorer-title"
+      >
+        <Image
+          src="/images/map_applications/vulnerability_explorer.png"
+          alt="Map of climate-change vulnerability across European wine regions"
+          fill
+          sizes="(min-width: 1024px) 680px, (min-width: 768px) 75vw, 100vw"
+          className={styles.pdoAtlasTeaserImage}
+        />
+        <div className={styles.pdoAtlasTeaserOverlay} />
 
-      <div className="flex flex-wrap gap-3">
-        <Button variant="outline" asChild className="w-fit">
-          <Link href="/map-applications/vulnerability-explorer">
-            <ShieldAlert className="mr-2 h-4 w-4" aria-hidden="true" />
-            Open Vulnerability Explorer
-            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-          </Link>
-        </Button>
-      </div>
+        <div className={styles.pdoAtlasTeaserContent}>
+          <div className={styles.pdoAtlasTeaserIcon}>
+            <ShieldAlert aria-hidden="true" />
+          </div>
+          <p className={styles.pdoAtlasTeaserEyebrow}>Interactive map</p>
+          <h3
+            id="vulnerability-explorer-title"
+            className={styles.pdoAtlasTeaserTitle}
+          >
+            Explore climate vulnerability
+          </h3>
+          <p className={styles.pdoAtlasTeaserDescription}>
+            Compare how European wine regions are exposed to climate change and
+            where adaptation capacity matters most.
+          </p>
+          <ul
+            className={styles.pdoAtlasTeaserFeatures}
+            aria-label="Vulnerability Explorer features"
+          >
+            <li>Find regions</li>
+            <li>Inspect indicators</li>
+            <li>Explore vulnerability</li>
+          </ul>
+          <span className={styles.pdoAtlasTeaserCta}>
+            Open the Vulnerability Explorer
+            <ArrowRight aria-hidden="true" />
+          </span>
+        </div>
+
+        <Link
+          href="/map-applications/vulnerability-explorer"
+          className={styles.pdoAtlasTeaserLink}
+          aria-label="Open the interactive Vulnerability Explorer"
+        />
+      </section>
 
       <aside className="mt-8 flex flex-col gap-3 rounded-lg border border-[color:var(--border)] bg-[color:var(--surface-overlay)] px-4 py-3 shadow-sm sm:flex-row sm:items-center sm:justify-between">
         <div className="flex min-w-0 gap-3">
