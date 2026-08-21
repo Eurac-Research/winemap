@@ -1,7 +1,9 @@
 "use client";
 
-import { type ReactNode, useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, type ReactNode } from "react";
 import { isMobile } from "react-device-detect";
+
+import { cn } from "@/lib/utils";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -15,6 +17,7 @@ interface PdoMapLayoutProps {
   mapDefaultSize?: number;
   sidebarMinSize?: number;
   mapMinSize?: number;
+  className?: string;
 }
 
 export function PdoMapLayout({
@@ -24,6 +27,7 @@ export function PdoMapLayout({
   mapDefaultSize = isMobile ? 60 : 70,
   sidebarMinSize,
   mapMinSize = isMobile ? 30 : 30,
+  className,
 }: PdoMapLayoutProps) {
   const mapPanelRef = useRef<HTMLDivElement | null>(null);
   const resizeTimeoutRef = useRef<number | null>(null);
@@ -57,7 +61,12 @@ export function PdoMapLayout({
   }, [notifyMapResize]);
 
   return (
-    <div className="fixed inset-x-0 bottom-0 top-[var(--top-nav-height)] z-10">
+    <div
+      className={cn(
+        "fixed inset-x-0 bottom-0 top-[var(--top-nav-height)] z-10",
+        className,
+      )}
+    >
       <ResizablePanelGroup
         direction={isMobile ? "vertical" : "horizontal"}
         className="h-full w-full"
@@ -72,10 +81,11 @@ export function PdoMapLayout({
 
         <ResizableHandle
           withHandle
-          className={`${isMobile
-            ? "h-3 w-full cursor-row-resize"
-            : "h-full w-2 cursor-col-resize"
-            } flex items-center justify-center opacity-60 transition-all relative group z-20`}
+          className={`${
+            isMobile
+              ? "h-3 w-full cursor-row-resize"
+              : "h-full w-2 cursor-col-resize"
+          } flex items-center justify-center opacity-60 transition-all relative group z-20`}
         />
 
         <ResizablePanel

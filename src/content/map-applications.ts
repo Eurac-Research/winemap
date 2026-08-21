@@ -27,6 +27,7 @@ export type MapApplicationHelpBlock =
 
 export type MapApplication = {
   title: string;
+  navigationIcon?: "layers" | "map-pinned" | "shield-alert";
   description: string;
   help?: MapApplicationHelpBlock[];
   href: string;
@@ -40,6 +41,7 @@ export type MapApplication = {
 export const mapApplications: MapApplication[] = [
   {
     title: "Environment Browser",
+    navigationIcon: "layers",
     description:
       "Access all map layers in one unified interface. Toggle layers, organize by scale or category, and explore detailed geospatial information.",
     help: [
@@ -98,6 +100,7 @@ export const mapApplications: MapApplication[] = [
   },
   {
     title: "European PDO Atlas",
+    navigationIcon: "map-pinned",
     description:
       "Discover detailed geospatial and regulatory information about European Wine PDO regions in the form of an interactive map.",
     help: [
@@ -148,6 +151,7 @@ export const mapApplications: MapApplication[] = [
   },
   {
     title: "Vulnerability Explorer",
+    navigationIcon: "shield-alert",
     description:
       "How vulnerable are European PDO regions to the effects of climate change? Get detailed, region-specific information in this interactive map.",
     help: [

@@ -44,6 +44,7 @@ import {
   MapApplicationHelp,
   MapApplicationHelpButton,
 } from "@/components/maps/MapApplicationHelp";
+import { MapApplicationNavigation } from "@/components/maps/MapApplicationNavigation";
 import MapPlaceSearch from "@/components/maps/MapPlaceSearch";
 import { VerticalLegend } from "@/components/maps/VerticalLegend";
 import { PdoMapLayout } from "@/components/pdo-app/PdoMapLayout";
@@ -953,12 +954,14 @@ export default function EnvironmentBrowserPage() {
   return (
     <>
       <PdoMapLayout
+        className="top-[calc(var(--top-nav-height)+3.5rem)] sm:left-14 sm:top-[var(--top-nav-height)]"
         sidebar={<PdoSidebarShell top={sidebarTop} body={sidebarBody} />}
         map={mapContent}
         sidebarDefaultSize={30}
         mapDefaultSize={70}
         sidebarMinSize={22}
       />
+      <MapApplicationNavigation activeHref="/map-applications/environment-browser" />
 
       {selectedInfo ? (
         <>
