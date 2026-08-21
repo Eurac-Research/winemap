@@ -102,7 +102,11 @@ export default function HomePage() {
             />
           </div> */}
 
-          <section id='faq' aria-labelledby="faq-title" className={styles.FAQSection}>
+          <section
+            id="faq"
+            aria-labelledby="faq-title"
+            className={styles.FAQSection}
+          >
             <div className={styles.FAQIntro}>
               <p className="app-eyebrow">Start exploring</p>
               <h2 id="faq-title" className="app-section-title">
@@ -158,9 +162,12 @@ export default function HomePage() {
                       Governance
                     </Link>{" "}
                     for legal and participatory frameworks, or{" "}
-                    <a href="#map-applications" className={styles.FAQLink}>
-                      Maps
-                    </a>{" "}
+                    <Link
+                      href="/map-applications/environment-browser"
+                      className={styles.FAQLink}
+                    >
+                      WINEMAP Explorer
+                    </Link>{" "}
                     to explore regional information directly.
                   </p>
                 </div>
@@ -189,63 +196,59 @@ export default function HomePage() {
                     <Link href="/governance" className={styles.FAQLink}>
                       Governance
                     </Link>
-                    —plus a collection of{" "}
-                    <a href="#map-applications" className={styles.FAQLink}>
-                      interactive map applications
-                    </a>
-                    . Use the main navigation to move between these areas. Each
-                    thematic area opens with an introduction and a topic guide;
-                    select a topic to explore its content, then use the map
-                    applications when you want to investigate a specific place
-                    or dataset directly.
-                  </p>
-                </div>
-              </details>
-
-              <details className={styles.FAQDetails}>
-                <summary className={styles.FAQSummary}>
-                  <span className={styles.FAQQuestion}>
-                    How do I explore a wine region on the maps?
-                  </span>
-                  <span className={styles.FAQChevron} aria-hidden="true">
-                    <ChevronDown className="h-4 w-4" />
-                  </span>
-                </summary>
-                <div className={styles.FAQAnswer}>
-                  <p>
-                    Open a map application, then zoom to a place or use the
-                    filters and search controls where available. Select a region
-                    or layer to inspect details. Each application includes an
-                    in-context help control explaining its map interactions and
-                    data.
-                  </p>
-                </div>
-              </details>
-
-              <details className={styles.FAQDetails}>
-                <summary className={styles.FAQSummary}>
-                  <span className={styles.FAQQuestion}>
-                    What does “vulnerability” mean in WINEMAP?
-                  </span>
-                  <span className={styles.FAQChevron} aria-hidden="true">
-                    <ChevronDown className="h-4 w-4" />
-                  </span>
-                </summary>
-                <div className={styles.FAQAnswer}>
-                  <p>
-                    Vulnerability describes how a PDO wine region may be
-                    affected by climate change. It combines exposure,
-                    sensitivity, and adaptive capacity. It is a regional,
-                    science-based assessment to support understanding and
-                    comparison—not a site-specific forecast or a prescription
-                    for individual vineyards. Read the{" "}
+                    —plus the{" "}
                     <Link
-                      href="/about/definitions#vulnerability"
+                      href="/map-applications/environment-browser"
                       className={styles.FAQLink}
                     >
-                      methodology and indicator definitions
+                      WINEMAP Explorer
                     </Link>
-                    .
+                    . Use the main navigation to move between these areas. Each
+                    thematic area opens with an introduction and a topic guide;
+                    select a topic to explore its content, then use the Explorer
+                    when you want to investigate a specific place or dataset
+                    directly.
+                  </p>
+                </div>
+              </details>
+
+              <details className={styles.FAQDetails}>
+                <summary className={styles.FAQSummary}>
+                  <span className={styles.FAQQuestion}>
+                    How do I explore a wine region in WINEMAP Explorer?
+                  </span>
+                  <span className={styles.FAQChevron} aria-hidden="true">
+                    <ChevronDown className="h-4 w-4" />
+                  </span>
+                </summary>
+                <div className={styles.FAQAnswer}>
+                  <p>
+                    Open the Explorer, then zoom to a place or use the search
+                    and layer controls. Select a region or layer to inspect its
+                    details. Use the map switcher at the left edge of the screen
+                    to move to the PDO Atlas or Vulnerability Explorer; each
+                    application includes an in-context help control.
+                  </p>
+                </div>
+              </details>
+
+              <details className={styles.FAQDetails}>
+                <summary className={styles.FAQSummary}>
+                  <span className={styles.FAQQuestion}>
+                    Which map application should I use?
+                  </span>
+                  <span className={styles.FAQChevron} aria-hidden="true">
+                    <ChevronDown className="h-4 w-4" />
+                  </span>
+                </summary>
+                <div className={styles.FAQAnswer}>
+                  <p>
+                    Start with the Explorer for environmental layers and general
+                    map exploration. Choose the European PDO Atlas to look up
+                    wine regions and their regulatory information, or the
+                    Vulnerability Explorer to compare the climate-change
+                    vulnerability of PDO regions. You can switch between all
+                    three applications from the map navigation bar.
                   </p>
                 </div>
               </details>
