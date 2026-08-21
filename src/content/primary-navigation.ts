@@ -63,7 +63,7 @@ export const primaryNavigationSections: PrimaryNavigationSection[] = [
       src: "/images/vineyards/burgenland.jpg",
       alt: "Vineyard at sunset",
       position: "50% 60%"
-    },
+    }
   },
   {
     id: "governance",
@@ -85,29 +85,63 @@ export const primaryNavigationSections: PrimaryNavigationSection[] = [
   },
   {
     id: "maps",
-    label: "WINEMAP Maps",
+    label: "WINEMAP Explorer",
     title: "WINEMAP",
-    subtitle: "Maps",
+    subtitle: "Explorer",
     Icon: Map,
     accent: "var(--section-maps-accent)",
-    href: "/#map-applications",
+    href: "/map-applications/environment-browser",
     description:
-      "Work directly with WINEMAP's interactive tools to explore spatial layers, regions, and vulnerability patterns.",
+      "Analyze the spatial data behind WINEMAP, including climatic, topographic and enviromental data, in our interactive map tool.",
     summary:
       "A dedicated collection of interactive tools for exploring WINEMAP data directly on maps. This area is for users who want to browse spatial layers, compare regions, inspect PDO information, investigate vulnerability, or work with specific geospatial applications without first reading through the thematic sections. It is the fastest route from a question about place to an interactive map view.",
     image: {
-      src: "/images/indicators/huglin_2071_2100.png",
-      alt: "Map of Huglin Index",
-      position: "50% 45.5%",
-      zoom: 1.65,
-    }
+      src: "/images/map_applications/environment_browser.png",
+      alt: "Map of Environment Browser",
+    },
   },
 ];
 
-export const secondaryNavigationSections = [
-  { label: "About", href: "/about" },
-  { label: "The Team", href: "/about/team" },
-  { label: "Scientific Literature", href: "/literature" },
-  { label: "Glossary", href: "/about/glossary" },
-  { label: "Imprint", href: "/imprint-privacy" },
-] as const;
+export type SecondaryNavigationSection = {
+  label: string;
+  href: string;
+  category: string;
+  footerLabel?: string;
+};
+
+export const secondaryNavigationSections: SecondaryNavigationSection[] = [
+  { label: "The Project", href: "/about", category: "About" },
+  { label: "The Team", href: "/about/team", category: "About" },
+  { label: "FAQ", href: "/#faq", category: 'About' },
+  {
+    label: "Scientific Literature",
+    href: "/literature",
+    category: "Resources",
+  },
+  { label: "Glossary", href: "/about/glossary", category: "Resources" },
+  {
+    label: "Imprint",
+    href: "/imprint-privacy",
+    category: "Legal",
+    footerLabel: "Imprint / Privacy Policy",
+  },
+];
+
+export const secondaryNavigationGroups = Array.from(
+  secondaryNavigationSections
+    .reduce((groups, item) => {
+      const group = groups.get(item.category);
+
+      if (group) {
+        group.items.push(item);
+      } else {
+        groups.set(item.category, {
+          category: item.category,
+          items: [item],
+        });
+      }
+
+      return groups;
+    }, new globalThis.Map<string, { category: string; items: SecondaryNavigationSection[] }>())
+    .values(),
+);

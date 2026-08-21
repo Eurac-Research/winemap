@@ -95,14 +95,14 @@ export default function HomePage() {
 
       <div className="relative z-20 w-full">
         <div className="relative z-20 w-full">
-          <div id="map-applications" className="scroll-mt-28">
+          {/* <div id="map-applications" className="scroll-mt-28">
             <BackgroundImageCarousel
               items={mapApplications}
               ariaLabel="Map applications carousel"
             />
-          </div>
+          </div> */}
 
-          <section aria-labelledby="faq-title" className={styles.FAQSection}>
+          <section id='faq' aria-labelledby="faq-title" className={styles.FAQSection}>
             <div className={styles.FAQIntro}>
               <p className="app-eyebrow">Start exploring</p>
               <h2 id="faq-title" className="app-section-title">

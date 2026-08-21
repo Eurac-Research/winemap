@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   primaryNavigationSections,
-  secondaryNavigationSections,
+  secondaryNavigationGroups,
 } from "@/content/primary-navigation";
 import { Home, Menu, X } from "lucide-react";
 
@@ -161,16 +161,31 @@ export function Navigation() {
 
               <div className="my-5 border-t border-[color:var(--border)]" />
 
-              <div>
-                {secondaryNavigationSections.map(({ label, href }) => (
-                  <Link
-                    key={href}
-                    href={href}
-                    onClick={closeMenu}
-                    className="block rounded-lg px-4 py-1 app-text-color transition-colors hover:bg-[color:var(--surface-muted)] focus-visible:bg-[color:var(--surface-muted)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
+              <div className="space-y-5">
+                {secondaryNavigationGroups.map(({ category, items }) => (
+                  <section
+                    key={category}
+                    aria-labelledby={`navigation-${category}`}
                   >
-                    {label}
-                  </Link>
+                    <h3
+                      id={`navigation-${category}`}
+                      className="px-4 text-xs font-semibold uppercase tracking-[0.16em] app-muted"
+                    >
+                      {category}
+                    </h3>
+                    <div className="mt-2">
+                      {items.map(({ label, href }) => (
+                        <Link
+                          key={href}
+                          href={href}
+                          onClick={closeMenu}
+                          className="block rounded-lg px-4 py-1 app-text-color transition-colors hover:bg-[color:var(--surface-muted)] focus-visible:bg-[color:var(--surface-muted)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)]"
+                        >
+                          {label}
+                        </Link>
+                      ))}
+                    </div>
+                  </section>
                 ))}
               </div>
             </nav>

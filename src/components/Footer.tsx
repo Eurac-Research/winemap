@@ -1,7 +1,7 @@
 import Link from "next/link";
 import {
   primaryNavigationSections,
-  secondaryNavigationSections,
+  secondaryNavigationGroups,
 } from "@/content/primary-navigation";
 import { ExternalLink } from "lucide-react";
 
@@ -11,18 +11,6 @@ import RespondLogo from "@/components/ui/RespondLogo";
 const footerLinkClassName =
   "inline-flex rounded-sm text-sm leading-6 text-slate-300 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white";
 
-const aboutNavigation = secondaryNavigationSections.filter(({ href }) =>
-  ["/about", "/about/team"].includes(href),
-);
-
-const resourceNavigation = secondaryNavigationSections.filter(({ href }) =>
-  ["/literature", "/about/glossary"].includes(href),
-);
-
-const legalNavigation = secondaryNavigationSections.filter(
-  ({ href }) => href === "/imprint-privacy",
-);
-
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -31,7 +19,7 @@ export default function Footer() {
       className="border-t border-white/15 bg-[rgb(24_28_36)] text-white"
       aria-labelledby="footer-title"
     >
-      <div className="mx-auto max-w-6xl px-6 py-14 sm:px-8 sm:py-16">
+      <div className="mx-auto max-w-6xl px-6 py-8 sm:px-8 sm:py-10">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="max-w-sm lg:col-span-4 border-r border-white/15">
             <Link
@@ -59,11 +47,6 @@ export default function Footer() {
                 Explore
               </h2>
               <ul className="mt-4 space-y-1">
-                <li>
-                  <Link href="/" className={footerLinkClassName}>
-                    Home
-                  </Link>
-                </li>
                 {primaryNavigationSections.map(({ id, label, href }) => (
                   <li key={id}>
                     <Link href={href} className={footerLinkClassName}>
@@ -74,56 +57,28 @@ export default function Footer() {
               </ul>
             </section>
 
-            <section>
-              <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-white">
-                About
-              </h2>
-              <ul className="mt-4 space-y-1">
-                {aboutNavigation.map(({ label, href }) => (
-                  <li key={href}>
-                    <Link href={href} className={footerLinkClassName}>
-                      {label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-white">
-                Resources
-              </h2>
-              <ul className="mt-4 space-y-1">
-                {resourceNavigation.map(({ label, href }) => (
-                  <li key={href}>
-                    <Link href={href} className={footerLinkClassName}>
-                      {label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-white">
-                Legal
-              </h2>
-              <ul className="mt-4 space-y-1">
-                {legalNavigation.map(({ label, href }) => (
-                  <li key={href}>
-                    <Link href={href} className={footerLinkClassName}>
-                      {label} / Privacy Policy
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </section>
+            {secondaryNavigationGroups.map(({ category, items }) => (
+              <section key={category}>
+                <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-white">
+                  {category}
+                </h2>
+                <ul className="mt-4 space-y-1">
+                  {items.map(({ label, footerLabel, href }) => (
+                    <li key={href}>
+                      <Link href={href} className={footerLinkClassName}>
+                        {footerLabel ?? label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))}
           </nav>
         </div>
 
         <section
           aria-labelledby="footer-partners-title"
-          className="mt-14 border-y border-white/15 py-8 sm:mt-16 sm:py-10"
+          className="mt-7 border-y border-white/15 py-4 sm:mt-8 sm:py-5"
         >
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
             <div className="max-w-2xl">
