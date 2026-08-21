@@ -40,7 +40,7 @@ export const mainAreas: MainArea[] = [
     mainHref: "/environment",
     categories: [
       {
-        label: "Environment Browser ->",
+        label: "WINEMAP Explorer ->",
         href: "/map-applications/environment-browser",
         description:
           "Explore climate, topographic, ecosystem service, and ecosystem condition layers in one map application.",

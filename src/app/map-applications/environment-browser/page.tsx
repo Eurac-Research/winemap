@@ -570,38 +570,42 @@ export default function EnvironmentBrowserPage() {
 
   if (environmentIndicators.length === 0) {
     return (
-      <PdoMapLayout
-        sidebar={
-          <PdoSidebarShell
-            top={
-              <div className={styles.filterPanel}>
-                <div className={styles.filterHeader}>
-                  <div className={styles.filterIntro}>
-                    <div className={styles.filterEyebrowRow}>
-                      <p className={styles.filterEyebrow}>
-                        Environment Browser
-                      </p>
+      <>
+        <PdoMapLayout
+          className="top-[calc(var(--top-nav-height)+3.5rem)] sm:left-14 sm:top-[var(--top-nav-height)]"
+          sidebar={
+            <PdoSidebarShell
+              top={
+                <div className={styles.filterPanel}>
+                  <div className={styles.filterHeader}>
+                    <div className={styles.filterIntro}>
+                      <div className={styles.filterEyebrowRow}>
+                        <p className={styles.filterEyebrow}>
+                          WINEMAP Explorer
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            }
-            body={
-              <div className="space-y-6">
-                <section className={styles.sidebarSection}>
-                  <p className={styles.sidebarSectionText}>
-                    No environment indicators are available.
-                  </p>
-                </section>
-              </div>
-            }
-          />
-        }
-        map={<div className="h-full w-full" />}
-        sidebarDefaultSize={30}
-        mapDefaultSize={70}
-        sidebarMinSize={22}
-      />
+              }
+              body={
+                <div className="space-y-6">
+                  <section className={styles.sidebarSection}>
+                    <p className={styles.sidebarSectionText}>
+                      No environment indicators are available.
+                    </p>
+                  </section>
+                </div>
+              }
+            />
+          }
+          map={<div className="h-full w-full" />}
+          sidebarDefaultSize={30}
+          mapDefaultSize={70}
+          sidebarMinSize={22}
+        />
+        <MapApplicationNavigation activeHref="/map-applications/environment-browser" />
+      </>
     );
   }
 
@@ -644,9 +648,9 @@ export default function EnvironmentBrowserPage() {
       <div className={styles.filterHeader}>
         <div className={styles.filterIntro}>
           <div className={styles.filterEyebrowRow}>
-            <p className={styles.filterEyebrow}>Environment Browser</p>
+            <p className={styles.filterEyebrow}>WINEMAP Explorer</p>
             {mapApplication?.help ? (
-              <MapApplicationHelpButton ariaLabel="Open help for Environment Browser">
+              <MapApplicationHelpButton ariaLabel="Open help for WINEMAP Explorer">
                 <MapApplicationHelp help={mapApplication.help} />
               </MapApplicationHelpButton>
             ) : null}

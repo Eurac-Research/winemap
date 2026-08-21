@@ -14,6 +14,7 @@ import {
 } from "react-map-gl/mapbox";
 
 import { MapApplicationHelp } from "@/components/maps/MapApplicationHelp";
+import { MapApplicationNavigation } from "@/components/maps/MapApplicationNavigation";
 import {
   DetailFieldList,
   type DetailField,
@@ -639,13 +640,17 @@ export default function PdoExplorerPage() {
   );
 
   return (
-    <PdoMapLayout
-      sidebar={
-        <Suspense fallback={<div>Loading...</div>}>
-          <PdoSidebarShell top={sidebarTop} body={sidebarBody} />
-        </Suspense>
-      }
-      map={mapContent}
-    />
+    <>
+      <PdoMapLayout
+        className="top-[calc(var(--top-nav-height)+3.5rem)] sm:left-14 sm:top-[var(--top-nav-height)]"
+        sidebar={
+          <Suspense fallback={<div>Loading...</div>}>
+            <PdoSidebarShell top={sidebarTop} body={sidebarBody} />
+          </Suspense>
+        }
+        map={mapContent}
+      />
+      <MapApplicationNavigation activeHref="/map-applications/pdo-atlas" />
+    </>
   );
 }

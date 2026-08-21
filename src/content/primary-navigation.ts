@@ -97,7 +97,7 @@ export const primaryNavigationSections: PrimaryNavigationSection[] = [
       "A dedicated collection of interactive tools for exploring WINEMAP data directly on maps. This area is for users who want to browse spatial layers, compare regions, inspect PDO information, investigate vulnerability, or work with specific geospatial applications without first reading through the thematic sections. It is the fastest route from a question about place to an interactive map view.",
     image: {
       src: "/images/map_applications/environment_browser.png",
-      alt: "Map of Environment Browser",
+      alt: "Map of WINEMAP Explorer",
     },
   },
 ];

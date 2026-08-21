@@ -40,7 +40,7 @@ export type MapApplication = {
 
 export const mapApplications: MapApplication[] = [
   {
-    title: "Environment Browser",
+    title: "WINEMAP Explorer",
     navigationIcon: "layers",
     description:
       "Access all map layers in one unified interface. Toggle layers, organize by scale or category, and explore detailed geospatial information.",
@@ -48,7 +48,7 @@ export const mapApplications: MapApplication[] = [
       {
         type: "paragraph",
         content: [
-          "Use the Environment Browser to display and analyze several geospatial datasets on an interactive map. The layers include terrain information, ",
+          "Use WINEMAP Explorer to display and analyze several geospatial datasets on an interactive map. The layers include terrain information, ",
           { text: "ecosystem services", glossaryId: "ecosystem-services" },
           ", ",
           {
@@ -93,7 +93,7 @@ export const mapApplications: MapApplication[] = [
     href: "/map-applications/environment-browser",
     backgroundImage: "/images/map_applications/environment_browser.png",
     backgroundAlt:
-      "A vineyard landscape used as a background for the Environment Browser map application.",
+      "A vineyard landscape used as a background for the WINEMAP Explorer map application.",
     backgroundPosition: "center",
     eyebrow: "Map applications",
     ctaLabel: "Go to Map",

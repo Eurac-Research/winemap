@@ -29,7 +29,7 @@ const CATEGORY_ORDER: IndicatorCategory[] = [
 const APP_LABELS: Record<AppId, string> = {
   cartography: "Cartography",
   "climate-explorer": "Climate Explorer",
-  "environment-browser": "Environment Browser",
+  "environment-browser": "WINEMAP Explorer",
 };
 
 const APP_HREFS: Partial<Record<AppId, string>> = {
