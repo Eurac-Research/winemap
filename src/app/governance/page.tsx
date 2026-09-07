@@ -1,9 +1,17 @@
 import Image from "next/image";
 import { Scale } from "lucide-react";
 
+import { createPageMetadata } from "@/lib/seo";
 import { TopicDirectory, TopicPanel } from "@/components/topics/TopicDirectory";
 import { topics } from "@/app/governance/topics.generated";
 import styles from "@/styles/Home.module.css";
+
+export const metadata = createPageMetadata({
+  title: "Governance for Vineyard Resilience",
+  description:
+    "Explore governance, participation, and legal frameworks that support resilient European vineyard landscapes.",
+  path: "/governance",
+});
 
 export default function GovernancePage() {
   const activeSlug = topics[0]?.slug;

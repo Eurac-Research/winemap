@@ -1,9 +1,16 @@
+import { createPageMetadata } from "@/lib/seo";
 import styles from "@/styles/Home.module.css";
+
+export const metadata = createPageMetadata({
+  title: "Imprint and Privacy",
+  description:
+    "Legal notice and privacy information for the WINEMAP platform by Eurac Research.",
+  path: "/imprint-privacy",
+});
 
 export default function Imprint() {
   return (
     <main className={styles.staticContentBox}>
-
       <h1 className="mt-12">Imprint / Privacy</h1>
       <p className={styles.imprintContent}>
         <strong>Eurac Research</strong>

@@ -7,10 +7,6 @@ import {
   locationValues,
   setColorFunction,
 } from "@geomatico/maplibre-cog-protocol";
-import type {
-  CogMetadata,
-  TypedArray,
-} from "@geomatico/maplibre-cog-protocol/dist/types/types";
 import {
   ChevronDown,
   ExternalLink,
@@ -51,6 +47,12 @@ import { PdoMapLayout } from "@/components/pdo-app/PdoMapLayout";
 import { PdoSidebarShell } from "@/components/pdo-app/PdoSidebarShell";
 import RespondLogo from "@/components/ui/RespondLogo";
 import styles from "@/styles/Home.module.css";
+
+type CogMetadata = Awaited<
+  ReturnType<typeof import("@geomatico/maplibre-cog-protocol").getCogMetadata>
+>;
+type ColorFunction = Parameters<typeof setColorFunction>[1];
+type TypedArray = Parameters<ColorFunction>[0];
 
 const SOURCE_ID = "environment-raster-source";
 const LAYER_ID = "environment-raster-layer";
@@ -580,9 +582,7 @@ export default function EnvironmentBrowserPage() {
                   <div className={styles.filterHeader}>
                     <div className={styles.filterIntro}>
                       <div className={styles.filterEyebrowRow}>
-                        <p className={styles.filterEyebrow}>
-                          WINEMAP Explorer
-                        </p>
+                        <p className={styles.filterEyebrow}>WINEMAP Explorer</p>
                       </div>
                     </div>
                   </div>

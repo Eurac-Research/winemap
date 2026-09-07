@@ -1,9 +1,17 @@
 import { ThermometerSun } from "lucide-react";
 
+import { createPageMetadata } from "@/lib/seo";
 import ImageComparisonSlider from "@/components/ImageComparisonSlider";
 import { TopicDirectory, TopicPanel } from "@/components/topics/TopicDirectory";
 import { topics } from "@/app/environment/topics.generated";
 import styles from "@/styles/Home.module.css";
+
+export const metadata = createPageMetadata({
+  title: "Environmental Change in Vineyards",
+  description:
+    "Understand environmental change, climate pressures, and resilience in European vineyard landscapes.",
+  path: "/environment",
+});
 
 export default function EnvironmentPage() {
   const activeSlug = topics[0]?.slug;
@@ -32,10 +40,9 @@ export default function EnvironmentPage() {
               </h1>
 
               <p className={styles.landingIntro}>
-                Winegrowing is closely tied to its environment. Climate,
-                water, soils, vegetation, and the wider landscape all
-                shape how vines grow and the character of the wines they
-                produce.
+                Winegrowing is closely tied to its environment. Climate, water,
+                soils, vegetation, and the wider landscape all shape how vines
+                grow and the character of the wines they produce.
               </p>
               <p className={styles.landingIntro}>
                 These conditions are changing across Europe. Rising
@@ -44,11 +51,10 @@ export default function EnvironmentPage() {
                 conditions.
               </p>
               <p className={styles.landingIntro}>
-                By bringing together climate
-                information and scenarios with data on ecosystem services 
-                and ecological conditions, WINEMAP Environment 
-                helps you explore the environmental factors
-                that matter for winegrowing and potentially shape its future.
+                By bringing together climate information and scenarios with data
+                on ecosystem services and ecological conditions, WINEMAP
+                Environment helps you explore the environmental factors that
+                matter for winegrowing and potentially shape its future.
               </p>
             </div>
 

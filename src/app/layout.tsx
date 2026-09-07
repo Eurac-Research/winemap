@@ -1,17 +1,42 @@
 import "../styles/globals.css";
 import "../styles/global.css";
+
 import { Suspense } from "react";
 import { Metadata } from "next";
 import PlausibleProvider from "next-plausible";
 
-import CookieConsent from "@/components/CookieConsent";
-import { ConditionalNavigation } from "@/components/ConditionalNavigation";
+import { siteUrl } from "@/lib/seo";
 import { ConditionalFooter } from "@/components/ConditionalFooter";
+import { ConditionalNavigation } from "@/components/ConditionalNavigation";
+import CookieConsent from "@/components/CookieConsent";
 
 export const metadata: Metadata = {
-  title: "Winemap by Eurac Research",
+  metadataBase: siteUrl,
+  title: {
+    default: "WINEMAP | Eurac Research",
+    template: "%s | WINEMAP",
+  },
   description:
-    "The Winemap presents an overview of the climate change vulnerability of European Protected Designation of Origin (PDO) wine regions and is based on the integrated vulnerability index that was developed in the study 'Climate resilience of European wine regions'. ",
+    "WINEMAP is an interactive platform for climate adaptation and resilient European vineyard landscapes by Eurac Research.",
+  applicationName: "WINEMAP",
+  openGraph: {
+    type: "website",
+    locale: "en",
+    url: "/",
+    siteName: "WINEMAP",
+    title: "WINEMAP | Eurac Research",
+    description:
+      "An interactive platform for climate adaptation and resilient European vineyard landscapes.",
+    images: ["/opengraph-image.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/opengraph-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   verification: {
     google: "OdAWzIPNr_gquodYDcLJpB5xjGfw0mJ1Mowe5Do9k6U",
   },

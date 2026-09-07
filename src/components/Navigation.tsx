@@ -65,10 +65,10 @@ export function Navigation() {
             <span className="text-sm font-medium tracking-wide app-text-color sm:text-base">
               WINEMAP
             </span>
-            <span className="hidden text-xs app-muted min-[360px]:inline sm:text-sm">
+            <span className="hidden text-xs app-muted min-[390px]:inline sm:text-sm">
               by
             </span>
-            <span className="text-sm font-medium tracking-wide app-text-color sm:text-base">
+            <span className="hidden text-sm font-medium tracking-wide app-text-color min-[390px]:inline sm:text-base">
               eurac research
             </span>
             {/* <EuracLogo
@@ -84,7 +84,7 @@ export function Navigation() {
             <RespondLogo
               variant="landscape"
               color="standard"
-              className="h-10 w-auto"
+              className="h-7 w-auto max-w-[8.5rem] object-contain sm:h-10 sm:max-w-none"
             />
           </Link>
         </div>

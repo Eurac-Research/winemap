@@ -872,6 +872,7 @@
   background: var(--surface-overlay);
   color: var(--foreground);
   cursor: pointer;
+  touch-action: manipulation;
   transition:
     background-color 160ms ease,
     border-color 160ms ease,
@@ -899,6 +900,34 @@
   background: var(--surface-muted);
   border-color: var(--accent);
   transform: translateY(-1px);
+}
+
+.resultItem:focus-visible,
+.showMoreResultsButton:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.showMoreResultsButton {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 12px;
+  padding: 8px 16px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--surface-overlay);
+  color: var(--foreground);
+  cursor: pointer;
+  font-weight: 600;
+  touch-action: manipulation;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+
+.showMoreResultsButton:hover {
+  border-color: var(--accent);
+  background: var(--surface-muted);
 }
 
 .resultItemTitle {
@@ -2137,6 +2166,42 @@
 .pdoAtlasTeaser:hover .pdoAtlasTeaserCta svg,
 .pdoAtlasTeaser:focus-within .pdoAtlasTeaserCta svg {
   transform: translateX(0.25rem);
+}
+
+@media (max-width: 639px) {
+  .landingCopy p,
+  .topicPanelContent > p {
+    hyphens: manual;
+    text-align: left;
+  }
+
+  .pdoAtlasTeaser,
+  .pdoAtlasTeaserContent {
+    min-height: 0;
+  }
+
+  .pdoAtlasTeaserOverlay {
+    background: linear-gradient(
+      180deg,
+      rgba(15, 13, 17, 0.88) 0%,
+      rgba(15, 13, 17, 0.76) 65%,
+      rgba(15, 13, 17, 0.84) 100%
+    );
+  }
+
+  .pdoAtlasTeaserContent {
+    padding: 1.5rem;
+  }
+
+  .pdoAtlasTeaserFeatures {
+    display: none;
+  }
+
+  .pdoAtlasTeaserCta {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 1.25rem;
+  }
 }
 
 .pdoAtlasTeaserLink:focus-visible {

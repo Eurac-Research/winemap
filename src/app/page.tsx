@@ -2,11 +2,19 @@ import Link from "next/link";
 import { mapApplications } from "@/content/map-applications";
 import { ChevronDown } from "lucide-react";
 
+import { createPageMetadata } from "@/lib/seo";
 import BackgroundImageCarousel from "@/components/BackgroundImageCarousel";
 import CourseCarousel from "@/components/CourseCarousel";
 // import RespondLogo from "@/components/ui/RespondLogo";
 import OverviewNavigation from "@/components/winemap-sections/OverviewNavigation";
 import styles from "@/styles/Home.module.css";
+
+export const metadata = createPageMetadata({
+  title: "Climate Adaptation for European Vineyards",
+  description:
+    "Explore climate adaptation, environmental change, governance, and interactive tools for resilient European vineyard landscapes.",
+  path: "/",
+});
 
 export default function HomePage() {
   return (
@@ -23,7 +31,7 @@ export default function HomePage() {
           }}
         />
 
-        <div className="relative z-20 mx-auto min-h-[clamp(34rem,72vh,54rem)] max-w-7xl">
+        <div className="relative z-20 mx-auto min-h-[calc(100dvh-var(--top-nav-height))] max-w-7xl sm:min-h-[clamp(34rem,72vh,54rem)]">
           <div className="absolute bottom-36 left-4 right-4 z-20 max-w-3xl sm:bottom-10 sm:left-auto sm:right-5">
             <div className="w-fit max-w-full rounded-2xl border border-white/20 bg-black/35 px-6 py-6 text-right text-white">
               <p className="text-5xl font-semibold uppercase tracking-[0.18em] sm:text-6xl lg:text-7xl">

@@ -45,7 +45,7 @@ export function MapApplicationNavigation({
             aria-label={application.title}
             aria-describedby={tooltipId}
             aria-current={isActive ? "page" : undefined}
-            className={`group relative inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)] ${
+            className={`group relative inline-flex h-11 w-11 shrink-0 touch-manipulation items-center justify-center rounded-xl transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent)] ${
               isActive
                 ? "bg-[color:var(--accent)] text-[color:var(--accent-foreground)] shadow-sm"
                 : "app-text-color hover:bg-[color:var(--surface-muted)] focus-visible:bg-[color:var(--surface-muted)]"

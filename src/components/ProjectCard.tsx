@@ -80,10 +80,16 @@ export function ProjectDetailCard({
   const content = (
     <>
       <h3 className="text-lg font-semibold">{name} Project</h3>
-      <div className={hasLogo ? "flex items-start justify-between gap-6" : ""}>
-        <p className="mt-2 app-muted">{description}</p>
+      <div
+        className={
+          hasLogo
+            ? "mt-2 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-6"
+            : ""
+        }
+      >
+        <p className="min-w-0 app-muted">{description}</p>
         {hasLogo ? (
-          <div className="flex w-40 shrink-0 items-center justify-center p-3">
+          <div className="flex h-24 w-full shrink-0 items-center justify-center p-3 sm:h-auto sm:w-40">
             <ProjectLogo name={name} logo={logo} logoImage={logoImage} />
           </div>
         ) : null}
