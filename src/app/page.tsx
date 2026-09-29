@@ -23,18 +23,21 @@ export default function HomePage() {
         <div
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: "url(/images/landscape_digital.png)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+            backgroundImage: "url(/images/Spring23_Wine_Sideshots_0021.jpg)",
+            backgroundPosition: "top",
             backgroundRepeat: "no-repeat",
             backgroundAttachment: "fixed",
           }}
         />
 
+        <p className="pointer-events-none absolute bottom-3 right-4 z-20 px-2 py-1 text-right text-[10px] font-medium tracking-wide text-white shadow-[0_0_10px_0_rgba(0,0,0,0.25)] sm:bottom-4 sm:right-5 sm:text-xs">
+          © IDM/Südtirol Wein/Tiberio Sorvillo
+        </p>
+
         <div className="relative z-20 mx-auto min-h-[calc(100dvh-var(--top-nav-height))] max-w-7xl sm:min-h-[clamp(34rem,72vh,54rem)]">
           <div className="absolute bottom-36 left-4 right-4 z-20 max-w-3xl sm:bottom-10 sm:left-auto sm:right-5">
-            <div className="w-fit max-w-full rounded-2xl border border-white/20 bg-black/35 px-6 py-6 text-right text-white">
-              <p className="text-5xl font-semibold uppercase tracking-[0.18em] sm:text-6xl lg:text-7xl">
+            <div className="w-fit max-w-full border bg-[rgba(1,1,1,0.50)] bg-blend-multiply px-6 py-6 text-right text-white">
+              <p className="text-5xl font-semibold uppercase  sm:text-6xl lg:text-7xl">
                 WINEMAP
               </p>
               <h1 className="mt-5 max-w-3xl text-3xl font-semibold leading-tight text-white sm:ml-auto">

@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   primaryNavigationSections,
   secondaryNavigationGroups,
 } from "@/content/primary-navigation";
 import { Home, Menu, X } from "lucide-react";
-
-import RespondLogo from "@/components/ui/RespondLogo";
 
 // import EuracLogo from "@/components/ui/EuracLogo";
 
@@ -40,13 +39,13 @@ export function Navigation() {
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header className="fixed left-0 top-0 z-[100] w-full border-b border-[color:var(--border)] bg-[color:var(--background)]">
+    <header className="fixed left-0 top-0 z-[100] w-full bg-[#181C24] text-white">
       <div className="flex h-[var(--top-nav-height)] items-center">
         <button
           ref={menuButtonRef}
           type="button"
           onClick={() => setMenuOpen((isOpen) => !isOpen)}
-          className="inline-flex h-full w-14 shrink-0 cursor-pointer items-center justify-center border-r border-[color:var(--border)] app-text-color transition-colors hover:bg-[color:var(--surface-overlay)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-[color:var(--accent)]"
+          className="inline-flex h-full w-14 shrink-0 cursor-pointer items-center justify-center border-r-[0.5px] border-white transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-[color:var(--accent)]"
           aria-label={menuOpen ? "Close navigation" : "Open navigation"}
           aria-expanded={menuOpen}
           aria-controls="site-navigation-drawer"
@@ -62,13 +61,13 @@ export function Navigation() {
             href="/"
             className="ml-3 flex min-w-0 shrink items-center gap-1.5 whitespace-nowrap rounded border border-transparent leading-none transition-colors hover:border-[color:var(--border)]"
           >
-            <span className="text-sm font-medium tracking-wide app-text-color sm:text-base">
+            <span className="text-sm font-medium tracking-wide sm:text-base">
               WINEMAP
             </span>
-            <span className="hidden text-xs app-muted min-[390px]:inline sm:text-sm">
+            <span className="hidden text-xs min-[390px]:inline sm:text-sm">
               by
             </span>
-            <span className="hidden text-sm font-medium tracking-wide app-text-color min-[390px]:inline sm:text-base">
+            <span className="hidden text-sm font-medium tracking-wide min-[390px]:inline sm:text-base">
               eurac research
             </span>
             {/* <EuracLogo
@@ -79,12 +78,15 @@ export function Navigation() {
           </Link>
           <Link
             href="/"
-            className="flex shrink-0 items-center whitespace-nowrap rounded border border-transparent leading-none transition-colors hover:border-[color:var(--border)]"
+            className="mr-3 flex shrink-0 items-center whitespace-nowrap leading-none transition-colors hover:border-[color:var(--border)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            aria-label="RESPOnD home"
           >
-            <RespondLogo
-              variant="landscape"
-              color="standard"
-              className="h-7 w-auto max-w-[8.5rem] object-contain sm:h-10 sm:max-w-none"
+            <Image
+              src="/logos/respond/RESPOnD_Logo_White.svg"
+              alt="RESPOnD"
+              width={195}
+              height={45}
+              className="w-auto"
             />
           </Link>
         </div>

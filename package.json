@@ -31,13 +31,13 @@
     "lucide-react": "^0.563.0",
     "mapbox-gl": "^3.18.1",
     "maplibre-gl": "^5.21.1",
-    "next": "16.3.4",
+    "next": "16.3.7",
     "next-plausible": "^3.12.5",
     "postcss": "^8.4.38",
-    "react": "19.2.8",
+    "react": "19.3.0",
     "react-circular-progressbar": "^2.1.0",
     "react-device-detect": "^2.2.3",
-    "react-dom": "19.2.8",
+    "react-dom": "19.3.0",
     "react-map-gl": "^8.1.0",
     "react-resizable-panels": "^4.5.4",
     "tailwind-merge": "^3.4.0",
@@ -50,10 +50,10 @@
     "@types/js-cookie": "^3.0.3",
     "@types/mapbox-gl": "^3.1.0",
     "@types/node": "25.1.0",
-    "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.7",
-    "eslint": "10.10.0",
-    "eslint-config-next": "16.3.4",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.3.7",
     "postcss-nesting": "^14.0.0",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
@@ -61,8 +61,8 @@
   },
   "pnpm": {
     "overrides": {
-      "@types/react": "19.2.18",
-      "@types/react-dom": "19.2.7"
+      "@types/react": "19.3.0",
+      "@types/react-dom": "19.3.0"
     },
     "onlyBuiltDependencies": [
       "@parcel/watcher",

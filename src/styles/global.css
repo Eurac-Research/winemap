@@ -4,7 +4,7 @@
   :root {
     color-scheme: light;
 
-    --top-nav-height: 44px;
+    --top-nav-height: 49px;
     --scroll-offset: calc(var(--top-nav-height) + 2rem);
 
     /* Base */
