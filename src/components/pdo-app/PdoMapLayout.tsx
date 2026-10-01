@@ -4,7 +4,7 @@ import {
   useCallback,
   useEffect,
   useRef,
-  useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 import { isMobile } from "react-device-detect";
@@ -15,6 +15,8 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+
+const subscribeToMount = () => () => {};
 
 interface PdoMapLayoutProps {
   sidebar: ReactNode;
@@ -35,13 +37,13 @@ export function PdoMapLayout({
   mapMinSize = isMobile ? 30 : 30,
   className,
 }: PdoMapLayoutProps) {
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useSyncExternalStore(
+    subscribeToMount,
+    () => true,
+    () => false,
+  );
   const mapPanelRef = useRef<HTMLDivElement | null>(null);
   const resizeTimeoutRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const notifyMapResize = useCallback(() => {
     if (resizeTimeoutRef.current != null) {
@@ -69,7 +71,7 @@ export function PdoMapLayout({
         window.clearTimeout(resizeTimeoutRef.current);
       }
     };
-  }, [notifyMapResize]);
+  }, [isMounted, notifyMapResize]);
 
   const layoutClassName = cn(
     "fixed inset-x-0 bottom-0 top-[var(--top-nav-height)] z-10",

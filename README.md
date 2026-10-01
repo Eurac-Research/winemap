@@ -1,105 +1,85 @@
-# WINEMAP Project
+# WINEMAP
 
-Welcome to the WINEMAP project! This initiative provides a comprehensive map of wineries and vineyards, offering detailed information about each location. The project is based on research from [Eurac Research](https://www.eurac.edu/) and includes insights from the following publications:
+WINEMAP is an interactive platform for exploring European wine regions, their regulatory information, climate-change vulnerability, and environmental conditions. It is based on research from [Eurac Research](https://www.eurac.edu/).
 
 - Candiago, S., Tscholl, S., Bassani, L. et al. A geospatial inventory of regulatory information for wine protected designations of origin in Europe. Sci Data 9, 394 (2022). https://doi.org/10.1038/s41597-022-01513-0
 - Tscholl, S., Candiago, S., Marsoner, T. et al. Climate resilience of European wine regions. Nat Commun 15, 6254 (2024). https://doi.org/10.1038/s41467-024-50549-w
 
-You can access the frontend of the WINEMAP project at [https://WINEMAP.eurac.edu/](https://WINEMAP.eurac.edu/).
-
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+The public application is available at [winemap.eurac.edu](https://winemap.eurac.edu/).
 
 ## Introduction
 
-The WINEMAP project is designed to help wine enthusiasts discover and learn about wineries and vineyards. It provides an interactive map with detailed information about each location, including contact details, types of wines produced, and visitor information. Additionally, the project assesses the vulnerability of Protected Designation of Origin (PDO) regions to climate change. This assessment includes factors such as exposure to climate change, sensitivity to impacts, and adaptive capacity. By understanding these vulnerabilities, the project aims to guide efforts to enhance resilience and reduce negative impacts of climate change on these regions.
+WINEMAP brings together interactive map applications, scientific data, and resources on climate adaptation, environmental change, governance, and resilient European vineyard landscapes. Its map applications cover PDO information, climate-change vulnerability, and environmental indicators.
 
 ## Features
 
-- Interactive map with winery and vineyard locations
-- Detailed information about each location
-- Search and filter functionality
-- Assessment of PDO region vulnerability to climate change
+- Interactive map applications for PDO, vulnerability, and environmental data
+- Search, filters, and region-level information for European wine PDOs
+- Adaptation, governance, ecosystem-based approach, course, and literature resources
+- Climate-change vulnerability assessments for European wine regions
 
 ## Installation
 
 To get started with the WINEMAP project, follow these steps:
 
-### Using npm
+### Prerequisites
 
-1. Clone the repository:
-
-```bash
-git clone https://github.com/yourusername/WINEMAP.git
-```
-
-2. Navigate to the project directory:
+- A current Node.js LTS release compatible with Next.js 16
+- [Corepack](https://nodejs.org/api/corepack.html) enabled, so the repository's pinned pnpm version is used
 
 ```bash
-cd WINEMAP
+corepack enable
 ```
 
-3. Install the dependencies:
+### Install dependencies
 
 ```bash
-npm install
+git clone https://github.com/Eurac-Research/winemap.git
+cd winemap
+pnpm install --frozen-lockfile
 ```
 
-### Using Yarn
+This repository uses pnpm 10.28.2. Do not use Yarn or npm to install dependencies, as they will not use the committed `pnpm-lock.yaml`.
 
-1. Clone the repository:
+### Configure local environment variables
+
+Map applications require a Mapbox public access token. Create `.env.local` in the project root with:
 
 ```bash
-git clone https://github.com/yourusername/WINEMAP.git
+NEXT_PUBLIC_MAPBOX_TOKEN=your_mapbox_public_access_token
 ```
 
-2. Navigate to the project directory:
-
-```bash
-cd WINEMAP
-```
-
-3. Install the dependencies:
-
-```bash
-yarn install
-```
+`.env.local` is ignored by Git. Because variables prefixed with `NEXT_PUBLIC_` are included in the browser bundle, use only a public, restricted token.
 
 ## Usage
 
-To run the development server, use the following command:
-
-### Using npm
+Start the development server:
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
-### Using Yarn
+The `predev` script automatically generates topic registries before Next.js starts. Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-```bash
-yarn dev
-```
+## Commands
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
-
-You can also access the frontend of the WINEMAP project at [https://WINEMAP.eurac.edu/](https://WINEMAP.eurac.edu/).
+| Command       | Description                                                 |
+| ------------- | ----------------------------------------------------------- |
+| `pnpm dev`    | Generate topic registries and start the development server. |
+| `pnpm build`  | Generate topic registries and create a production build.    |
+| `pnpm start`  | Start the production server after a build.                  |
+| `pnpm lint`   | Run ESLint on `src`.                                        |
+| `pnpm format` | Check formatting with Prettier.                             |
+| `pnpm fmt`    | Format supported source files with Prettier.                |
+| `pnpm run ci` | Run formatting, linting, and TypeScript checks.             |
 
 ## Contributing
 
 We welcome contributions to the WINEMAP project! If you would like to contribute, please follow these steps:
 
-1. Fork the repository.
-2. Create a new branch for your feature or bugfix.
-3. Make your changes and commit them with a descriptive message.
-4. Push your changes to your fork.
-5. Open a pull request to the main repository.
+1. Create a branch for your change.
+2. Make your changes and run the relevant checks above.
+3. Commit with a clear message and open a pull request.
 
 ## License
 

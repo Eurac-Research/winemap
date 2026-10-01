@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import styles from "@/styles/Home.module.css";
 import type { PDORecord } from "./usePdoData";
@@ -20,13 +20,7 @@ export function PdoResultsList({
   items,
   onSelect,
 }: PdoResultsListProps) {
-  const [visibleCount, setVisibleCount] = useState(RESULT_PAGE_SIZE);
-  const visibleItems = items.slice(0, visibleCount);
-  const hiddenCount = Math.max(0, items.length - visibleItems.length);
-
-  useEffect(() => {
-    setVisibleCount(RESULT_PAGE_SIZE);
-  }, [items]);
+  const resultSetKey = items.map((pdo) => pdo.pdoid).join(",");
 
   return (
     <div className={styles.sidebarSection}>
@@ -35,6 +29,23 @@ export function PdoResultsList({
         <h3 className={styles.sidebarSectionTitle}>{title}</h3>
         {summary && <p className={styles.sidebarSectionText}>{summary}</p>}
       </div>
+      <PaginatedResults key={resultSetKey} items={items} onSelect={onSelect} />
+    </div>
+  );
+}
+
+interface PaginatedResultsProps {
+  items: PDORecord[];
+  onSelect: (pdoId: string) => void;
+}
+
+function PaginatedResults({ items, onSelect }: PaginatedResultsProps) {
+  const [visibleCount, setVisibleCount] = useState(RESULT_PAGE_SIZE);
+  const visibleItems = items.slice(0, visibleCount);
+  const hiddenCount = Math.max(0, items.length - visibleItems.length);
+
+  return (
+    <>
       <div className={styles.resultList}>
         {visibleItems.map((pdo) => (
           <button
@@ -60,6 +71,6 @@ export function PdoResultsList({
           of {hiddenCount.toLocaleString()} remaining
         </button>
       ) : null}
-    </div>
+    </>
   );
 }
