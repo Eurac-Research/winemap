@@ -1,0 +1,37 @@
+.viewport {
+  overflow: hidden;
+  padding-block: 1rem;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: project-marquee 45s linear infinite;
+}
+
+.group {
+  display: flex;
+  gap: 1rem;
+  padding-right: 1rem;
+}
+
+.group > * {
+  flex: 0 0 13rem;
+}
+
+.viewport:hover .track,
+.viewport:focus-within .track {
+  animation-play-state: paused;
+}
+
+@keyframes project-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
+}

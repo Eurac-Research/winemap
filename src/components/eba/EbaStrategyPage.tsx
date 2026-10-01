@@ -1,0 +1,474 @@
+import Image from "next/image";
+import Link from "next/link";
+import {
+  getSimilarEbaStrategies,
+  type EbaStrategy,
+} from "@/content/eba/catalogue";
+import {
+  getEbaEcosystemServiceById,
+  type EbaServiceIcon,
+} from "@/content/eba/ecosystem-services";
+import type { EbaChallengeIcon } from "@/content/eba/potential-challenges";
+import type {
+  EbaStrategyChallenge,
+  EbaStrategyDetailContent,
+} from "@/content/eba/strategy-details";
+import {
+  AlertTriangle,
+  ArrowLeft,
+  ArrowRight,
+  BookOpenText,
+  Bug,
+  CircleDollarSign,
+  Droplets,
+  ExternalLink,
+  Flower2,
+  Grape,
+  Hammer,
+  Landmark,
+  Leaf,
+  ListFilter,
+  Mountain,
+  ShieldCheck,
+  Sprout,
+  ThermometerSun,
+  Trees,
+  Waves,
+  FolderSearch,
+  type LucideIcon,
+} from "lucide-react";
+
+import { GlossaryTermPopover } from "@/components/glossary/glossaryTerm";
+import { Button } from "@/components/ui/button";
+import { EbaSection } from "./EbaSection";
+import { EbaVideoEmbed } from "./EbaVideoEmbed";
+
+type EbaStrategyPageProps = {
+  strategy: EbaStrategy;
+  content?: EbaStrategyDetailContent;
+};
+
+const serviceIconMap: Record<EbaServiceIcon, LucideIcon> = {
+  biodiversity: Flower2,
+  economy: CircleDollarSign,
+  habitat: Trees,
+  heritage: Landmark,
+  landscape: Mountain,
+  "pest-control": Bug,
+  production: Grape,
+  recreation: Sprout,
+  soil: Sprout,
+  slope: Mountain,
+  temperature: ThermometerSun,
+  water: Droplets,
+};
+
+const challengeIconMap: Record<EbaChallengeIcon, LucideIcon> = {
+  cost: CircleDollarSign,
+  degradation: AlertTriangle,
+  resources: Waves,
+  technical: Hammer,
+  viability: ShieldCheck,
+  water: Droplets,
+};
+
+function SectionHeading({
+  eyebrow,
+  title,
+  icon: Icon,
+}: {
+  eyebrow: string;
+  title: string;
+  icon: LucideIcon;
+}) {
+  return (
+    <div className="flex items-start gap-3">
+      <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-[color:var(--accent)]/25 bg-[color:var(--accent)]/20 app-accent-text">
+        <Icon className="h-5 w-5" aria-hidden="true" />
+      </span>
+      <div>
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] app-accent-text">
+          {eyebrow}
+        </p>
+        <h2 className="mt-1 text-2xl font-semibold leading-tight app-text-color md:text-3xl">
+          {title}
+        </h2>
+      </div>
+    </div>
+  );
+}
+
+function EcosystemServicesGrid({
+  serviceEntries,
+}: {
+  serviceEntries: NonNullable<EbaStrategyDetailContent["ecosystemServices"]>;
+}) {
+  const services = serviceEntries.flatMap((entry) => {
+    const service = getEbaEcosystemServiceById(entry.id);
+    return service ? [{ service, note: entry.note }] : [];
+  });
+
+  if (!services.length) return null;
+
+  return (
+    <section id="ecosystem-services">
+      <div className="mx-auto max-w-6xl border-y border-[color:var(--border)] px-6 py-12">
+        <SectionHeading
+          eyebrow="Benefits"
+          title="Ecosystem services provided"
+          icon={Leaf}
+        />
+
+        <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {services.map(({ service, note }) => {
+            const Icon = serviceIconMap[service.icon];
+
+            return (
+              <article
+                key={service.id}
+                className="group/service min-h-28 border border-[color:var(--border)] bg-[color:var(--surface-overlay)] p-4 transition-colors hover:border-[color:var(--accent)]"
+              >
+                <div className="flex justify-stretch gap-3 h-full w-full">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-[color:var(--accent-soft)] app-accent-text">
+                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <div className="flex flex-col w-full">
+                    <h3 className="pt-1 text-base leading-6">
+                      {service.glossaryId ? (
+                        <GlossaryTermPopover
+                          id={service.glossaryId}
+                          className="border-b-0 text-left hover:text-[color:var(--app-accent-text-color)]"
+                        >
+                          <span className="font-semibold">{service.label}</span>
+                        </GlossaryTermPopover>
+                      ) : (
+                        service.label
+                      )}
+                    </h3>
+
+                    {note ? (
+                      <div className="h-full text-sm leading-7 app-text-color">
+                        {note}
+                      </div>
+                    ) : <div className='h-full'></div>}
+                  </div>
+                  <Link
+                    className = "group/tooltip relative mt-1 h-min w-min hover:text-[color:var(--app-accent-text-color)]"
+                    href={`/adaptation/eba-strategies?ecosystemService=${service.id}`}
+                  >
+                    <FolderSearch className = "h-4 w-4"/>
+                    <div id={`tooltip-${service.id}`} role="tooltip" className="absolute right-0 top-full mt-2 z-50 w-max max-w-52 whitespace-normal break-words rounded-md px-2 py-1 text-xs leading-snug border bg-white shadow-xs app-muted opacity-0 pointer-events-none transition group-hover/tooltip:opacity-100">
+                      Find other strategies with this service
+                    </div>
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ChallengeList({ challenges }: { challenges: EbaStrategyChallenge[] }) {
+  if (!challenges.length) return null;
+
+  return (
+    <section className="mx-auto max-w-6xl px-6 py-12">
+      <SectionHeading
+        eyebrow="Implementation"
+        title="Considerations for successful implementation"
+        icon={AlertTriangle}
+      />
+
+      <div className="mt-7 grid gap-4 md:grid-cols-2">
+        {challenges.map(({ title, details, icon = "technical" }) => {
+          const Icon = challengeIconMap[icon];
+
+          return (
+            <article
+              key={title}
+              className="border-l-4 border-[color:var(--accent)] bg-[color:var(--surface-overlay)] px-5 py-4 shadow-sm"
+            >
+              <div className="flex items-start gap-3">
+                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[color:var(--surface-muted)] app-accent-text">
+                  <Icon className="h-5 w-5" aria-hidden="true" />
+                </span>
+                <div>
+                  <h3 className="text-base font-semibold app-text-color">
+                    {title}
+                  </h3>
+                  {details ? (
+                    <div className="mt-2 text-sm leading-7 app-text-color">
+                      {details}
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+export function EbaStrategyPage({ strategy, content }: EbaStrategyPageProps) {
+  const hasCustomSections = Boolean(content?.sections?.length);
+  const hasAbout = Boolean(content?.about);
+  const hasEcosystemServices = Boolean(content?.ecosystemServices?.length);
+  const hasChallenges = Boolean(content?.challenges?.length);
+  const pdfHref = strategy.filename
+    ? `/factsheets/${strategy.filename}`
+    : undefined;
+  const hasHeaderImage = Boolean(content?.imagePath);
+  const headerImageAlt =
+    content?.imageAlt ??
+    `${strategy.title} ecosystem-based adaptation strategy`;
+  const strategyMetadata = [
+    { label: "Category", value: strategy.category },
+    { label: "Spatial scale", value: strategy.spatial_scale },
+  ];
+  const similarStrategies = getSimilarEbaStrategies(strategy).filter(
+    (relatedStrategy) => relatedStrategy.slug !== strategy.slug,
+  );
+
+  return (
+    <main className="section-adaptation min-h-screen bg-background text-foreground">
+      <section className="relative overflow-hidden border-b border-[color:var(--border)] bg-[color:var(--accent)]/10 pt-28">
+        {hasHeaderImage && content?.imagePath ? (
+          <div
+            className="absolute inset-y-0 right-0 hidden w-1/2 lg:block"
+            style={{ clipPath: "polygon(13% 0, 100% 0, 100% 100%, 0 100%)" }}
+          >
+            <Image
+              src={content.imagePath}
+              alt={headerImageAlt}
+              fill
+              priority
+              sizes="50vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-[color:var(--surface-inverse)]/10" />
+          </div>
+        ) : null}
+
+        <div className="relative mx-auto max-w-6xl px-6 pb-12">
+          <Link
+            href="/adaptation/eba-strategies"
+            className="inline-flex items-center gap-2 text-sm font-medium app-accent-text underline-offset-4 hover:underline"
+          >
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+            Back to EbA strategies
+          </Link>
+
+          <header
+            className={
+              hasHeaderImage
+                ? "mt-8 grid gap-8 lg:grid-cols-[minmax(0,0.48fr)_minmax(0,0.52fr)] lg:items-stretch"
+                : "mt-8 max-w-3xl"
+            }
+          >
+            <div className={hasHeaderImage ? "pb-2 lg:pr-8" : undefined}>
+              <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] app-accent-text">
+                <span className="section-icon">
+                  <Leaf className="h-4 w-4" aria-hidden="true" />
+                </span>
+                WINEMAP Adaptation
+              </p>
+              <h1 className="mt-3 app-page-title">{strategy.title}</h1>
+              {strategy.summary ? (
+                <p className="mt-6 max-w-3xl app-lead app-muted">
+                  {strategy.summary}
+                </p>
+              ) : null}
+              <dl className="mt-7 grid gap-3 sm:grid-cols-3">
+                {strategyMetadata.map((item) => (
+                  <div
+                    key={item.label}
+                    className="border border-[color:var(--border)] bg-[color:var(--surface-overlay)] px-4 py-3"
+                  >
+                    <dt className="text-xs font-semibold uppercase tracking-[0.14em] app-accent-text">
+                      {item.label}
+                    </dt>
+                    <dd className="mt-1 text-sm font-medium leading-6 app-text-color">
+                      {item.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+              {pdfHref ? (
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <Button
+                    variant="outline"
+                    asChild
+                    className="border-[color:var(--border)] bg-[color:var(--surface)] app-text-color hover:bg-[color:var(--surface-overlay)]"
+                  >
+                    <a href={pdfHref} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink
+                        className="mr-2 h-4 w-4"
+                        aria-hidden="true"
+                      />
+                      Open PDF factsheet
+                    </a>
+                  </Button>
+                </div>
+              ) : null}
+            </div>
+
+            {hasHeaderImage && content?.imagePath ? (
+              <div className="relative min-h-64 overflow-hidden border border-[color:var(--border)] lg:hidden">
+                <Image
+                  src={content.imagePath}
+                  alt={headerImageAlt}
+                  fill
+                  priority
+                  sizes="100vw"
+                  className="object-cover"
+                />
+              </div>
+            ) : null}
+          </header>
+        </div>
+      </section>
+
+      {hasAbout || hasCustomSections ? (
+        <section className="mx-auto max-w-6xl px-6 py-12">
+          <article className="lg:grid-cols-[18rem_minmax(0,1fr)]">
+            <div>
+              <SectionHeading
+                eyebrow="Overview"
+                title="About this strategy"
+                icon={Sprout}
+              />
+            </div>
+
+            <div className="min-w-0 space-y-8">
+              {hasAbout ? (
+                <div className="mt-8 app-text [&>p+p]:mt-4">
+                  {content?.about}
+                </div>
+              ) : null}
+
+              {hasCustomSections ? (
+                <div>
+                  {content?.sections?.map((section) => (
+                    <EbaSection
+                      key={section.id}
+                      id={section.id}
+                      title={section.title}
+                    >
+                      {section.children}
+                    </EbaSection>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          </article>
+        </section>
+      ) : null}
+
+      {hasEcosystemServices && content?.ecosystemServices ? (
+        <EcosystemServicesGrid serviceEntries={content.ecosystemServices} />
+      ) : null}
+
+      {hasChallenges && content?.challenges ? (
+        <ChallengeList challenges={content.challenges} />
+      ) : null}
+
+      {content?.videos?.length ? (
+        <section className="mx-auto max-w-6xl px-6 pb-16">
+          <EbaSection id="videos" title="Videos">
+            <div className="grid gap-5">
+              {content.videos.map((video) => (
+                <EbaVideoEmbed
+                  key={video.id}
+                  title={video.title}
+                  youtubeId={video.youtubeId}
+                  caption={video.caption}
+                />
+              ))}
+            </div>
+          </EbaSection>
+        </section>
+      ) : null}
+
+      {!hasAbout &&
+      !hasCustomSections &&
+      !hasEcosystemServices &&
+      !hasChallenges &&
+      !content?.videos?.length ? (
+        <section className="mx-auto max-w-6xl px-6 py-12">
+          <div className="border border-[color:var(--border)] bg-[color:var(--surface-overlay)] p-6">
+            <p className="app-caption">
+              Detailed factsheet content for this strategy is not available yet.
+            </p>
+          </div>
+        </section>
+      ) : null}
+
+      <section className="border-t border-[color:var(--border)] bg-[color:var(--surface-muted)] px-6 py-16">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] app-accent-text">
+                Discover similar EbA strategies
+              </p>
+            </div>
+
+            <Link
+              href="/adaptation/eba-strategies"
+              className="inline-flex items-center gap-2 text-sm font-medium app-accent-text underline-offset-4 hover:underline"
+            >
+              Browse full catalogue
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
+
+          {similarStrategies.length ? (
+            <div className="mt-8 flex gap-5 overflow-x-auto pb-2 [scrollbar-width:thin] lg:grid lg:grid-cols-3 lg:overflow-visible lg:pb-0">
+              {similarStrategies.map((relatedStrategy) => {
+                const hasSummary = Boolean(relatedStrategy.summary?.length);
+
+                return (
+                  <Link
+                    key={relatedStrategy.slug}
+                    href={`/adaptation/eba-strategies/${relatedStrategy.slug}`}
+                    className="group min-w-[17rem] border border-[color:var(--border)] bg-[color:var(--surface-overlay)] p-6 transition-colors hover:border-[color:var(--accent)] hover:bg-[color:var(--surface)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--app-accent-text-color)] sm:min-w-[20rem] lg:min-w-0"
+                    aria-label={`Open ${relatedStrategy.title} strategy`}
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <BookOpenText
+                        className="h-6 w-6 app-accent-text"
+                        aria-hidden="true"
+                      />
+                      <ArrowRight
+                        className="h-5 w-5 app-accent-text transition-transform group-hover:translate-x-1"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <h3 className="mt-5 text-xl font-semibold app-text-color">
+                      {relatedStrategy.title}
+                    </h3>
+                    {hasSummary ? (
+                      <p className="mt-3 app-caption">
+                        {relatedStrategy.summary}
+                      </p>
+                    ) : null}
+                  </Link>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="mt-8 border border-dashed border-[color:var(--border)] bg-[color:var(--surface-overlay)] p-6">
+              <p className="app-caption">
+                No other EbA strategies are currently listed in this category.
+              </p>
+            </div>
+          )}
+        </div>
+      </section>
+    </main>
+  );
+}

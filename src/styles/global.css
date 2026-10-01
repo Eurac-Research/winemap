@@ -1,3 +1,373 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    color-scheme: light;
+
+    --top-nav-height: 49px;
+    --scroll-offset: calc(var(--top-nav-height) + 2rem);
+
+    /* Base */
+    --background: rgb(255 255 255);
+    --foreground: rgb(54 63 77 / 0.94);
+    --text-muted: rgb(82 94 112 / 0.78);
+
+    /* Typography */
+    --app-text-color: var(--foreground);
+    --app-muted-color: var(--text-muted);
+    --app-heading-color: var(--foreground);
+    --app-accent-text-color: var(--accent);
+    --app-text-size: 1rem;
+    --app-text-line-height: 1.75rem;
+    --app-lead-size: 1.125rem;
+    --app-lead-line-height: 2rem;
+    --app-caption-size: 0.875rem;
+    --app-caption-line-height: 1.5rem;
+    --app-label-size: 0.75rem;
+    --app-label-line-height: 1rem;
+    --app-page-title-size: 2.25rem;
+    --app-page-title-line-height: 1.1;
+    --app-section-title-size: 1.875rem;
+    --app-section-title-line-height: 1.15;
+
+    /* Surfaces */
+    --surface: rgb(255 255 255);
+    --surface-muted: oklch(97% 0.00011 271.152);
+    --surface-overlay: rgb(255 255 255 / 0.78);
+    --surface-inverse: rgb(24 28 36 / 0.9);
+
+    /* Lines */
+    --border: rgb(102 118 138 / 0.18);
+    --border-strong: rgb(102 118 138 / 0.3);
+
+    /* Accent */
+    --accent: rgba(151, 4, 41, 0.9);
+    --accent-soft: rgb(207 47 88 / 0.12);
+    --accent-foreground: rgb(255 255 255);
+
+    /* Effects */
+    --shadow-soft: 0 16px 40px rgb(71 85 105 / 0.14);
+    --shadow-strong: 0 24px 48px rgb(15 23 42 / 0.16);
+
+    /* Section landing palettes */
+    --section-environment-accent: var(--accent);
+    --section-environment-accent-soft: var(--accent-soft);
+    --section-adaptation-accent: rgba(122, 151, 66, 0.9);
+    --section-adaptation-accent-soft: rgba(139, 170, 118, 0.1);
+    --section-governance-accent: rgba(0, 51, 153, 0.9);
+    --section-governance-accent-soft: rgba(54, 111, 225, 0.9);
+    --section-maps-accent: rgba(20, 116, 135, 0.9);
+    --section-maps-accent-soft: rgba(20, 116, 135, 0.1);
+
+    --vulnerability-chart-text: var(--foreground);
+    --vulnerability-chart-trail: rgb(51 65 85 / 0.14);
+    --vulnerability-chart-tooltip-bg: var(--surface);
+    --vulnerability-chart-low-text: #4f7b2d;
+    --vulnerability-chart-moderate-text: #8a6500;
+    --vulnerability-chart-high-text: #a43c36;
+    --vulnerability-chart-good: #5d8738;
+    --vulnerability-chart-moderate: #c49a24;
+    --vulnerability-chart-high: #c85e57;
+
+    /* Tailwind theme bridge */
+    --radius: 0.625rem;
+  }
+
+  .dark {
+    color-scheme: dark;
+
+    --background: rgb(16 18 24);
+    --foreground: rgb(232 236 241 / 0.94);
+    --text-muted: rgb(190 199 211 / 0.72);
+    --app-text-color: var(--foreground);
+    --app-muted-color: var(--text-muted);
+    --app-heading-color: var(--foreground);
+    --app-accent-text-color: var(--accent);
+    --surface: rgb(10 12 18 / 0.94);
+    --surface-muted: rgb(17 20 27 / 0.62);
+    --surface-overlay: rgb(16 18 24 / 0.78);
+    --surface-inverse: rgb(255 255 255 / 0.9);
+    --border: rgb(255 255 255 / 0.12);
+    --border-strong: rgb(255 255 255 / 0.22);
+    --accent: rgb(233 30 99 / 0.92);
+    --accent-soft: rgb(233 30 99 / 0.16);
+    --accent-foreground: rgb(16 18 24);
+    --shadow-soft: 0 16px 40px rgb(0 0 0 / 0.45);
+    --shadow-strong: 0 24px 48px rgb(0 0 0 / 0.35);
+    --vulnerability-chart-text: var(--foreground);
+    --vulnerability-chart-trail: rgb(255 255 255 / 0.12);
+    --vulnerability-chart-tooltip-bg: var(--surface);
+    --vulnerability-chart-low-text: #97be6c;
+    --vulnerability-chart-moderate-text: #e8c360;
+    --vulnerability-chart-high-text: #dd7c75;
+    --vulnerability-chart-good: #97be6c;
+    --vulnerability-chart-moderate: #e8c360;
+    --vulnerability-chart-high: #dd7c75;
+  }
+
+  html {
+    scroll-padding-top: var(--scroll-offset, 7rem);
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--background);
+    color: var(--foreground);
+    font-family:
+      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+      Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: var(--app-text-size);
+    line-height: var(--app-text-line-height);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  * {
+    box-sizing: border-box;
+    @apply border-border;
+  }
+}
+
+@theme inline {
+  --color-white: oklch(1 0 0);
+  --color-black: oklch(0 0 0);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-border: var(--border);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer components {
+  .app-text {
+    color: var(--app-text-color);
+    font-size: var(--app-text-size);
+    line-height: var(--app-text-line-height);
+  }
+
+  .app-text-color {
+    color: var(--app-text-color);
+  }
+
+  .app-lead {
+    color: var(--app-text-color);
+    font-size: var(--app-lead-size);
+    line-height: var(--app-lead-line-height);
+  }
+
+  .app-muted {
+    color: var(--app-muted-color);
+  }
+
+  .app-accent-text {
+    color: var(--app-accent-text-color);
+  }
+
+  .app-caption {
+    color: var(--app-muted-color);
+    font-size: var(--app-caption-size);
+    line-height: var(--app-caption-line-height);
+  }
+
+  .app-label {
+    color: var(--app-muted-color);
+    font-size: var(--app-label-size);
+    font-weight: 600;
+    line-height: var(--app-label-line-height);
+  }
+
+  .app-eyebrow {
+    color: var(--app-accent-text-color);
+    font-size: var(--app-caption-size);
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    line-height: 1.25rem;
+    text-transform: uppercase;
+  }
+
+  .app-page-title {
+    color: var(--app-heading-color);
+    font-size: var(--app-page-title-size);
+    font-weight: 600;
+    line-height: var(--app-page-title-line-height);
+  }
+
+  .app-section-title {
+    color: var(--app-heading-color);
+    font-size: var(--app-section-title-size);
+    font-weight: 600;
+    line-height: var(--app-section-title-line-height);
+  }
+
+  .section-environment {
+    --accent: var(--section-environment-accent);
+    --accent-soft: var(--section-environment-accent-soft);
+    --app-accent-text-color: var(--section-environment-accent);
+  }
+
+  .section-adaptation {
+    --accent: var(--section-adaptation-accent);
+    --accent-soft: var(--section-adaptation-accent-soft);
+    --app-accent-text-color: var(--section-adaptation-accent);
+  }
+
+  .section-governance {
+    --accent: var(--section-governance-accent);
+    --accent-soft: var(--section-governance-accent-soft);
+    --app-accent-text-color: var(--section-governance-accent);
+  }
+
+  .section-maps {
+    --accent: var(--section-maps-accent);
+    --accent-soft: var(--section-maps-accent-soft);
+    --app-accent-text-color: var(--section-maps-accent);
+  }
+
+  .section-icon {
+    display: inline-flex;
+    height: 2rem;
+    width: 2rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    color: var(--app-accent-text-color);
+  }
+
+  .article-page {
+    min-height: 100vh;
+    background: var(--background);
+    color: var(--app-text-color);
+  }
+
+  .article-shell {
+    margin-inline: auto;
+    max-width: 72rem;
+    padding: 8rem 1.5rem 4rem;
+  }
+
+  .article-header {
+    margin-bottom: 3rem;
+    max-width: 56rem;
+  }
+
+  .article-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--app-accent-text-color);
+    font-size: var(--app-caption-size);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    line-height: 1.25rem;
+    text-transform: uppercase;
+  }
+
+  .article-title {
+    margin-top: 1.25rem;
+    color: var(--app-heading-color);
+    font-size: var(--app-page-title-size);
+    font-weight: 700;
+    line-height: var(--app-page-title-line-height);
+  }
+
+  .article-lead {
+    margin-top: 1.5rem;
+    max-width: 56rem;
+    color: var(--app-text-color);
+    font-size: var(--app-lead-size);
+    line-height: var(--app-lead-line-height);
+  }
+
+  .article-body {
+    max-width: 56rem;
+  }
+
+  .article-body > * + * {
+    margin-top: 1.5rem;
+  }
+
+  .article-body p {
+    color: var(--app-text-color);
+    font-size: var(--app-text-size);
+    line-height: var(--app-text-line-height);
+  }
+
+  .article-body a:not(.article-action-link):not(.article-media-link) {
+    color: var(--app-accent-text-color);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+    text-underline-offset: 0.18em;
+  }
+
+  .article-body a:not(.article-action-link):not(.article-media-link):hover {
+    text-decoration-color: var(--accent);
+  }
+
+  .article-action-link,
+  .article-media-link {
+    text-decoration: none;
+  }
+
+  .article-section-title {
+    margin-top: 3rem;
+    color: var(--app-heading-color);
+    font-size: var(--app-section-title-size);
+    font-weight: 600;
+    line-height: var(--app-section-title-line-height);
+  }
+
+  .article-figure {
+    margin-inline: auto;
+    max-width: 56rem;
+  }
+
+  .article-caption {
+    color: var(--app-muted-color);
+    font-size: var(--app-caption-size);
+    line-height: var(--app-caption-line-height);
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .app-page-title {
+      --app-page-title-size: 3rem;
+    }
+  }
+}
+
+@keyframes eba-marker-ring-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.25);
+  }
+}
+
+.eba-marker-ring {
+  transform-origin: center;
+  animation: eba-marker-ring-pulse 2.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eba-marker-ring {
+    animation: none;
+  }
+}

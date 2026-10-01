@@ -1,0 +1,114 @@
+"use client";
+
+import { useId, useState, type KeyboardEvent, type ReactNode } from "react";
+import { glossaryTerms, type GlossaryTerm } from "@/content/glossary";
+import { ExternalLink } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+
+type GlossaryTermPopoverProps = {
+  id: GlossaryTerm["id"];
+  children?: ReactNode;
+  className?: string;
+};
+
+function getReferenceTypeLabel(
+  type: NonNullable<GlossaryTerm["references"]>[number]["type"],
+) {
+  if (type === "doi") return "DOI";
+  if (type === "website") return "Website";
+  return "Reference";
+}
+
+export function GlossaryTermPopover({
+  id,
+  children,
+  className,
+}: GlossaryTermPopoverProps) {
+  const popoverId = useId();
+  const [isPinned, setIsPinned] = useState(false);
+  const glossaryTerm = glossaryTerms.find((term) => term.id === id);
+
+  if (!glossaryTerm) return <>{children}</>;
+
+  const label = children ?? glossaryTerm.term;
+  const references = glossaryTerm.references?.filter((reference) =>
+    reference.label.trim(),
+  );
+
+  const closeOnEscape = (event: KeyboardEvent<HTMLSpanElement>) => {
+    if (event.key === "Escape") setIsPinned(false);
+  };
+
+  return (
+    <span
+      className="group/glossary relative inline-block"
+      onKeyDown={closeOnEscape}
+      onMouseLeave={() => setIsPinned(false)}
+    >
+      <button
+        type="button"
+        aria-describedby={popoverId}
+        aria-expanded={isPinned}
+        onClick={() => setIsPinned((current) => !current)}
+        className={cn(
+          "cursor-help border-0 border-b border-dotted border-[color:var(--accent)] bg-transparent p-0 text-inherit decoration-transparent underline-offset-4 transition-colors hover:text-[color:var(--app-accent-text-color)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--app-accent-text-color)]",
+          className,
+        )}
+      >
+        {label}
+      </button>
+
+      <span
+        id={popoverId}
+        role="tooltip"
+        className={cn(
+          "absolute bottom-full left-0 z-50 hidden w-[min(22rem,calc(100vw-2rem))] pb-2 text-left text-sm leading-relaxed group-hover/glossary:block group-focus-within/glossary:block",
+          isPinned && "block",
+        )}
+      >
+        <span className="block rounded-lg border border-[color:var(--border)] bg-[color:var(--surface)] p-4 app-text-color shadow-[0_18px_45px_rgba(15,23,42,0.18)]">
+          <span className="block text-base font-semibold app-text-color">
+            {glossaryTerm.term}
+          </span>
+          <span className="mt-2 block">{glossaryTerm.definition}</span>
+
+          {references?.length ? (
+            <span className="mt-3 block border-t border-[color:var(--border)] pt-3">
+              {references.map((reference) => {
+                const typeLabel = getReferenceTypeLabel(reference.type);
+
+                return (
+                  <span
+                    key={`${reference.label}-${reference.href ?? ""}`}
+                    className="mt-2 block first:mt-0"
+                  >
+                    {reference.href ? (
+                      <a
+                        href={reference.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-baseline gap-1 font-medium app-accent-text underline underline-offset-4"
+                      >
+                        <span>{typeLabel}</span>
+                        <ExternalLink
+                          className="h-3.5 w-3.5 shrink-0"
+                          aria-hidden="true"
+                        />
+                      </a>
+                    ) : (
+                      <span className="font-medium app-text-color">
+                        {typeLabel}
+                      </span>
+                    )}
+                    <span className="ml-2">{reference.label}</span>
+                  </span>
+                );
+              })}
+            </span>
+          ) : null}
+        </span>
+      </span>
+    </span>
+  );
+}

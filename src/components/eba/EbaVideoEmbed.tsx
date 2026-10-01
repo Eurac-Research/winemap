@@ -1,0 +1,33 @@
+type EbaVideoEmbedProps = {
+  title: string;
+  youtubeId: string;
+  caption?: string;
+};
+
+const getEmbedUrl = (youtubeId: string) =>
+  `https://www.youtube.com/embed/${youtubeId}`;
+
+export function EbaVideoEmbed({
+  title,
+  youtubeId,
+  caption,
+}: EbaVideoEmbedProps) {
+  return (
+    <figure className="overflow-hidden rounded-lg border border-[color:var(--border)] bg-[color:var(--surface-overlay)]">
+      <div className="aspect-video bg-[color:var(--surface)]">
+        <iframe
+          src={getEmbedUrl(youtubeId)}
+          title={title}
+          className="h-full w-full"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      </div>
+      {caption ? (
+        <figcaption className="border-t border-[color:var(--border)] px-4 py-3 app-caption">
+          {caption}
+        </figcaption>
+      ) : null}
+    </figure>
+  );
+}
