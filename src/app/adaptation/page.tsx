@@ -1,9 +1,17 @@
 import Image from "next/image";
 import { Leaf } from "lucide-react";
 
+import { createPageMetadata } from "@/lib/seo";
 import { TopicDirectory, TopicPanel } from "@/components/topics/TopicDirectory";
 import { topics } from "@/app/adaptation/topics.generated";
 import styles from "@/styles/Home.module.css";
+
+export const metadata = createPageMetadata({
+  title: "Adaptation in Vineyard Landscapes",
+  description:
+    "Discover ecosystem-based adaptation strategies and pilot experiences for climate-resilient vineyard landscapes.",
+  path: "/adaptation",
+});
 
 export default function AdaptationPage() {
   const activeSlug = topics[0]?.slug;

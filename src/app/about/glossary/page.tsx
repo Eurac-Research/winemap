@@ -1,11 +1,14 @@
 import { glossaryTerms, type GlossaryTerm } from "@/content/glossary";
 import { ExternalLink } from "lucide-react";
 
-export const metadata = {
-  title: "Glossary | WINEMAP",
+import { createPageMetadata } from "@/lib/seo";
+
+export const metadata = createPageMetadata({
+  title: "Glossary",
   description:
     "Scientific and technical terms used across the WINEMAP application.",
-};
+  path: "/about/glossary",
+});
 
 function getGroupLetter(term: string) {
   const letter = term.trim().charAt(0).toUpperCase();

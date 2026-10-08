@@ -9,7 +9,15 @@ import {
   ThermometerSun,
 } from "lucide-react";
 
+import { createPageMetadata } from "@/lib/seo";
 import { ProjectDetailCard } from "@/components/ProjectCard";
+
+export const metadata = createPageMetadata({
+  title: "About WINEMAP",
+  description:
+    "Learn about the WINEMAP platform, its scientific background, interactive resources, and the people behind it.",
+  path: "/about",
+});
 
 export default function About() {
   return (

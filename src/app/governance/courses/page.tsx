@@ -1,7 +1,15 @@
 import { courses } from "@/content/courses";
 import { GraduationCap } from "lucide-react";
 
+import { createPageMetadata } from "@/lib/seo";
 import CourseCard from "@/components/CourseCard";
+
+export const metadata = createPageMetadata({
+  title: "Courses",
+  description:
+    "Access learning resources on sustainable landscape management, green infrastructure, and biodiversity.",
+  path: "/governance/courses",
+});
 
 export default function CoursesPage() {
   return (

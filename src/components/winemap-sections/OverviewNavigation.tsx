@@ -55,7 +55,7 @@ export default function OverviewNavigation() {
               }
             }}
             data-overview-id={id}
-            className={`relative flex flex-col rounded-3xl border-2 border-black bg-white transition-all duration-500 ease-out hover:z-10 focus-within:z-10 focus-within:border-[color:var(--overview-accent)]/60 motion-reduce:transform-none motion-reduce:transition-none ${visibleItems.includes(id) ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
+            className={`relative flex flex-col shadow-[0_0_10px_0_rgba(0,0,0,0.25)] bg-white transition-all duration-500 ease-out hover:z-10 focus-within:z-10 focus-within:border-[color:var(--overview-accent)]/60 motion-reduce:transform-none motion-reduce:transition-none ${visibleItems.includes(id) ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
             style={
               {
                 "--overview-accent": accent,
@@ -88,14 +88,14 @@ export default function OverviewNavigation() {
               <Link
                 href={href}
                 aria-describedby={`overview-tooltip-${id}`}
-                className="group/link relative z-10 mt-auto inline-flex w-fit items-center gap-2 rounded-xl border border-white/20 bg-[color:var(--overview-accent)] px-2 py-1 text-base font-medium text-white transition-[transform,box-shadow,filter] duration-200 hover:-translate-y-0.5 hover:brightness-110 hover:shadow-md active:translate-y-0 active:brightness-100 active:shadow-sm focus-visible:-translate-y-0.5 focus-visible:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--overview-accent)]"
+                className="group/link relative z-10 mt-auto inline-flex w-fit items-center gap-2 rounded-[30px] border bg-[color:var(--overview-accent)] px-5 py-1 text-[13px] uppercase font-medium text-white transition-[transform,box-shadow,filter] duration-200 hover:-translate-y-0.5 hover:brightness-110 hover:shadow-md active:translate-y-0 active:brightness-100 active:shadow-sm focus-visible:-translate-y-0.5 focus-visible:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--overview-accent)]"
               >
                 <span>Discover more</span>
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 <span
                   id={`overview-tooltip-${id}`}
                   role="tooltip"
-                  className="pointer-events-none absolute right-0 top-[calc(100%+1rem)] z-50 w-[min(22rem,calc(100vw-3rem))] border border-[color:var(--border)] bg-[color:var(--background)] p-5 text-left text-sm font-normal leading-6 app-muted opacity-0 shadow-[0_24px_60px_rgba(15,23,42,0.2)] transition-opacity duration-150 group-hover/link:opacity-100 group-focus/link:opacity-100"
+                  className="normal-case pointer-events-none absolute right-0 top-[calc(100%+1rem)] z-50 w-[min(22rem,calc(100vw-3rem))] border border-[color:var(--border)] bg-[color:var(--background)] p-5 text-left text-sm font-normal leading-6 app-muted opacity-0 shadow-[0_24px_60px_rgba(15,23,42,0.2)] transition-opacity duration-150 group-hover/link:opacity-100 group-focus/link:opacity-100"
                 >
                   <span className="mb-2 block text-xs font-bold uppercase tracking-[0.16em] text-[color:var(--overview-accent)]">
                     {title} {subtitle}
@@ -114,26 +114,16 @@ export default function OverviewNavigation() {
                 className="object-cover object-center [clip-path:polygon(0_30%,100%_0,100%_100%,0_100%)]"
               />
             </figure> */}
-            <figure className="relative z-0 h-26 overflow-hidden rounded-b-[22px]">
+            <figure className="relative z-0 h-26 overflow-hidden mt-5">
               <Image
                 src={image.src}
                 alt={image.alt}
                 fill
                 sizes="(min-width: 768px) 32rem, 100vw"
                 className="object-cover"
-                style={{ objectPosition: image.position ?? "50% 50%", transform: `scale(${image.zoom ?? 1})` }}
+                style={{ transform: `scale(${image.zoom ?? 1})` }}
               />
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 100 20"
-                preserveAspectRatio="none"
-                className="pointer-events-none absolute inset-x-0 top-0 h-8 w-full"
-              >
-                <path
-                  d="M0 0H100V7C72 18 30 2 0 13Z"
-                  fill="white"
-                />
-              </svg>
+
             </figure>
           </article>
         ),

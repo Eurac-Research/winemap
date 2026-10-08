@@ -1,6 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useRef, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
 import { isMobile } from "react-device-detect";
 
 import { cn } from "@/lib/utils";
@@ -9,6 +15,8 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+
+const subscribeToMount = () => () => {};
 
 interface PdoMapLayoutProps {
   sidebar: ReactNode;
@@ -29,6 +37,11 @@ export function PdoMapLayout({
   mapMinSize = isMobile ? 30 : 30,
   className,
 }: PdoMapLayoutProps) {
+  const isMounted = useSyncExternalStore(
+    subscribeToMount,
+    () => true,
+    () => false,
+  );
   const mapPanelRef = useRef<HTMLDivElement | null>(null);
   const resizeTimeoutRef = useRef<number | null>(null);
 
@@ -58,15 +71,25 @@ export function PdoMapLayout({
         window.clearTimeout(resizeTimeoutRef.current);
       }
     };
-  }, [notifyMapResize]);
+  }, [isMounted, notifyMapResize]);
+
+  const layoutClassName = cn(
+    "fixed inset-x-0 bottom-0 top-[var(--top-nav-height)] z-10",
+    className,
+  );
+
+  if (!isMounted) {
+    return (
+      <div className={layoutClassName} aria-busy="true">
+        <div className="flex h-full items-center justify-center bg-[color:var(--surface-muted)] app-muted">
+          Loading map…
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div
-      className={cn(
-        "fixed inset-x-0 bottom-0 top-[var(--top-nav-height)] z-10",
-        className,
-      )}
-    >
+    <div className={layoutClassName}>
       <ResizablePanelGroup
         direction={isMobile ? "vertical" : "horizontal"}
         className="h-full w-full"

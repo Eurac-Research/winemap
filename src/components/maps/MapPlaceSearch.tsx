@@ -189,13 +189,19 @@ export default function MapPlaceSearch({
   };
 
   return (
-    <div ref={containerRef} className={`${styles.searchShell} ${className ?? ""}`}>
+    <div
+      ref={containerRef}
+      className={`${styles.searchShell} ${className ?? ""}`}
+    >
       <div className={styles.searchCard}>
         <div className={styles.inputRow}>
           {isLoading ? (
-            <LoaderCircle className={`${styles.icon} h-4 w-4 animate-spin`} />
+            <LoaderCircle
+              className={`${styles.icon} h-4 w-4 animate-spin`}
+              aria-hidden="true"
+            />
           ) : (
-            <Search className={`${styles.icon} h-4 w-4`} />
+            <Search className={`${styles.icon} h-4 w-4`} aria-hidden="true" />
           )}
           <input
             type="text"
@@ -214,7 +220,9 @@ export default function MapPlaceSearch({
                 event.preventDefault();
                 setOpen(true);
                 setActiveIndex((current) =>
-                  results.length === 0 ? -1 : Math.min(current + 1, results.length - 1),
+                  results.length === 0
+                    ? -1
+                    : Math.min(current + 1, results.length - 1),
                 );
               }
 
@@ -245,7 +253,13 @@ export default function MapPlaceSearch({
         {open && (error || results.length > 0) ? (
           <>
             {error ? (
-              <div className={`${styles.statusText} ${styles.statusError}`}>{error}</div>
+              <div
+                role="status"
+                aria-live="polite"
+                className={`${styles.statusText} ${styles.statusError}`}
+              >
+                {error}
+              </div>
             ) : null}
 
             {results.length > 0 ? (
@@ -254,6 +268,8 @@ export default function MapPlaceSearch({
                   <li key={result.id}>
                     <button
                       type="button"
+                      role="option"
+                      aria-selected={index === activeIndex}
                       className={`${styles.resultButton} ${
                         index === activeIndex ? styles.resultButtonActive : ""
                       }`}
@@ -262,7 +278,9 @@ export default function MapPlaceSearch({
                     >
                       <span className={styles.resultTitle}>{result.label}</span>
                       {result.secondaryLabel ? (
-                        <span className={styles.resultMeta}>{result.secondaryLabel}</span>
+                        <span className={styles.resultMeta}>
+                          {result.secondaryLabel}
+                        </span>
                       ) : null}
                     </button>
                   </li>

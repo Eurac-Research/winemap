@@ -18,6 +18,8 @@ import {
   ListTree,
 } from "lucide-react";
 
+import { createPageMetadata } from "@/lib/seo";
+
 const CATEGORY_ORDER: IndicatorCategory[] = [
   "climate",
   "topography",
@@ -38,11 +40,12 @@ const APP_HREFS: Partial<Record<AppId, string>> = {
 
 const URL_PATTERN = /(https?:\/\/[^\s]+)/g;
 
-export const metadata = {
-  title: "Indicator definitions | WINEMAP",
+export const metadata = createPageMetadata({
+  title: "Indicator Definitions",
   description:
     "Definitions, methodology notes, and references for climate, environmental, ecosystem service, topographic, and vulnerability indicators in WINEMAP.",
-};
+  path: "/about/definitions",
+});
 
 function extractHref(text: string) {
   const match = text.match(URL_PATTERN);

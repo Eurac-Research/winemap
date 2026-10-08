@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-
-import { EbaStrategyPage } from "@/components/eba/EbaStrategyPage";
-import {
-  ebaStrategies,
-  getEbaStrategyBySlug,
-} from "@/content/eba/catalogue";
+import { ebaStrategies, getEbaStrategyBySlug } from "@/content/eba/catalogue";
 import { getEbaStrategyDetailBySlug } from "@/content/eba/strategy-details";
+
+import { createPageMetadata } from "@/lib/seo";
+import { EbaStrategyPage } from "@/components/eba/EbaStrategyPage";
 
 type StrategyRouteProps = {
   params: Promise<{
@@ -26,14 +24,17 @@ export async function generateMetadata({
 
   if (!strategy) {
     return {
-      title: "EbA Strategy | WINEMAP",
+      title: "EbA Strategy",
     };
   }
 
-  return {
-    title: `${strategy.title} | EbA Strategies | WINEMAP`,
-    description: strategy.summary,
-  };
+  return createPageMetadata({
+    title: `${strategy.title} | EbA Strategies`,
+    description:
+      strategy.summary ??
+      "Explore ecosystem-based adaptation strategies for resilient vineyard landscapes.",
+    path: `/adaptation/eba-strategies/${strategy.slug}`,
+  });
 }
 
 export default async function StrategyRoute({ params }: StrategyRouteProps) {
