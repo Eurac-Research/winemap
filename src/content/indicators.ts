@@ -533,27 +533,27 @@ export const Indicators: Indicator[] = [
     ],
     map: createMapConfig({ assetId: "landuse_diversity_sh" }),
   },
-  {
-    id: "climatic-waterbalance",
-    name: "Climate water balance",
-    category: "ecosystem-conditions",
-    apps: ["environment-browser"],
-    subtitle:
-      "Water availability from precipitation after accounting for evapotranspiration.",
-    description: [
-      "The Climate Water Balance indicator represents the amount of water available from precipitation after accounting for evapotranspiration. Water availability is a key determinant of ecosystem productivity, vegetation health, and agricultural suitability, particularly under changing climatic conditions.",
-      "Regions with higher positive water balance are generally less exposed to drought stress and may require less artificial irrigation. Adequate water availability enhances ecosystem resilience and supports long-term sustainability of land use systems. The indicator is expressed on a 0–100 scale, where higher values indicate greater climatic water availability.",
-    ],
-    methodology: [
-      "The indicator is based on the Climate Moisture Index (CMI) derived from the CHELSA climate database. The CMI represents the difference between precipitation and potential evapotranspiration (mm). Average monthly CMI values for the period 1981–2010 were aggregated to calculate mean annual climate water balance. The resulting values were standardized to a 0–100 index scale, with higher values indicating greater water availability.",
-    ],
-    references: [
-      "Tscholl, S et al. (2024). Climate resilient winegrowing regions. Nature communications 15 (6254). doi.org/10.1038/s41467-024-50549-w",
-      "Karger, D. N., Schmatz, D. R., Dettling, G. & Zimmermann, N. E. High-resolution monthly precipitation and temperature time series from 2006 to 2100. Sci Data 7, 248 (2020).",
-      "Karger, D. N. et al. Climatologies at high resolution for the earth's land surface areas. Sci Data 4, 170122 (2017).",
-    ],
-    map: createMapConfig({ assetId: "climatic-waterbalance" }),
-  },
+  // {
+  //   id: "climatic-waterbalance",
+  //   name: "Climate water balance",
+  //   category: "ecosystem-conditions",
+  //   apps: ["environment-browser"],
+  //   subtitle:
+  //     "Water availability from precipitation after accounting for evapotranspiration.",
+  //   description: [
+  //     "The Climate Water Balance indicator represents the amount of water available from precipitation after accounting for evapotranspiration. Water availability is a key determinant of ecosystem productivity, vegetation health, and agricultural suitability, particularly under changing climatic conditions.",
+  //     "Regions with higher positive water balance are generally less exposed to drought stress and may require less artificial irrigation. Adequate water availability enhances ecosystem resilience and supports long-term sustainability of land use systems. The indicator is expressed on a 0–100 scale, where higher values indicate greater climatic water availability.",
+  //   ],
+  //   methodology: [
+  //     "The indicator is based on the Climate Moisture Index (CMI) derived from the CHELSA climate database. The CMI represents the difference between precipitation and potential evapotranspiration (mm). Average monthly CMI values for the period 1981–2010 were aggregated to calculate mean annual climate water balance. The resulting values were standardized to a 0–100 index scale, with higher values indicating greater water availability.",
+  //   ],
+  //   references: [
+  //     "Tscholl, S et al. (2024). Climate resilient winegrowing regions. Nature communications 15 (6254). doi.org/10.1038/s41467-024-50549-w",
+  //     "Karger, D. N., Schmatz, D. R., Dettling, G. & Zimmermann, N. E. High-resolution monthly precipitation and temperature time series from 2006 to 2100. Sci Data 7, 248 (2020).",
+  //     "Karger, D. N. et al. Climatologies at high resolution for the earth's land surface areas. Sci Data 4, 170122 (2017).",
+  //   ],
+  //   map: createMapConfig({ assetId: "climatic-waterbalance" }),
+  // },
   {
     id: "pollination",
     name: "Pollination",
