@@ -10,46 +10,42 @@ export type BasemapOption = {
 
 export const BASEMAPS: readonly BasemapOption[] = [
   {
-    id: "terrain",
-    label: "Terrain basemap",
-    style: {
-      version: 8,
-      sources: {
-        esriHillshade: {
-          type: "raster",
-          tiles: [
-            "https://services.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}",
-          ],
-          tileSize: 256,
-          attribution:
-            "Source: Esri, USGS, NGA, NASA, CGIAR, and the GIS User Community",
-        },
-        cartoLabels: {
-          type: "raster",
-          tiles: [
-            "https://a.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}.png",
-            "https://b.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}.png",
-            "https://c.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}.png",
-            "https://d.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}.png",
-          ],
-          tileSize: 256,
-          attribution:
-            "Map tiles by CARTO, data by OpenStreetMap contributors",
-        },
+  id: "terrain",
+  label: "Terrain basemap",
+  style: {
+    version: 8,
+    sources: {
+      esriHillshade: {
+        type: "raster",
+        tiles: [
+          "https://services.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}",
+        ],
+        tileSize: 256,
+        attribution:
+          "Source: Esri, USGS, NGA, NASA, CGIAR, and the GIS User Community",
       },
-      layers: [
-        {
-          id: "esri-hillshade",
-          type: "raster",
-          source: "esriHillshade",
-        },
-        {
-          id: "carto-terrain-labels",
-          type: "raster",
-          source: "cartoLabels",
-        },
-      ],
+      esriReference: {
+        type: "raster",
+        tiles: [
+          "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer/tile/{z}/{y}/{x}",
+        ],
+        tileSize: 256,
+        attribution: "Esri and its data providers",
+      },
     },
+    layers: [
+      {
+        id: "esri-hillshade",
+        type: "raster",
+        source: "esriHillshade",
+      },
+      {
+        id: "esri-reference",
+        type: "raster",
+        source: "esriReference",
+      },
+    ],
+  },
   },
   {
     id: "light",
