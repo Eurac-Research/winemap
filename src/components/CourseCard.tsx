@@ -40,6 +40,21 @@ export default function CourseCard({ course, imageSizes }: CourseCardProps) {
 
       <div className="flex min-h-24 flex-col p-4">
         <h3 className="text-sm font-semibold app-text-color">{course.title}</h3>
+        {course.languages?.length ? (
+          <div
+            className="mt-2 flex flex-wrap gap-1.5"
+            aria-label="Available languages"
+          >
+            {course.languages.map((language) => (
+              <span
+                key={language}
+                className="rounded-full border border-[color:var(--border)] bg-[color:var(--accent-soft)] px-2 py-0.5 text-xs font-semibold app-accent-text"
+              >
+                {language}
+              </span>
+            ))}
+          </div>
+        ) : null}
         {!isAvailable ? (
           <span className="mt-auto pt-3 text-xs font-semibold uppercase tracking-[0.12em] app-accent-text">
             Coming soon
