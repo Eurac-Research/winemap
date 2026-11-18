@@ -30,24 +30,6 @@ export type PrimaryNavigationSection = {
 
 export const primaryNavigationSections: PrimaryNavigationSection[] = [
   {
-    id: "adaptation",
-    label: "WINEMAP Adaptation",
-    title: "WINEMAP",
-    subtitle: "Adaptation",
-    Icon: Leaf,
-    accent: "var(--section-adaptation-accent)",
-    href: "/adaptation",
-    description:
-      "Discover ecosystem-based adaptation approaches and pilot implementation experiences that connect climate resilience with everyday vineyard management.",
-    summary:
-      "A practice-oriented entry point for vineyard managers, advisors, researchers, and local actors who want to understand how wine regions can respond to climate stress. This section brings together ecosystem-based adaptation strategies, pilot experiences, and implementation examples so users can move from general adaptation needs to concrete measures in the vineyard and surrounding landscape.",
-    image: {
-      src: "/images/vineyards/cinque_terre.JPG",
-      alt: "Vineyards on hill",
-      position: "50% 80%"
-    }
-  },
-  {
     id: "environment",
     label: "WINEMAP Environment",
     title: "WINEMAP",
@@ -63,6 +45,24 @@ export const primaryNavigationSections: PrimaryNavigationSection[] = [
       src: "/images/vineyards/burgenland.jpg",
       alt: "Vineyard at sunset",
       position: "50% 60%"
+    }
+  },
+  {
+    id: "adaptation",
+    label: "WINEMAP Adaptation",
+    title: "WINEMAP",
+    subtitle: "Adaptation",
+    Icon: Leaf,
+    accent: "var(--section-adaptation-accent)",
+    href: "/adaptation",
+    description:
+      "Discover ecosystem-based adaptation approaches and pilot implementation experiences that connect climate resilience with everyday vineyard management.",
+    summary:
+      "A practice-oriented entry point for vineyard managers, advisors, researchers, and local actors who want to understand how wine regions can respond to climate stress. This section brings together ecosystem-based adaptation strategies, pilot experiences, and implementation examples so users can move from general adaptation needs to concrete measures in the vineyard and surrounding landscape.",
+    image: {
+      src: "/images/vineyards/cinque_terre.JPG",
+      alt: "Vineyards on hill",
+      position: "50% 80%"
     }
   },
   {
