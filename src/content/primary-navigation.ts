@@ -119,6 +119,7 @@ export const secondaryNavigationSections: SecondaryNavigationSection[] = [
     category: "Resources",
   },
   { label: "Glossary", href: "/about/glossary", category: "Resources" },
+  { label: "Indicator Definitions", href: "/about/definitions", category: "Resources" },
   {
     label: "Imprint",
     href: "/imprint-privacy",
