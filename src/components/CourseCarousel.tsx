@@ -37,7 +37,7 @@ export default function CourseCarousel() {
           id="courses-title"
           className="text-4xl font-semibold leading-tight app-text-color sm:text-5xl"
         >
-          Courses
+          E-learning
         </h2>
         <p className="mt-3 app-lead">
           Improve your knowledge on viticulture, climate change, and
