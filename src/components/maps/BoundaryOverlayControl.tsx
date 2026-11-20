@@ -29,7 +29,7 @@ export function BoundaryOverlayControl({
               }
               className="h-4 w-4 accent-[var(--foreground)]"
             />
-            <svg
+            {/* <svg
               width="36"
               height="16"
               viewBox="0 0 36 16"
@@ -49,7 +49,7 @@ export function BoundaryOverlayControl({
                   ?.map((length) => length * overlay.width)
                   .join(" ")}
               />
-            </svg>
+            </svg> */}
             <span>{overlay.label}</span>
           </label>
         ))}
