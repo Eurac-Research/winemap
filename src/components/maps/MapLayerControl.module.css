@@ -1,0 +1,259 @@
+.shell {
+  position: relative;
+  width: min(320px, calc(100vw - 2rem));
+  max-width: 100%;
+  color: var(--foreground);
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  padding: 2px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  text-align: left;
+}
+
+.trigger:hover,
+.close:hover {
+  background: var(--surface-overlay);
+}
+
+.triggerPreview {
+  position: relative;
+  width: 48px;
+  height: 44px;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border-radius: 7px;
+}
+
+.triggerPreview .preview {
+  height: 100%;
+}
+
+.layersIcon {
+  position: absolute;
+  inset: auto 4px 4px auto;
+  padding: 2px;
+  box-sizing: content-box;
+  border-radius: 4px;
+  background: white;
+  color: #334155;
+}
+
+.panel {
+  margin-top: 8px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: 0 8px 28px rgb(0 0 0 / 18%);
+  max-height: max(160px, calc(100dvh - 260px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.header,
+.header > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header {
+  justify-content: space-between;
+  margin-bottom: 18px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.basemaps,
+.references {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+.basemaps legend,
+.references legend {
+  padding: 0;
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+.basemap {
+  position: relative;
+  min-width: 0;
+  cursor: pointer;
+}
+.choiceInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+.tile {
+  display: block;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background: var(--surface-overlay);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 12%);
+}
+.tileLabel {
+  display: block;
+  padding: 7px 4px;
+  text-align: center;
+  font-size: 12px;
+}
+.choiceInput:checked + .tile {
+  border-color: var(--accent);
+}
+.choiceInput:checked + .tile .tileLabel {
+  font-weight: 700;
+}
+.choiceInput:focus-visible + .tile,
+.trigger:focus-visible,
+.close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.basemap:hover .tile {
+  box-shadow: 0 2px 8px rgb(0 0 0 / 22%);
+}
+.preview {
+  display: block;
+  width: 100%;
+  height: 66px;
+  background-size: cover;
+  background-position: center;
+}
+.land {
+  fill: #edece8;
+}
+.park {
+  fill: #dde3d9;
+}
+.contour {
+  fill: none;
+  stroke: #d1d6cc;
+  stroke-width: 2;
+}
+.river {
+  fill: none;
+  stroke: #afd2dd;
+  stroke-width: 8;
+}
+.roadCasing {
+  fill: none;
+  stroke: #d5d5d0;
+  stroke-width: 5;
+}
+.road {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 3;
+}
+.preview[data-basemap="streets"] .land {
+  fill: #f3e9d6;
+}
+.preview[data-basemap="streets"] .park {
+  fill: #bad5ac;
+}
+.preview[data-basemap="streets"] .road {
+  stroke: #fff6c4;
+}
+.preview[data-basemap="streets"] .roadCasing {
+  stroke: #d6b976;
+}
+.preview[data-basemap="terrain"] .land {
+  fill: #d9dfc6;
+}
+.preview[data-basemap="terrain"] .park {
+  fill: #a8bb95;
+}
+.preview[data-basemap="terrain"] .contour {
+  stroke: #7e9472;
+  stroke-width: 3;
+}
+.preview[data-basemap="terrain"] .roadCasing {
+  stroke: #b7c2a4;
+}
+.preview[data-basemap="satellite"] .land {
+  fill: #4c6142;
+}
+.preview[data-basemap="satellite"] .park {
+  fill: #304b35;
+}
+.preview[data-basemap="satellite"] .contour {
+  stroke: #71815a;
+  stroke-width: 5;
+}
+.preview[data-basemap="satellite"] .river {
+  stroke: #315b6b;
+}
+.preview[data-basemap="satellite"] .roadCasing {
+  stroke: #384432;
+}
+.preview[data-basemap="satellite"] .road {
+  stroke: #a9a996;
+  stroke-width: 2;
+}
+
+.references {
+  margin-top: 20px;
+}
+.referenceList {
+  display: grid;
+  gap: 8px;
+}
+.reference {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.reference:has(input:checked) {
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+  border-color: var(--accent);
+}
+.reference input {
+  accent-color: var(--accent);
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+.reference svg {
+  flex-shrink: 0;
+}
+.reference:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

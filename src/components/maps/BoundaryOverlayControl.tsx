@@ -2,6 +2,8 @@
 
 import type { BoundaryOverlay } from "@/content/maps/boundaries";
 
+import styles from "./MapLayerControl.module.css";
+
 type Props = {
   overlays: readonly BoundaryOverlay[];
   visibleIds: readonly string[];
@@ -14,14 +16,11 @@ export function BoundaryOverlayControl({
   onVisibilityChange,
 }: Props) {
   return (
-    <fieldset className="mt-4">
-      <legend className="mb-2 text-sm font-medium">Boundaries</legend>
-      <div className="flex flex-col gap-2">
+    <fieldset className={styles.references}>
+      <legend>Reference Areas</legend>
+      <div className={styles.referenceList}>
         {overlays.map((overlay) => (
-          <label
-            key={overlay.id}
-            className="flex cursor-pointer items-center gap-2 text-sm"
-          >
+          <label key={overlay.id} className={styles.reference}>
             <input
               type="checkbox"
               checked={visibleIds.includes(overlay.id)}

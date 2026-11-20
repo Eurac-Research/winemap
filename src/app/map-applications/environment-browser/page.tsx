@@ -37,12 +37,12 @@ import { BASEMAPS } from "@/content/maps/basemaps";
 import { BOUNDARY_OVERLAYS, boundaryCasingId } from "@/content/maps/boundaries";
 import { RAMPS, type RampKey } from "@/content/maps/color-ramps";
 
-import { BoundaryOverlayControl } from "@/components/maps/BoundaryOverlayControl";
 import {
   MapApplicationHelp,
   MapApplicationHelpButton,
 } from "@/components/maps/MapApplicationHelp";
 import { MapApplicationNavigation } from "@/components/maps/MapApplicationNavigation";
+import { MapLayerControl } from "@/components/maps/MapLayerControl";
 import { MapLibreBoundaryLayers } from "@/components/maps/MapLibreBoundaryLayers";
 import MapPlaceSearch from "@/components/maps/MapPlaceSearch";
 import { VerticalLegend } from "@/components/maps/VerticalLegend";
@@ -677,43 +677,6 @@ export default function EnvironmentBrowserPage() {
       </div>
 
       <section className={styles.sidebarSection}>
-        <label
-          className={styles.filterLabel}
-          htmlFor="environment-basemap-select"
-        >
-          Basemap
-        </label>
-        <div className={styles.mapDropdownWrap}>
-          <select
-            id="environment-basemap-select"
-            value={selectedBasemap.id}
-            onChange={(event) => {
-              setMapReady(false);
-              setHoverInfo(null);
-              setSelectedBasemapId(event.target.value);
-            }}
-            className={styles.mapDropdown}
-          >
-            {BASEMAPS.map((basemap) => (
-              <option key={basemap.id} value={basemap.id}>
-                {basemap.label}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <BoundaryOverlayControl
-          overlays={BOUNDARY_OVERLAYS}
-          visibleIds={visibleBoundaryIds}
-          onVisibilityChange={(id, visible) => {
-            setVisibleBoundaryIds((current) =>
-              visible
-                ? [...new Set([...current, id])]
-                : current.filter((item) => item !== id),
-            );
-          }}
-        />
-
         <button
           type="button"
           onClick={clearSelection}
@@ -889,7 +852,7 @@ export default function EnvironmentBrowserPage() {
         <ScaleControl position="bottom-right" />
       </Map>
 
-      <div className="absolute left-4 top-4 z-20">
+      <div className="absolute left-4 right-4 top-4 z-20 flex flex-col items-start gap-3 pointer-events-none [&>*]:pointer-events-auto">
         <MapPlaceSearch
           onSelect={(result) => {
             setLoadError(null);
@@ -899,6 +862,27 @@ export default function EnvironmentBrowserPage() {
               zoom: Math.max(viewState.zoom, 9),
               essential: true,
             });
+          }}
+        />
+        <MapLayerControl
+          basemaps={BASEMAPS}
+          selectedBasemapId={selectedBasemap.id}
+          onBasemapChange={(id) => {
+            if (id === selectedBasemapId) return;
+            setMapReady(false);
+            setHoverInfo(null);
+            setSelectedBasemapId(id);
+          }}
+          referenceAreas={{
+            overlays: BOUNDARY_OVERLAYS,
+            visibleIds: visibleBoundaryIds,
+            onVisibilityChange: (id, visible) => {
+              setVisibleBoundaryIds((current) =>
+                visible
+                  ? [...new Set([...current, id])]
+                  : current.filter((item) => item !== id),
+              );
+            },
           }}
         />
       </div>
