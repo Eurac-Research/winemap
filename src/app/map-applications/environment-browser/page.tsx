@@ -34,13 +34,16 @@ import {
 } from "@/content/indicators";
 import { getMapApplicationByHref } from "@/content/map-applications";
 import { BASEMAPS } from "@/content/maps/basemaps";
+import { BOUNDARY_OVERLAYS, boundaryCasingId } from "@/content/maps/boundaries";
 import { RAMPS, type RampKey } from "@/content/maps/color-ramps";
 
+import { BoundaryOverlayControl } from "@/components/maps/BoundaryOverlayControl";
 import {
   MapApplicationHelp,
   MapApplicationHelpButton,
 } from "@/components/maps/MapApplicationHelp";
 import { MapApplicationNavigation } from "@/components/maps/MapApplicationNavigation";
+import { MapLibreBoundaryLayers } from "@/components/maps/MapLibreBoundaryLayers";
 import MapPlaceSearch from "@/components/maps/MapPlaceSearch";
 import { VerticalLegend } from "@/components/maps/VerticalLegend";
 import { PdoMapLayout } from "@/components/pdo-app/PdoMapLayout";
@@ -270,6 +273,11 @@ export default function EnvironmentBrowserPage() {
   const [selectedPeriodId, setSelectedPeriodId] = useState("");
   const [viewState, setViewState] = useState(INITIAL_VIEW_STATE);
   const [mapReady, setMapReady] = useState(false);
+  const [visibleBoundaryIds, setVisibleBoundaryIds] = useState<string[]>(() =>
+    BOUNDARY_OVERLAYS.filter((overlay) => overlay.defaultVisible).map(
+      (overlay) => overlay.id,
+    ),
+  );
   const [loadError, setLoadError] = useState<string | null>(null);
   const [hoverInfo, setHoverInfo] = useState<HoverInfo | null>(null);
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>(
@@ -413,15 +421,25 @@ export default function EnvironmentBrowserPage() {
         tileSize: 256,
       });
 
-      map.addLayer({
-        id: LAYER_ID,
-        type: "raster",
-        source: SOURCE_ID,
-        paint: {
-          "raster-opacity": 0.7,
-          "raster-fade-duration": 0,
+      // A newly selected raster must stay beneath any mounted boundaries.
+      const boundaryIds = new Set(
+        BOUNDARY_OVERLAYS.map((overlay) => boundaryCasingId(overlay.id)),
+      );
+      const firstBoundaryId = map
+        .getStyle()
+        .layers.find((layer) => boundaryIds.has(layer.id))?.id;
+      map.addLayer(
+        {
+          id: LAYER_ID,
+          type: "raster",
+          source: SOURCE_ID,
+          paint: {
+            "raster-opacity": 0.7,
+            "raster-fade-duration": 0,
+          },
         },
-      });
+        firstBoundaryId,
+      );
     };
 
     const handleStyleLoad = () => {
@@ -684,6 +702,18 @@ export default function EnvironmentBrowserPage() {
           </select>
         </div>
 
+        <BoundaryOverlayControl
+          overlays={BOUNDARY_OVERLAYS}
+          visibleIds={visibleBoundaryIds}
+          onVisibilityChange={(id, visible) => {
+            setVisibleBoundaryIds((current) =>
+              visible
+                ? [...new Set([...current, id])]
+                : current.filter((item) => item !== id),
+            );
+          }}
+        />
+
         <button
           type="button"
           onClick={clearSelection}
@@ -851,6 +881,10 @@ export default function EnvironmentBrowserPage() {
         }}
         onError={() => setLoadError("Unable to load the selected layer.")}
       >
+        <MapLibreBoundaryLayers
+          overlays={BOUNDARY_OVERLAYS}
+          visibleIds={visibleBoundaryIds}
+        />
         <NavigationControl position="bottom-right" visualizePitch showCompass />
         <ScaleControl position="bottom-right" />
       </Map>
