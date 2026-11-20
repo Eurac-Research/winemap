@@ -16,7 +16,7 @@ export const BOUNDARY_OVERLAYS: readonly BoundaryOverlay[] = [
     url: "/geometries/alpine_space.geojson",
     color: "#334155",
     width: 2,
-    defaultVisible: true,
+    defaultVisible: false,
   },
   {
     id: "respond-pilot-regions",
@@ -24,7 +24,7 @@ export const BOUNDARY_OVERLAYS: readonly BoundaryOverlay[] = [
     url: "/geometries/respond_pilot_regions.geojson",
     color: "#9d174d",
     width: 2,
-    defaultVisible: true,
+    defaultVisible: false,
   },
 ];
 
