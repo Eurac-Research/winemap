@@ -61,7 +61,7 @@ export function LocationReportPanel({
     <aside
       id="location-report"
       className={`${styles.panel} ${picking ? styles.picking : ""}`}
-      aria-labelledby="location-report-title"
+      aria-label="Location report"
       onKeyDown={(event) => {
         if (event.key === "Escape") {
           event.stopPropagation();
@@ -70,7 +70,41 @@ export function LocationReportPanel({
       }}
     >
       <header className={styles.header}>
-        <div>
+        <div className={styles.settingsHeader}>
+          <p className={styles.eyebrow}>Report settings</p>
+          <button
+            ref={closeRef}
+            className={styles.closeButton}
+            type="button"
+            onClick={onClose}
+            aria-label="Close location report"
+          >
+            ×
+          </button>
+        </div>
+        <div className={styles.pickRow}>
+          <button
+            type="button"
+            onClick={() => setPickingAt(picking ? undefined : location)}
+          >
+            {picking ? "Back to report" : "Choose on map"}
+          </button>
+          <span className={styles.muted}>
+            {picking
+              ? "Click a new location to reopen the report."
+              : "Click the map to update the location."}
+          </span>
+        </div>
+        <div hidden={picking}>
+          <ReportSettings
+            indicators={indicators}
+            selection={selection}
+            onChange={setSelection}
+          />
+        </div>
+      </header>
+      <div className={styles.body} hidden={picking}>
+        <div className={styles.reportHeading}>
           <p className={styles.eyebrow}>WINEMAP Explorer</p>
           <h2 id="location-report-title">Location report</h2>
           <p className={styles.muted}>
@@ -79,38 +113,6 @@ export function LocationReportPanel({
               : "Select a location on the map"}
           </p>
         </div>
-        <button
-          ref={closeRef}
-          type="button"
-          onClick={onClose}
-          aria-label="Close location report"
-        >
-          ×
-        </button>
-      </header>
-      <div className={styles.pickRow}>
-        <button
-          type="button"
-          onClick={() => setPickingAt(picking ? undefined : location)}
-        >
-          {picking ? "Back to report" : "Choose on map"}
-        </button>
-        {picking && (
-          <span className={styles.muted}>
-            Click a new location to reopen the report.
-          </span>
-        )}
-      </div>
-      <div className={styles.body} hidden={picking}>
-        <p className={styles.muted}>
-          Click the map to update this report. Your indicator choices stay
-          selected.
-        </p>
-        <ReportSettings
-          indicators={indicators}
-          selection={selection}
-          onChange={setSelection}
-        />
         {!location ? (
           <p className={styles.empty}>
             Click a location on the map to compare its climate, terrain and

@@ -29,10 +29,14 @@ export function ReportCharts({
   const titleId = useId();
   const [min, max] = chartDomain(indicator, samples);
   const classes = indicator.map?.classifications ?? [];
+  // Reserve only the width needed for the longest class label (11px font).
+  const classLabelWidth = classes.length
+    ? Math.max(...classes.map((item) => item.label.length)) * 6 + 18
+    : 30;
   const left = 58,
     top = 26,
     bottom = 292,
-    right = classes.length ? 435 : 610;
+    right = 640 - classLabelWidth;
   const y = (value: number) =>
     bottom - ((value - min) / (max - min)) * (bottom - top);
   const step = (right - left) / Math.max(samples.length, 1);

@@ -16,14 +16,27 @@
 }
 .header {
   flex-shrink: 0;
+  max-height: 50%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-muted);
+}
+.settingsHeader {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
-  padding: 18px 20px;
+  gap: 12px;
+}
+.reportHeading {
+  padding-bottom: 12px;
   border-bottom: 1px solid var(--border);
 }
-.header h2 {
+.reportHeading .muted {
+  margin-bottom: 0;
+}
+.reportHeading h2 {
   font-size: 22px;
   font-weight: 700;
   margin: 2px 0;
@@ -66,7 +79,7 @@
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
-.header button {
+.header .closeButton {
   font-size: 24px;
   line-height: 1;
   min-width: 36px;
@@ -78,6 +91,7 @@
   font-weight: 600;
 }
 .settings {
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 9px;
   padding: 12px;
@@ -216,7 +230,7 @@
   flex-wrap: wrap;
   gap: 10px;
   align-items: center;
-  padding: 10px 20px 0;
+  padding: 8px 0 12px;
 }
 .pickRow .muted {
   margin: 0;
@@ -224,8 +238,11 @@
 .picking {
   bottom: auto;
 }
+.picking .header {
+  max-height: 65dvh;
+}
 .picking .pickRow {
-  padding-bottom: 12px;
+  padding-bottom: 0;
 }
 @media (max-width: 700px) {
   .picking {
