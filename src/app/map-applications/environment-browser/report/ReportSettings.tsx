@@ -82,8 +82,7 @@ export function ReportSettings({
               ))}
           </fieldset>
         ))}
-      </div>
-      <fieldset>
+      {/* <fieldset>
         <legend>Climate conditions</legend>
         <p className={styles.muted}>
           Include the historical baseline to show changes from it.
@@ -118,7 +117,8 @@ export function ReportSettings({
             {scenario.label} · {period.label}
           </label>
         ))}
-      </fieldset>
+      </fieldset> */}
+      </div>
     </details>
   );
 }
