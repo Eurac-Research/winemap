@@ -7,12 +7,7 @@ import {
   locationValues,
   setColorFunction,
 } from "@geomatico/maplibre-cog-protocol";
-import {
-  ChevronDown,
-  ExternalLink,
-  HelpCircle,
-  Navigation2,
-} from "lucide-react";
+import { ChevronDown, ExternalLink, Info, Navigation2 } from "lucide-react";
 import maplibregl from "maplibre-gl";
 import type { MapMouseEvent } from "maplibre-gl";
 import Map, {
@@ -52,6 +47,7 @@ import { PdoMapLayout } from "@/components/pdo-app/PdoMapLayout";
 import { PdoSidebarShell } from "@/components/pdo-app/PdoSidebarShell";
 import RespondLogo from "@/components/ui/RespondLogo";
 import styles from "@/styles/Home.module.css";
+import layerStyles from "./layers.module.css";
 
 type CogMetadata = Awaited<
   ReturnType<typeof import("@geomatico/maplibre-cog-protocol").getCogMetadata>
@@ -717,74 +713,54 @@ export default function EnvironmentBrowserPage() {
   );
 
   const sidebarBody = (
-    <div className="space-y-3">
+    <div className={layerStyles.layers}>
       {groupedIndicators.map((group) => (
-        <section key={group.key} className={styles.sidebarSection}>
+        <section key={group.key} className={layerStyles.category}>
           <button
             type="button"
-            className={`${styles.sidebarSectionToggle} ${
-              openCategories[group.key]
-                ? styles.sidebarSectionToggleOpen
-                : styles.sidebarSectionToggleClosed
-            }`}
+            className={layerStyles.categoryToggle}
             aria-expanded={openCategories[group.key]}
             aria-controls={`environment-group-${group.key}`}
             onClick={() => toggleCategory(group.key)}
           >
-            <span className={styles.sidebarSectionTitle}>{group.title}</span>
+            <span>{group.title}</span>
             <ChevronDown
-              className={`h-4 w-4 shrink-0 transition-transform ${
-                openCategories[group.key] ? "rotate-180" : ""
-              }`}
+              className={`h-3.5 w-3.5 shrink-0 transition-transform ${openCategories[group.key] ? "" : "-rotate-90"}`}
             />
           </button>
           {openCategories[group.key] ? (
             <div
               id={`environment-group-${group.key}`}
-              className={styles.resultList}
+              className={layerStyles.list}
             >
               {group.items.map((indicator) => {
                 const isActive = indicator.id === selectedIndicatorId;
 
                 return (
-                  <button
+                  <div
                     key={indicator.id}
-                    type="button"
-                    onClick={() => selectIndicator(indicator.id)}
-                    className={
-                      isActive ? styles.resultActiveItem : styles.resultItem
-                    }
-                    aria-pressed={isActive}
+                    className={layerStyles.row}
+                    data-active={isActive}
                   >
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="min-w-0 flex-1 text-left">
-                        <span className={styles.resultItemTitle}>
-                          {indicator.name}
-                        </span>
-                        <p className={`${styles.resultItemMeta} mt-1`}>
-                          {formatUnit(indicator.map?.unit)}
-                        </p>
-                      </div>
-                      <span
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          setSelectedInfo(indicator);
-                        }}
-                        className="self-center cursor-pointer transition-colors app-muted hover:text-[color:var(--app-text-color)]"
-                        aria-label={`More info about ${indicator.name}`}
-                        role="button"
-                        tabIndex={0}
-                        onKeyDown={(event) => {
-                          if (event.key === "Enter" || event.key === " ") {
-                            event.preventDefault();
-                            setSelectedInfo(indicator);
-                          }
-                        }}
-                      >
-                        <HelpCircle className="h-4 w-4" />
-                      </span>
-                    </div>
-                  </button>
+                    <button
+                      type="button"
+                      onClick={() => selectIndicator(indicator.id)}
+                      className={layerStyles.selection}
+                      aria-pressed={isActive}
+                    >
+                      <span className={layerStyles.marker} aria-hidden="true" />
+                      <span>{indicator.name}</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedInfo(indicator)}
+                      className={layerStyles.info}
+                      aria-label={`More info about ${indicator.name}`}
+                      title={`More info about ${indicator.name}`}
+                    >
+                      <Info size={15} aria-hidden="true" />
+                    </button>
+                  </div>
                 );
               })}
             </div>
