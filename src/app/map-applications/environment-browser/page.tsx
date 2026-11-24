@@ -563,9 +563,9 @@ export default function EnvironmentBrowserPage() {
             />
           }
           map={<div className="h-full w-full" />}
-          sidebarDefaultSize={20}
-          mapDefaultSize={80}
-          sidebarMinSize={18}
+          sidebarDefaultSize={24}
+          mapDefaultSize={76}
+          sidebarMinSize={20}
         />
         <MapApplicationNavigation activeHref="/map-applications/environment-browser" />
       </>
@@ -899,9 +899,9 @@ export default function EnvironmentBrowserPage() {
         className="top-[calc(var(--top-nav-height)+3.5rem)] sm:left-14 sm:top-[var(--top-nav-height)]"
         sidebar={<PdoSidebarShell top={sidebarTop} body={sidebarBody} />}
         map={mapContent}
-        sidebarDefaultSize={20}
-        mapDefaultSize={80}
-        sidebarMinSize={18}
+        sidebarDefaultSize={24}
+        mapDefaultSize={76}
+        sidebarMinSize={20}
       />
       <MapApplicationNavigation activeHref="/map-applications/environment-browser" />
 
