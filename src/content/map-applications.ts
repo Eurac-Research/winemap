@@ -27,7 +27,7 @@ export type MapApplicationHelpBlock =
 
 export type MapApplication = {
   title: string;
-  navigationIcon?: "layers" | "map-pinned" | "shield-alert";
+  navigationIcon?: "layers" | "map-pinned" | "thermometer-sun";
   description: string;
   help?: MapApplicationHelpBlock[];
   href: string;
@@ -151,7 +151,7 @@ export const mapApplications: MapApplication[] = [
   },
   {
     title: "Vulnerability Explorer",
-    navigationIcon: "shield-alert",
+    navigationIcon: "thermometer-sun",
     description:
       "How vulnerable are European PDO regions to the effects of climate change? Get detailed, region-specific information in this interactive map.",
     help: [

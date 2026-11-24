@@ -3,12 +3,12 @@ import {
   mapApplications,
   type MapApplication,
 } from "@/content/map-applications";
-import { Layers3, MapPinned, ShieldAlert } from "lucide-react";
+import { Layers3, MapPinned, ThermometerSun  } from "lucide-react";
 
 const navigationIcons = {
   layers: Layers3,
   "map-pinned": MapPinned,
-  "shield-alert": ShieldAlert,
+  "thermometer-sun": ThermometerSun ,
 };
 
 type MapApplicationNavigationProps = {
