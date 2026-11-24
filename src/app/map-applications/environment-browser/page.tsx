@@ -683,7 +683,7 @@ export default function EnvironmentBrowserPage() {
           disabled={!selectedIndicator}
           className={styles.clearButton}
         >
-          Clear selected layer
+          Clear Selection
         </button>
 
         {selectedIndicator && hasScenarioOptions ? (
