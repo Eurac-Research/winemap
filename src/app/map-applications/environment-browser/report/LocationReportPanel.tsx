@@ -102,6 +102,28 @@ export function LocationReportPanel({
             onChange={setSelection}
           />
         </div>
+        <div role="status" className={styles.status}>
+          {report.status === "loading"
+            ? `Sampling ${report.completed} of ${targets.length} layers…`
+            : report.status === "error"
+              ? report.error
+              : `${report.completed} layers sampled${errors ? ` · ${errors} failed to load` : ""}`}
+        </div>
+        {report.status === "loading" && (
+          <progress
+            max={targets.length}
+            value={report.completed}
+            aria-label="Sampling progress"
+          />
+        )}
+        {(errors > 0 || report.status === "error") && (
+          <button
+            type="button"
+            onClick={() => setRetry((value) => value + 1)}
+          >
+            Retry failed layers
+          </button>
+        )}
       </header>
       <div className={styles.body} hidden={picking}>
         <div className={styles.reportHeading}>
@@ -125,28 +147,6 @@ export function LocationReportPanel({
           </p>
         ) : (
           <>
-            <div role="status" className={styles.status}>
-              {report.status === "loading"
-                ? `Sampling ${report.completed} of ${targets.length} layers…`
-                : report.status === "error"
-                  ? report.error
-                  : `${report.completed} layers sampled${errors ? ` · ${errors} failed to load` : ""}`}
-            </div>
-            {report.status === "loading" && (
-              <progress
-                max={targets.length}
-                value={report.completed}
-                aria-label="Sampling progress"
-              />
-            )}
-            {(errors > 0 || report.status === "error") && (
-              <button
-                type="button"
-                onClick={() => setRetry((value) => value + 1)}
-              >
-                Retry failed layers
-              </button>
-            )}
             <ReportContent
               indicators={indicators}
               targets={targets}

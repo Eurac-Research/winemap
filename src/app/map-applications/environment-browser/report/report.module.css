@@ -186,6 +186,15 @@
   min-width: 450px;
   height: auto;
 }
+.axisLink,
+.axisLink:link,
+.axisLink:visited,
+.axisLink:hover,
+.axisLink:active,
+.axisLink:focus {
+  text-decoration: none;
+  color: inherit;
+}
 .axisText {
   font: 11px sans-serif;
   fill: var(--foreground);

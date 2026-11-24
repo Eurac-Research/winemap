@@ -106,6 +106,7 @@ export function EcosystemChart({
                   href={getIndicatorGlossaryHref(indicator.id)}
                   target="_blank"
                   rel="noreferrer"
+                  className={styles.axisLink}
                 >
                   <text
                     x={left - 12}
