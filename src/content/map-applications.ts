@@ -66,7 +66,7 @@ export const mapApplications: MapApplication[] = [
       {
         type: "paragraph",
         content: [
-          "After selecting a layer, the corresponding data is visualized on the map. Zoom and hover over specific locations to inspect indicator values. Use the help button next to each layer for more information about the displayed data.",
+          "After selecting a layer, the corresponding data is visualized on the map. Click a location to inspect indicator values. The popup stays at that location as you pan or zoom. Click another location to replace it, or use the × button to close it. Use the help button next to each layer for more information about the displayed data.",
         ],
       },
       {

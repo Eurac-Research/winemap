@@ -131,7 +131,7 @@ export function VerticalLegend({
           </div>
           {currentLabel ? (
             <div>
-              <div style={defaultLegendValueLabelStyle}>Hover</div>
+              <div style={defaultLegendValueLabelStyle}>Selected</div>
               <div style={defaultLegendValueStyle}>{currentLabel}</div>
             </div>
           ) : null}

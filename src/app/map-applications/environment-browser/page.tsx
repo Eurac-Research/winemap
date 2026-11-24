@@ -14,9 +14,11 @@ import {
   Navigation2,
 } from "lucide-react";
 import maplibregl from "maplibre-gl";
-import type { LngLat, MapMouseEvent, PointLike } from "maplibre-gl";
+import type { MapMouseEvent } from "maplibre-gl";
 import Map, {
+  Marker,
   NavigationControl,
+  Popup,
   ScaleControl,
   type MapRef,
 } from "react-map-gl/maplibre";
@@ -85,19 +87,19 @@ const groupedIndicators = categories.map((category) => ({
   ),
 }));
 
-type HoverSample = {
+type InspectionSample = {
   scenarioId?: string;
   periodId?: string;
   label: string;
   value: number | null;
 };
 
-type HoverInfo = {
-  x: number;
-  y: number;
+type InspectionInfo = {
+  longitude: number;
+  latitude: number;
   value?: number | null;
   currentValue?: number | null;
-  samples?: HoverSample[];
+  samples?: InspectionSample[];
 };
 
 let cogProtocolRegistered = false;
@@ -245,7 +247,7 @@ function getAvailablePeriods(
   );
 }
 
-function buildHoverSampleLabel(
+function buildInspectionSampleLabel(
   mapConfig: IndicatorMapConfig,
   scenarioId?: string,
   periodId?: string,
@@ -259,12 +261,7 @@ function buildHoverSampleLabel(
 
 export default function EnvironmentBrowserPage() {
   const mapRef = useRef<MapRef>(null);
-  const hoverThrottleRef = useRef<number | null>(null);
-  const hoverRequestIdRef = useRef(0);
-  const hoverPointRef = useRef<{
-    point: { x: number; y: number };
-    lngLat: LngLat;
-  } | null>(null);
+  const inspectionRequestIdRef = useRef(0);
 
   const [selectedIndicatorId, setSelectedIndicatorId] = useState("");
   const [selectedInfo, setSelectedInfo] = useState<Indicator | null>(null);
@@ -279,7 +276,9 @@ export default function EnvironmentBrowserPage() {
     ),
   );
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [hoverInfo, setHoverInfo] = useState<HoverInfo | null>(null);
+  const [inspectionInfo, setInspectionInfo] = useState<InspectionInfo | null>(
+    null,
+  );
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>(
     () =>
       Object.fromEntries(
@@ -344,14 +343,18 @@ export default function EnvironmentBrowserPage() {
     selectedIndicator,
   ]);
 
-  const hoverSampleTargets = useMemo(() => {
+  const inspectionSampleTargets = useMemo(() => {
     if (!mapConfig || !hasScenarioOptions) return [];
 
     return mapConfig.layers.map((layer) => ({
       scenarioId: layer.scenarioId,
       periodId: layer.periodId,
       url: layer.url,
-      label: buildHoverSampleLabel(mapConfig, layer.scenarioId, layer.periodId),
+      label: buildInspectionSampleLabel(
+        mapConfig,
+        layer.scenarioId,
+        layer.periodId,
+      ),
     }));
   }, [hasScenarioOptions, mapConfig]);
 
@@ -362,12 +365,17 @@ export default function EnvironmentBrowserPage() {
     }));
   };
 
+  const clearInspection = () => {
+    inspectionRequestIdRef.current += 1;
+    setInspectionInfo(null);
+  };
+
   const clearSelection = () => {
     setSelectedIndicatorId("");
     setSelectedScenarioId("");
     setSelectedPeriodId("");
     setLoadError(null);
-    setHoverInfo(null);
+    clearInspection();
   };
 
   const selectIndicator = (indicatorId: string) => {
@@ -382,7 +390,7 @@ export default function EnvironmentBrowserPage() {
     setSelectedScenarioId(indicator?.map?.defaultScenarioId ?? "");
     setSelectedPeriodId(indicator?.map?.defaultPeriodId ?? "");
     setLoadError(null);
-    setHoverInfo(null);
+    clearInspection();
   };
 
   useEffect(() => {
@@ -459,22 +467,23 @@ export default function EnvironmentBrowserPage() {
     const map = mapRef.current?.getMap();
     if (!map || !mapReady || !selectedAsset || !mapConfig) return;
 
-    const runHoverQuery = async () => {
-      hoverThrottleRef.current = null;
+    const runInspectionQuery = async (event: MapMouseEvent) => {
+      // Popup clicks (including closing it) must not inspect the map beneath it.
+      const target = event.originalEvent.target;
+      if (target instanceof Element && target.closest(".maplibregl-popup"))
+        return;
 
-      const hoverPoint = hoverPointRef.current;
-      if (!hoverPoint) return;
-
-      const requestId = ++hoverRequestIdRef.current;
+      const requestId = ++inspectionRequestIdRef.current;
+      setInspectionInfo(null);
       const coordinates = {
-        latitude: hoverPoint.lngLat.lat,
-        longitude: hoverPoint.lngLat.lng,
+        latitude: event.lngLat.lat,
+        longitude: event.lngLat.lng,
       };
       const zoom = map.getZoom();
 
-      if (hasScenarioOptions && hoverSampleTargets.length > 0) {
+      if (hasScenarioOptions && inspectionSampleTargets.length > 0) {
         const results = await Promise.allSettled(
-          hoverSampleTargets.map(async (sampleTarget) => {
+          inspectionSampleTargets.map(async (sampleTarget) => {
             const [value] = await locationValues(
               sampleTarget.url,
               coordinates,
@@ -485,14 +494,14 @@ export default function EnvironmentBrowserPage() {
               periodId: sampleTarget.periodId,
               label: sampleTarget.label,
               value: Number.isFinite(value) ? value : null,
-            } satisfies HoverSample;
+            } satisfies InspectionSample;
           }),
         );
 
-        if (requestId !== hoverRequestIdRef.current) return;
+        if (requestId !== inspectionRequestIdRef.current) return;
 
         const samples = results.map((result, index) => {
-          const target = hoverSampleTargets[index]!;
+          const target = inspectionSampleTargets[index]!;
           if (result.status === "fulfilled") {
             return result.value;
           }
@@ -502,7 +511,7 @@ export default function EnvironmentBrowserPage() {
             periodId: target.periodId,
             label: target.label,
             value: null,
-          } satisfies HoverSample;
+          } satisfies InspectionSample;
         });
 
         const currentSample =
@@ -512,9 +521,8 @@ export default function EnvironmentBrowserPage() {
               sample.periodId === selectedAsset.periodId,
           ) ?? null;
 
-        setHoverInfo({
-          x: hoverPoint.point.x,
-          y: hoverPoint.point.y,
+        setInspectionInfo({
+          ...coordinates,
           currentValue: currentSample?.value ?? null,
           samples,
         });
@@ -527,62 +535,35 @@ export default function EnvironmentBrowserPage() {
           coordinates,
           zoom,
         );
-        if (requestId !== hoverRequestIdRef.current) return;
+        if (requestId !== inspectionRequestIdRef.current) return;
 
-        setHoverInfo({
-          x: hoverPoint.point.x,
-          y: hoverPoint.point.y,
+        setInspectionInfo({
+          ...coordinates,
           value: Number.isFinite(value) ? value : null,
         });
       } catch {
-        if (requestId !== hoverRequestIdRef.current) return;
-        setHoverInfo({
-          x: hoverPoint.point.x,
-          y: hoverPoint.point.y,
+        if (requestId !== inspectionRequestIdRef.current) return;
+        setInspectionInfo({
+          ...coordinates,
           value: null,
         });
       }
     };
 
-    const scheduleHoverQuery = () => {
-      if (hoverThrottleRef.current != null) return;
-      hoverThrottleRef.current = window.setTimeout(() => {
-        void runHoverQuery();
-      }, 100);
+    const handleClick = (event: MapMouseEvent) => {
+      void runInspectionQuery(event);
     };
 
-    const handleMouseMove = (event: MapMouseEvent & { point: PointLike }) => {
-      hoverPointRef.current = {
-        point: { x: event.point.x, y: event.point.y },
-        lngLat: event.lngLat,
-      };
-      scheduleHoverQuery();
-    };
-
-    const handleMouseLeave = () => {
-      hoverPointRef.current = null;
-      hoverRequestIdRef.current += 1;
-      if (hoverThrottleRef.current != null) {
-        window.clearTimeout(hoverThrottleRef.current);
-        hoverThrottleRef.current = null;
-      }
-      setHoverInfo(null);
-    };
-
-    map.on("mousemove", handleMouseMove);
-    map.on("mouseout", handleMouseLeave);
+    map.on("click", handleClick);
 
     return () => {
-      map.off("mousemove", handleMouseMove);
-      map.off("mouseout", handleMouseLeave);
-      if (hoverThrottleRef.current != null) {
-        window.clearTimeout(hoverThrottleRef.current);
-        hoverThrottleRef.current = null;
-      }
+      map.off("click", handleClick);
+      // Ignore results from requests made for a previous layer or map instance.
+      inspectionRequestIdRef.current += 1;
     };
   }, [
     hasScenarioOptions,
-    hoverSampleTargets,
+    inspectionSampleTargets,
     mapConfig,
     mapReady,
     selectedAsset,
@@ -629,16 +610,17 @@ export default function EnvironmentBrowserPage() {
 
   const activeRange = mapConfig?.displayRange ?? null;
   const activeClassification = mapConfig?.classifications ?? [];
-  const hoverValue = hoverInfo?.currentValue ?? hoverInfo?.value ?? null;
-  const hoverMarkerOffset =
-    hoverValue != null && activeRange
-      ? getBreakOffset(hoverValue, activeRange)
+  const inspectionValue =
+    inspectionInfo?.currentValue ?? inspectionInfo?.value ?? null;
+  const inspectionMarkerOffset =
+    inspectionValue != null && activeRange
+      ? getBreakOffset(inspectionValue, activeRange)
       : null;
 
-  const hoveredClassBreak =
-    hoverValue != null
+  const inspectedClassBreak =
+    inspectionValue != null
       ? (activeClassification.find((classBreak) =>
-          matchesClassBreak(hoverValue, classBreak),
+          matchesClassBreak(inspectionValue, classBreak),
         ) ?? null)
       : null;
 
@@ -648,13 +630,13 @@ export default function EnvironmentBrowserPage() {
         .map((classBreak) => ({
           label: classBreak.label,
           offset: getBreakOffset(classBreak.min as number, activeRange),
-          isActive: hoveredClassBreak?.label === classBreak.label,
+          isActive: inspectedClassBreak?.label === classBreak.label,
         }))
     : [];
 
   const activeLayerLabel =
     mapConfig && selectedAsset
-      ? buildHoverSampleLabel(
+      ? buildInspectionSampleLabel(
           mapConfig,
           selectedAsset.scenarioId,
           selectedAsset.periodId,
@@ -700,7 +682,7 @@ export default function EnvironmentBrowserPage() {
                 value={activeScenarioId}
                 onChange={(event) => {
                   setLoadError(null);
-                  setHoverInfo(null);
+                  clearInspection();
                   setSelectedScenarioId(event.target.value);
                 }}
                 className={styles.mapDropdown}
@@ -725,7 +707,7 @@ export default function EnvironmentBrowserPage() {
                 value={activePeriodId}
                 onChange={(event) => {
                   setLoadError(null);
-                  setHoverInfo(null);
+                  clearInspection();
                   setSelectedPeriodId(event.target.value);
                 }}
                 className={styles.mapDropdown}
@@ -850,13 +832,114 @@ export default function EnvironmentBrowserPage() {
         />
         <NavigationControl position="bottom-right" visualizePitch showCompass />
         <ScaleControl position="bottom-right" />
+        {inspectionInfo && selectedIndicator ? (
+          <>
+            <Marker
+              longitude={inspectionInfo.longitude}
+              latitude={inspectionInfo.latitude}
+              anchor="center"
+              style={{ pointerEvents: "none" }}
+            >
+              <div
+                role="img"
+                aria-label="Selected location"
+                className="h-3 w-3 rounded-full border-2 border-white bg-[color:var(--accent)] shadow-[0_0_0_1px_rgba(0,0,0,0.6)]"
+              />
+            </Marker>
+            <Popup
+              longitude={inspectionInfo.longitude}
+              latitude={inspectionInfo.latitude}
+              closeButton={false}
+              closeOnClick={false}
+              closeOnMove={false}
+              focusAfterOpen={false}
+              maxWidth="260px"
+              anchor="bottom"
+              offset={12}
+              className="[&_.maplibregl-popup-content]:!bg-transparent [&_.maplibregl-popup-content]:!p-0 [&_.maplibregl-popup-content]:!shadow-none [&_.maplibregl-popup-tip]:!border-transparent"
+            >
+              <div
+                className="relative rounded-lg border px-3 py-2 text-xs shadow-lg backdrop-blur"
+                style={{
+                  borderColor: "var(--border)",
+                  background: "var(--surface)",
+                  color: "var(--foreground)",
+                }}
+              >
+                <button
+                  type="button"
+                  aria-label="Close pixel values"
+                  className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded text-lg hover:bg-black/10 focus-visible:outline"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    clearInspection();
+                  }}
+                >
+                  ×
+                </button>
+                <div className="pr-6 font-medium">{selectedIndicator.name}</div>
+                {inspectionInfo.samples && inspectionInfo.samples.length > 0 ? (
+                  <>
+                    <div
+                      className="mt-1 text-[11px]"
+                      style={{ color: "var(--text-muted)" }}
+                    >
+                      Active layer: {activeLayerLabel}
+                    </div>
+                    <div className="mt-2 space-y-1">
+                      {inspectionInfo.samples.map((sample) => {
+                        const isActive =
+                          sample.scenarioId === selectedAsset?.scenarioId &&
+                          sample.periodId === selectedAsset?.periodId;
+
+                        return (
+                          <div
+                            key={`${sample.scenarioId ?? "none"}-${sample.periodId ?? "none"}`}
+                            className="flex items-start justify-between gap-3"
+                            style={{
+                              color: isActive
+                                ? "var(--accent)"
+                                : "var(--foreground)",
+                              fontWeight: isActive ? 600 : 400,
+                            }}
+                          >
+                            <span>{sample.label}</span>
+                            <span>
+                              {formatSampleValue(sample.value, mapConfig?.unit)}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {mapConfig?.unit ? (
+                      <div
+                        className="mt-1 text-[11px]"
+                        style={{ color: "var(--text-muted)" }}
+                      >
+                        {formatUnit(mapConfig.unit)}
+                      </div>
+                    ) : null}
+                    <div className="mt-2 font-semibold">
+                      {formatSampleValue(
+                        inspectionInfo.value ?? null,
+                        mapConfig?.unit,
+                      )}
+                    </div>
+                  </>
+                )}
+              </div>
+            </Popup>
+          </>
+        ) : null}
       </Map>
 
       <div className="absolute left-4 right-4 top-4 z-20 flex flex-col items-start gap-3 pointer-events-none [&>*]:pointer-events-auto">
         <MapPlaceSearch
           onSelect={(result) => {
             setLoadError(null);
-            setHoverInfo(null);
             mapRef.current?.flyTo({
               center: [result.longitude, result.latitude],
               zoom: Math.max(viewState.zoom, 9),
@@ -870,7 +953,7 @@ export default function EnvironmentBrowserPage() {
           onBasemapChange={(id) => {
             if (id === selectedBasemapId) return;
             setMapReady(false);
-            setHoverInfo(null);
+            clearInspection();
             setSelectedBasemapId(id);
           }}
           referenceAreas={{
@@ -887,68 +970,6 @@ export default function EnvironmentBrowserPage() {
         />
       </div>
 
-      {hoverInfo && selectedIndicator ? (
-        <div
-          className="pointer-events-none absolute z-10 max-w-[260px] -translate-y-full rounded-lg border px-3 py-2 text-xs shadow-lg backdrop-blur"
-          style={{
-            left: hoverInfo.x + 12,
-            top: hoverInfo.y - 12,
-            borderColor: "var(--border)",
-            background: "var(--surface)",
-            color: "var(--foreground)",
-          }}
-        >
-          <div className="font-medium">{selectedIndicator.name}</div>
-          {hoverInfo.samples && hoverInfo.samples.length > 0 ? (
-            <>
-              <div
-                className="mt-1 text-[11px]"
-                style={{ color: "var(--text-muted)" }}
-              >
-                Active layer: {activeLayerLabel}
-              </div>
-              <div className="mt-2 space-y-1">
-                {hoverInfo.samples.map((sample) => {
-                  const isActive =
-                    sample.scenarioId === selectedAsset?.scenarioId &&
-                    sample.periodId === selectedAsset?.periodId;
-
-                  return (
-                    <div
-                      key={`${sample.scenarioId ?? "none"}-${sample.periodId ?? "none"}`}
-                      className="flex items-start justify-between gap-3"
-                      style={{
-                        color: isActive ? "var(--accent)" : "var(--foreground)",
-                        fontWeight: isActive ? 600 : 400,
-                      }}
-                    >
-                      <span>{sample.label}</span>
-                      <span>
-                        {formatSampleValue(sample.value, mapConfig?.unit)}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </>
-          ) : (
-            <>
-              {mapConfig?.unit ? (
-                <div
-                  className="mt-1 text-[11px]"
-                  style={{ color: "var(--text-muted)" }}
-                >
-                  {formatUnit(mapConfig.unit)}
-                </div>
-              ) : null}
-              <div className="mt-2 font-semibold">
-                {formatSampleValue(hoverInfo.value ?? null, mapConfig?.unit)}
-              </div>
-            </>
-          )}
-        </div>
-      ) : null}
-
       <div className="absolute bottom-13 right-12 w-auto bg-background rounded-xl">
         <RespondLogo width={170} />
       </div>
@@ -959,10 +980,10 @@ export default function EnvironmentBrowserPage() {
           title={selectedIndicator.name}
           subtitle={mapConfig.unit ? `Unit: ${mapConfig.unit}` : undefined}
           breaks={legendBreaks.length > 0 ? legendBreaks : undefined}
-          currentOffset={hoverMarkerOffset}
+          currentOffset={inspectionMarkerOffset}
           currentLabel={
-            hoverValue != null
-              ? formatLegendValue(hoverValue, mapConfig.unit)
+            inspectionValue != null
+              ? formatLegendValue(inspectionValue, mapConfig.unit)
               : undefined
           }
           maxLabel={formatLegendValue(activeRange[1], mapConfig.unit)}
