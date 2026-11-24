@@ -79,7 +79,7 @@ export function LocationReportPanel({
             onClick={onClose}
             aria-label="Close location report"
           >
-            ×
+            x
           </button>
         </div>
         <div className={styles.pickRow}>
