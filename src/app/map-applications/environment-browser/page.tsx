@@ -47,6 +47,8 @@ import { PdoMapLayout } from "@/components/pdo-app/PdoMapLayout";
 import { PdoSidebarShell } from "@/components/pdo-app/PdoSidebarShell";
 import RespondLogo from "@/components/ui/RespondLogo";
 import styles from "@/styles/Home.module.css";
+import { resolveClimateChoice } from "./climate-options";
+import { ClimateSettings } from "./ClimateSettings";
 import layerStyles from "./layers.module.css";
 
 type CogMetadata = Awaited<
@@ -225,24 +227,6 @@ function getOptionLabel(
   return options?.find((option) => option.id === optionId)?.label ?? optionId;
 }
 
-function getAvailablePeriods(
-  mapConfig: IndicatorMapConfig,
-  scenarioId?: string,
-) {
-  const periods = mapConfig.periods ?? [];
-
-  if (periods.length === 0) return [];
-  if (!scenarioId) return periods;
-
-  return periods.filter((period) =>
-    mapConfig.layers.some(
-      (layer) =>
-        layer.periodId === period.id &&
-        (layer.scenarioId == null || layer.scenarioId === scenarioId),
-    ),
-  );
-}
-
 function buildInspectionSampleLabel(
   mapConfig: IndicatorMapConfig,
   scenarioId?: string,
@@ -294,23 +278,13 @@ export default function EnvironmentBrowserPage() {
     (mapConfig?.scenarios?.length ?? 0) > 0 ||
     (mapConfig?.periods?.length ?? 0) > 0;
 
-  const availableScenarios = mapConfig?.scenarios ?? [];
-  const activeScenarioId =
-    selectedScenarioId &&
-    availableScenarios.some((item) => item.id === selectedScenarioId)
-      ? selectedScenarioId
-      : (mapConfig?.defaultScenarioId ?? availableScenarios[0]?.id ?? "");
-
-  const availablePeriods = useMemo(
-    () => (mapConfig ? getAvailablePeriods(mapConfig, activeScenarioId) : []),
-    [activeScenarioId, mapConfig],
+  const activeClimateChoice = resolveClimateChoice(
+    mapConfig,
+    selectedScenarioId,
+    selectedPeriodId,
   );
-
-  const activePeriodId =
-    selectedPeriodId &&
-    availablePeriods.some((item) => item.id === selectedPeriodId)
-      ? selectedPeriodId
-      : (mapConfig?.defaultPeriodId ?? availablePeriods[0]?.id ?? "");
+  const activeScenarioId = activeClimateChoice?.scenario.id ?? "";
+  const activePeriodId = activeClimateChoice?.period.id ?? "";
 
   const ramp = (mapConfig?.defaultRamp ?? "viridis") as RampKey;
 
@@ -368,8 +342,6 @@ export default function EnvironmentBrowserPage() {
 
   const clearSelection = () => {
     setSelectedIndicatorId("");
-    setSelectedScenarioId("");
-    setSelectedPeriodId("");
     setLoadError(null);
     clearInspection();
   };
@@ -380,11 +352,7 @@ export default function EnvironmentBrowserPage() {
       return;
     }
 
-    const indicator =
-      environmentIndicators.find((item) => item.id === indicatorId) ?? null;
     setSelectedIndicatorId(indicatorId);
-    setSelectedScenarioId(indicator?.map?.defaultScenarioId ?? "");
-    setSelectedPeriodId(indicator?.map?.defaultPeriodId ?? "");
     setLoadError(null);
     clearInspection();
   };
@@ -654,60 +622,6 @@ export default function EnvironmentBrowserPage() {
         >
           Clear Selection
         </button>
-
-        {selectedIndicator && hasScenarioOptions ? (
-          <>
-            <label
-              className={`${styles.filterLabel} mt-4 block`}
-              htmlFor="environment-scenario-select"
-            >
-              Scenario
-            </label>
-            <div className={styles.mapDropdownWrap}>
-              <select
-                id="environment-scenario-select"
-                value={activeScenarioId}
-                onChange={(event) => {
-                  setLoadError(null);
-                  clearInspection();
-                  setSelectedScenarioId(event.target.value);
-                }}
-                className={styles.mapDropdown}
-              >
-                {availableScenarios.map((scenario) => (
-                  <option key={scenario.id} value={scenario.id}>
-                    {scenario.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <label
-              className={`${styles.filterLabel} mt-4 block`}
-              htmlFor="environment-period-select"
-            >
-              Period
-            </label>
-            <div className={styles.mapDropdownWrap}>
-              <select
-                id="environment-period-select"
-                value={activePeriodId}
-                onChange={(event) => {
-                  setLoadError(null);
-                  clearInspection();
-                  setSelectedPeriodId(event.target.value);
-                }}
-                className={styles.mapDropdown}
-              >
-                {availablePeriods.map((period) => (
-                  <option key={period.id} value={period.id}>
-                    {period.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </>
-        ) : null}
       </section>
     </div>
   );
@@ -760,6 +674,21 @@ export default function EnvironmentBrowserPage() {
                     >
                       <Info size={15} aria-hidden="true" />
                     </button>
+                    {indicator.map && (
+                      <ClimateSettings
+                        name={indicator.name}
+                        config={indicator.map}
+                        scenarioId={selectedScenarioId}
+                        periodId={selectedPeriodId}
+                        onSelect={(scenarioId, periodId) => {
+                          setSelectedIndicatorId(indicator.id);
+                          setSelectedScenarioId(scenarioId);
+                          setSelectedPeriodId(periodId);
+                          setLoadError(null);
+                          clearInspection();
+                        }}
+                      />
+                    )}
                   </div>
                 );
               })}
@@ -939,7 +868,16 @@ export default function EnvironmentBrowserPage() {
         <VerticalLegend
           ramp={ramp}
           title={selectedIndicator.name}
-          subtitle={mapConfig.unit ? `Unit: ${mapConfig.unit}` : undefined}
+          subtitle={
+            [
+              activeClimateChoice
+                ? `${activeClimateChoice.scenario.displayLabel ?? activeClimateChoice.scenario.label} · ${activeClimateChoice.scenario.label} · ${activeClimateChoice.period.label}`
+                : undefined,
+              mapConfig.unit ? `Unit: ${mapConfig.unit}` : undefined,
+            ]
+              .filter(Boolean)
+              .join(" · ") || undefined
+          }
           breaks={legendBreaks.length > 0 ? legendBreaks : undefined}
           currentOffset={inspectionMarkerOffset}
           currentLabel={

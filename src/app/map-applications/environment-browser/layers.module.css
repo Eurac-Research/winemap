@@ -115,3 +115,109 @@
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+
+.climatePanel {
+  box-sizing: border-box;
+  width: min(370px, calc(100vw - 32px));
+  max-height: min(600px, calc(100vh - 40px));
+  max-height: min(600px, calc(100dvh - 40px));
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
+  padding: 16px;
+  color: var(--foreground);
+}
+
+.climateHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.climateHeader h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.climateHeader p,
+.climateDescription,
+.climateFootnote {
+  margin: 4px 0 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.climateGroup {
+  min-width: 0;
+  margin: 12px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.climateGroup legend {
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.climateGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.climateChoice {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--foreground);
+  text-align: left;
+  cursor: pointer;
+}
+
+.climateChoice:only-child {
+  grid-column: 1 / -1;
+}
+
+.climateChoice > span {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.climateChoice small {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.climateChoice:hover {
+  background: var(--surface-muted);
+}
+
+.climateChoice[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.climateChoice:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.climateFootnote {
+  margin: 12px 0 0;
+}
+
+@media (max-width: 420px) {
+  .climateGrid {
+    grid-template-columns: 1fr;
+  }
+}

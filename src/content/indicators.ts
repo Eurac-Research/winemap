@@ -21,6 +21,8 @@ export type IndicatorMapOption = {
   id: string;
   label: string;
   shortLabel?: string;
+  /** Plain-language label for selection controls; label retains scientific detail. */
+  displayLabel?: string;
 };
 
 export type IndicatorMapLayer = {
@@ -93,15 +95,40 @@ const DEFAULT_CLIMATE_SCENARIO_ID = "historical";
 const DEFAULT_CLIMATE_PERIOD_ID = "1981-2010";
 
 export const CLIMATE_SCENARIOS = [
-  { id: "historical", label: "Historical", shortLabel: "Historical" },
-  { id: "ssp370", label: "SSP3-7.0", shortLabel: "SSP3-7.0" },
-  { id: "ssp585", label: "SSP5-8.5", shortLabel: "SSP5-8.5" },
+  {
+    id: "historical",
+    label: "Historical",
+    shortLabel: "Historical",
+    displayLabel: "Historical baseline",
+  },
+  {
+    id: "ssp370",
+    label: "SSP3-7.0",
+    shortLabel: "SSP3-7.0",
+    displayLabel: "High emissions",
+  },
+  {
+    id: "ssp585",
+    label: "SSP5-8.5",
+    shortLabel: "SSP5-8.5",
+    displayLabel: "Very high emissions",
+  },
 ] as const satisfies readonly IndicatorMapOption[];
 
 export const CLIMATE_PERIODS = [
   { id: "1981-2010", label: "1981-2010", shortLabel: "1981-2010" },
-  { id: "2041-2070", label: "2041-2070", shortLabel: "2041-2070" },
-  { id: "2071-2100", label: "2071-2100", shortLabel: "2071-2100" },
+  {
+    id: "2041-2070",
+    label: "2041-2070",
+    shortLabel: "2041-2070",
+    displayLabel: "Mid-century",
+  },
+  {
+    id: "2071-2100",
+    label: "2071-2100",
+    shortLabel: "2071-2100",
+    displayLabel: "Late-century",
+  },
 ] as const satisfies readonly IndicatorMapOption[];
 
 type ClimateScenarioId = (typeof CLIMATE_SCENARIOS)[number]["id"];

@@ -72,7 +72,7 @@ export const mapApplications: MapApplication[] = [
       {
         type: "paragraph",
         content: [
-          "For climate layers, the map can show values for different periods and climate scenarios. First select an indicator on the left, then choose the desired scenario and period in the panel above.",
+          "Use the settings button beside a climate layer to choose climate conditions. Select the historical baseline or a future period under high or very high emissions. Each option shows its exact period and scenario. Selecting an option activates that layer; your choice carries over to other climate layers where available. The legend shows the conditions currently displayed. Emissions scenarios describe possible futures, not forecasts.",
         ],
       },
       {
