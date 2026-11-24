@@ -921,7 +921,7 @@ export default function EnvironmentBrowserPage() {
         ) : null}
       </Map>
 
-      <div className="absolute left-4 right-4 top-4 z-20 flex flex-col items-start gap-3 pointer-events-none [&>*]:pointer-events-auto">
+      <div className="absolute left-6 right-4 top-3 z-20 flex flex-col items-start gap-3 pointer-events-none [&>*]:pointer-events-auto">
         <MapPlaceSearch
           onSelect={(result) => {
             setLoadError(null);
