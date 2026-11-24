@@ -163,8 +163,7 @@
   color: var(--accent);
   text-decoration: underline;
 }
-.chartScroll,
-.tableScroll {
+.chartScroll {
   overflow-x: auto;
 }
 .chart {
@@ -181,49 +180,6 @@
   stroke: var(--foreground);
   stroke-opacity: 0.18;
   stroke-width: 1;
-}
-.card table {
-  border-collapse: collapse;
-  width: 100%;
-  font-size: 11px;
-  text-align: left;
-}
-.card th,
-.card td {
-  padding: 8px 6px;
-  border-bottom: 1px solid var(--border);
-}
-.card thead th {
-  font-weight: 600;
-  color: var(--text-muted);
-}
-.card tbody th {
-  font-weight: 400;
-}
-.metric {
-  padding: 16px 0;
-  font-size: 12px;
-}
-.metric strong {
-  font-size: 28px;
-  font-weight: 600;
-}
-.metric meter {
-  display: block;
-  width: 100%;
-  height: 16px;
-  margin-top: 8px;
-}
-.aspect {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  padding: 18px 0;
-  font-size: 12px;
-}
-.aspect span {
-  font-size: 38px;
-  color: var(--accent);
 }
 .srOnly {
   position: absolute;
@@ -277,4 +233,44 @@
     top: auto;
     height: auto;
   }
+}
+
+.terrainGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 18px;
+  padding: 16px;
+  margin: 10px 0;
+  background: var(--surface-muted);
+  border-radius: 10px;
+}
+.terrainItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.terrainIcon {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+.terrainItem dt {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.terrainItem dt a {
+  color: inherit;
+  text-decoration: none;
+}
+.terrainItem dt a:hover {
+  text-decoration: underline;
+}
+.terrainItem dd {
+  margin: 3px 0 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+.terrainItem dd span {
+  font-size: 11px;
+  font-weight: 400;
 }

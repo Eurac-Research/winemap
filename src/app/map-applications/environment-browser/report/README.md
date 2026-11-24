@@ -3,9 +3,10 @@
 The Explorer popup and configurable location report share this sampler.
 Open "Create location report" in the sidebar or popup, then click the map.
 The panel retains indicator and climate-condition selections while changing
-locations or basemaps. Its tables include all result states and absolute baseline
-differences; classified indicators have vertical bar charts with labeled class
-bands. Charts use responsive SVG with equivalent HTML tables. On mobile the panel
+locations or basemaps. Topography appears first in a compact icon grid. Each ecosystem section uses one
+horizontal bar chart. Climate figures show values, absolute baseline differences,
+and labeled class bands. Loading and missing-data states appear in the charts,
+with accessible SVG descriptions; no repeated value tables are shown. On mobile the panel
 occupies the bottom of the screen, leaving the map available above it.
 PDF export is a subsequent stage. Other map applications do not import this module.
 

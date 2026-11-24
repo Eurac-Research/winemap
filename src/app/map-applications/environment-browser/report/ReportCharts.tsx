@@ -1,7 +1,12 @@
 import { useId } from "react";
 import type { Indicator } from "@/content/indicators";
 
-import { chartDomain, formatReportValue } from "./build-report";
+import {
+  baselineDifference,
+  chartDomain,
+  formatReportValue,
+  sampleStatus,
+} from "./build-report";
 import styles from "./report.module.css";
 import type { LocationSample } from "./types";
 
@@ -15,9 +20,11 @@ const colors: Record<string, string> = {
 export function ReportCharts({
   indicator,
   samples,
+  pendingUrls = [],
 }: {
   indicator: Indicator;
   samples: LocationSample[];
+  pendingUrls?: string[];
 }) {
   const titleId = useId();
   const [min, max] = chartDomain(indicator, samples);
@@ -29,18 +36,23 @@ export function ReportCharts({
   const y = (value: number) =>
     bottom - ((value - min) / (max - min)) * (bottom - top);
   const step = (right - left) / Math.max(samples.length, 1);
-  if (!samples.some((sample) => sample.status === "ok")) return null;
+
   return (
     <div className={styles.chartScroll}>
       <svg
-        viewBox="0 0 640 365"
+        viewBox="0 0 640 395"
         className={styles.chart}
         role="img"
         aria-labelledby={titleId}
       >
         <title id={titleId}>
-          {indicator.name}: values by climate conditions. Exact values and
-          classes are in the table below.
+          {indicator.name}:{" "}
+          {samples
+            .map((sample) => {
+              const difference = baselineDifference(sample, samples);
+              return `${sample.label}: ${pendingUrls.includes(sample.url) ? "Loading" : sampleStatus(sample)} ${sample.unit ?? ""}${sample.classification ? `, ${sample.classification.label}` : ""}${difference == null ? "" : `, change from baseline ${formatReportValue(difference)}`}`;
+            })
+            .join("; ")}
         </title>
         <text x={left} y={15} className={styles.axisText}>
           {indicator.map?.unit ?? "Index (0–100)"}
@@ -116,6 +128,7 @@ export function ReportCharts({
         {samples.map((sample, index) => {
           const x = left + step * (index + 0.5);
           const value = sample.status === "ok" ? sample.value : null;
+          const difference = baselineDifference(sample, samples);
           return (
             <g key={sample.url}>
               {value != null ? (
@@ -152,7 +165,11 @@ export function ReportCharts({
                   textAnchor="middle"
                   className={styles.axisText}
                 >
-                  —
+                  {pendingUrls.includes(sample.url)
+                    ? "Loading…"
+                    : sample.status === "outside-coverage"
+                      ? "Outside area"
+                      : sampleStatus(sample)}
                 </text>
               )}
               <text
@@ -176,9 +193,26 @@ export function ReportCharts({
               >
                 {sample.periodId ?? ""}
               </text>
+              <text
+                x={x}
+                y={bottom + 63}
+                textAnchor="middle"
+                className={styles.axisText}
+              >
+                {difference == null
+                  ? ""
+                  : `Δ ${difference > 0 ? "+" : ""}${formatReportValue(difference)}`}
+              </text>
             </g>
           );
         })}
+        {samples.some(
+          (sample) => baselineDifference(sample, samples) != null,
+        ) && (
+          <text x={left} y={bottom + 88} className={styles.axisText}>
+            Δ change from historical baseline ({indicator.map?.unit ?? "index"})
+          </text>
+        )}
       </svg>
     </div>
   );
