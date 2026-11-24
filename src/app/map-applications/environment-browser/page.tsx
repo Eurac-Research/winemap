@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
   cogProtocol,
-  locationValues,
   setColorFunction,
 } from "@geomatico/maplibre-cog-protocol";
 import { ChevronDown, ExternalLink, Info, Navigation2 } from "lucide-react";
@@ -26,8 +25,6 @@ import {
   getIndicatorsWithMapByApp,
   type ClassificationBreak,
   type Indicator,
-  type IndicatorMapConfig,
-  type IndicatorMapOption,
 } from "@/content/indicators";
 import { getMapApplicationByHref } from "@/content/map-applications";
 import { BASEMAPS } from "@/content/maps/basemaps";
@@ -50,6 +47,7 @@ import styles from "@/styles/Home.module.css";
 import { resolveClimateChoice } from "./climate-options";
 import { ClimateSettings } from "./ClimateSettings";
 import layerStyles from "./layers.module.css";
+import { buildSamplingTargets, sampleLocation } from "./report/sample-location";
 
 type CogMetadata = Awaited<
   ReturnType<typeof import("@geomatico/maplibre-cog-protocol").getCogMetadata>
@@ -219,26 +217,6 @@ function removeRasterLayer(map: maplibregl.Map | null | undefined) {
   }
 }
 
-function getOptionLabel(
-  options: IndicatorMapOption[] | undefined,
-  optionId: string | undefined,
-) {
-  if (!optionId) return "";
-  return options?.find((option) => option.id === optionId)?.label ?? optionId;
-}
-
-function buildInspectionSampleLabel(
-  mapConfig: IndicatorMapConfig,
-  scenarioId?: string,
-  periodId?: string,
-) {
-  const scenarioLabel = getOptionLabel(mapConfig.scenarios, scenarioId);
-  const periodLabel = getOptionLabel(mapConfig.periods, periodId);
-
-  if (scenarioLabel && periodLabel) return `${scenarioLabel} ${periodLabel}`;
-  return scenarioLabel || periodLabel || "Active layer";
-}
-
 export default function EnvironmentBrowserPage() {
   const mapRef = useRef<MapRef>(null);
   const inspectionRequestIdRef = useRef(0);
@@ -313,20 +291,13 @@ export default function EnvironmentBrowserPage() {
     selectedIndicator,
   ]);
 
-  const inspectionSampleTargets = useMemo(() => {
-    if (!mapConfig || !hasScenarioOptions) return [];
-
-    return mapConfig.layers.map((layer) => ({
-      scenarioId: layer.scenarioId,
-      periodId: layer.periodId,
-      url: layer.url,
-      label: buildInspectionSampleLabel(
-        mapConfig,
-        layer.scenarioId,
-        layer.periodId,
-      ),
-    }));
-  }, [hasScenarioOptions, mapConfig]);
+  const inspectionSampleTargets = useMemo(
+    () =>
+      buildSamplingTargets(environmentIndicators, {
+        indicatorIds: selectedIndicatorId ? [selectedIndicatorId] : [],
+      }),
+    [selectedIndicatorId],
+  );
 
   const toggleCategory = (categoryKey: string) => {
     setOpenCategories((current) => ({
@@ -431,6 +402,7 @@ export default function EnvironmentBrowserPage() {
     const map = mapRef.current?.getMap();
     if (!map || !mapReady || !selectedAsset || !mapConfig) return;
 
+    let controller: AbortController | undefined;
     const runInspectionQuery = async (event: MapMouseEvent) => {
       // Popup clicks (including closing it) must not inspect the map beneath it.
       const target = event.originalEvent.target;
@@ -443,74 +415,43 @@ export default function EnvironmentBrowserPage() {
         latitude: event.lngLat.lat,
         longitude: event.lngLat.lng,
       };
-      const zoom = map.getZoom();
-
-      if (hasScenarioOptions && inspectionSampleTargets.length > 0) {
-        const results = await Promise.allSettled(
-          inspectionSampleTargets.map(async (sampleTarget) => {
-            const [value] = await locationValues(
-              sampleTarget.url,
-              coordinates,
-              zoom,
-            );
-            return {
-              scenarioId: sampleTarget.scenarioId,
-              periodId: sampleTarget.periodId,
-              label: sampleTarget.label,
-              value: Number.isFinite(value) ? value : null,
-            } satisfies InspectionSample;
-          }),
-        );
-
-        if (requestId !== inspectionRequestIdRef.current) return;
-
-        const samples = results.map((result, index) => {
-          const target = inspectionSampleTargets[index]!;
-          if (result.status === "fulfilled") {
-            return result.value;
-          }
-
-          return {
-            scenarioId: target.scenarioId,
-            periodId: target.periodId,
-            label: target.label,
-            value: null,
-          } satisfies InspectionSample;
-        });
-
-        const currentSample =
-          samples.find(
-            (sample) =>
-              sample.scenarioId === selectedAsset.scenarioId &&
-              sample.periodId === selectedAsset.periodId,
-          ) ?? null;
-
-        setInspectionInfo({
-          ...coordinates,
-          currentValue: currentSample?.value ?? null,
-          samples,
-        });
-        return;
-      }
-
+      // Stop scheduling the previous inspection when a new location is clicked.
+      controller?.abort();
+      controller = new AbortController();
       try {
-        const [value] = await locationValues(
-          selectedAsset.url,
+        const report = await sampleLocation(
           coordinates,
-          zoom,
+          inspectionSampleTargets,
+          {
+            signal: controller.signal,
+          },
         );
         if (requestId !== inspectionRequestIdRef.current) return;
-
-        setInspectionInfo({
-          ...coordinates,
-          value: Number.isFinite(value) ? value : null,
-        });
-      } catch {
+        const samples: InspectionSample[] = report.samples.map((sample) => ({
+          scenarioId: sample.scenarioId,
+          periodId: sample.periodId,
+          label: sample.label,
+          value: sample.value,
+        }));
+        const currentSample = samples.find(
+          (sample) =>
+            sample.scenarioId === selectedAsset.scenarioId &&
+            sample.periodId === selectedAsset.periodId,
+        );
+        setInspectionInfo(
+          hasScenarioOptions
+            ? {
+                ...coordinates,
+                currentValue: currentSample?.value ?? null,
+                samples,
+              }
+            : { ...coordinates, value: currentSample?.value ?? null },
+        );
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError")
+          return;
         if (requestId !== inspectionRequestIdRef.current) return;
-        setInspectionInfo({
-          ...coordinates,
-          value: null,
-        });
+        setInspectionInfo({ ...coordinates, value: null });
       }
     };
 
@@ -522,6 +463,7 @@ export default function EnvironmentBrowserPage() {
 
     return () => {
       map.off("click", handleClick);
+      controller?.abort();
       // Ignore results from requests made for a previous layer or map instance.
       inspectionRequestIdRef.current += 1;
     };
