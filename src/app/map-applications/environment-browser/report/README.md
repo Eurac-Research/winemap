@@ -1,8 +1,13 @@
 # Explorer location sampling
 
-Stage one provides data collection only. The Explorer popup uses the same sampler;
-the configurable report panel, charts, and PDF export are subsequent stages.
-Other map applications do not import this module.
+The Explorer popup and configurable location report share this sampler.
+Open "Create location report" in the sidebar or popup, then click the map.
+The panel retains indicator and climate-condition selections while changing
+locations or basemaps. Its tables include all result states and absolute baseline
+differences; classified indicators have vertical bar charts with labeled class
+bands. Charts use responsive SVG with equivalent HTML tables. On mobile the panel
+occupies the bottom of the screen, leaving the map available above it.
+PDF export is a subsequent stage. Other map applications do not import this module.
 
 ## Usage
 

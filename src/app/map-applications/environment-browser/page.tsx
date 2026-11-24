@@ -47,7 +47,10 @@ import styles from "@/styles/Home.module.css";
 import { resolveClimateChoice } from "./climate-options";
 import { ClimateSettings } from "./ClimateSettings";
 import layerStyles from "./layers.module.css";
+import { LocationReportPanel } from "./report/LocationReportPanel";
+import reportStyles from "./report/report.module.css";
 import { buildSamplingTargets, sampleLocation } from "./report/sample-location";
+import type { ReportLocation } from "./report/types";
 
 type CogMetadata = Awaited<
   ReturnType<typeof import("@geomatico/maplibre-cog-protocol").getCogMetadata>
@@ -220,6 +223,10 @@ function removeRasterLayer(map: maplibregl.Map | null | undefined) {
 export default function EnvironmentBrowserPage() {
   const mapRef = useRef<MapRef>(null);
   const inspectionRequestIdRef = useRef(0);
+  const [reportOpen, setReportOpen] = useState(false);
+  const [reportLocation, setReportLocation] = useState<ReportLocation | null>(
+    null,
+  );
 
   const [selectedIndicatorId, setSelectedIndicatorId] = useState("");
   const [selectedInfo, setSelectedInfo] = useState<Indicator | null>(null);
@@ -400,7 +407,7 @@ export default function EnvironmentBrowserPage() {
 
   useEffect(() => {
     const map = mapRef.current?.getMap();
-    if (!map || !mapReady || !selectedAsset || !mapConfig) return;
+    if (!map || !mapReady) return;
 
     let controller: AbortController | undefined;
     const runInspectionQuery = async (event: MapMouseEvent) => {
@@ -413,10 +420,12 @@ export default function EnvironmentBrowserPage() {
       setInspectionInfo(null);
       const coordinates = {
         latitude: event.lngLat.lat,
-        longitude: event.lngLat.lng,
+        longitude: ((((event.lngLat.lng + 180) % 360) + 360) % 360) - 180,
       };
       // Stop scheduling the previous inspection when a new location is clicked.
       controller?.abort();
+      setReportLocation(coordinates);
+      if (reportOpen || !selectedAsset) return;
       controller = new AbortController();
       try {
         const report = await sampleLocation(
@@ -470,6 +479,7 @@ export default function EnvironmentBrowserPage() {
   }, [
     hasScenarioOptions,
     inspectionSampleTargets,
+    reportOpen,
     mapConfig,
     mapReady,
     selectedAsset,
@@ -555,6 +565,18 @@ export default function EnvironmentBrowserPage() {
         </div>
       </div>
 
+      <button
+        type="button"
+        className={reportStyles.entry}
+        aria-expanded={reportOpen}
+        aria-controls="location-report"
+        onClick={() => {
+          clearInspection();
+          setReportOpen((value) => !value);
+        }}
+      >
+        {reportOpen ? "Hide location report" : "Create location report"}
+      </button>
       <section className={styles.sidebarSection}>
         <button
           type="button"
@@ -670,7 +692,20 @@ export default function EnvironmentBrowserPage() {
         />
         <NavigationControl position="bottom-right" visualizePitch showCompass />
         <ScaleControl position="bottom-right" />
-        {inspectionInfo && selectedIndicator ? (
+        {reportOpen && reportLocation && (
+          <Marker
+            longitude={reportLocation.longitude}
+            latitude={reportLocation.latitude}
+            anchor="center"
+          >
+            <div
+              role="img"
+              aria-label="Report location"
+              className="h-4 w-4 rounded-full border-2 border-white bg-[color:var(--accent)] shadow-lg"
+            />
+          </Marker>
+        )}
+        {!reportOpen && inspectionInfo && selectedIndicator ? (
           <>
             <Marker
               longitude={inspectionInfo.longitude}
@@ -762,6 +797,21 @@ export default function EnvironmentBrowserPage() {
                     </div>
                   </>
                 )}
+                <button
+                  type="button"
+                  className={reportStyles.entry}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    setReportLocation({
+                      longitude: inspectionInfo.longitude,
+                      latitude: inspectionInfo.latitude,
+                    });
+                    clearInspection();
+                    setReportOpen(true);
+                  }}
+                >
+                  Create location report
+                </button>
               </div>
             </Popup>
           </>
@@ -847,6 +897,11 @@ export default function EnvironmentBrowserPage() {
       />
       <MapApplicationNavigation activeHref="/map-applications/environment-browser" />
 
+      <LocationReportPanel
+        open={reportOpen}
+        location={reportLocation}
+        onClose={() => setReportOpen(false)}
+      />
       {selectedInfo ? (
         <>
           <div

@@ -33,9 +33,10 @@ const idle: ReportState = {
 export function useLocationReport(
   location: ReportLocation | null,
   selection: ReportSelection,
+  retry = 0,
 ) {
   // Compare by content: inline selection objects must not restart sampling.
-  const requestKey = JSON.stringify({ location, selection });
+  const requestKey = JSON.stringify({ location, selection, retry });
   const generation = useRef(0);
   const [state, setState] = useState<ReportState & { requestKey: string }>({
     ...idle,
