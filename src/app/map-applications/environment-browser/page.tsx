@@ -634,15 +634,6 @@ export default function EnvironmentBrowserPage() {
         }))
     : [];
 
-  const activeLayerLabel =
-    mapConfig && selectedAsset
-      ? buildInspectionSampleLabel(
-          mapConfig,
-          selectedAsset.scenarioId,
-          selectedAsset.periodId,
-        )
-      : "";
-
   const sidebarTop = (
     <div className={styles.filterPanel}>
       <div className={styles.filterHeader}>
@@ -880,12 +871,6 @@ export default function EnvironmentBrowserPage() {
                 <div className="pr-6 font-medium">{selectedIndicator.name}</div>
                 {inspectionInfo.samples && inspectionInfo.samples.length > 0 ? (
                   <>
-                    <div
-                      className="mt-1 text-[11px]"
-                      style={{ color: "var(--text-muted)" }}
-                    >
-                      Active layer: {activeLayerLabel}
-                    </div>
                     <div className="mt-2 space-y-1">
                       {inspectionInfo.samples.map((sample) => {
                         const isActive =
