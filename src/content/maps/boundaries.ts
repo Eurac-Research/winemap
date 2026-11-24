@@ -26,6 +26,14 @@ export const BOUNDARY_OVERLAYS: readonly BoundaryOverlay[] = [
     width: 2,
     defaultVisible: false,
   },
+  {
+    id: "country-borders",
+    label: "Countries",
+    url: "/geometries/countries.geojson",
+    color: "#928f90",
+    width: 1,
+    defaultVisible: false,
+  },
 ];
 
 export const boundaryLayerId = (id: string) => `boundary-${id}-line`;
