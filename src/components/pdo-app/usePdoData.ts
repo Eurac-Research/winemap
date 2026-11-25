@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+
 import type {
   Feature,
   FeatureCollection,
@@ -28,11 +29,11 @@ export interface PDORecord {
 
 export type PdoPointFeature = Feature<
   Geometry,
-  GeoJsonProperties & { PDOid?: string }
+  GeoJsonProperties & { PDOid?: string; pdoid?: string }
 >;
 export type PdoPointCollection = FeatureCollection<
   Geometry,
-  GeoJsonProperties & { PDOid?: string }
+  GeoJsonProperties & { PDOid?: string; pdoid?: string }
 >;
 
 interface CountryOption {
@@ -45,9 +46,11 @@ export interface SelectOption {
   value: string;
 }
 
-export function usePdoData() {
+export function usePdoData(staticFiles = false) {
   const [pdoData, setPdoData] = useState<PDORecord[]>([]);
-  const [pdoPointsData, setPdoPointsData] = useState<PdoPointCollection | null>(null);
+  const [pdoPointsData, setPdoPointsData] = useState<PdoPointCollection | null>(
+    null,
+  );
   const [countryData, setCountryData] = useState<CountryOption[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -62,8 +65,14 @@ export function usePdoData() {
 
       try {
         const [pdoRes, pointsRes, countryRes] = await Promise.all([
-          fetch("/api/data/pdo-eu-id", { signal: controller.signal }),
-          fetch("/api/data/pdo-points", { signal: controller.signal }),
+          fetch(
+            staticFiles ? "/data/pdo/records.json" : "/api/data/pdo-eu-id",
+            { signal: controller.signal },
+          ),
+          fetch(
+            staticFiles ? "/data/pdo/points.geojson" : "/api/data/pdo-points",
+            { signal: controller.signal },
+          ),
           fetch("/api/data/country-codes", { signal: controller.signal }),
         ]);
 
@@ -103,10 +112,12 @@ export function usePdoData() {
       isActive = false;
       controller.abort();
     };
-  }, []);
+  }, [staticFiles]);
 
   const pdoOptions = useMemo<SelectOption[]>(() => {
-    const uniqueNames = [...new Set(pdoData.map((item) => item.pdoname.trim()))];
+    const uniqueNames = [
+      ...new Set(pdoData.map((item) => item.pdoname.trim())),
+    ];
 
     return uniqueNames
       .filter(Boolean)
@@ -183,7 +194,7 @@ export function usePdoData() {
     const lookup = new Map<string, PdoPointFeature>();
 
     for (const feature of pdoPointsData?.features ?? []) {
-      const pdoId = feature.properties?.PDOid;
+      const pdoId = feature.properties?.pdoid ?? feature.properties?.PDOid;
       if (pdoId && !lookup.has(pdoId)) {
         lookup.set(pdoId, feature);
       }

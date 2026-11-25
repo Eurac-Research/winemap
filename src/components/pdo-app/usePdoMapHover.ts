@@ -1,8 +1,13 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
-import type { MapMouseEvent } from "mapbox-gl";
+
 import type { PdoHoverInfo } from "./PdoMapHoverTooltip";
+
+type HoverEvent = {
+  point: { x: number; y: number };
+  features?: { properties: Record<string, unknown> | null }[];
+};
 
 interface PdoHoverRecord {
   pdoid: string;
@@ -22,19 +27,23 @@ export function usePdoMapHover<T extends PdoHoverRecord>(pdoData: T[]) {
     [pdoNameById],
   );
 
-  const onHover = useCallback((event: MapMouseEvent) => {
+  const onHover = useCallback((event: HoverEvent) => {
     const {
       features,
       point: { x, y },
     } = event;
 
-    const pdoIds =
-      features
-        ?.map((feature) => {
-          const pdoId = feature?.properties?.PDOid;
-          return typeof pdoId === "string" ? pdoId : null;
-        })
-        .filter((pdoId): pdoId is string => Boolean(pdoId)) ?? [];
+    const pdoIds = Array.from(
+      new Set(
+        features
+          ?.map((feature) => {
+            const pdoId =
+              feature?.properties?.pdoid ?? feature?.properties?.PDOid;
+            return typeof pdoId === "string" ? pdoId : null;
+          })
+          .filter((pdoId): pdoId is string => Boolean(pdoId)) ?? [],
+      ),
+    );
 
     if (!pdoIds.length) {
       setHoverInfo(null);

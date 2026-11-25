@@ -3,18 +3,22 @@
 import { Suspense, useCallback, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { getMapApplicationByHref } from "@/content/map-applications";
+import { BASEMAPS } from "@/content/maps/basemaps";
+import { BOUNDARY_OVERLAYS } from "@/content/maps/boundaries";
 import { ChevronLeft } from "lucide-react";
-import type { MapMouseEvent } from "mapbox-gl";
 import { isMobile } from "react-device-detect";
 import {
   NavigationControl,
   Map as ReactMap,
   ScaleControl,
+  type MapLayerMouseEvent,
   type MapRef,
-} from "react-map-gl/mapbox";
+} from "react-map-gl/maplibre";
 
 import { MapApplicationHelp } from "@/components/maps/MapApplicationHelp";
 import { MapApplicationNavigation } from "@/components/maps/MapApplicationNavigation";
+import { MapLayerControl } from "@/components/maps/MapLayerControl";
+import { MapLibreBoundaryLayers } from "@/components/maps/MapLibreBoundaryLayers";
 import {
   DetailFieldList,
   type DetailField,
@@ -23,12 +27,16 @@ import {
   PdoFilterPanel,
   type FilterFieldConfig,
 } from "@/components/pdo-app/PdoFilterPanel";
+import { PdoLayers } from "@/components/pdo-app/PdoLayers";
 import { PdoMapHoverTooltip } from "@/components/pdo-app/PdoMapHoverTooltip";
 import { PdoMapLayout } from "@/components/pdo-app/PdoMapLayout";
 import { PdoResultsList } from "@/components/pdo-app/PdoResultsList";
 import { PdoSidebarShell } from "@/components/pdo-app/PdoSidebarShell";
+import { usePdoAreas } from "@/components/pdo-app/usePdoAreas";
 import { usePdoData, type PDORecord } from "@/components/pdo-app/usePdoData";
-import { usePdoMapFiltering } from "@/components/pdo-app/usePdoMapFiltering";
+
+import "maplibre-gl/dist/maplibre-gl.css";
+
 import { usePdoMapHover } from "@/components/pdo-app/usePdoMapHover";
 import styles from "@/styles/Home.module.css";
 import amendmentIcon from "@/public/icons/Amendment-outline.svg";
@@ -57,7 +65,6 @@ type FilterKey = keyof FilterState;
 
 type SidebarView = "overview" | "list" | "detail";
 
-const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 const INITIAL_VIEW_STATE = {
   longitude: 14,
   latitude: 46.611715,
@@ -70,11 +77,23 @@ const mapApplication = getMapApplicationByHref("/map-applications/pdo-atlas");
 
 export default function PdoExplorerPage() {
   const mapRef = useRef<MapRef>(null);
+  const [selectedBasemapId, setSelectedBasemapId] = useState("light");
+  const selectedBasemap =
+    BASEMAPS.find((item) => item.id === selectedBasemapId) ?? BASEMAPS[0];
+  const [visibleBoundaryIds, setVisibleBoundaryIds] = useState<string[]>(() =>
+    BOUNDARY_OVERLAYS.filter((item) => item.defaultVisible).map(
+      (item) => item.id,
+    ),
+  );
+  const [viewState, setViewState] = useState(INITIAL_VIEW_STATE);
+  const [mapError, setMapError] = useState<string | null>(null);
+  const { areas, boundsById, areaError } = usePdoAreas();
   const [filters, setFilters] = useState<FilterState>({});
   const [selectedPdoId, setSelectedPdoId] = useState<string | null>(null);
   const [mapSelectedPdoIds, setMapSelectedPdoIds] = useState<string[]>([]);
   const {
     pdoData,
+    pdoPointsData,
     isLoadingData,
     loadError,
     pdoOptions,
@@ -83,7 +102,7 @@ export default function PdoExplorerPage() {
     varietyOptions,
     countryOptions,
     pointFeatureByPdoId,
-  } = usePdoData();
+  } = usePdoData(true);
   const { hoverInfo, getPdoNameById, onHover, clearHover } =
     usePdoMapHover(pdoData);
 
@@ -155,7 +174,9 @@ export default function PdoExplorerPage() {
   const sidebarListPdos =
     mapSelectedPdos.length > 0 ? mapSelectedPdos : filteredPdos;
   const listSummary =
-    filterSummary ?? (mapSelectedPdos.length > 0 ? "Selected from map" : null);
+    mapSelectedPdos.length > 0
+      ? "Overlapping PDOs at the selected location"
+      : filterSummary;
 
   const sidebarView = useMemo<SidebarView>(() => {
     if (selectedPdo) return "detail";
@@ -191,12 +212,44 @@ export default function PdoExplorerPage() {
       { label: "Varieties", value: varietyCount.toString() },
     ];
   }, [pdoData]);
-  const { resetMapView, showPdoIdsOnMap } = usePdoMapFiltering({
-    mapRef,
-    pointFeatureByPdoId,
-    initialViewState: INITIAL_VIEW_STATE,
-    defaultPadding: DEFAULT_PADDING,
-  });
+  const resetMapView = useCallback(() => {
+    mapRef.current?.flyTo({
+      center: [INITIAL_VIEW_STATE.longitude, INITIAL_VIEW_STATE.latitude],
+      zoom: INITIAL_VIEW_STATE.zoom,
+    });
+  }, []);
+  const showPdoIdsOnMap = useCallback(
+    (ids: string[]) => {
+      const bounds = ids.flatMap<number[]>((id) => {
+        const areaBounds = boundsById.get(id);
+        if (areaBounds) return [areaBounds];
+        const point = pointFeatureByPdoId.get(id)?.geometry;
+        if (point?.type !== "Point") return [];
+        const [x, y] = point.coordinates;
+        return [[x, y, x, y]];
+      });
+      if (!bounds.length) return;
+      mapRef.current?.fitBounds(
+        [
+          [
+            Math.min(...bounds.map((b) => b[0])),
+            Math.min(...bounds.map((b) => b[1])),
+          ],
+          [
+            Math.max(...bounds.map((b) => b[2])),
+            Math.max(...bounds.map((b) => b[3])),
+          ],
+        ],
+        { padding: DEFAULT_PADDING, duration: 700, maxZoom: 12 },
+      );
+    },
+    [boundsById, pointFeatureByPdoId],
+  );
+  const visiblePdoIds = useMemo(
+    () =>
+      Object.keys(filters).length ? filteredPdos.map((pdo) => pdo.pdoid) : null,
+    [filters, filteredPdos],
+  );
 
   const updateSidebarUrl = useCallback(
     (nextFilters: FilterState, detailPdoId?: string | null) => {
@@ -224,10 +277,6 @@ export default function PdoExplorerPage() {
     setFilters({});
     setSelectedPdoId(null);
     setMapSelectedPdoIds([]);
-    mapRef.current
-      ?.getMap()
-      .setFilter("pdo-area", null)
-      .setFilter("pdo-pins", null);
     history.replaceState({}, "", window.location.pathname);
   }, []);
 
@@ -359,12 +408,12 @@ export default function PdoExplorerPage() {
   ]);
 
   const handleMapClick = useCallback(
-    (event: MapMouseEvent) => {
+    (event: MapLayerMouseEvent) => {
       const pdoIds = Array.from(
         new Set(
           event.features
             ?.map((feature) => {
-              const pdoId = feature?.properties?.PDOid;
+              const pdoId = feature?.properties?.pdoid;
               return typeof pdoId === "string" ? pdoId : null;
             })
             .filter((pdoId): pdoId is string => Boolean(pdoId)) ?? [],
@@ -379,7 +428,6 @@ export default function PdoExplorerPage() {
       if (pdoIds.length > 1) {
         setSelectedPdoId(null);
         setMapSelectedPdoIds(pdoIds);
-        showPdoIdsOnMap(pdoIds);
         history.replaceState({}, "", window.location.pathname);
         return;
       }
@@ -387,7 +435,7 @@ export default function PdoExplorerPage() {
       setMapSelectedPdoIds([]);
       openPdoDetail(pdoIds[0]);
     },
-    [clearSelectionInPlace, openPdoDetail, showPdoIdsOnMap],
+    [clearSelectionInPlace, openPdoDetail],
   );
 
   const filterFields = useMemo<FilterFieldConfig<FilterKey>[]>(
@@ -520,7 +568,7 @@ export default function PdoExplorerPage() {
       filters={filters}
       isLoadingData={isLoadingData}
       filtersDisabled={filtersDisabled}
-      loadError={loadError}
+      loadError={loadError ?? areaError}
       onReset={clearSelection}
     />
   );
@@ -605,24 +653,40 @@ export default function PdoExplorerPage() {
   );
 
   const mapContent = (
-    <Suspense fallback={<div>Loading...</div>}>
+    <div className="relative h-full w-full">
       <ReactMap
+        key={selectedBasemap.id}
         ref={mapRef}
         minZoom={isMobile ? 1 : 3}
-        initialViewState={INITIAL_VIEW_STATE}
+        {...viewState}
+        onMove={(event) => setViewState(event.viewState)}
         style={{ width: "100%", height: "100%" }}
-        mapStyle="mapbox://styles/tiacop/clas8a92e003c15o2bpopdfqt"
-        mapboxAccessToken={MAPBOX_TOKEN}
-        interactiveLayerIds={[
-          "pdo-area",
-          "pdo-pins",
-          "pdo-municipality",
-          "vulnerabilityLayer",
-        ]}
+        mapStyle={selectedBasemap.style}
+        onLoad={() => setMapError(null)}
+        onError={(event) => {
+          console.error("PDO map resource error", event.error);
+          queueMicrotask(() =>
+            setMapError(
+              "Some map resources could not be loaded. Try another basemap.",
+            ),
+          );
+        }}
+        interactiveLayerIds={["pdo-area", "pdo-pins"]}
+        cursor={hoverInfo ? "pointer" : "grab"}
         onClick={handleMapClick}
         onMouseMove={onHover}
         onMouseLeave={clearHover}
       >
+        <PdoLayers
+          points={pdoPointsData}
+          areas={areas}
+          visibleIds={visiblePdoIds}
+          selectedId={selectedPdoId}
+        />
+        <MapLibreBoundaryLayers
+          overlays={BOUNDARY_OVERLAYS}
+          visibleIds={visibleBoundaryIds}
+        />
         <NavigationControl
           position="bottom-right"
           visualizePitch={true}
@@ -630,13 +694,42 @@ export default function PdoExplorerPage() {
         />
         <ScaleControl position="bottom-right" />
       </ReactMap>
+      <div className="absolute top-3 left-5 z-10">
+        <MapLayerControl
+          basemaps={BASEMAPS}
+          selectedBasemapId={selectedBasemap.id}
+          onBasemapChange={(id) => {
+            clearHover();
+            setMapError(null);
+            setSelectedBasemapId(id);
+          }}
+          referenceAreas={{
+            overlays: BOUNDARY_OVERLAYS,
+            visibleIds: visibleBoundaryIds,
+            onVisibilityChange: (id, visible) =>
+              setVisibleBoundaryIds((current) =>
+                visible
+                  ? [...new Set([...current, id])]
+                  : current.filter((item) => item !== id),
+              ),
+          }}
+        />
+      </div>
+      {(!areas || mapError) && (
+        <div
+          role="status"
+          className="absolute bottom-8 left-3 rounded bg-[var(--surface)] p-2 text-sm"
+        >
+          {areaError ?? mapError ?? "Loading PDO boundaries…"}
+        </div>
+      )}
       {hoverInfo && (
         <PdoMapHoverTooltip
           hoverInfo={hoverInfo}
           getPdoNameById={getPdoNameById}
         />
       )}
-    </Suspense>
+    </div>
   );
 
   return (
