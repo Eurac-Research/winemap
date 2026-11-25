@@ -13,7 +13,7 @@ export const BOUNDARY_OVERLAYS: readonly BoundaryOverlay[] = [
   {
     id: "alpine-space",
     label: "Alpine Space",
-    url: "/geometries/alpine_space.geojson",
+    url: "/data/boundaries/alpine_space.geojson",
     color: "#334155",
     width: 2,
     defaultVisible: false,
@@ -21,7 +21,7 @@ export const BOUNDARY_OVERLAYS: readonly BoundaryOverlay[] = [
   {
     id: "respond-pilot-regions",
     label: "RESPOND pilot regions",
-    url: "/geometries/respond_pilot_regions.geojson",
+    url: "/data/boundaries/respond_pilot_regions.geojson",
     color: "#9d174d",
     width: 2,
     defaultVisible: false,
@@ -29,7 +29,7 @@ export const BOUNDARY_OVERLAYS: readonly BoundaryOverlay[] = [
   {
     id: "country-borders",
     label: "Countries",
-    url: "/geometries/countries.geojson",
+    url: "/data/boundaries/countries.geojson",
     color: "#928f90",
     width: 1,
     defaultVisible: false,
