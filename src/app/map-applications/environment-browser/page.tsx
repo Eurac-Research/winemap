@@ -55,7 +55,7 @@ import styles from "@/styles/Home.module.css";
 import { resolveClimateChoice } from "./climate-options";
 import { ClimateSettings } from "./ClimateSettings";
 import layerStyles from "./layers.module.css";
-import controlStyles from "./map-controls.module.css";
+import controlStyles from "@/components/maps/MapActions.module.css";
 import { LocationReportPanel } from "./report/LocationReportPanel";
 import { buildSamplingTargets, sampleLocation } from "./report/sample-location";
 import type { ReportLocation } from "./report/types";

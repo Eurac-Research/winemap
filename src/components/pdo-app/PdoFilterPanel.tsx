@@ -24,7 +24,7 @@ interface PdoFilterPanelProps<TKey extends string> {
   isLoadingData: boolean;
   filtersDisabled: boolean;
   loadError: string | null;
-  onReset: () => void;
+  onReset?: () => void;
 }
 
 export function PdoFilterPanel<TKey extends string>({
@@ -52,15 +52,17 @@ export function PdoFilterPanel<TKey extends string>({
           </div>
           <h2 className={styles.filterHeading}>{heading}</h2>
         </div>
-        <div className={styles.filterResetWrap}>
-          <button
-            type="button"
-            className={styles.filterResetButton}
-            onClick={onReset}
-          >
-            reset
-          </button>
-        </div>
+        {onReset && (
+          <div className={styles.filterResetWrap}>
+            <button
+              type="button"
+              className={styles.filterResetButton}
+              onClick={onReset}
+            >
+              reset
+            </button>
+          </div>
+        )}
       </div>
 
       <div className={styles.filterFields}>

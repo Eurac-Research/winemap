@@ -5,7 +5,7 @@ import Image from "next/image";
 import { getMapApplicationByHref } from "@/content/map-applications";
 import { BASEMAPS } from "@/content/maps/basemaps";
 import { BOUNDARY_OVERLAYS } from "@/content/maps/boundaries";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Eraser } from "lucide-react";
 import { isMobile } from "react-device-detect";
 import {
   NavigationControl,
@@ -15,10 +15,12 @@ import {
   type MapRef,
 } from "react-map-gl/maplibre";
 
+import controlStyles from "@/components/maps/MapActions.module.css";
 import { MapApplicationHelp } from "@/components/maps/MapApplicationHelp";
 import { MapApplicationNavigation } from "@/components/maps/MapApplicationNavigation";
 import { MapLayerControl } from "@/components/maps/MapLayerControl";
 import { MapLibreBoundaryLayers } from "@/components/maps/MapLibreBoundaryLayers";
+import MapPlaceSearch from "@/components/maps/MapPlaceSearch";
 import {
   DetailFieldList,
   type DetailField,
@@ -77,6 +79,7 @@ const mapApplication = getMapApplicationByHref("/map-applications/pdo-atlas");
 
 export default function PdoExplorerPage() {
   const mapRef = useRef<MapRef>(null);
+  const [searchResetKey, setSearchResetKey] = useState(0);
   const [selectedBasemapId, setSelectedBasemapId] = useState("light");
   const selectedBasemap =
     BASEMAPS.find((item) => item.id === selectedBasemapId) ?? BASEMAPS[0];
@@ -569,7 +572,6 @@ export default function PdoExplorerPage() {
       isLoadingData={isLoadingData}
       filtersDisabled={filtersDisabled}
       loadError={loadError ?? areaError}
-      onReset={clearSelection}
     />
   );
 
@@ -694,26 +696,66 @@ export default function PdoExplorerPage() {
         />
         <ScaleControl position="bottom-right" />
       </ReactMap>
-      <div className="absolute top-3 left-5 z-10">
-        <MapLayerControl
-          basemaps={BASEMAPS}
-          selectedBasemapId={selectedBasemap.id}
-          onBasemapChange={(id) => {
-            clearHover();
+      <div className="absolute left-6 right-4 top-3 z-20 flex flex-col items-start gap-3 pointer-events-none [&>*]:pointer-events-auto">
+        <MapPlaceSearch
+          key={searchResetKey}
+          onSelect={(result) => {
             setMapError(null);
-            setSelectedBasemapId(id);
-          }}
-          referenceAreas={{
-            overlays: BOUNDARY_OVERLAYS,
-            visibleIds: visibleBoundaryIds,
-            onVisibilityChange: (id, visible) =>
-              setVisibleBoundaryIds((current) =>
-                visible
-                  ? [...new Set([...current, id])]
-                  : current.filter((item) => item !== id),
-              ),
+            clearHover();
+            mapRef.current?.flyTo({
+              center: [result.longitude, result.latitude],
+              zoom: Math.max(viewState.zoom, 9),
+              essential: true,
+            });
           }}
         />
+        <div className="relative">
+          <MapLayerControl
+            basemaps={BASEMAPS}
+            selectedBasemapId={selectedBasemap.id}
+            onBasemapChange={(id) => {
+              clearHover();
+              setMapError(null);
+              setSelectedBasemapId(id);
+            }}
+            referenceAreas={{
+              overlays: BOUNDARY_OVERLAYS,
+              visibleIds: visibleBoundaryIds,
+              onVisibilityChange: (id, visible) =>
+                setVisibleBoundaryIds((current) =>
+                  visible
+                    ? [...new Set([...current, id])]
+                    : current.filter((item) => item !== id),
+                ),
+            }}
+          />
+          <div
+            className={controlStyles.actions}
+            role="group"
+            aria-label="Map actions"
+          >
+            <button
+              type="button"
+              className={controlStyles.button}
+              aria-label="Clear selection"
+              aria-describedby="pdo-clear-selection-hint"
+              onClick={() => {
+                clearSelection();
+                clearHover();
+                setSearchResetKey((value) => value + 1);
+              }}
+            >
+              <Eraser size={18} aria-hidden="true" />
+              <span
+                id="pdo-clear-selection-hint"
+                role="tooltip"
+                className={controlStyles.tooltip}
+              >
+                Clear PDO selection, filters and search, and reset the map view
+              </span>
+            </button>
+          </div>
+        </div>
       </div>
       {(!areas || mapError) && (
         <div
