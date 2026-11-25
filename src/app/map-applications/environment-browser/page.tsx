@@ -924,11 +924,14 @@ export default function EnvironmentBrowserPage() {
       />
       <MapApplicationNavigation activeHref="/map-applications/environment-browser" />
 
-      <LocationReportPanel
-        open={reportOpen}
-        location={reportLocation}
-        onClose={() => setReportOpen(false)}
-      />
+      {reportOpen && (
+        <LocationReportPanel
+          open={reportOpen}
+          location={reportLocation}
+          initialIndicatorId={selectedIndicatorId}
+          onClose={() => setReportOpen(false)}
+        />
+      )}
       {selectedInfo ? (
         <>
           <div

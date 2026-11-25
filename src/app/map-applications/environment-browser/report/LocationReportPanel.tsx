@@ -11,28 +11,27 @@ import type { ReportLocation, ReportSelection } from "./types";
 import { useLocationReport } from "./useLocationReport";
 
 const indicators = getIndicatorsWithMapByApp("environment-browser");
-const defaults = [
-  "mean_temperature",
-  "huglin",
-  "dem",
-  "naturalness-index",
-  "pollination",
-];
 
 export function LocationReportPanel({
   open,
   location,
+  initialIndicatorId,
   onClose,
 }: {
   open: boolean;
   location: ReportLocation | null;
+  initialIndicatorId?: string;
   onClose: () => void;
 }) {
-  const [selection, setSelection] = useState<ReportSelection>({
-    indicatorIds: defaults.filter((id) =>
-      indicators.some((item) => item.id === id),
-    ),
-  });
+  const [selection, setSelection] = useState<ReportSelection>(() => ({
+    indicatorIds: indicators
+      .filter(
+        (indicator) =>
+          indicator.category === "topography" ||
+          indicator.id === initialIndicatorId,
+      )
+      .map((indicator) => indicator.id),
+  }));
   const [retry, setRetry] = useState(0);
   const closeRef = useRef<HTMLButtonElement>(null);
   const report = useLocationReport(open ? location : null, selection, retry);
@@ -123,8 +122,7 @@ export function LocationReportPanel({
           </p>
         ) : !targets.length ? (
           <p className={styles.empty}>
-            Choose at least one indicator
-            condition.
+            Choose at least one indicator condition.
           </p>
         ) : (
           <>
