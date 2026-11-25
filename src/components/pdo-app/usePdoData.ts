@@ -73,7 +73,10 @@ export function usePdoData(staticFiles = false) {
             staticFiles ? "/data/pdo/points.geojson" : "/api/data/pdo-points",
             { signal: controller.signal },
           ),
-          fetch("/api/data/country-codes", { signal: controller.signal }),
+          fetch(
+            staticFiles ? "/data/country_codes.json" : "/api/data/country-codes",
+            { signal: controller.signal },
+          ),
         ]);
 
         if (!pdoRes.ok || !pointsRes.ok || !countryRes.ok) {
