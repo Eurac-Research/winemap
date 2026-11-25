@@ -34,10 +34,6 @@ export function LocationReportPanel({
     ),
   });
   const [retry, setRetry] = useState(0);
-  const [pickingAt, setPickingAt] = useState<ReportLocation | null | undefined>(
-    undefined,
-  );
-  const picking = pickingAt !== undefined && pickingAt === location;
   const closeRef = useRef<HTMLButtonElement>(null);
   const report = useLocationReport(open ? location : null, selection, retry);
   const targets = useMemo(
@@ -60,7 +56,7 @@ export function LocationReportPanel({
   return (
     <aside
       id="location-report"
-      className={`${styles.panel} ${picking ? styles.picking : ""}`}
+      className={styles.panel}
       aria-label="Location report"
       onKeyDown={(event) => {
         if (event.key === "Escape") {
@@ -82,20 +78,8 @@ export function LocationReportPanel({
             x
           </button>
         </div>
-        <div className={styles.pickRow}>
-          <button
-            type="button"
-            onClick={() => setPickingAt(picking ? undefined : location)}
-          >
-            {picking ? "Back to report" : "Choose on map"}
-          </button>
-          <span className={styles.muted}>
-            {picking
-              ? "Click a new location to reopen the report."
-              : "Click the map to update the location."}
-          </span>
-        </div>
-        <div hidden={picking}>
+        <p className={styles.muted}>Click the map to update the location.</p>
+        <div>
           <ReportSettings
             indicators={indicators}
             selection={selection}
@@ -117,15 +101,12 @@ export function LocationReportPanel({
           />
         )}
         {(errors > 0 || report.status === "error") && (
-          <button
-            type="button"
-            onClick={() => setRetry((value) => value + 1)}
-          >
+          <button type="button" onClick={() => setRetry((value) => value + 1)}>
             Retry failed layers
           </button>
         )}
       </header>
-      <div className={styles.body} hidden={picking}>
+      <div className={styles.body}>
         <div className={styles.reportHeading}>
           <p className={styles.eyebrow}>WINEMAP Explorer</p>
           <h2 id="location-report-title">Location report</h2>

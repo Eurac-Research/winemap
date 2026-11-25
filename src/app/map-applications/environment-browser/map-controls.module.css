@@ -1,0 +1,62 @@
+.actions {
+  position: absolute;
+  top: 7px;
+  left: 62px;
+  display: flex;
+  gap: 8px;
+}
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--foreground);
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+}
+.button:hover:not([aria-disabled="true"]),
+.button[aria-expanded="true"] {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.button[aria-disabled="true"] {
+  color: var(--text-muted);
+  background: var(--surface-muted);
+  cursor: not-allowed;
+}
+.button[aria-disabled="true"] > svg {
+  opacity: 0.5;
+}
+.button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.tooltip {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: -62px;
+  z-index: 1;
+  width: max-content;
+  max-width: min(230px, calc(100vw - 80px));
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--foreground);
+  box-shadow: var(--shadow-soft);
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: left;
+  pointer-events: none;
+  visibility: hidden;
+}
+.button:hover .tooltip,
+.button:focus-visible .tooltip {
+  visibility: visible;
+}

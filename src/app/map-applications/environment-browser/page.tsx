@@ -6,7 +6,15 @@ import {
   cogProtocol,
   setColorFunction,
 } from "@geomatico/maplibre-cog-protocol";
-import { ChevronDown, ExternalLink, Info, Navigation2 } from "lucide-react";
+import {
+  ChevronDown,
+  Eraser,
+  ExternalLink,
+  FileChartColumn,
+  Info,
+  Map as MapIcon,
+  Navigation2,
+} from "lucide-react";
 import maplibregl from "maplibre-gl";
 import type { MapMouseEvent } from "maplibre-gl";
 import Map, {
@@ -47,8 +55,8 @@ import styles from "@/styles/Home.module.css";
 import { resolveClimateChoice } from "./climate-options";
 import { ClimateSettings } from "./ClimateSettings";
 import layerStyles from "./layers.module.css";
+import controlStyles from "./map-controls.module.css";
 import { LocationReportPanel } from "./report/LocationReportPanel";
-import reportStyles from "./report/report.module.css";
 import { buildSamplingTargets, sampleLocation } from "./report/sample-location";
 import type { ReportLocation } from "./report/types";
 
@@ -324,6 +332,12 @@ export default function EnvironmentBrowserPage() {
     clearInspection();
   };
 
+  const clearLocation = () => {
+    clearInspection();
+    setReportLocation(null);
+    setReportOpen(false);
+  };
+
   const selectIndicator = (indicatorId: string) => {
     if (indicatorId === selectedIndicatorId) {
       clearSelection();
@@ -564,29 +578,6 @@ export default function EnvironmentBrowserPage() {
           </div>
         </div>
       </div>
-
-      <button
-        type="button"
-        className={reportStyles.entry}
-        aria-expanded={reportOpen}
-        aria-controls="location-report"
-        onClick={() => {
-          clearInspection();
-          setReportOpen((value) => !value);
-        }}
-      >
-        {reportOpen ? "Hide location report" : "Create location report"}
-      </button>
-      <section className={styles.sidebarSection}>
-        <button
-          type="button"
-          onClick={clearSelection}
-          disabled={!selectedIndicator}
-          className={styles.clearButton}
-        >
-          Clear Selection
-        </button>
-      </section>
     </div>
   );
 
@@ -692,33 +683,22 @@ export default function EnvironmentBrowserPage() {
         />
         <NavigationControl position="bottom-right" visualizePitch showCompass />
         <ScaleControl position="bottom-right" />
-        {reportOpen && reportLocation && (
+        {reportLocation && (
           <Marker
             longitude={reportLocation.longitude}
             latitude={reportLocation.latitude}
             anchor="center"
+            style={{ pointerEvents: "none" }}
           >
             <div
               role="img"
-              aria-label="Report location"
+              aria-label={reportOpen ? "Report location" : "Selected location"}
               className="h-4 w-4 rounded-full border-2 border-white bg-[color:var(--accent)] shadow-lg"
             />
           </Marker>
         )}
         {!reportOpen && inspectionInfo && selectedIndicator ? (
           <>
-            <Marker
-              longitude={inspectionInfo.longitude}
-              latitude={inspectionInfo.latitude}
-              anchor="center"
-              style={{ pointerEvents: "none" }}
-            >
-              <div
-                role="img"
-                aria-label="Selected location"
-                className="h-3 w-3 rounded-full border-2 border-white bg-[color:var(--accent)] shadow-[0_0_0_1px_rgba(0,0,0,0.6)]"
-              />
-            </Marker>
             <Popup
               longitude={inspectionInfo.longitude}
               latitude={inspectionInfo.latitude}
@@ -797,21 +777,6 @@ export default function EnvironmentBrowserPage() {
                     </div>
                   </>
                 )}
-                <button
-                  type="button"
-                  className={reportStyles.entry}
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    setReportLocation({
-                      longitude: inspectionInfo.longitude,
-                      latitude: inspectionInfo.latitude,
-                    });
-                    clearInspection();
-                    setReportOpen(true);
-                  }}
-                >
-                  Create location report
-                </button>
               </div>
             </Popup>
           </>
@@ -829,27 +794,89 @@ export default function EnvironmentBrowserPage() {
             });
           }}
         />
-        <MapLayerControl
-          basemaps={BASEMAPS}
-          selectedBasemapId={selectedBasemap.id}
-          onBasemapChange={(id) => {
-            if (id === selectedBasemapId) return;
-            setMapReady(false);
-            clearInspection();
-            setSelectedBasemapId(id);
-          }}
-          referenceAreas={{
-            overlays: BOUNDARY_OVERLAYS,
-            visibleIds: visibleBoundaryIds,
-            onVisibilityChange: (id, visible) => {
-              setVisibleBoundaryIds((current) =>
-                visible
-                  ? [...new Set([...current, id])]
-                  : current.filter((item) => item !== id),
-              );
-            },
-          }}
-        />
+        <div className="relative">
+          <MapLayerControl
+            basemaps={BASEMAPS}
+            selectedBasemapId={selectedBasemap.id}
+            onBasemapChange={(id) => {
+              if (id === selectedBasemapId) return;
+              setMapReady(false);
+              clearInspection();
+              setSelectedBasemapId(id);
+            }}
+            referenceAreas={{
+              overlays: BOUNDARY_OVERLAYS,
+              visibleIds: visibleBoundaryIds,
+              onVisibilityChange: (id, visible) => {
+                setVisibleBoundaryIds((current) =>
+                  visible
+                    ? [...new Set([...current, id])]
+                    : current.filter((item) => item !== id),
+                );
+              },
+            }}
+          />
+          <div
+            className={controlStyles.actions}
+            role="group"
+            aria-label="Map actions"
+          >
+            <button
+              type="button"
+              className={controlStyles.button}
+              aria-label={
+                reportOpen
+                  ? "Hide location report and show map"
+                  : "Create location report"
+              }
+              aria-describedby="location-report-hint"
+              aria-disabled={!reportLocation}
+              aria-expanded={reportOpen}
+              aria-controls="location-report"
+              onClick={() => {
+                if (!reportLocation) return;
+                clearInspection();
+                setReportOpen((value) => !value);
+              }}
+            >
+              {reportOpen ? (
+                <MapIcon size={18} aria-hidden="true" />
+              ) : (
+                <FileChartColumn size={18} aria-hidden="true" />
+              )}
+              <span
+                id="location-report-hint"
+                role="tooltip"
+                className={controlStyles.tooltip}
+              >
+                {!reportLocation
+                  ? "Select a location on the map first"
+                  : reportOpen
+                    ? "Hide location report and show map"
+                    : "Create location report"}
+              </span>
+            </button>
+            <button
+              type="button"
+              className={controlStyles.button}
+              aria-label="Clear selection"
+              aria-describedby="clear-selection-hint"
+              aria-disabled={!reportLocation && !inspectionInfo && !reportOpen}
+              onClick={clearLocation}
+            >
+              <Eraser size={18} aria-hidden="true" />
+              <span
+                id="clear-selection-hint"
+                role="tooltip"
+                className={controlStyles.tooltip}
+              >
+                {reportLocation || inspectionInfo || reportOpen
+                  ? "Clear the selected location, popup and report"
+                  : "No location selected to clear"}
+              </span>
+            </button>
+          </div>
+        </div>
       </div>
 
       <div className="absolute bottom-13 right-12 w-auto bg-background rounded-xl">
