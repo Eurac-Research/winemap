@@ -576,6 +576,9 @@ export default function EnvironmentBrowserPage() {
               </MapApplicationHelpButton>
             ) : null}
           </div>
+          <div className="mt-3 text-sm leading-relaxed app-muted">
+            <MapApplicationHelp help={mapApplication?.help?.slice(0, 1)} />
+          </div>
         </div>
       </div>
     </div>

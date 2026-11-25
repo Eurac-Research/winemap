@@ -139,11 +139,16 @@ export function MapApplicationHelpButton({
   return (
     <Popover
       trigger="click"
+      getPopupContainer={() => document.body}
+      autoAdjustOverflow
+      zIndex={1050}
       content={<div className={styles.filterHelpContent}>{children}</div>}
       classNames={{ root: styles.filterHelpPopup }}
       styles={{
         container: {
-          maxWidth: 380,
+          maxWidth: "min(380px, calc(100vw - 2rem))",
+          maxHeight: "calc(100dvh - 2rem)",
+          overflowY: "auto",
           padding: 0,
           border: "1px solid var(--border)",
           borderRadius: 14,
