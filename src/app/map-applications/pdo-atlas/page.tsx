@@ -105,7 +105,7 @@ export default function PdoExplorerPage() {
     varietyOptions,
     countryOptions,
     pointFeatureByPdoId,
-  } = usePdoData(true);
+  } = usePdoData();
   const { hoverInfo, getPdoNameById, onHover, clearHover } =
     usePdoMapHover(pdoData);
 

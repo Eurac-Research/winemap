@@ -5,8 +5,9 @@ export const PDO_MAP_STYLE = {
   pointRadius: 5,
   polygonColor: "#9d174d",
   polygonOpacity: 0.25,
-  outlineColor: "#831843",
-  outlineWidth: 1,
+  outlineColor: "#070104",
+  outlineWidth: .5,
   selectedColor: "#f59e0b",
   selectedOutlineWidth: 3,
 };
+

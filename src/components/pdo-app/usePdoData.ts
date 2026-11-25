@@ -8,8 +8,10 @@ import type {
   GeoJsonProperties,
   Geometry,
 } from "@/types/geojson";
+import type { VulnerabilityRecord } from "./useVulnerabilityData";
 
 export interface PDORecord {
+  vulnerability?: Omit<VulnerabilityRecord, "PDOid"> | null;
   country: string;
   pdoid: string;
   pdoname: string;
@@ -46,7 +48,7 @@ export interface SelectOption {
   value: string;
 }
 
-export function usePdoData(staticFiles = false) {
+export function usePdoData() {
   const [pdoData, setPdoData] = useState<PDORecord[]>([]);
   const [pdoPointsData, setPdoPointsData] = useState<PdoPointCollection | null>(
     null,
@@ -65,18 +67,9 @@ export function usePdoData(staticFiles = false) {
 
       try {
         const [pdoRes, pointsRes, countryRes] = await Promise.all([
-          fetch(
-            staticFiles ? "/data/pdo/records.json" : "/api/data/pdo-eu-id",
-            { signal: controller.signal },
-          ),
-          fetch(
-            staticFiles ? "/data/pdo/points.geojson" : "/api/data/pdo-points",
-            { signal: controller.signal },
-          ),
-          fetch(
-            staticFiles ? "/data/country_codes.json" : "/api/data/country-codes",
-            { signal: controller.signal },
-          ),
+          fetch("/data/pdo/records.json", { signal: controller.signal }),
+          fetch("/data/pdo/points.geojson", { signal: controller.signal }),
+          fetch("/data/country_codes.json", { signal: controller.signal }),
         ]);
 
         if (!pdoRes.ok || !pointsRes.ok || !countryRes.ok) {
@@ -115,7 +108,7 @@ export function usePdoData(staticFiles = false) {
       isActive = false;
       controller.abort();
     };
-  }, [staticFiles]);
+  }, []);
 
   const pdoOptions = useMemo<SelectOption[]>(() => {
     const uniqueNames = [

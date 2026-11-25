@@ -1,7 +1,10 @@
 "use client";
 
 import { PDO_MAP_STYLE as style } from "@/content/maps/pdo";
-import type { FilterSpecification } from "maplibre-gl";
+import type {
+  DataDrivenPropertyValueSpecification,
+  FilterSpecification,
+} from "maplibre-gl";
 import { Layer, Source } from "react-map-gl/maplibre";
 
 import type { PdoAreas } from "./usePdoAreas";
@@ -12,9 +15,20 @@ type Props = {
   areas: PdoAreas | null;
   visibleIds: string[] | null;
   selectedId: string | null;
+  color?: DataDrivenPropertyValueSpecification<string>;
+  pointRadius?: DataDrivenPropertyValueSpecification<number>;
+  pointOpacity?: DataDrivenPropertyValueSpecification<number>;
 };
 
-export function PdoLayers({ points, areas, visibleIds, selectedId }: Props) {
+export function PdoLayers({
+  points,
+  areas,
+  visibleIds,
+  selectedId,
+  color,
+  pointRadius,
+  pointOpacity = 1,
+}: Props) {
   const filter: FilterSpecification =
     visibleIds === null
       ? ["has", "pdoid"]
@@ -34,8 +48,9 @@ export function PdoLayers({ points, areas, visibleIds, selectedId }: Props) {
             maxzoom={areas ? style.polygonMinZoom : 24}
             filter={filter}
             paint={{
-              "circle-color": style.pointColor,
-              "circle-radius": style.pointRadius,
+              "circle-color": color ?? style.pointColor,
+              "circle-radius": pointRadius ?? style.pointRadius,
+              "circle-opacity": pointOpacity,
               "circle-stroke-color": "#ffffff",
               "circle-stroke-width": 1.5,
             }}
@@ -50,7 +65,7 @@ export function PdoLayers({ points, areas, visibleIds, selectedId }: Props) {
             minzoom={style.polygonMinZoom}
             filter={filter}
             paint={{
-              "fill-color": style.polygonColor,
+              "fill-color": color ?? style.polygonColor,
               "fill-opacity": style.polygonOpacity,
             }}
           />
