@@ -123,7 +123,7 @@ export function LocationReportPanel({
           </p>
         ) : !targets.length ? (
           <p className={styles.empty}>
-            Choose at least one indicator and, for climate indicators, a climate
+            Choose at least one indicator
             condition.
           </p>
         ) : (
